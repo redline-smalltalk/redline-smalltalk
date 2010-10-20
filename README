@@ -26,8 +26,20 @@ Currently, Redline Smalltalk will put the compiler output into the 'out' folder 
 the package st/redline but this will change shortly. Again - this is a *very* Alpha
 version.
 
+Note: If your .st source file does not contain a class definition in the usual form
+(see below) then it is considered to be a Smalltalk script and after compilation it
+is executed.
+
+The usual form for a Smalltalk class definition is the following keyword message:
+
+Object subclass: #Subclass 
+       instanceVariableNames: '' 
+       classVariableNames: '' 
+       poolDictionaries: ''
+       category: ''!
+
 When you compile a Smalltalk source file there will be a *lot* of trace from the parser
-and the compiler, which is to assist in developing and debugging the compiler and 
+and the compiler which is to assist in developing and debugging the compiler and 
 runtime. At present this can't be turned off.
 
 *end*
