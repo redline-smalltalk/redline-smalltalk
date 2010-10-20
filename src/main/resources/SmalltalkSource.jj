@@ -58,7 +58,7 @@ SKIP : {
 }
 
 TOKEN: {
-    < END_SCRIPT: "! !" | ".! !" >  
+    < END_SCRIPT: "! !" | ".! !" >
 |   < BANG: "!">
 |   < ANSWER: "^">
 |   < ASSIGNMENT: ":=" | "_" >
@@ -80,7 +80,7 @@ TOKEN: {
 |   < LEFT_PARENTHESES: "(" >
 |   < RIGHT_PARENTHESES: ")" >
 |   < CHARACTER: "$" (["a"-"z","A"-"Z","0"-"9","~","!","@","%","&","*","-","+","=","\\","|","?","/",">","<",",","_","^","#","(",")","[","]",":",";","{","}","'","\""]){1} >
-|   < STRING: "'" ( "'" "'" | (~["'"])* )* "'" > 
+|   < STRING: "'" ( "'" "'" | (~["'"])* )* "'" >
 |   < MULTI_KEYWORD: <IDENTIFIER> ":" (<IDENTIFIER> ":")+ >
 |   < ALTERNATE_KEYWORD: ":" <IDENTIFIER> ":" (<IDENTIFIER> ":")* >
 |   < COLON: ":" >
@@ -102,9 +102,10 @@ Object parse():
 void parseSource():
 {}
 {
+    LOOKAHEAD(<STRING><BANG> | <IDENTIFIER> keyword("subclass:"))
     parseClass()
-    // |
-    // parseScript()
+    |
+    parseScript()
 }
 
 void parseClass():
@@ -307,7 +308,7 @@ Statements statements():
             { statements.add(statementList); }
         )
     )
-    (<PERIOD>)? 
+    (<PERIOD>)?
     { return statements; }
 }
 
@@ -572,7 +573,7 @@ void binarySymbol(String expected):
 Block block():
 {
     Block block = new Block(); List<Variable> blockArguments; List<Variable> blockTemporaries; Statements statements;
-    enterBlockContext(); 
+    enterBlockContext();
 }
 {
     <LEFT_SQUARE_BRACKET>

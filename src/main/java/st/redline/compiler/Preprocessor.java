@@ -8,9 +8,16 @@ public class Preprocessor {
 	private static final String PATTERN_CLASSCOMMENT_START = "category:[^!]+";
 
 	private final String contents;
+	private static final String TERMINATOR = "! !";
 
 	public Preprocessor(String contents) {
-		this.contents = contents;
+		this.contents = terminate(contents);
+	}
+
+	private String terminate(String contents) {
+		if (!contents.trim().endsWith(TERMINATOR))
+			return contents + TERMINATOR;
+		return contents;
 	}
 
 	// The preprocessor looks for the start of the class comment which is any
@@ -50,7 +57,7 @@ public class Preprocessor {
 				index++;
 			}
 			index++;
-			// add new lines back so source line numbers match. 
+			// add new lines back so source line numbers match.
 			for (int l = 0; l < lines; l++)
 				newSource.append("\n");
 			newSource.append(contents.substring(index));
