@@ -1,0 +1,287 @@
+
+options {
+	STATIC = false;
+	LOOKAHEAD = 2;
+	FORCE_LA_CHECK = true;
+	DEBUG_PARSER = true;
+}
+
+PARSER_BEGIN(MethodBodyParser)
+	package st.redline.compiler;
+	class MethodBodyParser implements Parser {
+		private MethodBody methodBody = new MethodBody();
+
+		public void sourcePath(String sourcePath) {
+			methodBody.sourcePath(sourcePath);
+		}
+	}
+PARSER_END(MethodBodyParser)
+
+SKIP : {
+	" " | "\t" | "\n" | "\r" | <"\"">: INSIDE_COMMENT
+}
+
+<INSIDE_COMMENT>
+SKIP: {
+	<"\"">: DEFAULT | <~[]>
+}
+
+TOKEN : {
+	< PIPE: "|" >
+|	< PERIOD: "." >
+|	< ANSWER: "^" >
+|	< ASSIGNMENT: ":=" | "_" >
+|	< HASH: "#" >
+|	< COLON: ":" >
+|	< IDENTIFIER: ["a"-"z", "A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+|	< VARIABLE_NAME: ["a"-"z", "A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+|	< KEYWORD: ["a"-"z", "A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* ":" >
+|	< KEYWORDS: ( <KEYWORD> )+ >
+|	< BINARY_SELECTOR: ["-"] | ( ["+", "/", "\\", "*", "~", "`", "<", ">", "=", "@", "%", "|", "&", "?", "!"] )+ >
+|	< CHARACTER_CONSTANT: "$" ["'", "\"", "0"-"9", "a"-"z","A"-"Z", "+", "/", "\\", "*", "~", "`", "<", ">", "=", "@", "%", "|", "&", "?", "!", "[", "]", "{", "}", "(", ")", "_", "-", "^", ",", ";", "$", "#", ":"] >
+|	< NUMBER: (["0"-"9"])+ >
+|	< STRING: "'" (~["'"])+ "'" >
+|	< OPEN_PAREN: "(" >
+|	< CLOSE_PAREN: ")" >
+|	< OPEN_BLOCK: "[" >
+|	< CLOSE_BLOCK: "]" >
+|	< TEMP1: "{" >
+|	< TEMP2: "}" >
+|	< TEMP3: "(!" >
+|	< TEMP4: "(|" >
+|	< TEMP5: "(/" >
+}
+
+Object parse() : {} {
+	methodBody()<EOF>
+	{ return methodBody; }
+}
+
+void methodBody() : {} {
+	(temporaries())? (statements(methodBody))
+}
+
+void temporaries() : {} {
+	<PIPE>(temporary())*<PIPE>
+}
+
+void temporary() : { Token token; } {
+	token = identifier()
+	{ methodBody.addTemporary(token); }
+}
+
+void statements(Body body) : { Expression exp1 = null; Token ans1 = null; Expression exp2 = null; Token ans2 = null; } {
+	((ans1 = <ANSWER>)? exp1 = expression())*
+	(
+		<PERIOD> (ans2 = <ANSWER>)? exp2 = expression()
+		{ body.nextExpression(exp2, (ans2 != null)); ans2 = null; exp2 = null; }
+	)*
+	{ body.firstExpression(exp1, (ans1 != null)); ans1 = null; exp1 = null; }
+}
+
+Expression expression() : { Token token = null; Expression expression = new Expression(); Primary primary = null; MessageExpression messageExpression = null; CascadedMessageExpression cascadedMessageExpression = null; } {
+	(
+		(
+			token = assignment()
+			{ expression.addAssignment(token); }
+		)*
+		(
+			LOOKAHEAD(messageExpression() ";")
+			cascadedMessageExpression = cascadedMessageExpression()
+			{ expression.cascadedMessageExpression(cascadedMessageExpression); }
+			|
+			messageExpression = messageExpression()
+			{ expression.messageExpression(messageExpression); }
+			|
+			primary = primary()
+			{ expression.primary(primary); }
+		)
+	)
+	{ return expression; }
+}
+
+Token variableName() : { Token token; } {
+	LOOKAHEAD({ getToken(1).kind == IDENTIFIER && methodBody.isVariableName(getToken(1)) })
+	token = <IDENTIFIER>
+	{ return token; }
+}
+
+Token className() : { Token token; } {
+	LOOKAHEAD({ getToken(1).kind == IDENTIFIER && methodBody.isClassName(getToken(1))})
+	token = <IDENTIFIER>
+	{ return token; }
+}
+
+Token identifier() : { Token token; } {
+	LOOKAHEAD({ getToken(1).kind == IDENTIFIER && methodBody.isIdentifier(getToken(1)) })
+	token = <IDENTIFIER>
+	{ return token; }
+}
+
+Token assignment() : { Token token; } {
+	token = variableName()<ASSIGNMENT>
+	{ return token; }
+}
+
+Primary primary() : { Token token; Primary literalPrimary; Primary blockPrimary; Primary expressionPrimary; Expression expression; } {
+	(
+		token = variableName()
+		{ return new VariableNamePrimary(token); }
+		|
+		token = className()
+		{ return new ClassNamePrimary(token); }
+		|
+		literalPrimary = literalPrimary()
+		{ return literalPrimary; }
+		|
+		blockPrimary = blockPrimary()
+		{ return blockPrimary; }
+		|
+		<OPEN_PAREN>expression = expression()<CLOSE_PAREN>
+		{ return new ExpressionPrimary(expression); }
+	)
+}
+
+MessageExpression messageExpression() : { MessageExpression messageExpression; } {
+	(
+		LOOKAHEAD(binaryObjectDescription() <KEYWORD>) messageExpression = keywordExpression()
+		|
+		LOOKAHEAD(unaryObjectDescription() <BINARY_SELECTOR>) messageExpression = binaryExpression()
+		|
+		messageExpression = unaryExpression()
+	)
+	{ return messageExpression; }
+}
+
+UnaryMessageExpression unaryExpression() : { UnaryMessageExpression unaryMessageExpression = new UnaryMessageExpression(); Primary primary; } {
+	(
+		primary = primary()
+		{ unaryMessageExpression.primary(primary); }
+		(
+			token = identifier()
+			{ unaryMessageExpression.addUnarySelector(token); }
+		)+
+	)
+	{ return unaryMessageExpression; }
+}
+
+UnaryObjectDescription unaryObjectDescription() : { UnaryMessageExpression unaryExpression; Primary primary; } {
+	(
+		unaryExpression = unaryExpression()
+		{ return new UnaryObjectDescription(unaryExpression); }
+		|
+		primary = primary()
+		{ return new UnaryObjectDescription(primary); }
+	)
+}
+
+BinaryMessageExpression binaryExpression() : { BinaryMessageExpression binaryMessageExpression = new BinaryMessageExpression(); UnaryObjectDescription leftUnaryObjectDescription; Token binarySelector; UnaryObjectDescription rightUnaryObjectDescription; } {
+	(
+		leftUnaryObjectDescription = unaryObjectDescription()
+		{ binaryMessageExpression.addLeft(leftUnaryObjectDescription); }
+		(
+			binarySelector = <BINARY_SELECTOR>
+			rightUnaryObjectDescription = unaryObjectDescription()
+			{ binaryMessageExpression.addRight(binarySelector, rightUnaryObjectDescription); }
+		)+
+	)
+	{ return binaryMessageExpression; }
+}
+
+BinaryObjectDescription binaryObjectDescription() : { UnaryObjectDescription unaryObjectDescription; BinaryMessageExpression binaryExpression; } {
+	(
+		unaryObjectDescription = unaryObjectDescription()
+		{ return new BinaryObjectDescription(unaryObjectDescription); }
+		|
+		binaryExpression = binaryExpression()
+		{ return new BinaryObjectDescription(binaryExpression); }
+	)
+}
+
+KeywordMessageExpression keywordExpression() : { KeywordMessageExpression keywordMessageExpression = new KeywordMessageExpression(); BinaryObjectDescription leftBinaryObjectDescription; BinaryObjectDescription rightBinaryObjectDescription; Token keywordSelector; } {
+	(
+		leftBinaryObjectDescription = binaryObjectDescription()
+		{ keywordMessageExpression.addLeft(leftBinaryObjectDescription); }
+		(
+			keywordSelector = <KEYWORD>
+			rightBinaryObjectDescription = binaryObjectDescription()
+			{ keywordMessageExpression.addRight(keywordSelector, rightBinaryObjectDescription); }
+		)+
+	)
+	{ return keywordMessageExpression; }
+}
+
+CascadedMessageExpression cascadedMessageExpression() : { Token identifier; Token binarySelector; Token keywordSelector; CascadedMessageExpression cascadedMessageExpression = new CascadedMessageExpression(); MessageExpression messageExpression; BinaryObjectDescription binaryObjectDescription; UnaryObjectDescription unaryObjectDescription; } {
+	(
+		messageExpression = messageExpression()
+		{ cascadedMessageExpression.messageExpression(messageExpression); }
+		(
+			";"
+			identifier = identifier()
+			{ cascadedMessageExpression.add(identifier); }
+			|
+			";" binarySelector = <BINARY_SELECTOR>
+			unaryObjectDescription = unaryObjectDescription()
+			{ cascadedMessageExpression.addBinary(binarySelector, unaryObjectDescription); }
+			|
+			";" keywordSelector = <KEYWORD>
+			binaryObjectDescription = binaryObjectDescription()
+			{ cascadedMessageExpression.addKeyword(keywordSelector, binaryObjectDescription); }
+		)+
+	)
+	{ return cascadedMessageExpression; }
+}
+
+LiteralPrimary literalPrimary() : { Token token; Object object; } {
+	(
+		token = <NUMBER>
+		{ return new NumberLiteralPrimary(token); }
+		|
+		<HASH>(object = identifier() | object = <BINARY_SELECTOR> | object = <KEYWORDS> | object = <KEYWORD> | <OPEN_PAREN>object = array()<CLOSE_PAREN>)
+		{ return (object instanceof Token) ? new SymbolConstantLiteralPrimary((Token) object) : new ArrayConstantLiteralPrimary((ArrayPrimary) object); }
+		|
+		token = <CHARACTER_CONSTANT>
+		{ return new CharacterConstantLiteralPrimary(token); }
+		|
+		token = <STRING>
+		{ return new StringLiteralPrimary(token); }
+	)
+}
+
+ArrayPrimary array() : { Token token; ArrayPrimary arrayPrimary = new ArrayPrimary(); ArrayPrimary arrayArrayElement; } {
+	(
+		(
+			(token = variableName() | token = <BINARY_SELECTOR> | token = <KEYWORDS> | token = <KEYWORD>)
+			{ arrayPrimary.add(new SymbolLiteralPrimary(token)); }
+			|
+			token = <NUMBER>
+			{ arrayPrimary.add(new NumberLiteralPrimary(token)); }
+			|
+			token = <STRING>
+			{ arrayPrimary.add(new StringLiteralPrimary(token)); }
+			|
+			token = <CHARACTER_CONSTANT>
+			{ arrayPrimary.add(new CharacterConstantLiteralPrimary(token)); }
+			|
+			<OPEN_PAREN>arrayArrayElement = array()<CLOSE_PAREN>
+			{ arrayPrimary.add(arrayArrayElement); }
+		)*
+	)
+	{ return arrayPrimary; }
+}
+
+BlockPrimary blockPrimary() : { BlockPrimary blockPrimary = new BlockPrimary(); Token token = null; } {
+	<OPEN_BLOCK>
+	(
+		(blockTemporary(blockPrimary))*
+		(<PIPE>)?
+		(statements(blockPrimary))
+	)
+	<CLOSE_BLOCK>
+	{ return blockPrimary; }
+}
+
+void blockTemporary(BlockPrimary blockPrimary) : { Token token; } {
+	<COLON>token = identifier()
+	{ blockPrimary.addTemporary(token); }
+}
