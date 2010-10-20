@@ -56,6 +56,7 @@ public class Generator extends ClassLoader implements Executor, Translator {
 	}
 
 	public void visitClassDefinition(ClassDefinition classDefinition, ClassInstanceVariables classInstanceVariables) {
+		classDefinitionLineNumber = classDefinition.lineNumber();
 		encoder.defineClass(classDefinition, sourcePath);
 	}
 

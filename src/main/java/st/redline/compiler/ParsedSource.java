@@ -22,6 +22,7 @@ public class ParsedSource implements Translatable {
 	private Statements statements;
 	private MethodComment methodComment;
 	private String sourceFolder;
+	private boolean script = false;
 
 	public ParsedSource() {
 		variables = new Stack<Map<String, Token>>();
@@ -39,6 +40,10 @@ public class ParsedSource implements Translatable {
 	public void sourcePath(String sourcePath) {
 		this.sourcePath = sourcePath;
 		this.sourceFolder = sourcePath.substring(0, sourcePath.lastIndexOf(File.separator)+1);
+	}
+
+	public String sourceFolder() {
+		return sourceFolder;
 	}
 
 	public String sourcePath() {
@@ -79,9 +84,10 @@ public class ParsedSource implements Translatable {
 	}
 
 	public void defineVariables(Token input) {
-		for (String string : input.toString().split(" "))
-			if (string.length() > 0)
-				defineVariable(string, input);
+		if (input != null)
+			for (String string : input.toString().split(" "))
+				if (string.length() > 0)
+					defineVariable(string, input);
 	}
 
 	public void defineVariable(String key, Token variable) {
@@ -196,5 +202,9 @@ public class ParsedSource implements Translatable {
 	private void visitClassDefinition() {
 		if (classDefinition != null)
 			translator.visitClassDefinition(classDefinition, classInstanceVariables);
+	}
+
+	public void isScript(boolean script) {
+		this.script = script;
 	}
 }

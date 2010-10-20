@@ -150,10 +150,12 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitCode();
 		emitMessage(mv);  // <-- to be removed - for debug/tracing only.
 		defineClassInitialization(mv, classDefinition);
-		emitUnarySend(mv, classDefinition.unarySend());
-		emitKeywordSend(mv, classDefinition.keywordSends());
-		mv.visitInsn(POP);
-		mv.visitInsn(RETURN);
+		if (!classDefinition.isScript()) {
+			emitUnarySend(mv, classDefinition.unarySend());
+			emitKeywordSend(mv, classDefinition.keywordSends());
+			mv.visitInsn(POP);
+			mv.visitInsn(RETURN);
+		}
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();
 	}

@@ -13,6 +13,10 @@ public class ClassDefinition {
 		this.keywordSends = new ArrayList<KeywordSend>();
 	}
 
+	public boolean isScript() {
+		return false;
+	}
+
 	public void add(KeywordSend keywordSend) {
 		keywordSends.add(keywordSend);
 	}
