@@ -1,6 +1,5 @@
 package st.redline.compiler;
 
-import st.redline.ProtoObject;
 import st.redline.Smalltalk;
 
 public class ScriptExecutor implements Executor {
