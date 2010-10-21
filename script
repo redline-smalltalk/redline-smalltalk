@@ -1,2 +1,2 @@
-java -cp out/redline-smalltalk.jar:lib/dev/asm-all-3.2.jar st.redline.Script $1
+java -cp out/redline-smalltalk.jar:lib/dev/asm-all-3.2.jar:out st.redline.Script $1
 
