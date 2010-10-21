@@ -32,8 +32,8 @@
 	</target>
 
 	<target name="compile" description="Compile sources." depends="generate">
-		<javac srcdir="${java.src}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false"/>
-		<javac srcdir="${grammar.out}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false"/>
+		<javac srcdir="${java.src}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
+		<javac srcdir="${grammar.out}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
 	</target>
 
 	<target name="package" description="Package artefacts." depends="clean, compile">

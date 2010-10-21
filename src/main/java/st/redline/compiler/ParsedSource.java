@@ -207,4 +207,8 @@ public class ParsedSource implements Translatable {
 	public void isScript(boolean script) {
 		this.script = script;
 	}
+
+	public boolean isScript() {
+		return script;
+	}
 }

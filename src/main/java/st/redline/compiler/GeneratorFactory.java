@@ -7,6 +7,6 @@ public class GeneratorFactory {
 	public Executor generatorFor(ParsedSource parsedSource, ScriptListener scriptListener) {
 		if (parsedSource.hasClassDefinition())
 			return new ClassFileGenerator(parsedSource, scriptListener);
-		return new ScriptClassFileGenerator(parsedSource, scriptListener);
+		return new ScriptExecutor(new ScriptClassFileGenerator(parsedSource, scriptListener));
 	}
 }

@@ -154,8 +154,8 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			emitUnarySend(mv, classDefinition.unarySend());
 			emitKeywordSend(mv, classDefinition.keywordSends());
 			mv.visitInsn(POP);
-			mv.visitInsn(RETURN);
 		}
+		mv.visitInsn(RETURN);
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();
 	}

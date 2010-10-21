@@ -23,6 +23,22 @@ public class Generator extends ClassLoader implements Executor, Translator {
 		return parsedSource.outputPath();
 	}
 
+	public String sourceFolder() {
+		return parsedSource.sourceFolder();
+	}
+
+	public String sourcePath() {
+		return parsedSource.sourcePath();
+	}
+
+	public String filenameWithoutExtension() {
+		String filename = parsedSource.sourcePath().substring(parsedSource.sourceFolder().length());
+		int period = filename.lastIndexOf('.');
+		if (period != -1)
+			filename = filename.substring(0, period);
+		return filename;
+	}
+
 	public void execute() {
 		sourcePath = parsedSource.sourcePath();
 		parsedSource.apply(this);

@@ -130,7 +130,7 @@ public class ProtoObject extends JavaObject {
 		return _variables_;
 	}
 
-	public ProtoObject prim$Send(String selector) {
+	public ProtoObject prim$end(String selector) {
 		System.out.println("prim$end(" + selector + ")");
 		return tryInvokeMethod(selector, NO_ARGUMENTS);
 	}
@@ -175,7 +175,7 @@ public class ProtoObject extends JavaObject {
 		return tryInvokeMethod(selector, new ProtoObject[] { arg1, arg2 });
 	}
 
-	public ProtoObject prim$Send(String selector, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3) {
+	public ProtoObject prim$end(String selector, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3) {
 		System.out.println("prim$end(" + selector + "," + arg1.toString() + "," + arg2.toString() + "," + arg3.toString() + ")");
 		return tryInvokeMethod(selector, new ProtoObject[] { arg1, arg2, arg3 });
 	}

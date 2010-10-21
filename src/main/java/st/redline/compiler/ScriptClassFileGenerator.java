@@ -2,14 +2,12 @@ package st.redline.compiler;
 
 import st.redline.ScriptListener;
 
-import java.util.List;
-
 public class ScriptClassFileGenerator extends ClassFileGenerator {
 
 	public ScriptClassFileGenerator(ParsedSource parsedSource, ScriptListener scriptListener) {
 		super(parsedSource, scriptListener);
 		parsedSource.isScript(true);
-		parsedSource.add(new ScriptClassDefinition(parsedSource));
+		parsedSource.add(new ScriptClassDefinition(this));
 		parsedSource.add(new ScriptDoItMethod());
 	}
 
@@ -25,14 +23,12 @@ public class ScriptClassFileGenerator extends ClassFileGenerator {
 
 		private String subclass;
 
-		public ScriptClassDefinition(ParsedSource parsedSource) {
+		public ScriptClassDefinition(ScriptClassFileGenerator generator) {
 			super(null);
-			subclass = parsedSource.sourcePath().substring(parsedSource.sourceFolder().length());
-			if (subclass.endsWith(".st"))
-				subclass = subclass.substring(0, subclass.length()-3);
+			subclass = generator.filenameWithoutExtension();
 		}
 
-		public boolean isScript() { return true; };
+		public boolean isScript() { return true; }
 		public Token rawInstanceVariableNames() { return null; }
 		public Token rawClassVariableNames() { return null; }
 		public Token rawPoolDictionaries() { return null; }
