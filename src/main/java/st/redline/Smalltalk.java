@@ -7,9 +7,10 @@ public class Smalltalk {
 
 	private static final Map<String, ProtoObject> classes;
 	static {
+		ProtoObject bootstrap = ProtoObject.specialInstance();
 		classes = new HashMap<String, ProtoObject>();
-		classes.put("ProtoObject", new ProtoObject().prim$bootstrap());
-		classes.put("Object", new ProtoObject().prim$bootstrap());
+		classes.put("ProtoObject", bootstrap);
+		classes.put("Object", bootstrap);
 	}
 
 	public static ProtoObject register(String className, ProtoObject aClass) {
@@ -19,7 +20,7 @@ public class Smalltalk {
 	}
 
 	public static ProtoObject classNamed(String className) {
-		System.out.println("classNamed(" + className + ") exists: " + classes.containsKey(className));
+//		System.out.println("classNamed(" + className + ") exists: " + classes.containsKey(className));
 		return classes.get(className);
 	}
 }

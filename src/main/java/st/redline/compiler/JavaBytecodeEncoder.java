@@ -63,21 +63,20 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void defineHelperMethods() {
-		defineMethodFindMethod(classWriter, qualifiedSubclass);
-		defineMethodFindMethod(classClassWriter, classQualifiedSubclass);
+		defineFindMethodHelper(classClassWriter, classQualifiedSubclass);
 	}
 
-	private void defineMethodFindMethod(ClassWriter classWriter, String subclass) {
+	private void defineFindMethodHelper(ClassWriter classWriter, String qualifiedSubclass) {
 		MethodVisitor mv = classWriter.visitMethod(ACC_PROTECTED, "findMethod", "(Ljava/lang/String;)Ljava/lang/reflect/Method;", null, null);
 		mv.visitCode();
 		Label l0 = new Label();
 		mv.visitLabel(l0);
-		mv.visitLineNumber(20, l0);
-		mv.visitLdcInsn(subclass);
+		mv.visitLineNumber(25, l0);
+		mv.visitLdcInsn(qualifiedSubclass);
 		mv.visitVarInsn(ASTORE, 2);
 		Label l1 = new Label();
 		mv.visitLabel(l1);
-		mv.visitLineNumber(21, l1);
+		mv.visitLineNumber(26, l1);
 		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 		mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
 		mv.visitInsn(DUP);
@@ -89,13 +88,18 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
 		mv.visitVarInsn(ALOAD, 2);
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+		mv.visitLdcInsn(" ");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitFieldInsn(GETFIELD, qualifiedSubclass, "_class_", "Lst/redline/ProtoObject;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 		Label l2 = new Label();
 		mv.visitLabel(l2);
-		mv.visitLineNumber(22, l2);
+		mv.visitLineNumber(27, l2);
 		mv.visitVarInsn(ALOAD, 0);
-		mv.visitFieldInsn(GETFIELD, subclass, "_class_", "Lst/redline/ProtoObject;");
+		mv.visitFieldInsn(GETFIELD, qualifiedSubclass, "_class_", "Lst/redline/ProtoObject;");
 		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "method$", "()Ljava/util/Map;");
 		mv.visitVarInsn(ALOAD, 1);
 		mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Map", "get", "(Ljava/lang/Object;)Ljava/lang/Object;");
@@ -103,17 +107,17 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitVarInsn(ASTORE, 3);
 		Label l3 = new Label();
 		mv.visitLabel(l3);
-		mv.visitLineNumber(23, l3);
+		mv.visitLineNumber(28, l3);
 		mv.visitVarInsn(ALOAD, 3);
 		Label l4 = new Label();
 		mv.visitJumpInsn(IFNULL, l4);
 		Label l5 = new Label();
 		mv.visitLabel(l5);
-		mv.visitLineNumber(24, l5);
+		mv.visitLineNumber(29, l5);
 		mv.visitVarInsn(ALOAD, 3);
 		mv.visitInsn(ARETURN);
 		mv.visitLabel(l4);
-		mv.visitLineNumber(25, l4);
+		mv.visitLineNumber(30, l4);
 		mv.visitFrame(Opcodes.F_APPEND,2, new Object[] {"java/lang/String", "java/lang/reflect/Method"}, 0, null);
 		mv.visitVarInsn(ALOAD, 0);
 		mv.visitVarInsn(ALOAD, 1);
@@ -121,7 +125,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitInsn(ARETURN);
 		Label l6 = new Label();
 		mv.visitLabel(l6);
-		mv.visitLocalVariable("this", "L"+subclass+";", null, l0, l6, 0);
+		mv.visitLocalVariable("this", "L"+qualifiedSubclass+";", null, l0, l6, 0);
 		mv.visitLocalVariable("selector", "Ljava/lang/String;", null, l0, l6, 1);
 		mv.visitLocalVariable("name", "Ljava/lang/String;", null, l1, l6, 2);
 		mv.visitLocalVariable("method", "Ljava/lang/reflect/Method;", null, l3, l6, 3);
@@ -216,7 +220,6 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	private void defineClassConstructor(ClassDefinition classDefinition) {
 		MethodVisitor mv = classWriter.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
 		mv.visitCode();
-		emitMessage(mv);  // <-- to be removed - for debug/tracing only.
 		defineClassInitialization(mv, classDefinition);
 		emitUnarySend(mv, classDefinition.unarySend());
 		emitKeywordSend(mv, classDefinition.keywordSends());
@@ -231,6 +234,8 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitClassInitialization(MethodVisitor mv, ClassDefinition classDefinition, String aClassClass, String aClass) {
+		emitMessage(mv, "ClassInitialization: "+ aClassClass + " " + aClass);
+
 		Label l0 = new Label();
 		mv.visitLabel(l0);
 		mv.visitLineNumber(classDefinition.lineNumber(), l0);
@@ -243,12 +248,12 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitInsn(POP);
 	}
 
-	private void emitMessage(MethodVisitor mv) {
+	private void emitMessage(MethodVisitor mv, String message) {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
 		mv.visitLineNumber(1, l0);
 		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-		mv.visitLdcInsn("Constructing Class: '" + subclass + "'");
+		mv.visitLdcInsn(message);
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 	}
 

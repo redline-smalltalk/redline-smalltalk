@@ -16,43 +16,20 @@ public class ProtoObject {
 	private Object _primitiveValue_;
 
 	public static ProtoObject objectFromPrimitive(String value, boolean isSymbol) {
-		System.out.println("objectFromPrimitive(" + value + ", " + isSymbol + ") - TODO");
+//		System.out.println("objectFromPrimitive(" + value + ", " + isSymbol + ") - TODO");
 		ProtoObject object = Smalltalk.classNamed( isSymbol ? "Symbol" : "String");
 		if (object == null)
 			object = new ProtoObject();
 		return object.primitiveValue(value);
 	}
 
-	public String toString() {
-		if (_primitiveValue_ != null)
-			return _primitiveValue_.toString();
-		return getClass().toString();
-	}
-
-	protected ProtoObject primitiveValue(Object value) {
-		_primitiveValue_ = value;
-		return this;
-	}
-
-	protected Object primitiveValue() {
-		return _primitiveValue_;
-	}
-
-	public ProtoObject prim$init(String className, Class aClass) {
-		System.out.println("prim$init: '" + className + "', " + this.getClass().getName() + " and " + aClass);
-		method$(methodsFrom(aClass));
-		Smalltalk.register(className, this);
-		return this;
-	}
-
-	public ProtoObject prim$bootstrap() {
-		System.out.println("prim$bootstrap: '" + this.getClass().getName());
-		ProtoObject metaclass = new ProtoObject();
+	public static ProtoObject specialInstance() {
+		ProtoObject subclass = new ProtoObject();
 		Map<String, Method> methods = new HashMap<String, Method>();
-		methods.put("subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:", specialSubclassMethod());
-		metaclass.method$(methods);
-		clas$(metaclass);
-		return this;
+		methods.put("subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:", subclass.specialSubclassMethod());
+		subclass.method$(methods);
+		subclass.clas$(subclass);  // <- note cyclic reference.
+		return subclass;
 	}
 
 	private Method specialSubclassMethod() {
@@ -70,39 +47,33 @@ public class ProtoObject {
 		ProtoObject subclass = Smalltalk.classNamed(subclassName.toString());
 		if (subclass == null)
 			throw new IllegalStateException("Expected '" + subclassName + "' to have been registered.");
-		ProtoObject object = subclass.prim$bootstrap();
-		if (!subclassName.toString().equals("Object"))
-			return object;
-		Class metaclassClass = null;
-		metaclassClass = loadMetaclass(metaclassClass);
-		fixupMetaclass(object, metaclassClass);
-		fixupMetaclass(Smalltalk.classNamed("Behavior"), metaclassClass);
-		fixupMetaclass(Smalltalk.classNamed("ClassDescription"), metaclassClass);
-		fixupMetaclass(Smalltalk.classNamed("Class"), metaclassClass);
-		fixupMetaclass(Smalltalk.classNamed("Metaclass"), metaclassClass);
-		return object;
+		System.out.println("subclass of type: " + subclass.getClass().getName());
+		subclass.clas$(Smalltalk.classNamed("ProtoObject"));
+		System.out.println();
+		if (subclassName.toString().equals("Object"))
+			System.out.println("*** fixup required here now all Object dependencies are loaded ***\n");
+		return subclass;
 	}
 
-	private Class loadMetaclass(Class metaclassClass) {
-		try {
-			return Class.forName("st.redline.Metaclass");
-		} catch (ClassNotFoundException e) {
-			throw new IllegalStateException(e);
-		}
+	public ProtoObject prim$init(String className, Class aClass) {
+		System.out.println("prim$init: '" + className + "', " + this.getClass().getName() + " and " + aClass);
+		Smalltalk.register(className, this);
+		return this;
 	}
 
-	private void fixupMetaclass(ProtoObject object, Class metaclassClass) {
-		Map<String, Method> classMethods = methodsFrom(object);
-		try {
-			ProtoObject newMetaclass = (ProtoObject) metaclassClass.newInstance();
-			newMetaclass.method$(classMethods);
-			object.clas$(newMetaclass);
-			System.out.println("Fixed up " + object.getClass().getName() + " to have proper metaclass.");
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
+	public String toString() {
+		if (_primitiveValue_ != null)
+			return _primitiveValue_.toString();
+		return getClass().toString();
+	}
+
+	protected ProtoObject primitiveValue(Object value) {
+		_primitiveValue_ = value;
+		return this;
+	}
+
+	protected Object primitiveValue() {
+		return _primitiveValue_;
 	}
 
 	protected ProtoObject clas$() {
@@ -110,6 +81,7 @@ public class ProtoObject {
 	}
 
 	protected ProtoObject clas$(ProtoObject aClass) {
+		System.out.println("ProtoObject.clas$() set to: " + aClass.getClass().getName());
 		_class_ = aClass;
 		return this;
 	}
@@ -131,9 +103,9 @@ public class ProtoObject {
 		System.out.println("prim$end(" + selector + ")");
 		return tryInvokeMethod(selector, NO_ARGUMENTS);
 	}
-
+	
 	protected Method findMethod(String selector) {
-		System.out.println("findMethod reached in ProtoObject - " + selector);
+		System.out.println("findMethod reached in ProtoObject - " + selector + " " + getClass().getName());
 		return _class_.method$().get(selector);
 	}
 
