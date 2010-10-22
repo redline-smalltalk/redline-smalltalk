@@ -63,7 +63,7 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="152" column="61" selection-start="7935" selection-end="7935" vertical-scroll-proportion="0.8080082">
+            <state line="202" column="42" selection-start="10027" selection-end="10027" vertical-scroll-proportion="0.68172485">
               <folding />
             </state>
           </provider>
@@ -73,9 +73,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="21" column="67" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -83,7 +81,7 @@
       <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="37" selection-start="308" selection-end="308" vertical-scroll-proportion="0.0">
+            <state line="75" column="0" selection-start="3090" selection-end="3090" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -125,8 +123,8 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/JavaObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
       </list>
     </option>
@@ -166,6 +164,9 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -254,9 +255,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -273,8 +271,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -549,37 +547,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="78" selection-end="78" vertical-scroll-proportion="-0.4974773">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="35" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="37" selection-start="308" selection-end="308" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="4" column="13" selection-start="78" selection-end="78" vertical-scroll-proportion="-0.4974773" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="67" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="21" column="67" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="35" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="0" selection-start="3090" selection-end="3090" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="61" selection-start="7935" selection-end="7935" vertical-scroll-proportion="0.8080082">
+        <state line="202" column="42" selection-start="10027" selection-end="10027" vertical-scroll-proportion="0.68172485">
           <folding />
         </state>
       </provider>

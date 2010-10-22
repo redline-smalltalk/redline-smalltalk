@@ -66,7 +66,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 		defineClass(sourcePath, classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
 		defineClassFields(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
-		defineClassInitialization(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
+		defineClassInitialization(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass, qualifiedSubclass);
 		defineClassHelpers(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
 
 		defineClassRegistration(classWriter, qualifiedSubclass, qualifiedSuperclass);
@@ -180,7 +180,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitEnd();
 	}
 
-	private void defineClassInitialization(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
+	private void defineClassInitialization(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass, String subclass) {
 		MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
 		mv.visitCode();
 		Label l0 = new Label();
@@ -198,11 +198,18 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitFieldInsn(PUTFIELD, classQualifiedSubclass, "_class_", "Lst/redline/Metaclass;");
 		Label l2 = new Label();
 		mv.visitLabel(l2);
-		mv.visitLineNumber(14, l2);
-		mv.visitInsn(RETURN);
+		mv.visitLineNumber(17, l2);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitLdcInsn(Type.getType("L"+subclass+";"));
+		mv.visitMethodInsn(INVOKESTATIC, "st/redline/ProtoObject", "methodsFrom", "(Ljava/lang/Class;)Ljava/util/Map;");
+		mv.visitFieldInsn(PUTFIELD, classQualifiedSubclass, "_methods_", "Ljava/util/Map;");
 		Label l3 = new Label();
 		mv.visitLabel(l3);
-		mv.visitLocalVariable("this", "L"+classQualifiedSubclass+";", null, l0, l3, 0);
+		mv.visitLineNumber(14, l3);
+		mv.visitInsn(RETURN);
+		Label l4 = new Label();
+		mv.visitLabel(l4);
+		mv.visitLocalVariable("this", "L"+classQualifiedSubclass+";", null, l0, l4, 0);
 		mv.visitMaxs(3, 1);
 		mv.visitEnd();
 	}

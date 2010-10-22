@@ -73,6 +73,7 @@ public class ProtoObject {
 	}
 
 	public static Map<String, Method> methodsFrom(Class aClass) {
+		System.out.println("methodsFrom(" + aClass.getName() + ")");
 		Map<String, Method> methods = new HashMap<String, Method>();
 		for (Method method : aClass.getDeclaredMethods()) {
 			if (Modifier.isPublic(method.getModifiers())
