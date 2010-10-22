@@ -72,11 +72,7 @@ public class ProtoObject {
 		return tryInvokeMethod(selector, new ProtoObject[] { arg1, arg2, arg3, arg4, arg5 });
 	}
 
-	private static Map<String, Method> methodsFrom(ProtoObject aClass) {
-		return methodsFrom(aClass.getClass());
-	}
-
-	private static Map<String, Method> methodsFrom(Class aClass) {
+	public static Map<String, Method> methodsFrom(Class aClass) {
 		Map<String, Method> methods = new HashMap<String, Method>();
 		for (Method method : aClass.getDeclaredMethods()) {
 			if (Modifier.isPublic(method.getModifiers())

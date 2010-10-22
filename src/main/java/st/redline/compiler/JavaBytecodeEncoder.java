@@ -56,90 +56,192 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		else
 			classQualifiedSuperclass = DEFAULT_FILE_PACKAGE + classDefinition.superclass() + "$mClass";
 		defineClass(sourcePath);
-		defineFields();
-		defineDefaultConstructor(classDefinition.lineNumber());
-		defineClassRegistration();
-		defineHelperMethods();
 	}
 
-	private void defineFields() {
-		defineFields(classWriter, qualifiedSubclass, qualifiedSuperclass);
-		defineFields(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
+	private void defineClass(String sourcePath) {
+		defineClass(sourcePath, classWriter, qualifiedSubclass, qualifiedSuperclass);
+		defineInstanceFields(classWriter, qualifiedSubclass, qualifiedSuperclass);
+		defineInstanceInitialization(classWriter, qualifiedSubclass, qualifiedSuperclass);
+		defineInstanceHelpers(classWriter, qualifiedSubclass, qualifiedSuperclass);
+
+		defineClass(sourcePath, classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
+		defineClassFields(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
+		defineClassInitialization(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
+		defineClassHelpers(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
+
+		defineClassRegistration(classWriter, qualifiedSubclass, qualifiedSuperclass);
 	}
 
-	private void defineFields(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
-		FieldVisitor fv = classWriter.visitField(ACC_PUBLIC, "_class_", "Lst/redline/ProtoObject;", null, null);
-		fv.visitEnd();
-	}
-
-	private void defineHelperMethods() {
-		defineMethodFinder(classWriter, qualifiedSubclass, qualifiedSuperclass);
-		defineMethodFinder(classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
-	}
-
-	private void defineMethodFinder(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
+	private void defineClassHelpers(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
 		MethodVisitor mv = classWriter.visitMethod(ACC_PROTECTED, "findMethod", "(Ljava/lang/String;)Ljava/lang/reflect/Method;", null, null);
 		mv.visitCode();
-		emitMessage(mv, "findMethod: in " + qualifiedSubclass);
-
-mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-mv.visitVarInsn(ALOAD, 0);
-mv.visitFieldInsn(GETFIELD, qualifiedSubclass, "_class_", "Lst/redline/ProtoObject;");
-mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V");
-
 		Label l0 = new Label();
 		mv.visitLabel(l0);
-		mv.visitLineNumber(18, l0);
+		mv.visitLineNumber(19, l0);
+		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 		mv.visitVarInsn(ALOAD, 0);
-		mv.visitFieldInsn(GETFIELD, qualifiedSubclass, "_class_", "Lst/redline/ProtoObject;");
-		mv.visitFieldInsn(GETFIELD, "st/redline/ProtoObject", "_methods_", "Ljava/util/Map;");
+		mv.visitFieldInsn(GETFIELD, classQualifiedSubclass, "_class_", "Lst/redline/Metaclass;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V");
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(20, l1);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitFieldInsn(GETFIELD, classQualifiedSubclass, "_class_", "Lst/redline/Metaclass;");
+		mv.visitFieldInsn(GETFIELD, "st/redline/Metaclass", "_methods_", "Ljava/util/Map;");
 		mv.visitVarInsn(ALOAD, 1);
 		mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Map", "get", "(Ljava/lang/Object;)Ljava/lang/Object;");
 		mv.visitTypeInsn(CHECKCAST, "java/lang/reflect/Method");
 		mv.visitVarInsn(ASTORE, 2);
-		Label l1 = new Label();
-		mv.visitLabel(l1);
-		mv.visitLineNumber(19, l1);
-		mv.visitVarInsn(ALOAD, 2);
 		Label l2 = new Label();
-		mv.visitJumpInsn(IFNULL, l2);
-		Label l3 = new Label();
-		mv.visitLabel(l3);
-		mv.visitLineNumber(20, l3);
-		mv.visitVarInsn(ALOAD, 2);
-		mv.visitInsn(ARETURN);
 		mv.visitLabel(l2);
 		mv.visitLineNumber(21, l2);
+		mv.visitVarInsn(ALOAD, 2);
+		Label l3 = new Label();
+		mv.visitJumpInsn(IFNULL, l3);
+		Label l4 = new Label();
+		mv.visitLabel(l4);
+		mv.visitLineNumber(22, l4);
+		mv.visitVarInsn(ALOAD, 2);
+		mv.visitInsn(ARETURN);
+		mv.visitLabel(l3);
+		mv.visitLineNumber(23, l3);
 		mv.visitVarInsn(ALOAD, 0);
 		mv.visitVarInsn(ALOAD, 1);
 		mv.visitMethodInsn(INVOKESPECIAL, qualifiedSuperclass, "findMethod", "(Ljava/lang/String;)Ljava/lang/reflect/Method;");
 		mv.visitInsn(ARETURN);
-		Label l4 = new Label();
-		mv.visitLabel(l4);
-		mv.visitLocalVariable("this", "L" + qualifiedSubclass + ";", null, l0, l4, 0);
-		mv.visitLocalVariable("selector", "Ljava/lang/String;", null, l0, l4, 1);
-		mv.visitLocalVariable("method", "Ljava/lang/reflect/Method;", null, l1, l4, 2);
+		Label l5 = new Label();
+		mv.visitLabel(l5);
 		mv.visitMaxs(2, 3);
 		mv.visitEnd();
 	}
 
-	private void defineClassRegistration() {
+	private void defineInstanceHelpers(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
+		MethodVisitor mv = classWriter.visitMethod(ACC_PROTECTED, "findMethod", "(Ljava/lang/String;)Ljava/lang/reflect/Method;", null, null);
+		mv.visitCode();
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(28, l0);
+		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitFieldInsn(GETFIELD, qualifiedSubclass, "_class_", "Lst/redline/Object$mClass;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V");
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(29, l1);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitFieldInsn(GETFIELD, qualifiedSubclass, "_class_", "L"+classQualifiedSubclass+";");
+		mv.visitFieldInsn(GETFIELD, classQualifiedSubclass, "_methods_", "Ljava/util/Map;");
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Map", "get", "(Ljava/lang/Object;)Ljava/lang/Object;");
+		mv.visitTypeInsn(CHECKCAST, "java/lang/reflect/Method");
+		mv.visitVarInsn(ASTORE, 2);
+		Label l2 = new Label();
+		mv.visitLabel(l2);
+		mv.visitLineNumber(30, l2);
+		mv.visitVarInsn(ALOAD, 2);
+		Label l3 = new Label();
+		mv.visitJumpInsn(IFNULL, l3);
+		Label l4 = new Label();
+		mv.visitLabel(l4);
+		mv.visitLineNumber(31, l4);
+		mv.visitVarInsn(ALOAD, 2);
+		mv.visitInsn(ARETURN);
+		mv.visitLabel(l3);
+		mv.visitLineNumber(32, l3);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitMethodInsn(INVOKESPECIAL, qualifiedSuperclass, "findMethod", "(Ljava/lang/String;)Ljava/lang/reflect/Method;");
+		mv.visitInsn(ARETURN);
+		Label l5 = new Label();
+		mv.visitLabel(l5);
+		mv.visitLocalVariable("this", "L"+qualifiedSubclass+";", null, l0, l5, 0);
+		mv.visitLocalVariable("selector", "Ljava/lang/String;", null, l0, l5, 1);
+		mv.visitLocalVariable("method", "Ljava/lang/reflect/Method;", null, l2, l5, 2);
+		mv.visitMaxs(2, 3);
+		mv.visitEnd();
+	}
+
+	private void defineClassRegistration(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
 		MethodVisitor mv = classWriter.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
 		mv.visitCode();
-		emitMessage(mv, "Registering: " + subclass + " " + classQualifiedSubclass);
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(11, l0);
 		mv.visitLdcInsn(subclass);
 		mv.visitTypeInsn(NEW, classQualifiedSubclass);
 		mv.visitInsn(DUP);
 		mv.visitMethodInsn(INVOKESPECIAL, classQualifiedSubclass, "<init>", "()V");
 		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "register", "(Ljava/lang/String;Lst/redline/ProtoObject;)V");
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(6, l1);
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(3, 0);
 		mv.visitEnd();
 	}
 
-	private void defineClass(String sourcePath) {
-		defineClass(sourcePath, classWriter, qualifiedSubclass, qualifiedSuperclass);
-		defineClass(sourcePath, classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
+	private void defineClassInitialization(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
+		MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+		mv.visitCode();
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(14, l0);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, qualifiedSuperclass, "<init>", "()V");
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(16, l1);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitTypeInsn(NEW, "st/redline/Metaclass");
+		mv.visitInsn(DUP);
+		mv.visitMethodInsn(INVOKESPECIAL, "st/redline/Metaclass", "<init>", "()V");
+		mv.visitFieldInsn(PUTFIELD, classQualifiedSubclass, "_class_", "Lst/redline/Metaclass;");
+		Label l2 = new Label();
+		mv.visitLabel(l2);
+		mv.visitLineNumber(14, l2);
+		mv.visitInsn(RETURN);
+		Label l3 = new Label();
+		mv.visitLabel(l3);
+		mv.visitLocalVariable("this", "L"+classQualifiedSubclass+";", null, l0, l3, 0);
+		mv.visitMaxs(3, 1);
+		mv.visitEnd();
+	}
+
+	private void defineInstanceInitialization(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
+		MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+		mv.visitCode();
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(6, l0);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, qualifiedSuperclass, "<init>", "()V");
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(8, l1);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitLdcInsn(subclass);
+		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classNamed", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
+		mv.visitTypeInsn(CHECKCAST, classQualifiedSubclass);
+		mv.visitFieldInsn(PUTFIELD, qualifiedSubclass, "_class_", "Lst/redline/Object$mClass;");
+		Label l2 = new Label();
+		mv.visitLabel(l2);
+		mv.visitLineNumber(6, l2);
+		mv.visitInsn(RETURN);
+		Label l3 = new Label();
+		mv.visitLabel(l3);
+		mv.visitLocalVariable("this", "L"+classQualifiedSubclass+";", null, l0, l3, 0);
+		mv.visitMaxs(2, 1);
+		mv.visitEnd();
+	}
+
+	private void defineClassFields(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
+		FieldVisitor fv = classWriter.visitField(ACC_PUBLIC, "_class_", "Lst/redline/Metaclass;", null, null);
+		fv.visitEnd();
+	}
+
+	private void defineInstanceFields(ClassWriter classWriter, String qualifiedSubclass, String qualifiedSuperclass) {
+		FieldVisitor fv = classWriter.visitField(ACC_PUBLIC, "_class_", "L"+classQualifiedSubclass+";", null, null);
+		fv.visitEnd();
 	}
 
 	private void defineClass(String sourcePath, ClassWriter classWriter, String subclass, String superclass) {
@@ -160,53 +262,17 @@ mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang
 		return defineClass(DEFAULT_JAVA_PACKAGE + subclass, code[0], 0, code[0].length);
 	}
 
-	private void defineClassConstructor(ClassDefinition classDefinition) {
-		MethodVisitor mv = classWriter.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
-		mv.visitCode();
-//		defineClassInitialization(mv, classDefinition);
-//		emitUnarySend(mv, classDefinition.unarySend());
-//		emitKeywordSend(mv, classDefinition.keywordSends());
-//		mv.visitInsn(POP);
-		mv.visitInsn(RETURN);
-		mv.visitMaxs(1, 1);
-		mv.visitEnd();
-	}
-
-	private void defineDefaultConstructor(int lineNumber) {
-		defineDefaultConstructorInstance(lineNumber, classWriter, qualifiedSuperclass, qualifiedSubclass);
-		defineDefaultConstructorClass(lineNumber, classClassWriter, classQualifiedSuperclass, classQualifiedSubclass);
-	}
-
-	private void defineDefaultConstructorClass(int lineNumber, ClassWriter classWriter, String qualifiedSuperclass, String qualifiedSubclass) {
-		MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
-		mv.visitCode();
-		emitMessage(mv, "Constructing: " + qualifiedSubclass);
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitMethodInsn(INVOKESPECIAL, qualifiedSuperclass, "<init>", "()V");
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitTypeInsn(NEW, "st/redline/Metaclass");
-		mv.visitInsn(DUP);
-		mv.visitMethodInsn(INVOKESPECIAL, "st/redline/Metaclass", "<init>", "()V");
-		mv.visitFieldInsn(PUTFIELD, qualifiedSubclass, "_class_", "Lst/redline/ProtoObject;");
-		mv.visitInsn(RETURN);
-		mv.visitMaxs(3, 1);
-		mv.visitEnd();
-	}
-
-	private void defineDefaultConstructorInstance(int lineNumber, ClassWriter classWriter, String qualifiedSuperclass, String qualifiedSubclass) {
-		MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
-		mv.visitCode();
-		emitMessage(mv, "Constructing: " + qualifiedSubclass);
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitMethodInsn(INVOKESPECIAL, qualifiedSuperclass, "<init>", "()V");
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitLdcInsn(subclass);
-		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classNamed", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
-		mv.visitFieldInsn(PUTFIELD, qualifiedSubclass, "_class_", "Lst/redline/ProtoObject;");
-		mv.visitInsn(RETURN);
-		mv.visitMaxs(2, 1);
-		mv.visitEnd();
-	}
+//	private void defineClassConstructor(ClassDefinition classDefinition) {
+//		MethodVisitor mv = classWriter.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
+//		mv.visitCode();
+////		defineClassInitialization(mv, classDefinition);
+////		emitUnarySend(mv, classDefinition.unarySend());
+////		emitKeywordSend(mv, classDefinition.keywordSends());
+////		mv.visitInsn(POP);
+//		mv.visitInsn(RETURN);
+//		mv.visitMaxs(1, 1);
+//		mv.visitEnd();
+//	}
 
 	private void emitMessage(MethodVisitor mv, String message) {
 		Label l0 = new Label();
