@@ -10,103 +10,14 @@ public class ProtoObject {
 
 	private static final ProtoObject[] NO_ARGUMENTS = {};
 
-	private ProtoObject _class_;
-	private ProtoObject[] _variables_;
-	private Map<String, Method> _methods_;
-	private Object _primitiveValue_;
-
-	public static ProtoObject objectFromPrimitive(String value, boolean isSymbol) {
-//		System.out.println("objectFromPrimitive(" + value + ", " + isSymbol + ") - TODO");
-		ProtoObject object = Smalltalk.classNamed( isSymbol ? "Symbol" : "String");
-		if (object == null)
-			object = new ProtoObject();
-		return object.primitiveValue(value);
-	}
-
-	public static ProtoObject specialInstance() {
-		ProtoObject subclass = new ProtoObject();
-		Map<String, Method> methods = new HashMap<String, Method>();
-		methods.put("subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:", subclass.specialSubclassMethod());
-		subclass.method$(methods);
-		subclass.clas$(subclass);  // <- note cyclic reference.
-		return subclass;
-	}
-
-	private Method specialSubclassMethod() {
-		try {
-			return ProtoObject.class.getDeclaredMethod("prim$ubclass",
-					new Class[] { ProtoObject.class, ProtoObject.class, ProtoObject.class, ProtoObject.class, ProtoObject.class } );
-		} catch (NoSuchMethodException e) {
-			/* its our method so we dont expect this. */
-		}
-		return null;
-	}
-
-	public ProtoObject prim$ubclass(ProtoObject subclassName, ProtoObject instanceVariableNames, ProtoObject classVariableNames, ProtoObject poolDictionaries, ProtoObject category) {
-		System.out.println(this.getClass().getName() + " prim$ubclass(" + subclassName + ", " + instanceVariableNames + ", " + classVariableNames + ", " + poolDictionaries + ", " + category + ")");
-		ProtoObject subclass = Smalltalk.classNamed(subclassName.toString());
-		if (subclass == null)
-			throw new IllegalStateException("Expected '" + subclassName + "' to have been registered.");
-		System.out.println("subclass of type: " + subclass.getClass().getName());
-		subclass.clas$(Smalltalk.classNamed("ProtoObject"));
-		System.out.println();
-		if (subclassName.toString().equals("Object"))
-			System.out.println("*** fixup required here now all Object dependencies are loaded ***\n");
-		return subclass;
-	}
-
-	public ProtoObject prim$init(String className, Class aClass) {
-		System.out.println("prim$init: '" + className + "', " + this.getClass().getName() + " and " + aClass);
-		Smalltalk.register(className, this);
-		return this;
-	}
-
-	public String toString() {
-		if (_primitiveValue_ != null)
-			return _primitiveValue_.toString();
-		return getClass().toString();
-	}
-
-	protected ProtoObject primitiveValue(Object value) {
-		_primitiveValue_ = value;
-		return this;
-	}
-
-	protected Object primitiveValue() {
-		return _primitiveValue_;
-	}
-
-	protected ProtoObject clas$() {
-		return _class_;
-	}
-
-	protected ProtoObject clas$(ProtoObject aClass) {
-		System.out.println("ProtoObject.clas$() set to: " + aClass.getClass().getName());
-		_class_ = aClass;
-		return this;
-	}
-
-	protected Map<String, Method> method$() {
-		return _methods_;
-	}
-
-	protected ProtoObject method$(Map<String, Method> methods) {
-		_methods_ = methods;
-		return this;
-	}
-
-	protected ProtoObject[] variable$() {
-		return _variables_;
-	}
-
 	public ProtoObject prim$end(String selector) {
 		System.out.println("prim$end(" + selector + ")");
 		return tryInvokeMethod(selector, NO_ARGUMENTS);
 	}
-	
+
 	protected Method findMethod(String selector) {
 		System.out.println("findMethod reached in ProtoObject - " + selector + " " + getClass().getName());
-		return _class_.method$().get(selector);
+		return null; //_class_.method$().get(selector);
 	}
 
 	protected ProtoObject tryInvokeMethod(String selector, Object[] arguments) {
