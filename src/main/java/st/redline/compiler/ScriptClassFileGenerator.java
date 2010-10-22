@@ -16,7 +16,7 @@ public class ScriptClassFileGenerator extends ClassFileGenerator {
 	private static final KeywordSend CLASS_VARIABLE_NAMES_KEYWORDSEND = new KeywordSend(CLASS_VARIABLE_NAMES_KEYWORD);
 	private static final KeywordSend POOL_DICTIONARIES_KEYWORDSEND = new KeywordSend(POOL_DICTIONARIES_KEYWORD);
 	private static final KeywordSend CATEGORY_KEYWORDSEND = new KeywordSend(CATEGORY_KEYWORD);
-	private static final Primary EMPTY_STRING_VARIABLE = new PrimaryLiteral(new PretendStringLiteral(""));
+	private static final Primary EMPTY_STRING_VARIABLE = new PrimaryLiteral(new PretendStringLiteral("''"));
 	private static final UnarySend EMPTY_STRING_PRIMARY_VARIABLE = new UnarySend(EMPTY_STRING_VARIABLE);
 	static {
 		INSTANCE_VARIABLE_NAMES_KEYWORDSEND.add(EMPTY_STRING_PRIMARY_VARIABLE);

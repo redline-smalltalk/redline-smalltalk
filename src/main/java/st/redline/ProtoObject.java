@@ -6,7 +6,7 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProtoObject extends JavaObject {
+public class ProtoObject {
 
 	private static final ProtoObject[] NO_ARGUMENTS = {};
 
@@ -26,7 +26,7 @@ public class ProtoObject extends JavaObject {
 	public String toString() {
 		if (_primitiveValue_ != null)
 			return _primitiveValue_.toString();
-		return this.getClass().toString();
+		return getClass().toString();
 	}
 
 	protected ProtoObject primitiveValue(Object value) {
@@ -46,6 +46,7 @@ public class ProtoObject extends JavaObject {
 	}
 
 	public ProtoObject prim$bootstrap() {
+		System.out.println("prim$bootstrap: '" + this.getClass().getName());
 		ProtoObject metaclass = new ProtoObject();
 		Map<String, Method> methods = new HashMap<String, Method>();
 		methods.put("subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:", specialSubclassMethod());
@@ -74,15 +75,11 @@ public class ProtoObject extends JavaObject {
 			return object;
 		Class metaclassClass = null;
 		metaclassClass = loadMetaclass(metaclassClass);
-		System.out.println("**** Object subclass should be ok here ****");
-		System.out.println(object);
 		fixupMetaclass(object, metaclassClass);
 		fixupMetaclass(Smalltalk.classNamed("Behavior"), metaclassClass);
 		fixupMetaclass(Smalltalk.classNamed("ClassDescription"), metaclassClass);
 		fixupMetaclass(Smalltalk.classNamed("Class"), metaclassClass);
 		fixupMetaclass(Smalltalk.classNamed("Metaclass"), metaclassClass);
-
-		System.out.println(object.getClass().getSuperclass());
 		return object;
 	}
 
@@ -136,12 +133,8 @@ public class ProtoObject extends JavaObject {
 	}
 
 	protected Method findMethod(String selector) {
-		System.out.println("findMethod(" + selector + ") in " + clas$().method$());
-		Method method = clas$().method$().get(selector);
-		if (method != null)
-			return method;
-		System.out.println("findMethod - looking in superclass");
-		return super.findMethod(selector);
+		System.out.println("findMethod reached in ProtoObject - " + selector);
+		return _class_.method$().get(selector);
 	}
 
 	protected ProtoObject tryInvokeMethod(String selector, Object[] arguments) {
