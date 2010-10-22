@@ -10,6 +10,12 @@ public class ProtoObject {
 
 	private static final ProtoObject[] NO_ARGUMENTS = {};
 
+	public Map<String, Method> _methods_;
+
+	public ProtoObject() {
+		System.out.println("*** PROTOOBJECT CREATED ***");
+	}
+
 	public ProtoObject prim$end(String selector) {
 		System.out.println("prim$end(" + selector + ")");
 		return tryInvokeMethod(selector, NO_ARGUMENTS);
