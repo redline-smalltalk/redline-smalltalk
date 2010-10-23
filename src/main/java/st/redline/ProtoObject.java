@@ -9,11 +9,15 @@ import java.util.Map;
 public class ProtoObject {
 
 	private static final ProtoObject[] NO_ARGUMENTS = {};
+	private static final Map<String, Method> METHODS = methodsFrom(ProtoObject.class);
 
+	public ProtoObject _class_;
 	public Map<String, Method> _methods_;
 
 	public ProtoObject() {
 		System.out.println("*** PROTOOBJECT CREATED ***");
+		_class_ = this;
+		_methods_ = METHODS;
 	}
 
 	public ProtoObject prim$end(String selector) {

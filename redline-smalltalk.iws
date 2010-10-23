@@ -63,7 +63,7 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="202" column="42" selection-start="10027" selection-end="10027" vertical-scroll-proportion="0.68172485">
+            <state line="89" column="0" selection-start="4532" selection-end="4532" vertical-scroll-proportion="0.40143737">
               <folding />
             </state>
           </provider>
@@ -72,7 +72,7 @@
       <file leaf-file-name="ScriptExecutor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="67" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0">
+            <state line="36" column="40" selection-start="841" selection-end="841" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -81,7 +81,7 @@
       <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="0" selection-start="3090" selection-end="3090" vertical-scroll-proportion="0.0">
+            <state line="19" column="0" selection-start="522" selection-end="522" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -123,9 +123,9 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/JavaObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java" />
       </list>
     </option>
   </component>
@@ -550,11 +550,6 @@
         <state line="4" column="13" selection-start="78" selection-end="78" vertical-scroll-proportion="-0.4974773" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="67" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="35" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0" />
@@ -562,14 +557,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="0" selection-start="3090" selection-end="3090" vertical-scroll-proportion="0.0">
+        <state line="19" column="0" selection-start="522" selection-end="522" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="40" selection-start="841" selection-end="841" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="202" column="42" selection-start="10027" selection-end="10027" vertical-scroll-proportion="0.68172485">
+        <state line="89" column="0" selection-start="4532" selection-end="4532" vertical-scroll-proportion="0.40143737">
           <folding />
         </state>
       </provider>
