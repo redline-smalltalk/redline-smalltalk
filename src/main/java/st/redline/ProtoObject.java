@@ -16,7 +16,7 @@ public abstract class ProtoObject {
 	}
 
 	public ProtoObject $send(java.lang.String selector) {
-		System.out.println("$send(" + selector + ") " + $class().methodDictionary);
+		System.out.println("$send(" + selector + ") " + this + " " + $class() + " " + $class().methodDictionary);
 		java.lang.reflect.Method method = $class().methodDictionary.get(selector);
 		if (method != null)
 			return null;
