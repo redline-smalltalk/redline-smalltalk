@@ -1,88 +1,35 @@
 package st.redline;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProtoObject {
+public abstract class ProtoObject {
 
-	private static final ProtoObject[] NO_ARGUMENTS = {};
-	private static final Map<String, Method> METHODS = methodsFrom(ProtoObject.class);
+	protected Map<String, Method> methodDictionary;
 
-	public ProtoObject _class_;
-	public Map<String, Method> _methods_;
+	public abstract ProtoObject $class();
 
 	public ProtoObject() {
-		System.out.println("*** PROTOOBJECT CREATED ***");
-		_class_ = this;
-		_methods_ = METHODS;
+		System.out.println("constructing ProtoObject");
 	}
 
-	public ProtoObject prim$end(String selector) {
-		System.out.println("prim$end(" + selector + ")");
-		return tryInvokeMethod(selector, NO_ARGUMENTS);
-	}
-
-	protected Method findMethod(String selector) {
-		System.out.println("findMethod reached in ProtoObject - " + selector + " " + getClass().getName());
-		return null; //_class_.method$().get(selector);
-	}
-
-	protected ProtoObject tryInvokeMethod(String selector, Object[] arguments) {
-		Method method = findMethod(selector);
+	public ProtoObject $send(java.lang.String selector) {
+		System.out.println("$send(" + selector + ") " + $class().methodDictionary);
+		java.lang.reflect.Method method = $class().methodDictionary.get(selector);
 		if (method != null)
-			try {
-				return (ProtoObject) method.invoke(this, arguments);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				return this;
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-				return this;
-			}
-		return sendDoesNotUnderstand(selector, arguments);
+			return null;
+		throw new RuntimeException("Don't have method " + selector);
 	}
 
-	private ProtoObject sendDoesNotUnderstand(String selector, Object[] arguments) {
-		System.out.println("sendDoesNotUnderstand(" + selector + "," + arguments + ")");
-		// TODO.
-		throw new IllegalStateException(this.getClass().getName() + " does not understand #" + selector);
-	}
-
-	public ProtoObject prim$end(String selector, ProtoObject arg1) {
-		System.out.println("prim$end(" + selector + "," + arg1.toString() + ")");
-		return tryInvokeMethod(selector, new ProtoObject[] { arg1 });
-	}
-
-	public ProtoObject prim$end(String selector, ProtoObject arg1, ProtoObject arg2) {
-		System.out.println("prim$end(" + selector + "," + arg1.toString() + "," + arg2.toString() + ")");
-		return tryInvokeMethod(selector, new ProtoObject[] { arg1, arg2 });
-	}
-
-	public ProtoObject prim$end(String selector, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3) {
-		System.out.println("prim$end(" + selector + "," + arg1.toString() + "," + arg2.toString() + "," + arg3.toString() + ")");
-		return tryInvokeMethod(selector, new ProtoObject[] { arg1, arg2, arg3 });
-	}
-
-	public ProtoObject prim$end(String selector, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4) {
-		System.out.println("prim$end(" + selector + "," + arg1.toString() + "," + arg2.toString() + "," + arg3.toString() + "," + arg4.toString() + ")");
-		return tryInvokeMethod(selector, new ProtoObject[] { arg1, arg2, arg3, arg4 });
-	}
-
-	public ProtoObject prim$end(String selector, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
-		System.out.println(this.getClass().getName() + " prim$end(" + selector + "," + arg1.toString() + "," + arg2.toString() + "," + arg3.toString() + "," + arg4.toString() + "," + arg5.toString() + ")");
-		return tryInvokeMethod(selector, new ProtoObject[] { arg1, arg2, arg3, arg4, arg5 });
-	}
-
-	public static Map<String, Method> methodsFrom(Class aClass) {
-		System.out.println("methodsFrom(" + aClass.getName() + ")");
+	protected Map<String, Method> methodsFrom(java.lang.Class primitiveClass) {
+		System.out.println("methodsFrom(" + primitiveClass + ")");
 		Map<String, Method> methods = new HashMap<String, Method>();
-		for (Method method : aClass.getDeclaredMethods()) {
+		for (Method method : primitiveClass.getDeclaredMethods()) {
 			if (Modifier.isPublic(method.getModifiers())
 				&& !Modifier.isStatic(method.getModifiers())
-				&& !method.getName().startsWith("prim$")) {
+				&& !method.getName().startsWith("$")) {
 				System.out.println("Caching method: " + method);
 				methods.put(method.getName(), method);
 			}

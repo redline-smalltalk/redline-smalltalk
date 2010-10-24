@@ -24,7 +24,7 @@ public class ScriptExecutor implements Executor {
 			ProtoObject object = Smalltalk.classNamed("Object");
 			dump(object);
 
-			// Smalltalk.classNamed(scriptName).prim$end("new").prim$end("doIt");
+			Smalltalk.classNamed(scriptName).$send("new").$send("doIt");
 
 		} catch (Exception e) {
 			e.printStackTrace();
