@@ -18,11 +18,23 @@ public class ScriptExecutor implements Executor {
 
 	private void invokeScript() {
 		String scriptName = generator.filenameWithoutExtension();
+		tryInitializeScriptClass(scriptName);
+		scriptInstance(scriptName).$send("doIt");
+	}
+
+	private ProtoObject scriptInstance(String scriptName) {
+		return scriptClass(scriptName).$send("new");
+	}
+
+	private ProtoObject scriptClass(String scriptName) {
+		return Smalltalk.classNamed(scriptName);
+	}
+
+	private void tryInitializeScriptClass(String scriptName) {
 		try {
-			Class.forName("st.redline." + scriptName).newInstance();
-			Smalltalk.classNamed(scriptName).$send("new").$send("doIt");
+			Class.forName("st.redline." + scriptName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 }

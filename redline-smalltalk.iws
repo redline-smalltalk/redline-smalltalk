@@ -69,19 +69,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScriptExecutor.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ScriptExecutor.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0">
+            <state line="20" column="15" selection-start="429" selection-end="429" vertical-scroll-proportion="0.38224852">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="85" selection-start="1490" selection-end="1490" vertical-scroll-proportion="0.52307695">
+            <state line="41" column="85" selection-start="1490" selection-end="1490" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -122,10 +122,10 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/PretendVariable.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/JavaObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java" />
       </list>
     </option>
   </component>
@@ -557,11 +557,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="20" selection-start="510" selection-end="510" vertical-scroll-proportion="0.0" />
@@ -569,7 +564,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="85" selection-start="1490" selection-end="1490" vertical-scroll-proportion="0.52307695">
+        <state line="41" column="85" selection-start="1490" selection-end="1490" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="15" selection-start="429" selection-end="429" vertical-scroll-proportion="0.38224852">
           <folding />
         </state>
       </provider>
