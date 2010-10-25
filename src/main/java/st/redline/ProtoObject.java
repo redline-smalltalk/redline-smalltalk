@@ -11,15 +11,22 @@ public abstract class ProtoObject {
 
 	public abstract ProtoObject $class();
 
+	public abstract ProtoObject $super();
+
 	public ProtoObject() {
 		System.out.println("constructing ProtoObject");
 	}
 
 	public ProtoObject $send(java.lang.String selector) {
 		System.out.println("$send(" + selector + ") " + this + " " + $class() + " " + $class().methodDictionary);
-		java.lang.reflect.Method method = $class().methodDictionary.get(selector);
-		if (method != null)
-			return null;
+		ProtoObject aClass = $class();
+		java.lang.reflect.Method method = aClass.methodDictionary.get(selector);
+		if (method == null) {
+			aClass = aClass.$super();
+			System.out.println(aClass);
+			method = aClass.$class().methodDictionary.get(selector);
+			System.out.println(method);
+		}
 		throw new RuntimeException("Don't have method " + selector);
 	}
 

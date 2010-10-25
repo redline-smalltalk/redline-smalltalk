@@ -91,6 +91,23 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitLocalVariable("this", "Lst/redline/Class;", null, l0, l1, 0);
 			mv.visitMaxs(1, 1);
 			mv.visitEnd();
+
+			mv = classWriter.visitMethod(ACC_PUBLIC, "$super", "()Lst/redline/ProtoObject;", null, null);
+			mv.visitCode();
+			l0 = new Label();
+			mv.visitLabel(l0);
+			mv.visitLineNumber(31, l0);
+			mv.visitVarInsn(ALOAD, 0);
+			mv.visitFieldInsn(GETFIELD, "st/redline/Class", "primitiveClass", "Ljava/lang/Class;");
+			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Class", "getSuperclass", "()Ljava/lang/Class;");
+			mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classForPrimitiveClass", "(Ljava/lang/Class;)Lst/redline/ProtoObject;");
+			mv.visitTypeInsn(CHECKCAST, "st/redline/Behavior");
+			mv.visitInsn(ARETURN);
+			l1 = new Label();
+			mv.visitLabel(l1);
+			mv.visitLocalVariable("this", "Lst/redline/Class;", null, l0, l1, 0);
+			mv.visitMaxs(1, 1);
+			mv.visitEnd();
 		} else {
 			MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "$class", "()Lst/redline/Behavior;", null, null);
 			mv.visitCode();
@@ -115,6 +132,40 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitInsn(ARETURN);
 			mv.visitMaxs(1, 1);
 			mv.visitEnd();
+
+			if (subclass.equals("Metaclass")) {
+				mv = classWriter.visitMethod(ACC_PUBLIC, "$super", "()Lst/redline/ProtoObject;", null, null);
+				mv.visitCode();
+				l0 = new Label();
+				mv.visitLabel(l0);
+				mv.visitLineNumber(27, l0);
+				mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+				mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
+				mv.visitInsn(DUP);
+				mv.visitLdcInsn("Asking ");
+				mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "(Ljava/lang/String;)V");
+				mv.visitVarInsn(ALOAD, 0);
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
+				mv.visitLdcInsn(" (");
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+				mv.visitVarInsn(ALOAD, 0);
+				mv.visitFieldInsn(GETFIELD, "st/redline/Metaclass", "classWeAreMetaFor", "Lst/redline/Object;");
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
+				mv.visitLdcInsn(") for super");
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
+				l1 = new Label();
+				mv.visitLabel(l1);
+				mv.visitLineNumber(28, l1);
+				mv.visitInsn(ACONST_NULL);
+				mv.visitInsn(ARETURN);
+				Label l2 = new Label();
+				mv.visitLabel(l2);
+				mv.visitLocalVariable("this", "Lst/redline/Metaclass;", null, l0, l2, 0);
+				mv.visitMaxs(4, 1);
+				mv.visitEnd();
+			}
 		}
 	}
 
@@ -220,12 +271,18 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitCode();
 			Label l0 = new Label();
 			mv.visitLabel(l0);
-			mv.visitLineNumber(14, l0);
+			mv.visitLineNumber(16, l0);
 			mv.visitVarInsn(ALOAD, 0);
 			mv.visitMethodInsn(INVOKESPECIAL, "st/redline/ClassDescription", "<init>", "()V");
 			Label l1 = new Label();
 			mv.visitLabel(l1);
-			mv.visitLineNumber(15, l1);
+			mv.visitLineNumber(17, l1);
+			mv.visitVarInsn(ALOAD, 0);
+			mv.visitVarInsn(ALOAD, 1);
+			mv.visitFieldInsn(PUTFIELD, "st/redline/Metaclass", "classWeAreMetaFor", "Lst/redline/Object;");
+			Label l2 = new Label();
+			mv.visitLabel(l2);
+			mv.visitLineNumber(18, l2);
 			mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 			mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
 			mv.visitInsn(DUP);
@@ -235,23 +292,23 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
 			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
 			mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
-			Label l2 = new Label();
-			mv.visitLabel(l2);
-			mv.visitLineNumber(16, l2);
+			Label l3 = new Label();
+			mv.visitLabel(l3);
+			mv.visitLineNumber(19, l3);
 			mv.visitVarInsn(ALOAD, 0);
 			mv.visitVarInsn(ALOAD, 0);
 			mv.visitVarInsn(ALOAD, 1);
 			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Object", "getClass", "()Ljava/lang/Class;");
 			mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/Metaclass", "methodsFrom", "(Ljava/lang/Class;)Ljava/util/Map;");
 			mv.visitFieldInsn(PUTFIELD, "st/redline/Metaclass", "methodDictionary", "Ljava/util/Map;");
-			Label l3 = new Label();
-			mv.visitLabel(l3);
-			mv.visitLineNumber(17, l3);
-			mv.visitInsn(RETURN);
 			Label l4 = new Label();
 			mv.visitLabel(l4);
-			mv.visitLocalVariable("this", "Lst/redline/Metaclass;", null, l0, l4, 0);
-			mv.visitLocalVariable("aClass", "Lst/redline/Class;", null, l0, l4, 1);
+			mv.visitLineNumber(20, l4);
+			mv.visitInsn(RETURN);
+			Label l5 = new Label();
+			mv.visitLabel(l5);
+			mv.visitLocalVariable("this", "Lst/redline/Metaclass;", null, l0, l5, 0);
+			mv.visitLocalVariable("aClass", "Lst/redline/Class;", null, l0, l5, 1);
 			mv.visitMaxs(4, 2);
 			mv.visitEnd();
 		}else {
@@ -279,6 +336,9 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		fv.visitEnd();
 		if (subclass.equals("Class")) {
 			fv = classWriter.visitField(ACC_PROTECTED, "metaclass", "Lst/redline/Metaclass;", null, null);
+			fv.visitEnd();
+		} else if (subclass.equals("Metaclass")) {
+			fv = classWriter.visitField(ACC_PRIVATE, "classWeAreMetaFor", "Lst/redline/Object;", null, null);
 			fv.visitEnd();
 		}
 	}
