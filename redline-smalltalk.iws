@@ -63,38 +63,9 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="162" column="16" selection-start="8082" selection-end="8082" vertical-scroll-proportion="0.6554217">
+            <state line="246" column="0" selection-start="11586" selection-end="11586" vertical-scroll-proportion="0.6546584">
               <folding>
-                <marker date="1287983677000" expanded="true" signature="37:81" placeholder="..." />
-                <marker date="1287983677000" expanded="true" signature="2966:3107" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="3186:3696" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="3743:4131" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="4212:5570" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="15304:15509" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="15625:15903" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="16016:16428" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="16467:16613" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="16644:16858" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="17372:17660" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="17742:18064" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="18155:18303" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="18394:18588" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="18663:18867" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="18936:19059" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="19123:19354" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="19417:19711" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="19790:20047" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="20124:20465" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="20540:20850" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="20925:21235" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="21305:21567" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="21690:21804" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="21920:22763" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="22835:22931" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="23003:23050" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="23126:23174" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="23235:23279" placeholder="{...}" />
-                <marker date="1287983677000" expanded="true" signature="23336:23783" placeholder="{...}" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -608,38 +579,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="162" column="16" selection-start="8082" selection-end="8082" vertical-scroll-proportion="0.6554217">
+        <state line="246" column="0" selection-start="11586" selection-end="11586" vertical-scroll-proportion="0.6546584">
           <folding>
-            <marker date="1287983677000" expanded="true" signature="37:81" placeholder="..." />
-            <marker date="1287983677000" expanded="true" signature="2966:3107" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="3186:3696" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="3743:4131" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="4212:5570" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="15304:15509" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="15625:15903" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="16016:16428" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="16467:16613" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="16644:16858" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="17372:17660" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="17742:18064" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="18155:18303" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="18394:18588" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="18663:18867" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="18936:19059" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="19123:19354" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="19417:19711" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="19790:20047" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="20124:20465" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="20540:20850" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="20925:21235" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="21305:21567" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="21690:21804" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="21920:22763" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="22835:22931" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="23003:23050" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="23126:23174" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="23235:23279" placeholder="{...}" />
-            <marker date="1287983677000" expanded="true" signature="23336:23783" placeholder="{...}" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
