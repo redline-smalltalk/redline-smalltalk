@@ -48,7 +48,7 @@ public abstract class ProtoObject {
 		ProtoObject aClass = $class();
 		java.lang.reflect.Method method = aClass.methodDictionary.get(selector);
 		while (method == null && aClass != null) {
-			System.out.println("super: " + aClass.$super());
+			System.out.println("super of: " + aClass + " " + aClass.$super());
 			aClass = aClass.$super();
 			if (aClass != null) {
 				System.out.println("looking in: " + aClass);

@@ -6,12 +6,12 @@ Object subclass: #Behavior
 	poolDictionaries: ''
 	category: 'Kernel-Objects'!
 
-!Behavior commentStamp: '<historical>' prior: 0!
-this is a class level comment!
+!Behavior commentStamp: 'al 12/8/2005 20:44' prior: 0!
+My instances describe the behavior of other objects. I provide the minimum state necessary for compiling methods, and creating and running instances. Most objects are created as instances of the more fully supported subclass, Class, but I am a good starting point for providing instance-specific behavior (as in Metaclass).!
 
-!Behavior methodsFor: 'as yet unclassified' stamp: 'jcl 19/11/2010 09:17'!
-placeholder
-        "Answer nil."
+!Behavior methodsFor: 'instance creation' stamp: 'Noury Bouraqadi 8/23/2003 14:51'!
+new
+	"Answer a new initialized instance of the receiver (which is a class) with no indexable variables. Fail if the class is indexable."
 
-        ^nil! !
-
+	^ self basicNew initialize
+! !
