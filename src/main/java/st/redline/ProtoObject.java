@@ -33,7 +33,14 @@ public abstract class ProtoObject {
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 			}
-		throw new RuntimeException("TODO: Handle DNU");
+		if (!selector.equals("doesNotUnderstand:"))
+			return sendDoesNotUnderstand(selector, arguments);
+		throw new IllegalStateException("Expected doesNotUnderstand: to be implemented.");
+	}
+
+	private ProtoObject sendDoesNotUnderstand(String selector, Object[] arguments) {
+		System.out.println("sendDoesNotUnderstand(" + selector + "," + arguments + ")");
+		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand");
 	}
 
 	private Method $findMethod(String selector) {
