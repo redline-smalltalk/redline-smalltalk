@@ -1,5 +1,6 @@
 package st.redline;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -8,26 +9,49 @@ import java.util.Map;
 public abstract class ProtoObject {
 
 	protected Map<String, Method> methodDictionary;
+	private static final Object[] NO_ARGUMENTS = {};
 
 	public abstract ProtoObject $class();
 
-	public abstract ProtoObject $super();
+	public ProtoObject $super() { return null; }
 
 	public ProtoObject() {
 		System.out.println("constructing ProtoObject");
 	}
 
 	public ProtoObject $send(java.lang.String selector) {
-		System.out.println("$send(" + selector + ") " + this + " " + $class() + " " + $class().methodDictionary);
+		System.out.println("$send(" + selector + ")");
+		return tryInvokeMethod($findMethod(selector), selector, NO_ARGUMENTS);
+	}
+
+	private ProtoObject tryInvokeMethod(Method method, String selector, Object[] arguments) {
+		if (method != null)
+			try {
+				return (ProtoObject) method.invoke(this, arguments);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			}
+		throw new RuntimeException("TODO: Handle DNU");
+	}
+
+	private Method $findMethod(String selector) {
+		System.out.println("$findMethod(" + selector + ") " + this + " " + $class() + " " + $class().methodDictionary);
 		ProtoObject aClass = $class();
 		java.lang.reflect.Method method = aClass.methodDictionary.get(selector);
-		if (method == null) {
+		while (method == null && aClass != null) {
+			System.out.println("super: " + aClass.$super());
 			aClass = aClass.$super();
-			System.out.println(aClass);
-			method = aClass.$class().methodDictionary.get(selector);
-			System.out.println(method);
+			if (aClass != null) {
+				System.out.println("looking in: " + aClass);
+				System.out.println(aClass.$class());
+				System.out.println(aClass.$class().methodDictionary);
+				method = aClass.$class().methodDictionary.get(selector);
+				System.out.println(method);
+			}
 		}
-		throw new RuntimeException("Don't have method " + selector);
+		return method;
 	}
 
 	protected Map<String, Method> methodsFrom(java.lang.Class primitiveClass) {
