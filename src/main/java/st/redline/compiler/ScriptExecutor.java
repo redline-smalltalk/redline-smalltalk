@@ -20,21 +20,9 @@ public class ScriptExecutor implements Executor {
 		String scriptName = generator.filenameWithoutExtension();
 		try {
 			Class.forName("st.redline." + scriptName).newInstance();
-
-			ProtoObject object = Smalltalk.classNamed("Object");
-			dump(object);
-
 			Smalltalk.classNamed(scriptName).$send("new").$send("doIt");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void dump(ProtoObject object) {
-		System.out.println();
-		System.out.println("object      " + object);
-		System.out.println("object type " + object.getClass().getName());
-		System.out.println();
 	}
 }

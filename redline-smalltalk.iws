@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="bb7d3878-7bd4-45a7-a49b-e338923a3cdd" name="Default" comment="" />
-    <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
+    <ignored path="$USER_HOME_GRIFFON$/" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,28 +63,59 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="218" column="42" selection-start="9813" selection-end="9813" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="192" column="0" selection-start="8669" selection-end="8669" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1287971334000" expanded="true" signature="37:81" placeholder="..." />
+                <marker date="1287971334000" expanded="true" signature="2966:3107" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="3186:3696" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="3743:4131" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="4212:4789" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="12514:12555" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="12671:12949" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="13062:13474" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="13513:13659" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="13690:13904" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="14418:14706" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="14788:15110" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="15201:15349" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="15440:15634" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="15709:15913" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="15982:16105" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="16169:16400" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="16463:16757" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="16836:17093" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="17170:17511" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="17586:17896" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="17971:18281" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="18351:18613" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="18736:18850" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="18966:19809" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="19881:19977" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="20049:20096" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="20172:20220" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="20281:20325" placeholder="{...}" />
+                <marker date="1287971334000" expanded="true" signature="20382:20829" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScriptExecutor.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ScriptExecutor.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="29" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="22" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.4224852">
+              <folding>
+                <marker date="1287971370000" expanded="true" signature="223:257" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="61" selection-start="453" selection-end="453" vertical-scroll-proportion="0.308779">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="18" column="37" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -92,10 +123,8 @@
       <file leaf-file-name="Smalltalk.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="16" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="9" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -127,9 +156,9 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/JavaObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java" />
       </list>
     </option>
   </component>
@@ -169,7 +198,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -259,6 +287,7 @@
         </subPane>
       </pane>
       <pane id="Favorites" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -435,7 +464,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3" y="0" width="1926" height="1169" extended-state="6" />
+    <frame x="0" y="0" width="1686" height="1019" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -449,7 +478,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20042758" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21030043" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -556,32 +585,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="16" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="29" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0">
+        <state line="9" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="218" column="42" selection-start="9813" selection-end="9813" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="192" column="0" selection-start="8669" selection-end="8669" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1287971334000" expanded="true" signature="37:81" placeholder="..." />
+            <marker date="1287971334000" expanded="true" signature="2966:3107" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="3186:3696" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="3743:4131" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="4212:4789" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="12514:12555" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="12671:12949" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="13062:13474" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="13513:13659" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="13690:13904" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="14418:14706" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="14788:15110" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="15201:15349" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="15440:15634" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="15709:15913" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="15982:16105" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="16169:16400" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="16463:16757" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="16836:17093" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="17170:17511" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="17586:17896" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="17971:18281" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="18351:18613" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="18736:18850" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="18966:19809" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="19881:19977" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="20049:20096" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="20172:20220" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="20281:20325" placeholder="{...}" />
+            <marker date="1287971334000" expanded="true" signature="20382:20829" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="61" selection-start="453" selection-end="453" vertical-scroll-proportion="0.308779">
+        <state line="18" column="37" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.4224852">
           <folding>
-            <element signature="imports" expanded="true" />
+            <marker date="1287971370000" expanded="true" signature="223:257" placeholder="{...}" />
           </folding>
         </state>
       </provider>
