@@ -100,10 +100,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScriptExecutor.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ScriptExecutor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.4224852">
+            <state line="22" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1287971370000" expanded="true" signature="223:257" placeholder="{...}" />
               </folding>
@@ -120,10 +120,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Smalltalk.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Smalltalk.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
+            <state line="25" column="1" selection-start="1015" selection-end="1015" vertical-scroll-proportion="0.48284024">
               <folding />
             </state>
           </provider>
@@ -155,10 +155,10 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/PretendVariable.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/JavaObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java" />
       </list>
     </option>
   </component>
@@ -583,13 +583,6 @@
         <state line="4" column="13" selection-start="78" selection-end="78" vertical-scroll-proportion="-0.4974773" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="192" column="0" selection-start="8669" selection-end="8669" vertical-scroll-proportion="0.0">
@@ -637,10 +630,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptExecutor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.4224852">
+        <state line="22" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1287971370000" expanded="true" signature="223:257" placeholder="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="1" selection-start="1015" selection-end="1015" vertical-scroll-proportion="0.48284024">
+          <folding />
         </state>
       </provider>
     </entry>
