@@ -363,7 +363,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitMaxs(4, 2);
 			mv.visitEnd();
 
-		}else {
+		} else {
 
 			MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
 			mv.visitCode();

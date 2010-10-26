@@ -46,20 +46,15 @@ public abstract class ProtoObject {
 	}
 
 	private Method $findMethod(String selector) {
-		System.out.println("$findMethod(" + selector + ") " + this + " " + $class() + " " + $class().methodDictionary);
+		System.out.println("$findMethod(" + selector + ") " + this);
 		ProtoObject aClass = $class();
-		System.out.println("Methods: " + aClass.methodDictionary);
 		Method method = aClass.methodDictionary.get(selector);
 		while (method == null) {
-			System.out.println("Method not found, looking in superclass");
 			ProtoObject aSuperclass = aClass.$superclass();
 			if (aSuperclass == null)
 				break;
-			System.out.println("Superclass of " + aClass + " is " + aSuperclass);
-			System.out.println("Methods: " + aSuperclass.methodDictionary);
 			method = aSuperclass.methodDictionary.get(selector);
 			if (method != null) {
-				System.out.println("*** FOUND ***");
 				break;
 			}
 			aClass = aSuperclass;
