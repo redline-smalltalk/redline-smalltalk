@@ -337,29 +337,45 @@ Expression expression(boolean isAnswered):
 }
 
 Cascade cascade():
-{ Cascade cascade; }
+{ Cascade cascade = new Cascade(); UnarySend unarySend; BinarySend binarySend; KeywordSend keywordSend; Token unarySelector;
+  List<KeywordSend> keywordSends = new ArrayList<KeywordSend>(); }
 {
-    unarySend()
+    unarySend = unarySend()
+    { cascade.add(unarySend); }
 
-    (LOOKAHEAD(<BINARY_SYMBOL>) binarySend() )*
+    (
+        LOOKAHEAD(<BINARY_SYMBOL>)
+        binarySend = binarySend()
+        { cascade.add(binarySend); }
+    )*
 
-    (LOOKAHEAD(<KEYWORD>) keywordSend() )*
+    (
+        LOOKAHEAD(<KEYWORD>)
+        keywordSend = keywordSend()
+        { cascade.add(keywordSend); }
+    )*
 
     (
         LOOKAHEAD(<SEMICOLON>)
         <SEMICOLON>
         (
           LOOKAHEAD(<IDENTIFIER>)
-          unarySelector()
+          unarySelector = unarySelector()
+          { cascade.addCascadeSend(unarySelector); }
         |
           LOOKAHEAD(<BINARY_SYMBOL>)
-          binarySend()
+          binarySend = binarySend()
+          { cascade.addCascadeSend(binarySend); }
         |
           LOOKAHEAD(<KEYWORD>)
-          (keywordSend())*
+          (
+              keywordSend = keywordSend()
+              { keywordSends.add(keywordSend); }
+          )*
+          { cascade.addCascadeSend(keywordSends); }
         )
     )*
-    { return null; }
+    { return cascade; }
 }
 
 BinarySend binarySend():

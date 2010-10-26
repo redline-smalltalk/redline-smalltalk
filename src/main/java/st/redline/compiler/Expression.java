@@ -23,4 +23,20 @@ public class Expression {
 		this.cascade = cascade;
 		this.primary = null;
 	}
+
+	public boolean isAnswered() {
+		return answered;
+	}
+
+	public boolean isPrimary() {
+		return primary != null;
+	}
+
+	public Primary primary() {
+		return primary;
+	}
+
+	public Cascade cascade() {
+		return cascade;
+	}
 }

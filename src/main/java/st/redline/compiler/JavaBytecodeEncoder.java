@@ -2,6 +2,7 @@ package st.redline.compiler;
 
 import org.objectweb.asm.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
@@ -487,7 +488,15 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitLabel(l0);
 		mv.visitLineNumber(selector.beginLine, l0);
 		mv.visitLdcInsn(selector.toString());
-		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "prim$end", SEND_SIGNATURE[0]);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$send", SEND_SIGNATURE[0]);
+	}
+
+	private void emitBinarySends(MethodVisitor mv, List<BinarySend> binarySends) {
+		throw new RuntimeException("TODO - emitBinarySend(S)");
+	}
+
+	private void emitBinarySend(MethodVisitor mv, BinarySend binarySend) {
+		throw new RuntimeException("TODO - emitBinarySend");
 	}
 
 	private void emitPrimary(MethodVisitor mv, Primary primary) {
@@ -567,8 +576,6 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		if (method.pragmas()[1] != null)
 			emitPragmas(mv, method.pragmas()[1]);
 		emitStatements(mv, method.statements());
-		// return this, although we should never reach these statements.
-		mv.visitVarInsn(ALOAD, 0);
 		mv.visitInsn(ARETURN);
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();
@@ -580,7 +587,33 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitExpression(MethodVisitor mv, Expression expression) {
-		System.out.println("TODO - Expression");
+		if (expression.isPrimary())
+			emitPrimary(mv, expression.primary());
+		emitCascade(mv, expression.cascade());
+	}
+
+	private void emitCascade(MethodVisitor mv, Cascade cascade) {
+		emitUnarySend(mv, cascade.unarySend());
+		if (cascade.hasBinarySends())
+			emitBinarySends(mv, cascade.binarySends());
+		if (cascade.hasKeywordSends())
+			emitKeywordSend(mv, cascade.keywordSends());
+		if (cascade.hasCascadedSends()) {
+			for (Object send : cascade.cascadedSends()) {
+				mv.visitInsn(DUP);   // duplicate top of stack as receiver (A)
+				emitCascadeSend(mv, send);
+				mv.visitInsn(POP);   // pop result (back to original receiver (A))
+			}
+		}
+	}
+
+	private void emitCascadeSend(MethodVisitor mv, Object send) {
+		if (send instanceof Token)
+			emitUnaryCall(mv, (Token) send);
+		else if (send instanceof BinarySend)
+			emitBinarySend(mv, (BinarySend) send);
+		else if (send instanceof List)
+			emitKeywordSend(mv, (List<KeywordSend>) send);
 	}
 
 	private void emitTemporaries(MethodVisitor mv, List<Variable> variables) {
