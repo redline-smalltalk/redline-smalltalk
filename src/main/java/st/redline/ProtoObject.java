@@ -29,6 +29,7 @@ public abstract class ProtoObject {
 	private ProtoObject tryInvokeMethod(Method method, String selector, Object[] arguments) {
 		if (method != null)
 			try {
+				System.out.println("invoking: " + method + " with " + arguments);
 				return (ProtoObject) method.invoke(this, arguments);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -65,14 +66,21 @@ public abstract class ProtoObject {
 	protected Map<String, Method> methodsFrom(java.lang.Class primitiveClass) {
 		System.out.println("methodsFrom(" + primitiveClass + ")");
 		Map<String, Method> methods = new HashMap<String, Method>();
-		for (Method method : primitiveClass.getDeclaredMethods()) {
-			if (Modifier.isPublic(method.getModifiers())
-				&& !Modifier.isStatic(method.getModifiers())
-				&& !method.getName().startsWith("$")) {
-				System.out.println("Caching method: " + method);
-				methods.put(method.getName(), method);
-			}
-		}
+		for (Method method : primitiveClass.getDeclaredMethods())
+			selectMethod(methods, method);
 		return methods;
+	}
+
+	private void selectMethod(Map<String, Method> methods, Method method) {
+		if (isSelectable(method)) {
+			System.out.println("Caching method: " + method);
+			methods.put(method.getName(), method);
+		}
+	}
+
+	private boolean isSelectable(Method method) {
+		return Modifier.isPublic(method.getModifiers())
+			&& !Modifier.isStatic(method.getModifiers())
+			&& !method.getName().startsWith("$");
 	}
 }
