@@ -92,36 +92,30 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitMaxs(1, 1);
 			mv.visitEnd();
 
-			mv = classWriter.visitMethod(ACC_PUBLIC, "$superclass", "()Lst/redline/Behavior;", null, null);
+			mv = classWriter.visitMethod(ACC_PUBLIC, "$superclass", "()Lst/redline/ProtoObject;", null, null);
 			mv.visitCode();
 			l0 = new Label();
 			mv.visitLabel(l0);
-			mv.visitLineNumber(31, l0);
+			mv.visitLineNumber(36, l0);
 			mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-			mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
-			mv.visitInsn(DUP);
-			mv.visitLdcInsn("get superclass of: ");
-			mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "(Ljava/lang/String;)V");
-			mv.visitVarInsn(ALOAD, 0);
-			mv.visitFieldInsn(GETFIELD, "st/redline/Class", "primitiveClass", "Ljava/lang/Class;");
-			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
-			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+			mv.visitLdcInsn("superclass() called in Class");
 			mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 			l1 = new Label();
 			mv.visitLabel(l1);
-			mv.visitLineNumber(32, l1);
+			mv.visitLineNumber(37, l1);
 			mv.visitVarInsn(ALOAD, 0);
 			mv.visitFieldInsn(GETFIELD, "st/redline/Class", "primitiveClass", "Ljava/lang/Class;");
 			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Class", "getSuperclass", "()Ljava/lang/Class;");
 			mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classForPrimitiveClass", "(Ljava/lang/Class;)Lst/redline/ProtoObject;");
-			mv.visitTypeInsn(CHECKCAST, "st/redline/Behavior");
 			mv.visitInsn(ARETURN);
 			Label l2 = new Label();
 			mv.visitLabel(l2);
 			mv.visitLocalVariable("this", "Lst/redline/Class;", null, l0, l2, 0);
-			mv.visitMaxs(4, 1);
+			mv.visitMaxs(2, 1);
 			mv.visitEnd();
+
 		} else {
+
 			MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "$class", "()Lst/redline/Behavior;", null, null);
 			mv.visitCode();
 			Label l0 = new Label();
@@ -147,7 +141,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitEnd();
 
 			if (subclass.equals("Metaclass")) {
-				mv = classWriter.visitMethod(ACC_PUBLIC, "$super", "()Lst/redline/ProtoObject;", null, null);
+				mv = classWriter.visitMethod(ACC_PUBLIC, "$superclass", "()Lst/redline/ProtoObject;", null, null);
 				mv.visitCode();
 				l0 = new Label();
 				mv.visitLabel(l0);
@@ -155,17 +149,13 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 				mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 				mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
 				mv.visitInsn(DUP);
-				mv.visitLdcInsn("Asking ");
+				mv.visitLdcInsn("Metaclass.$superclass() super= ");
 				mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "(Ljava/lang/String;)V");
 				mv.visitVarInsn(ALOAD, 0);
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
-				mv.visitLdcInsn(" (");
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
-				mv.visitVarInsn(ALOAD, 0);
 				mv.visitFieldInsn(GETFIELD, "st/redline/Metaclass", "classWeAreMetaFor", "Lst/redline/Class;");
+				mv.visitFieldInsn(GETFIELD, "st/redline/Class", "primitiveClass", "Ljava/lang/Class;");
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Class", "getSuperclass", "()Ljava/lang/Class;");
 				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
-				mv.visitLdcInsn(") for super");
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
 				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
 				mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 				l1 = new Label();
@@ -173,12 +163,50 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 				mv.visitLineNumber(28, l1);
 				mv.visitVarInsn(ALOAD, 0);
 				mv.visitFieldInsn(GETFIELD, "st/redline/Metaclass", "classWeAreMetaFor", "Lst/redline/Class;");
-				mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/Class", "$superclass", "()Lst/redline/Behavior;");
-				mv.visitInsn(ARETURN);
+				mv.visitFieldInsn(GETFIELD, "st/redline/Class", "primitiveClass", "Ljava/lang/Class;");
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Class", "getSuperclass", "()Ljava/lang/Class;");
+				mv.visitVarInsn(ASTORE, 1);
 				Label l2 = new Label();
 				mv.visitLabel(l2);
-				mv.visitLocalVariable("this", "Lst/redline/Metaclass;", null, l0, l2, 0);
-				mv.visitMaxs(4, 1);
+				mv.visitLineNumber(29, l2);
+				mv.visitVarInsn(ALOAD, 1);
+				mv.visitLdcInsn(Type.getType("Lst/redline/ProtoObject;"));
+				Label l3 = new Label();
+				mv.visitJumpInsn(IF_ACMPNE, l3);
+				Label l4 = new Label();
+				mv.visitLabel(l4);
+				mv.visitLineNumber(30, l4);
+				mv.visitFieldInsn(GETSTATIC, "st/redline/Class", "$class", "Lst/redline/Class$mClass;");
+				mv.visitInsn(ARETURN);
+				mv.visitLabel(l3);
+				mv.visitLineNumber(31, l3);
+				mv.visitFrame(Opcodes.F_APPEND,1, new Object[] {"java/lang/Class"}, 0, null);
+				mv.visitVarInsn(ALOAD, 1);
+				mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classForPrimitiveClass", "(Ljava/lang/Class;)Lst/redline/ProtoObject;");
+				mv.visitTypeInsn(CHECKCAST, "st/redline/Behavior");
+				mv.visitVarInsn(ASTORE, 2);
+				Label l5 = new Label();
+				mv.visitLabel(l5);
+				mv.visitLineNumber(32, l5);
+				mv.visitVarInsn(ALOAD, 2);
+				Label l6 = new Label();
+				mv.visitJumpInsn(IFNONNULL, l6);
+				mv.visitInsn(ACONST_NULL);
+				Label l7 = new Label();
+				mv.visitJumpInsn(GOTO, l7);
+				mv.visitLabel(l6);
+				mv.visitFrame(Opcodes.F_APPEND,1, new Object[] {"st/redline/Behavior"}, 0, null);
+				mv.visitVarInsn(ALOAD, 2);
+				mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/Behavior", "$class", "()Lst/redline/Behavior;");
+				mv.visitLabel(l7);
+				mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {"st/redline/Behavior"});
+				mv.visitInsn(ARETURN);
+				Label l8 = new Label();
+				mv.visitLabel(l8);
+				mv.visitLocalVariable("this", "Lst/redline/Metaclass;", null, l0, l8, 0);
+				mv.visitLocalVariable("aClass", "Ljava/lang/Class;", null, l2, l8, 1);
+				mv.visitLocalVariable("aBehavior", "Lst/redline/Behavior;", null, l5, l8, 2);
+				mv.visitMaxs(4, 3);
 				mv.visitEnd();
 			}
 		}
@@ -287,7 +315,9 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitLocalVariable("aClass", "Ljava/lang/Class;", null, l0, l7, 1);
 			mv.visitMaxs(4, 2);
 			mv.visitEnd();
+
 		} else if (subclass.equals("Metaclass")) {
+
 			MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/Class;)V", null, null);
 			mv.visitCode();
 			Label l0 = new Label();
@@ -332,7 +362,9 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitLocalVariable("aClass", "Lst/redline/Class;", null, l0, l5, 1);
 			mv.visitMaxs(4, 2);
 			mv.visitEnd();
+
 		}else {
+
 			MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
 			mv.visitCode();
 			Label l0 = new Label();
@@ -358,7 +390,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		if (subclass.equals("Class")) {
 			fv = classWriter.visitField(ACC_PROTECTED, "metaclass", "Lst/redline/Metaclass;", null, null);
 			fv.visitEnd();
-			fv = classWriter.visitField(ACC_PROTECTED, "primitiveClass", "Ljava/lang/Class;", null, null);
+			fv = classWriter.visitField(ACC_PUBLIC, "primitiveClass", "Ljava/lang/Class;", null, null);
 			fv.visitEnd();
 		} else if (subclass.equals("Metaclass")) {
 			fv = classWriter.visitField(ACC_PRIVATE, "classWeAreMetaFor", "Lst/redline/Class;", null, null);

@@ -13,7 +13,9 @@ public abstract class ProtoObject {
 
 	public abstract ProtoObject $class();
 
-	public ProtoObject $super() { return null; }
+	public ProtoObject $superclass() {
+		return null;
+	}
 
 	public ProtoObject() {
 		System.out.println("constructing ProtoObject");
@@ -46,17 +48,21 @@ public abstract class ProtoObject {
 	private Method $findMethod(String selector) {
 		System.out.println("$findMethod(" + selector + ") " + this + " " + $class() + " " + $class().methodDictionary);
 		ProtoObject aClass = $class();
-		java.lang.reflect.Method method = aClass.methodDictionary.get(selector);
-		while (method == null && aClass != null) {
-			System.out.println("super of: " + aClass + " " + aClass.$super());
-			aClass = aClass.$super();
-			if (aClass != null) {
-				System.out.println("looking in: " + aClass);
-				System.out.println(aClass.$class());
-				System.out.println(aClass.$class().methodDictionary);
-				method = aClass.$class().methodDictionary.get(selector);
-				System.out.println(method);
+		System.out.println("Methods: " + aClass.methodDictionary);
+		Method method = aClass.methodDictionary.get(selector);
+		while (method == null) {
+			System.out.println("Method not found, looking in superclass");
+			ProtoObject aSuperclass = aClass.$superclass();
+			if (aSuperclass == null)
+				break;
+			System.out.println("Superclass of " + aClass + " is " + aSuperclass);
+			System.out.println("Methods: " + aSuperclass.methodDictionary);
+			method = aSuperclass.methodDictionary.get(selector);
+			if (method != null) {
+				System.out.println("*** FOUND ***");
+				break;
 			}
+			aClass = aSuperclass;
 		}
 		return method;
 	}
