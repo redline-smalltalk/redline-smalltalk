@@ -60,10 +60,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="685" column="0" selection-start="29246" selection-end="29246" vertical-scroll-proportion="0.47108433">
+            <state line="686" column="27" selection-start="29364" selection-end="29364" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -96,10 +96,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Behavior.st" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Behavior.st" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Behavior.st">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="9" selection-start="1102" selection-end="1102" vertical-scroll-proportion="0.0">
+            <state line="32" column="0" selection-start="1249" selection-end="1249" vertical-scroll-proportion="0.64378697">
               <folding />
             </state>
           </provider>
@@ -142,9 +142,9 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Primitive.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Pragma.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Number.java" />
-        <option value="$PROJECT_DIR$/src/main/smalltalk/Behavior.st" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
+        <option value="$PROJECT_DIR$/src/main/smalltalk/Behavior.st" />
       </list>
     </option>
   </component>
@@ -453,7 +453,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1686" height="1019" extended-state="0" />
+    <frame x="-3" y="0" width="1686" height="1019" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -589,13 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Behavior.st">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="9" selection-start="1102" selection-end="1102" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="64" column="0" selection-start="2042" selection-end="2042" vertical-scroll-proportion="0.0">
@@ -605,7 +598,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="685" column="0" selection-start="29246" selection-end="29246" vertical-scroll-proportion="0.47108433">
+        <state line="686" column="27" selection-start="29364" selection-end="29364" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Behavior.st">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="1249" selection-end="1249" vertical-scroll-proportion="0.64378697">
           <folding />
         </state>
       </provider>
