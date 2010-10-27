@@ -12,6 +12,7 @@ public abstract class ProtoObject {
 	private static final Object[] NO_ARGUMENTS = {};
 
 	public abstract ProtoObject $class();
+	public abstract ProtoObject $new();
 
 	public ProtoObject $superclass() {
 		return null;

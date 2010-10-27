@@ -74,6 +74,33 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void defineClassHelpers() {
+		System.out.println();
+		MethodVisitor mv = classClassWriter.visitMethod(ACC_PUBLIC, "$new", "()Lst/redline/ProtoObject;", null, null);
+		mv.visitCode();
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(14, l0);
+		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+		mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
+		mv.visitInsn(DUP);
+		mv.visitLdcInsn("new of ");
+		mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "(Ljava/lang/String;)V");
+		mv.visitLdcInsn(Type.getType("L"+qualifiedSubclass+";"));
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(15, l1);
+		mv.visitTypeInsn(NEW, qualifiedSubclass);
+		mv.visitInsn(DUP);
+		mv.visitMethodInsn(INVOKESPECIAL, qualifiedSubclass, "<init>", "()V");
+		mv.visitInsn(ARETURN);
+		Label l2 = new Label();
+		mv.visitLabel(l2);
+		mv.visitLocalVariable("this", "L"+classQualifiedSubclass+";", null, l0, l2, 0);
+		mv.visitMaxs(4, 1);
+		mv.visitEnd();
 	}
 
 	private void defineInstanceHelpers() {
@@ -453,7 +480,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
 		mv.visitLineNumber(keywordSends.get(0).keyword().beginLine, l0);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "prim$end", SEND_SIGNATURE[keywordSends.size()]);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$send", SEND_SIGNATURE[keywordSends.size()]);
 	}
 
 	private void emitKeywordSendArguments(MethodVisitor mv, List<KeywordSend> keywordSends) {
@@ -637,7 +664,31 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitPragmas(MethodVisitor mv, Pragma pragma) {
-		System.out.println("TODO - Pragmas");
+		Primitive primitive = pragma.primitive();
+		if (!primitive.hasSecondPart()) {
+			Object firstPart = primitive.firstPart();
+			if (firstPart instanceof Number)
+				emitPrimitive(mv, (Number) firstPart);
+		} else {
+			throw new RuntimeException("Need to handle primitive with second part: " + primitive.firstPart() + " " + primitive.secondPart());
+		}
+	}
+
+	private void emitPrimitive(MethodVisitor mv, Number primitiveIdentifier) {
+		int index = Integer.parseInt(primitiveIdentifier.toString());
+		switch (index) {
+			// Behavior basicNew ...
+			case 70:
+				Label l0 = new Label();
+				mv.visitLabel(l0);
+				mv.visitLineNumber(primitiveIdentifier.lineNumber(), l0);
+				mv.visitVarInsn(ALOAD, 0);
+				mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$new", "()Lst/redline/ProtoObject;");
+				mv.visitInsn(ARETURN);
+				break;
+			default:
+				throw new IllegalStateException("Unknown primitive identifier: " + index);
+		}
 	}
 
 	private void emitNumber(MethodVisitor mv, int number) {

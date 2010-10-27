@@ -9,4 +9,12 @@ public class Number {
 		this.number = number;
 		this.negative = negative;
 	}
+
+	public int lineNumber() {
+		return number.beginLine;
+	}
+
+	public String toString() {
+		return (negative ? "-" + number.toString() : number.toString()); 
+	}
 }

@@ -7,4 +7,8 @@ public class Pragma {
 	public Pragma(Primitive primitive) {
 		this.primitive = primitive;
 	}
+
+	public Primitive primitive() {
+		return primitive;
+	}
 }

@@ -14,4 +14,16 @@ public class Primitive {
 		this.firstPart = firstPart;
 		this.secondPart = secondPart;
 	}
+
+	public Object firstPart() {
+		return firstPart;
+	}
+
+	public boolean hasSecondPart() {
+		return secondPart != null;
+	}
+
+	public Token secondPart() {
+		return secondPart;
+	}
 }
