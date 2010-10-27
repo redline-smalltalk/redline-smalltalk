@@ -524,8 +524,24 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			emitLiteral(mv, (SymbolLiteral) literal);
 		} else if (literal instanceof StringLiteral) {
 			emitLiteral(mv, (StringLiteral) literal);
+		} else if (literal instanceof SpecialLiteral) {
+			emitLiteral(mv, (SpecialLiteral) literal);
 		} else {
 			throw new RuntimeException("Need to handle other types of LITERAL: " + literal.getClass());
+		}
+	}
+
+	private void emitLiteral(MethodVisitor mv, SpecialLiteral specialLiteral) {
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(specialLiteral.lineNumber(), l0);
+		String value = specialLiteral.toString();
+		if (value.equals("self")) {
+			mv.visitVarInsn(ALOAD, 0);
+		} else if (value.equals("nil")) {
+			mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "nil", "()Lst/redline/ProtoObject;");
+		} else {
+			throw new RuntimeException("Need to handle other SPECIAL LITERAL: " + value);
 		}
 	}
 

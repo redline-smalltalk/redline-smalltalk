@@ -7,6 +7,7 @@ public class Smalltalk {
 
 	private static Map<String, ProtoObject> classesByName = new HashMap<String, ProtoObject>();
 	private static Map<java.lang.Class, ProtoObject> classesByPrimitiveClass = new HashMap<java.lang.Class, ProtoObject>();
+	private static ProtoObject nil = null;
 
 	public static void register(java.lang.Class primitiveClass, ProtoObject objectClass) {
 		String name = primitiveClass.getName().substring(primitiveClass.getName().lastIndexOf('.')+1);
@@ -22,5 +23,19 @@ public class Smalltalk {
 	public static st.redline.ProtoObject classForPrimitiveClass(java.lang.Class primitiveClass) {
 		System.out.println("Getting class for the primitive Class: " + primitiveClass);
 		return classesByPrimitiveClass.get(primitiveClass);
+	}
+
+	public static ProtoObject nil() {
+		if (nil == null)
+			nil = instanceOf("UndefinedObject");
+		return nil;
+	}
+
+	private static ProtoObject instanceOf(String className) {
+		try {
+			return (ProtoObject) Class.forName("st.redline." + className).newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
