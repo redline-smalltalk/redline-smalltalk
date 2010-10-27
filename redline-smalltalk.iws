@@ -63,7 +63,7 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="685" column="0" selection-start="29246" selection-end="29246" vertical-scroll-proportion="0.40963855">
+            <state line="685" column="0" selection-start="29246" selection-end="29246" vertical-scroll-proportion="0.47108433">
               <folding />
             </state>
           </provider>
@@ -108,7 +108,7 @@
       <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0">
+            <state line="64" column="0" selection-start="2042" selection-end="2042" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -568,16 +568,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Pragma.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Number.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0">
+        <state line="15" column="0" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Number.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Pragma.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0">
+        <state line="10" column="0" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -598,14 +598,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0">
+        <state line="64" column="0" selection-start="2042" selection-end="2042" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="685" column="0" selection-start="29246" selection-end="29246" vertical-scroll-proportion="0.40963855">
+        <state line="685" column="0" selection-start="29246" selection-end="29246" vertical-scroll-proportion="0.47108433">
           <folding />
         </state>
       </provider>

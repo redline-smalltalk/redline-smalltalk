@@ -19,7 +19,6 @@ public abstract class ProtoObject {
 	}
 
 	public ProtoObject() {
-		System.out.println("constructing ProtoObject");
 	}
 
 	public ProtoObject $send(java.lang.String selector) {
@@ -30,7 +29,6 @@ public abstract class ProtoObject {
 	private ProtoObject tryInvokeMethod(Method method, String selector, Object[] arguments) {
 		if (method != null)
 			try {
-				System.out.println("invoking: " + method + " with " + arguments);
 				return (ProtoObject) method.invoke(this, arguments);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -65,7 +63,6 @@ public abstract class ProtoObject {
 	}
 
 	protected Map<String, Method> methodsFrom(java.lang.Class primitiveClass) {
-		System.out.println("methodsFrom(" + primitiveClass + ")");
 		Map<String, Method> methods = new HashMap<String, Method>();
 		for (Method method : primitiveClass.getDeclaredMethods())
 			selectMethod(methods, method);
