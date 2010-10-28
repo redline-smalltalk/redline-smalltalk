@@ -25,8 +25,6 @@ basicNew
 	 Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 70>
-	self isVariable ifTrue: [ ^ self basicNew: 0 ].
-	"space must be low"
-	self environment signalLowSpace.
-	^ self basicNew  "retry if user proceeds"
+	" TODO - out back code that follows this primitive"
+	^ nil
 ! !

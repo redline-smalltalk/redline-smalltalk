@@ -99,7 +99,7 @@
       <file leaf-file-name="Behavior.st" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Behavior.st">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="0" selection-start="1249" selection-end="1249" vertical-scroll-proportion="0.64378697">
+            <state line="27" column="0" selection-start="1098" selection-end="1098" vertical-scroll-proportion="0.54319525">
               <folding />
             </state>
           </provider>
@@ -183,9 +183,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -274,6 +273,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -290,8 +290,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -568,6 +568,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="686" column="27" selection-start="29364" selection-end="29364" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Number.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="0" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0">
@@ -596,16 +603,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="686" column="27" selection-start="29364" selection-end="29364" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Behavior.st">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="1249" selection-end="1249" vertical-scroll-proportion="0.64378697">
+        <state line="27" column="0" selection-start="1098" selection-end="1098" vertical-scroll-proportion="0.54319525">
           <folding />
         </state>
       </provider>
