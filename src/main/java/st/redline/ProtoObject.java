@@ -14,11 +14,11 @@ public abstract class ProtoObject {
 	public abstract ProtoObject $class();
 	public abstract ProtoObject $new();
 
-	public ProtoObject $superclass() {
-		return null;
+	public ProtoObject() {
 	}
 
-	public ProtoObject() {
+	public ProtoObject $superclass() {
+		return null;
 	}
 
 	public ProtoObject $send(java.lang.String selector) {

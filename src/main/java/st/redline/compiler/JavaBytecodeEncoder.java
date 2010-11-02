@@ -620,7 +620,12 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		emitTemporaries(mv, method.temporaries());
 		if (method.pragmas()[1] != null)
 			emitPragmas(mv, method.pragmas()[1]);
-		emitStatements(mv, method.statements());
+		if (method.statements() != null) {
+			emitStatements(mv, method.statements());
+		} else {
+			// answer receiver if no statements. 
+			mv.visitVarInsn(ALOAD, 0);
+		}
 		mv.visitInsn(ARETURN);
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();
