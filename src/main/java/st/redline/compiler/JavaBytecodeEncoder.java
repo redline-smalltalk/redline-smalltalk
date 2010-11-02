@@ -40,6 +40,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	private String qualifiedSuperclass;
 	private String classQualifiedSuperclass;
 	private String sourcePath;
+	private String currentMethodName;
 
 	public JavaBytecodeEncoder() {
 		classWriter = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -607,6 +608,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		System.out.println();
 		MessagePattern messagePattern = method.messagePattern();
 		String methodName = messagePattern.pattern();
+		currentMethodName = methodName;
 		MethodVisitor mv;
 		if (classMethods)
 			mv = classClassWriter.visitMethod(ACC_PUBLIC, methodName, METHOD_SIGNATURE[messagePattern.argumentCount()], null, null);
