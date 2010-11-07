@@ -25,6 +25,7 @@ public class ClassFileGenerator extends Generator {
 
 	private void writeClassFile(byte[] bytes, String filename) {
 		String realFilename = makeRealfilename(filename);
+		makeOutputPath();
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(realFilename);
@@ -34,6 +35,12 @@ public class ClassFileGenerator extends Generator {
 		} finally {
 			if (fos != null) try { fos.close(); } catch(IOException e) { e.printStackTrace(); }
 		}
+	}
+
+	private void makeOutputPath() {
+		File folder = new File(outputPath());
+		if (!folder.exists())
+			folder.mkdirs();
 	}
 
 	private String makeRealfilename(String filename) {
