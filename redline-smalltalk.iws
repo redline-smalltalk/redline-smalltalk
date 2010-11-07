@@ -60,37 +60,28 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Script.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Script.java">
+      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="36" selection-start="2553" selection-end="2553" vertical-scroll-proportion="0.0">
+            <state line="510" column="0" selection-start="23803" selection-end="23803" vertical-scroll-proportion="0.0373494">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GeneratorFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/GeneratorFactory.java">
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="32" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
+            <state line="23" column="0" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassFileGenerator.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java">
+      <file leaf-file-name="UndefinedObject.st" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/UndefinedObject.st">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="28" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.76449704">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ParserFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ParserFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="18" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0">
+            <state line="9" column="0" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -121,12 +112,12 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Primitive.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Pragma.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Number.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/Behavior.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/Object.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/UndefinedObject.st" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
       </list>
     </option>
   </component>
@@ -538,13 +529,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="487" selection-end="487" vertical-scroll-proportion="0.020118343">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Object.st">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="0" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.54319525">
@@ -552,23 +536,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/UndefinedObject.st">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="326" selection-end="326" vertical-scroll-proportion="0.18106508">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="625" column="0" selection-start="27227" selection-end="27227" vertical-scroll-proportion="0.020481927">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ParserFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="18" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0">
+        <state line="9" column="18" selection-start="224" selection-end="224" vertical-scroll-proportion="0.16094674">
           <folding />
         </state>
       </provider>
@@ -590,6 +560,27 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="42" column="28" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.76449704">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/UndefinedObject.st">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="326" selection-end="326" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="510" column="0" selection-start="23803" selection-end="23803" vertical-scroll-proportion="0.0373494">
           <folding />
         </state>
       </provider>

@@ -4,6 +4,7 @@ import org.objectweb.asm.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
@@ -32,6 +33,18 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		"(Ljava/lang/String;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;"
 	};
 
+	private static final String[] SUPER_SEND_SIGNATURE = {
+		"(Ljava/lang/String;Ljava/lang/String;)Lst/redline/ProtoObject;",
+		"(Ljava/lang/String;Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;",
+		"(Ljava/lang/String;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;",
+		"(Ljava/lang/String;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;",
+		"(Ljava/lang/String;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;",
+		"(Ljava/lang/String;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;",
+		"(Ljava/lang/String;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;",
+		"(Ljava/lang/String;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;",
+		"(Ljava/lang/String;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;"
+	};
+
 	private final ClassWriter classWriter;
 	private final ClassWriter classClassWriter;
 	private String subclass;
@@ -41,6 +54,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	private String classQualifiedSuperclass;
 	private String sourcePath;
 	private String currentMethodName;
+	private Stack<Boolean> superSend = new Stack<Boolean>();
 
 	public JavaBytecodeEncoder() {
 		classWriter = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -481,7 +495,13 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
 		mv.visitLineNumber(keywordSends.get(0).keyword().beginLine, l0);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$send", SEND_SIGNATURE[keywordSends.size()]);
+		if (isSendToSuper()) {
+			clearSendToSuper();
+			mv.visitLdcInsn(currentMethodName);
+			mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$superSend", SUPER_SEND_SIGNATURE[keywordSends.size()]);
+		} else {
+			mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$send", SEND_SIGNATURE[keywordSends.size()]);
+		}
 	}
 
 	private void emitKeywordSendArguments(MethodVisitor mv, List<KeywordSend> keywordSends) {
@@ -516,7 +536,23 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitLabel(l0);
 		mv.visitLineNumber(selector.beginLine, l0);
 		mv.visitLdcInsn(selector.toString());
-		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$send", SEND_SIGNATURE[0]);
+		if (isSendToSuper()) {
+			clearSendToSuper();
+			mv.visitLdcInsn(currentMethodName);
+			mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$superSend", SUPER_SEND_SIGNATURE[0]);
+		} else {
+			mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$send", SEND_SIGNATURE[0]);
+		}
+	}
+
+	private void clearSendToSuper() {
+		superSend.pop();
+	}
+
+	private boolean isSendToSuper() {
+		if (superSend.empty())
+			return false;
+		return superSend.peek().booleanValue();
 	}
 
 	private void emitBinarySends(MethodVisitor mv, List<BinarySend> binarySends) {
@@ -568,6 +604,8 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitVarInsn(ALOAD, 0);
 		} else if (value.equals("nil")) {
 			mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "nil", "()Lst/redline/ProtoObject;");
+		} else if (value.equals("super")) {
+			superSend.push(Boolean.TRUE);
 		} else {
 			throw new RuntimeException("Need to handle other SPECIAL LITERAL: " + value);
 		}
@@ -637,9 +675,12 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitExpression(MethodVisitor mv, Expression expression) {
+		int superSendsBeforeCount = superSend.size();
 		if (expression.isPrimary())
 			emitPrimary(mv, expression.primary());
 		emitCascade(mv, expression.cascade());
+		if (superSendsBeforeCount != superSend.size())
+			throw new RuntimeException("A 'super' send was not handled.");
 	}
 
 	private void emitCascade(MethodVisitor mv, Cascade cascade) {

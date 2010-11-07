@@ -21,6 +21,11 @@ public abstract class ProtoObject {
 		return null;
 	}
 
+	public ProtoObject $superSend(java.lang.String selector, java.lang.String currentMethodName) {
+		System.out.println("$superSend(" + selector + ", " + currentMethodName + ")");
+		throw new RuntimeException("$superSend() not implemented.");
+	}
+
 	public ProtoObject $send(java.lang.String selector) {
 		System.out.println("$send(" + selector + ")");
 		return tryInvokeMethod($findMethod(selector), selector, NO_ARGUMENTS);
