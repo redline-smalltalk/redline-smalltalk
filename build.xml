@@ -31,9 +31,16 @@
 		<javacc target="src/main/resources/SmalltalkSource.jj" outputdirectory="${grammar.out}" javacchome="${javacc.home}" static="false"/>
 	</target>
 
-	<target name="compile" description="Compile sources." depends="generate">
+	<target name="compile" description="Compile sources, including runtime." depends="generate">
 		<javac srcdir="${java.src}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
 		<javac srcdir="${grammar.out}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
+		<java classname="st.redline.Script" failonerror="true">
+			<arg value="src/main/smalltalk"/>
+			<classpath>
+				<path refid="build-classpath"/>
+				<pathelement location="out"/>
+			</classpath>
+		</java>
 	</target>
 
 	<target name="package" description="Package artefacts." depends="clean, compile">

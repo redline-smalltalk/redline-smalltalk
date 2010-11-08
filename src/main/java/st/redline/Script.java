@@ -1,6 +1,9 @@
 package st.redline;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import st.redline.compiler.*;
 
 public class Script {
@@ -17,15 +20,29 @@ public class Script {
 	private ParsedSource parsedSource;
 
 	public static void main(java.lang.String[] args) {
-		Script.fromFile(args[0]).doIt();
+		for (Script script : Script.fromFile(args[0]))
+			script.doIt();
 	}
 
-	public static Script fromFile(java.lang.String scriptFilename) {
+	public static List<Script> fromFile(java.lang.String scriptFilename) {
 		return Script.fromFile(scriptFilename, DEFAULT_OUTPUT_FOLDER, new NullScriptListener());
 	}
 
-	public static Script fromFile(java.lang.String scriptFilename, java.lang.String outputPath, ScriptListener scriptListener) {
-		return Script.fromFile(new ScriptFile(scriptFilename), outputPath, scriptListener);
+	public static List<Script> fromFile(java.lang.String scriptFilename, java.lang.String outputPath, ScriptListener scriptListener) {
+		List<Script> scripts = new ArrayList<Script>();
+		for (String singleScriptFilename : fileNames(scriptFilename))
+			scripts.add(Script.fromFile(new ScriptFile(singleScriptFilename), outputPath, scriptListener));
+		return scripts;
+	}
+
+	private static String[] fileNames(String scriptFilename) {
+		File[] listOfFiles = new File(scriptFilename).listFiles();
+		if (listOfFiles == null)
+			return new String[] { scriptFilename };
+		String[] files = new String[listOfFiles.length];
+		for (int i = 0; i < listOfFiles.length; i++)
+			files[i] = listOfFiles[i].getAbsolutePath();
+		return files;
 	}
 
 	public static Script fromFile(ScriptFile scriptFile, java.lang.String outputPath, ScriptListener scriptListener) {
