@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ParsedSource implements Translatable {
 
-	private final Stack<Map<String, Token>> variables;
+	private final Stack<Map<String, Variable>> variables;
 
 	private String sourcePath;
 	private Translator translator;
@@ -25,7 +25,7 @@ public class ParsedSource implements Translatable {
 	private boolean script = false;
 
 	public ParsedSource() {
-		variables = new Stack<Map<String, Token>>();
+		variables = new Stack<Map<String, Variable>>();
 		enterMethodContext();
 	}
 
@@ -72,25 +72,43 @@ public class ParsedSource implements Translatable {
 	}
 
 	private boolean isVariableDefinedInPreviousContext(String key) {
-		for (Map<String, Token> context : variables) {
+		for (Map<String, Variable> context : variables) {
 			if (context.containsKey(key))
 				return true;
 		}
 		return false;
 	}
 
-	public void defineVariable(Token variable) {
+	public Variable definedVariable(Token variable) {
+		String key = variable.toString();
+		if (variables().containsKey(key))
+			return variables().get(key);
+		return variableDefinedInPreviousContext(key);
+	}
+
+	private Variable variableDefinedInPreviousContext(String key) {
+		for (Map<String, Variable> context : variables) {
+			if (context.containsKey(key))
+				return context.get(key);
+		}
+		return null;
+	}
+
+	public void defineVariable(Variable variable) {
 		defineVariable(variable.toString(), variable);
 	}
 
 	public void defineVariables(Token input) {
+		int offset = 0;
 		if (input != null)
 			for (String string : input.toString().split(" "))
-				if (string.length() > 0)
-					defineVariable(string, input);
+				if (string.length() > 0) {
+					offset += 1;
+					defineVariable(string, new Variable(input, offset));
+				}
 	}
 
-	public void defineVariable(String key, Token variable) {
+	public void defineVariable(String key, Variable variable) {
 		if (key.charAt(0) == '\'')
 			key = key.substring(1);
 		if (key.charAt(key.length()-1) == '\'')
@@ -100,11 +118,11 @@ public class ParsedSource implements Translatable {
 
 	private void defineVariables(List<Variable> variables) {
 		for (Variable variable : variables)
-			defineVariable(variable.token());
+			defineVariable(variable);
 	}
 
 	public void enterMethodContext() {
-		variables.push(new HashMap<String, Token>());
+		variables.push(new HashMap<String, Variable>());
 	}
 
 	public void exitMethodContext() {
@@ -112,14 +130,14 @@ public class ParsedSource implements Translatable {
 	}
 
 	public void enterBlockContext() {
-		variables.push(new HashMap<String, Token>());
+		variables.push(new HashMap<String, Variable>());
 	}
 
 	public void exitBlockContext() {
 		variables.pop();
 	}
 
-	public Map<String, Token> variables() {
+	public Map<String, Variable> variables() {
 		return variables.peek();
 	}
 

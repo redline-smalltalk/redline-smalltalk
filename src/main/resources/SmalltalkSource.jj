@@ -13,6 +13,8 @@ PARSER_BEGIN(SourceParser)
     import java.util.*;
     class SourceParser implements Parser {
         private ParsedSource parsedSource = new ParsedSource();
+        private int argumentOffset = 0;
+        private int temporaryOffset = 0;
         public void sourcePath(String sourcePath) {
             parsedSource.sourcePath(sourcePath);
         }
@@ -28,8 +30,11 @@ PARSER_BEGIN(SourceParser)
         public boolean isDefinedEnvironment(Token token) {
             return parsedSource.isDefinedEnvironment(token);
         }
-        public void defineVariable(Token token) {
-            parsedSource.defineVariable(token);
+        public Variable definedVariable(Token token) {
+            return parsedSource.definedVariable(token);
+        }
+        public void defineVariable(Variable variable) {
+            parsedSource.defineVariable(variable);
         }
         public void defineVariables(Token token) {
             parsedSource.defineVariables(token);
@@ -45,6 +50,20 @@ PARSER_BEGIN(SourceParser)
         }
         public void exitBlockContext() {
             parsedSource.exitBlockContext();
+        }
+        public int argumentOffset() {
+            argumentOffset += 1;
+            return argumentOffset;
+        }
+        public void resetArgumentOffset() {
+            argumentOffset = 0;
+        }
+        public int temporaryOffset() {
+            temporaryOffset += 1;
+            return temporaryOffset;
+        }
+        public void resetTemporaryOffset() {
+            temporaryOffset = 0;
         }
     }
 PARSER_END(SourceParser)
@@ -194,7 +213,7 @@ void method():
 }
 
 void messagePattern():
-{}
+{ resetArgumentOffset(); }
 {
     (
         keywordMessagePattern()
@@ -538,7 +557,8 @@ ArrayLiteral arrayLiteral():
 }
 
 void temporaries():
-{ List<Variable> variables = new ArrayList<Variable>(); Variable variable; }
+{ List<Variable> variables = new ArrayList<Variable>(); Variable variable;
+  resetTemporaryOffset(); }
 {
     <PIPE>
     (
@@ -568,14 +588,15 @@ Primitive primitive():
 }
 
 Variable methodArgument():
-{ Token name; }
+{ Token name; Argument argument; }
 {
     name = <IDENTIFIER>
     {
         if (isDefinedVariable(name))
             throw new RuntimeException("Method argument '"+name+"' is already defined. Error on line: " + name.beginLine);
-        defineVariable(name);
-        return new Variable(name);
+        argument = new Argument(name, argumentOffset());
+        defineVariable(argument);
+        return argument;
     }
 }
 
@@ -617,7 +638,8 @@ Block block():
 }
 
 List<Variable> blockArguments():
-{ List<Variable> arguments = new ArrayList<Variable>(); Variable argument; }
+{ List<Variable> arguments = new ArrayList<Variable>(); Variable argument;
+  resetTemporaryOffset(); }
 {
     <COLON> argument = temporary()
     { arguments.add(argument); }
@@ -633,7 +655,8 @@ List<Variable> blockArguments():
 }
 
 List<Variable> blockTemporaries():
-{ List<Variable> temporaries = new ArrayList<Variable>(); Variable temporary; }
+{ List<Variable> temporaries = new ArrayList<Variable>(); Variable temporary;
+  resetTemporaryOffset(); }
 {
     LOOKAHEAD({ getToken(1).kind == PIPE && getToken(2).kind == IDENTIFIER && !isDefinedVariable(getToken(2)) })
     <PIPE> temporary = temporary()
@@ -665,14 +688,15 @@ Number number():
 }
 
 Variable temporary():
-{ Token identifier; }
+{ Token identifier; Temporary temporary; }
 {
     identifier = <IDENTIFIER>
     {
         if (isDefinedVariable(identifier))
             throw new RuntimeException("Identifier '" + identifier + "' already defined as a variable. Error on line: " + identifier.beginLine);
-        defineVariable(identifier);
-        return new Variable(identifier, true);
+        temporary = new Temporary(identifier, temporaryOffset());
+        defineVariable(temporary);
+        return temporary;
     }
 }
 
@@ -681,10 +705,14 @@ Variable variable():
 {
     identifier = <IDENTIFIER>
     {
-        variable = new Variable(identifier);
+        variable = new Variable(identifier, 0);
 
-        if (isDefinedVariable(identifier))
-            return variable;
+        if (isDefinedVariable(identifier)) {
+            variable = definedVariable(identifier);
+            if (variable != null)
+                return variable;
+            throw new RuntimeException("failed to get variable object for identifier '" + identifier + "'");
+        }
 
         if (isDefinedClass(identifier)) {
             variable.isClass(true);

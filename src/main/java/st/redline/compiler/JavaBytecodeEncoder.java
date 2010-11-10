@@ -577,9 +577,17 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		Variable variable = primaryVariable.variable();
 		if (variable.isClass()) {
 			emitClassLoopkup(mv, variable);
+		} else if (variable instanceof Argument) {
+			emitArgumentReference(mv, (Argument) variable);
 		} else {
 			throw new RuntimeException("Need to handle other types of VARIABLE: " + variable.getClass() + " " + variable.toString());
 		}
+	}
+
+	private void emitArgumentReference(MethodVisitor mv, Argument variable) {
+		if (variable.offset() == 0)
+			throw new RuntimeException("Argument offset unexpectedly zero (0)");
+		mv.visitVarInsn(ALOAD, variable.offset());
 	}
 
 	private void emitPrimary(MethodVisitor mv, PrimaryLiteral primaryLiteral) {

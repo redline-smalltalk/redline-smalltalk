@@ -5,15 +5,11 @@ public class Variable {
 	private final Token name;
 	private boolean isClass;
 	private boolean isEnvironment;
-	private boolean isTemporary;
+	private int offset;
 
-	public Variable(Token name) {
-		this(name, false);
-	}
-
-	public Variable(Token name, boolean isTemporary) {
+	public Variable(Token name, int offset) {
 		this.name = name;
-		this.isTemporary = isTemporary;
+		this.offset = offset;
 	}
 
 	public String toString() {
@@ -26,6 +22,10 @@ public class Variable {
 
 	public int lineNumber() {
 		return name.beginLine;
+	}
+
+	public int offset() {
+		return offset;
 	}
 
 	public void isClass(boolean isClass) {
@@ -45,6 +45,10 @@ public class Variable {
 	}
 
 	public boolean isTemporary() {
-		return isTemporary;
+		return false;
+	}
+
+	public boolean isArgument() {
+		return false;
 	}
 }

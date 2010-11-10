@@ -93,7 +93,7 @@ public class ScriptClassFileGenerator extends ClassFileGenerator {
 		private final boolean isClass;
 
 		public PretendVariable(String value, boolean isClass) {
-			super(null);
+			super(null, 0);
 			this.value = value;
 			this.isClass = isClass;
 		}
