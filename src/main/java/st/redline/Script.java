@@ -25,7 +25,7 @@ public class Script {
 	}
 
 	public static List<Script> fromFile(java.lang.String scriptFilename) {
-		return Script.fromFile(scriptFilename, DEFAULT_OUTPUT_FOLDER, new NullScriptListener());
+		return Script.fromFile(scriptFilename, DEFAULT_OUTPUT_FOLDER, null);
 	}
 
 	public static List<Script> fromFile(java.lang.String scriptFilename, java.lang.String outputPath, ScriptListener scriptListener) {
@@ -57,7 +57,7 @@ public class Script {
 		contents = script;
 		this.scriptPath = scriptPath;
 		this.outputPath = outputPath;
-		this.scriptListener = scriptListener;
+		this.scriptListener = (scriptListener != null) ? scriptListener : new NullScriptListener();
 		this.parserFactory = parserFactory;
 		this.generatorFactory = generatorFactory;
 	}
