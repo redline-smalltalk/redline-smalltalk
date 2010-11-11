@@ -34,10 +34,7 @@ public class Serve {
 
 	private static ProtoObject instanceOf(String className) {
 		tryInitializeClass(className);
-		ProtoObject aClass = Smalltalk.classNamed(className);
-		if (aClass != null)
-			return aClass.$send("new");
-		return null;
+		return Smalltalk.classNamed(className);
 	}
 
 	private static void tryInitializeClass(String className) {
@@ -48,15 +45,28 @@ public class Serve {
 		}
 	}
 
-	private static Handler handle(final ProtoObject anObject) {
-		System.out.println("handle(" + anObject + ")");
+	private static Handler handle(final ProtoObject aClass) {
+		System.out.println("handle(" + aClass + ")");
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch) throws IOException, ServletException {
 				System.out.println(request);
 				Request base_request = (request instanceof Request) ? (Request) request:HttpConnection.getCurrentConnection().getRequest();
 				base_request.setHandled(true);
 
-				// TODO.jcl Handle dispatch of requests to Object (anObject).
+				// TODO.jcl Handle dispatch of requests to an instance of aClass.
+//				ProtoObject object = aClass.$send("new");
+//				if (object != null) {
+//					ProtoObject result = object.$send("call:");
+//					if (result != null) {
+//						// handle unpack of result and put into http response object.
+//					} else {
+//						// 'call:' didnt respond with object.
+//						// make error response.
+//					}
+//				} else {
+//					// don't have instance of 'aClass'
+//					// make error response.
+//				}
 
 				response.setContentType("text/html");
 				response.setStatus(HttpServletResponse.SC_OK);
