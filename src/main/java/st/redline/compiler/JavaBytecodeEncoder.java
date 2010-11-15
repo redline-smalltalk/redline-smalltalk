@@ -623,18 +623,20 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
 		mv.visitLineNumber(symbolLiteral.lineNumber(), l0);
+		mv.visitLdcInsn("Symbol");
+		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classNamed", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
 		mv.visitLdcInsn(symbolLiteral.toString());
-		mv.visitInsn(ICONST_1);
-		mv.visitMethodInsn(INVOKESTATIC, "st/redline/ProtoObject", "objectFromPrimitive", "(Ljava/lang/String;Z)Lst/redline/ProtoObject;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;");
 	}
 
 	private void emitLiteral(MethodVisitor mv, StringLiteral stringLiteral) {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
 		mv.visitLineNumber(stringLiteral.lineNumber(), l0);
+		mv.visitLdcInsn("String");
+		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classNamed", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
 		mv.visitLdcInsn(stringLiteral.toString());
-		mv.visitInsn(ICONST_0);
-		mv.visitMethodInsn(INVOKESTATIC, "st/redline/ProtoObject", "objectFromPrimitive", "(Ljava/lang/String;Z)Lst/redline/ProtoObject;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;");
 	}
 
 	private void emitClassLoopkup(MethodVisitor mv, Variable variable) {
