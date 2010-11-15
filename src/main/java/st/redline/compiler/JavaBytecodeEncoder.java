@@ -310,6 +310,23 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 				mv.visitMaxs(4, 3);
 				mv.visitEnd();
 			}
+
+			if (subclass.equals("String") || subclass.equals("Symbol")) {
+				mv = classWriter.visitMethod(ACC_PUBLIC, "toString", "()Ljava/lang/String;", null, null);
+				mv.visitCode();
+				l0 = new Label();
+				mv.visitLabel(l0);
+				mv.visitLineNumber(10, l0);
+				mv.visitVarInsn(ALOAD, 0);
+				mv.visitFieldInsn(GETFIELD, qualifiedSubclass, "primitiveValue", "Ljava/lang/StringBuffer;");
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuffer", "toString", "()Ljava/lang/String;");
+				mv.visitInsn(ARETURN);
+				l1 = new Label();
+				mv.visitLabel(l1);
+				mv.visitLocalVariable("this", "L"+qualifiedSubclass+";", null, l0, l1, 0);
+				mv.visitMaxs(1, 1);
+				mv.visitEnd();
+			}
 		}
 	}
 
