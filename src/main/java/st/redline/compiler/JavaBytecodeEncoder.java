@@ -117,6 +117,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitEnd();
 
 		if (subclass.equals("String") || subclass.equals("Symbol")) {
+			System.out.println();
 			mv = classClassWriter.visitMethod(ACC_PUBLIC, "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;", null, null);
 			mv.visitCode();
 			l0 = new Label();

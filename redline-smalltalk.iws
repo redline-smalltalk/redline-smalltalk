@@ -60,10 +60,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="698" column="0" selection-start="31469" selection-end="31469" vertical-scroll-proportion="0.0">
+            <state line="119" column="33" selection-start="7217" selection-end="7217" vertical-scroll-proportion="0.71686745">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,10 +80,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Smalltalk.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Smalltalk.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="1" selection-start="1759" selection-end="1759" vertical-scroll-proportion="0.8792899">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -118,8 +118,8 @@
         <option value="$PROJECT_DIR$/src/main/smalltalk/Symbol.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/True.st" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
       </list>
     </option>
   </component>
@@ -582,19 +582,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="698" column="0" selection-start="31469" selection-end="31469" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="1" selection-start="1759" selection-end="1759" vertical-scroll-proportion="0.8792899">
-          <folding />
+        <state line="119" column="33" selection-start="7217" selection-end="7217" vertical-scroll-proportion="0.71686745">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
