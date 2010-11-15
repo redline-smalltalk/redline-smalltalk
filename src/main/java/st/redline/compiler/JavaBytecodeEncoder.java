@@ -670,7 +670,9 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 	private void emitPrimary(MethodVisitor mv, PrimaryLiteral primaryLiteral) {
 		Literal literal = primaryLiteral.literal();
-		if (literal instanceof SymbolLiteral) {
+		if (literal instanceof ArraySymbolLiteral) {
+			emitLiteral(mv, (ArraySymbolLiteral) literal);
+		} else if (literal instanceof SymbolLiteral) {
 			emitLiteral(mv, (SymbolLiteral) literal);
 		} else if (literal instanceof StringLiteral) {
 			emitLiteral(mv, (StringLiteral) literal);
@@ -695,6 +697,10 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		} else {
 			throw new RuntimeException("Need to handle other SPECIAL LITERAL: " + value);
 		}
+	}
+
+	private void emitLiteral(MethodVisitor mv, ArraySymbolLiteral arraySymbolLiteral) {
+		throw new RuntimeException("TODO - handle array symbol literal");
 	}
 
 	private void emitLiteral(MethodVisitor mv, SymbolLiteral symbolLiteral) {

@@ -504,6 +504,9 @@ Literal literal():
         token = <STRING>
         { return new StringSymbolLiteral(token); }
         |
+        <LEFT_PARENTHESES> (literalArray = literalArray())? <RIGHT_PARENTHESES>
+        { return new ArraySymbolLiteral(literalArray); }
+        |
         token = <IDENTIFIER>
         { return new SymbolLiteral(token); }
         |
@@ -518,9 +521,6 @@ Literal literal():
         |
         token = <ALTERNATE_KEYWORD>
         { return new AlternateKeywordSymbolLiteral(token); }
-        |
-        <LEFT_PARENTHESES> (literalArray = literalArray())? <RIGHT_PARENTHESES>
-        { return new ArraySymbolLiteral(literalArray); }
         |
         token = <COLON>
         { return new StringSymbolLiteral(token); }

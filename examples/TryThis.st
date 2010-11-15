@@ -2,5 +2,5 @@
 
         "Answer a value."
 
-        ^ 'foo bar'
+        ^ #()
 
