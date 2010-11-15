@@ -2,7 +2,6 @@ package st.redline.compiler;
 
 import org.objectweb.asm.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -635,8 +634,8 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitLineNumber(stringLiteral.lineNumber(), l0);
 		mv.visitLdcInsn("String");
 		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classNamed", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
-		mv.visitLdcInsn(stringLiteral.toString());
-		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;");
+//		mv.visitLdcInsn(stringLiteral.toString());
+//		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;");
 	}
 
 	private void emitClassLoopkup(MethodVisitor mv, Variable variable) {

@@ -9,6 +9,13 @@ public class Smalltalk {
 	private static Map<java.lang.Class, ProtoObject> classesByPrimitiveClass = new HashMap<java.lang.Class, ProtoObject>();
 	private static ProtoObject nil = null;
 
+	// ensure Smalltalk classes we rely on are loaded.
+	static {
+		basicClassNamed("Object");
+		basicClassNamed("String");
+		basicClassNamed("Symbol");
+	}
+
 	public static void register(java.lang.Class primitiveClass, ProtoObject objectClass) {
 		String name = primitiveClass.getName().substring(primitiveClass.getName().lastIndexOf('.')+1);
 		System.out.println("Registering " + name + " as " + objectClass);
@@ -33,7 +40,15 @@ public class Smalltalk {
 
 	private static ProtoObject instanceOf(String className) {
 		try {
-			return (ProtoObject) Class.forName("st.redline." + className).newInstance();
+			return (ProtoObject) basicClassNamed("st.redline." + className).newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static Class basicClassNamed(String className) {
+		try {
+			return Class.forName("st.redline." + className);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
