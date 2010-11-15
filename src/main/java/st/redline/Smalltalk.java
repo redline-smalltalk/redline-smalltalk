@@ -9,13 +9,6 @@ public class Smalltalk {
 	private static Map<java.lang.Class, ProtoObject> classesByPrimitiveClass = new HashMap<java.lang.Class, ProtoObject>();
 	private static ProtoObject nil = null;
 
-	// ensure Smalltalk classes we rely on are loaded.
-	static {
-		basicClassNamed("Object");
-		basicClassNamed("String");
-		basicClassNamed("Symbol");
-	}
-
 	public static void register(java.lang.Class primitiveClass, ProtoObject objectClass) {
 		String name = primitiveClass.getName().substring(primitiveClass.getName().lastIndexOf('.')+1);
 		System.out.println("Registering " + name + " as " + objectClass);
@@ -24,6 +17,10 @@ public class Smalltalk {
 	}
 
 	public static st.redline.ProtoObject classNamed(String className) {
+		System.out.println("classNamed: " + className);
+		ProtoObject aClass = classesByName.get(className);
+		if (aClass == null)
+			basicClassNamed(className);
 		return classesByName.get(className);
 	}
 
@@ -33,18 +30,19 @@ public class Smalltalk {
 	}
 
 	public static ProtoObject nil() {
-		if (nil == null)
-			nil = instanceOf("UndefinedObject");
+		if (nil == null) {
+			nil = classNamed("UndefinedObject").$send("new");
+		}
 		return nil;
 	}
 
-	private static ProtoObject instanceOf(String className) {
-		try {
-			return (ProtoObject) basicClassNamed("st.redline." + className).newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+//	private static ProtoObject instanceOf(String className) {
+//		try {
+//			return (ProtoObject) basicClassNamed("st.redline." + className).newInstance();
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
 
 	private static Class basicClassNamed(String className) {
 		try {

@@ -115,6 +115,64 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitLocalVariable("this", "L"+classQualifiedSubclass+";", null, l0, l2, 0);
 		mv.visitMaxs(4, 1);
 		mv.visitEnd();
+
+		if (subclass.equals("String") || subclass.equals("Symbol")) {
+			mv = classClassWriter.visitMethod(ACC_PUBLIC, "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;", null, null);
+			mv.visitCode();
+			l0 = new Label();
+			mv.visitLabel(l0);
+			mv.visitLineNumber(21, l0);
+			mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+			mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
+			mv.visitInsn(DUP);
+			mv.visitLdcInsn("$fromPrimitive: ");
+			mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "(Ljava/lang/String;)V");
+			mv.visitVarInsn(ALOAD, 1);
+			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
+			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+			mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
+			l1 = new Label();
+			mv.visitLabel(l1);
+			mv.visitLineNumber(22, l1);
+			mv.visitVarInsn(ALOAD, 0);
+			mv.visitMethodInsn(INVOKEVIRTUAL, classQualifiedSubclass, "$new", "()Lst/redline/ProtoObject;");
+			mv.visitTypeInsn(CHECKCAST, qualifiedSubclass);
+			mv.visitVarInsn(ASTORE, 2);
+			l2 = new Label();
+			mv.visitLabel(l2);
+			mv.visitLineNumber(23, l2);
+			mv.visitVarInsn(ALOAD, 2);
+			Label l3 = new Label();
+			mv.visitLabel(l3);
+			mv.visitTypeInsn(NEW, "java/lang/StringBuffer");
+			mv.visitInsn(DUP);
+			mv.visitVarInsn(ALOAD, 1);
+			Label l4 = new Label();
+			mv.visitJumpInsn(IFNONNULL, l4);
+			mv.visitLdcInsn("");
+			Label l5 = new Label();
+			mv.visitJumpInsn(GOTO, l5);
+			mv.visitLabel(l4);
+			mv.visitFrame(Opcodes.F_FULL, 3, new Object[] {classQualifiedSubclass, "java/lang/Object", qualifiedSubclass}, 3, new Object[] {qualifiedSubclass, l3, l3});
+			mv.visitVarInsn(ALOAD, 1);
+			mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Object", "toString", "()Ljava/lang/String;");
+			mv.visitLabel(l5);
+			mv.visitFrame(Opcodes.F_FULL, 3, new Object[] {classQualifiedSubclass, "java/lang/Object", qualifiedSubclass}, 4, new Object[] {qualifiedSubclass, l3, l3, "java/lang/String"});
+			mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuffer", "<init>", "(Ljava/lang/String;)V");
+			mv.visitFieldInsn(PUTFIELD, qualifiedSubclass, "primitiveValue", "Ljava/lang/StringBuffer;");
+			Label l6 = new Label();
+			mv.visitLabel(l6);
+			mv.visitLineNumber(24, l6);
+			mv.visitVarInsn(ALOAD, 2);
+			mv.visitInsn(ARETURN);
+			Label l7 = new Label();
+			mv.visitLabel(l7);
+			mv.visitLocalVariable("this", "L"+classQualifiedSubclass+";", null, l0, l7, 0);
+			mv.visitLocalVariable("value", "Ljava/lang/Object;", null, l0, l7, 1);
+			mv.visitLocalVariable("object", "L"+qualifiedSubclass+";", null, l2, l7, 2);
+			mv.visitMaxs(4, 3);
+			mv.visitEnd();
+		}
 	}
 
 	private void defineInstanceHelpers() {
@@ -437,6 +495,9 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		} else if (subclass.equals("Metaclass")) {
 			fv = classWriter.visitField(ACC_PRIVATE, "classWeAreMetaFor", "Lst/redline/Class;", null, null);
 			fv.visitEnd();
+		} else if (subclass.equals("String") || subclass.equals("Symbol")) {
+			fv = classWriter.visitField(ACC_PUBLIC, "primitiveValue", "Ljava/lang/StringBuffer;", null, null);
+			fv.visitEnd();
 		}
 	}
 
@@ -634,8 +695,8 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitLineNumber(stringLiteral.lineNumber(), l0);
 		mv.visitLdcInsn("String");
 		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classNamed", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
-//		mv.visitLdcInsn(stringLiteral.toString());
-//		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;");
+		mv.visitLdcInsn(stringLiteral.toString());
+		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;");
 	}
 
 	private void emitClassLoopkup(MethodVisitor mv, Variable variable) {

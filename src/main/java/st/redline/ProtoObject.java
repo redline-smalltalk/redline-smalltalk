@@ -13,6 +13,7 @@ public abstract class ProtoObject {
 
 	public abstract ProtoObject $class();
 	public abstract ProtoObject $new();
+	public abstract ProtoObject $fromPrimitive(java.lang.Object value);
 
 	public ProtoObject() {
 	}
