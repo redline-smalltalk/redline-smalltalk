@@ -700,7 +700,15 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitLiteral(MethodVisitor mv, ArraySymbolLiteral arraySymbolLiteral) {
-		throw new RuntimeException("TODO - handle array symbol literal");
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(arraySymbolLiteral.lineNumber(), l0);
+		mv.visitLdcInsn("Array");
+		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classNamed", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
+		mv.visitLdcInsn("new");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$send", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
+		if (arraySymbolLiteral.hasElements())
+			throw new RuntimeException("TODO - handle array symbol literal - with elements");
 	}
 
 	private void emitLiteral(MethodVisitor mv, SymbolLiteral symbolLiteral) {

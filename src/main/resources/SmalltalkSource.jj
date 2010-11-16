@@ -499,13 +499,13 @@ Literal literal():
     token = <STRING>
     { return new StringLiteral(token); }
     |
-    <HASH>
+    token = <HASH>
     (
         token = <STRING>
         { return new StringSymbolLiteral(token); }
         |
         <LEFT_PARENTHESES> (literalArray = literalArray())? <RIGHT_PARENTHESES>
-        { return new ArraySymbolLiteral(literalArray); }
+        { return new ArraySymbolLiteral(literalArray, token); }
         |
         token = <IDENTIFIER>
         { return new SymbolLiteral(token); }
