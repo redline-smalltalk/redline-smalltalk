@@ -757,7 +757,8 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitCode();
 		if (method.pragmas()[0] != null)
 			emitPragmas(mv, method.pragmas()[0]);
-		emitTemporaries(mv, method.temporaries());
+		if (method.temporaries() != null)
+			emitTemporaries(mv, method.temporaries());
 		if (method.pragmas()[1] != null)
 			emitPragmas(mv, method.pragmas()[1]);
 		if (method.statements() != null) {
@@ -810,7 +811,11 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitTemporaries(MethodVisitor mv, List<Variable> variables) {
-		System.out.println("TODO - Temporaries");
+		// We dont do anything on the declaration of a temporary.
+		// Outputing for visual validation only, to ensure offset is after args
+		// and if no args offset starts at 1.
+		for (Variable variable : variables)
+			System.out.println("temp var: " + variable + " @ " + variable.offset());
 	}
 
 	private void emitPragmas(MethodVisitor mv, Pragma pragma) {

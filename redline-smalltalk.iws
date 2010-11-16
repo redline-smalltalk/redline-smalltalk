@@ -60,64 +60,48 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ExceptionSet.st" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/ExceptionSet.st">
+      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="815" column="44" selection-start="36256" selection-end="36256" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Variable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Variable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="30" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Exception.st" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Exception.st">
+      <file leaf-file-name="SmalltalkSource.jj" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="648" column="0" selection-start="17762" selection-end="17762" vertical-scroll-proportion="0.36506024">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Collection.st" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Collection.st">
+      <file leaf-file-name="ParsedSource.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ParsedSource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="12" selection-start="370" selection-end="370" vertical-scroll-proportion="0.0">
+            <state line="192" column="23" selection-start="5068" selection-end="5068" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Boolean.st" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Boolean.st">
+      <file leaf-file-name="Method.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Method.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArrayedCollection.st" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/ArrayedCollection.st">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SequenceableCollection.st" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/SequenceableCollection.st">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="346" selection-end="346" vertical-scroll-proportion="0.18106508">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Array.st" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Array.st">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="6" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0">
+            <state line="8" column="32" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -138,7 +122,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/smalltalk/False.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/Class.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/ClassDescription.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/Metaclass.st" />
@@ -150,10 +133,11 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/TestCase.st" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/SymbolLiteral.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ArraySymbolLiteral.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/Array.st" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ParsedSource.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj" />
       </list>
     </option>
   </component>
@@ -192,9 +176,9 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Favorites" />
       <pane id="Scope" />
+      <pane id="Favorites" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -498,7 +482,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1686" height="1019" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -511,7 +495,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22869405" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16860822" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -556,48 +540,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Script.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="49" selection-start="2498" selection-end="2498" vertical-scroll-proportion="0.63493973">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="69" selection-start="469" selection-end="469" vertical-scroll-proportion="0.020118343">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Symbol.st">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="97" selection-start="278" selection-end="278" vertical-scroll-proportion="0.16094674">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ArrayLiteral.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.040236685">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="507" column="59" selection-start="13920" selection-end="13920" vertical-scroll-proportion="0.5120482">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/SymbolLiteral.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="21" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0">
@@ -612,23 +554,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="707" column="28" selection-start="31770" selection-end="31770" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/smalltalk/ExceptionSet.st">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Exception.st">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -642,7 +568,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Boolean.st">
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/ArrayedCollection.st">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -656,16 +582,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/ArrayedCollection.st">
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/SequenceableCollection.st">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="346" selection-end="346" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Class.st">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/SequenceableCollection.st">
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Object.st">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="346" selection-end="346" vertical-scroll-proportion="0.18106508">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Boolean.st">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="16" selection-start="325" selection-end="325" vertical-scroll-proportion="0.18106508">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Exception.st">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Variable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="30" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ParsedSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="192" column="23" selection-start="5068" selection-end="5068" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Method.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="32" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="815" column="44" selection-start="36256" selection-end="36256" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="648" column="0" selection-start="17762" selection-end="17762" vertical-scroll-proportion="0.36506024">
           <folding />
         </state>
       </provider>

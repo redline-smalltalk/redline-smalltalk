@@ -63,7 +63,7 @@ PARSER_BEGIN(SourceParser)
             return temporaryOffset;
         }
         public void resetTemporaryOffset() {
-            temporaryOffset = 0;
+            temporaryOffset = argumentOffset;
         }
     }
 PARSER_END(SourceParser)
@@ -610,7 +610,7 @@ void binarySymbol(String expected):
 Block block():
 {
     Block block = new Block(); List<Variable> blockArguments; List<Variable> blockTemporaries; Statements statements;
-    enterBlockContext();
+    enterBlockContext(); resetTemporaryOffset();
 }
 {
     <LEFT_SQUARE_BRACKET>
@@ -638,8 +638,7 @@ Block block():
 }
 
 List<Variable> blockArguments():
-{ List<Variable> arguments = new ArrayList<Variable>(); Variable argument;
-  resetTemporaryOffset(); }
+{ List<Variable> arguments = new ArrayList<Variable>(); Variable argument; }
 {
     <COLON> argument = temporary()
     { arguments.add(argument); }
@@ -655,8 +654,7 @@ List<Variable> blockArguments():
 }
 
 List<Variable> blockTemporaries():
-{ List<Variable> temporaries = new ArrayList<Variable>(); Variable temporary;
-  resetTemporaryOffset(); }
+{ List<Variable> temporaries = new ArrayList<Variable>(); Variable temporary; }
 {
     LOOKAHEAD({ getToken(1).kind == PIPE && getToken(2).kind == IDENTIFIER && !isDefinedVariable(getToken(2)) })
     <PIPE> temporary = temporary()
