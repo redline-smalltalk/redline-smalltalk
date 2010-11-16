@@ -764,7 +764,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		if (method.statements() != null) {
 			emitStatements(mv, method.statements());
 		} else {
-			// answer receiver if no statements. 
+			// answer receiver if no statements.
 			mv.visitVarInsn(ALOAD, 0);
 		}
 		mv.visitInsn(ARETURN);
@@ -779,11 +779,44 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 	private void emitExpression(MethodVisitor mv, Expression expression) {
 		int superSendsBeforeCount = superSend.size();
-		if (expression.isPrimary())
-			emitPrimary(mv, expression.primary());
-		emitCascade(mv, expression.cascade());
+		if (expression instanceof AssignmentExpression) {
+			emitExpression(mv, (AssignmentExpression) expression);
+		} else {
+			if (expression.isPrimary())
+				emitPrimary(mv, expression.primary());
+			emitCascade(mv, expression.cascade());
+		}
 		if (superSendsBeforeCount != superSend.size())
 			throw new RuntimeException("A 'super' send was not handled.");
+	}
+
+	private void emitExpression(MethodVisitor mv, AssignmentExpression expression) {
+		Expression rightOfAssignment = expression.expression();
+		emitExpression(mv, rightOfAssignment);
+		if (rightOfAssignment instanceof AssignmentExpression)
+			throw new RuntimeException("Need to support multiple assignment. v1 := v2 := etc.");
+		Variable variable = expression.variable();
+		if (variable instanceof Argument) {
+			emitStore(mv, (Argument) variable);
+		} else if (variable instanceof Temporary) {
+			emitStore(mv, (Temporary) variable);
+		} else {
+			throw new RuntimeException("Need to handle AssignmentExpression Variable: " + variable.getClass());
+		}
+	}
+
+	private void emitStore(MethodVisitor mv, Argument argument) {
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(argument.lineNumber(), l0);
+		mv.visitVarInsn(ASTORE, argument.offset());
+	}
+
+	private void emitStore(MethodVisitor mv, Temporary temporary) {
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(temporary.lineNumber(), l0);
+		mv.visitVarInsn(ASTORE, temporary.offset());
 	}
 
 	private void emitCascade(MethodVisitor mv, Cascade cascade) {

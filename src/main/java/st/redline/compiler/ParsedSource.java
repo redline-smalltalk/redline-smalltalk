@@ -183,7 +183,6 @@ public class ParsedSource implements Translatable {
 
 	public void add(List<Variable> temporaries) {
 		this.temporaries = temporaries;
-		System.out.println("**** TEMPORARIES **** " + temporaries);
 	}
 
 	public void add(Statements statements) {

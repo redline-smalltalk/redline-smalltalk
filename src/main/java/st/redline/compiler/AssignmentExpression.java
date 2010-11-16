@@ -10,4 +10,12 @@ public class AssignmentExpression extends Expression {
 		this.variable = variable;
 		this.expression = expression;
 	}
+
+	public Variable variable() {
+		return variable;
+	}
+
+	public Expression expression() {
+		return expression;
+	}
 }
