@@ -60,10 +60,28 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="664" column="77" selection-start="30049" selection-end="30049" vertical-scroll-proportion="0.33333334">
+            <state line="7" column="13" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScriptClassFileGenerator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="13" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassFileGenerator.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="0" selection-start="667" selection-end="667" vertical-scroll-proportion="0.4116223">
               <folding />
             </state>
           </provider>
@@ -129,7 +147,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/smalltalk/ClassDescription.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/Metaclass.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/SequenceableCollection.st" />
         <option value="$PROJECT_DIR$/src/main/smalltalk/String.st" />
@@ -145,6 +162,7 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ParsedSource.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/AssignmentExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java" />
       </list>
     </option>
   </component>
@@ -183,9 +201,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -316,6 +333,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -333,8 +351,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -381,7 +399,7 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" adl_options="" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" class_name="" debugger_sdk="Module SDK" html_or_swf_file_path="" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" port="0" run_mode="HtmlOrSwfFile" scope="Class" socket_policy_port="0" url_to_launch="http://">
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" class_name="" html_or_swf_file_path="" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" port="0" run_mode="HtmlOrSwfFile" scope="Class" socket_policy_port="0" url_to_launch="http://">
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -530,7 +548,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1167" extended-state="0" />
+    <frame x="0" y="0" width="1686" height="1019" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -544,7 +562,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16836461" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21275291" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -589,16 +607,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/SymbolLiteral.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="21" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ArraySymbolLiteral.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="36" selection-start="418" selection-end="418" vertical-scroll-proportion="0.36213017" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/smalltalk/ExceptionSet.st">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -630,9 +638,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Expression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Exception.st">
@@ -640,9 +646,19 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Variable.java">
+    <entry file="jar://$PROJECT_DIR$/lib/prod/asm-all-3.2.jar!/org/objectweb/asm/Opcodes.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+        <state line="101" column="8" selection-start="2417" selection-end="2417" vertical-scroll-proportion="0.3326425" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Cascade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="442" column="57" selection-start="12219" selection-end="12224" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -654,37 +670,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Variable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/AssignmentExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="17" selection-start="400" selection-end="400" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/prod/asm-all-3.2.jar!/org/objectweb/asm/Opcodes.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="8" selection-start="2417" selection-end="2417" vertical-scroll-proportion="0.3326425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="442" column="57" selection-start="12219" selection-end="12224" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Cascade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="17" column="17" selection-start="400" selection-end="400" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="664" column="77" selection-start="30049" selection-end="30049" vertical-scroll-proportion="0.33333334">
+        <state line="7" column="13" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="13" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="667" selection-end="667" vertical-scroll-proportion="0.4116223">
           <folding />
         </state>
       </provider>

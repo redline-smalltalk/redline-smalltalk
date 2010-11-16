@@ -19,8 +19,10 @@ public class ClassFileGenerator extends Generator {
 
 	private void writeClassFile() {
 		byte[][] bytes = definedClassBytes();
-		writeClassFile(bytes[1], definedPackageName() + definedClassName() + "$mClass");
 		writeClassFile(bytes[0], definedPackageName() + definedClassName());
+		writeClassFile(bytes[1], definedPackageName() + definedClassName() + "$mClass");
+		for (int i = 2; i < bytes.length; i++)
+			writeClassFile(bytes[i], definedPackageName() + definedClassName() + "$block" + i);
 	}
 
 	private void writeClassFile(byte[] bytes, String filename) {
