@@ -7,7 +7,9 @@ public class Smalltalk {
 
 	private static Map<String, ProtoObject> classesByName = new HashMap<String, ProtoObject>();
 	private static Map<java.lang.Class, ProtoObject> classesByPrimitiveClass = new HashMap<java.lang.Class, ProtoObject>();
-	private static ProtoObject nil = null;
+	private static ProtoObject _nil = null;
+	private static ProtoObject _true = null;
+	private static ProtoObject _false = null;
 
 	public static void register(java.lang.Class primitiveClass, ProtoObject objectClass) {
 		String name = primitiveClass.getName().substring(primitiveClass.getName().lastIndexOf('.')+1);
@@ -29,11 +31,25 @@ public class Smalltalk {
 		return classesByPrimitiveClass.get(primitiveClass);
 	}
 
-	public static ProtoObject nil() {
-		if (nil == null) {
-			nil = classNamed("UndefinedObject").$send("new");
+	public static ProtoObject $nil() {
+		if (_nil == null) {
+			_nil = classNamed("UndefinedObject").$send("new");
 		}
-		return nil;
+		return _nil;
+	}
+
+	public static ProtoObject $true() {
+		if (_true == null) {
+			_true = classNamed("True").$send("new");
+		}
+		return _true;
+	}
+
+	public static ProtoObject $false() {
+		if (_false == null) {
+			_false = classNamed("False").$send("new");
+		}
+		return _false;
 	}
 
 //	private static ProtoObject instanceOf(String className) {

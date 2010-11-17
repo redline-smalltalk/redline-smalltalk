@@ -691,7 +691,11 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		if (value.equals("self")) {
 			mv.visitVarInsn(ALOAD, 0);
 		} else if (value.equals("nil")) {
-			mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "nil", "()Lst/redline/ProtoObject;");
+			mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "$nil", "()Lst/redline/ProtoObject;");
+		} else if (value.equals("true")) {
+			mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "$true", "()Lst/redline/ProtoObject;");
+		} else if (value.equals("false")) {
+			mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "$false", "()Lst/redline/ProtoObject;");
 		} else if (value.equals("super")) {
 			superSend.push(Boolean.TRUE);
 		} else {

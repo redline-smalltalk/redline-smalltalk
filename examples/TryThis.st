@@ -10,6 +10,6 @@ stuff to try.!
 !TryThis methodsFor: 'as yet unclassified' stamp: 'jcl 19/11/2010 09:17'!
 placeholder
 	"Answer."
-	^ []
+	^ false
 ! !
 
