@@ -60,73 +60,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="13" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScriptClassFileGenerator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ScriptClassFileGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="13" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassFileGenerator.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="667" selection-end="667" vertical-scroll-proportion="0.4116223">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Cascade.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Cascade.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SmalltalkSource.jj" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="442" column="57" selection-start="12219" selection-end="12224" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Argument.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Argument.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Variable.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Variable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AssignmentExpression.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/AssignmentExpression.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="17" selection-start="400" selection-end="400" vertical-scroll-proportion="0.0">
+            <state line="11" column="44" selection-start="317" selection-end="317" vertical-scroll-proportion="0.1408284">
               <folding />
             </state>
           </provider>
@@ -607,11 +544,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/ExceptionSet.st">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Class.st">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -653,33 +585,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Cascade.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0" />
+        <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.020118343">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="442" column="57" selection-start="12219" selection-end="12224" vertical-scroll-proportion="0.0">
+        <state line="442" column="57" selection-start="12219" selection-end="12224" vertical-scroll-proportion="0.020481927">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Argument.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.040236685">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Variable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.020118343">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/AssignmentExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="17" selection-start="400" selection-end="400" vertical-scroll-proportion="0.0" />
+        <state line="17" column="17" selection-start="400" selection-end="400" vertical-scroll-proportion="0.34201184">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
@@ -698,7 +634,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="667" selection-end="667" vertical-scroll-proportion="0.4116223">
+        <state line="24" column="0" selection-start="667" selection-end="667" vertical-scroll-proportion="0.40236688">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="44" selection-start="317" selection-end="317" vertical-scroll-proportion="0.1408284">
           <folding />
         </state>
       </provider>
