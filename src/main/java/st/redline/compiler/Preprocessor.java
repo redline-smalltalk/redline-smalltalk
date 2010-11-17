@@ -23,7 +23,7 @@ public class Preprocessor {
 	// The preprocessor looks for the start of the class comment which is any
 	// sequence of characters terminated with a "!".
 	// I have had trouble getting the parser to handle these "chunks" so Im
-	// adding a "@@" before the chunk to make it easier for the parser.
+	// removing them.
 	// I'd like to avoid this but will need to revisit later.
 	public String preprocess() {
 		Pattern commentStartHeader = Pattern.compile(PATTERN_CLASSCOMMENT_START);
@@ -42,10 +42,16 @@ public class Preprocessor {
 		if (contents.charAt(index) == '!') {
 			index = skipCommentStampChunk(index);
 		}
+
+		// if we dont have a commentStamp, we dont need to continue.
+		if (index == -1)
+			return contents;
+
 		// skip any whitespace we may have.
 		while (Character.isWhitespace(contents.charAt(index))) {
 			index++;
 		}
+
 		// Do we have a class comment?
 		if (contents.charAt(index) != '!') {
 			StringBuffer newSource = new StringBuffer(contents.substring(0, index));
@@ -67,6 +73,7 @@ public class Preprocessor {
 	}
 
 	private int skipCommentStampChunk(int index) {
+		int mark = index;
 		index++;
 		// find start of "commentStamp:" comment.
 		while (contents.charAt(index) != '!') {
@@ -76,6 +83,9 @@ public class Preprocessor {
 		while (contents.charAt(index) != '!') {
 			index++;
 		}
+		// check we just skipped the right thing.
+		if (contents.substring(mark, index).indexOf("commentStamp:") == -1)
+			return -1;
 		index++;
 		return index;
 	}
