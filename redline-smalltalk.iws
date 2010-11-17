@@ -72,7 +72,7 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="697" column="0" selection-start="31412" selection-end="31412" vertical-scroll-proportion="0.6927711">
+            <state line="697" column="42" selection-start="31445" selection-end="31445" vertical-scroll-proportion="0.56987953">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -663,7 +663,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="697" column="0" selection-start="31412" selection-end="31412" vertical-scroll-proportion="0.6927711">
+        <state line="697" column="42" selection-start="31445" selection-end="31445" vertical-scroll-proportion="0.56987953">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
