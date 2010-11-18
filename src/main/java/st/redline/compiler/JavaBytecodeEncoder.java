@@ -657,9 +657,32 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			emitClassLoopkup(mv, variable);
 		} else if (variable instanceof Argument) {
 			emitArgumentReference(mv, (Argument) variable);
+		} else if (variable instanceof InstanceField) {
+			emitFieldLoad(mv, (InstanceField) variable);
+		} else if (variable instanceof ClassField) {
+			emitFieldLoad(mv, (ClassField) variable);
 		} else {
 			throw new RuntimeException("Need to handle other types of VARIABLE: " + variable.getClass() + " " + variable.toString());
 		}
+	}
+
+	private void emitFieldLoad(MethodVisitor mv, ClassField classField) {
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(classField.lineNumber(), l0);
+		mv.visitFieldInsn(GETSTATIC, qualifiedSubclass, "$class", "L"+classQualifiedSubclass+";");
+		mv.visitFieldInsn(GETFIELD, classQualifiedSubclass, classField.toString(), "Lst/redline/ProtoObject;");
+	}
+
+	private void emitFieldLoad(MethodVisitor mv, InstanceField instanceField) {
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(instanceField.lineNumber(), l0);
+		mv.visitVarInsn(ALOAD, 0);
+		if (instanceField.onInstance())
+			mv.visitFieldInsn(GETFIELD, qualifiedSubclass, instanceField.toString(), "Lst/redline/ProtoObject;");
+		else
+			mv.visitFieldInsn(GETFIELD, classQualifiedSubclass, instanceField.toString(), "Lst/redline/ProtoObject;");
 	}
 
 	private void emitArgumentReference(MethodVisitor mv, Argument variable) {

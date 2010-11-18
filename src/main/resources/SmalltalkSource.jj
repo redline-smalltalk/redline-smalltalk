@@ -21,6 +21,9 @@ PARSER_BEGIN(SourceParser)
         public void outputPath(String outputPath) {
             parsedSource.outputPath(outputPath);
         }
+        public boolean isClassSection() {
+            return parsedSource.isClassSection();
+        }
         public boolean isDefinedVariable(Token token) {
             return parsedSource.isDefinedVariable(token);
         }
@@ -35,9 +38,6 @@ PARSER_BEGIN(SourceParser)
         }
         public void defineVariable(Variable variable) {
             parsedSource.defineVariable(variable);
-        }
-        public void defineVariables(Token token) {
-            parsedSource.defineVariables(token);
         }
         public void enterMethodContext() {
             parsedSource.enterMethodContext();
@@ -708,7 +708,10 @@ Variable variable():
         if (isDefinedVariable(identifier)) {
             variable = definedVariable(identifier);
             if (variable != null)
-                return variable;
+                if (variable.onInstance() && isClassSection())
+                    throw new RuntimeException("Reference to variable in instance by Class instance '" + identifier + "'");
+                else
+                    return variable;
             throw new RuntimeException("failed to get variable object for identifier '" + identifier + "'");
         }
 

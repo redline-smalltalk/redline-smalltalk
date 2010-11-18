@@ -13,6 +13,9 @@ public class Variable {
 	}
 
 	public String toString() {
+		String temp = name.toString();
+		if (temp.startsWith("'"))
+			return temp.substring(1, temp.length() - 1);
 		return name.toString();
 	}
 
@@ -49,6 +52,18 @@ public class Variable {
 	}
 
 	public boolean isArgument() {
+		return false;
+	}
+
+	public boolean isInstanceField() {
+		return false;
+	}
+
+	public boolean isClassField() {
+		return false;
+	}
+
+	public boolean onInstance() {
 		return false;
 	}
 }

@@ -1,6 +1,6 @@
 Object subclass: #TryThis
-	instanceVariableNames: ''
-	classVariableNames: ''
+	instanceVariableNames: 'instVar'
+	classVariableNames: 'classVar'
 	poolDictionaries: ''
 	category: 'Kernel-Objects'!
 
@@ -10,6 +10,17 @@ stuff to try.!
 !TryThis methodsFor: 'as yet unclassified' stamp: 'jcl 19/11/2010 09:17'!
 placeholder
 	"Answer."
-	^ []
+	^ classVar
+! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+TryThis class
+	instanceVariableNames: 'classInstVar'!
+
+!TryThis class methodsFor: 'as yet unclassified' stamp: 'jcl 19/11/2010 09:17'!
+classPlaceholder
+	"Answer nil."
+	^ classInstVar
 ! !
 

@@ -98,13 +98,16 @@ public class ParsedSource implements Translatable {
 		defineVariable(variable.toString(), variable);
 	}
 
-	public void defineVariables(Token input) {
+	public void defineVariables(Token input, boolean instance, boolean onInstance) {
 		int offset = 0;
 		if (input != null)
 			for (String string : input.toString().split(" "))
 				if (string.length() > 0) {
 					offset += 1;
-					defineVariable(string, new Variable(input, offset));
+					if (instance)
+						defineVariable(string, new InstanceField(input, offset, onInstance));
+					else
+						defineVariable(string, new ClassField(input, offset));
 				}
 	}
 
@@ -146,12 +149,13 @@ public class ParsedSource implements Translatable {
 			System.err.println("Warning: overwriting class definition.");
 
 		this.classDefinition = classDefinition;
-		defineVariables(classDefinition.rawInstanceVariableNames());
-		defineVariables(classDefinition.rawClassVariableNames());
+		defineVariables(classDefinition.rawInstanceVariableNames(), true, true);
+		defineVariables(classDefinition.rawClassVariableNames(), false, true);
 	}
 
 	public void add(ClassInstanceVariables classInstanceVariables) {
 		this.classInstanceVariables = classInstanceVariables;
+		defineVariables(classInstanceVariables.instanceVariableNames(), true, false);
 	}
 
 	public boolean hasClassDefinition() {
@@ -204,6 +208,10 @@ public class ParsedSource implements Translatable {
 		pragmas = new Pragma[2];
 		temporaries = null;
 		statements = null;
+	}
+
+	public boolean isClassSection() {
+		return classSection;
 	}
 
 	public void apply(Translator translator) {

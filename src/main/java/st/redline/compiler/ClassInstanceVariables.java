@@ -13,4 +13,8 @@ public class ClassInstanceVariables {
 	public String[] names() {
 		return instanceVariableNames.toString().split(" ");
 	}
+
+	public Token instanceVariableNames() {
+		return instanceVariableNames;
+	}
 }
