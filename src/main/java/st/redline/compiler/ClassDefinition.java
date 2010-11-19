@@ -46,10 +46,14 @@ public class ClassDefinition {
 	}
 
 	public String[] classVariableNames() {
+		if (rawClassVariableNames() == null)
+			return new String[0];
 		return split(rawClassVariableNames().toString());
 	}
 
 	public String[] instanceVariableNames() {
+		if (rawInstanceVariableNames() == null)
+			return new String[0];
 		return split(rawInstanceVariableNames().toString());
 	}
 

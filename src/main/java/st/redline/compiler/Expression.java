@@ -39,4 +39,8 @@ public class Expression {
 	public Cascade cascade() {
 		return cascade;
 	}
+
+	public int lineNumber() {
+		return primary.lineNumber();
+	}
 }

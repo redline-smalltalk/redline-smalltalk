@@ -18,4 +18,8 @@ public class AssignmentExpression extends Expression {
 	public Expression expression() {
 		return expression;
 	}
+
+	public int lineNumber() {
+		return expression.lineNumber();
+	}
 }

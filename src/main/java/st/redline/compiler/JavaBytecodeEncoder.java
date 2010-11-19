@@ -60,7 +60,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		classClassWriter = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
 	}
 
-	public void defineClass(ClassDefinition classDefinition, String sourcePath) {
+	public void defineClass(ClassDefinition classDefinition, ClassInstanceVariables classInstanceVariables, String sourcePath) {
 		this.subclass = classDefinition.subclass();
 		this.sourcePath = sourcePath;
 		qualifiedSubclass = DEFAULT_FILE_PACKAGE + subclass;
@@ -70,17 +70,18 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			classQualifiedSuperclass = DEFAULT_FILE_PACKAGE + "Class";
 		else
 			classQualifiedSuperclass = DEFAULT_FILE_PACKAGE + classDefinition.superclass() + "$mClass";
-		defineClass(sourcePath);
+		String[] classInstanceVariableNames = classInstanceVariables != null ? classInstanceVariables.names() : new String[0];
+		defineClass(sourcePath, classDefinition.instanceVariableNames(), classDefinition.classVariableNames(), classInstanceVariableNames);
 	}
 
-	private void defineClass(String sourcePath) {
+	private void defineClass(String sourcePath, String[] instanceVariableNames, String[] classVariableNames, String[] classInstanceVariableNames) {
 		defineInstanceClass(sourcePath, classWriter, qualifiedSubclass, qualifiedSuperclass);
-		defineInstanceFields();
+		defineInstanceFields(instanceVariableNames);
 		defineInstanceInitialization();
 		defineInstanceHelpers();
 
 		defineClassClass(sourcePath, classClassWriter, classQualifiedSubclass, classQualifiedSuperclass);
-		defineClassFields();
+		defineClassFields(classVariableNames, classInstanceVariableNames);
 		defineClassInitialization();
 		defineClassHelpers();
 
@@ -499,12 +500,17 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		}
 	}
 
-	private void defineClassFields() {
+	private void defineClassFields(String[] classVariableNames, String[] classInstanceVariableNames) {
+		defineFields(classClassWriter, classVariableNames);
+		defineFields(classClassWriter, classInstanceVariableNames);
 	}
 
-	private void defineInstanceFields() {
+	private void defineInstanceFields(String[] instanceVariableNames) {
 		FieldVisitor fv = classWriter.visitField(ACC_PUBLIC + ACC_FINAL + ACC_STATIC, "$class", "L"+classQualifiedSubclass+";", null, null);
 		fv.visitEnd();
+
+		defineFields(classWriter, instanceVariableNames);
+
 		if (subclass.equals("Class")) {
 			fv = classWriter.visitField(ACC_PROTECTED, "metaclass", "Lst/redline/Metaclass;", null, null);
 			fv.visitEnd();
@@ -515,6 +521,13 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			fv.visitEnd();
 		} else if (subclass.equals("String") || subclass.equals("Symbol")) {
 			fv = classWriter.visitField(ACC_PUBLIC, "primitiveValue", "Ljava/lang/StringBuffer;", null, null);
+			fv.visitEnd();
+		}
+	}
+
+	private void defineFields(ClassWriter classWriter, String[] fields) {
+		for (String field : fields) {
+			FieldVisitor fv = classWriter.visitField(ACC_PUBLIC, field, "Lst/redline/ProtoObject;", null, null);
 			fv.visitEnd();
 		}
 	}
@@ -818,18 +831,45 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitExpression(MethodVisitor mv, AssignmentExpression expression) {
+		Variable variable = expression.variable();
+
+		// prologue to field store. See additional handling below.
+		if (variable instanceof InstanceField) {
+			mv.visitVarInsn(ALOAD, 0);
+		} else if (variable instanceof ClassField) {
+			mv.visitFieldInsn(GETSTATIC, qualifiedSubclass, "$class", "L"+classQualifiedSubclass+";");
+		}
+
 		Expression rightOfAssignment = expression.expression();
 		emitExpression(mv, rightOfAssignment);
 		if (rightOfAssignment instanceof AssignmentExpression)
 			throw new RuntimeException("Need to support multiple assignment. v1 := v2 := etc.");
-		Variable variable = expression.variable();
+
 		if (variable instanceof Argument) {
 			emitStore(mv, (Argument) variable);
 		} else if (variable instanceof Temporary) {
 			emitStore(mv, (Temporary) variable);
+		} else if (variable instanceof InstanceField) {
+			emitStore(mv, (InstanceField) variable);
+		} else if (variable instanceof ClassField) {
+			emitStore(mv, (ClassField) variable);
 		} else {
 			throw new RuntimeException("Need to handle AssignmentExpression Variable: " + variable.getClass());
 		}
+	}
+
+	private void emitStore(MethodVisitor mv, ClassField classField) {
+		mv.visitFieldInsn(PUTFIELD, classQualifiedSubclass, classField.toString(), "Lst/redline/ProtoObject;");
+	}
+
+	private void emitStore(MethodVisitor mv, InstanceField instanceField) {
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(instanceField.lineNumber(), l0);
+		if (instanceField.onInstance())
+			mv.visitFieldInsn(PUTFIELD, qualifiedSubclass, instanceField.toString(), "Lst/redline/ProtoObject;");
+		else
+			mv.visitFieldInsn(PUTFIELD, classQualifiedSubclass, instanceField.toString(), "Lst/redline/ProtoObject;");
 	}
 
 	private void emitStore(MethodVisitor mv, Argument argument) {
