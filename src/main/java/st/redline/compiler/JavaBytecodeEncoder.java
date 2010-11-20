@@ -803,11 +803,12 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			emitPragmas(mv, method.pragmas()[1]);
 		if (method.statements() != null) {
 			emitStatements(mv, method.statements());
-		} else {
-			// answer receiver if no statements.
-			mv.visitVarInsn(ALOAD, 0);
 		}
+
+		// default answer of a method is the receiver.
+		mv.visitVarInsn(ALOAD, 0);
 		mv.visitInsn(ARETURN);
+
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();
 	}
@@ -825,6 +826,10 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			if (expression.isPrimary())
 				emitPrimary(mv, expression.primary());
 			emitCascade(mv, expression.cascade());
+
+			// answer top of stack if this is ^ <expression> 
+			if (expression.isAnswered())
+				mv.visitInsn(ARETURN);
 		}
 		if (superSendsBeforeCount != superSend.size())
 			throw new RuntimeException("A 'super' send was not handled.");

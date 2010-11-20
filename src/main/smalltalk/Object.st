@@ -1,6 +1,6 @@
 
 ProtoObject subclass: #Object
-	instanceVariableNames: ''
+	instanceVariableNames: 'instVar'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Kernel-Objects'!
@@ -24,6 +24,13 @@ by certain subsystems or applications, or to respond to certain general test mes
 initialize
 	"Subclasses should redefine this method to perform initializations on instance creation"
 ! !
+
+!Object methodsFor: 'initialize-release' stamp: 'jcl 19/11/2010 09:17'!
+test
+    "This is a test method that should be deleted"
+    instVar := nil
+! !
+
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
