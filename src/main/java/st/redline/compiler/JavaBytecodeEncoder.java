@@ -666,31 +666,35 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 	private void emitPrimary(MethodVisitor mv, PrimaryVariable primaryVariable) {
 		Variable variable = primaryVariable.variable();
+		int lineNumber = variable.lineNumber();
+		if (variable instanceof ReferenceToVariable)
+			variable = ((ReferenceToVariable) variable).referencedVariable();
+
 		if (variable.isClass()) {
-			emitClassLoopkup(mv, variable);
+			emitClassLoopkup(mv, variable, lineNumber);
 		} else if (variable instanceof Argument) {
-			emitArgumentReference(mv, (Argument) variable);
+			emitArgumentReference(mv, (Argument) variable, lineNumber);
 		} else if (variable instanceof InstanceField) {
-			emitFieldLoad(mv, (InstanceField) variable);
+			emitFieldLoad(mv, (InstanceField) variable, lineNumber);
 		} else if (variable instanceof ClassField) {
-			emitFieldLoad(mv, (ClassField) variable);
+			emitFieldLoad(mv, (ClassField) variable, lineNumber);
 		} else {
 			throw new RuntimeException("Need to handle other types of VARIABLE: " + variable.getClass() + " " + variable.toString());
 		}
 	}
 
-	private void emitFieldLoad(MethodVisitor mv, ClassField classField) {
+	private void emitFieldLoad(MethodVisitor mv, ClassField classField, int lineNumber) {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
-		mv.visitLineNumber(classField.lineNumber(), l0);
+		mv.visitLineNumber(lineNumber, l0);
 		mv.visitFieldInsn(GETSTATIC, qualifiedSubclass, "$class", "L"+classQualifiedSubclass+";");
 		mv.visitFieldInsn(GETFIELD, classQualifiedSubclass, classField.toString(), "Lst/redline/ProtoObject;");
 	}
 
-	private void emitFieldLoad(MethodVisitor mv, InstanceField instanceField) {
+	private void emitFieldLoad(MethodVisitor mv, InstanceField instanceField, int lineNumber) {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
-		mv.visitLineNumber(instanceField.lineNumber(), l0);
+		mv.visitLineNumber(lineNumber, l0);
 		mv.visitVarInsn(ALOAD, 0);
 		if (instanceField.onInstance())
 			mv.visitFieldInsn(GETFIELD, qualifiedSubclass, instanceField.toString(), "Lst/redline/ProtoObject;");
@@ -698,9 +702,12 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			mv.visitFieldInsn(GETFIELD, classQualifiedSubclass, instanceField.toString(), "Lst/redline/ProtoObject;");
 	}
 
-	private void emitArgumentReference(MethodVisitor mv, Argument variable) {
+	private void emitArgumentReference(MethodVisitor mv, Argument variable, int lineNumber) {
 		if (variable.offset() == 0)
 			throw new RuntimeException("Argument offset unexpectedly zero (0)");
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(lineNumber, l0);
 		mv.visitVarInsn(ALOAD, variable.offset());
 	}
 
@@ -771,10 +778,10 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/ProtoObject", "$fromPrimitive", "(Ljava/lang/Object;)Lst/redline/ProtoObject;");
 	}
 
-	private void emitClassLoopkup(MethodVisitor mv, Variable variable) {
+	private void emitClassLoopkup(MethodVisitor mv, Variable variable, int lineNumber) {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
-		mv.visitLineNumber(variable.lineNumber(), l0);
+		mv.visitLineNumber(lineNumber, l0);
 		mv.visitLdcInsn(variable.toString());
 		mv.visitMethodInsn(INVOKESTATIC, "st/redline/Smalltalk", "classNamed", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
 	}
@@ -837,6 +844,10 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 	private void emitExpression(MethodVisitor mv, AssignmentExpression expression) {
 		Variable variable = expression.variable();
+		int lineNumber = variable.lineNumber();
+
+		if (variable instanceof ReferenceToVariable)
+			variable = ((ReferenceToVariable) variable).referencedVariable();
 
 		// prologue to field store. See additional handling below.
 		if (variable instanceof InstanceField) {
@@ -851,43 +862,46 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			throw new RuntimeException("Need to support multiple assignment. v1 := v2 := etc.");
 
 		if (variable instanceof Argument) {
-			emitStore(mv, (Argument) variable);
+			emitStore(mv, (Argument) variable, lineNumber);
 		} else if (variable instanceof Temporary) {
-			emitStore(mv, (Temporary) variable);
+			emitStore(mv, (Temporary) variable, lineNumber);
 		} else if (variable instanceof InstanceField) {
-			emitStore(mv, (InstanceField) variable);
+			emitStore(mv, (InstanceField) variable, lineNumber);
 		} else if (variable instanceof ClassField) {
-			emitStore(mv, (ClassField) variable);
+			emitStore(mv, (ClassField) variable, lineNumber);
 		} else {
 			throw new RuntimeException("Need to handle AssignmentExpression Variable: " + variable.getClass());
 		}
 	}
 
-	private void emitStore(MethodVisitor mv, ClassField classField) {
+	private void emitStore(MethodVisitor mv, ClassField classField, int lineNumber) {
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(lineNumber, l0);
 		mv.visitFieldInsn(PUTFIELD, classQualifiedSubclass, classField.toString(), "Lst/redline/ProtoObject;");
 	}
 
-	private void emitStore(MethodVisitor mv, InstanceField instanceField) {
+	private void emitStore(MethodVisitor mv, InstanceField instanceField, int lineNumber) {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
-		mv.visitLineNumber(instanceField.lineNumber(), l0);
+		mv.visitLineNumber(lineNumber, l0);
 		if (instanceField.onInstance())
 			mv.visitFieldInsn(PUTFIELD, qualifiedSubclass, instanceField.toString(), "Lst/redline/ProtoObject;");
 		else
 			mv.visitFieldInsn(PUTFIELD, classQualifiedSubclass, instanceField.toString(), "Lst/redline/ProtoObject;");
 	}
 
-	private void emitStore(MethodVisitor mv, Argument argument) {
+	private void emitStore(MethodVisitor mv, Argument argument, int lineNumber) {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
-		mv.visitLineNumber(argument.lineNumber(), l0);
+		mv.visitLineNumber(lineNumber, l0);
 		mv.visitVarInsn(ASTORE, argument.offset());
 	}
 
-	private void emitStore(MethodVisitor mv, Temporary temporary) {
+	private void emitStore(MethodVisitor mv, Temporary temporary, int lineNumber) {
 		Label l0 = new Label();
 		mv.visitLabel(l0);
-		mv.visitLineNumber(temporary.lineNumber(), l0);
+		mv.visitLineNumber(lineNumber, l0);
 		mv.visitVarInsn(ASTORE, temporary.offset());
 	}
 

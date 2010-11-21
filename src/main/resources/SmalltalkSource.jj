@@ -711,17 +711,17 @@ Variable variable():
                 if (variable.onInstance() && isClassSection())
                     throw new RuntimeException("Reference to variable in instance by Class instance '" + identifier + "'");
                 else
-                    return variable;
+                    return new ReferenceToVariable(variable, identifier);
             throw new RuntimeException("failed to get variable object for identifier '" + identifier + "'");
         }
 
         if (isDefinedClass(identifier)) {
             variable.isClass(true);
-            return variable;
+            return new ReferenceToVariable(variable, identifier);
         }
         if (isDefinedEnvironment(identifier)) {
             variable.isEnvironment(true);
-            return variable;
+            return new ReferenceToVariable(variable, identifier);
         }
 
         throw new RuntimeException("Identifier '" + identifier + "' expected to be defined as a variable, Class or Environment/Namespace. Error on line: " + identifier.beginLine);
