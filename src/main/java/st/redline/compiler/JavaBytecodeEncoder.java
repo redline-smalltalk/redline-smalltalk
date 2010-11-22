@@ -659,9 +659,28 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			emitPrimary(mv, (PrimaryVariable) primary);
 		} else if (primary instanceof PrimaryLiteral) {
 			emitPrimary(mv, (PrimaryLiteral) primary);
+		} else if (primary instanceof PrimaryBlock) {
+			emitPrimary(mv, (PrimaryBlock) primary);
 		} else {
 			throw new RuntimeException("Need to handle PRIMARY of type: " + primary.getClass());
 		}
+	}
+
+	private void emitPrimary(MethodVisitor mv, PrimaryBlock primaryBlock) {
+		Block block = primaryBlock.block();
+		emitBlockInstantiation(mv, block);
+	}
+
+	private void emitBlockInstantiation(MethodVisitor mv, Block block) {
+		String blockClassName = (block.definedInClassMethod() ? classQualifiedSubclass : qualifiedSubclass) + "$B" + block.identifier();
+		String outerClassName = block.definedInClassMethod() ? classQualifiedSubclass : qualifiedSubclass;
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(block.lineNumber(), l0);
+		mv.visitTypeInsn(NEW, blockClassName);
+		mv.visitInsn(DUP);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, blockClassName, "<init>", "(L"+outerClassName+";)V");
 	}
 
 	private void emitPrimary(MethodVisitor mv, PrimaryVariable primaryVariable) {

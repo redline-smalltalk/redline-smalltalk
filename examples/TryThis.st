@@ -21,7 +21,7 @@ TryThis class
 !TryThis class methodsFor: 'as yet unclassified' stamp: 'jcl 19/11/2010 09:17'!
 classPlaceholder
 	"Answer nil."
-	classInstVar := nil
+	classInstVar := []
 
 ! !
 

@@ -13,6 +13,7 @@ PARSER_BEGIN(SourceParser)
     import java.util.*;
     class SourceParser implements Parser {
         private ParsedSource parsedSource = new ParsedSource();
+        private int blockCount = 0;
         private int argumentOffset = 0;
         private int temporaryOffset = 0;
         public void sourcePath(String sourcePath) {
@@ -50,6 +51,10 @@ PARSER_BEGIN(SourceParser)
         }
         public void exitBlockContext() {
             parsedSource.exitBlockContext();
+        }
+        public int blockCount() {
+            blockCount += 1;
+            return blockCount;
         }
         public int argumentOffset() {
             argumentOffset += 1;
@@ -609,11 +614,11 @@ void binarySymbol(String expected):
 
 Block block():
 {
-    Block block = new Block(); List<Variable> blockArguments; List<Variable> blockTemporaries; Statements statements;
+    Block block = new Block(blockCount()); List<Variable> blockArguments; List<Variable> blockTemporaries; Statements statements; Token token;
     enterBlockContext(); resetTemporaryOffset();
 }
 {
-    <LEFT_SQUARE_BRACKET>
+    token = <LEFT_SQUARE_BRACKET>
     (
         (
             LOOKAHEAD(<COLON>)
@@ -633,6 +638,8 @@ Block block():
     <RIGHT_SQUARE_BRACKET>
     {
         exitBlockContext();
+        block.definedInClassMethod(isClassSection());
+        block.lineNumber(token.beginLine);
         return block;
     }
 }

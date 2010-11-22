@@ -7,4 +7,8 @@ public class PrimaryBlock extends Primary {
 	public PrimaryBlock(Block block) {
 		this.block = block;
 	}
+
+	public Block block() {
+		return block;
+	}
 }
