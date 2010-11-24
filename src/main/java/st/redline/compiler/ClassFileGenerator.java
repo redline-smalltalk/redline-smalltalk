@@ -5,6 +5,7 @@ import st.redline.ScriptListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class ClassFileGenerator extends Generator {
 
@@ -14,16 +15,21 @@ public class ClassFileGenerator extends Generator {
 
 	public void execute() {
 		super.execute();
-		writeClassFile();
+		writeClassFiles();
 	}
 
-	private void writeClassFile() {
-		byte[][] bytes = definedClassBytes();
-		writeClassFile(bytes[0], definedPackageName() + definedClassName());
-		writeClassFile(bytes[1], definedPackageName() + definedClassName() + "$mClass");
-		for (int i = 2; i < bytes.length; i++)
-			writeClassFile(bytes[i], definedPackageName() + definedClassName() + "$block" + i);
+	private void writeClassFiles() {
+		for (RawClass rawClass : definedClassBytes())
+			writeClassFile(rawClass.bytes(), definedPackageName() + rawClass.name());
 	}
+
+//	private void writeClassFile() {
+//		byte[][] bytes = definedClassBytes();
+//		writeClassFile(bytes[0], definedPackageName() + definedClassName());
+//		writeClassFile(bytes[1], definedPackageName() + definedClassName() + "$mClass");
+//		for (int i = 2; i < bytes.length; i++)
+//			writeClassFile(bytes[i], definedPackageName() + definedClassName() + "$B" + i);
+//	}
 
 	private void writeClassFile(byte[] bytes, String filename) {
 		String realFilename = makeRealfilename(filename);

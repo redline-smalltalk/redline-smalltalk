@@ -52,7 +52,7 @@ public class Generator extends ClassLoader implements Executor, Translator {
 		return JavaBytecodeEncoder.DEFAULT_JAVA_PACKAGE;
 	}
 
-	public byte[][] definedClassBytes() {
+	public List<RawClass> definedClassBytes() {
 		notifyClassGenerated();
 
 		// to be removed, just a test.

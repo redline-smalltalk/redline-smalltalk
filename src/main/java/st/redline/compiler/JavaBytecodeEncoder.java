@@ -2,6 +2,7 @@ package st.redline.compiler;
 
 import org.objectweb.asm.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -547,16 +548,13 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		classWriter.visitInnerClass(classQualifiedSuperclass, qualifiedSuperclass, "mClass", ACC_PUBLIC + ACC_STATIC);
 	}
 
-	public byte[][] definedClassBytes() {
+	public List<RawClass> definedClassBytes() {
 		classWriter.visitEnd();
 		classClassWriter.visitEnd();
-		return new byte[][] { classWriter.toByteArray(), classClassWriter.toByteArray() };
-	}
-
-	public Class definedClass() {
-		byte[][] code = definedClassBytes();
-		defineClass(DEFAULT_JAVA_PACKAGE + subclass + "$mClass", code[1], 0, code[1].length);
-		return defineClass(DEFAULT_JAVA_PACKAGE + subclass, code[0], 0, code[0].length);
+		List<RawClass> classes = new ArrayList<RawClass>();
+		classes.add(new RawClass(subclass, classWriter.toByteArray()));
+		classes.add(new RawClass(subclass + "$mClass", classClassWriter.toByteArray()));
+		return classes;
 	}
 
 //	private void defineClassConstructor(ClassDefinition classDefinition) {
@@ -669,6 +667,11 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	private void emitPrimary(MethodVisitor mv, PrimaryBlock primaryBlock) {
 		Block block = primaryBlock.block();
 		emitBlockInstantiation(mv, block);
+		emitBlockClass(block);
+	}
+
+	private void emitBlockClass(Block block) {
+		
 	}
 
 	private void emitBlockInstantiation(MethodVisitor mv, Block block) {
