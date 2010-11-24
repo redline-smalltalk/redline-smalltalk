@@ -2,5 +2,5 @@
 
         "Answer a value."
 	
-        ^ TryThis new placeholder
+        ^ TryThis new placeholder value
 

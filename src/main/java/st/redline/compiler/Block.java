@@ -48,6 +48,10 @@ public class Block {
 		this.statements = statements;
 	}
 
+	public Statements statements() {
+		return statements;
+	}
+
 	public boolean hasAnsweredExpression() {
 		if (statements == null)
 			return false;

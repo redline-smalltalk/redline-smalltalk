@@ -55,7 +55,8 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	private String sourcePath;
 	private String currentMethodName;
 	private Stack<Boolean> superSend = new Stack<Boolean>();
-	private List<RawClass> blocks = new ArrayList<RawClass>();
+	private List<RawClass> blocksAndBlockAnswers = new ArrayList<RawClass>();
+	private Stack<Block> currentBlock = new Stack<Block>();
 
 	public JavaBytecodeEncoder() {
 		classWriter = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -555,7 +556,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		List<RawClass> classes = new ArrayList<RawClass>();
 		classes.add(new RawClass(subclass, classWriter.toByteArray()));
 		classes.add(new RawClass(subclass + "$mClass", classClassWriter.toByteArray()));
-		classes.addAll(blocks);
+		classes.addAll(blocksAndBlockAnswers);
 		return classes;
 	}
 
@@ -708,11 +709,42 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitMaxs(2, 2);
 		mv.visitEnd();
 
-		// emit value method here.
+		// emit value method for block
+		emitBlockValueMethod(cw, block, blockClassName);
 
-		// add to list of blocks.
+		// add to list of blocksAndBlockAnswers.
 		cw.visitEnd();
-		blocks.add(new RawClass(blockClassName, cw.toByteArray()));
+		blocksAndBlockAnswers.add(new RawClass(blockClassName, cw.toByteArray()));
+	}
+
+	private void emitBlockValueMethod(ClassWriter cw, Block block, String blockClassName) {
+		System.out.println();
+		System.out.println("Block value method\n");
+
+		// NOTE: We change the state of instance variables in the Encoder here,
+		// then put them back when we are done.
+		String tempClassQualifiedSubclass = classQualifiedSubclass;
+		String tempQualifiedSubclass = qualifiedSubclass; 
+		currentBlock.push(block);
+
+		MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "value", METHOD_SIGNATURE[0], null, null);
+		mv.visitCode();
+
+		emitMessage(mv, "BLOCK VALUE METHOD");
+		// emitStatements(mv, block.statements());
+
+		// default answer of a method is the receiver.
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitInsn(ARETURN);
+
+		mv.visitMaxs(1, 1);
+		mv.visitEnd();
+
+		currentBlock.pop();
+		classQualifiedSubclass = tempClassQualifiedSubclass;
+		qualifiedSubclass = tempQualifiedSubclass;
+
+		System.out.println();
 	}
 
 	private void emitBlockInstantiation(MethodVisitor mv, Block block) {
