@@ -2,6 +2,5 @@
 
         "Answer a value."
 	
-        ^ Object new test
-
+        ^ TryThis new placeholder
 

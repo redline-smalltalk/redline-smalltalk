@@ -23,4 +23,11 @@ public class Statements {
 	public List<Expression> expressions() {
 		return expressions;
 	}
+
+	public boolean hasAnsweredExpression() {
+		for (Expression expression : expressions)
+			if (expression.isAnswered())
+				return true;
+		return false;
+	}
 }

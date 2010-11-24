@@ -47,4 +47,10 @@ public class Block {
 	public void add(Statements statements) {
 		this.statements = statements;
 	}
+
+	public boolean hasAnsweredExpression() {
+		if (statements == null)
+			return false;
+		return statements.hasAnsweredExpression();
+	}
 }

@@ -55,6 +55,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	private String sourcePath;
 	private String currentMethodName;
 	private Stack<Boolean> superSend = new Stack<Boolean>();
+	private List<RawClass> blocks = new ArrayList<RawClass>();
 
 	public JavaBytecodeEncoder() {
 		classWriter = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -554,6 +555,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		List<RawClass> classes = new ArrayList<RawClass>();
 		classes.add(new RawClass(subclass, classWriter.toByteArray()));
 		classes.add(new RawClass(subclass + "$mClass", classClassWriter.toByteArray()));
+		classes.addAll(blocks);
 		return classes;
 	}
 
@@ -671,12 +673,51 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitBlockClass(Block block) {
-		
+		System.out.println();
+		String outerClass = block.definedInClassMethod() ? classQualifiedSubclass : qualifiedSubclass;
+		String blockName = outerClass + "$b" + block.identifier();
+		String blockClassName = (block.definedInClassMethod() ? subclass + "$mClass" : subclass) + "$b" + block.identifier();
+		String subclassedBlock = block.hasAnsweredExpression() ? "st/redline/BlockWithAnswer" : "st/redline/BlockWithoutAnswer";
+
+		ClassWriter cw = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
+		cw.visit(V1_6, ACC_SUPER, blockName, null, subclassedBlock, null);
+		cw.visitSource(subclass+".st", null);
+		cw.visitOuterClass(outerClass, currentMethodName, "()L"+subclassedBlock+";");
+		cw.visitInnerClass(blockName, null, null, 0);
+
+		FieldVisitor fv = cw.visitField(ACC_FINAL + ACC_SYNTHETIC, "this$0", "L"+outerClass+";", null, null);
+		fv.visitEnd();
+
+		MethodVisitor mv = cw.visitMethod(0, "<init>", "(L"+outerClass+";)V", null, null);
+		mv.visitCode();
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(1, l0);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitFieldInsn(PUTFIELD, blockName, "this$0", "L"+outerClass+";");
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(31, l1);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, subclassedBlock, "<init>", "()V");
+		mv.visitInsn(RETURN);
+		Label l2 = new Label();
+		mv.visitLabel(l2);
+		mv.visitLocalVariable("this", "L"+blockName+";", null, l0, l2, 0);
+		mv.visitMaxs(2, 2);
+		mv.visitEnd();
+
+		// emit value method here.
+
+		// add to list of blocks.
+		cw.visitEnd();
+		blocks.add(new RawClass(blockClassName, cw.toByteArray()));
 	}
 
 	private void emitBlockInstantiation(MethodVisitor mv, Block block) {
-		String blockClassName = (block.definedInClassMethod() ? classQualifiedSubclass : qualifiedSubclass) + "$B" + block.identifier();
 		String outerClassName = block.definedInClassMethod() ? classQualifiedSubclass : qualifiedSubclass;
+		String blockClassName = outerClassName + "$b" + block.identifier();
 		Label l0 = new Label();
 		mv.visitLabel(l0);
 		mv.visitLineNumber(block.lineNumber(), l0);
