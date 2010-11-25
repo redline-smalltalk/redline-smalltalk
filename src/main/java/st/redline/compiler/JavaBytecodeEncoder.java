@@ -331,6 +331,23 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 				mv.visitMaxs(1, 1);
 				mv.visitEnd();
 			}
+
+			if (subclass.equals("BlockWithAnswer") || subclass.equals("BlockWithoutAnswer")) {
+				// create each permutation of value method so subclass can implement.
+				String signature = "value";
+				for (int i = 0; i < METHOD_SIGNATURE.length; i++) {
+					mv = classWriter.visitMethod(ACC_PUBLIC, signature, METHOD_SIGNATURE[i], null, null);
+					mv.visitCode();
+					mv.visitTypeInsn(NEW, "java/lang/IllegalStateException");
+					mv.visitInsn(DUP);
+					mv.visitLdcInsn("Subclass should implement.");
+					mv.visitMethodInsn(INVOKESPECIAL, "java/lang/IllegalStateException", "<init>", "(Ljava/lang/String;)V");
+					mv.visitInsn(ATHROW);
+					mv.visitMaxs(1, 1);
+					mv.visitEnd();
+					signature = (i + 1 == 1) ? signature + ":" : signature + "value:";
+				}
+			}
 		}
 	}
 
@@ -730,7 +747,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "value", METHOD_SIGNATURE[0], null, null);
 		mv.visitCode();
 
-		emitMessage(mv, "BLOCK VALUE METHOD");
+		emitMessage(mv, "BLOCK VALUE METHOD CALLED");
 		// emitStatements(mv, block.statements());
 
 		// default answer of a method is the receiver.
