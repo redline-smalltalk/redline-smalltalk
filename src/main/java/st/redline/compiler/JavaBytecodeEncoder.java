@@ -698,6 +698,9 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		boolean blockHasAnsweredExpression = block.hasAnsweredExpression();
 		String subclassedBlock = blockHasAnsweredExpression ? "st/redline/BlockWithAnswer" : "st/redline/BlockWithoutAnswer";
 
+		block.className(blockClassName);
+		block.answerClassName(blockClassName+"Answer");
+
 		ClassWriter cw = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
 		cw.visit(V1_6, ACC_SUPER, blockName, null, subclassedBlock, null);
 		cw.visitSource(subclass+".st", null);
@@ -728,7 +731,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		mv.visitEnd();
 
 		// emit value method for block
-		emitBlockValueMethod(cw, block, blockClassName);
+		emitBlockValueMethod(cw, block, blockHasAnsweredExpression);
 
 		// add to list of blocksAndBlockAnswers.
 		cw.visitEnd();
@@ -779,7 +782,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		}
 	}
 
-	private void emitBlockValueMethod(ClassWriter cw, Block block, String blockClassName) {
+	private void emitBlockValueMethod(ClassWriter cw, Block block, boolean blockHasAnsweredExpression) {
 		System.out.println();
 		System.out.println("Block value method\n");
 
@@ -792,8 +795,9 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "value", METHOD_SIGNATURE[0], null, null);
 		mv.visitCode();
 
-		emitMessage(mv, "BLOCK VALUE METHOD CALLED");
-		// emitStatements(mv, block.statements());
+		emitMessage(mv, "BLOCK VALUE METHOD CALLED " + (blockHasAnsweredExpression ? "^" : ""));
+		if (block.statements() != null)
+			emitStatements(mv, block.statements());
 
 		// default answer of a method is the receiver.
 		mv.visitVarInsn(ALOAD, 0);
@@ -992,8 +996,12 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			emitCascade(mv, expression.cascade());
 
 			// answer top of stack if this is ^ <expression> 
-			if (expression.isAnswered())
+			if (expression.isAnswered()) {
+				// throw answer if in block and block has ^ <expression>
+				if (!currentBlock.isEmpty())
+					System.out.println("*** SHOULD THROW ANSWER " + currentBlock.peek().answerClassName());
 				mv.visitInsn(ARETURN);
+			}
 		}
 		if (superSendsBeforeCount != superSend.size())
 			throw new RuntimeException("A 'super' send was not handled.");
