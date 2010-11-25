@@ -687,15 +687,16 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	private void emitPrimary(MethodVisitor mv, PrimaryBlock primaryBlock) {
 		Block block = primaryBlock.block();
 		emitBlockInstantiation(mv, block);
-		emitBlockClass(block);
+		emitBlockClassAndException(block);
 	}
 
-	private void emitBlockClass(Block block) {
+	private void emitBlockClassAndException(Block block) {
 		System.out.println();
 		String outerClass = block.definedInClassMethod() ? classQualifiedSubclass : qualifiedSubclass;
 		String blockName = outerClass + "$b" + block.identifier();
 		String blockClassName = (block.definedInClassMethod() ? subclass + "$mClass" : subclass) + "$b" + block.identifier();
-		String subclassedBlock = block.hasAnsweredExpression() ? "st/redline/BlockWithAnswer" : "st/redline/BlockWithoutAnswer";
+		boolean blockHasAnsweredExpression = block.hasAnsweredExpression();
+		String subclassedBlock = blockHasAnsweredExpression ? "st/redline/BlockWithAnswer" : "st/redline/BlockWithoutAnswer";
 
 		ClassWriter cw = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
 		cw.visit(V1_6, ACC_SUPER, blockName, null, subclassedBlock, null);
@@ -732,6 +733,50 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		// add to list of blocksAndBlockAnswers.
 		cw.visitEnd();
 		blocksAndBlockAnswers.add(new RawClass(blockClassName, cw.toByteArray()));
+
+		if (blockHasAnsweredExpression) {
+			System.out.println();
+
+			cw.visit(V1_6, ACC_PUBLIC + ACC_SUPER, blockName+"Answer", null, "java/lang/Error", null);
+			cw.visitSource(subclass+".st", null);
+
+			fv = cw.visitField(ACC_PRIVATE + ACC_FINAL, "answer", "Lst/redline/ProtoObject;", null, null);
+			fv.visitEnd();
+
+			mv = cw.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/ProtoObject;)V", null, null);
+			mv.visitCode();
+			l0 = new Label();
+			mv.visitLabel(l0);
+			mv.visitLineNumber(5, l0);
+			mv.visitVarInsn(ALOAD, 0);
+			mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Error", "<init>", "()V");
+			l1 = new Label();
+			mv.visitLabel(l1);
+			mv.visitLineNumber(6, l1);
+			mv.visitVarInsn(ALOAD, 0);
+			mv.visitVarInsn(ALOAD, 1);
+			mv.visitFieldInsn(PUTFIELD, blockName+"Answer", "answer", "Lst/redline/ProtoObject;");
+			l2 = new Label();
+			mv.visitLabel(l2);
+			mv.visitLineNumber(7, l2);
+			mv.visitInsn(RETURN);
+			mv.visitMaxs(2, 2);
+			mv.visitEnd();
+
+			mv = cw.visitMethod(ACC_PUBLIC, "answer", "()Lst/redline/ProtoObject;", null, null);
+			mv.visitCode();
+			l0 = new Label();
+			mv.visitLabel(l0);
+			mv.visitLineNumber(9, l0);
+			mv.visitVarInsn(ALOAD, 0);
+			mv.visitFieldInsn(GETFIELD, blockName+"Answer", "answer", "Lst/redline/ProtoObject;");
+			mv.visitInsn(ARETURN);
+			mv.visitMaxs(1, 1);
+			mv.visitEnd();
+
+			cw.visitEnd();
+			blocksAndBlockAnswers.add(new RawClass(blockClassName+"Answer", cw.toByteArray()));
+		}
 	}
 
 	private void emitBlockValueMethod(ClassWriter cw, Block block, String blockClassName) {

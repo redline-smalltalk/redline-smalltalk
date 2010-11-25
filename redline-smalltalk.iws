@@ -63,7 +63,7 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="749" column="50" selection-start="33977" selection-end="33977" vertical-scroll-proportion="0.4506024">
+            <state line="690" column="0" selection-start="31620" selection-end="31620" vertical-scroll-proportion="0.26626506">
               <folding />
             </state>
           </provider>
@@ -236,8 +236,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
       <pane id="PackagesPane" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -255,8 +255,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -589,7 +589,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="749" column="50" selection-start="33977" selection-end="33977" vertical-scroll-proportion="0.4506024">
+        <state line="690" column="0" selection-start="31620" selection-end="31620" vertical-scroll-proportion="0.26626506">
           <folding />
         </state>
       </provider>
