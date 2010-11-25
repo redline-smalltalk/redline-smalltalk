@@ -63,7 +63,7 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1010" column="0" selection-start="44098" selection-end="44469" vertical-scroll-proportion="0.4554217">
+            <state line="1007" column="41" selection-start="44371" selection-end="44371" vertical-scroll-proportion="0.4506024">
               <folding />
             </state>
           </provider>
@@ -138,7 +138,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -227,8 +226,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -246,8 +246,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -575,14 +575,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Block.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="1421" selection-end="1421" vertical-scroll-proportion="0.79881656">
-          <folding />
-        </state>
+        <state line="69" column="0" selection-start="1421" selection-end="1421" vertical-scroll-proportion="0.79881656" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1010" column="0" selection-start="44098" selection-end="44469" vertical-scroll-proportion="0.4554217">
+        <state line="1007" column="41" selection-start="44371" selection-end="44371" vertical-scroll-proportion="0.4506024">
           <folding />
         </state>
       </provider>

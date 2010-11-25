@@ -999,14 +999,13 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 			if (expression.isAnswered()) {
 				// throw answer if in block and block has ^ <expression>
 				if (!currentBlock.isEmpty()) {
-					System.out.println("*** SHOULD THROW ANSWER " + currentBlock.peek().answerClassName());
-//					mv.visitTypeInsn(NEW, "st/redline/BlockAnswer");
-//					mv.visitInsn(DUP);
-//					mv.visitVarInsn(ALOAD, 1);
-//					mv.visitMethodInsn(INVOKESPECIAL, "st/redline/BlockAnswer", "<init>", "(Lst/redline/ProtoObject;)V");
+					Block block = currentBlock.peek();
+					System.out.println("*** SHOULD THROW ANSWER " + block.answerClassName());
+//					mv.visitTypeInsn(NEW, block.answerClassName());
+//					mv.visitInsn(DUP_X1);
+//					mv.visitInsn(SWAP);
+//					mv.visitMethodInsn(INVOKESPECIAL, block.answerClassName(), "<init>", "(Lst/redline/ProtoObject;)V");
 //					mv.visitInsn(ATHROW);
-//					mv.visitLabel(l1);
-//					mv.visitLineNumber(21, l1);
 //					mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 				}
 				mv.visitInsn(ARETURN);
