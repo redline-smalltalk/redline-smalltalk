@@ -7,6 +7,7 @@ public class BlockAnswer extends Error {
 	public BlockAnswer() {}
 
 	public void answer(ProtoObject answer) {
+		System.out.println("BlockAnswer set: " + answer);
 		this.answer = answer;
 	}
 }

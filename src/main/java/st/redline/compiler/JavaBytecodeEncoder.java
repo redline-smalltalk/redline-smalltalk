@@ -775,24 +775,13 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 		MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "value", "()Lst/redline/ProtoObject;", null, null);
 		mv.visitCode();
-		Label l0 = new Label();
-		mv.visitLabel(l0);
-		mv.visitLineNumber(37, l0);
-		mv.visitTypeInsn(NEW, block.answerClassName());
-		mv.visitInsn(DUP);
-		mv.visitMethodInsn(INVOKESPECIAL, block.answerClassName(), "<init>", "()V");
-		mv.visitVarInsn(ASTORE, 1);
-		Label l1 = new Label();
-		mv.visitLabel(l1);
-		mv.visitLineNumber(38, l1);
-		mv.visitVarInsn(ALOAD, 1);
-		mv.visitInsn(ACONST_NULL);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/BlockAnswer", "answer", "(Lst/redline/ProtoObject;)V");
-		Label l2 = new Label();
-		mv.visitLabel(l2);
-		mv.visitLineNumber(39, l2);
-		mv.visitVarInsn(ALOAD, 1);
-		mv.visitInsn(ATHROW);
+
+		if (block.statements() != null)
+			emitStatements(mv, block.statements());
+
+		// default answer of a method is the receiver.
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitInsn(ARETURN);
 		mv.visitMaxs(2, 2);
 		mv.visitEnd();
 
@@ -987,11 +976,38 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 			// answer top of stack if this is ^ <expression> 
 			if (expression.isAnswered()) {
+				if (!currentBlock.isEmpty())
+					emitBlockAnswerThrow(mv);
 				mv.visitInsn(ARETURN);
 			}
 		}
 		if (superSendsBeforeCount != superSend.size())
 			throw new RuntimeException("A 'super' send was not handled.");
+	}
+
+	private void emitBlockAnswerThrow(MethodVisitor mv) {
+		Block block = currentBlock.peek();
+
+		// store answer value for setting into BlockAnswer.
+		mv.visitVarInsn(ASTORE, 1);
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(37, l0);
+		mv.visitTypeInsn(NEW, block.answerClassName());
+		mv.visitInsn(DUP);
+		mv.visitMethodInsn(INVOKESPECIAL, block.answerClassName(), "<init>", "()V");
+		mv.visitVarInsn(ASTORE, 2);
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(38, l1);
+		mv.visitVarInsn(ALOAD, 2);
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/BlockAnswer", "answer", "(Lst/redline/ProtoObject;)V");
+		Label l2 = new Label();
+		mv.visitLabel(l2);
+		mv.visitLineNumber(39, l2);
+		mv.visitVarInsn(ALOAD, 2);
+		mv.visitInsn(ATHROW);
 	}
 
 	private void emitExpression(MethodVisitor mv, AssignmentExpression expression) {
