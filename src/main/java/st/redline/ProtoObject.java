@@ -39,7 +39,9 @@ public abstract class ProtoObject {
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 			} catch (InvocationTargetException e) {
-				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+				if (e.getCause() instanceof BlockAnswer)
+					throw ((Error) e.getCause());
+				e.printStackTrace();
 			}
 		if (!selector.equals("doesNotUnderstand:"))
 			return sendDoesNotUnderstand(selector, arguments);
