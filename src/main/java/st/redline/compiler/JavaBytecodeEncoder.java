@@ -699,7 +699,7 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		String subclassedBlock = blockHasAnsweredExpression ? "st/redline/BlockWithAnswer" : "st/redline/BlockWithoutAnswer";
 
 		block.className(blockClassName);
-		block.answerClassName(blockClassName+"Answer");
+		block.answerClassName(blockName+"Answer");
 
 		ClassWriter cw = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
 		cw.visit(V1_6, ACC_SUPER, blockName, null, subclassedBlock, null);
@@ -739,41 +739,20 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 		if (blockHasAnsweredExpression) {
 			System.out.println();
+			System.out.println("Making blockanswer ");
 
-			cw.visit(V1_6, ACC_PUBLIC + ACC_SUPER, blockName+"Answer", null, "java/lang/Error", null);
+			cw = new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
+			cw.visit(V1_6, ACC_PUBLIC + ACC_SUPER, blockName+"Answer", null, "st/redline/BlockAnswer", null);
 			cw.visitSource(subclass+".st", null);
 
-			fv = cw.visitField(ACC_PRIVATE + ACC_FINAL, "answer", "Lst/redline/ProtoObject;", null, null);
-			fv.visitEnd();
-
-			mv = cw.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/ProtoObject;)V", null, null);
+			mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
 			mv.visitCode();
 			l0 = new Label();
 			mv.visitLabel(l0);
-			mv.visitLineNumber(5, l0);
+			mv.visitLineNumber(3, l0);
 			mv.visitVarInsn(ALOAD, 0);
-			mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Error", "<init>", "()V");
-			l1 = new Label();
-			mv.visitLabel(l1);
-			mv.visitLineNumber(6, l1);
-			mv.visitVarInsn(ALOAD, 0);
-			mv.visitVarInsn(ALOAD, 1);
-			mv.visitFieldInsn(PUTFIELD, blockName+"Answer", "answer", "Lst/redline/ProtoObject;");
-			l2 = new Label();
-			mv.visitLabel(l2);
-			mv.visitLineNumber(7, l2);
+			mv.visitMethodInsn(INVOKESPECIAL, "st/redline/BlockAnswer", "<init>", "()V");
 			mv.visitInsn(RETURN);
-			mv.visitMaxs(2, 2);
-			mv.visitEnd();
-
-			mv = cw.visitMethod(ACC_PUBLIC, "answer", "()Lst/redline/ProtoObject;", null, null);
-			mv.visitCode();
-			l0 = new Label();
-			mv.visitLabel(l0);
-			mv.visitLineNumber(9, l0);
-			mv.visitVarInsn(ALOAD, 0);
-			mv.visitFieldInsn(GETFIELD, blockName+"Answer", "answer", "Lst/redline/ProtoObject;");
-			mv.visitInsn(ARETURN);
 			mv.visitMaxs(1, 1);
 			mv.visitEnd();
 
@@ -792,18 +771,29 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 		String tempQualifiedSubclass = qualifiedSubclass; 
 		currentBlock.push(block);
 
-		MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "value", METHOD_SIGNATURE[0], null, null);
+		System.out.println("BlockAnswer subclass: " + block.answerClassName());
+
+		MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "value", "()Lst/redline/ProtoObject;", null, null);
 		mv.visitCode();
-
-		emitMessage(mv, "BLOCK VALUE METHOD CALLED " + (blockHasAnsweredExpression ? "^" : ""));
-		if (block.statements() != null)
-			emitStatements(mv, block.statements());
-
-		// default answer of a method is the receiver.
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitInsn(ARETURN);
-
-		mv.visitMaxs(1, 1);
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(37, l0);
+		mv.visitTypeInsn(NEW, block.answerClassName());
+		mv.visitInsn(DUP);
+		mv.visitMethodInsn(INVOKESPECIAL, block.answerClassName(), "<init>", "()V");
+		mv.visitVarInsn(ASTORE, 1);
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(38, l1);
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitInsn(ACONST_NULL);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/BlockAnswer", "answer", "(Lst/redline/ProtoObject;)V");
+		Label l2 = new Label();
+		mv.visitLabel(l2);
+		mv.visitLineNumber(39, l2);
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitInsn(ATHROW);
+		mv.visitMaxs(2, 2);
 		mv.visitEnd();
 
 		currentBlock.pop();
@@ -997,17 +987,6 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 			// answer top of stack if this is ^ <expression> 
 			if (expression.isAnswered()) {
-				// throw answer if in block and block has ^ <expression>
-				if (!currentBlock.isEmpty()) {
-					Block block = currentBlock.peek();
-					System.out.println("*** SHOULD THROW ANSWER " + block.answerClassName());
-//					mv.visitTypeInsn(NEW, block.answerClassName());
-//					mv.visitInsn(DUP_X1);
-//					mv.visitInsn(SWAP);
-//					mv.visitMethodInsn(INVOKESPECIAL, block.answerClassName(), "<init>", "(Lst/redline/ProtoObject;)V");
-//					mv.visitInsn(ATHROW);
-//					mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-				}
 				mv.visitInsn(ARETURN);
 			}
 		}

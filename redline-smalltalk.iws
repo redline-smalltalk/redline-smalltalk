@@ -63,7 +63,25 @@
       <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1007" column="41" selection-start="44371" selection-end="44371" vertical-scroll-proportion="0.4506024">
+            <state line="789" column="0" selection-start="35359" selection-end="35359" vertical-scroll-proportion="0.61084336">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="22" selection-start="212" selection-end="212" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlockAnswer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/BlockAnswer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="0" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -84,7 +102,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/AssignmentExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Expression.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassDefinition.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ReferenceToVariable.java" />
@@ -99,6 +116,7 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Statements.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Block.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/BlockAnswer.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
       </list>
     </option>
@@ -138,6 +156,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -226,9 +245,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="Favorites" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -246,8 +264,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -503,19 +521,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Smalltalk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="83" selection-end="83" vertical-scroll-proportion="0.08047337" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Array.st">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="22" selection-start="212" selection-end="212" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryBlock.java">
@@ -578,9 +586,21 @@
         <state line="69" column="0" selection-start="1421" selection-end="1421" vertical-scroll-proportion="0.79881656" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="22" selection-start="212" selection-end="212" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/BlockAnswer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1007" column="41" selection-start="44371" selection-end="44371" vertical-scroll-proportion="0.4506024">
+        <state line="789" column="0" selection-start="35359" selection-end="35359" vertical-scroll-proportion="0.61084336">
           <folding />
         </state>
       </provider>
