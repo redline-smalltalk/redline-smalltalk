@@ -1,0 +1,39 @@
+
+
+Label start = new Label();    // beginning of the exception handler's scope (inclusive).
+Label end = new Label();      // end of the exception handler's scope (exclusive).
+Label handler = new Label();  // beginning of the exception handler's code.
+mv.visitTryCatchBlock(start, end, handler, "st/redline/BlockAnswer");
+
+// whatever code needs to come before start of try/catch block.
+
+// mark beginning of guarded code.
+mv.visitLabel(start);
+mv.visitLineNumber(41, start);
+
+// do code that needs to be wrapped in try 
+mv.visitVarInsn(ALOAD, 0);
+mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/Model", "someMethod", "()V");
+mv.visitLabel(end);
+
+// jump over handler
+Label l4 = new Label();
+mv.visitJumpInsn(GOTO, l4);
+
+// get BlockAnswer exception from the stack and store local (see comment below)
+mv.visitLabel(handler);
+mv.visitLineNumber(42, handler);
+mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {"st/redline/BlockAnswer"});
+mv.visitVarInsn(ASTORE, 1);   // Need to make ASTORE into slot after any variables.
+
+// get the block answer from the block and return it ([^]).
+Label l5 = new Label();
+mv.visitLabel(l5);
+mv.visitLineNumber(43, l5);
+mv.visitVarInsn(ALOAD, 1);
+mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/BlockAnswer", "answer", "()Lst/redline/ProtoObject;");
+mv.visitInsn(ARETURN);
+
+mv.visitLabel(l4);
+
+// what ever follows after try/catch block.
