@@ -967,6 +967,9 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 
 	private void emitExpression(MethodVisitor mv, Expression expression) {
 		int superSendsBeforeCount = superSend.size();
+		if (expression.hasBlockWithAnswer()) {
+			System.out.println("**** hasBlockWithAnswer ****");
+		}
 		if (expression instanceof AssignmentExpression) {
 			emitExpression(mv, (AssignmentExpression) expression);
 		} else {

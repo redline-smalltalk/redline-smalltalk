@@ -13,6 +13,10 @@ public class UnarySend extends MessageSend {
 		this.selectors = new ArrayList<Token>();
 	}
 
+	public boolean hasBlockWithAnswer() {
+		return primary().hasBlockWithAnswer();
+	}
+
 	public String toString() {
 		String result = primary.toString();
 		for (Token selector : selectors)

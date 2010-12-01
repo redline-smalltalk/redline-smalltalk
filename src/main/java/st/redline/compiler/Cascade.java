@@ -10,6 +10,18 @@ public class Cascade {
 	private List<KeywordSend> keywordSends = new ArrayList<KeywordSend>();
 	private List<Object> cascadedSends = new ArrayList<Object>();
 
+	public boolean hasBlockWithAnswer() {
+		if (unarySend != null && unarySend().hasBlockWithAnswer())
+			return true;
+		for (BinarySend binarySend : binarySends)
+			if (binarySend.hasBlockWithAnswer())
+				return true;
+		for (KeywordSend keywordSend : keywordSends)
+			if (keywordSend.hasBlockWithAnswer())
+				return true;
+		return false;
+	}
+
 	public void add(UnarySend unarySend) {
 		this.unarySend = unarySend;
 	}

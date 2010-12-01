@@ -24,6 +24,14 @@ public class Expression {
 		this.primary = null;
 	}
 
+	public boolean hasBlockWithAnswer() {
+		if (primary != null && primary.hasBlockWithAnswer())
+			return true;
+		if (cascade != null && cascade.hasBlockWithAnswer())
+			return true;
+		return false;
+	}
+
 	public boolean isAnswered() {
 		return answered;
 	}

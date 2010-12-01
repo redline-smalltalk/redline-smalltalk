@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="bb7d3878-7bd4-45a7-a49b-e338923a3cdd" name="Default" comment="" />
-    <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
+    <ignored path="$USER_HOME_GRIFFON$/" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,28 +60,91 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Expression.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Expression.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="49" selection-start="699" selection-end="699" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Cascade.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Cascade.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KeywordSend.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/KeywordSend.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JavaBytecodeEncoder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1004" column="0" selection-start="43997" selection-end="43997" vertical-scroll-proportion="0.0">
+            <state line="950" column="21" selection-start="42378" selection-end="42378" vertical-scroll-proportion="-0.020961776">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+      <file leaf-file-name="MessageSend.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MessageSend.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="0" selection-start="1388" selection-end="1388" vertical-scroll-proportion="0.58343196">
+            <state line="4" column="42" selection-start="134" selection-end="134" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlockAnswer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/BlockAnswer.java">
+      <file leaf-file-name="BinarySend.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySend.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="161" selection-end="161" vertical-scroll-proportion="0.0">
+            <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UnarySend.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnarySend.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrimaryVariable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryVariable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Primary.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Primary.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="21" selection-start="193" selection-end="193" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrimaryExpression.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryExpression.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="0" selection-start="245" selection-end="245" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -102,22 +165,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassDefinition.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ReferenceToVariable.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/BLock.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/Block.java" />
-        <option value="$PROJECT_DIR$/src/main/smalltalk/BlockWithoutAnwer.st" />
-        <option value="$PROJECT_DIR$/src/main/smalltalk/BlockWithAnwer.st" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryBlock.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/RawClass.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Generator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Statements.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Block.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/BlockAnswer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/AssignmentExpression.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Expression.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Primary.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryBlock.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryExpression.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/UnarySend.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySend.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Cascade.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/KeywordSend.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/MessageSend.java" />
       </list>
     </option>
   </component>
@@ -156,9 +219,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Favorites" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -247,6 +308,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -264,8 +327,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -521,88 +584,114 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Array.st">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/BlockAnswer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="9" column="0" selection-start="161" selection-end="161" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryBlock.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="21" selection-start="205" selection-end="205" vertical-scroll-proportion="0.0" />
+        <state line="42" column="0" selection-start="1388" selection-end="1388" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Variable.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/AssignmentExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/BlockWithAnwer.st">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="16" selection-start="591" selection-end="591" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/BlockWithoutAnswer.st">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="19" selection-start="516" selection-end="516" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Generator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="25" selection-start="1345" selection-end="1345" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/RawClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="273" selection-end="273" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassFileGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1017" selection-end="1017" vertical-scroll-proportion="0.0" />
+        <state line="11" column="0" selection-start="329" selection-end="329" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1291237730000" expanded="true" signature="248:331" placeholder="{...}" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/SmalltalkSource.jj">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="640" column="28" selection-start="17654" selection-end="17654" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Statements.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="627" selection-end="627" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Expression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Serve.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="13" selection-start="471" selection-end="471" vertical-scroll-proportion="0.0" />
+        <state line="350" column="12" selection-start="9785" selection-end="9785" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Block.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="1421" selection-end="1421" vertical-scroll-proportion="0.79881656" />
+        <state line="56" column="27" selection-start="1162" selection-end="1162" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/BlockAnswer.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryBlock.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="161" selection-end="161" vertical-scroll-proportion="0.0">
+        <state line="15" column="0" selection-start="249" selection-end="249" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Primary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="21" selection-start="193" selection-end="193" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="245" selection-end="245" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/PrimaryVariable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Expression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="49" selection-start="699" selection-end="699" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MessageSend.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="42" selection-start="134" selection-end="134" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnarySend.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySend.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="13" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Cascade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/KeywordSend.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JavaBytecodeEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1004" column="0" selection-start="43997" selection-end="43997" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1388" selection-end="1388" vertical-scroll-proportion="0.58343196">
+        <state line="950" column="21" selection-start="42378" selection-end="42378" vertical-scroll-proportion="-0.020961776">
           <folding />
         </state>
       </provider>

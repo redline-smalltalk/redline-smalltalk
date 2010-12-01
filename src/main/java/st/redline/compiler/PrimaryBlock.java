@@ -11,4 +11,8 @@ public class PrimaryBlock extends Primary {
 	public Block block() {
 		return block;
 	}
+
+	public boolean hasBlockWithAnswer() {
+		return block.hasAnsweredExpression();
+	}
 }

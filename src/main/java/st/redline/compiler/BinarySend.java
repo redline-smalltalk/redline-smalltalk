@@ -10,6 +10,10 @@ public class BinarySend extends MessageSend {
 		this.unarySend = unarySend;
 	}
 
+	public boolean hasBlockWithAnswer() {
+		return unarySend.hasBlockWithAnswer();
+	}
+
 	public Primary primary() {
 		return unarySend.primary();
 	}

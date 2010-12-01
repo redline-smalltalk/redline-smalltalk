@@ -13,6 +13,13 @@ public class KeywordSend extends MessageSend {
 		this.arguments = new ArrayList<MessageSend>();
 	}
 
+	public boolean hasBlockWithAnswer() {
+		for (MessageSend messageSend : arguments)
+			if (messageSend.hasBlockWithAnswer())
+				return true;
+		return false;
+	}
+
 	public void add(MessageSend messageSend) {
 		arguments.add(messageSend);
 	}

@@ -7,4 +7,8 @@ public class PrimaryExpression extends Primary {
 	public PrimaryExpression(Expression expression) {
 		this.expression = expression;
 	}
+
+	public boolean hasBlockWithAnswer() {
+		return expression.hasBlockWithAnswer();
+	}
 }

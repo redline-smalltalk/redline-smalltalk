@@ -8,4 +8,8 @@ public class Primary {
 	public int lineNumber() {
 		return 0;
 	}
+
+	public boolean hasBlockWithAnswer() {
+		return false;
+	}
 }
