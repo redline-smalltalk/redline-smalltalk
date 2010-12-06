@@ -1,5 +1,5 @@
 package st.redline.compiler;
 
 public interface Executor {
-	void execute();
+	void execute() throws Throwable;
 }

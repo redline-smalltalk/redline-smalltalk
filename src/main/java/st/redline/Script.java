@@ -92,7 +92,11 @@ public class Script {
 	}
 
 	private void execute() {
-		executor().execute();
+		try {
+			executor().execute();
+		} catch (Throwable throwable) {
+			throwable.printStackTrace();
+		}
 	}
 
 	private Executor executor() {

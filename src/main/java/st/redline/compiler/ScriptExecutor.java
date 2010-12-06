@@ -11,18 +11,18 @@ public class ScriptExecutor implements Executor {
 		this.generator = generator;
 	}
 
-	public void execute() {
+	public void execute() throws Throwable {
 		generator.execute();
 		invokeScript();
 	}
 
-	private void invokeScript() {
+	private void invokeScript() throws Throwable {
 		String scriptName = generator.filenameWithoutExtension();
 		tryInitializeScriptClass(scriptName);
 		scriptInstance(scriptName).$send("doIt");
 	}
 
-	private ProtoObject scriptInstance(String scriptName) {
+	private ProtoObject scriptInstance(String scriptName) throws Throwable {
 		return scriptClass(scriptName).$send("new");
 	}
 

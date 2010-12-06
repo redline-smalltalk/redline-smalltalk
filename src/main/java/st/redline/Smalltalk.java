@@ -31,21 +31,21 @@ public class Smalltalk {
 		return classesByPrimitiveClass.get(primitiveClass);
 	}
 
-	public static ProtoObject $nil() {
+	public static ProtoObject $nil() throws Throwable {
 		if (_nil == null) {
 			_nil = classNamed("UndefinedObject").$send("new");
 		}
 		return _nil;
 	}
 
-	public static ProtoObject $true() {
+	public static ProtoObject $true() throws Throwable {
 		if (_true == null) {
 			_true = classNamed("True").$send("new");
 		}
 		return _true;
 	}
 
-	public static ProtoObject $false() {
+	public static ProtoObject $false() throws Throwable {
 		if (_false == null) {
 			_false = classNamed("False").$send("new");
 		}

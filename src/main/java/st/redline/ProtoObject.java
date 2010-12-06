@@ -27,21 +27,19 @@ public abstract class ProtoObject {
 		throw new RuntimeException("$superSend() not implemented.");
 	}
 
-	public ProtoObject $send(java.lang.String selector) {
+	public ProtoObject $send(java.lang.String selector) throws Throwable {
 		System.out.println("$send(" + selector + ")");
 		return tryInvokeMethod($findMethod(selector), selector, NO_ARGUMENTS);
 	}
 
-	private ProtoObject tryInvokeMethod(Method method, String selector, Object[] arguments) {
+	private ProtoObject tryInvokeMethod(Method method, String selector, Object[] arguments) throws Throwable {
 		if (method != null)
 			try {
 				return (ProtoObject) method.invoke(this, arguments);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 			} catch (InvocationTargetException e) {
-				if (e.getCause() instanceof BlockAnswer)
-					throw ((Error) e.getCause());
-				e.printStackTrace();
+				throw e.getCause();
 			}
 		if (!selector.equals("doesNotUnderstand:"))
 			return sendDoesNotUnderstand(selector, arguments);
