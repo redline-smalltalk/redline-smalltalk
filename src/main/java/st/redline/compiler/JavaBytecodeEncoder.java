@@ -961,15 +961,44 @@ public class JavaBytecodeEncoder extends ClassLoader implements Opcodes {
 	}
 
 	private void emitStatements(MethodVisitor mv, Statements statements) {
+Label start = new Label();    // beginning of the exception handler's scope (inclusive).
+Label end = new Label();      // end of the exception handler's scope (exclusive).
+Label handler = new Label();  // beginning of the exception handler's code.
+mv.visitTryCatchBlock(start, end, handler, "st/redline/TryThis$b1Answer");
+
+// mark beginning of guarded code.
+mv.visitLabel(start);
+mv.visitLineNumber(41, start);
+
 		for (Expression expression : statements.expressions())
 			emitExpression(mv, expression);
+
+mv.visitLabel(end);
+
+// jump over handler
+Label l4 = new Label();
+mv.visitJumpInsn(GOTO, l4);
+
+// get BlockAnswer exception from the stack and store local (see comment below)
+mv.visitLabel(handler);
+mv.visitLineNumber(42, handler);
+mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {"st/redline/TryThis$b1Answer"});
+mv.visitVarInsn(ASTORE, 1);   // Need to make ASTORE into slot after any variables.
+
+// get the block answer from the block and return it ([^]).
+Label l5 = new Label();
+mv.visitLabel(l5);
+mv.visitLineNumber(43, l5);
+mv.visitVarInsn(ALOAD, 1);
+mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/TryThis$b1Answer", "answer", "()Lst/redline/ProtoObject;");
+mv.visitInsn(ARETURN);
+
+mv.visitLabel(l4);
+
 	}
 
 	private void emitExpression(MethodVisitor mv, Expression expression) {
 		int superSendsBeforeCount = superSend.size();
-		if (expression.hasBlockWithAnswer()) {
-			System.out.println("**** hasBlockWithAnswer ****");
-		}
 		if (expression instanceof AssignmentExpression) {
 			emitExpression(mv, (AssignmentExpression) expression);
 		} else {

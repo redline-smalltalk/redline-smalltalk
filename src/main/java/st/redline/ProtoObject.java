@@ -37,7 +37,7 @@ public abstract class ProtoObject {
 			try {
 				return (ProtoObject) method.invoke(this, arguments);
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+				e.printStackTrace();
 			} catch (InvocationTargetException e) {
 				throw e.getCause();
 			}
