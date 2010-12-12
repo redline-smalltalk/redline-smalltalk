@@ -5,5 +5,6 @@
 	<classpathentry kind="src" path="src/main/generated"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/antlr-3.3-complete.jar"/>
+	<classpathentry kind="lib" path="lib/build/junit-4.8.2.jar"/>
 	<classpathentry kind="output" path="out"/>
 </classpath>
