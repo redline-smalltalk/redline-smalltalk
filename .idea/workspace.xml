@@ -63,7 +63,7 @@
       <file leaf-file-name="Stic.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="15" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.12099644">
+            <state line="25" column="15" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.12071006">
               <folding />
             </state>
           </provider>
@@ -465,7 +465,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1017" extended-state="0" />
+    <frame x="-3" y="0" width="1686" height="1019" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -480,7 +480,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16738461" sideWeight="0.6624569" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16676885" sideWeight="0.6624569" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295063" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -565,7 +565,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="15" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.12099644">
+        <state line="25" column="15" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.12071006">
           <folding />
         </state>
       </provider>
