@@ -1,3 +1,6 @@
 out/
 .ant-targets-build.xml
+smalltalk.tokens
+src/main/generated
+src/main/grammar/output
 

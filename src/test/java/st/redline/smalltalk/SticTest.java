@@ -1,3 +1,4 @@
+/*
 Redline Smalltalk is licensed under the MIT License
 
 Redline Smalltalk Copyright (c) 2010 James C. Ladd
@@ -16,5 +17,23 @@ LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE A
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+package st.redline.smalltalk;
 
-*end*
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class SticTest {
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void shouldCriteria() {
+	}
+}
