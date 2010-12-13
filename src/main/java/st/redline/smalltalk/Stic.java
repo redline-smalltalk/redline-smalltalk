@@ -21,7 +21,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk;
 
 /**
- * Provides a mechanism to invoke Smalltalk from the command line.
+ * Invokes Smalltalk from the command line.
  */
 public class Stic {
 	public static void main(String[] args) {

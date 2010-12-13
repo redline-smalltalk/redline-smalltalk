@@ -23,17 +23,25 @@ package st.redline.smalltalk;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import st.redline.testsupport.TestThatCapturesSystemOutputs;
 
-public class SticTest {
+import static org.junit.Assert.assertEquals;
+
+public class SticTest extends TestThatCapturesSystemOutputs {
+
 	@Before
 	public void setUp() throws Exception {
+		captureSystemOutputs();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		dontCaptureSystemOutputs();
 	}
 
 	@Test
 	public void shouldCriteria() {
+		System.out.println("hello world");
+		assertEquals("hello world\n", capturedStandardOutput());
 	}
 }
