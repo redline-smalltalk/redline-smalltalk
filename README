@@ -5,8 +5,10 @@ productive as Smalltalk, and the App has to run on the Java Virtual Machine.
 Redline Smalltalk is Copyright (c) James C. Ladd 2010 and released under the MIT License.
 See the LICENSE file for more information.
  
-For the latest information please see the wiki http://github.com/jamesladd/redline-smalltalk/wiki
-or the blog http://redline.st
+For the latest information please see:
+
+    wiki http://github.com/jamesladd/redline-smalltalk/wiki
+    blog http://redline.st
 
 *end*
 
