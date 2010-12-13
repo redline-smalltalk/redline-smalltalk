@@ -69,19 +69,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="build.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="42" selection-start="3410" selection-end="3410" vertical-scroll-proportion="0.0">
+            <state line="79" column="68" selection-start="3541" selection-end="3541" vertical-scroll-proportion="0.36790606">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SticTest.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SticTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="19" selection-start="1366" selection-end="1366" vertical-scroll-proportion="0.10059172">
+            <state line="47" column="8" selection-start="1795" selection-end="1795" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -123,13 +123,13 @@
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/LICENSE" />
-        <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/testsupport/CapturedPrintStream.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/testsupport/StringPrintStream.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/TestThatCapturesSystemOutputs.java" />
-        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/testsupport/TestThatCapturesSystemOutputs.java" />
+        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java" />
+        <option value="$PROJECT_DIR$/build.xml" />
       </list>
     </option>
   </component>
@@ -345,6 +345,9 @@
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
       <recent name="st.redline.smalltalk" />
+    </key>
+    <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="st.redline.smalltalk.SticTest" />
     </key>
   </component>
   <component name="RunManager" selected="JUnit.SticTest">
@@ -657,11 +660,6 @@
         <state line="1077" column="0" selection-start="17341" selection-end="36922" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="42" selection-start="3410" selection-end="3410" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/testsupport/TestThatCapturesSystemOutputs.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="4" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0">
@@ -687,7 +685,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="19" selection-start="1366" selection-end="1366" vertical-scroll-proportion="0.10059172">
+        <state line="47" column="8" selection-start="1795" selection-end="1795" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="68" selection-start="3541" selection-end="3541" vertical-scroll-proportion="0.36790606">
           <folding />
         </state>
       </provider>

@@ -29,6 +29,8 @@ import static org.junit.Assert.assertEquals;
 
 public class SticTest extends TestThatCapturesSystemOutputs {
 
+	private static final String[] NO_ARGUMENTS = new String[] {};
+
 	@Before
 	public void setUp() throws Exception {
 		captureSystemOutputs();
@@ -40,8 +42,9 @@ public class SticTest extends TestThatCapturesSystemOutputs {
 	}
 
 	@Test
-	public void shouldCriteria() {
-		System.out.println("hello world");
-		assertEquals("hello world\n", capturedStandardOutput());
+	public void shouldPrintUsageWhenInvokedWithNoArguments() {
+		String expectedStandardOutput = "Usage: stic [options]\n";
+		Stic.main(NO_ARGUMENTS);
+		assertEquals(expectedStandardOutput, capturedStandardOutput());
 	}
 }
