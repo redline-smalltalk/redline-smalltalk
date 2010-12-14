@@ -79,7 +79,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 	<target name="test" description="Test Redline." depends="clean, unit-test"/>
 
-	<target name="build" description="Generate, Compile and Test sources." depends="compile, test"/>
+	<target name="build" description="Generate, Compile and Test sources." depends="test"/>
 
 	<target name="jar" description="Create Java Archive." depends="build">
 		<mkdir dir="${jar.out}"/>

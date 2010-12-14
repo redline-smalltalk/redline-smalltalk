@@ -29,7 +29,11 @@ import static org.junit.Assert.assertEquals;
 
 public class SticTest extends TestThatCapturesSystemOutputs {
 
-	private static final String[] NO_ARGUMENTS = new String[] {};
+	private static final String[] NO_ARGUMENTS = null;
+	private static final String NO_OUTPUT = "";
+	private static final String HELP_USAGE =
+		"usage: Stic\n" +
+		" -?,--help   print this message.";
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,9 +46,23 @@ public class SticTest extends TestThatCapturesSystemOutputs {
 	}
 
 	@Test
-	public void shouldPrintUsageWhenInvokedWithNoArguments() {
-		String expectedStandardOutput = "Usage: stic [options]\n";
+	public void shouldPrintUsageWhenNoArguments() {
 		Stic.main(NO_ARGUMENTS);
-		assertEquals(expectedStandardOutput, capturedStandardOutput());
+		assertEquals(HELP_USAGE, capturedStandardOutput());
+		assertEquals(NO_OUTPUT, capturedErrorOutput());
+	}
+
+	@Test
+	public void shouldPrintUsageWhenHelpRequested() {
+		Stic.main(new String[] {"-?"});
+		assertEquals(HELP_USAGE, capturedStandardOutput());
+		assertEquals(NO_OUTPUT, capturedErrorOutput());
+	}
+
+	@Test
+	public void shouldPrintUsageWhenHelpRequestedWithAlias() {
+		Stic.main(new String[] {"--help"});
+		assertEquals(HELP_USAGE, capturedStandardOutput());
+		assertEquals(NO_OUTPUT, capturedErrorOutput());
 	}
 }

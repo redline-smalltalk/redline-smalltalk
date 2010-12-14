@@ -38,15 +38,22 @@ public class StringPrintStream extends PrintStream {
 	}
 
 	public String contents() {
-		return contents.toString();
+		return contents.toString().trim();
 	}
 
 	public void flush() {
-		flush();
 	}
 
 	public void close() {
-		close();
+	}
+
+	public void write(int b) {
+		contents.append((char) b);
+	}
+
+	public void write(byte buf[], int off, int len) {
+		for (int i = off; i < len; i++)
+			write(buf[i]);
 	}
 
 	public void print(boolean b) {

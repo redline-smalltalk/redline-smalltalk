@@ -20,10 +20,43 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import java.io.PrintStream;
+
 /**
  * Invokes Smalltalk from the command line.
  */
 public class Stic {
+
+	private final PrintStream outputStream;
+	private final PrintStream errorStream;
+	private final SticCommandLine commandLine;
+
 	public static void main(String[] args) {
+		new Stic(args, System.out, System.err).run();
+	}
+
+	public Stic(String[] arguments, PrintStream outputStream, PrintStream errorStream) {
+		this.outputStream = outputStream;
+		this.errorStream = errorStream;
+		this.commandLine = new SticCommandLine(arguments);
+		parseCommandLine();
+	}
+
+	private void parseCommandLine() {
+		commandLine.tryParseArguments();
+	}
+
+	public Stic run() {
+		if (helpRequested())
+			return printHelp();
+		return this;
+	}
+
+	private Stic printHelp() {
+		return commandLine.printHelp();
+	}
+
+	private boolean helpRequested() {
+		return commandLine.helpRequested();
 	}
 }
