@@ -32,7 +32,7 @@ public class SticTest extends TestThatCapturesSystemOutputs {
 	private static final String[] NO_ARGUMENTS = null;
 	private static final String NO_OUTPUT = "";
 	private static final String HELP_USAGE =
-		"usage: Stic\n" +
+		"usage: stic\n" +
 		" -?,--help   print this message.";
 
 	@Before

@@ -60,10 +60,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SticTest.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SticTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="47" selection-start="2214" selection-end="2214" vertical-scroll-proportion="0.0">
+            <state line="34" column="17" selection-start="1560" selection-end="1560" vertical-scroll-proportion="0.19526628">
               <folding />
             </state>
           </provider>
@@ -72,16 +72,16 @@
       <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="8" selection-start="3130" selection-end="3130" vertical-scroll-proportion="-7.04">
+            <state line="67" column="8" selection-start="3130" selection-end="3130" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Stic.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Stic.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.06035503">
+            <state line="22" column="0" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -90,7 +90,7 @@
       <file leaf-file-name="SticCommandLine.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/SticCommandLine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="290" selection-end="290" vertical-scroll-proportion="0.0">
+            <state line="17" column="36" selection-start="340" selection-end="340" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -116,10 +116,10 @@
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/TestThatCapturesSystemOutputs.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/testsupport/TestThatCapturesSystemOutputs.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/testsupport/StringPrintStream.java" />
-        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/SticCommandLine.java" />
         <option value="$PROJECT_DIR$/build.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/SticCommandLine.java" />
+        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java" />
       </list>
     </option>
   </component>
@@ -161,7 +161,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -309,7 +309,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -328,9 +328,9 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -759,26 +759,30 @@
         <state line="40" column="0" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="47" selection-start="2214" selection-end="2214" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/SticCommandLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="290" selection-end="290" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="8" selection-start="3130" selection-end="3130" vertical-scroll-proportion="-7.04">
+        <state line="67" column="8" selection-start="3130" selection-end="3130" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.06035503">
+        <state line="22" column="0" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/SticCommandLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="36" selection-start="340" selection-end="340" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="17" selection-start="1560" selection-end="1560" vertical-scroll-proportion="0.19526628">
           <folding />
         </state>
       </provider>

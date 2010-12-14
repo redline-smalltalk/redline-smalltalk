@@ -15,7 +15,7 @@ class SticCommandLine {
 	}
 
 	Stic printHelp() {
-		helpFormatter().printHelp("Stic", commandLineOptions());
+		helpFormatter().printHelp("stic", commandLineOptions());
 		return null;
 	}
 

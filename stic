@@ -1,0 +1,8 @@
+#!/bin/bash
+the_classpath=out/redline-smalltalk.jar
+for jar in lib/*.jar
+do
+   the_classpath=$the_classpath:$jar
+done
+java -cp "$the_classpath" st.redline.smalltalk.Stic $*
+
