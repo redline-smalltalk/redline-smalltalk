@@ -52,7 +52,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		<delete dir="${grammar.out}"/>
 	</target>
 
-	<target name="generate" description="Generate Redline sources from grammar." depends="init">
+	<target name="generate" description="Generate sources from grammar." depends="init">
 		<java jar="${grammar.lib}" fork="true">
 			<arg value="-o"/>
 			<arg value="${grammar.out}/st/redline/smalltalk"/>
@@ -60,13 +60,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		</java>
 	</target>
 
-	<target name="compile" description="Compile Redline sources." depends="generate">
+	<target name="compile" description="Compile sources." depends="generate">
 		<javac source="${java.src.version}" srcdir="${java.src}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
 		<javac source="${java.src.version}" srcdir="${grammar.out}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
 		<javac source="${java.src.version}" srcdir="${java.test.src}" destdir="${java.test.out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
 	</target>
 
-	<target name="unit-test" description="Test Redline." depends="compile">
+	<target name="unit-test" description="Unit-Test." depends="compile">
 		<delete dir="${test.results.out}"/>
 		<mkdir dir="${test.results.out}"/>
 		<junit printsummary="yes" haltonerror="true">
@@ -81,11 +81,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		</junit>
 	</target>
 
-	<target name="test" description="Test Redline." depends="clean, unit-test"/>
+	<target name="test" description="Test." depends="clean, unit-test"/>
 
 	<target name="build" description="Generate, Compile and Test sources." depends="test"/>
 
-	<target name="jar" description="Create Java Archive." depends="build">
+	<target name="jar" description="Create a Java Archive." depends="build">
 		<mkdir dir="${jar.out}"/>
 		<delete file="${jar.name}"/>
 		<jar destfile="${jar.name}" basedir="${out}" includes="st/**" excludes="st/**/*Test.class, st/redline/testsupport/**">
