@@ -71,6 +71,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 				<path refid="build-classpath"/>
 				<path location="${java.out}"/>
 			</classpath>
+			<formatter type="xml"/>
 			<batchtest fork="yes">
 				<fileset dir="${java.test.src}" includes="**/*Test.java"/>
 			</batchtest>
