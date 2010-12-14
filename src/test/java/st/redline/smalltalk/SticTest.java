@@ -29,10 +29,12 @@ import static org.junit.Assert.assertEquals;
 
 public class SticTest extends TestThatCapturesSystemOutputs {
 
+	public static final String LF = System.getProperty("line.separator");
+
 	private static final String[] NO_ARGUMENTS = null;
 	private static final String NO_OUTPUT = "";
 	private static final String HELP_USAGE =
-		"usage: stic" + System.getProperty("line.separator")  +
+		"usage: stic" + LF +
 		" -?,--help   print this message.";
 
 	@Before

@@ -36,6 +36,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	<property name="java.test.src" location="${src}/test/java"/>
 	<property name="java.test.out" location="${java.out}"/>
 	<property name="java.src.version" value="1.5"/>
+	<property name="test.results.out" location="${out}/test-results"/>
 
 	<path id="build-classpath">
 		<fileset dir="${lib}" includes="**/*.jar"/>
@@ -66,13 +67,15 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	</target>
 
 	<target name="unit-test" description="Test Redline." depends="compile">
+		<delete dir="${test.results.out}"/>
+		<mkdir dir="${test.results.out}"/>
 		<junit printsummary="yes" haltonerror="true">
 			<classpath>
 				<path refid="build-classpath"/>
 				<path location="${java.out}"/>
 			</classpath>
 			<formatter type="xml"/>
-			<batchtest fork="yes">
+			<batchtest fork="yes" todir="${test.results.out}">
 				<fileset dir="${java.test.src}" includes="**/*Test.java"/>
 			</batchtest>
 		</junit>
