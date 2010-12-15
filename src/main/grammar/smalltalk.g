@@ -32,7 +32,7 @@ options {
 	package st.redline.smalltalk;
 }
 
-rule: IDENT+;
+program: NAME+;
 
-IDENT: 'a'..'z'+;
-WS: ' '+ {$channel = HIDDEN;};
+NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
+WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};

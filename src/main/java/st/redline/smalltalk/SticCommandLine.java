@@ -2,21 +2,27 @@ package st.redline.smalltalk;
 
 import org.apache.commons.cli.*;
 
+import java.util.List;
+
 /**
- * Processes the arguments given to Stic.
+ * Processes the rawArguments given to Stic.
  */
 class SticCommandLine {
 
-	private final String[] arguments;
+	private final String[] rawArguments;
 	private CommandLine commandLine;
 
-	public SticCommandLine(String[] arguments) {
-		this.arguments = arguments;
+	public SticCommandLine(String[] rawArguments) {
+		this.rawArguments = rawArguments;
 	}
 
 	Stic printHelp() {
-		helpFormatter().printHelp("stic", commandLineOptions());
+		helpFormatter().printHelp("stic [options] <source files>", commandLineOptions());
 		return null;
+	}
+
+	List arguments() {
+		return commandLine.getArgList();
 	}
 
 	boolean helpRequested() {
@@ -33,7 +39,7 @@ class SticCommandLine {
 
 	void tryParseArguments() {
 		try {
-			commandLine = commandLineParser().parse(commandLineOptions(), arguments);
+			commandLine = commandLineParser().parse(commandLineOptions(), rawArguments);
 		} catch (ParseException e) {
 			throw new IllegalStateException(e);
 		}

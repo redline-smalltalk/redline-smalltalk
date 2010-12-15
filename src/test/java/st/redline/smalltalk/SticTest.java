@@ -34,7 +34,7 @@ public class SticTest extends TestThatCapturesSystemOutputs {
 	private static final String[] NO_ARGUMENTS = null;
 	private static final String NO_OUTPUT = "";
 	private static final String HELP_USAGE =
-		"usage: stic" + LF +
+		"usage: stic [options] <source files>" + LF +
 		" -?,--help   print this message.";
 
 	@Before
