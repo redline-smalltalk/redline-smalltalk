@@ -21,6 +21,7 @@ class SticCommandLine {
 
 	void printHelp(PrintWriter printWriter) {
 		helpFormatter().printHelp(printWriter, 80, "stic [options] <source files>", "", commandLineOptions(), 1, 4, "");
+		printWriter.flush();
 	}
 
 	List arguments() {
