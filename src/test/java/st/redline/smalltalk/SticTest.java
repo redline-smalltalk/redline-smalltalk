@@ -23,11 +23,13 @@ package st.redline.smalltalk;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import st.redline.testsupport.TestThatCapturesSystemOutputs;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import static org.junit.Assert.assertEquals;
 
-public class SticTest extends TestThatCapturesSystemOutputs {
+public class SticTest {
 
 	public static final String LF = System.getProperty("line.separator");
 
@@ -35,36 +37,56 @@ public class SticTest extends TestThatCapturesSystemOutputs {
 	private static final String NO_OUTPUT = "";
 	private static final String HELP_USAGE =
 		"usage: stic [options] <source files>" + LF +
-		" -?,--help   print this message.";
+		" -?,--help    print this message." + LF;
+
+	private StringWriter outputWriter;
+	private StringWriter errorWriter;
+	private PrintWriter outputPrintWriter;
+	private PrintWriter errorPrintWriter;
 
 	@Before
 	public void setUp() throws Exception {
-		captureSystemOutputs();
+		outputWriter = new StringWriter();
+		errorWriter = new StringWriter();
+		outputPrintWriter = new PrintWriter(outputWriter);
+		errorPrintWriter = new PrintWriter(errorWriter);
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		dontCaptureSystemOutputs();
-	}
+	public void tearDown() throws Exception {}
 
 	@Test
 	public void shouldPrintUsageWhenNoArguments() {
-		Stic.main(NO_ARGUMENTS);
-		assertEquals(HELP_USAGE, capturedStandardOutput());
-		assertEquals(NO_OUTPUT, capturedErrorOutput());
+		new Stic(NO_ARGUMENTS, outputPrintWriter, errorPrintWriter).run();
+		assertHelpOutputWithNoErrors();
 	}
 
 	@Test
 	public void shouldPrintUsageWhenHelpRequested() {
-		Stic.main(new String[] {"-?"});
-		assertEquals(HELP_USAGE, capturedStandardOutput());
-		assertEquals(NO_OUTPUT, capturedErrorOutput());
+		new Stic(new String[] {"-?"}, outputPrintWriter, errorPrintWriter).run();
+		assertHelpOutputWithNoErrors();
 	}
 
 	@Test
 	public void shouldPrintUsageWhenHelpRequestedWithAlias() {
-		Stic.main(new String[] {"--help"});
+		new Stic(new String[] {"--help"}, outputPrintWriter, errorPrintWriter).run();
+		assertHelpOutputWithNoErrors();
+	}
+
+	private void assertHelpOutputWithNoErrors() {
 		assertEquals(HELP_USAGE, capturedStandardOutput());
 		assertEquals(NO_OUTPUT, capturedErrorOutput());
+	}
+
+	private String capturedStandardOutput() {
+		return contents(outputWriter);
+	}
+
+	private String capturedErrorOutput() {
+		return contents(errorWriter);
+	}
+
+	private String contents(StringWriter outputWriter) {
+		return outputWriter.getBuffer().toString();
 	}
 }

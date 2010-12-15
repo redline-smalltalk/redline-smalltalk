@@ -1,0 +1,5 @@
+
+16/12/2010 Changes
+
+Refactored SticTest to use PrintWriters rather than PrintStreams, since PrintWriters
+will be used later. Makes for less code = good. Refactoring suggested by David Kemp.

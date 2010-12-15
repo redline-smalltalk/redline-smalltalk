@@ -2,6 +2,9 @@ package st.redline.smalltalk;
 
 import org.apache.commons.cli.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.List;
 
 /**
@@ -16,9 +19,8 @@ class SticCommandLine {
 		this.rawArguments = rawArguments;
 	}
 
-	Stic printHelp() {
-		helpFormatter().printHelp("stic [options] <source files>", commandLineOptions());
-		return null;
+	void printHelp(PrintWriter printWriter) {
+		helpFormatter().printHelp(printWriter, 80, "stic [options] <source files>", "", commandLineOptions(), 1, 4, "");
 	}
 
 	List arguments() {

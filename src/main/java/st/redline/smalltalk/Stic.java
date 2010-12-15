@@ -20,7 +20,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -28,17 +28,17 @@ import java.util.List;
  */
 public class Stic {
 
-	private final PrintStream outputStream;
-	private final PrintStream errorStream;
+	private final PrintWriter outputWriter;
+	private final PrintWriter errorWriter;
 	private final SticCommandLine commandLine;
 
 	public static void main(String[] args) {
-		new Stic(args, System.out, System.err).run();
+		new Stic(args, new PrintWriter(System.out), new PrintWriter(System.err)).run();
 	}
 
-	public Stic(String[] arguments, PrintStream outputStream, PrintStream errorStream) {
-		this.outputStream = outputStream;
-		this.errorStream = errorStream;
+	public Stic(String[] arguments, PrintWriter outputWriter, PrintWriter errorWriter) {
+		this.outputWriter = outputWriter;
+		this.errorWriter = errorWriter;
 		this.commandLine = commandLineFrom(arguments);
 		parseCommandLine();
 	}
@@ -68,7 +68,8 @@ public class Stic {
 	}
 
 	private Stic printHelp() {
-		return commandLine.printHelp();
+		commandLine.printHelp(outputWriter);
+		return this;
 	}
 
 	private boolean helpRequested() {
