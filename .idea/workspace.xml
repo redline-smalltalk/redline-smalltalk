@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="bf340547-97a3-46d1-9b1f-ccc3c3574995" name="Default" comment="" />
-    <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
+    <ignored path="$USER_HOME_GRIFFON$/" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,10 +72,8 @@
       <file leaf-file-name="EnvironmentTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/EnvironmentTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="12" selection-start="1449" selection-end="1449" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="52" column="24" selection-start="1978" selection-end="1978" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -83,7 +81,7 @@
       <file leaf-file-name="Environment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Environment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="111" selection-start="1388" selection-end="1388" vertical-scroll-proportion="0.0">
+            <state line="27" column="27" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -92,10 +90,8 @@
       <file leaf-file-name="SticTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="0" selection-start="1574" selection-end="1574" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="41" column="10" selection-start="1664" selection-end="1664" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -103,7 +99,7 @@
       <file leaf-file-name="Stic.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="36" selection-start="2405" selection-end="2405" vertical-scroll-proportion="0.0">
+            <state line="39" column="0" selection-start="1703" selection-end="1703" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -111,22 +107,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Smalltalk.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Smalltalk.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="20" selection-start="1698" selection-end="1698" vertical-scroll-proportion="0.0">
+            <state line="25" column="0" selection-start="1215" selection-end="1215" vertical-scroll-proportion="0.08577195">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommandLine.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CommandLine.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/CommandLine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="17" selection-start="255" selection-end="255" vertical-scroll-proportion="0.34">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="13" column="17" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -154,13 +148,13 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/MissingArgumentException.java" />
         <option value="$PROJECT_DIR$/CHANGES" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SmalltalkTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/SticCommandLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/CommandLine.java" />
+        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/EnvironmentTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Environment.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java" />
-        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/EnvironmentTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/SticCommandLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/CommandLine.java" />
       </list>
     </option>
   </component>
@@ -202,6 +196,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
@@ -315,8 +311,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -335,9 +329,9 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -686,10 +680,10 @@
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="JUnit.SticTest.shouldPrintUsageWhenNoArguments" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.SticTest.shouldPrintUsageWhenHelpRequested" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.SticTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.EnvironmentTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.SmalltalkTest" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.SticTest.shouldDispatchEvaluationOfFilesToSmalltalk" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.EnvironmentTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.SmalltalkTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.SticTest.shouldDispatchEvaluationOfFilesToSmalltalk" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.SticTest" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -738,9 +732,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17103153" sideWeight="0.6653582" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17103153" sideWeight="0.66339546" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32777232" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32777232" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.54180986" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -794,55 +788,26 @@
         <state line="99" column="22" selection-start="3983" selection-end="3983" vertical-scroll-proportion="0.033203125" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="20" selection-start="1698" selection-end="1698" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/lib/build/junit-4.8.2.jar!/org/junit/internal/runners/statements/ExpectException.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="607" selection-end="607" vertical-scroll-proportion="0.29872206">
+        <state line="12" column="0" selection-start="607" selection-end="607" vertical-scroll-proportion="0.29872206" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SmalltalkTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="1220" selection-end="1220" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="10" selection-start="1664" selection-end="1664" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Stic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="36" selection-start="2405" selection-end="2405" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Environment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="111" selection-start="1388" selection-end="1388" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SticTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="0" selection-start="1574" selection-end="1574" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/SmalltalkTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="1220" selection-end="1220" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/EnvironmentTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="12" selection-start="1449" selection-end="1449" vertical-scroll-proportion="0.0">
+        <state line="39" column="0" selection-start="1703" selection-end="1703" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -851,10 +816,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/CommandLine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="17" selection-start="255" selection-end="255" vertical-scroll-proportion="0.34">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="13" column="17" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/EnvironmentTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="24" selection-start="1978" selection-end="1978" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Environment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="27" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="1215" selection-end="1215" vertical-scroll-proportion="0.08577195">
+          <folding />
         </state>
       </provider>
     </entry>

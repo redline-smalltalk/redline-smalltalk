@@ -25,11 +25,25 @@ import java.util.HashMap;
 
 public class Environment extends HashMap<String, Object> {
 
-	public static Environment from(CommandLine commandLine, PrintWriter standardOutput, PrintWriter errorOutput) {
+	private final CommandLine commandLine;
+	private final PrintWriter standardOutput;
+
+	public static Environment with(CommandLine commandLine, PrintWriter standardOutput, PrintWriter errorOutput) {
 		if (commandLine == null || standardOutput == null || errorOutput == null)
 			throw new MissingArgumentException();
-		return new Environment();
+		return new Environment(commandLine, standardOutput);
 	}
 
-	private Environment() {}
+	private Environment(CommandLine commandLine, PrintWriter standardOutput) {
+		this.commandLine = commandLine;
+		this.standardOutput = standardOutput;
+	}
+
+	public CommandLine commandLine() {
+		return commandLine;
+	}
+
+	public PrintWriter standardOutput() {
+		return standardOutput;
+	}
 }

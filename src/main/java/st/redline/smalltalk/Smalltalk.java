@@ -42,11 +42,11 @@ public class Smalltalk {
 			return;
 	}
 
-	public PrintWriter output() {
-		return null;
+	public PrintWriter standardOutput() {
+		return environment.standardOutput();
 	}
 
 	public CommandLine commandLine() {
-		return null;
+		return environment.commandLine();
 	}
 }

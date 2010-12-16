@@ -39,8 +39,7 @@ public class SticTest {
 
 	private static final List<String> listWithOneFileName = new ArrayList<String>();
 
-	@Mock
-	CommandLine commandLine;
+	@Mock CommandLine commandLine;
 	@Mock Smalltalk smalltalk;
 	@Mock PrintWriter standardOutput;
 
@@ -61,7 +60,7 @@ public class SticTest {
 
 	@Test public void shouldPrintUsageWhenHelpRequested() {
 		when(commandLine.helpRequested()).thenReturn(true);
-		when(smalltalk.output()).thenReturn(standardOutput);
+		when(smalltalk.standardOutput()).thenReturn(standardOutput);
 
 		new Stic(smalltalk).run();
 		verify(commandLine).printHelp(standardOutput);

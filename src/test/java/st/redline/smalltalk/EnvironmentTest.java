@@ -40,16 +40,16 @@ public class EnvironmentTest {
 
 	@Test(expected=MissingArgumentException.class)
 	public void shouldNotAcceptNullCommandLineArgument() {
-		Environment.from(null, standardOutput, errorOutput);
+		Environment.with(null, standardOutput, errorOutput);
 	}
 
 	@Test(expected=MissingArgumentException.class)
 	public void shouldNotAcceptNullStandardOutputArgument() {
-		Environment.from(commandLine, null, errorOutput);
+		Environment.with(commandLine, null, errorOutput);
 	}
 
 	@Test(expected=MissingArgumentException.class)
 	public void shouldNotAcceptNullErrorOutputArgument() {
-		Environment.from(commandLine, standardOutput, null);
+		Environment.with(commandLine, standardOutput, null);
 	}
 }

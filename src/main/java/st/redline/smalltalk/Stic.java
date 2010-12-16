@@ -35,16 +35,16 @@ public class Stic {
 		PrintWriter standardOut = new PrintWriter(System.out);
 		PrintWriter standardErr = new PrintWriter(System.err);
 		CommandLine commandLine = createCommandLineWith(args);
-		Environment environment = createEnvironmentFrom(commandLine, standardOut, standardErr);
-		Smalltalk smalltalk = createSmalltalkOn(environment);
+		Environment environment = createEnvironmentWith(commandLine, standardOut, standardErr);
+		Smalltalk smalltalk = createSmalltalkWith(environment);
 		new Stic(smalltalk).run();
 	}
 
-	public static Environment createEnvironmentFrom(CommandLine commandLine, PrintWriter output, PrintWriter error) {
-		return Environment.from(commandLine, output, error);
+	public static Environment createEnvironmentWith(CommandLine commandLine, PrintWriter output, PrintWriter error) {
+		return Environment.with(commandLine, output, error);
 	}
 
-	public static Smalltalk createSmalltalkOn(Environment environment) {
+	public static Smalltalk createSmalltalkWith(Environment environment) {
 		return Smalltalk.with(environment);
 	}
 
@@ -78,12 +78,12 @@ public class Stic {
 	}
 
 	private Stic printHelp() {
-		commandLine().printHelp(output());
+		commandLine().printHelp(standardOutput());
 		return this;
 	}
 
-	private PrintWriter output() {
-		return smalltalk.output();
+	private PrintWriter standardOutput() {
+		return smalltalk.standardOutput();
 	}
 
 	private boolean helpRequested() {
