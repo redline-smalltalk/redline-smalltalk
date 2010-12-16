@@ -13,9 +13,9 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
@@ -29,48 +29,39 @@ import java.util.List;
  */
 public class Stic {
 
-	private final PrintWriter outputWriter;
-	private final PrintWriter errorWriter;
-	private final SticCommandLine commandLine;
-	private Environment environment;
 	private Smalltalk smalltalk;
 
 	public static void main(String[] args) {
-		new Stic(commandLineWith(args), new PrintWriter(System.out), new PrintWriter(System.err))
-			.run();
+		PrintWriter standardOut = new PrintWriter(System.out);
+		PrintWriter standardErr = new PrintWriter(System.err);
+		CommandLine commandLine = createCommandLineWith(args);
+		Environment environment = createEnvironmentFrom(commandLine, standardOut, standardErr);
+		Smalltalk smalltalk = createSmalltalkOn(environment);
+		new Stic(smalltalk).run();
 	}
 
-	public static SticCommandLine commandLineWith(String[] arguments) {
-		return new SticCommandLine(arguments);
+	public static Environment createEnvironmentFrom(CommandLine commandLine, PrintWriter output, PrintWriter error) {
+		return Environment.from(commandLine, output, error);
 	}
 
-	public Stic(SticCommandLine commandLine, PrintWriter outputWriter, PrintWriter errorWriter) {
-		this.outputWriter = outputWriter;
-		this.errorWriter = errorWriter;
-		this.commandLine = commandLine;
+	public static Smalltalk createSmalltalkOn(Environment environment) {
+		return Smalltalk.with(environment);
+	}
+
+	public static CommandLine createCommandLineWith(String[] arguments) {
+		return new CommandLine(arguments);
+	}
+
+	public Stic(Smalltalk smalltalk) {
+		this.smalltalk = smalltalk;
 	}
 
 	public Stic run() {
 		if (helpRequested())
 			return printHelp();
-		if (haveFileNames()) {
-			initializeSmalltalk();
+		if (haveFileNames())
 			runSmalltalkScripts();
-		}
 		return this;
-	}
-
-	private void initializeSmalltalk() {
-		createEnvironment();
-		createSmalltalk();
-	}
-
-	private void createEnvironment() {
-		environment = Environment.from(commandLine);
-	}
-
-	private void createSmalltalk() {
-		smalltalk = Smalltalk.with(environment);
 	}
 
 	private void runSmalltalkScripts() {
@@ -79,19 +70,27 @@ public class Stic {
 	}
 
 	private List fileNames() {
-		return commandLine.arguments();
+		return commandLine().arguments();
 	}
 
 	private boolean haveFileNames() {
-		return !commandLine.haveNoArguments();
+		return !commandLine().haveNoArguments();
 	}
 
 	private Stic printHelp() {
-		commandLine.printHelp(outputWriter);
+		commandLine().printHelp(output());
 		return this;
 	}
 
+	private PrintWriter output() {
+		return smalltalk.output();
+	}
+
 	private boolean helpRequested() {
-		return commandLine.helpRequested();
+		return commandLine().helpRequested();
+	}
+
+	private CommandLine commandLine() {
+		return smalltalk.commandLine();
 	}
 }

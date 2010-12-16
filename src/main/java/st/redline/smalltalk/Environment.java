@@ -13,19 +13,20 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 public class Environment extends HashMap<String, Object> {
 
-	public static Environment from(SticCommandLine commandLine) {
-		if (commandLine == null)
+	public static Environment from(CommandLine commandLine, PrintWriter standardOutput, PrintWriter errorOutput) {
+		if (commandLine == null || standardOutput == null || errorOutput == null)
 			throw new MissingArgumentException();
 		return new Environment();
 	}

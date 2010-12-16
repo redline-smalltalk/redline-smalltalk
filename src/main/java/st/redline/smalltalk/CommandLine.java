@@ -3,19 +3,17 @@ package st.redline.smalltalk;
 import org.apache.commons.cli.*;
 
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
 
 /**
  * Processes the raw arguments given in String[] format.
  */
-class SticCommandLine {
+class CommandLine {
 
 	private final String[] rawArguments;
-	private CommandLine commandLine;
+	private org.apache.commons.cli.CommandLine commandLine;
 
-	public SticCommandLine(String[] rawArguments) {
+	public CommandLine(String[] rawArguments) {
 		this.rawArguments = rawArguments;
 		tryParseArguments();
 	}
