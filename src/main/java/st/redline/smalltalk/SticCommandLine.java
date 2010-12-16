@@ -8,7 +8,7 @@ import java.io.Writer;
 import java.util.List;
 
 /**
- * Processes the rawArguments given to Stic.
+ * Processes the raw arguments given in String[] format.
  */
 class SticCommandLine {
 
@@ -17,6 +17,7 @@ class SticCommandLine {
 
 	public SticCommandLine(String[] rawArguments) {
 		this.rawArguments = rawArguments;
+		tryParseArguments();
 	}
 
 	void printHelp(PrintWriter printWriter) {

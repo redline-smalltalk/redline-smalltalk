@@ -32,8 +32,10 @@ import static org.junit.Assert.assertEquals;
 public class SticTest {
 
 	private static final String LF = System.getProperty("line.separator");
-	private static final String[] NO_ARGUMENTS = null;
 	private static final String NO_OUTPUT = "";
+	private static final SticCommandLine NO_ARGUMENTS = Stic.commandLineWith(new String[] {});
+	private static final SticCommandLine HELP_REQUEST = Stic.commandLineWith(new String[] {"-?"});
+	private static final SticCommandLine ALIAS_HELP_REQUEST = Stic.commandLineWith(new String[] {"--help"});
 
 	private static final String HELP_USAGE =
 		"usage: stic [options] <source files>" + LF +
@@ -62,13 +64,13 @@ public class SticTest {
 
 	@Test
 	public void shouldPrintUsageWhenHelpRequested() {
-		new Stic(new String[] {"-?"}, outputPrintWriter, errorPrintWriter).run();
+		new Stic(HELP_REQUEST, outputPrintWriter, errorPrintWriter).run();
 		assertHelpOutputWithNoErrors();
 	}
 
 	@Test
 	public void shouldPrintUsageWhenHelpRequestedWithAlias() {
-		new Stic(new String[] {"--help"}, outputPrintWriter, errorPrintWriter).run();
+		new Stic(ALIAS_HELP_REQUEST, outputPrintWriter, errorPrintWriter).run();
 		assertHelpOutputWithNoErrors();
 	}
 

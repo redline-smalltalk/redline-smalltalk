@@ -36,22 +36,18 @@ public class Stic {
 	private Smalltalk smalltalk;
 
 	public static void main(String[] args) {
-		new Stic(args, new PrintWriter(System.out), new PrintWriter(System.err)).run();
+		new Stic(commandLineWith(args), new PrintWriter(System.out), new PrintWriter(System.err))
+			.run();
 	}
 
-	public Stic(String[] arguments, PrintWriter outputWriter, PrintWriter errorWriter) {
-		this.outputWriter = outputWriter;
-		this.errorWriter = errorWriter;
-		this.commandLine = commandLineFrom(arguments);
-		parseCommandLine();
-	}
-
-	private SticCommandLine commandLineFrom(String[] arguments) {
+	public static SticCommandLine commandLineWith(String[] arguments) {
 		return new SticCommandLine(arguments);
 	}
 
-	private void parseCommandLine() {
-		commandLine.tryParseArguments();
+	public Stic(SticCommandLine commandLine, PrintWriter outputWriter, PrintWriter errorWriter) {
+		this.outputWriter = outputWriter;
+		this.errorWriter = errorWriter;
+		this.commandLine = commandLine;
 	}
 
 	public Stic run() {
@@ -59,7 +55,7 @@ public class Stic {
 			return printHelp();
 		if (haveFileNames()) {
 			initializeSmalltalk();
-			runSmalltalk();
+			runSmalltalkScripts();
 		}
 		return this;
 	}
@@ -69,15 +65,15 @@ public class Stic {
 		createSmalltalk();
 	}
 
-	protected void createEnvironment() {
+	private void createEnvironment() {
 		environment = Environment.from(commandLine);
 	}
 
-	protected void createSmalltalk() {
+	private void createSmalltalk() {
 		smalltalk = Smalltalk.with(environment);
 	}
 
-	private void runSmalltalk() {
+	private void runSmalltalkScripts() {
 		for (Object fileName : fileNames())
 			smalltalk.eval(new File(fileName.toString()));
 	}
