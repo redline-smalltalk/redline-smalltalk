@@ -29,8 +29,7 @@ import java.io.PrintWriter;
 
 public class EnvironmentTest {
 
-	@Mock
-	CommandLine commandLine;
+	@Mock CommandLine commandLine;
 	@Mock PrintWriter standardOutput;
 	@Mock PrintWriter errorOutput;
 

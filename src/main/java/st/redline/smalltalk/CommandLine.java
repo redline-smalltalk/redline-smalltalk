@@ -7,6 +7,9 @@ import java.util.List;
 
 /**
  * Processes the raw arguments given in String[] format.
+ * 
+ * Command line options are different to command line arguments.
+ * Arguments is the list of <source files>
  */
 class CommandLine {
 

@@ -32,23 +32,27 @@ public class Stic {
 	private Smalltalk smalltalk;
 
 	public static void main(String[] args) {
-		PrintWriter standardOut = new PrintWriter(System.out);
-		PrintWriter standardErr = new PrintWriter(System.err);
-		CommandLine commandLine = createCommandLineWith(args);
-		Environment environment = createEnvironmentWith(commandLine, standardOut, standardErr);
-		Smalltalk smalltalk = createSmalltalkWith(environment);
-		new Stic(smalltalk).run();
+		new Stic(createSmalltalkWith(args)).run();
 	}
 
-	public static Environment createEnvironmentWith(CommandLine commandLine, PrintWriter output, PrintWriter error) {
+	public static Smalltalk createSmalltalkWith(String[] args) {
+		return createSmalltalkWith(createEnvironmentWith(args));
+	}
+
+	private static Environment createEnvironmentWith(String[] args) {
+		CommandLine commandLine = createCommandLineWith(args);
+		return createEnvironmentWith(commandLine, new PrintWriter(System.out), new PrintWriter(System.err));
+	}
+
+	private static Environment createEnvironmentWith(CommandLine commandLine, PrintWriter output, PrintWriter error) {
 		return Environment.with(commandLine, output, error);
 	}
 
-	public static Smalltalk createSmalltalkWith(Environment environment) {
+	private static Smalltalk createSmalltalkWith(Environment environment) {
 		return Smalltalk.with(environment);
 	}
 
-	public static CommandLine createCommandLineWith(String[] arguments) {
+	private static CommandLine createCommandLineWith(String[] arguments) {
 		return new CommandLine(arguments);
 	}
 

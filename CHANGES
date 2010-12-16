@@ -5,3 +5,6 @@ Refactored SticTest to use PrintWriters rather than PrintStreams, since PrintWri
 will be used later. Makes for less code = good. Refactoring suggested by David Kemp.
 
 Added Smalltalk and Environment Tests and Classes.
+
+Added Mockito mocking framework to help with Testing.
+

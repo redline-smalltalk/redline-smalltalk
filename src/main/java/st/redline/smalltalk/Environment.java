@@ -23,7 +23,7 @@ package st.redline.smalltalk;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
-public class Environment extends HashMap<String, Object> {
+public class Environment {
 
 	private final CommandLine commandLine;
 	private final PrintWriter standardOutput;
