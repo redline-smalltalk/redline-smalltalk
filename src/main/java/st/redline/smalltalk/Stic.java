@@ -20,6 +20,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class Stic {
 	private final PrintWriter outputWriter;
 	private final PrintWriter errorWriter;
 	private final SticCommandLine commandLine;
+	private Environment environment;
+	private Smalltalk smalltalk;
 
 	public static void main(String[] args) {
 		new Stic(args, new PrintWriter(System.out), new PrintWriter(System.err)).run();
@@ -54,9 +57,29 @@ public class Stic {
 	public Stic run() {
 		if (helpRequested())
 			return printHelp();
-		if (haveFileNames())
-			System.out.println(fileNames());
+		if (haveFileNames()) {
+			initializeSmalltalk();
+			runSmalltalk();
+		}
 		return this;
+	}
+
+	private void initializeSmalltalk() {
+		createEnvironment();
+		createSmalltalk();
+	}
+
+	protected void createEnvironment() {
+		environment = Environment.from(commandLine);
+	}
+
+	protected void createSmalltalk() {
+		smalltalk = Smalltalk.with(environment);
+	}
+
+	private void runSmalltalk() {
+		for (Object fileName : fileNames())
+			smalltalk.eval(new File(fileName.toString()));
 	}
 
 	private List fileNames() {
