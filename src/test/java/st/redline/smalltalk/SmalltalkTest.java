@@ -20,9 +20,49 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.io.File;
+
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class SmalltalkTest {
+
+	@Mock File sourceFile;
+	@Mock Environment environment;
+
+	private Smalltalk smalltalk;
+
+	@Before public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		smalltalk = Smalltalk.with(environment);
+	}
+
+	@Test public void shouldNotEvaluateNonExistentFile() {
+		when(sourceFile.exists()).thenReturn(false);
+		smalltalk.eval(sourceFile);
+		verify(environment, never()).put(Smalltalk.CURRENT_FILE, sourceFile);
+	}
+
+	@Test public void shouldNotEvaluateNonFile() {
+		when(sourceFile.exists()).thenReturn(true);
+		when(sourceFile.isFile()).thenReturn(false);
+		smalltalk.eval(sourceFile);
+		verify(environment, never()).put(Smalltalk.CURRENT_FILE, sourceFile);
+	}
+
+	@Test public void shouldTrackSourceFileBeingEvaluated() {
+		when(sourceFile.exists()).thenReturn(true);
+		when(sourceFile.isFile()).thenReturn(true);
+		smalltalk.eval(sourceFile);
+		verify(environment).put(Smalltalk.CURRENT_FILE, sourceFile);
+		verify(environment).remove(Smalltalk.CURRENT_FILE);
+	}
 
 	@Test (expected=MissingArgumentException.class)
 	public void shouldNotAcceptNullEnvironmentArgument() {

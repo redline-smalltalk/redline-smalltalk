@@ -25,7 +25,11 @@ import java.io.PrintWriter;
 
 public class Smalltalk {
 
+	public static final String CURRENT_FILE = "CURRENT_FILE";
+
 	private final Environment environment;
+
+	private File currentFile;
 
 	public static Smalltalk with(Environment environment) {
 		if (environment == null)
@@ -37,9 +41,39 @@ public class Smalltalk {
 		this.environment = environment;
 	}
 
+	public void eval(String source) {
+	}
+
 	public void eval(File file) {
-		if (file == null)
+		if (isNotFile(file))
 			return;
+		currentFile = file;
+		evalFile();
+	}
+
+	private void evalFile() {
+		trackFile();
+		try {
+			eval(fileContents());
+		} finally {
+			untrackFile();
+		}
+	}
+
+	private String fileContents() {
+		return "";
+	}
+
+	private boolean isNotFile(File file) {
+		return file == null || !file.exists() || !file.isFile();
+	}
+
+	private void untrackFile() {
+		environment.remove(CURRENT_FILE);
+	}
+
+	private void trackFile() {
+		environment.put(CURRENT_FILE, currentFile);
 	}
 
 	public PrintWriter standardOutput() {

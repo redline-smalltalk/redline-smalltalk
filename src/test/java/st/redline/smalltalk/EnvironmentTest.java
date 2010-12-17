@@ -27,14 +27,34 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.PrintWriter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 public class EnvironmentTest {
 
 	@Mock CommandLine commandLine;
 	@Mock PrintWriter standardOutput;
 	@Mock PrintWriter errorOutput;
 
+	private Environment environment;
+	private String key = "Key";
+	private Object value = this;
+
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		environment = Environment.with(commandLine, standardOutput, errorOutput);
+	}
+
+	@Test public void shouldStoreKeyedValues() {
+		environment.put(key, value);
+		assertEquals(this, environment.get(key));
+	}
+
+	@Test public void shouldRemoveKeyedValues() {
+		environment.put(key, value);
+		assertEquals(this, environment.get(key));
+		assertEquals(this, environment.remove(key));
+		assertFalse(environment.containsKey(key));
 	}
 
 	@Test(expected=MissingArgumentException.class)

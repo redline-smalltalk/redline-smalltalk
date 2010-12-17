@@ -22,9 +22,12 @@ package st.redline.smalltalk;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 public class Environment {
 
+	private final Map<String, Object> contents;
 	private final CommandLine commandLine;
 	private final PrintWriter standardOutput;
 
@@ -37,6 +40,7 @@ public class Environment {
 	private Environment(CommandLine commandLine, PrintWriter standardOutput) {
 		this.commandLine = commandLine;
 		this.standardOutput = standardOutput;
+		this.contents = new Hashtable<String, Object>();
 	}
 
 	public CommandLine commandLine() {
@@ -45,5 +49,21 @@ public class Environment {
 
 	public PrintWriter standardOutput() {
 		return standardOutput;
+	}
+
+	public Object put(String key, Object value) {
+		return contents.put(key, value);
+	}
+
+	public Object get(String key) {
+		return contents.get(key);
+	}
+
+	public Object remove(String key) {
+		return contents.remove(key);
+	}
+
+	public boolean containsKey(String key) {
+		return contents.containsKey(key);
 	}
 }
