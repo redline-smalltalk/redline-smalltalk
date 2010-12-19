@@ -1,4 +1,9 @@
 
+20/12/2010 Changes
+
+Added stic.bat supplied by Jeff Heon. Adapted from Kasim's ClojureW Project (https://bitbucket.org/kasim/clojurew)
+
+
 16/12/2010 Changes
 
 Refactored SticTest to use PrintWriters rather than PrintStreams, since PrintWriters
