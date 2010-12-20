@@ -36,9 +36,12 @@ import static org.mockito.Mockito.when;
 
 public class SmalltalkTest {
 
+	String sourceCode = "";
+
 	@Mock File sourceFile;
 	@Mock FileReader fileReader;
 	@Mock Environment environment;
+	@Mock Interpreter interpreter;
 
 	private Smalltalk smalltalk;
 
@@ -46,29 +49,49 @@ public class SmalltalkTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
+	@Test public void shouldInterpretSourceCode() {
+		when(environment.get(Smalltalk.INTERPRETER)).thenReturn(interpreter);
+		smalltalk = Smalltalk.with(environment);
+		smalltalk.eval(sourceCode);
+		verify(interpreter).interpretUsing(sourceCode, smalltalk);
+	}
+
 	@Test public void shouldProvideAccessToEnvironment() {
 		smalltalk = Smalltalk.with(environment);
 		assertEquals(environment, smalltalk.environment());
 	}
 
+	@Test public void shouldInitializeInterpreterWhenNotSupplied() {
+		when(environment.get(Smalltalk.INTERPRETER)).thenReturn(null);
+		Smalltalk.with(environment);
+		verify(environment).put(eq(Smalltalk.INTERPRETER), isNotNull());
+	}
+
+	// Users can supply their own Interpreter.
+	@Test public void shouldNotInitializeInterpreterWhenSupplied() {
+		when(environment.get(Smalltalk.INTERPRETER)).thenReturn(interpreter);
+		Smalltalk.with(environment);
+		verify(environment, never()).put(eq(Smalltalk.INTERPRETER), isNotNull());
+	}
+
 	@Test public void shouldInitializeFileReaderWhenNotSupplied() {
 		when(environment.get(Smalltalk.FILE_READER)).thenReturn(null);
-		smalltalk = Smalltalk.with(environment);
+		Smalltalk.with(environment);
 		verify(environment).put(eq(Smalltalk.FILE_READER), isNotNull());
 	}
 
-	// Users can supply their own File Reader objects.
+	// Users can supply their own File Reader object.
 	@Test public void shouldNotInitializeFileReaderWhenSupplied() {
 		when(environment.get(Smalltalk.FILE_READER)).thenReturn(fileReader);
-		smalltalk = Smalltalk.with(environment);
+		Smalltalk.with(environment);
 		verify(environment, never()).put(eq(Smalltalk.FILE_READER), isNotNull());
 	}
 
 	// Users can see which file is being evaluated via the Environment.
 	@Test public void shouldTrackSourceFileBeingEvaluated() {
+		when(environment.get(Smalltalk.INTERPRETER)).thenReturn(interpreter);
 		when(environment.get(Smalltalk.FILE_READER)).thenReturn(fileReader);
 		when(fileReader.read(sourceFile)).thenReturn("");
-
 		Smalltalk.with(environment).eval(sourceFile);
 		verify(environment).put(Smalltalk.CURRENT_FILE, sourceFile);
 		verify(environment).remove(Smalltalk.CURRENT_FILE);

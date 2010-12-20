@@ -29,6 +29,7 @@ import java.io.PrintWriter;
 public class Smalltalk {
 
 	public static final String CURRENT_FILE = "CURRENT_FILE";
+	public static final String INTERPRETER = "INTERPRETER";
 	public static final String FILE_READER = "FILE_READER";
 
 	private final Environment environment;
@@ -49,6 +50,8 @@ public class Smalltalk {
 	private void initialize() {
 		if (fileReader() == null)
 			fileReader(new FileReader());
+		if (interpreter() == null)
+			interpreter(new Interpreter());
 	}
 
 	public Environment environment() {
@@ -56,6 +59,7 @@ public class Smalltalk {
 	}
 
 	public void eval(String source) {
+		interpreter().interpretUsing(source, this);
 	}
 
 	public void eval(File file) {
@@ -74,6 +78,14 @@ public class Smalltalk {
 
 	private String fileContents() {
 		return fileReader().read(currentFile);
+	}
+
+	private Interpreter interpreter() {
+		return (Interpreter) environment.get(INTERPRETER);
+	}
+
+	private void interpreter(Interpreter interpreter) {
+		environment.put(INTERPRETER, interpreter);
 	}
 
 	private FileReader fileReader() {
