@@ -23,9 +23,13 @@ package st.redline.smalltalk;
 import java.io.File;
 import java.io.PrintWriter;
 
+/**
+ * Provides an entry point for Redline Smalltalk.
+ */
 public class Smalltalk {
 
 	public static final String CURRENT_FILE = "CURRENT_FILE";
+	public static final String FILE_READER = "FILE_READER";
 
 	private final Environment environment;
 
@@ -39,14 +43,22 @@ public class Smalltalk {
 
 	private Smalltalk(Environment environment) {
 		this.environment = environment;
+		initialize();
+	}
+
+	private void initialize() {
+		if (fileReader() == null)
+			fileReader(new FileReader());
+	}
+
+	public Environment environment() {
+		return environment;
 	}
 
 	public void eval(String source) {
 	}
 
 	public void eval(File file) {
-		if (isNotFile(file))
-			return;
 		currentFile = file;
 		evalFile();
 	}
@@ -61,11 +73,15 @@ public class Smalltalk {
 	}
 
 	private String fileContents() {
-		return "";
+		return fileReader().read(currentFile);
 	}
 
-	private boolean isNotFile(File file) {
-		return file == null || !file.exists() || !file.isFile();
+	private FileReader fileReader() {
+		return (FileReader) environment.get(FILE_READER);
+	}
+
+	private void fileReader(FileReader fileReader) {
+		environment.put(FILE_READER, fileReader);
 	}
 
 	private void untrackFile() {

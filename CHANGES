@@ -2,7 +2,7 @@
 20/12/2010 Changes
 
 Added stic.bat supplied by Jeff Heon. Adapted from Kasim's ClojureW Project (https://bitbucket.org/kasim/clojurew)
-
+Refactored File related functionality out into FileReader class. Need tests around FileReader.
 
 16/12/2010 Changes
 

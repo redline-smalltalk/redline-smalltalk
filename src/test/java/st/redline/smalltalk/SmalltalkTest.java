@@ -27,6 +27,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.File;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,32 +37,39 @@ import static org.mockito.Mockito.when;
 public class SmalltalkTest {
 
 	@Mock File sourceFile;
+	@Mock FileReader fileReader;
 	@Mock Environment environment;
 
 	private Smalltalk smalltalk;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
+	}
+
+	@Test public void shouldProvideAccessToEnvironment() {
 		smalltalk = Smalltalk.with(environment);
+		assertEquals(environment, smalltalk.environment());
 	}
 
-	@Test public void shouldNotEvaluateNonExistentFile() {
-		when(sourceFile.exists()).thenReturn(false);
-		smalltalk.eval(sourceFile);
-		verify(environment, never()).put(Smalltalk.CURRENT_FILE, sourceFile);
+	@Test public void shouldInitializeFileReaderWhenNotSupplied() {
+		when(environment.get(Smalltalk.FILE_READER)).thenReturn(null);
+		smalltalk = Smalltalk.with(environment);
+		verify(environment).put(eq(Smalltalk.FILE_READER), isNotNull());
 	}
 
-	@Test public void shouldNotEvaluateNonFile() {
-		when(sourceFile.exists()).thenReturn(true);
-		when(sourceFile.isFile()).thenReturn(false);
-		smalltalk.eval(sourceFile);
-		verify(environment, never()).put(Smalltalk.CURRENT_FILE, sourceFile);
+	// Users can supply their own File Reader objects.
+	@Test public void shouldNotInitializeFileReaderWhenSupplied() {
+		when(environment.get(Smalltalk.FILE_READER)).thenReturn(fileReader);
+		smalltalk = Smalltalk.with(environment);
+		verify(environment, never()).put(eq(Smalltalk.FILE_READER), isNotNull());
 	}
 
+	// Users can see which file is being evaluated via the Environment.
 	@Test public void shouldTrackSourceFileBeingEvaluated() {
-		when(sourceFile.exists()).thenReturn(true);
-		when(sourceFile.isFile()).thenReturn(true);
-		smalltalk.eval(sourceFile);
+		when(environment.get(Smalltalk.FILE_READER)).thenReturn(fileReader);
+		when(fileReader.read(sourceFile)).thenReturn("");
+
+		Smalltalk.with(environment).eval(sourceFile);
 		verify(environment).put(Smalltalk.CURRENT_FILE, sourceFile);
 		verify(environment).remove(Smalltalk.CURRENT_FILE);
 	}
