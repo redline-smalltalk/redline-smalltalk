@@ -1,17 +1,22 @@
 program
-	:	temporaries? EOF
-	;
+        :       temporaries? EOF
+        ;
 
 temporaries
-	:	'||'
-	|	'|' temporaryVariables '|'
-	;	
+	:       '||'
+        |       '|' temporaryVariables '|'
+        |       '|' temporaryVariables error
+        ;
 
 temporaryVariables
-	:	variable*
-	;
+        :       variable*
+        ;
 
 variable
-	:	NAME
+        :       NAME
+        ;
+
+error
+	:	~('|' | NAME)
 	;
 
