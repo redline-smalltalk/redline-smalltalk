@@ -18,29 +18,17 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-grammar Smalltalk;
+package st.redline.smalltalk.interpreter;
 
-options {
-	language = Java;
+public abstract class BasicNode implements Node {
+
+	private final String value;
+
+	public BasicNode(String value) {
+		this.value = value;
+	}
+
+	public String toString() {
+		return value;
+	}
 }
-
-@header {
-	package st.redline.smalltalk.interpreter;
-}
-
-@lexer::header {
-	package st.redline.smalltalk.interpreter;
-}
-
-program returns [Node n]
-	:	sequence EOF {$n = $sequence.n;}
-	;	
-
-sequence returns [Node n]
-	:	NAME {$n = new Name($NAME.text);}
-	;
-
-NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
-WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
-COMMENT: '"' .* '"' {$channel = HIDDEN;};
- 

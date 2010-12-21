@@ -18,29 +18,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package st.redline.smalltalk;
+package st.redline.smalltalk.interpreter;
 
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
-
-public class Interpreter {
-
-	public void interpretUsing(String sourceCode, Smalltalk smalltalk) {
-		SmalltalkLexer smalltalkLexer = lexorOn(sourceCode);
-		SmalltalkParser smalltalkParser = parserUsing(smalltalkLexer);
-		try {
-			smalltalkParser.program();
-		} catch (RecognitionException e) {
-			throw new IllegalStateException(e);
-		}
-	}
-
-	private SmalltalkParser parserUsing(SmalltalkLexer smalltalkLexer) {
-		return new SmalltalkParser(new CommonTokenStream(smalltalkLexer));
-	}
-
-	private SmalltalkLexer lexorOn(String sourceCode) {
-		return new SmalltalkLexer(new ANTLRStringStream(sourceCode));
-	}
+public interface Node {
 }

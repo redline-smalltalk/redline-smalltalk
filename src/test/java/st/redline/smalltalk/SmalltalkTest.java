@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import st.redline.smalltalk.interpreter.Interpreter;
 
 import java.io.File;
 
@@ -41,7 +42,8 @@ public class SmalltalkTest {
 	@Mock File sourceFile;
 	@Mock FileReader fileReader;
 	@Mock Environment environment;
-	@Mock Interpreter interpreter;
+	@Mock
+	Interpreter interpreter;
 
 	private Smalltalk smalltalk;
 

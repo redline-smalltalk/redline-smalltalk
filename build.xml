@@ -55,14 +55,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	<target name="generate" description="Generate sources from grammar." depends="init">
 		<java jar="${grammar.lib}" fork="true">
 			<arg value="-o"/>
-			<arg value="${grammar.out}/st/redline/smalltalk"/>
+			<arg value="${grammar.out}/st/redline/smalltalk/interpreter"/>
 			<arg value="${grammar.src}/Smalltalk.g"/>
 		</java>
 	</target>
 
 	<target name="compile" description="Compile sources." depends="generate">
-		<javac source="${java.src.version}" srcdir="${grammar.out}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
-		<javac source="${java.src.version}" srcdir="${java.src}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
+		<javac source="${java.src.version}" srcdir="${grammar.out};${java.src}" destdir="${out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
 		<javac source="${java.src.version}" srcdir="${java.test.src}" destdir="${java.test.out}" classpathref="build-classpath" includeAntRuntime="false" debug="true"/>
 	</target>
 
