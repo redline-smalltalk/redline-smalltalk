@@ -32,7 +32,7 @@ options {
 	package st.redline.smalltalk.interpreter;
 }
 
-program returns [Node n]
+program returns [Program n]
 	:	sequence EOF {$n = new Program($sequence.n);}
 	;	
 

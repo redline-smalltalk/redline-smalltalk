@@ -28,11 +28,11 @@ import st.redline.smalltalk.Smalltalk;
 public class Interpreter {
 
 	public void interpretUsing(String sourceCode, Smalltalk smalltalk) {
-		Node root = parse(sourceCode);
-		System.out.println(root.getClass() + " " + root);
+		Program program = parse(sourceCode);
+		System.out.println(program.getClass() + " " + program);
 	}
 
-	private Node parse(String sourceCode) {
+	private Program parse(String sourceCode) {
 		SmalltalkLexer smalltalkLexer = lexorOn(sourceCode);
 		SmalltalkParser smalltalkParser = parserUsing(smalltalkLexer);
 		try {
