@@ -33,13 +33,43 @@ options {
 }
 
 program returns [Node n]
-	:	sequence EOF {$n = $sequence.n;}
+	:	sequence EOF {$n = new Program($sequence.n);}
 	;	
 
 sequence returns [Node n]
-	:	NAME {$n = new Name($NAME.text);}
+	:	statements {$n = new Sequence($statements.n);}
 	;
 
+statements returns [Node n]
+	:	statementList '.'? {$n = new Statements($statementList.n);}
+	;
+	
+statementList returns [Node n]
+	:	{ $n = new StatementList(); }	
+		expression {$n.add($expression.n);}
+	;
+	
+expression returns [Node n]
+	:	cascade {$n = new Expression($cascade.n);}
+	;
+
+cascade returns [Node n]
+	:	messageSend {$n = new Cascade($messageSend.n);}
+	;
+
+messageSend returns [Node n]
+	:	unaryMessageSend {$n = new MessageSend($unaryMessageSend.n);}
+	;
+
+unaryMessageSend returns [Node n]
+	:	{ $n = new UnaryMessageSend(); }	
+		(unaryMessage {$n.add($unaryMessage.n);})*
+	;
+
+unaryMessage returns [Node n]
+	:	NAME {$n = new UnaryMessage($NAME.text);}	
+	;
+		
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
 COMMENT: '"' .* '"' {$channel = HIDDEN;};

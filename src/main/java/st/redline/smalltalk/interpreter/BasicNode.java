@@ -22,13 +22,17 @@ package st.redline.smalltalk.interpreter;
 
 public abstract class BasicNode implements Node {
 
-	private final String value;
+	private final Object value;
 
-	public BasicNode(String value) {
+	public BasicNode(Object value) {
 		this.value = value;
 	}
 
+	public void add(Node node) {
+		throw new IllegalStateException("Basic nodes don't support node lists.");
+	}
+
 	public String toString() {
-		return value;
+		return value.toString();
 	}
 }
