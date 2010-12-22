@@ -22,8 +22,8 @@ package st.redline.smalltalk.interpreter;
 
 public class Program extends BasicNode {
 
-	public Program(Node value) {
-		super(value);
+	public Program(Sequence sequence) {
+		super(sequence);
 	}
 
 	public void accept(NodeVisitor visitor) {

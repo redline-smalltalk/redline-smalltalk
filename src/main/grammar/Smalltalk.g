@@ -36,40 +36,47 @@ program returns [Program n]
 	:	sequence EOF {$n = new Program($sequence.n);}
 	;	
 
-sequence returns [Node n]
+sequence returns [Sequence n]
 	:	statements {$n = new Sequence($statements.n);}
 	;
 
-statements returns [Node n]
+statements returns [Statements n]
 	:	statementList '.'? {$n = new Statements($statementList.n);}
 	;
 	
-statementList returns [Node n]
+statementList returns [StatementList n]
 	:	{ $n = new StatementList(); }	
 		expression {$n.add($expression.n);}
 	;
 	
-expression returns [Node n]
+expression returns [Expression n]
 	:	cascade {$n = new Expression($cascade.n);}
 	;
 
-cascade returns [Node n]
+cascade returns [Cascade n]
 	:	messageSend {$n = new Cascade($messageSend.n);}
 	;
 
-messageSend returns [Node n]
+messageSend returns [MessageSend n]
 	:	unaryMessageSend {$n = new MessageSend($unaryMessageSend.n);}
 	;
 
-unaryMessageSend returns [Node n]
-	:	{ $n = new UnaryMessageSend(); }	
-		(unaryMessage {$n.add($unaryMessage.n);})*
+unaryMessageSend returns [UnaryMessageSend n]
+	:	primary {$n = new UnaryMessageSend($primary.n);} unaryMessage+ {$n.add($unaryMessage.n);}
 	;
 
-unaryMessage returns [Node n]
-	:	NAME {$n = new UnaryMessage($NAME.text);}	
+unaryMessage returns [UnaryMessage n]
+	:	NAME {$n = new UnaryMessage($NAME.text);}
 	;
-		
+
+primary returns [Primary n]
+	:	variable {$n = $variable.n;}
+	;
+	
+variable returns [Variable n]
+	:	NAME {$n = new Variable($NAME.text);}
+	;
+	
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
 COMMENT: '"' .* '"' {$channel = HIDDEN;};

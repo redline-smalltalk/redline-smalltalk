@@ -22,7 +22,7 @@ package st.redline.smalltalk.interpreter;
 
 public class Statements extends BasicNode {
 
-	public Statements(Node value) {
-		super(value);
+	public Statements(StatementList statementList) {
+		super(statementList);
 	}
 }

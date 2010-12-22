@@ -30,11 +30,11 @@ public class Interpreter {
 	private InterpreterVisitor interpreter;
 
 	public void interpretUsing(String sourceCode, Smalltalk smalltalk) {
-		initializeInterpreter(smalltalk);
+		initialize(smalltalk);
 		interpret(parse(sourceCode));
 	}
 
-	private void initializeInterpreter(Smalltalk smalltalk) {
+	private void initialize(Smalltalk smalltalk) {
 		interpreter = new InterpreterVisitor(smalltalk);
 	}
 

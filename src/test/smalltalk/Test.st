@@ -1,4 +1,3 @@
 
 "im a comment"
-Foo bar baz
-
+Object new name
