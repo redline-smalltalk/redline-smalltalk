@@ -27,9 +27,20 @@ import st.redline.smalltalk.Smalltalk;
 
 public class Interpreter {
 
+	private InterpreterVisitor interpreter;
+
 	public void interpretUsing(String sourceCode, Smalltalk smalltalk) {
-		Program program = parse(sourceCode);
-		System.out.println(program.getClass() + " " + program);
+		initializeInterpreter(smalltalk);
+		interpret(parse(sourceCode));
+	}
+
+	private void initializeInterpreter(Smalltalk smalltalk) {
+		interpreter = new InterpreterVisitor(smalltalk);
+	}
+
+	private void interpret(Program program) {
+		if (program != null)
+			program.accept(interpreter);
 	}
 
 	private Program parse(String sourceCode) {
@@ -48,5 +59,18 @@ public class Interpreter {
 
 	private SmalltalkLexer lexorOn(String sourceCode) {
 		return new SmalltalkLexer(new ANTLRStringStream(sourceCode));
+	}
+
+	private class InterpreterVisitor implements NodeVisitor {
+
+		private final Smalltalk smalltalk;
+
+		public InterpreterVisitor(Smalltalk smalltalk) {
+			this.smalltalk = smalltalk;
+		}
+
+		public void visit(Program program) {
+			System.out.println(program);
+		}
 	}
 }

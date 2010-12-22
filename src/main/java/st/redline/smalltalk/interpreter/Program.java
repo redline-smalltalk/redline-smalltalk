@@ -25,4 +25,8 @@ public class Program extends BasicNode {
 	public Program(Node value) {
 		super(value);
 	}
+
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
+	}
 }
