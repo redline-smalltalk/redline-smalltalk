@@ -1,4 +1,11 @@
 
+23/12/2010 Changes
+
+Added parsing of source input into Node tree.
+Added visiting of Node tree.
+Fixed an error in capturing multiple unary messages in grammar.
+Slapped self on wrist for not updating this file more frequently.
+
 21/12/2010 Changes
 
 Added delegation to Interpreter to interpret source code. Added Tests around delegation.
