@@ -20,7 +20,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class StatementList extends BasicNodeList {
+public class StatementList extends BasicListNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);

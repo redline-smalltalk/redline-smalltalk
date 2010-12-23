@@ -23,11 +23,11 @@ package st.redline.smalltalk.interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BasicNodeList implements Node {
+public abstract class BasicListNode implements Node {
 
 	private final List<Node> nodes;
 
-	public BasicNodeList() {
+	public BasicListNode() {
 		nodes = new ArrayList<Node>();
 	}
 

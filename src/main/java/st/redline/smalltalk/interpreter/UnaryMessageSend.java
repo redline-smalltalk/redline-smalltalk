@@ -20,7 +20,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class UnaryMessageSend extends BasicNodeList {
+public class UnaryMessageSend extends BasicListNode {
 
 	private final Primary primary;
 
