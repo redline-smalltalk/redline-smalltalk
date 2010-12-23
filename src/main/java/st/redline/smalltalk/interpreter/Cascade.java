@@ -25,4 +25,12 @@ public class Cascade extends BasicNode {
 	public Cascade(Node value) {
 		super(value);
 	}
+
+	public MessageSend messageSend() {
+		return (MessageSend) value();
+	}
+
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
+	}
 }

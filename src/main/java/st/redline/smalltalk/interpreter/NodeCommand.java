@@ -20,17 +20,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Sequence extends BasicNode {
-
-	public Sequence(Statements statements) {
-		super(statements);
-	}
-
-	public Statements statements() {
-		return (Statements) value();
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-	}
+public interface NodeCommand {
+	void execute(Node node);
 }

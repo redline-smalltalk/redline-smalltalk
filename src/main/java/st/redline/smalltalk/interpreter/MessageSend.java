@@ -25,4 +25,12 @@ public class MessageSend extends BasicNode {
 	public MessageSend(Node value) {
 		super(value);
 	}
+
+	public UnaryMessageSend unaryMessageSend() {
+		return (UnaryMessageSend) value();
+	}
+
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
+	}
 }

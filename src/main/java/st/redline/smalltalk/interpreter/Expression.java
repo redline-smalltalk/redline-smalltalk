@@ -25,4 +25,12 @@ public class Expression extends BasicNode {
 	public Expression(Node value) {
 		super(value);
 	}
+
+	public Cascade cascade() {
+		return (Cascade) value();
+	}
+
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
+	}
 }

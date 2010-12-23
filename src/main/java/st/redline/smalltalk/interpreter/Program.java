@@ -26,6 +26,10 @@ public class Program extends BasicNode {
 		super(sequence);
 	}
 
+	public Sequence sequence() {
+		return (Sequence) value();
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}

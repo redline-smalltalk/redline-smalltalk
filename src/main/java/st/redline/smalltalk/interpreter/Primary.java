@@ -25,4 +25,8 @@ public class Primary extends BasicNode {
 	public Primary(Object value) {
 		super(value);
 	}
+
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
+	}
 }

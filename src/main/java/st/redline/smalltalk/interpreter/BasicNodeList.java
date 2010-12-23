@@ -38,4 +38,9 @@ public abstract class BasicNodeList implements Node {
 	public String toString() {
 		return nodes.toString();
 	}
+
+	public void each(NodeCommand command) {
+		for (Node node : nodes)
+			command.execute(node);
+	}
 }

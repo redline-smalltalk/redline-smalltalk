@@ -62,7 +62,7 @@ messageSend returns [MessageSend n]
 	;
 
 unaryMessageSend returns [UnaryMessageSend n]
-	:	primary {$n = new UnaryMessageSend($primary.n);} unaryMessage+ {$n.add($unaryMessage.n);}
+	:	primary {$n = new UnaryMessageSend($primary.n);} ( unaryMessage {$n.add($unaryMessage.n);} )+
 	;
 
 unaryMessage returns [UnaryMessage n]

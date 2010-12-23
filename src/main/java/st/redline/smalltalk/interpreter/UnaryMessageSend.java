@@ -22,9 +22,25 @@ package st.redline.smalltalk.interpreter;
 
 public class UnaryMessageSend extends BasicNodeList {
 
-	private final Node primary;
+	private final Primary primary;
 
 	public UnaryMessageSend(Primary primary) {
 		this.primary = primary;
+	}
+
+	public Primary primary() {
+		return primary;
+	}
+
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
+	}
+
+	public void eachAccept(final NodeVisitor visitor) {
+		each(new NodeCommand() {
+			public void execute(Node node) {
+				visitor.visit((UnaryMessage) node);
+			}
+		});
 	}
 }

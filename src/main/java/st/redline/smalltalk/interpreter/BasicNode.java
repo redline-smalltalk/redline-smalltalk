@@ -28,6 +28,10 @@ public abstract class BasicNode implements Node {
 		this.value = value;
 	}
 
+	public Object value() {
+		return value;
+	}
+
 	public void add(Node node) {
 		throw new IllegalStateException("Basic nodes don't support node lists.");
 	}

@@ -25,4 +25,12 @@ public class Statements extends BasicNode {
 	public Statements(StatementList statementList) {
 		super(statementList);
 	}
+
+	public StatementList statementList() {
+		return (StatementList) value();
+	}
+
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
+	}
 }

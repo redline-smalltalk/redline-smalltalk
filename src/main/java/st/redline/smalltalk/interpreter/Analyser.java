@@ -31,6 +31,43 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Program program) {
-		System.out.println(program);
+		program.sequence().accept(this);
+	}
+
+	public void visit(Sequence sequence) {
+		sequence.statements().accept(this);
+	}
+
+	public void visit(Statements statements) {
+		statements.statementList().accept(this);
+	}
+
+	public void visit(StatementList statementList) {
+		statementList.eachAccept(this);
+	}
+
+	public void visit(Expression expression) {
+		expression.cascade().accept(this);
+	}
+
+	public void visit(Cascade cascade) {
+		cascade.messageSend().accept(this);
+	}
+
+	public void visit(MessageSend messageSend) {
+		messageSend.unaryMessageSend().accept(this);
+	}
+
+	public void visit(UnaryMessageSend unaryMessageSend) {
+		unaryMessageSend.primary().accept(this);
+		unaryMessageSend.eachAccept(this);
+	}
+
+	public void visit(Primary primary) {
+		System.out.println(primary);
+	}
+
+	public void visit(UnaryMessage unaryMessage) {
+		System.out.println(unaryMessage);
 	}
 }

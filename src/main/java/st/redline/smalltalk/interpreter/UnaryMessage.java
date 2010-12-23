@@ -25,4 +25,8 @@ public class UnaryMessage extends BasicNode {
 	public UnaryMessage(String value) {
 		super(value);
 	}
+
+	public String selector() {
+		return (String) value();
+	}
 }
