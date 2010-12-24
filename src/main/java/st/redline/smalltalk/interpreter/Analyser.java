@@ -25,9 +25,11 @@ import st.redline.smalltalk.Smalltalk;
 public class Analyser implements NodeVisitor {
 
 	private final Smalltalk smalltalk;
+	private final Generator generator;
 
-	public Analyser(Smalltalk smalltalk) {
+	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
+		this.generator = generator;
 	}
 
 	public void visit(Program program) {

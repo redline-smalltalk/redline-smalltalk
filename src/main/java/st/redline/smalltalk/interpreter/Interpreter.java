@@ -27,20 +27,24 @@ import st.redline.smalltalk.Smalltalk;
 
 public class Interpreter {
 
-	private Analyser analyser;
+	private Smalltalk smalltalk;
 
 	public void interpretUsing(String sourceCode, Smalltalk smalltalk) {
-		initialize(smalltalk);
+		this.smalltalk = smalltalk;
 		interpret(parse(sourceCode));
 	}
 
-	private void initialize(Smalltalk smalltalk) {
-		analyser = new Analyser(smalltalk);
+	private Analyser analyser() {
+		return new Analyser(smalltalk, generator());
+	}
+
+	private Generator generator() {
+		return smalltalk.generator();
 	}
 
 	private void interpret(Program program) {
 		if (program != null)
-			program.accept(analyser);
+			program.accept(analyser());
 	}
 
 	private Program parse(String sourceCode) {

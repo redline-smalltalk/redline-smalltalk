@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import st.redline.smalltalk.interpreter.Generator;
 import st.redline.smalltalk.interpreter.Interpreter;
 
 import java.io.File;
@@ -41,6 +42,7 @@ public class SmalltalkTest {
 	@Mock File sourceFile;
 	@Mock FileReader fileReader;
 	@Mock Environment environment;
+	@Mock Generator generator;
 	@Mock Interpreter interpreter;
 
 	private Smalltalk smalltalk;
@@ -65,6 +67,19 @@ public class SmalltalkTest {
 		when(environment.get(Smalltalk.INTERPRETER)).thenReturn(null);
 		Smalltalk.with(environment);
 		verify(environment).put(eq(Smalltalk.INTERPRETER), isNotNull());
+	}
+
+	// Users can supply their own Generator.
+	@Test public void shouldNotInitializeGeneratorWhenSupplied() {
+		when(environment.get(Smalltalk.GENERATOR)).thenReturn(generator);
+		Smalltalk.with(environment);
+		verify(environment, never()).put(eq(Smalltalk.GENERATOR), isNotNull());
+	}
+
+	@Test public void shouldInitializeGeneratorWhenNotSupplied() {
+		when(environment.get(Smalltalk.GENERATOR)).thenReturn(null);
+		Smalltalk.with(environment);
+		verify(environment).put(eq(Smalltalk.GENERATOR), isNotNull());
 	}
 
 	// Users can supply their own Interpreter.

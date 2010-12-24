@@ -20,6 +20,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import st.redline.smalltalk.interpreter.Generator;
 import st.redline.smalltalk.interpreter.Interpreter;
 
 import java.io.File;
@@ -32,10 +33,10 @@ public class Smalltalk {
 
 	public static final String CURRENT_FILE = "CURRENT_FILE";
 	public static final String INTERPRETER = "INTERPRETER";
+	public static final String GENERATOR = "GENERATOR";
 	public static final String FILE_READER = "FILE_READER";
 
 	private final Environment environment;
-
 	private File currentFile;
 
 	public static Smalltalk with(Environment environment) {
@@ -54,6 +55,8 @@ public class Smalltalk {
 			fileReader(new FileReader());
 		if (interpreter() == null)
 			interpreter(new Interpreter());
+		if (generator() == null)
+			generator(new Generator());
 	}
 
 	public Environment environment() {
@@ -82,7 +85,15 @@ public class Smalltalk {
 		return fileReader().read(currentFile);
 	}
 
-	private Interpreter interpreter() {
+	public Generator generator() {
+		return (Generator) environment.get(GENERATOR);
+	}
+
+	private void generator(Generator generator) {
+		environment.put(GENERATOR, generator);
+	}
+
+	public Interpreter interpreter() {
 		return (Interpreter) environment.get(INTERPRETER);
 	}
 
@@ -90,7 +101,7 @@ public class Smalltalk {
 		environment.put(INTERPRETER, interpreter);
 	}
 
-	private FileReader fileReader() {
+	public FileReader fileReader() {
 		return (FileReader) environment.get(FILE_READER);
 	}
 
