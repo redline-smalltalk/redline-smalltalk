@@ -13,9 +13,9 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
@@ -28,8 +28,11 @@ import st.redline.smalltalk.interpreter.Generator;
 import st.redline.smalltalk.interpreter.Interpreter;
 
 import java.io.File;
+import java.net.URI;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -39,7 +42,8 @@ public class SmalltalkTest {
 
 	String sourceCode = "";
 
-	@Mock File sourceFile;
+	@Mock File file;
+	@Mock SourceFile sourceFile;
 	@Mock FileReader fileReader;
 	@Mock Environment environment;
 	@Mock Generator generator;
@@ -49,6 +53,8 @@ public class SmalltalkTest {
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		when(fileReader.read(sourceFile)).thenReturn("");
+		when(file.getAbsolutePath()).thenReturn("");
 	}
 
 	@Test public void shouldInterpretSourceCode() {
@@ -61,6 +67,11 @@ public class SmalltalkTest {
 	@Test public void shouldProvideAccessToEnvironment() {
 		smalltalk = Smalltalk.with(environment);
 		assertEquals(environment, smalltalk.environment());
+	}
+
+	@Test public void shouldProvideAccessToCurrentFile() {
+		smalltalk = Smalltalk.with(environment);
+		assertNull(smalltalk.currentFile());
 	}
 
 	@Test public void shouldInitializeInterpreterWhenNotSupplied() {
@@ -106,9 +117,8 @@ public class SmalltalkTest {
 	@Test public void shouldTrackSourceFileBeingEvaluated() {
 		when(environment.get(Smalltalk.INTERPRETER)).thenReturn(interpreter);
 		when(environment.get(Smalltalk.FILE_READER)).thenReturn(fileReader);
-		when(fileReader.read(sourceFile)).thenReturn("");
-		Smalltalk.with(environment).eval(sourceFile);
-		verify(environment).put(Smalltalk.CURRENT_FILE, sourceFile);
+		Smalltalk.with(environment).eval(file);
+		verify(environment).put(eq(Smalltalk.CURRENT_FILE), isNotNull());
 		verify(environment).remove(Smalltalk.CURRENT_FILE);
 	}
 

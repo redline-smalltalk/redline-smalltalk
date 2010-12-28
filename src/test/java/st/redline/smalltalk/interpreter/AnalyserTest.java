@@ -25,15 +25,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import st.redline.smalltalk.Smalltalk;
-import st.redline.smalltalk.interpreter.Analyser;
-import st.redline.smalltalk.interpreter.Generator;
+import st.redline.smalltalk.SourceFile;
 
 import java.io.File;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
 public class AnalyserTest {
@@ -42,16 +37,24 @@ public class AnalyserTest {
 	@Mock Generator generator;
 	@Mock Program program;
 	@Mock Sequence sequence;
+	@Mock SourceFile sourceFile;
 
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		analyser = new Analyser(smalltalk, generator);
+		when(program.sequence()).thenReturn(sequence);
+		when(smalltalk.currentFile()).thenReturn(sourceFile);
 	}
 
-	@Test public void shouldVistChildrenOfProgramNode() {
-		when(program.sequence()).thenReturn(sequence);
+	@Test public void shouldGenerateProgramFromProgramNode() {
+		verifyNoMoreInteractions(program);
+		analyser.visit(program);
+		verify(generator).generateProgram(sourceFile);
+	}
+
+	@Test public void shouldVistChildOfProgramNode() {
 		verifyNoMoreInteractions(program);
 		analyser.visit(program);
 		verify(sequence).accept(analyser);

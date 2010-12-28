@@ -1,4 +1,15 @@
 
+28/10/2010 Changes
+
+Added SourceFile to add methods to File that we need.
+Added Tests around Analysis and interaction with generator.
+
+24/10/2010 Changes
+
+Added AnalyserTest to drive out interaction with Nodes and Generator.
+Added Analyser class.
+Added Generator class.
+
 23/12/2010 Changes
 
 Added parsing of source input into Node tree.

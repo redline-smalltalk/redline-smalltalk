@@ -37,7 +37,7 @@ public class Smalltalk {
 	public static final String FILE_READER = "FILE_READER";
 
 	private final Environment environment;
-	private File currentFile;
+	private SourceFile currentFile;
 
 	public static Smalltalk with(Environment environment) {
 		if (environment == null)
@@ -68,7 +68,7 @@ public class Smalltalk {
 	}
 
 	public void eval(File file) {
-		currentFile = file;
+		currentFile = new SourceFile(file.getAbsolutePath(), this);
 		evalFile();
 	}
 
@@ -82,7 +82,7 @@ public class Smalltalk {
 	}
 
 	private String fileContents() {
-		return fileReader().read(currentFile);
+		return currentFile.contents();
 	}
 
 	public Generator generator() {
@@ -123,5 +123,9 @@ public class Smalltalk {
 
 	public CommandLine commandLine() {
 		return environment.commandLine();
+	}
+
+	public SourceFile currentFile() {
+		return currentFile;
 	}
 }

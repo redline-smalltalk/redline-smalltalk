@@ -20,5 +20,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import st.redline.smalltalk.SourceFile;
+
 public class Generator {
+
+	public void generateProgram(SourceFile sourceFile) {
+	}
 }
