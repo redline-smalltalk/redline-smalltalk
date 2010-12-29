@@ -57,7 +57,7 @@ public class AnalyserTest {
 		verify(generator).generateProgram(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 	}
 
-	@Test public void shouldVistChildOfProgramNode() {
+	@Test public void shouldVisitChildOfProgramNode() {
 		verifyNoMoreInteractions(program);
 		analyser.visit(program);
 		verify(sequence).accept(analyser);
