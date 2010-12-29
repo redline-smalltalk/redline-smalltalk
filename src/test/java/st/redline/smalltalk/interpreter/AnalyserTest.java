@@ -27,11 +27,12 @@ import org.mockito.MockitoAnnotations;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
-import java.io.File;
-
 import static org.mockito.Mockito.*;
 
 public class AnalyserTest {
+
+	private static final String PACKAGE_INTERNAL_NAME = "st/redline/smalltalk";
+	private static final String CLASS_NAME = "Test";
 
 	@Mock Smalltalk smalltalk;
 	@Mock Generator generator;
@@ -46,12 +47,14 @@ public class AnalyserTest {
 		analyser = new Analyser(smalltalk, generator);
 		when(program.sequence()).thenReturn(sequence);
 		when(smalltalk.currentFile()).thenReturn(sourceFile);
+		when(sourceFile.nameWithoutExtension()).thenReturn(CLASS_NAME);
+		when(sourceFile.parentPath()).thenReturn(PACKAGE_INTERNAL_NAME);
 	}
 
 	@Test public void shouldGenerateProgramFromProgramNode() {
 		verifyNoMoreInteractions(program);
 		analyser.visit(program);
-		verify(generator).generateProgram(sourceFile);
+		verify(generator).generateProgram(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 	}
 
 	@Test public void shouldVistChildOfProgramNode() {

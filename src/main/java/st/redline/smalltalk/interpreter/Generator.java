@@ -20,10 +20,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import st.redline.smalltalk.SourceFile;
+import java.io.File;
 
 public class Generator {
 
-	public void generateProgram(SourceFile sourceFile) {
+	private String className;
+	private String packageInternalName;
+	private String fullyQualifiedName;
+
+	public void generateProgram(String className, String packageInternalName) {
+		this.className = className;
+		this.packageInternalName = packageInternalName;
+		this.fullyQualifiedName = packageInternalName + File.pathSeparator + className;
 	}
 }

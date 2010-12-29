@@ -23,6 +23,11 @@ public class SourceFile extends File {
 		return name.substring(0, period);
 	}
 
+	public String parentPath() {
+		String parent = super.getParent();
+		return parent == null ? "" : parent;
+	}
+
 	private FileReader fileReader() {
 		return smalltalk.fileReader();
 	}
