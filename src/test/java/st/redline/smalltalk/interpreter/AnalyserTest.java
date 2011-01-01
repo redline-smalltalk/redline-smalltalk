@@ -38,14 +38,26 @@ public class AnalyserTest {
 	@Mock Generator generator;
 	@Mock Program program;
 	@Mock Sequence sequence;
+	@Mock Statements statements;
 	@Mock SourceFile sourceFile;
-
+	@Mock StatementList statementList;
+	@Mock Cascade cascade;
+	@Mock MessageSend messageSend;
+	@Mock Expression expression;
+	@Mock UnaryMessageSend unaryMessageSend;
+	@Mock Variable primary;
+	@Mock Variable variable;
 	private Analyser analyser;
 
-	@Before public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		analyser = new Analyser(smalltalk, generator);
 		when(program.sequence()).thenReturn(sequence);
+		when(sequence.statements()).thenReturn(statements);
+		when(statements.statementList()).thenReturn(statementList);
+		when(expression.cascade()).thenReturn(cascade);
+		when(cascade.messageSend()).thenReturn(messageSend);
+		when(messageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
 		when(smalltalk.currentFile()).thenReturn(sourceFile);
 		when(sourceFile.nameWithoutExtension()).thenReturn(CLASS_NAME);
 		when(sourceFile.parentPath()).thenReturn(PACKAGE_INTERNAL_NAME);
@@ -57,9 +69,60 @@ public class AnalyserTest {
 		verify(generator).generateProgram(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 	}
 
+	@Test public void shouldGenerateClassLookupWhenPrimaryVariableIsClassName() {
+		when(variable.isClassReference()).thenReturn(true);
+		when(variable.name()).thenReturn("Object");
+		analyser.visit(variable);
+		verify(generator).generateClassLookup("Object");
+	}
+
 	@Test public void shouldVisitChildOfProgramNode() {
 		verifyNoMoreInteractions(program);
 		analyser.visit(program);
 		verify(sequence).accept(analyser);
+	}
+
+	@Test public void shouldVisitChildOfSequenceNode() {
+		verifyNoMoreInteractions(sequence);
+		analyser.visit(sequence);
+		verify(statements).accept(analyser);
+	}
+
+	@Test public void shouldVisitChildOfStatementsNode() {
+		verifyNoMoreInteractions(statements);
+		analyser.visit(statements);
+		verify(statementList).accept(analyser);
+	}
+
+	@Test public void shouldVisitEachNodeOfStatementListNode() {
+		verifyNoMoreInteractions(statementList);
+		analyser.visit(statementList);
+		verify(statementList).eachAccept(analyser);
+	}
+
+	@Test public void shouldVisitExpressionNode() {
+		verifyNoMoreInteractions(expression);
+		analyser.visit(expression);
+		verify(cascade).accept(analyser);
+	}
+
+	@Test public void shouldVisitChildOfCascadeNode() {
+		verifyNoMoreInteractions(cascade);
+		analyser.visit(cascade);
+		verify(messageSend).accept(analyser);
+	}
+
+	@Test public void shouldVisitChildOfMessageSendNode() {
+		verifyNoMoreInteractions(messageSend);
+		analyser.visit(messageSend);
+		verify(unaryMessageSend).accept(analyser);
+	}
+
+	@Test public void shouldVisitUnaryMessageSendParts() {
+		when(unaryMessageSend.primary()).thenReturn(primary);
+		verifyNoMoreInteractions(unaryMessageSend);
+		analyser.visit(unaryMessageSend);
+		verify(primary).accept(analyser);
+		verify(unaryMessageSend).eachAccept(analyser);
 	}
 }

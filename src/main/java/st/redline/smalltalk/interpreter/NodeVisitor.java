@@ -9,6 +9,6 @@ public interface NodeVisitor {
 	void visit(Cascade cascade);
 	void visit(MessageSend messageSend);
 	void visit(UnaryMessageSend unaryMessageSend);
-	void visit(Primary primary);
+	void visit(Variable variable);
 	void visit(UnaryMessage unaryMessage);
 }

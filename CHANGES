@@ -1,4 +1,8 @@
 
+01/01/2011 Changes
+
+Adding more tests around analyser. Fleshing out interaction with generator.
+
 28/10/2010 Changes
 
 Added SourceFile to add methods to File that we need.

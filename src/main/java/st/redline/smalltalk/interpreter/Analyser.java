@@ -67,8 +67,9 @@ public class Analyser implements NodeVisitor {
 		unaryMessageSend.eachAccept(this);
 	}
 
-	public void visit(Primary primary) {
-		System.out.println(primary);
+	public void visit(Variable variable) {
+		if (variable.isClassReference())
+			generator.generateClassLookup(variable.name());
 	}
 
 	public void visit(UnaryMessage unaryMessage) {

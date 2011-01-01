@@ -33,4 +33,7 @@ public class Generator {
 		this.packageInternalName = packageInternalName;
 		this.fullyQualifiedName = packageInternalName + File.pathSeparator + className;
 	}
+
+	public void generateClassLookup(String className) {
+	}
 }
