@@ -20,41 +20,28 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
+import st.redline.smalltalk.Smalltalk;
+import st.redline.smalltalk.SourceFile;
 
-import java.io.File;
+import static org.mockito.Mockito.*;
 
-public class Generator {
+public class GeneratorTest {
 
-	private String className;
-	private String packageInternalName;
-	private String fullyQualifiedName;
-	private ClassWriter classWriter;
+	@Mock ClassWriter classWriter;
 
-	public Generator() {
-		this(new TracingClassWriter(ClassWriter.COMPUTE_MAXS));
+	private Generator generator;
+
+	@Before public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		generator = new Generator(classWriter);
 	}
 
-	Generator(ClassWriter classWriter) {
-		this.classWriter = classWriter;
-	}
-
-	public void openClass(String className, String packageInternalName) {
-		rememberNames(className, packageInternalName);
-	}
-
-	private void rememberNames(String className, String packageInternalName) {
-		this.className = className;
-		this.packageInternalName = packageInternalName;
-		this.fullyQualifiedName = packageInternalName + File.pathSeparator + className;
-	}
-
-	public void closeClass() {
-	}
-
-	public void lookupClass(String className) {
-	}
-
-	public void unarySend(String unarySelector) {
+	@Test public void shouldGenerate() {
 	}
 }

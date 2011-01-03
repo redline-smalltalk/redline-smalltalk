@@ -6,6 +6,9 @@ so code can use Thread.currentThread().getContextClassLoader() to get hold of th
 Smalltalk instance.
 Added Test around generating message sends.
 
+Added ObjectWeb ASM library for generating java bytecodes.
+Added GeneratorTest to drive out Generator functionality.
+Added Tracing versions of the ObjectWeb classes so I can see what is happening. 
 
 01/01/2011 Changes
 
