@@ -24,16 +24,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
-import st.redline.smalltalk.Smalltalk;
-import st.redline.smalltalk.SourceFile;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import static org.mockito.Mockito.*;
 
-public class GeneratorTest {
+public class GeneratorTest implements Opcodes {
+
+	private static final String CLASS_NAME = "Model";
+	private static final String PACKAGE_INTERNAL_NAME = "app/data";
+	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/ProtoObject";
 
 	@Mock ClassWriter classWriter;
+	@Mock MethodVisitor methodVisitor;
 
 	private Generator generator;
 
@@ -42,6 +46,31 @@ public class GeneratorTest {
 		generator = new Generator(classWriter);
 	}
 
-	@Test public void shouldGenerate() {
+	@Test public void shouldWriteClassAndInitMethodWhenClassOpened() {
+		when(classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)).thenReturn(methodVisitor);
+		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
+		verify(classWriter).visit(V1_5, ACC_PUBLIC + ACC_SUPER, "app/data/Model", null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
+		verify(classWriter).visitSource("Model.st", null);
+		verify(methodVisitor).visitCode();
+		verifyInvokeOfSuperclassInitMethod();
+	}
+
+	@Test public void shouldEndWritingClassAndInitMethodWhenClassClosed() {
+		when(classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)).thenReturn(methodVisitor);
+		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
+		generator.closeClass();
+		verifyInitMethodClosed();
+		verify(classWriter).visitEnd();
+	}
+
+	private void verifyInvokeOfSuperclassInitMethod() {
+		verify(methodVisitor).visitVarInsn(ALOAD, 0);
+		verify(methodVisitor).visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, "<init>", "()V");
+	}
+
+	private void verifyInitMethodClosed() {
+		verify(methodVisitor).visitInsn(RETURN);
+		verify(methodVisitor).visitMaxs(1, 1);
+		verify(methodVisitor).visitEnd();
 	}
 }

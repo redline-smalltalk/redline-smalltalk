@@ -10,20 +10,27 @@ Added ObjectWeb ASM library for generating java bytecodes.
 Added GeneratorTest to drive out Generator functionality.
 Added Tracing versions of the ObjectWeb classes so I can see what is happening. 
 
+Removed verifyNoMoreInteractions from tests until I work out how to properly ensure no
+unsolicited calls are made to mocks.
+
+
 01/01/2011 Changes
 
 Adding more tests around analyser. Fleshing out interaction with generator.
+
 
 28/10/2010 Changes
 
 Added SourceFile to add methods to File that we need.
 Added Tests around Analysis and interaction with generator.
 
+
 24/10/2010 Changes
 
 Added AnalyserTest to drive out interaction with Nodes and Generator.
 Added Analyser class.
 Added Generator class.
+
 
 23/12/2010 Changes
 
@@ -32,14 +39,17 @@ Added visiting of Node tree.
 Fixed an error in capturing multiple unary messages in grammar.
 Slapped self on wrist for not updating this file more frequently.
 
+
 21/12/2010 Changes
 
 Added delegation to Interpreter to interpret source code. Added Tests around delegation.
+
 
 20/12/2010 Changes
 
 Added stic.bat supplied by Jeff Heon. Adapted from Kasim's ClojureW Project (https://bitbucket.org/kasim/clojurew)
 Refactored File related functionality out into FileReader class. Need tests around FileReader.
+
 
 16/12/2010 Changes
 

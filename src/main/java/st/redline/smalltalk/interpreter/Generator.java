@@ -21,15 +21,21 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk.interpreter;
 
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import java.io.File;
 
-public class Generator {
+public class Generator implements Opcodes {
+
+	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/ProtoObject";
+
+	private final ClassWriter classWriter;
 
 	private String className;
 	private String packageInternalName;
 	private String fullyQualifiedName;
-	private ClassWriter classWriter;
+	private MethodVisitor methodVisitor;
 
 	public Generator() {
 		this(new TracingClassWriter(ClassWriter.COMPUTE_MAXS));
@@ -41,15 +47,41 @@ public class Generator {
 
 	public void openClass(String className, String packageInternalName) {
 		rememberNames(className, packageInternalName);
+		openClass();
+		openInitializeMethod();
+	}
+
+	private void openInitializeMethod() {
+		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+		methodVisitor.visitCode();
+		invokeSuperclassInitMethod();
+	}
+
+	private void invokeSuperclassInitMethod() {
+		methodVisitor.visitVarInsn(ALOAD, 0);
+		methodVisitor.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, "<init>", "()V");
+	}
+
+	private void openClass() {
+		classWriter.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
+		classWriter.visitSource(className + ".st", null);
 	}
 
 	private void rememberNames(String className, String packageInternalName) {
 		this.className = className;
 		this.packageInternalName = packageInternalName;
-		this.fullyQualifiedName = packageInternalName + File.pathSeparator + className;
+		this.fullyQualifiedName = packageInternalName + File.separator + className;
 	}
 
 	public void closeClass() {
+		closeInitializeMethod();
+		classWriter.visitEnd();
+	}
+
+	private void closeInitializeMethod() {
+		methodVisitor.visitInsn(RETURN);
+		methodVisitor.visitMaxs(1, 1);
+		methodVisitor.visitEnd();
 	}
 
 	public void lookupClass(String className) {

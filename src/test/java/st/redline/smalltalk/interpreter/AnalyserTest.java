@@ -66,7 +66,6 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldGenerateProgramFromProgramNode() {
-		verifyNoMoreInteractions(program);
 		analyser.visit(program);
 		verify(generator).openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 		verify(generator).closeClass();
@@ -86,50 +85,42 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldVisitChildOfProgramNode() {
-		verifyNoMoreInteractions(program);
 		analyser.visit(program);
 		verify(sequence).accept(analyser);
 	}
 
 	@Test public void shouldVisitChildOfSequenceNode() {
-		verifyNoMoreInteractions(sequence);
 		analyser.visit(sequence);
 		verify(statements).accept(analyser);
 	}
 
 	@Test public void shouldVisitChildOfStatementsNode() {
-		verifyNoMoreInteractions(statements);
 		analyser.visit(statements);
 		verify(statementList).accept(analyser);
 	}
 
 	@Test public void shouldVisitEachNodeOfStatementListNode() {
-		verifyNoMoreInteractions(statementList);
 		analyser.visit(statementList);
 		verify(statementList).eachAccept(analyser);
 	}
 
 	@Test public void shouldVisitExpressionNode() {
-		verifyNoMoreInteractions(expression);
 		analyser.visit(expression);
 		verify(cascade).accept(analyser);
 	}
 
 	@Test public void shouldVisitChildOfCascadeNode() {
-		verifyNoMoreInteractions(cascade);
 		analyser.visit(cascade);
 		verify(messageSend).accept(analyser);
 	}
 
 	@Test public void shouldVisitChildOfMessageSendNode() {
-		verifyNoMoreInteractions(messageSend);
 		analyser.visit(messageSend);
 		verify(unaryMessageSend).accept(analyser);
 	}
 
 	@Test public void shouldVisitUnaryMessageSendParts() {
 		when(unaryMessageSend.primary()).thenReturn(primary);
-		verifyNoMoreInteractions(unaryMessageSend);
 		analyser.visit(unaryMessageSend);
 		verify(primary).accept(analyser);
 		verify(unaryMessageSend).eachAccept(analyser);
