@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="lib/build/junit-4.8.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/build/mockito-all-1.8.5.jar"/>
+	<classpathentry kind="lib" path="lib/asm-all-3.2.jar"/>
 	<classpathentry kind="output" path="out"/>
 </classpath>
