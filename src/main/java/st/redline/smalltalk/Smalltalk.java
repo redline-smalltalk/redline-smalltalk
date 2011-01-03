@@ -29,7 +29,7 @@ import java.io.PrintWriter;
 /**
  * Provides an entry point for Redline Smalltalk.
  */
-public class Smalltalk {
+public class Smalltalk extends ClassLoader {
 
 	public static final String CURRENT_FILE = "CURRENT_FILE";
 	public static final String INTERPRETER = "INTERPRETER";
@@ -37,16 +37,22 @@ public class Smalltalk {
 	public static final String FILE_READER = "FILE_READER";
 
 	private final Environment environment;
+	private final ClassLoader parentClassLoader;
 	private SourceFile currentFile;
 
 	public static Smalltalk with(Environment environment) {
 		if (environment == null)
 			throw new MissingArgumentException();
-		return new Smalltalk(environment);
+		return new Smalltalk(environment, currentClassLoader());
 	}
 
-	private Smalltalk(Environment environment) {
+	private static ClassLoader currentClassLoader() {
+		return Thread.currentThread().getContextClassLoader();
+	}
+
+	private Smalltalk(Environment environment, ClassLoader classLoader) {
 		this.environment = environment;
+		this.parentClassLoader = classLoader;
 		initialize();
 	}
 
@@ -57,6 +63,7 @@ public class Smalltalk {
 			interpreter(new Interpreter());
 		if (generator() == null)
 			generator(new Generator());
+		Thread.currentThread().setContextClassLoader(this);
 	}
 
 	public Environment environment() {

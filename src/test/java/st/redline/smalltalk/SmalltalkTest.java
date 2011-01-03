@@ -57,6 +57,11 @@ public class SmalltalkTest {
 		when(file.getAbsolutePath()).thenReturn("");
 	}
 
+	@Test public void shouldBeContextClassLoader() {
+		smalltalk = Smalltalk.with(environment);
+		assertEquals(smalltalk, Thread.currentThread().getContextClassLoader());
+	}
+
 	@Test public void shouldInterpretSourceCode() {
 		when(environment.get(Smalltalk.INTERPRETER)).thenReturn(interpreter);
 		smalltalk = Smalltalk.with(environment);

@@ -33,6 +33,7 @@ public class AnalyserTest {
 
 	private static final String PACKAGE_INTERNAL_NAME = "st/redline/smalltalk";
 	private static final String CLASS_NAME = "Test";
+	private static final String UNARY_MESSAGE = "new";
 
 	@Mock Smalltalk smalltalk;
 	@Mock Generator generator;
@@ -45,11 +46,12 @@ public class AnalyserTest {
 	@Mock MessageSend messageSend;
 	@Mock Expression expression;
 	@Mock UnaryMessageSend unaryMessageSend;
+	@Mock UnaryMessage unaryMessage;
 	@Mock Variable primary;
 	@Mock Variable variable;
 	private Analyser analyser;
 
-    @Before public void setUp() throws Exception {
+	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		analyser = new Analyser(smalltalk, generator);
 		when(program.sequence()).thenReturn(sequence);
@@ -66,14 +68,21 @@ public class AnalyserTest {
 	@Test public void shouldGenerateProgramFromProgramNode() {
 		verifyNoMoreInteractions(program);
 		analyser.visit(program);
-		verify(generator).generateProgram(CLASS_NAME, PACKAGE_INTERNAL_NAME);
+		verify(generator).openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
+		verify(generator).closeClass();
 	}
 
 	@Test public void shouldGenerateClassLookupWhenPrimaryVariableIsClassName() {
 		when(variable.isClassReference()).thenReturn(true);
-		when(variable.name()).thenReturn("Object");
+		when(variable.name()).thenReturn(CLASS_NAME);
 		analyser.visit(variable);
-		verify(generator).generateClassLookup("Object");
+		verify(generator).lookupClass(CLASS_NAME);
+	}
+
+	@Test public void shouldGenerateUnarySendFromUnaryMessage() {
+		when(unaryMessage.selector()).thenReturn(UNARY_MESSAGE);
+		analyser.visit(unaryMessage);
+		verify(generator).unarySend(UNARY_MESSAGE);
 	}
 
 	@Test public void shouldVisitChildOfProgramNode() {

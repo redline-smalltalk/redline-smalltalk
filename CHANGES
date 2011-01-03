@@ -1,4 +1,12 @@
 
+04/01/2011 Changes
+
+Changed Smalltalk Class to be a Class Loader, and set itself as context class loader,
+so code can use Thread.currentThread().getContextClassLoader() to get hold of the active
+Smalltalk instance.
+Added Test around generating message sends.
+
+
 01/01/2011 Changes
 
 Adding more tests around analyser. Fleshing out interaction with generator.

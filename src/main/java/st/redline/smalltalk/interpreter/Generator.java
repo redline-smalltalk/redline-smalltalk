@@ -28,12 +28,22 @@ public class Generator {
 	private String packageInternalName;
 	private String fullyQualifiedName;
 
-	public void generateProgram(String className, String packageInternalName) {
+	public void openClass(String className, String packageInternalName) {
+		rememberNames(className, packageInternalName);
+	}
+
+	private void rememberNames(String className, String packageInternalName) {
 		this.className = className;
 		this.packageInternalName = packageInternalName;
 		this.fullyQualifiedName = packageInternalName + File.pathSeparator + className;
 	}
 
-	public void generateClassLookup(String className) {
+	public void closeClass() {
+	}
+
+	public void lookupClass(String className) {
+	}
+
+	public void unarySend(String unarySelector) {
 	}
 }

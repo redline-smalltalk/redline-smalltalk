@@ -34,8 +34,9 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Program program) {
-		generator.generateProgram(sourceFileName(), sourceFileParentPath());
+		generator.openClass(sourceFileName(), sourceFileParentPath());
 		program.sequence().accept(this);
+		generator.closeClass();
 	}
 
 	public void visit(Sequence sequence) {
@@ -69,11 +70,11 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Variable variable) {
 		if (variable.isClassReference())
-			generator.generateClassLookup(variable.name());
+			generator.lookupClass(variable.name());
 	}
 
 	public void visit(UnaryMessage unaryMessage) {
-		System.out.println(unaryMessage);
+		generator.unarySend(unaryMessage.selector());
 	}
 
 	private String sourceFileName() {
