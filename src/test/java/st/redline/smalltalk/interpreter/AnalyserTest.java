@@ -75,7 +75,7 @@ public class AnalyserTest {
 		when(variable.isClassReference()).thenReturn(true);
 		when(variable.name()).thenReturn(CLASS_NAME);
 		analyser.visit(variable);
-		verify(generator).lookupClass(CLASS_NAME);
+		verify(generator).classLookup(CLASS_NAME);
 	}
 
 	@Test public void shouldGenerateUnarySendFromUnaryMessage() {

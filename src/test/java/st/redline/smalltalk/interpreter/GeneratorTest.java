@@ -34,7 +34,10 @@ public class GeneratorTest implements Opcodes {
 
 	private static final String CLASS_NAME = "Model";
 	private static final String PACKAGE_INTERNAL_NAME = "app/data";
+	private static final String CLASS_FULLY_QUALIFIED_NAME = PACKAGE_INTERNAL_NAME + "/" + CLASS_NAME;
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/ProtoObject";
+	private static final String UNARY_SELECTOR = "unarySelector";
+	private static final String UNARY_METHOD_DESCRIPTOR = "(Ljava/lang/String;)Lst/redline/ProtoObject;";
 
 	@Mock ClassWriter classWriter;
 	@Mock MethodVisitor methodVisitor;
@@ -44,23 +47,29 @@ public class GeneratorTest implements Opcodes {
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		generator = new Generator(classWriter);
+		when(classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)).thenReturn(methodVisitor);
 	}
 
 	@Test public void shouldWriteClassAndInitMethodWhenClassOpened() {
-		when(classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)).thenReturn(methodVisitor);
 		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
-		verify(classWriter).visit(V1_5, ACC_PUBLIC + ACC_SUPER, "app/data/Model", null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
+		verify(classWriter).visit(V1_5, ACC_PUBLIC + ACC_SUPER, CLASS_FULLY_QUALIFIED_NAME, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
 		verify(classWriter).visitSource("Model.st", null);
 		verify(methodVisitor).visitCode();
 		verifyInvokeOfSuperclassInitMethod();
 	}
 
 	@Test public void shouldEndWritingClassAndInitMethodWhenClassClosed() {
-		when(classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)).thenReturn(methodVisitor);
 		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 		generator.closeClass();
 		verifyInitMethodClosed();
 		verify(classWriter).visitEnd();
+	}
+
+	@Test public void shouldGenerateUnarySend() {
+		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
+		generator.unarySend(UNARY_SELECTOR);
+		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, CLASS_FULLY_QUALIFIED_NAME, "$send", UNARY_METHOD_DESCRIPTOR);
 	}
 
 	private void verifyInvokeOfSuperclassInitMethod() {

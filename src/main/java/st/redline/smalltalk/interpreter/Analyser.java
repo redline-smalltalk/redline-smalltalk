@@ -70,7 +70,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Variable variable) {
 		if (variable.isClassReference())
-			generator.lookupClass(variable.name());
+			generator.classLookup(variable.name());
 	}
 
 	public void visit(UnaryMessage unaryMessage) {

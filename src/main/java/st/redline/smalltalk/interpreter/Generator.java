@@ -29,9 +29,12 @@ import java.io.File;
 public class Generator implements Opcodes {
 
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/ProtoObject";
+	private static final String SEND_METHOD_NAME = "$send";
+	private static final String[] METHOD_DESCRIPTORS = {
+			"(Ljava/lang/String;)Lst/redline/ProtoObject;"
+	};
 
 	private final ClassWriter classWriter;
-
 	private String className;
 	private String packageInternalName;
 	private String fullyQualifiedName;
@@ -84,9 +87,11 @@ public class Generator implements Opcodes {
 		methodVisitor.visitEnd();
 	}
 
-	public void lookupClass(String className) {
+	public void classLookup(String className) {
 	}
 
 	public void unarySend(String unarySelector) {
+		methodVisitor.visitLdcInsn(unarySelector);
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
 	}
 }
