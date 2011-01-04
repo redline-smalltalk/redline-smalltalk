@@ -50,9 +50,9 @@ public class Smalltalk extends ClassLoader {
 		return Thread.currentThread().getContextClassLoader();
 	}
 
-	private Smalltalk(Environment environment, ClassLoader classLoader) {
+	private Smalltalk(Environment environment, ClassLoader parentClassLoader) {
 		this.environment = environment;
-		this.parentClassLoader = classLoader;
+		this.parentClassLoader = parentClassLoader;
 		initialize();
 	}
 
@@ -126,6 +126,10 @@ public class Smalltalk extends ClassLoader {
 
 	public PrintWriter standardOutput() {
 		return environment.standardOutput();
+	}
+
+	public PrintWriter errorOutput() {
+		return environment.errorOutput();
 	}
 
 	public CommandLine commandLine() {

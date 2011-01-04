@@ -33,7 +33,15 @@ public class Analyser implements NodeVisitor {
 		this.generator = generator;
 	}
 
+	public byte[] result() {
+		return generator.classBytes();
+	}
+
 	public void visit(Program program) {
+		writeClass(program);
+	}
+
+	private void writeClass(Program program) {
 		generator.openClass(sourceFileName(), sourceFileParentPathWithoutUserPath());
 		program.sequence().accept(this);
 		generator.closeClass();

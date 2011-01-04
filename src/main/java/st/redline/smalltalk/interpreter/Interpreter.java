@@ -25,12 +25,19 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import st.redline.smalltalk.Smalltalk;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+
 public class Interpreter {
 
 	private Smalltalk smalltalk;
+	private Analyser analyser;
+	private Program program;
+	private Class programClass;
 
 	public void interpretUsing(String sourceCode, Smalltalk smalltalk) {
 		this.smalltalk = smalltalk;
+		this.analyser = analyser();
 		interpret(parse(sourceCode));
 	}
 
@@ -43,8 +50,36 @@ public class Interpreter {
 	}
 
 	private void interpret(Program program) {
-		if (program != null)
-			program.accept(analyser());
+		if (program == null)
+			return;
+		this.program = program;
+		compileProgram();
+		loadProgram();
+		runProgram();
+	}
+
+	private void runProgram() {
+		try {
+			if (programClass != null)
+				programClass.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace(errorOutput());
+		} catch (IllegalAccessException e) {
+			e.printStackTrace(errorOutput());
+		}
+	}
+
+	private PrintWriter errorOutput() {
+		return smalltalk.errorOutput();
+	}
+
+	private void loadProgram() {
+// todo.
+//		programClass = smalltalk.defineClass(analyser.result());
+	}
+
+	private void compileProgram() {
+		program.accept(analyser);
 	}
 
 	private Program parse(String sourceCode) {

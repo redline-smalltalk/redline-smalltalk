@@ -105,4 +105,8 @@ public class Generator implements Opcodes {
 		methodVisitor.visitLdcInsn(unarySelector);
 		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
 	}
+
+	public byte[] classBytes() {
+		return classWriter.toByteArray();
+	}
 }

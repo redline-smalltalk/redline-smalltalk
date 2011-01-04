@@ -30,16 +30,18 @@ public class Environment {
 	private final Map<String, Object> contents;
 	private final CommandLine commandLine;
 	private final PrintWriter standardOutput;
+	private final PrintWriter errorOutput;
 
 	public static Environment with(CommandLine commandLine, PrintWriter standardOutput, PrintWriter errorOutput) {
 		if (commandLine == null || standardOutput == null || errorOutput == null)
 			throw new MissingArgumentException();
-		return new Environment(commandLine, standardOutput);
+		return new Environment(commandLine, standardOutput, errorOutput);
 	}
 
-	private Environment(CommandLine commandLine, PrintWriter standardOutput) {
+	private Environment(CommandLine commandLine, PrintWriter standardOutput, PrintWriter errorOutput) {
 		this.commandLine = commandLine;
 		this.standardOutput = standardOutput;
+		this.errorOutput = errorOutput;
 		this.contents = new Hashtable<String, Object>();
 	}
 
@@ -49,6 +51,10 @@ public class Environment {
 
 	public PrintWriter standardOutput() {
 		return standardOutput;
+	}
+
+	public PrintWriter errorOutput() {
+		return errorOutput;
 	}
 
 	public Object put(String key, Object value) {
