@@ -29,12 +29,14 @@ import java.io.File;
 public class Generator implements Opcodes {
 
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/ProtoObject";
-	private static final String SEND_METHOD_NAME = "$send";
+	private static final String SEND_METHOD_NAME = "send";
+	private static final String SMALLTALK_CLASS = "st/redline/Smalltalk";
 	private static final String[] METHOD_DESCRIPTORS = {
-			"(Ljava/lang/String;)Lst/redline/ProtoObject;"
+			"(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;"
 	};
 
 	private final ClassWriter classWriter;
+
 	private String className;
 	private String packageInternalName;
 	private String fullyQualifiedName;
@@ -88,10 +90,19 @@ public class Generator implements Opcodes {
 	}
 
 	public void classLookup(String className) {
+		currentSmalltalkClass();
+		methodVisitor.visitLdcInsn(className);
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "at", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
+	}
+
+	private void currentSmalltalkClass() {
+		methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Thread", "currentThread", "()Ljava/lang/Thread;");
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Thread", "getContextClassLoader", "()Ljava/lang/ClassLoader;");
+		methodVisitor.visitTypeInsn(CHECKCAST, SMALLTALK_CLASS);
 	}
 
 	public void unarySend(String unarySelector) {
 		methodVisitor.visitLdcInsn(unarySelector);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
+		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
 	}
 }

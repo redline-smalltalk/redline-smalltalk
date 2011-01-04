@@ -35,6 +35,10 @@ public class Variable extends Primary {
 	}
 
 	public boolean isClassReference() {
-		return false;
+		return isFirstCharacterUppercase(name());
+	}
+
+	private boolean isFirstCharacterUppercase(String string) {
+		return Character.isUpperCase(string.charAt(0));
 	}
 }

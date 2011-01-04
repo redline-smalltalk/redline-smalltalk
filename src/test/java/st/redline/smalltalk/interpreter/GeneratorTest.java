@@ -37,21 +37,23 @@ public class GeneratorTest implements Opcodes {
 	private static final String CLASS_FULLY_QUALIFIED_NAME = PACKAGE_INTERNAL_NAME + "/" + CLASS_NAME;
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/ProtoObject";
 	private static final String UNARY_SELECTOR = "unarySelector";
-	private static final String UNARY_METHOD_DESCRIPTOR = "(Ljava/lang/String;)Lst/redline/ProtoObject;";
+	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 
 	@Mock ClassWriter classWriter;
 	@Mock MethodVisitor methodVisitor;
 
 	private Generator generator;
+	private static final String SMALLTALK_CLASS = "st/redline/Smalltalk";
+	private static final String THREAD_CLASS = "java/lang/Thread";
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		generator = new Generator(classWriter);
 		when(classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)).thenReturn(methodVisitor);
+		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 	}
 
 	@Test public void shouldWriteClassAndInitMethodWhenClassOpened() {
-		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 		verify(classWriter).visit(V1_5, ACC_PUBLIC + ACC_SUPER, CLASS_FULLY_QUALIFIED_NAME, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
 		verify(classWriter).visitSource("Model.st", null);
 		verify(methodVisitor).visitCode();
@@ -59,17 +61,24 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldEndWritingClassAndInitMethodWhenClassClosed() {
-		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 		generator.closeClass();
 		verifyInitMethodClosed();
 		verify(classWriter).visitEnd();
 	}
 
+	@Test public void shouldGenerateClassLookup() {
+		generator.classLookup(CLASS_NAME);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, THREAD_CLASS, "currentThread", "()Ljava/lang/Thread;");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, THREAD_CLASS, "getContextClassLoader", "()Ljava/lang/ClassLoader;");
+		verify(methodVisitor).visitTypeInsn(CHECKCAST, SMALLTALK_CLASS);
+		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "at", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
+	}
+
 	@Test public void shouldGenerateUnarySend() {
-		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 		generator.unarySend(UNARY_SELECTOR);
 		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
-		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, CLASS_FULLY_QUALIFIED_NAME, "$send", UNARY_METHOD_DESCRIPTOR);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", UNARY_METHOD_DESCRIPTOR);
 	}
 
 	private void verifyInvokeOfSuperclassInitMethod() {
