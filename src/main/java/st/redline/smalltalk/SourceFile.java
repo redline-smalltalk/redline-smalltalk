@@ -28,6 +28,18 @@ public class SourceFile extends File {
 		return parent == null ? "" : parent;
 	}
 
+	public String parentPathWithoutUserPath() {
+		String userPath = userPath();
+		String parentPath = parentPath();
+		if (parentPath.startsWith(userPath))
+			return parentPath.substring(userPath.length() + 1);
+		return parentPath;
+	}
+
+	private String userPath() {
+		return smalltalk.userPath();
+	}
+
 	private FileReader fileReader() {
 		return smalltalk.fileReader();
 	}

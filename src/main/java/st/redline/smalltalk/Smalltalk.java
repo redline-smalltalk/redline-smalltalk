@@ -135,4 +135,8 @@ public class Smalltalk extends ClassLoader {
 	public SourceFile currentFile() {
 		return currentFile;
 	}
+
+	public String userPath() {
+		return System.getProperty("user.dir");
+	}
 }

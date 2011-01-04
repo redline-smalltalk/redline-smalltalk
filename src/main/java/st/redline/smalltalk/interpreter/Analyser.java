@@ -34,7 +34,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Program program) {
-		generator.openClass(sourceFileName(), sourceFileParentPath());
+		generator.openClass(sourceFileName(), sourceFileParentPathWithoutUserPath());
 		program.sequence().accept(this);
 		generator.closeClass();
 	}
@@ -81,8 +81,8 @@ public class Analyser implements NodeVisitor {
 		return sourceFile().nameWithoutExtension();
 	}
 
-	private String sourceFileParentPath() {
-		return sourceFile().parentPath();
+	private String sourceFileParentPathWithoutUserPath() {
+		return sourceFile().parentPathWithoutUserPath();
 	}
 
 	private SourceFile sourceFile() {

@@ -62,7 +62,7 @@ public class AnalyserTest {
 		when(messageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
 		when(smalltalk.currentFile()).thenReturn(sourceFile);
 		when(sourceFile.nameWithoutExtension()).thenReturn(CLASS_NAME);
-		when(sourceFile.parentPath()).thenReturn(PACKAGE_INTERNAL_NAME);
+		when(sourceFile.parentPathWithoutUserPath()).thenReturn(PACKAGE_INTERNAL_NAME);
 	}
 
 	@Test public void shouldGenerateProgramFromProgramNode() {
