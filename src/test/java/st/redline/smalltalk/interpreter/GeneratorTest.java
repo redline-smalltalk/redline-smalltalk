@@ -72,7 +72,7 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, THREAD_CLASS, "getContextClassLoader", "()Ljava/lang/ClassLoader;");
 		verify(methodVisitor).visitTypeInsn(CHECKCAST, SMALLTALK_CLASS);
 		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
-		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "at", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
 	}
 
 	@Test public void shouldGenerateUnarySend() {

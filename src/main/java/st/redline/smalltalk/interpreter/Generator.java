@@ -92,7 +92,7 @@ public class Generator implements Opcodes {
 	public void classLookup(String className) {
 		currentSmalltalkClass();
 		methodVisitor.visitLdcInsn(className);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "at", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
 	}
 
 	private void currentSmalltalkClass() {

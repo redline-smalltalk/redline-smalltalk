@@ -1,4 +1,11 @@
 
+06/01/2011 Changes
+
+Cleaned up Smalltalk class and readying it for resolving Classes.
+Send being called but dispatch wont be implemented until Class resolution in place.
+Thinking through Class resolution process.
+
+
 04/01/2011 Changes
 
 Changed Smalltalk Class to be a Class Loader, and set itself as context class loader,

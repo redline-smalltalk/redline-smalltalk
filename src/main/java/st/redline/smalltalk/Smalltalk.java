@@ -25,6 +25,8 @@ import st.redline.smalltalk.interpreter.Interpreter;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides an entry point for Redline Smalltalk.
@@ -37,22 +39,19 @@ public class Smalltalk extends ClassLoader {
 	public static final String FILE_READER = "FILE_READER";
 
 	private final Environment environment;
-	private final ClassLoader parentClassLoader;
+	private final Map<String, ProtoObject> cachedObjects;
+
 	private SourceFile currentFile;
 
 	public static Smalltalk with(Environment environment) {
 		if (environment == null)
 			throw new MissingArgumentException();
-		return new Smalltalk(environment, currentClassLoader());
+		return new Smalltalk(environment);
 	}
 
-	private static ClassLoader currentClassLoader() {
-		return Thread.currentThread().getContextClassLoader();
-	}
-
-	private Smalltalk(Environment environment, ClassLoader parentClassLoader) {
+	private Smalltalk(Environment environment) {
 		this.environment = environment;
-		this.parentClassLoader = parentClassLoader;
+		this.cachedObjects = new HashMap<String, ProtoObject>();
 		initialize();
 	}
 
@@ -148,7 +147,21 @@ public class Smalltalk extends ClassLoader {
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
 
-	public ProtoObject at(String className) {
+	public ProtoObject basicAt(String className) {
+		ProtoObject cached = cachedObject(className);
+		if (cached != null)
+			return cached;
+		if (resolveClassObject(className))
+			return cachedObject(className);
+		// todo - this should return nil.
 		return null;
+	}
+
+	private boolean resolveClassObject(String name) {
+		return false;
+	}
+
+	private ProtoObject cachedObject(String name) {
+		return cachedObjects.get(name);
 	}
 }
