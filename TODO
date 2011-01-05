@@ -1,0 +1,9 @@
+
+Add command line parameter to turn on/off tracing.
+
+Add command line parameter to indicate where source files can be found.
+This path will be subtracted from the path of input source files to form
+the class name. eg: src/test/smalltalk/Test.st with a source file path of
+'src/test/' will be seen as the Class Test in the namespace 'smalltalk'
+
+
