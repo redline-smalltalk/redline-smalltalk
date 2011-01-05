@@ -145,7 +145,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public Class defineClass(byte[] classBytes) {
-		return super.defineClass(null, classBytes, 0, classBytes.length);
+		return defineClass(null, classBytes, 0, classBytes.length);
 	}
 
 	public ProtoObject at(String className) {
