@@ -143,4 +143,12 @@ public class Smalltalk extends ClassLoader {
 	public String userPath() {
 		return System.getProperty("user.dir");
 	}
+
+	public Class defineClass(byte[] classBytes) {
+		return super.defineClass(null, classBytes, 0, classBytes.length);
+	}
+
+	public ProtoObject at(String className) {
+		return null;
+	}
 }

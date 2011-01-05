@@ -74,8 +74,7 @@ public class Interpreter {
 	}
 
 	private void loadProgram() {
-// todo.
-//		programClass = smalltalk.defineClass(analyser.result());
+		programClass = smalltalk.defineClass(analyser.result());
 	}
 
 	private void compileProgram() {

@@ -28,11 +28,11 @@ import java.io.File;
 
 public class Generator implements Opcodes {
 
-	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/ProtoObject";
+	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/ProtoObject";
 	private static final String SEND_METHOD_NAME = "send";
-	private static final String SMALLTALK_CLASS = "st/redline/Smalltalk";
+	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String[] METHOD_DESCRIPTORS = {
-			"(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;"
+			"(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;"
 	};
 
 	private final ClassWriter classWriter;
@@ -92,7 +92,7 @@ public class Generator implements Opcodes {
 	public void classLookup(String className) {
 		currentSmalltalkClass();
 		methodVisitor.visitLdcInsn(className);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "at", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "at", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
 	}
 
 	private void currentSmalltalkClass() {

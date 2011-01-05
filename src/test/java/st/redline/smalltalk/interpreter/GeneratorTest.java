@@ -35,16 +35,16 @@ public class GeneratorTest implements Opcodes {
 	private static final String CLASS_NAME = "Model";
 	private static final String PACKAGE_INTERNAL_NAME = "app/data";
 	private static final String CLASS_FULLY_QUALIFIED_NAME = PACKAGE_INTERNAL_NAME + "/" + CLASS_NAME;
-	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/ProtoObject";
+	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/ProtoObject";
 	private static final String UNARY_SELECTOR = "unarySelector";
-	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
+	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;";
+	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
+	private static final String THREAD_CLASS = "java/lang/Thread";
 
 	@Mock ClassWriter classWriter;
 	@Mock MethodVisitor methodVisitor;
 
 	private Generator generator;
-	private static final String SMALLTALK_CLASS = "st/redline/Smalltalk";
-	private static final String THREAD_CLASS = "java/lang/Thread";
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -72,7 +72,7 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, THREAD_CLASS, "getContextClassLoader", "()Ljava/lang/ClassLoader;");
 		verify(methodVisitor).visitTypeInsn(CHECKCAST, SMALLTALK_CLASS);
 		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
-		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "at", "(Ljava/lang/String;)Lst/redline/ProtoObject;");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "at", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
 	}
 
 	@Test public void shouldGenerateUnarySend() {
