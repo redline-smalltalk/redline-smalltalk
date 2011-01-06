@@ -33,6 +33,7 @@ import java.util.Map;
  */
 public class Smalltalk extends ClassLoader {
 
+	public static final String REDLINE_PACKAGE = "st.redline.smalltalk";
 	public static final String CURRENT_FILE = "CURRENT_FILE";
 	public static final String INTERPRETER = "INTERPRETER";
 	public static final String GENERATOR = "GENERATOR";
@@ -46,10 +47,15 @@ public class Smalltalk extends ClassLoader {
 	public static Smalltalk with(Environment environment) {
 		if (environment == null)
 			throw new MissingArgumentException();
-		return new Smalltalk(environment);
+		return new Smalltalk(environment, currentClassLoader());
 	}
 
-	private Smalltalk(Environment environment) {
+	private static ClassLoader currentClassLoader() {
+		return Thread.currentThread().getContextClassLoader();
+	}
+
+	private Smalltalk(Environment environment, ClassLoader parentClassLoader) {
+		super(parentClassLoader);
 		this.environment = environment;
 		this.cachedObjects = new HashMap<String, ProtoObject>();
 		initialize();
@@ -158,7 +164,54 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	private boolean resolveClassObject(String name) {
+		try {
+			loadClass(name).newInstance();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace(errorOutput());
+			errorOutput().flush();
+		}
 		return false;
+	}
+
+	protected Class<?> findClass(String name) throws ClassNotFoundException {
+		Class<?> cls = findClassInDefaultPackage(name);
+		if (cls != null)
+			return cls;
+		cls = loadClassFromSource(name);
+		if (cls != null)
+			return cls;
+		return super.findClass(name);
+	}
+
+	private Class<?> loadClassFromSource(String name) throws ClassNotFoundException {
+		File source = findClassSource(name);
+		if (source != null) {
+			eval(source);
+			return loadClass(name);
+		}
+		return null;
+	}
+
+	private File findClassSource(String name) {
+		// todo. remove println.
+		System.out.println("findClassSource('" + name + "')");
+		return null;
+	}
+
+	private Class<?> findClassInDefaultPackage(String name) {
+		if (!name.startsWith(REDLINE_PACKAGE)) {
+			return findClassIn(name, REDLINE_PACKAGE);
+		}
+		return null;
+	}
+
+	private Class<?> findClassIn(String name, String inPackage) {
+		try {
+			return loadClass(inPackage + "." + name);
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
 	}
 
 	private ProtoObject cachedObject(String name) {
