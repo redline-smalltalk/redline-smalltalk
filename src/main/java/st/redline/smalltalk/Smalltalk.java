@@ -26,6 +26,7 @@ import st.redline.smalltalk.interpreter.Interpreter;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +34,7 @@ import java.util.Map;
  */
 public class Smalltalk extends ClassLoader {
 
+	public static final String SMALLTALK_SOURCE_EXTENSION = ".st";
 	public static final String REDLINE_PACKAGE = "st.redline.smalltalk";
 	public static final String CURRENT_FILE = "CURRENT_FILE";
 	public static final String INTERPRETER = "INTERPRETER";
@@ -149,6 +151,10 @@ public class Smalltalk extends ClassLoader {
 		return System.getProperty("user.dir");
 	}
 
+	public List<String> sourcePaths() {
+		return commandLine().sourcePaths();
+	}
+
 	public Class defineClass(byte[] classBytes) {
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
@@ -194,9 +200,28 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	private File findClassSource(String name) {
-		// todo. remove println.
-		System.out.println("findClassSource('" + name + "')");
+		String filename = makeSourceFilename(name);
+		return findFileInSourcePath(filename);
+	}
+
+	private File findFileInSourcePath(String filename) {
+		for (String path : sourcePaths()) {
+			File file = findFile(filename, path);
+			if (file != null)
+				return file;
+		}
 		return null;
+	}
+
+	private File findFile(String filename, String path) {
+		File file = new File(path + File.separator + filename);
+		if (file.exists())
+			return file;
+		return null;
+	}
+
+	private String makeSourceFilename(String name) {
+		return name.replaceAll("\\.", File.separator) + SMALLTALK_SOURCE_EXTENSION;
 	}
 
 	private Class<?> findClassInDefaultPackage(String name) {

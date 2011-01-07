@@ -1,4 +1,13 @@
 
+07/01/2011 Changes
+
+Add 'sourcepath' command line option for specifying which folder to look in
+for source files. The leading sourcepath names are removed from source filenames.
+eg: sourcepath src/test and a source file of src/test/smalltalk/Object.st
+will result in a source filename of smalltalk/Object.st and a class Object in 
+the package smalltalk. 
+
+
 06/01/2011 Changes
 
 Cleaned up Smalltalk class and readying it for resolving Classes.

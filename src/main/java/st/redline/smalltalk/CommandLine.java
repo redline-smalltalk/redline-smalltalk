@@ -2,7 +2,9 @@ package st.redline.smalltalk;
 
 import org.apache.commons.cli.*;
 
+import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +14,8 @@ import java.util.List;
  * Arguments is the list of <source files>
  */
 class CommandLine {
+
+	private static final String SOURCEPATH_OPTION = "sourcepath";
 
 	private final String[] rawArguments;
 	private org.apache.commons.cli.CommandLine commandLine;
@@ -54,6 +58,16 @@ class CommandLine {
 		return new CommandLineOptions();
 	}
 
+	List<String> sourcePaths() {
+		List<String> sourcePaths = new ArrayList<String>();
+		if (commandLine.hasOption(SOURCEPATH_OPTION)) {
+			for (String path : commandLine.getOptionValue(SOURCEPATH_OPTION).split(File.pathSeparator))
+				sourcePaths.add(path);
+		}
+		sourcePaths.add(System.getProperty("user.dir"));
+		return sourcePaths;
+	}
+
 	CommandLineParser commandLineParser() {
 		return new GnuParser();
 	}
@@ -66,10 +80,18 @@ class CommandLine {
 
 		public CommandLineOptions() {
 			addOption(help());
+			addOption(sourcePath());
 		}
 
 		private Option help() {
 			return new Option("?", "help", false, "print this message.");
+		}
+
+		private Option sourcePath() {
+			return OptionBuilder.withArgName("path")
+								.hasArg()
+								.withDescription("where to find input source files.")
+								.create(SOURCEPATH_OPTION);
 		}
 	}
 }

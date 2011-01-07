@@ -36,14 +36,27 @@ public class CommandLineTest {
 	private static final String[] HELP_IN_ARGUMENTS = new String[] {"-?"};
 	private static final String[] HELP_ALIAS_IN_ARGUMENTS = new String[] {"--help"};
 	private static final String[] TWO_SOURCE_FILE_NAMES_IN_ARGUMENTS = new String[] {"foo.st", "bar.st"};
+	private static final String[] SOURCE_PATH_IN_ARGUMENTS = new String[] {"-sourcepath", "foo"};
 	private static final String EXPECTED_HELP_MESSAGE =
-									"usage: stic [options] <source files>" + LF +
-									" -?,--help    print this message." + LF;
+								"usage: stic [options] <source files>" + LF +
+								" -?,--help             print this message." + LF +
+								" -sourcepath <path>    where to find input source files." + LF;
 
 	@Test public void shouldPrintHelpMessage() {
 		StringWriter stringWriter = new StringWriter();
 		new CommandLine(null).printHelp(new PrintWriter(stringWriter));
 		assertEquals(EXPECTED_HELP_MESSAGE, stringWriter.getBuffer().toString());
+	}
+
+	@Test public void shouldAddUserFolderToSourcePath() {
+		CommandLine commandLine = new CommandLine(null);
+		assertFalse(commandLine.sourcePaths().isEmpty());
+		assertTrue(commandLine.sourcePaths().contains(System.getProperty("user.dir")));
+
+		commandLine = new CommandLine(SOURCE_PATH_IN_ARGUMENTS);
+		assertFalse(commandLine.sourcePaths().isEmpty());
+		assertTrue(commandLine.sourcePaths().contains(System.getProperty("user.dir")));
+		assertTrue(commandLine.sourcePaths().contains(SOURCE_PATH_IN_ARGUMENTS[1]));
 	}
 
 	@Test public void shouldHaveEmptyArgumentsWhenNullArguments() {

@@ -23,6 +23,8 @@ package st.redline.smalltalk.interpreter;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
+import java.util.List;
+
 public class Analyser implements NodeVisitor {
 
 	private final Smalltalk smalltalk;
@@ -42,7 +44,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	private void writeClass(Program program) {
-		generator.openClass(sourceFileName(), sourceFileParentPathWithoutUserPath());
+		generator.openClass(sourceFileName(), sourceFileParentPathWithoutSourcePaths());
 		program.sequence().accept(this);
 		generator.closeClass();
 	}
@@ -89,8 +91,19 @@ public class Analyser implements NodeVisitor {
 		return sourceFile().nameWithoutExtension();
 	}
 
-	private String sourceFileParentPathWithoutUserPath() {
-		return sourceFile().parentPathWithoutUserPath();
+	private String sourceFileParentPathWithoutSourcePaths() {
+		String parentPath = sourceFile().parentPathWithoutUserPath();
+		for (String path : sourcePaths()) {
+			if (parentPath.length() == path.length())
+				return "";
+			if (parentPath.startsWith(path))
+				return parentPath.substring(path.length() + 1);
+		}
+		return parentPath;
+	}
+
+	private List<String> sourcePaths() {
+		return smalltalk.sourcePaths();
 	}
 
 	private SourceFile sourceFile() {
