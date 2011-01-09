@@ -28,6 +28,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 /**
  * Provides an entry point for Redline Smalltalk.
@@ -221,7 +222,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	private String makeSourceFilename(String name) {
-		return name.replaceAll("\\.", File.separator) + SMALLTALK_SOURCE_EXTENSION;
+		return name.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + SMALLTALK_SOURCE_EXTENSION;
 	}
 
 	private Class<?> findClassInDefaultPackage(String name) {
