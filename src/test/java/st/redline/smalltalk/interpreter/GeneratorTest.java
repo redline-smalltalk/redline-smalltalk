@@ -20,6 +20,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.io.File;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -34,7 +36,7 @@ public class GeneratorTest implements Opcodes {
 
 	private static final String CLASS_NAME = "Model";
 	private static final String PACKAGE_INTERNAL_NAME = "app/data";
-	private static final String CLASS_FULLY_QUALIFIED_NAME = PACKAGE_INTERNAL_NAME + "/" + CLASS_NAME;
+	private static final String CLASS_FULLY_QUALIFIED_NAME = PACKAGE_INTERNAL_NAME + File.separator + CLASS_NAME;
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/ProtoObject";
 	private static final String UNARY_SELECTOR = "unarySelector";
 	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;";
