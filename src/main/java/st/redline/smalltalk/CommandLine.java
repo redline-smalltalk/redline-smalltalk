@@ -60,10 +60,9 @@ class CommandLine {
 
 	List<String> sourcePaths() {
 		List<String> sourcePaths = new ArrayList<String>();
-		if (commandLine.hasOption(SOURCEPATH_OPTION)) {
+		if (commandLine.hasOption(SOURCEPATH_OPTION))
 			for (String path : commandLine.getOptionValue(SOURCEPATH_OPTION).split(File.pathSeparator))
 				sourcePaths.add(path);
-		}
 		sourcePaths.add(System.getProperty("user.dir"));
 		return sourcePaths;
 	}

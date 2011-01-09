@@ -20,13 +20,61 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import java.util.Map;
+
 /**
  * Provides base for all Smalltalk Objects.
  */
 public class ProtoObject {
+
+	private static final int CLASS_OFFSET = 0;
+	private static final int SUPERCLASS_OFFSET = 1;
+	private static final int METHOD_DICTIONARY_OFFSET = 2;
+
+	public ProtoObject[] variables;
+
+	public ProtoObject() {
+		this(0);
+	}
+
+	public ProtoObject(int basicSize) {
+		createVariables(basicSize + 2);
+	}
+
+	private void createVariables(int basicSize) {
+		variables = new ProtoObject[basicSize];
+	}
+
 	public static ProtoObject send(ProtoObject receiver, String unarySelector) {
-		// TODO.jcl Remove this System.out
-		System.out.println("send(" + String.valueOf(receiver) + ", '" + unarySelector + "')");
-		return null;
+		ProtoMethod method = receiver.basicClass().basicMethodDictionaryAt(unarySelector);
+		if (method != null)
+			return method.applyTo(receiver);
+		ProtoObject superclass = receiver.basicClass().basicSuperclass();
+		while ((method = superclass.basicMethodDictionaryAt(unarySelector)) == null)
+			if ((superclass = superclass.basicSuperclass()) == null)
+				break;
+		if (method != null)
+			return method.applyTo(receiver);
+		return sendDoesNotUnderstand(receiver, unarySelector);
+	}
+
+	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String unarySelector) {
+		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand");
+	}
+
+	public ProtoObject basicClass() {
+		return variables[CLASS_OFFSET];
+	}
+
+	public ProtoMethod basicMethodDictionaryAt(String selector) {
+		return basicMethodDictionary().get(selector);
+	}
+
+	public Map<String, ProtoMethod> basicMethodDictionary() {
+		return (Map<String, ProtoMethod>) variables[METHOD_DICTIONARY_OFFSET];
+	}
+
+	public ProtoObject basicSuperclass() {
+		return variables[SUPERCLASS_OFFSET];
 	}
 }

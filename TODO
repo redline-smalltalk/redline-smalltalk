@@ -1,4 +1,6 @@
 
+Change runtime exception when selector not understood with send of DNU.
+
 Add command line parameter to turn on/off tracing.
 
 Add command line parameter to indicate where source files can be found.

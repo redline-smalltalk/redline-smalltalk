@@ -1,3 +1,10 @@
+10/01/2011 Changes
+
+Added ProtoMethod as base for all methods.
+Made fixes suggested by David Kemp for Windows platform.
+Added Tests for ProtoObject to drive out method lookup and dispatch.
+Added instance variables holder in ProtoObject. Offset 0 is always the
+class object.
 
 07/01/2011 Changes
 
