@@ -4,6 +4,9 @@
 Added to grammar to allow parsing of each kind of statement. See 'statements:' in grammar file.
 Answering the result of an expression is now implemented. If an expreesion result is not answered
 the value is popped off the stack to keep it balanced.
+Added Bootstrapper class which initializes ProtoObject instance and registers it in Smalltalk dictionary.
+Changed Test.st to call ProtoObject to show method resolving. *Currently* will result in Runtime exception
+with a TODO. Will be adding to ProtoObject method dictionary shortly.
 
 
 10/01/2011 Changes

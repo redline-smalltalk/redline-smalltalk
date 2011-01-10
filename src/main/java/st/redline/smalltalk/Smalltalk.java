@@ -63,6 +63,11 @@ public class Smalltalk extends ClassLoader {
 		this.environment = environment;
 		this.cachedObjects = new HashMap<String, ProtoObject>();
 		initialize();
+		bootstrap();
+	}
+
+	private void bootstrap() {
+		new Bootstrapper(this).bootstrap();
 	}
 
 	private void initialize() {
@@ -250,5 +255,9 @@ public class Smalltalk extends ClassLoader {
 		if (object == null)
 			object = cachedObjects.get(NIL);
 		return object;
+	}
+
+	public void basicAtPut(String name, ProtoObject protoObject) {
+		cachedObjects.put(name, protoObject);
 	}
 }

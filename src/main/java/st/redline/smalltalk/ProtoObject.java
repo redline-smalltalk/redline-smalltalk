@@ -20,6 +20,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -27,11 +28,22 @@ import java.util.Map;
  */
 public class ProtoObject {
 
+	private static final int BASIC_SIZE = 2;
 	private static final int CLASS_OFFSET = 0;
 	private static final int SUPERCLASS_OFFSET = 1;
-	private static final int METHOD_DICTIONARY_OFFSET = 2;
 
 	public ProtoObject[] variables;
+	public Map<String, ProtoMethod> methodDictionary;
+
+	public static ProtoObject createBasicClass(int size) {
+		ProtoObject classObject = new ProtoObject(size + BASIC_SIZE);
+		classObject.methodDictionary = createBasicMethodDictionary();
+		return classObject;
+	}
+
+	public static Map<String, ProtoMethod> createBasicMethodDictionary() {
+		return new Hashtable<String, ProtoMethod>();
+	}
 
 	public ProtoObject() {
 		this(1);
@@ -66,15 +78,19 @@ public class ProtoObject {
 		return variables[CLASS_OFFSET];
 	}
 
-	public ProtoMethod basicMethodDictionaryAt(String selector) {
-		return basicMethodDictionary().get(selector);
+	public void basicClass(ProtoObject classObject) {
+		variables[CLASS_OFFSET] = classObject;
 	}
 
-	public Map<String, ProtoMethod> basicMethodDictionary() {
-		return (Map<String, ProtoMethod>) variables[METHOD_DICTIONARY_OFFSET];
+	public ProtoMethod basicMethodDictionaryAt(String selector) {
+		return methodDictionary.get(selector);
 	}
 
 	public ProtoObject basicSuperclass() {
 		return variables[SUPERCLASS_OFFSET];
+	}
+
+	public void basicSuperclass(ProtoObject superclass) {
+		variables[SUPERCLASS_OFFSET] = superclass;
 	}
 }
