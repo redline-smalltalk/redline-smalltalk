@@ -5,6 +5,10 @@ Made fixes suggested by David Kemp for Windows platform.
 Added Tests for ProtoObject to drive out method lookup and dispatch.
 Added instance variables holder in ProtoObject. Offset 0 is always the
 class object.
+Added src/main/smalltalk/Redline folder, which will contain the Smalltalk
+source for the runtime.
+Default namespace for Smalltalk Runtime Objects is Redline.
+
 
 07/01/2011 Changes
 

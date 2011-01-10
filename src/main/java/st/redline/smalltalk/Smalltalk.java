@@ -36,11 +36,12 @@ import java.util.regex.Matcher;
 public class Smalltalk extends ClassLoader {
 
 	public static final String SMALLTALK_SOURCE_EXTENSION = ".st";
-	public static final String REDLINE_PACKAGE = "st.redline.smalltalk";
+	public static final String REDLINE_PACKAGE = "Redline";
 	public static final String CURRENT_FILE = "CURRENT_FILE";
 	public static final String INTERPRETER = "INTERPRETER";
 	public static final String GENERATOR = "GENERATOR";
 	public static final String FILE_READER = "FILE_READER";
+	public static final String NIL = "nil";
 
 	private final Environment environment;
 	private final Map<String, ProtoObject> cachedObjects;
@@ -149,7 +150,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public String userPath() {
-		return System.getProperty("user.dir");
+		return commandLine().userPath();
 	}
 
 	public List<String> sourcePaths() {
@@ -161,13 +162,13 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public ProtoObject basicAt(String className) {
-		ProtoObject cached = cachedObject(className);
-		if (cached != null)
-			return cached;
-		if (resolveClassObject(className))
-			return cachedObject(className);
-		// todo - this should return nil.
-		return null;
+		if (notCachedObject(className))
+			resolveClassObject(className);
+		return cachedObject(className);
+	}
+
+	private boolean notCachedObject(String className) {
+		return !cachedObjects.containsKey(className);
 	}
 
 	private boolean resolveClassObject(String name) {
@@ -241,6 +242,9 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	private ProtoObject cachedObject(String name) {
-		return cachedObjects.get(name);
+		ProtoObject object = cachedObjects.get(name);
+		if (object == null)
+			object = cachedObjects.get(NIL);
+		return object;
 	}
 }

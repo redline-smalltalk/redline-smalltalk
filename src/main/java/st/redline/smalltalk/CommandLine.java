@@ -25,6 +25,10 @@ class CommandLine {
 		tryParseArguments();
 	}
 
+	String userPath() {
+		return System.getProperty("user.dir");
+	}
+
 	void printHelp(PrintWriter printWriter) {
 		helpFormatter().printHelp(printWriter, 80, "stic [options] <source files>", "", commandLineOptions(), 1, 4, "");
 		printWriter.flush();
@@ -63,7 +67,7 @@ class CommandLine {
 		if (commandLine.hasOption(SOURCEPATH_OPTION))
 			for (String path : commandLine.getOptionValue(SOURCEPATH_OPTION).split(File.pathSeparator))
 				sourcePaths.add(path);
-		sourcePaths.add(System.getProperty("user.dir"));
+		sourcePaths.add(userPath());
 		return sourcePaths;
 	}
 
