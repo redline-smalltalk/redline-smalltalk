@@ -22,8 +22,8 @@ package st.redline.smalltalk.interpreter;
 
 public class Variable extends Primary {
 
-	public Variable(String value) {
-		super(value);
+	public Variable(String value, int line) {
+		super(value, line);
 	}
 
 	public void accept(NodeVisitor visitor) {

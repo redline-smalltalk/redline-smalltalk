@@ -80,11 +80,11 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Variable variable) {
 		if (variable.isClassReference())
-			generator.classLookup(variable.name());
+			generator.classLookup(variable.name(), variable.line());
 	}
 
 	public void visit(UnaryMessage unaryMessage) {
-		generator.unarySend(unaryMessage.selector());
+		generator.unarySend(unaryMessage.selector(), unaryMessage.line());
 	}
 
 	private String sourceFileName() {

@@ -24,7 +24,7 @@ public abstract class Primary extends BasicNode {
 
 	abstract void accept(NodeVisitor visitor);
 
-	public Primary(Object value) {
-		super(value);
+	public Primary(Object value, int line) {
+		super(value, line);
 	}
 }

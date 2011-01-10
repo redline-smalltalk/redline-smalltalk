@@ -23,13 +23,23 @@ package st.redline.smalltalk.interpreter;
 public abstract class BasicNode implements Node {
 
 	private final Object value;
+	private final int line;
 
 	public BasicNode(Object value) {
+		this(value, 0);
+	}
+
+	public BasicNode(Object value, int line) {
 		this.value = value;
+		this.line = line;
 	}
 
 	public Object value() {
 		return value;
+	}
+
+	public int line() {
+		return line;
 	}
 
 	public void add(Node node) {

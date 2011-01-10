@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -42,6 +43,7 @@ public class GeneratorTest implements Opcodes {
 	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String THREAD_CLASS = "java/lang/Thread";
+	private static final int LINE_NUMBER= 42;
 
 	@Mock ClassWriter classWriter;
 	@Mock MethodVisitor methodVisitor;
@@ -69,7 +71,8 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldGenerateClassLookup() {
-		generator.classLookup(CLASS_NAME);
+		generator.classLookup(CLASS_NAME, LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, THREAD_CLASS, "currentThread", "()Ljava/lang/Thread;");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, THREAD_CLASS, "getContextClassLoader", "()Ljava/lang/ClassLoader;");
 		verify(methodVisitor).visitTypeInsn(CHECKCAST, SMALLTALK_CLASS);
@@ -77,8 +80,14 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
 	}
 
+	private void verifyLineNumber(int lineNumber) {
+		verify(methodVisitor).visitLabel((Label) notNull());
+		verify(methodVisitor).visitLineNumber(eq(lineNumber), (Label) notNull());
+	}
+
 	@Test public void shouldGenerateUnarySend() {
-		generator.unarySend(UNARY_SELECTOR);
+		generator.unarySend(UNARY_SELECTOR, LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", UNARY_METHOD_DESCRIPTOR);
 	}

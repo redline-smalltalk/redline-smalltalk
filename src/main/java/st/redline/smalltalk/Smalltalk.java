@@ -72,7 +72,7 @@ public class Smalltalk extends ClassLoader {
 			interpreter(new Interpreter());
 		if (generator() == null)
 			generator(new Generator());
-		Thread.currentThread().setContextClassLoader(this);
+			Thread.currentThread().setContextClassLoader(this);
 	}
 
 	public Environment environment() {

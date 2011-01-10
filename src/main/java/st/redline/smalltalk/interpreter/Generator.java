@@ -21,6 +21,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk.interpreter;
 
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -89,7 +90,10 @@ public class Generator implements Opcodes {
 		methodVisitor.visitEnd();
 	}
 
-	public void classLookup(String className) {
+	public void classLookup(String className, int line) {
+		Label label = new Label();
+		methodVisitor.visitLabel(label);
+		methodVisitor.visitLineNumber(line, label);
 		currentSmalltalkClass();
 		methodVisitor.visitLdcInsn(className);
 		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
@@ -101,7 +105,10 @@ public class Generator implements Opcodes {
 		methodVisitor.visitTypeInsn(CHECKCAST, SMALLTALK_CLASS);
 	}
 
-	public void unarySend(String unarySelector) {
+	public void unarySend(String unarySelector, int line) {
+		Label label = new Label();
+		methodVisitor.visitLabel(label);
+		methodVisitor.visitLineNumber(line, label);
 		methodVisitor.visitLdcInsn(unarySelector);
 		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
 	}

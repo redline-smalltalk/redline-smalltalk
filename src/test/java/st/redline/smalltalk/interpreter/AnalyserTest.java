@@ -34,6 +34,7 @@ public class AnalyserTest {
 	private static final String PACKAGE_INTERNAL_NAME = "st/redline/smalltalk";
 	private static final String CLASS_NAME = "Test";
 	private static final String UNARY_MESSAGE = "new";
+	private static final int LINE_NUMBER= 42;
 
 	@Mock Smalltalk smalltalk;
 	@Mock Generator generator;
@@ -74,14 +75,16 @@ public class AnalyserTest {
 	@Test public void shouldGenerateClassLookupWhenPrimaryVariableIsClassName() {
 		when(variable.isClassReference()).thenReturn(true);
 		when(variable.name()).thenReturn(CLASS_NAME);
+		when(variable.line()).thenReturn(LINE_NUMBER);
 		analyser.visit(variable);
-		verify(generator).classLookup(CLASS_NAME);
+		verify(generator).classLookup(CLASS_NAME, LINE_NUMBER);
 	}
 
 	@Test public void shouldGenerateUnarySendFromUnaryMessage() {
 		when(unaryMessage.selector()).thenReturn(UNARY_MESSAGE);
+		when(unaryMessage.line()).thenReturn(LINE_NUMBER);
 		analyser.visit(unaryMessage);
-		verify(generator).unarySend(UNARY_MESSAGE);
+		verify(generator).unarySend(UNARY_MESSAGE, LINE_NUMBER);
 	}
 
 	@Test public void shouldVisitChildOfProgramNode() {

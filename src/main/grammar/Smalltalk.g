@@ -66,7 +66,7 @@ unaryMessageSend returns [UnaryMessageSend n]
 	;
 
 unaryMessage returns [UnaryMessage n]
-	:	NAME {$n = new UnaryMessage($NAME.text);}
+	:	NAME {$n = new UnaryMessage($NAME.text, $NAME.line);}
 	;
 
 primary returns [Primary n]
@@ -74,7 +74,7 @@ primary returns [Primary n]
 	;
 	
 variable returns [Variable n]
-	:	NAME {$n = new Variable($NAME.text);}
+	:	NAME {$n = new Variable($NAME.text, $NAME.line);}
 	;
 	
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;

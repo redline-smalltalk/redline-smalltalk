@@ -22,8 +22,8 @@ package st.redline.smalltalk.interpreter;
 
 public class UnaryMessage extends BasicNode {
 
-	public UnaryMessage(String value) {
-		super(value);
+	public UnaryMessage(String value, int line) {
+		super(value, line);
 	}
 
 	public String selector() {
