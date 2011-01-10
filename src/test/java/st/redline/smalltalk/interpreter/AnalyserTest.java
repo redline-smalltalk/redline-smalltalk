@@ -88,7 +88,7 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldGeneratePopWhenExpressionResultNotAnswered() {
-		when(expression.answered()).thenReturn(false);
+		when(expression.isAnswered()).thenReturn(false);
 		analyser.visit(expression);
 		verify(generator).stackPop();
 	}

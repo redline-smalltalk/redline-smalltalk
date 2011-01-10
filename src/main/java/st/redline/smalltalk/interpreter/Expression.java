@@ -22,8 +22,11 @@ package st.redline.smalltalk.interpreter;
 
 public class Expression extends BasicNode {
 
+	private boolean answered;
+
 	public Expression(Node value) {
 		super(value);
+		answered = false;
 	}
 
 	public Cascade cascade() {
@@ -34,7 +37,11 @@ public class Expression extends BasicNode {
 		visitor.visit(this);
 	}
 
-	public boolean answered() {
-		return false;
+	public void answered() {
+		answered = true;
+	}
+
+	public boolean isAnswered() {
+		return answered;
 	}
 }

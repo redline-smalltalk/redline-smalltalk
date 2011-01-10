@@ -26,6 +26,16 @@ public class Statements extends BasicNode {
 		super(statementList);
 	}
 
+	public Statements(Expression expression) {
+		super(new StatementList());
+		answer(expression);
+	}
+
+	public void answer(Expression expression) {
+		expression.answered();
+		statementList().add(expression);
+	}
+
 	public StatementList statementList() {
 		return (StatementList) value();
 	}

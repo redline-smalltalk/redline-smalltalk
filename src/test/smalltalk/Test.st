@@ -1,3 +1,4 @@
 
 "im a comment"
-Object new. Object name
+Object new. ^Object new.
+

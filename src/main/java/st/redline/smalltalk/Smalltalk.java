@@ -162,13 +162,17 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public ProtoObject basicAt(String className) {
-		if (notCachedObject(className))
-			resolveClassObject(className);
+		if (isCachedObject(className))
+			return cachedObject(className);
+		String packageAndClassName = REDLINE_PACKAGE + "." + className;
+		if (isCachedObject(packageAndClassName))
+			return cachedObject(packageAndClassName);
+		resolveClassObject(className);
 		return cachedObject(className);
 	}
 
-	private boolean notCachedObject(String className) {
-		return !cachedObjects.containsKey(className);
+	private boolean isCachedObject(String className) {
+		return cachedObjects.containsKey(className);
 	}
 
 	private boolean resolveClassObject(String name) {
