@@ -63,6 +63,8 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Expression expression) {
 		expression.cascade().accept(this);
+		if (!expression.answered())
+			generator.stackPop();
 	}
 
 	public void visit(Cascade cascade) {

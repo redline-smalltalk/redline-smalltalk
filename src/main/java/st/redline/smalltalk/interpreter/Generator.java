@@ -76,7 +76,7 @@ public class Generator implements Opcodes {
 	private void rememberNames(String className, String packageInternalName) {
 		this.className = className;
 		this.packageInternalName = packageInternalName;
-		this.fullyQualifiedName = packageInternalName == "" ? className : packageInternalName + File.separator + className;
+		this.fullyQualifiedName = packageInternalName.equals("") ? className : packageInternalName + File.separator + className;
 	}
 
 	public void closeClass() {
@@ -115,5 +115,9 @@ public class Generator implements Opcodes {
 
 	public byte[] classBytes() {
 		return classWriter.toByteArray();
+	}
+
+	public void stackPop() {
+		methodVisitor.visitInsn(POP);
 	}
 }

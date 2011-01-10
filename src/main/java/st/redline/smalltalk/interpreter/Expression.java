@@ -33,4 +33,8 @@ public class Expression extends BasicNode {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
+
+	public boolean answered() {
+		return false;
+	}
 }

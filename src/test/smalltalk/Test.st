@@ -1,3 +1,3 @@
 
 "im a comment"
-Object new name
+Object new. Object name

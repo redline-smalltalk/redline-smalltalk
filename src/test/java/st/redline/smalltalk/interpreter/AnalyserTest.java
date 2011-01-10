@@ -87,6 +87,12 @@ public class AnalyserTest {
 		verify(generator).unarySend(UNARY_MESSAGE, LINE_NUMBER);
 	}
 
+	@Test public void shouldGeneratePopWhenExpressionResultNotAnswered() {
+		when(expression.answered()).thenReturn(false);
+		analyser.visit(expression);
+		verify(generator).stackPop();
+	}
+
 	@Test public void shouldVisitChildOfProgramNode() {
 		analyser.visit(program);
 		verify(sequence).accept(analyser);

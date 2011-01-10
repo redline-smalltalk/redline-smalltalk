@@ -46,7 +46,7 @@ statements returns [Statements n]
 	
 statementList returns [StatementList n]
 	:	{ $n = new StatementList(); }	
-		expression {$n.add($expression.n);}
+		e1 = expression {$n.add($e1.n);} ( '.' e2 = expression {$n.add($e2.n);} )*
 	;
 	
 expression returns [Expression n]
