@@ -48,9 +48,9 @@ public class ProtoObjectTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	@Test public void shouldCreateWithMinimimTwoVariableSlots() {
+	@Test public void shouldCreateWithMinimimVariableSlots() {
 		protoObject = new ProtoObject();
-		assertEquals(2, protoObject.variables.length);
+		assertEquals(1, protoObject.variables.length);
 	}
 
 	@Test public void shouldLookupMethodInClassOfReceiver() {

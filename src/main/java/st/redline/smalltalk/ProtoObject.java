@@ -34,11 +34,11 @@ public class ProtoObject {
 	public ProtoObject[] variables;
 
 	public ProtoObject() {
-		this(0);
+		this(1);
 	}
 
 	public ProtoObject(int basicSize) {
-		createVariables(basicSize + 2);
+		createVariables(basicSize);
 	}
 
 	private void createVariables(int basicSize) {
