@@ -13,6 +13,8 @@ public interface NodeVisitor {
 	void visit(KeywordMessage keywordMessage);
 	void visit(KeywordMessagePart keywordMessagePart);
 	void visit(KeywordArgument keywordArgument);
-	void visit(Variable variable);
 	void visit(UnaryMessage unaryMessage);
+	void visit(Variable variable);
+	void visit(Symbol symbol);
+	void visit(StString string);
 }

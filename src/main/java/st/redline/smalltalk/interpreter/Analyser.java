@@ -106,6 +106,16 @@ public class Analyser implements NodeVisitor {
 			generator.classLookup(variable.name(), variable.line());
 	}
 
+	public void visit(Symbol symbol) {
+		// TODO - handle symbol.
+		System.out.println("#" + symbol.symbol());
+	}
+
+	public void visit(StString string) {
+		// TODO - handle String.
+		System.out.println(string.string());
+	}
+
 	public void visit(UnaryMessage unaryMessage) {
 		generator.unarySend(unaryMessage.selector(), unaryMessage.line());
 	}

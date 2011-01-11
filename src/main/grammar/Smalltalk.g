@@ -86,14 +86,21 @@ unaryMessage returns [UnaryMessage n]
 
 primary returns [Primary n]
 	:	variable {$n = $variable.n;}
+	|	literal {$n = $literal.n;}
 	;
 	
 variable returns [Variable n]
 	:	NAME {$n = new Variable($NAME.text, $NAME.line);}
 	;
-	
+
+literal returns [Literal n]
+	:	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
+	|	STRING {$n = new StString($STRING.text, $STRING.line);}
+	;
+		
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
+STRING: '\'' .* '\'';
  
