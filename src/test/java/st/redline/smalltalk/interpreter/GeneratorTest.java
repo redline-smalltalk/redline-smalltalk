@@ -42,7 +42,6 @@ public class GeneratorTest implements Opcodes {
 	private static final String UNARY_SELECTOR = "unarySelector";
 	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
-	private static final String THREAD_CLASS = "java/lang/Thread";
 	private static final int LINE_NUMBER= 42;
 
 	@Mock ClassWriter classWriter;
@@ -73,9 +72,7 @@ public class GeneratorTest implements Opcodes {
 	@Test public void shouldGenerateClassLookup() {
 		generator.classLookup(CLASS_NAME, LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, THREAD_CLASS, "currentThread", "()Ljava/lang/Thread;");
-		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, THREAD_CLASS, "getContextClassLoader", "()Ljava/lang/ClassLoader;");
-		verify(methodVisitor).visitTypeInsn(CHECKCAST, SMALLTALK_CLASS);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
 		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
 	}

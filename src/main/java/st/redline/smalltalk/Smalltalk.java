@@ -58,6 +58,10 @@ public class Smalltalk extends ClassLoader {
 		return Thread.currentThread().getContextClassLoader();
 	}
 
+	public static Smalltalk instance() {
+		return (Smalltalk) Thread.currentThread().getContextClassLoader();
+	}
+
 	private Smalltalk(Environment environment, ClassLoader parentClassLoader) {
 		super(parentClassLoader);
 		this.environment = environment;
