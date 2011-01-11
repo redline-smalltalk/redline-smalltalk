@@ -7,6 +7,8 @@ the value is popped off the stack to keep it balanced.
 Added Bootstrapper class which initializes ProtoObject instance and registers it in Smalltalk dictionary.
 Changed Test.st to call ProtoObject to show method resolving. *Currently* will result in Runtime exception
 with a TODO. Will be adding to ProtoObject method dictionary shortly.
+Added grammar and nodes to support parsing of keyword messages. *Currently* Keyword message arguments can
+only be primary values.
 
 
 10/01/2011 Changes
