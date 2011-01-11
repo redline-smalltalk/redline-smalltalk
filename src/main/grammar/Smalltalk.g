@@ -60,7 +60,20 @@ cascade returns [Cascade n]
 	;
 
 messageSend returns [MessageSend n]
-	:	unaryMessageSend {$n = new MessageSend($unaryMessageSend.n);}
+	:	keywordMessageSend {$n = new MessageSend($keywordMessageSend.n);}
+	|	unaryMessageSend {$n = new MessageSend($unaryMessageSend.n);}
+	;
+
+keywordMessageSend returns [KeywordMessageSend n]
+	:	primary keywordMessage {$n = new KeywordMessageSend($primary.n, $keywordMessage.n);}
+	;
+	
+keywordMessage returns [KeywordMessage n]
+	:	k1 = KEYWORD a1 = keywordArgument {$n = new KeywordMessage($k1.text, $k1.line, $a1.n);} ( k2 = KEYWORD a2 = keywordArgument {$n.add($k2.text, $k2.line, $a2.n);} )*
+	;
+
+keywordArgument returns [KeywordArgument n]
+	:	primary {$n = new KeywordArgument($primary.n);}
 	;
 
 unaryMessageSend returns [UnaryMessageSend n]
@@ -80,6 +93,7 @@ variable returns [Variable n]
 	;
 	
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
+KEYWORD: NAME ':';
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
  

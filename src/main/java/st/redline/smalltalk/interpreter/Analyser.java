@@ -72,12 +72,33 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(MessageSend messageSend) {
-		messageSend.unaryMessageSend().accept(this);
+		if (messageSend.isUnaryMessageSend())
+			messageSend.unaryMessageSend().accept(this);
+		else if (messageSend.isKeywordMessageSend())
+			messageSend.keywordMessageSend().accept(this);
 	}
 
 	public void visit(UnaryMessageSend unaryMessageSend) {
 		unaryMessageSend.primary().accept(this);
 		unaryMessageSend.eachAccept(this);
+	}
+
+	public void visit(KeywordMessageSend keywordMessageSend) {
+		keywordMessageSend.primary().accept(this);
+		keywordMessageSend.keywordMessage().accept(this);
+	}
+
+	public void visit(KeywordMessage keywordMessage) {
+		keywordMessage.eachAccept(this);
+	}
+
+	public void visit(KeywordMessagePart keywordMessagePart) {
+		// TODO - handle keyword.
+		keywordMessagePart.keywordArgument().accept(this);
+	}
+
+	public void visit(KeywordArgument keywordArgument) {
+		keywordArgument.primary().accept(this);
 	}
 
 	public void visit(Variable variable) {

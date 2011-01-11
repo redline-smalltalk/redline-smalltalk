@@ -48,6 +48,10 @@ public class AnalyserTest {
 	@Mock Expression expression;
 	@Mock UnaryMessageSend unaryMessageSend;
 	@Mock UnaryMessage unaryMessage;
+	@Mock KeywordMessageSend keywordMessageSend;
+	@Mock KeywordMessage keywordMessage;
+	@Mock KeywordMessagePart keywordMessagePart;
+	@Mock KeywordArgument keywordArgument;
 	@Mock Variable primary;
 	@Mock Variable variable;
 	private Analyser analyser;
@@ -123,9 +127,37 @@ public class AnalyserTest {
 		verify(messageSend).accept(analyser);
 	}
 
-	@Test public void shouldVisitChildOfMessageSendNode() {
+	@Test public void shouldVisitUnaryMessageSendWhenMessageSendIsUnary() {
+		when(messageSend.isUnaryMessageSend()).thenReturn(true);
+		when(messageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
 		analyser.visit(messageSend);
 		verify(unaryMessageSend).accept(analyser);
+	}
+
+	@Test public void shouldVisitKeywordMessageSendWhenMessageSendIsKeyword() {
+		when(messageSend.isKeywordMessageSend()).thenReturn(true);
+		when(messageSend.keywordMessageSend()).thenReturn(keywordMessageSend);
+		analyser.visit(messageSend);
+		verify(keywordMessageSend).accept(analyser);
+	}
+
+	@Test public void shouldVisitKeywordMessageSendParts() {
+		when(keywordMessageSend.primary()).thenReturn(primary);
+		when(keywordMessageSend.keywordMessage()).thenReturn(keywordMessage);
+		analyser.visit(keywordMessageSend);
+		verify(primary).accept(analyser);
+		verify(keywordMessage).accept(analyser);
+	}
+
+	@Test public void shouldVisitEachNodeOfKeywordMessageListNode() {
+		analyser.visit(keywordMessage);
+		verify(keywordMessage).eachAccept(analyser);
+	}
+
+	@Test public void shouldVisitKeywordMessagePart() {
+		when(keywordMessagePart.keywordArgument()).thenReturn(keywordArgument);
+		analyser.visit(keywordMessagePart);
+		verify(keywordArgument).accept(analyser);
 	}
 
 	@Test public void shouldVisitUnaryMessageSendParts() {

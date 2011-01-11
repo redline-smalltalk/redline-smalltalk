@@ -20,30 +20,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class MessageSend extends BasicNode {
+public class KeywordArgument extends BasicNode {
 
-	// TODO.JCL - adding a parameter to indicate type could be an improvement rather than using 'instanceof' each time.
-	public MessageSend(Node value) {
-		super(value);
-	}
-
-	public boolean isUnaryMessageSend() {
-		return (value() instanceof UnaryMessageSend);
-	}
-
-	public boolean isKeywordMessageSend() {
-		return (value() instanceof KeywordMessageSend);
-	}
-
-	public UnaryMessageSend unaryMessageSend() {
-		return (UnaryMessageSend) value();
-	}
-
-	public KeywordMessageSend keywordMessageSend() {
-		return (KeywordMessageSend) value();
+	public KeywordArgument(Primary primary) {
+		super(primary);
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	public Primary primary() {
+		return (Primary) value();
 	}
 }
