@@ -42,7 +42,9 @@ public class GeneratorTest implements Opcodes {
 	private static final String UNARY_SELECTOR = "unarySelector";
 	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
-	private static final String STRING = "'foo'";
+	private static final String KEYWORD_SELECTOR = "at:put:";
+	private static final int KEYWORD_ARGUMENT_COUNT = 2;
+	private static final String KEYWORD_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/ProtoObject;Lst/redline/smalltalk/ProtoObject;Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;";
 	private static final int LINE_NUMBER= 42;
 
 	@Mock ClassWriter classWriter;
@@ -97,6 +99,18 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
 		verify(methodVisitor).visitLdcInsn("symbol");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+	}
+
+	@Test public void shouldGenerateKeywordSend() {
+		generator.keywordSend(KEYWORD_SELECTOR, KEYWORD_ARGUMENT_COUNT, LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitLdcInsn(KEYWORD_SELECTOR);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", KEYWORD_METHOD_DESCRIPTOR);
+	}
+
+	@Test (expected=IllegalArgumentException.class)
+	public void shouldGenerateExceptionWhenMoreThanTenKeywordArguments() {
+		generator.keywordSend(KEYWORD_SELECTOR, 12, LINE_NUMBER);
 	}
 
 	private void verifyLineNumber(int lineNumber) {

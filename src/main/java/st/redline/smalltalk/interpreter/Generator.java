@@ -33,8 +33,11 @@ public class Generator implements Opcodes {
 	private static final String SEND_METHOD_NAME = "send";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String[] METHOD_DESCRIPTORS = {
-			"(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;"
+			"(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;",
+			"(Lst/redline/smalltalk/ProtoObject;Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;",
+			"(Lst/redline/smalltalk/ProtoObject;Lst/redline/smalltalk/ProtoObject;Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;",
 	};
+	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
 
 	private final ClassWriter classWriter;
 
@@ -91,12 +94,16 @@ public class Generator implements Opcodes {
 	}
 
 	public void classLookup(String className, int line) {
-		Label label = new Label();
-		methodVisitor.visitLabel(label);
-		methodVisitor.visitLineNumber(line, label);
+		visitLine(line);
 		currentSmalltalkClass();
 		methodVisitor.visitLdcInsn(className);
 		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+	}
+
+	private void visitLine(int line) {
+		Label label = new Label();
+		methodVisitor.visitLabel(label);
+		methodVisitor.visitLineNumber(line, label);
 	}
 
 	private void currentSmalltalkClass() {
@@ -104,9 +111,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void unarySend(String unarySelector, int line) {
-		Label label = new Label();
-		methodVisitor.visitLabel(label);
-		methodVisitor.visitLineNumber(line, label);
+		visitLine(line);
 		methodVisitor.visitLdcInsn(unarySelector);
 		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
 	}
@@ -129,5 +134,13 @@ public class Generator implements Opcodes {
 		currentSmalltalkClass();
 		methodVisitor.visitLdcInsn(symbol);
 		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+	}
+
+	public void keywordSend(String keywordSelector, int countOfArguments, int line) {
+		if (countOfArguments > MAXIMUM_KEYWORD_ARGUMENTS)
+			throw new IllegalArgumentException("More than " + MAXIMUM_KEYWORD_ARGUMENTS + " keyword arguments!");
+		visitLine(line);
+		methodVisitor.visitLdcInsn(keywordSelector);
+		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[countOfArguments]);
 	}
 }

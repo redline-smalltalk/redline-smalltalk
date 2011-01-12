@@ -57,21 +57,29 @@ public class ProtoObject {
 		variables = new ProtoObject[basicSize];
 	}
 
-	public static ProtoObject send(ProtoObject receiver, String unarySelector) {
-		ProtoMethod method = receiver.basicClass().basicMethodDictionaryAt(unarySelector);
+	public static ProtoObject send(ProtoObject receiver, ProtoObject argument, String selector) {
+		return sendDoesNotUnderstand(receiver, selector);
+	}
+
+	public static ProtoObject send(ProtoObject receiver, ProtoObject argument1, ProtoObject argument2, String selector) {
+		return sendDoesNotUnderstand(receiver, selector);
+	}
+
+	public static ProtoObject send(ProtoObject receiver, String selector) {
+		ProtoMethod method = receiver.basicClass().basicMethodDictionaryAt(selector);
 		if (method != null)
 			return method.applyTo(receiver);
 		ProtoObject superclass = receiver.basicClass().basicSuperclass();
-		while ((method = superclass.basicMethodDictionaryAt(unarySelector)) == null)
+		while ((method = superclass.basicMethodDictionaryAt(selector)) == null)
 			if ((superclass = superclass.basicSuperclass()) == null)
 				break;
 		if (method != null)
 			return method.applyTo(receiver);
-		return sendDoesNotUnderstand(receiver, unarySelector);
+		return sendDoesNotUnderstand(receiver, selector);
 	}
 
-	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String unarySelector) {
-		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand");
+	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector) {
+		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
 	}
 
 	public ProtoObject basicClass() {

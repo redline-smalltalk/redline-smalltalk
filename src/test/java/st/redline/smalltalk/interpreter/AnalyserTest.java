@@ -27,6 +27,9 @@ import org.mockito.MockitoAnnotations;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 public class AnalyserTest {
@@ -34,9 +37,15 @@ public class AnalyserTest {
 	private static final String PACKAGE_INTERNAL_NAME = "st/redline/smalltalk";
 	private static final String CLASS_NAME = "Test";
 	private static final String UNARY_MESSAGE = "new";
+	private static final String KEYWORD_SELECTOR = "at:put:";
 	private static final String STRING = "'foo'";
 	private static final String SYMBOL = "foo";
 	private static final int LINE_NUMBER= 42;
+	private static final List<String> KEYWORD_MESSAGE_LIST = new ArrayList<String>();
+	static {
+		KEYWORD_MESSAGE_LIST.add("at:");
+		KEYWORD_MESSAGE_LIST.add("put:");
+	}
 
 	@Mock Smalltalk smalltalk;
 	@Mock Generator generator;
@@ -93,6 +102,14 @@ public class AnalyserTest {
 		when(unaryMessage.line()).thenReturn(LINE_NUMBER);
 		analyser.visit(unaryMessage);
 		verify(generator).unarySend(UNARY_MESSAGE, LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateKeywordSendFromKeywordMessage() {
+		when(keywordMessage.keywords()).thenReturn(KEYWORD_MESSAGE_LIST);
+		when(keywordMessage.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(keywordMessage);
+		verify(keywordMessage).eachAccept(analyser);
+		verify(generator).keywordSend(KEYWORD_SELECTOR, 2, LINE_NUMBER);
 	}
 
 	@Test public void shouldGeneratePopWhenExpressionResultNotAnswered() {

@@ -4,6 +4,7 @@
 Added grammar to recognise Symbols and Strings.
 Added generator methods to generate calls to Smalltalk to convert the primitive String and Symbol into 
 Objects.
+Added send of keyword messages with simple String or Symbol arguments.
 
 
 11/01/2011 Changes

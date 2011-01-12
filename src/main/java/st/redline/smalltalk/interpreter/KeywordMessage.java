@@ -20,10 +20,20 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class KeywordMessage extends BasicListNode {
 
+	private int line;
+
 	public KeywordMessage(String keyword, int line, KeywordArgument keywordArgument) {
+		this.line = line;
 		add(keyword, line, keywordArgument);
+	}
+
+	public int line() {
+		return line;
 	}
 
 	public void add(String keyword, int line, KeywordArgument keywordArgument) {
@@ -32,6 +42,16 @@ public class KeywordMessage extends BasicListNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	public List<String> keywords() {
+		final List<String> keywords = new ArrayList<String>();
+		each(new NodeCommand() {
+			public void execute(Node node) {
+				keywords.add(((KeywordMessagePart) node).keyword());
+			}
+		});
+		return keywords;
 	}
 
 	public void eachAccept(final NodeVisitor visitor) {

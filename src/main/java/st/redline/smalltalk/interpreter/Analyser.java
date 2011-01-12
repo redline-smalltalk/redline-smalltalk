@@ -89,11 +89,25 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(KeywordMessage keywordMessage) {
+		visitKeywordMessageParts(keywordMessage);
+		visitKeywordMessageSelector(keywordMessage);
+	}
+
+	private void visitKeywordMessageSelector(KeywordMessage keywordMessage) {
+		int keywordArguments = 0;
+		StringBuffer keywords = new StringBuffer();
+		for (String keyword : keywordMessage.keywords()) {
+			keywords.append(keyword);
+			keywordArguments++;
+		}
+		generator.keywordSend(keywords.toString(), keywordArguments, keywordMessage.line());
+	}
+
+	private void visitKeywordMessageParts(KeywordMessage keywordMessage) {
 		keywordMessage.eachAccept(this);
 	}
 
 	public void visit(KeywordMessagePart keywordMessagePart) {
-		// TODO - handle keyword.
 		keywordMessagePart.keywordArgument().accept(this);
 	}
 
