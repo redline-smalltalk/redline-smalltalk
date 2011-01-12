@@ -28,10 +28,10 @@ import java.util.Map;
  */
 public class ProtoObject {
 
-	private static final int CLASS_OFFSET = 0;
-	private static final int SUPERCLASS_OFFSET = 1;
-	private static final int CLASS_OOP_SIZE = 2;
-	private static final int INSTANCE_OOP_SIZE = 1;
+	public static final int CLASS_OFFSET = 0;
+	public static final int SUPERCLASS_OFFSET = 1;
+	public static final int CLASS_OOP_SIZE = 2;
+	public static final int INSTANCE_OOP_SIZE = 1;
 
 	public ProtoObject[] oop;
 	public ProtoData data;
