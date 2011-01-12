@@ -30,8 +30,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
@@ -39,32 +38,56 @@ public class ProtoObjectTest {
 
 	private static final String MESSAGE = "example";
 
-	@Mock ProtoObject classObject;
-	@Mock ProtoObject superclassObject;
-	@Mock ProtoObject protoObject;
 	@Mock ProtoMethod protoMethod;
+	@Mock ProtoData classProtoData;
+	@Mock ProtoData superclassProtoData;
+
+	private ProtoObject protoObject;
+	private ProtoObject classObject;
+	private ProtoObject superclassObject;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		classObject = new ProtoObject(true);
+		superclassObject = new ProtoObject(true);
 	}
 
-	@Test public void shouldCreateWithMinimimVariableSlots() {
-		protoObject = new ProtoObject();
-		assertEquals(1, protoObject.variables.length);
+	@Test public void shouldCreateBasicClass() {
+		protoObject = new ProtoObject(true);
+		assertEquals(2, protoObject.oop.length);
+		assertNotNull(protoObject.data);
+		assertNull(protoObject.data.methodAt("nonExistentSelector"));
+	}
+
+	@Test public void shouldCreateBasicInstance() {
+		protoObject = new ProtoObject(false);
+		assertEquals(1, protoObject.oop.length);
+		assertNotNull(protoObject.data);
+	}
+
+	@Test (expected=IllegalStateException.class)
+	public void shouldNotHaveMethodDictionaryInInstance() {
+		protoObject = new ProtoObject(false);
+		protoObject.data.methodAt("anySelector");
 	}
 
 	@Test public void shouldLookupMethodInClassOfReceiver() {
-		when(protoObject.basicClass()).thenReturn(classObject);
-		when(classObject.basicMethodDictionaryAt(MESSAGE)).thenReturn(protoMethod);
+		protoObject = new ProtoObject(true);
+		protoObject.oop[0] = classObject;
+		classObject.data = classProtoData;
+		when(classProtoData.methodAt(MESSAGE)).thenReturn(protoMethod);
 		ProtoObject.send(protoObject, MESSAGE);
 		verify(protoMethod).applyTo(protoObject);
 	}
 
 	@Test public void shouldLookupMethodInSuperclassOfReceiverWhenNotFoundInReceiver() {
-		when(protoObject.basicClass()).thenReturn(classObject);
-		when(classObject.basicMethodDictionaryAt(MESSAGE)).thenReturn(null);
-		when(classObject.basicSuperclass()).thenReturn(superclassObject);
-		when(superclassObject.basicMethodDictionaryAt(MESSAGE)).thenReturn(protoMethod);
+		protoObject = new ProtoObject(true);
+		protoObject.oop[0] = classObject;
+		classObject.data = classProtoData;
+		classObject.oop[1] = superclassObject;
+		superclassObject.data = superclassProtoData;
+		when(classProtoData.methodAt(MESSAGE)).thenReturn(null);
+		when(superclassProtoData.methodAt(MESSAGE)).thenReturn(protoMethod);
 		ProtoObject.send(protoObject, MESSAGE);
 		verify(protoMethod).applyTo(protoObject);
 	}

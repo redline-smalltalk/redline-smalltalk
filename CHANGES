@@ -1,4 +1,12 @@
 
+13/01/2011 Changes
+
+Refactored ProtoObject to have more dynamic data depending on being used for a class or instance.
+Refactored method dispatch to use new structure of ProtoObject.
+*Note* Bootstrapper needs redoing so execution right now will result in NullPointerException. Will
+fix a.s.a.p
+
+
 12/01/2011 Changes
 
 Added grammar to recognise Symbols and Strings.

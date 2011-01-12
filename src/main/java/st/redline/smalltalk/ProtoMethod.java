@@ -24,6 +24,7 @@ package st.redline.smalltalk;
  * Provides base for all Smalltalk Methods / Blocks.
  */
 public class ProtoMethod extends ProtoObject {
+
 	public ProtoObject applyTo(ProtoObject receiver) {
 		return null;
 	}

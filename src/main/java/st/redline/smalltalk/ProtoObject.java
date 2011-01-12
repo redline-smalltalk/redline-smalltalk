@@ -28,17 +28,20 @@ import java.util.Map;
  */
 public class ProtoObject {
 
-	private static final int BASIC_SIZE = 2;
 	private static final int CLASS_OFFSET = 0;
 	private static final int SUPERCLASS_OFFSET = 1;
+	private static final int CLASS_OOP_SIZE = 2;
+	private static final int INSTANCE_OOP_SIZE = 1;
 
-	public ProtoObject[] variables;
-	public Map<String, ProtoMethod> methodDictionary;
+	public ProtoObject[] oop;
+	public ProtoData data;
 
-	public static ProtoObject createBasicClass(int size) {
-		ProtoObject classObject = new ProtoObject(size + BASIC_SIZE);
-		classObject.methodDictionary = createBasicMethodDictionary();
-		return classObject;
+	public static ProtoObject classInstance() {
+		return new ProtoObject(true);
+	}
+
+	public static ProtoObject instanceInstance() {
+		return new ProtoObject(false);
 	}
 
 	public static Map<String, ProtoMethod> createBasicMethodDictionary() {
@@ -46,15 +49,24 @@ public class ProtoObject {
 	}
 
 	public ProtoObject() {
-		this(1);
+		this(false);
 	}
 
-	public ProtoObject(int basicSize) {
-		createVariables(basicSize);
+	public ProtoObject(boolean asClass) {
+		if (asClass)
+			initializeAsClass();
+		else
+			initializeAsInstance();
 	}
 
-	private void createVariables(int basicSize) {
-		variables = new ProtoObject[basicSize];
+	private void initializeAsClass() {
+		oop = new ProtoObject[CLASS_OOP_SIZE];
+		data = new ClassProtoData(createBasicMethodDictionary());
+	}
+
+	private void initializeAsInstance() {
+		oop = new ProtoObject[INSTANCE_OOP_SIZE];
+		data = new InstanceProtoData();
 	}
 
 	public static ProtoObject send(ProtoObject receiver, ProtoObject argument, String selector) {
@@ -66,12 +78,12 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject send(ProtoObject receiver, String selector) {
-		ProtoMethod method = receiver.basicClass().basicMethodDictionaryAt(selector);
+		ProtoMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver);
-		ProtoObject superclass = receiver.basicClass().basicSuperclass();
-		while ((method = superclass.basicMethodDictionaryAt(selector)) == null)
-			if ((superclass = superclass.basicSuperclass()) == null)
+		ProtoObject superclass = receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET];
+		while ((method = superclass.data.methodAt(selector)) == null)
+			if ((superclass = superclass.oop[SUPERCLASS_OFFSET]) == null)
 				break;
 		if (method != null)
 			return method.applyTo(receiver);
@@ -80,25 +92,5 @@ public class ProtoObject {
 
 	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector) {
 		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
-	}
-
-	public ProtoObject basicClass() {
-		return variables[CLASS_OFFSET];
-	}
-
-	public void basicClass(ProtoObject classObject) {
-		variables[CLASS_OFFSET] = classObject;
-	}
-
-	public ProtoMethod basicMethodDictionaryAt(String selector) {
-		return methodDictionary.get(selector);
-	}
-
-	public ProtoObject basicSuperclass() {
-		return variables[SUPERCLASS_OFFSET];
-	}
-
-	public void basicSuperclass(ProtoObject superclass) {
-		variables[SUPERCLASS_OFFSET] = superclass;
 	}
 }

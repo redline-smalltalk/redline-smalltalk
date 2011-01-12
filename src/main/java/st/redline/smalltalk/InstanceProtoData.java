@@ -20,20 +20,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
-public class Bootstrapper {
+public class InstanceProtoData extends ProtoData {
 
-	private final Smalltalk smalltalk;
-
-	public Bootstrapper(Smalltalk smalltalk) {
-		this.smalltalk = smalltalk;
+	public InstanceProtoData() {
+		super();
 	}
 
-	public void bootstrap() {
-		smalltalk.basicAtPut("ProtoObject", bootstrapProtoObject());
-	}
-
-	private ProtoObject bootstrapProtoObject() {
-		// TODO.JCL
-		return null;
+	public ProtoMethod methodAt(String selector) {
+		throw new IllegalStateException("Object instances don't have method dictionaries.");
 	}
 }

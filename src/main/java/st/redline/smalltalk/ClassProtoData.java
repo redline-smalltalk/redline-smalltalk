@@ -20,20 +20,18 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
-public class Bootstrapper {
+import java.util.Map;
 
-	private final Smalltalk smalltalk;
+public class ClassProtoData extends ProtoData {
 
-	public Bootstrapper(Smalltalk smalltalk) {
-		this.smalltalk = smalltalk;
+	private final Map<String, ProtoMethod> methodDictionary;
+
+	public ClassProtoData(Map<String, ProtoMethod> methodDictionary) {
+		super();
+		this.methodDictionary = methodDictionary;
 	}
 
-	public void bootstrap() {
-		smalltalk.basicAtPut("ProtoObject", bootstrapProtoObject());
-	}
-
-	private ProtoObject bootstrapProtoObject() {
-		// TODO.JCL
-		return null;
+	public ProtoMethod methodAt(String selector) {
+		return methodDictionary.get(selector);
 	}
 }
