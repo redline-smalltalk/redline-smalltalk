@@ -44,7 +44,7 @@ public class Smalltalk extends ClassLoader {
 	public static final String NIL = "nil";
 
 	private final Environment environment;
-	private final Map<String, ProtoObject> cachedObjects;
+	private final Map<String, RObject> cachedObjects;
 
 	private SourceFile currentFile;
 
@@ -65,7 +65,7 @@ public class Smalltalk extends ClassLoader {
 	private Smalltalk(Environment environment, ClassLoader parentClassLoader) {
 		super(parentClassLoader);
 		this.environment = environment;
-		this.cachedObjects = new HashMap<String, ProtoObject>();
+		this.cachedObjects = new HashMap<String, RObject>();
 		initialize();
 		bootstrap();
 	}
@@ -170,17 +170,17 @@ public class Smalltalk extends ClassLoader {
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
 
-	public ProtoObject stringFromPrimitive(String string) {
+	public RObject stringFromPrimitive(String string) {
 		// TODO.jcl - turn string into String object.
 		return null;
 	}
 
-	public ProtoObject symbolFromPrimitive(String symbol) {
+	public RObject symbolFromPrimitive(String symbol) {
 		// TODO.jcl - turn symbol into Symbol object.
 		return null;
 	}
 
-	public ProtoObject basicAt(String className) {
+	public RObject basicAt(String className) {
 		if (isCachedObject(className))
 			return cachedObject(className);
 		String packageAndClassName = REDLINE_PACKAGE + "." + className;
@@ -264,14 +264,14 @@ public class Smalltalk extends ClassLoader {
 		}
 	}
 
-	private ProtoObject cachedObject(String name) {
-		ProtoObject object = cachedObjects.get(name);
+	private RObject cachedObject(String name) {
+		RObject object = cachedObjects.get(name);
 		if (object == null)
 			object = cachedObjects.get(NIL);
 		return object;
 	}
 
-	public void basicAtPut(String name, ProtoObject protoObject) {
-		cachedObjects.put(name, protoObject);
+	public void basicAtPut(String name, RObject rObject) {
+		cachedObjects.put(name, rObject);
 	}
 }

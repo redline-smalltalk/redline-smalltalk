@@ -20,18 +20,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
-import java.util.Map;
+public class InstanceData extends RData {
 
-public class ClassProtoData extends ProtoData {
-
-	private final Map<String, ProtoMethod> methodDictionary;
-
-	public ClassProtoData(Map<String, ProtoMethod> methodDictionary) {
+	public InstanceData() {
 		super();
-		this.methodDictionary = methodDictionary;
 	}
 
-	public ProtoMethod methodAt(String selector) {
-		return methodDictionary.get(selector);
+	public RMethod methodAt(String selector) {
+		throw new IllegalStateException("Object instances don't have method dictionaries.");
 	}
 }

@@ -29,15 +29,15 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
-		ProtoObject superclass = ProtoObject.classInstance();
-		ProtoObject protoObjectClass = bootstrapProtoObject(superclass);
+		RObject superclass = RObject.classInstance();
+		RObject protoObjectClass = bootstrapProtoObject(superclass);
 		smalltalk.basicAtPut("ProtoObject", protoObjectClass);
 	}
 
-	private ProtoObject bootstrapProtoObject(ProtoObject superclass) {
-		ProtoObject protoObjectClass = ProtoObject.classInstance();
-		protoObjectClass.oop[ProtoObject.CLASS_OFFSET] = protoObjectClass;
-		protoObjectClass.oop[ProtoObject.SUPERCLASS_OFFSET] = superclass;
+	private RObject bootstrapProtoObject(RObject superclass) {
+		RObject protoObjectClass = RObject.classInstance();
+		protoObjectClass.oop[RObject.CLASS_OFFSET] = protoObjectClass;
+		protoObjectClass.oop[RObject.SUPERCLASS_OFFSET] = superclass;
 		return protoObjectClass;
 	}
 }

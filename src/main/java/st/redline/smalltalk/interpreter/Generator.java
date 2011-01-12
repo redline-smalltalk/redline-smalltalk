@@ -29,13 +29,13 @@ import java.io.File;
 
 public class Generator implements Opcodes {
 
-	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/ProtoObject";
+	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RObject";
 	private static final String SEND_METHOD_NAME = "send";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String[] METHOD_DESCRIPTORS = {
-			"(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;",
-			"(Lst/redline/smalltalk/ProtoObject;Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;",
-			"(Lst/redline/smalltalk/ProtoObject;Lst/redline/smalltalk/ProtoObject;Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;",
+			"(Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
+			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
+			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
 	};
 	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
 
@@ -97,7 +97,7 @@ public class Generator implements Opcodes {
 		visitLine(line);
 		currentSmalltalkClass();
 		methodVisitor.visitLdcInsn(className);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	private void visitLine(int line) {
@@ -127,13 +127,13 @@ public class Generator implements Opcodes {
 	public void primitiveStringConversion(String string, int line) {
 		currentSmalltalkClass();
 		methodVisitor.visitLdcInsn(string.substring(1, string.length() - 1));  // remove ''
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	public void primitiveSymbolConversion(String symbol, int line) {
 		currentSmalltalkClass();
 		methodVisitor.visitLdcInsn(symbol);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	public void keywordSend(String keywordSelector, int countOfArguments, int line) {

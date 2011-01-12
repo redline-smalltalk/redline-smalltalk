@@ -25,70 +25,64 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
-public class ProtoObjectTest {
+public class RObjectTest {
 
 	private static final String MESSAGE = "example";
 
-	@Mock ProtoMethod protoMethod;
-	@Mock ProtoData classProtoData;
-	@Mock ProtoData superclassProtoData;
+	@Mock RMethod method;
+	@Mock RData classData;
+	@Mock RData superclassData;
 
-	private ProtoObject protoObject;
-	private ProtoObject classObject;
-	private ProtoObject superclassObject;
+	private RObject object;
+	private RObject classObject;
+	private RObject superclassObject;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		classObject = new ProtoObject(true);
-		superclassObject = new ProtoObject(true);
+		classObject = new RObject(true);
+		superclassObject = new RObject(true);
 	}
 
 	@Test public void shouldCreateBasicClass() {
-		protoObject = new ProtoObject(true);
-		assertEquals(2, protoObject.oop.length);
-		assertNotNull(protoObject.data);
-		assertNull(protoObject.data.methodAt("nonExistentSelector"));
+		object = new RObject(true);
+		assertEquals(2, object.oop.length);
+		assertNotNull(object.data);
+		assertNull(object.data.methodAt("nonExistentSelector"));
 	}
 
 	@Test public void shouldCreateBasicInstance() {
-		protoObject = new ProtoObject(false);
-		assertEquals(1, protoObject.oop.length);
-		assertNotNull(protoObject.data);
+		object = new RObject(false);
+		assertEquals(1, object.oop.length);
+		assertNotNull(object.data);
 	}
 
 	@Test (expected=IllegalStateException.class)
 	public void shouldNotHaveMethodDictionaryInInstance() {
-		protoObject = new ProtoObject(false);
-		protoObject.data.methodAt("anySelector");
+		object = new RObject(false);
+		object.data.methodAt("anySelector");
 	}
 
 	@Test public void shouldLookupMethodInClassOfReceiver() {
-		protoObject = new ProtoObject(true);
-		protoObject.oop[0] = classObject;
-		classObject.data = classProtoData;
-		when(classProtoData.methodAt(MESSAGE)).thenReturn(protoMethod);
-		ProtoObject.send(protoObject, MESSAGE);
-		verify(protoMethod).applyTo(protoObject);
+		object = new RObject(true);
+		object.oop[0] = classObject;
+		classObject.data = classData;
+		when(classData.methodAt(MESSAGE)).thenReturn(method);
+		RObject.send(object, MESSAGE);
+		verify(method).applyTo(object);
 	}
 
 	@Test public void shouldLookupMethodInSuperclassOfReceiverWhenNotFoundInReceiver() {
-		protoObject = new ProtoObject(true);
-		protoObject.oop[0] = classObject;
-		classObject.data = classProtoData;
+		object = new RObject(true);
+		object.oop[0] = classObject;
+		classObject.data = classData;
 		classObject.oop[1] = superclassObject;
-		superclassObject.data = superclassProtoData;
-		when(classProtoData.methodAt(MESSAGE)).thenReturn(null);
-		when(superclassProtoData.methodAt(MESSAGE)).thenReturn(protoMethod);
-		ProtoObject.send(protoObject, MESSAGE);
-		verify(protoMethod).applyTo(protoObject);
+		superclassObject.data = superclassData;
+		when(classData.methodAt(MESSAGE)).thenReturn(null);
+		when(superclassData.methodAt(MESSAGE)).thenReturn(method);
+		RObject.send(object, MESSAGE);
+		verify(method).applyTo(object);
 	}
 }

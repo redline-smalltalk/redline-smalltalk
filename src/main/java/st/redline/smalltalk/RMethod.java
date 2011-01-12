@@ -20,6 +20,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
-public abstract class ProtoData {
-	public abstract ProtoMethod methodAt(String selector);
+/**
+ * Provides base for all Smalltalk Methods / Blocks.
+ */
+public class RMethod extends RObject {
+
+	public RObject applyTo(RObject receiver) {
+		return null;
+	}
 }

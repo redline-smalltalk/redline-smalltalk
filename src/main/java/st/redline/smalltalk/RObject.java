@@ -26,33 +26,33 @@ import java.util.Map;
 /**
  * Provides base for all Smalltalk Objects.
  */
-public class ProtoObject {
+public class RObject {
 
 	public static final int CLASS_OFFSET = 0;
 	public static final int SUPERCLASS_OFFSET = 1;
 	public static final int CLASS_OOP_SIZE = 2;
 	public static final int INSTANCE_OOP_SIZE = 1;
 
-	public ProtoObject[] oop;
-	public ProtoData data;
+	public RObject[] oop;
+	public RData data;
 
-	public static ProtoObject classInstance() {
-		return new ProtoObject(true);
+	public static RObject classInstance() {
+		return new RObject(true);
 	}
 
-	public static ProtoObject instanceInstance() {
-		return new ProtoObject(false);
+	public static RObject instanceInstance() {
+		return new RObject(false);
 	}
 
-	public static Map<String, ProtoMethod> createBasicMethodDictionary() {
-		return new Hashtable<String, ProtoMethod>();
+	public static Map<String, RMethod> createBasicMethodDictionary() {
+		return new Hashtable<String, RMethod>();
 	}
 
-	public ProtoObject() {
+	public RObject() {
 		this(false);
 	}
 
-	public ProtoObject(boolean asClass) {
+	public RObject(boolean asClass) {
 		if (asClass)
 			initializeAsClass();
 		else
@@ -60,28 +60,28 @@ public class ProtoObject {
 	}
 
 	private void initializeAsClass() {
-		oop = new ProtoObject[CLASS_OOP_SIZE];
-		data = new ClassProtoData(createBasicMethodDictionary());
+		oop = new RObject[CLASS_OOP_SIZE];
+		data = new ClassData(createBasicMethodDictionary());
 	}
 
 	private void initializeAsInstance() {
-		oop = new ProtoObject[INSTANCE_OOP_SIZE];
-		data = new InstanceProtoData();
+		oop = new RObject[INSTANCE_OOP_SIZE];
+		data = new InstanceData();
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject argument, String selector) {
+	public static RObject send(RObject receiver, RObject argument, String selector) {
 		return sendDoesNotUnderstand(receiver, selector);
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject argument1, ProtoObject argument2, String selector) {
+	public static RObject send(RObject receiver, RObject argument1, RObject argument2, String selector) {
 		return sendDoesNotUnderstand(receiver, selector);
 	}
 
-	public static ProtoObject send(ProtoObject receiver, String selector) {
-		ProtoMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+	public static RObject send(RObject receiver, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver);
-		ProtoObject superclass = receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET];
+		RObject superclass = receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET];
 		while ((method = superclass.data.methodAt(selector)) == null)
 			if ((superclass = superclass.oop[SUPERCLASS_OFFSET]) == null)
 				break;
@@ -90,7 +90,7 @@ public class ProtoObject {
 		return sendDoesNotUnderstand(receiver, selector);
 	}
 
-	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector) {
+	private static RObject sendDoesNotUnderstand(RObject receiver, String selector) {
 		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
 	}
 }
