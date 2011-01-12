@@ -34,6 +34,8 @@ public class AnalyserTest {
 	private static final String PACKAGE_INTERNAL_NAME = "st/redline/smalltalk";
 	private static final String CLASS_NAME = "Test";
 	private static final String UNARY_MESSAGE = "new";
+	private static final String STRING = "'foo'";
+	private static final String SYMBOL = "foo";
 	private static final int LINE_NUMBER= 42;
 
 	@Mock Smalltalk smalltalk;
@@ -52,6 +54,8 @@ public class AnalyserTest {
 	@Mock KeywordMessage keywordMessage;
 	@Mock KeywordMessagePart keywordMessagePart;
 	@Mock KeywordArgument keywordArgument;
+	@Mock StString string;
+	@Mock Symbol symbol;
 	@Mock Variable primary;
 	@Mock Variable variable;
 	private Analyser analyser;
@@ -97,6 +101,20 @@ public class AnalyserTest {
 		verify(generator).stackPop();
 	}
 
+	@Test public void shouldGeneratePrimitiveConversionForString() {
+		when(string.string()).thenReturn(STRING);
+		when(string.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(string);
+		verify(generator).primitiveStringConversion(STRING, LINE_NUMBER);
+	}
+
+	@Test public void shouldGeneratePrimitiveConversionForSymbol() {
+		when(symbol.symbol()).thenReturn(SYMBOL);
+		when(symbol.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(symbol);
+		verify(generator).primitiveSymbolConversion(SYMBOL, LINE_NUMBER);
+	}
+
 	@Test public void shouldVisitChildOfProgramNode() {
 		analyser.visit(program);
 		verify(sequence).accept(analyser);
@@ -127,14 +145,14 @@ public class AnalyserTest {
 		verify(messageSend).accept(analyser);
 	}
 
-	@Test public void shouldVisitUnaryMessageSendWhenMessageSendIsUnary() {
+	@Test public void shouldVisitUnaryMessageSendWhenMessageSendIsUnaryType() {
 		when(messageSend.isUnaryMessageSend()).thenReturn(true);
 		when(messageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
 		analyser.visit(messageSend);
 		verify(unaryMessageSend).accept(analyser);
 	}
 
-	@Test public void shouldVisitKeywordMessageSendWhenMessageSendIsKeyword() {
+	@Test public void shouldVisitKeywordMessageSendWhenMessageSendIsKeywordType() {
 		when(messageSend.isKeywordMessageSend()).thenReturn(true);
 		when(messageSend.keywordMessageSend()).thenReturn(keywordMessageSend);
 		analyser.visit(messageSend);

@@ -118,4 +118,16 @@ public class Generator implements Opcodes {
 	public void stackPop() {
 		methodVisitor.visitInsn(POP);
 	}
+
+	public void primitiveStringConversion(String string, int line) {
+		currentSmalltalkClass();
+		methodVisitor.visitLdcInsn(string.substring(1, string.length() - 1));  // remove ''
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+	}
+
+	public void primitiveSymbolConversion(String symbol, int line) {
+		currentSmalltalkClass();
+		methodVisitor.visitLdcInsn(symbol);
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+	}
 }

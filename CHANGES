@@ -1,4 +1,11 @@
 
+12/01/2011 Changes
+
+Added grammar to recognise Symbols and Strings.
+Added generator methods to generate calls to Smalltalk to convert the primitive String and Symbol into 
+Objects.
+
+
 11/01/2011 Changes
 
 Added to grammar to allow parsing of each kind of statement. See 'statements:' in grammar file.

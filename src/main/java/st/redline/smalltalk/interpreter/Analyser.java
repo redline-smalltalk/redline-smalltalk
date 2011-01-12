@@ -107,13 +107,11 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Symbol symbol) {
-		// TODO - handle symbol.
-		System.out.println("#" + symbol.symbol());
+		generator.primitiveSymbolConversion(symbol.symbol(), symbol.line());
 	}
 
 	public void visit(StString string) {
-		// TODO - handle String.
-		System.out.println(string.string());
+		generator.primitiveStringConversion(string.string(), string.line());
 	}
 
 	public void visit(UnaryMessage unaryMessage) {

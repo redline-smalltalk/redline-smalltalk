@@ -42,6 +42,7 @@ public class GeneratorTest implements Opcodes {
 	private static final String UNARY_SELECTOR = "unarySelector";
 	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/ProtoObject;Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
+	private static final String STRING = "'foo'";
 	private static final int LINE_NUMBER= 42;
 
 	@Mock ClassWriter classWriter;
@@ -77,16 +78,30 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
 	}
 
-	private void verifyLineNumber(int lineNumber) {
-		verify(methodVisitor).visitLabel((Label) notNull());
-		verify(methodVisitor).visitLineNumber(eq(lineNumber), (Label) notNull());
-	}
-
 	@Test public void shouldGenerateUnarySend() {
 		generator.unarySend(UNARY_SELECTOR, LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", UNARY_METHOD_DESCRIPTOR);
+	}
+
+	@Test public void shouldGeneratePrimitiveStringConversion() {
+		generator.primitiveStringConversion("'a-string'", LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitLdcInsn("a-string");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+	}
+
+	@Test public void shouldGeneratePrimitiveSymbolConversion() {
+		generator.primitiveSymbolConversion("symbol", LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitLdcInsn("symbol");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/ProtoObject;");
+	}
+
+	private void verifyLineNumber(int lineNumber) {
+		verify(methodVisitor).visitLabel((Label) notNull());
+		verify(methodVisitor).visitLineNumber(eq(lineNumber), (Label) notNull());
 	}
 
 	private void verifyInvokeOfSuperclassInitMethod() {

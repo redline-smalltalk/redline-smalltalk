@@ -170,6 +170,16 @@ public class Smalltalk extends ClassLoader {
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
 
+	public ProtoObject stringFromPrimitive(String string) {
+		// TODO.jcl - turn string into String object.
+		return null;
+	}
+
+	public ProtoObject symbolFromPrimitive(String symbol) {
+		// TODO.jcl - turn symbol into Symbol object.
+		return null;
+	}
+
 	public ProtoObject basicAt(String className) {
 		if (isCachedObject(className))
 			return cachedObject(className);

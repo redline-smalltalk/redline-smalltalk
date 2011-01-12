@@ -1,4 +1,7 @@
 
+Optimise the calls to Smalltalk.instance() so they are done once per method
+or set of statements.
+
 Change runtime exception when selector not understood with send of DNU.
 
 Add command line parameter to turn on/off tracing.
