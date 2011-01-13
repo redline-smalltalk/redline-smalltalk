@@ -1,4 +1,8 @@
 
 "im a comment"
-ProtoObject at: #foo put: 'bar'.
+ProtoObject subclass: #Object
+	instanceVariableNames: ''
+	classVariableNames: 'DependentsFields'
+	poolDictionaries: ''
+	category: 'Kernel-Objects'
 

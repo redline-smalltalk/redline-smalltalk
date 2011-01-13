@@ -69,36 +69,6 @@ public class RObject {
 		data = new InstanceData();
 	}
 
-	public static RObject send(RObject receiver, RObject argument, String selector) {
-		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
-		if (method != null)
-			return method.applyToWith(receiver, argument);
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
-		if (method != null)
-			return method.applyToWith(receiver, argument);
-		return sendDoesNotUnderstand(receiver, selector, new RObject[] {argument});
-	}
-
-	public static RObject send(RObject receiver, RObject argument1, RObject argument2, String selector) {
-		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
-		if (method != null)
-			return method.applyToWith(receiver, argument1, argument2);
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
-		if (method != null)
-			return method.applyToWith(receiver, argument1, argument2);
-		return sendDoesNotUnderstand(receiver, selector, new RObject[] {argument1,  argument1});
-	}
-
-	public static RObject send(RObject receiver, String selector) {
-		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
-		if (method != null)
-			return method.applyTo(receiver);
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
-		if (method != null)
-			return method.applyTo(receiver);
-		return sendDoesNotUnderstand(receiver, selector, null);
-	}
-
 	private static RMethod methodFor(RObject rObject, String selector) {
 		RMethod method;
 		RObject superclass = rObject;
@@ -110,5 +80,120 @@ public class RObject {
 
 	private static RObject sendDoesNotUnderstand(RObject receiver, String selector, RObject[] arguments) {
 		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
+	}
+
+	//
+	// send(r,s) to send(r,a,a,a,a,a,a,a,a,a,a,s)
+	// Note: Selector (s) is last argument.
+	//
+
+	public static RObject send(RObject receiver, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyTo(receiver);
+		return sendDoesNotUnderstand(receiver, selector, null);
+	}
+
+	public static RObject send(RObject receiver, RObject arg, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7, arg8});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9});
+	}
+
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, RObject arg10, String selector) {
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10});
 	}
 }

@@ -3,6 +3,10 @@
 
 Refactored Bootstrapper to correctly bootstrap ProtoObject hierarchy according to Smalltalk rules.
 Renamed a few methods to make their meaning more clear.
+Added RMethod support for applyToWith methods for up to 10 arguments. Redline doesnt support more than
+10 keyword arguments right now. It can if required.
+Added RObject send method support for up to 10 arguments.
+Modified src/test/smalltalk/TestKeyword.st to be an example Class creation message.
 
 
 13/01/2011 Changes

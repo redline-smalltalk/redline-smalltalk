@@ -1,4 +1,4 @@
-/*
+	/*
 Redline Smalltalk is licensed under the MIT License
 
 Redline Smalltalk Copyright (c) 2010 James C. Ladd
@@ -26,14 +26,50 @@ package st.redline.smalltalk;
 public class RMethod extends RObject {
 
 	public RObject applyTo(RObject receiver) {
-		return null;
+		throw subclassShouldHaveImplemented(0);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject argument) {
-		return null;
+	private RuntimeException subclassShouldHaveImplemented(int argumentCount) {
+		return new IllegalStateException("A compile subclass of RMethod should implement 'applyToWith' " + argumentCount + " arguments.");
 	}
 
-	public RObject applyToWith(RObject receiver, RObject argument1, RObject argument2) {
-		return null;
+	public RObject applyToWith(RObject receiver, RObject arg) {
+		throw subclassShouldHaveImplemented(1);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2) {
+		throw subclassShouldHaveImplemented(2);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3) {
+		throw subclassShouldHaveImplemented(3);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4) {
+		throw subclassShouldHaveImplemented(4);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
+		throw subclassShouldHaveImplemented(5);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6) {
+		throw subclassShouldHaveImplemented(6);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7) {
+		throw subclassShouldHaveImplemented(7);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8) {
+		throw subclassShouldHaveImplemented(8);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9) {
+		throw subclassShouldHaveImplemented(9);
+	}
+
+	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, RObject arg10) {
+		throw subclassShouldHaveImplemented(10);
 	}
 }
