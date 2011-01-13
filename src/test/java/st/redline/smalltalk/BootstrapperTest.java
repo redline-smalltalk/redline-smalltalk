@@ -57,7 +57,7 @@ public class BootstrapperTest {
 		verify(smalltalk).basicAtPut(eq("Class"), (RObject) notNull());
 	}
 
-	@Test public void shouldInitializeProtoObjectClassAssociationsAccordingToSmalltalkRules() {
+	@Test public void shouldInitializeProtoObjectClassHierarchyAccordingToSmalltalkRules() {
 		map = new Hashtable<String, RObject>();
 		bootstrapper = new Bootstrapper(smalltalkThatCapturesBasicAtPut());
 		bootstrapper.bootstrap();

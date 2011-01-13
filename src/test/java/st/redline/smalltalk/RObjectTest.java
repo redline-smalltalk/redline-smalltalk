@@ -74,7 +74,7 @@ public class RObjectTest {
 		verify(method).applyTo(object);
 	}
 
-	@Test public void shouldLookupMethodInSuperclassOfReceiverWhenNotFoundInReceiver() {
+	@Test public void shouldLookupMethodInSuperclassOfReceiversClassWhenNotFoundInReceiver() {
 		object = new RObject(true);
 		object.oop[0] = classObject;
 		classObject.data = classData;

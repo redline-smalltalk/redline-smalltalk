@@ -1,4 +1,10 @@
 
+14/01/2001 Changes
+
+Refactored Bootstrapper to correctly bootstrap ProtoObject hierarchy according to Smalltalk rules.
+Renamed a few methods to make their meaning more clear.
+
+
 13/01/2011 Changes
 
 Refactored ProtoObject to have more dynamic data depending on being used for a class or instance.
