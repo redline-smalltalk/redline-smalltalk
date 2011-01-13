@@ -28,4 +28,12 @@ public class RMethod extends RObject {
 	public RObject applyTo(RObject receiver) {
 		return null;
 	}
+
+	public RObject applyToWith(RObject receiver, RObject argument) {
+		return null;
+	}
+
+	public RObject applyToWith(RObject receiver, RObject argument1, RObject argument2) {
+		return null;
+	}
 }

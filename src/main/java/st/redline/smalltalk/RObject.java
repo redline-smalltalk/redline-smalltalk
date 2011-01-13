@@ -70,27 +70,45 @@ public class RObject {
 	}
 
 	public static RObject send(RObject receiver, RObject argument, String selector) {
-		return sendDoesNotUnderstand(receiver, selector);
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, argument);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, argument);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {argument});
 	}
 
 	public static RObject send(RObject receiver, RObject argument1, RObject argument2, String selector) {
-		return sendDoesNotUnderstand(receiver, selector);
+		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
+		if (method != null)
+			return method.applyToWith(receiver, argument1, argument2);
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyToWith(receiver, argument1, argument2);
+		return sendDoesNotUnderstand(receiver, selector, new RObject[] {argument1,  argument1});
 	}
 
 	public static RObject send(RObject receiver, String selector) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver);
-		RObject superclass = receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET];
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
+		if (method != null)
+			return method.applyTo(receiver);
+		return sendDoesNotUnderstand(receiver, selector, null);
+	}
+
+	private static RMethod methodFor(RObject rObject, String selector) {
+		RMethod method;
+		RObject superclass = rObject;
 		while ((method = superclass.data.methodAt(selector)) == null)
 			if ((superclass = superclass.oop[SUPERCLASS_OFFSET]) == null)
 				break;
-		if (method != null)
-			return method.applyTo(receiver);
-		return sendDoesNotUnderstand(receiver, selector);
+		return method;
 	}
 
-	private static RObject sendDoesNotUnderstand(RObject receiver, String selector) {
+	private static RObject sendDoesNotUnderstand(RObject receiver, String selector, RObject[] arguments) {
 		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
 	}
 }

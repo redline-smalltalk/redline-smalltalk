@@ -62,7 +62,7 @@ public class Smalltalk extends ClassLoader {
 		return (Smalltalk) Thread.currentThread().getContextClassLoader();
 	}
 
-	private Smalltalk(Environment environment, ClassLoader parentClassLoader) {
+	protected Smalltalk(Environment environment, ClassLoader parentClassLoader) {
 		super(parentClassLoader);
 		this.environment = environment;
 		this.cachedObjects = new HashMap<String, RObject>();
@@ -74,7 +74,7 @@ public class Smalltalk extends ClassLoader {
 		new Bootstrapper(this).bootstrap();
 	}
 
-	private void initialize() {
+	protected void initialize() {
 		if (fileReader() == null)
 			fileReader(new FileReader());
 		if (interpreter() == null)

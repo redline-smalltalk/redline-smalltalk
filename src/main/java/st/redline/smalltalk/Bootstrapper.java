@@ -29,15 +29,32 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
-		RObject superclass = RObject.classInstance();
-		RObject protoObjectClass = bootstrapProtoObject(superclass);
+		RObject classClass = bootstrapClassClass();
+		RObject protoObjectClassMetaclass = bootstrapProtoObjectClassMetaclass(classClass);
+		RObject protoObjectClass = bootstrapProtoObjectClass(protoObjectClassMetaclass);
+		smalltalk.basicAtPut("Class", classClass);
 		smalltalk.basicAtPut("ProtoObject", protoObjectClass);
 	}
 
-	private RObject bootstrapProtoObject(RObject superclass) {
+	private RObject bootstrapClassClass() {
+		// TODO.JCL initialize super and metaclass.
+		RObject classClass = RObject.classInstance();
+		classClass.oop[RObject.CLASS_OFFSET] = null;
+		classClass.oop[RObject.SUPERCLASS_OFFSET] = null;
+		return classClass;
+	}
+
+	private RObject bootstrapProtoObjectClassMetaclass(RObject superclass) {
+		RObject protoObjectClassMetaclass = RObject.classInstance();
+		protoObjectClassMetaclass.oop[RObject.CLASS_OFFSET] = null;
+		protoObjectClassMetaclass.oop[RObject.SUPERCLASS_OFFSET] = superclass;
+		return protoObjectClassMetaclass;
+	}
+
+	private RObject bootstrapProtoObjectClass(RObject metaclass) {
 		RObject protoObjectClass = RObject.classInstance();
-		protoObjectClass.oop[RObject.CLASS_OFFSET] = protoObjectClass;
-		protoObjectClass.oop[RObject.SUPERCLASS_OFFSET] = superclass;
+		protoObjectClass.oop[RObject.CLASS_OFFSET] = metaclass;
+		protoObjectClass.oop[RObject.SUPERCLASS_OFFSET] = null;
 		return protoObjectClass;
 	}
 }
