@@ -26,11 +26,27 @@ public class InstanceData extends RData {
 		super();
 	}
 
+	public Object primitiveValue() {
+		throw instanceDoesntHavePrimitiveValue();
+	}
+
+	public void primitiveValue(Object value) {
+		throw instanceDoesntHavePrimitiveValue();
+	}
+
 	public RMethod methodAt(String selector) {
-		throw new IllegalStateException("Object instances don't have method dictionaries.");
+		throw instancesDontHaveMethodDictionaries();
 	}
 
 	public void methodAtPut(String selector, RMethod method) {
-		throw new IllegalStateException("Object instances don't have method dictionaries.");
+		throw instancesDontHaveMethodDictionaries();
+	}
+
+	private IllegalStateException instancesDontHaveMethodDictionaries() {
+		return new IllegalStateException("Object instances don't have method dictionaries.");
+	}
+
+	private IllegalStateException instanceDoesntHavePrimitiveValue() {
+		return new IllegalStateException("Object donesn't have primitive value.");
 	}
 }

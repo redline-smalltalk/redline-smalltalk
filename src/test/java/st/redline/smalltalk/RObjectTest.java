@@ -42,31 +42,31 @@ public class RObjectTest {
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		classObject = new RObject(true);
-		superclassObject = new RObject(true);
+		classObject = new RObject(RObject.Datum.CLASS);
+		superclassObject = new RObject(RObject.Datum.CLASS);
 	}
 
 	@Test public void shouldCreateBasicClass() {
-		object = new RObject(true);
+		object = new RObject(RObject.Datum.CLASS);
 		assertEquals(2, object.oop.length);
 		assertNotNull(object.data);
 		assertNull(object.data.methodAt("nonExistentSelector"));
 	}
 
 	@Test public void shouldCreateBasicInstance() {
-		object = new RObject(false);
+		object = new RObject(RObject.Datum.INSTANCE);
 		assertEquals(1, object.oop.length);
 		assertNotNull(object.data);
 	}
 
 	@Test (expected=IllegalStateException.class)
 	public void shouldNotHaveMethodDictionaryInInstance() {
-		object = new RObject(false);
+		object = new RObject(RObject.Datum.INSTANCE);
 		object.data.methodAt("anySelector");
 	}
 
 	@Test public void shouldLookupMethodInClassOfReceiver() {
-		object = new RObject(true);
+		object = new RObject(RObject.Datum.CLASS);
 		object.oop[0] = classObject;
 		classObject.data = classData;
 		when(classData.methodAt(MESSAGE)).thenReturn(method);
@@ -75,7 +75,7 @@ public class RObjectTest {
 	}
 
 	@Test public void shouldLookupMethodInSuperclassOfReceiversClassWhenNotFoundInReceiver() {
-		object = new RObject(true);
+		object = new RObject(RObject.Datum.CLASS);
 		object.oop[0] = classObject;
 		classObject.data = classData;
 		classObject.oop[1] = superclassObject;

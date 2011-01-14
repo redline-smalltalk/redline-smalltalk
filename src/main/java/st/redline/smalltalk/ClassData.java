@@ -31,11 +31,23 @@ public class ClassData extends RData {
 		this.methodDictionary = methodDictionary;
 	}
 
+	public Object primitiveValue() {
+		throw classesDontHavePrimitiveValues();
+	}
+
+	public void primitiveValue(Object value) {
+		throw classesDontHavePrimitiveValues();
+	}
+
 	public RMethod methodAt(String selector) {
 		return methodDictionary.get(selector);
 	}
 
 	public void methodAtPut(String selector, RMethod method) {
 		methodDictionary.put(selector, method);
+	}
+
+	private IllegalStateException classesDontHavePrimitiveValues() {
+		return new IllegalStateException("Class objects don't have primitive values.");
 	}
 }

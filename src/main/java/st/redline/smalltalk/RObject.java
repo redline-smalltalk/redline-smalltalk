@@ -28,6 +28,8 @@ import java.util.Map;
  */
 public class RObject {
 
+	protected enum Datum { CLASS, INSTANCE, PRIMITIVEINSTANCE };
+
 	public static final int CLASS_OFFSET = 0;
 	public static final int SUPERCLASS_OFFSET = 1;
 	public static final int CLASS_OOP_SIZE = 2;
@@ -37,11 +39,11 @@ public class RObject {
 	public RData data;
 
 	public static RObject classInstance() {
-		return new RObject(true);
+		return new RObject(Datum.CLASS);
 	}
 
 	public static RObject instanceInstance() {
-		return new RObject(false);
+		return new RObject(Datum.INSTANCE);
 	}
 
 	public static Map<String, RMethod> createBasicMethodDictionary() {
@@ -49,12 +51,14 @@ public class RObject {
 	}
 
 	public RObject() {
-		this(false);
+		this(Datum.INSTANCE);
 	}
 
-	public RObject(boolean asClass) {
-		if (asClass)
+	public RObject(Datum datum) {
+		if (datum == Datum.CLASS)
 			initializeAsClass();
+		else if (datum == Datum.PRIMITIVEINSTANCE)
+			initializeAsPrimitiveInstance();
 		else
 			initializeAsInstance();
 	}
@@ -67,6 +71,11 @@ public class RObject {
 	private void initializeAsInstance() {
 		oop = new RObject[INSTANCE_OOP_SIZE];
 		data = new InstanceData();
+	}
+
+	private void initializeAsPrimitiveInstance() {
+		oop = new RObject[INSTANCE_OOP_SIZE];
+		data = new PrimitiveInstanceData();
 	}
 
 	private static RMethod methodFor(RObject rObject, String selector) {

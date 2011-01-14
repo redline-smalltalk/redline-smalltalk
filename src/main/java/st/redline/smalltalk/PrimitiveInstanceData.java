@@ -20,9 +20,19 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
-public abstract class RData {
-	public abstract Object primitiveValue();
-	public abstract void primitiveValue(Object value);
-	public abstract RMethod methodAt(String selector);
-	public abstract void methodAtPut(String selector, RMethod method);
+public class PrimitiveInstanceData extends InstanceData {
+
+	private Object primitiveValue;
+
+	public PrimitiveInstanceData() {
+		super();
+	}
+
+	public Object primitiveValue() {
+		return primitiveValue;
+	}
+
+	public void primitiveValue(Object primitiveValue) {
+		this.primitiveValue = primitiveValue;
+	}
 }

@@ -45,6 +45,7 @@ public class Smalltalk extends ClassLoader {
 
 	private final Environment environment;
 	private final Map<String, RObject> cachedObjects;
+	private final Map<String, String> internedSymbols;
 
 	private SourceFile currentFile;
 
@@ -66,6 +67,7 @@ public class Smalltalk extends ClassLoader {
 		super(parentClassLoader);
 		this.environment = environment;
 		this.cachedObjects = new HashMap<String, RObject>();
+		this.internedSymbols = new HashMap<String, String>();
 		initialize();
 		bootstrap();
 	}
@@ -170,14 +172,33 @@ public class Smalltalk extends ClassLoader {
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
 
-	public RObject stringFromPrimitive(String string) {
-		// TODO.jcl - turn string into String object.
-		return null;
+	public RObject stringFromPrimitive(String value) {
+		return createObjectWithPrimitiveValue("String", value);
 	}
 
-	public RObject symbolFromPrimitive(String symbol) {
-		// TODO.jcl - turn symbol into Symbol object.
-		return null;
+	private RObject lookupMustHaveObject(String name) {
+		RObject object = basicAt(name);
+		if (object != null)
+			return object;
+		throw new IllegalStateException("Can't find requried object '" + name + "'.");
+	}
+
+	public RObject symbolFromPrimitive(String value) {
+		return createObjectWithPrimitiveValue("Symbol", internedSymbol(value));
+	}
+
+	private RObject createObjectWithPrimitiveValue(String objectName, String primitiveValue) {
+		RObject aClass = lookupMustHaveObject(objectName);
+		RObject anInstance = aClass.send(aClass, "new");
+		anInstance.data.primitiveValue(primitiveValue);
+		return anInstance;
+	}
+
+	private String internedSymbol(String symbol) {
+		if (internedSymbols.containsKey(symbol))
+			return internedSymbols.get(symbol);
+		internedSymbols.put(symbol, symbol);
+		return symbol;
 	}
 
 	public RObject basicAt(String className) {

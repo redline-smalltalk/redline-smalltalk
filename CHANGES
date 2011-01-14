@@ -7,6 +7,8 @@ Added RMethod support for applyToWith methods for up to 10 arguments. Redline do
 10 keyword arguments right now. It can if required.
 Added RObject send method support for up to 10 arguments.
 Modified src/test/smalltalk/TestKeyword.st to be an example Class creation message.
+Added creation of String and Symbol instances from primitive value string.
+Added bootstrap method for 'subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:'
 
 
 13/01/2011 Changes
