@@ -22,6 +22,8 @@ package st.redline.smalltalk;
 
 public class Bootstrapper {
 
+	private static final String SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:";
+
 	private final Smalltalk smalltalk;
 
 	public Bootstrapper(Smalltalk smalltalk) {
@@ -41,6 +43,7 @@ public class Bootstrapper {
 		RObject classClass = RObject.classInstance();
 		classClass.oop[RObject.CLASS_OFFSET] = null;
 		classClass.oop[RObject.SUPERCLASS_OFFSET] = null;
+		classClass.data.methodAtPut(SUBCLASSING_SELECTOR, new SubclassMethod());
 		return classClass;
 	}
 
@@ -56,5 +59,12 @@ public class Bootstrapper {
 		protoObjectClass.oop[RObject.CLASS_OFFSET] = metaclass;
 		protoObjectClass.oop[RObject.SUPERCLASS_OFFSET] = null;
 		return protoObjectClass;
+	}
+
+	public class SubclassMethod extends RMethod {
+		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
+			System.out.println("SubclassMethod called.");
+			return null;
+		}
 	}
 }

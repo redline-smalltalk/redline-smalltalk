@@ -34,4 +34,8 @@ public class ClassData extends RData {
 	public RMethod methodAt(String selector) {
 		return methodDictionary.get(selector);
 	}
+
+	public void methodAtPut(String selector, RMethod method) {
+		methodDictionary.put(selector, method);
+	}
 }

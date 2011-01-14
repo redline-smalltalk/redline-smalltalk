@@ -22,4 +22,5 @@ package st.redline.smalltalk;
 
 public abstract class RData {
 	public abstract RMethod methodAt(String selector);
+	public abstract void methodAtPut(String selector, RMethod method);
 }

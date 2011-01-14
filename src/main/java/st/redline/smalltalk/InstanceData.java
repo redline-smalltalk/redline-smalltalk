@@ -29,4 +29,8 @@ public class InstanceData extends RData {
 	public RMethod methodAt(String selector) {
 		throw new IllegalStateException("Object instances don't have method dictionaries.");
 	}
+
+	public void methodAtPut(String selector, RMethod method) {
+		throw new IllegalStateException("Object instances don't have method dictionaries.");
+	}
 }

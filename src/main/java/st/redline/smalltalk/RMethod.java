@@ -30,7 +30,7 @@ public class RMethod extends RObject {
 	}
 
 	private RuntimeException subclassShouldHaveImplemented(int argumentCount) {
-		return new IllegalStateException("A compile subclass of RMethod should implement 'applyToWith' " + argumentCount + " arguments.");
+		return new IllegalStateException("A subclass of RMethod should implement 'applyToWith' " + argumentCount + " arguments.");
 	}
 
 	public RObject applyToWith(RObject receiver, RObject arg) {
