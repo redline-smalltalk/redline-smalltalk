@@ -32,8 +32,8 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
-		smalltalk.basicAtPut("String", bootstrapPrimitiveClass(new StringNewMethod()));
-		smalltalk.basicAtPut("Symbol", bootstrapPrimitiveClass(new SymbolNewMethod()));
+		smalltalk.basicAtPut("String", bootstrapPrimitiveClass(new NewMethod()));
+		smalltalk.basicAtPut("Symbol", bootstrapPrimitiveClass(new NewMethod()));
 		RObject classClass = bootstrapClassClass();
 		RObject protoObjectClassMetaclass = bootstrapProtoObjectClassMetaclass(classClass);
 		RObject protoObjectClass = bootstrapProtoObjectClass(protoObjectClassMetaclass);
@@ -74,22 +74,14 @@ public class Bootstrapper {
 
 	public class SubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
-			System.out.println("SubclassMethod called: #" + arg1.data.primitiveValue() + ", '"
+			System.out.println("SubclassMethod called: " + receiver + " #" + arg1.data.primitiveValue() + ", '"
 					+ arg2.data.primitiveValue() + "', '" + arg3.data.primitiveValue() + "', '"
 					+ arg4.data.primitiveValue() + "', '" + arg5.data.primitiveValue() + "'");
 			return null;
 		}
 	}
 
-	public class StringNewMethod extends RMethod {
-		public RObject applyTo(RObject receiver) {
-			RObject instance = RObject.primitiveInstance();
-			instance.oop[RObject.CLASS_OFFSET] = receiver;
-			return instance;
-		}
-	}
-
-	public class SymbolNewMethod extends RMethod {
+	public class NewMethod extends RMethod {
 		public RObject applyTo(RObject receiver) {
 			RObject instance = RObject.primitiveInstance();
 			instance.oop[RObject.CLASS_OFFSET] = receiver;
