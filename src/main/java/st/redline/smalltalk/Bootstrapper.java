@@ -84,7 +84,7 @@ public class Bootstrapper {
 	public class StringNewMethod extends RMethod {
 		public RObject applyTo(RObject receiver) {
 			RObject instance = RObject.primitiveInstance();
-			instance.oop[RObject.CLASS_OFFSET] = smalltalk.basicAt("String");
+			instance.oop[RObject.CLASS_OFFSET] = receiver;
 			return instance;
 		}
 	}
@@ -92,7 +92,7 @@ public class Bootstrapper {
 	public class SymbolNewMethod extends RMethod {
 		public RObject applyTo(RObject receiver) {
 			RObject instance = RObject.primitiveInstance();
-			instance.oop[RObject.CLASS_OFFSET] = smalltalk.basicAt("Symbol");
+			instance.oop[RObject.CLASS_OFFSET] = receiver;
 			return instance;
 		}
 	}
