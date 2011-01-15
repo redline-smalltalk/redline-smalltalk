@@ -33,6 +33,7 @@ public class Analyser implements NodeVisitor {
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
 		this.generator = generator;
+		generator.initialize();
 	}
 
 	public byte[] result() {

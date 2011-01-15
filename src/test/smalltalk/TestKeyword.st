@@ -1,8 +1,9 @@
 
 "im a comment"
-ProtoObject subclass: #Object
-	instanceVariableNames: ''
-	classVariableNames: 'DependentsFields'
-	poolDictionaries: ''
-	category: 'Kernel-Objects'
+
+Object subclass: #TestKeyword
+	instanceVariableNames: 'instVars'
+	classVariableNames: 'ClassVars'
+	poolDictionaries: 'Pool'
+	category: 'Test'
 

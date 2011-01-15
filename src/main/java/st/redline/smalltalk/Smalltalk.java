@@ -180,7 +180,7 @@ public class Smalltalk extends ClassLoader {
 		RObject object = basicAt(name);
 		if (object != null)
 			return object;
-		throw new IllegalStateException("Can't find requried object '" + name + "'.");
+		throw new IllegalStateException("Can't find required object '" + name + "'.");
 	}
 
 	public RObject symbolFromPrimitive(String value) {

@@ -48,18 +48,20 @@ public class Generator implements Opcodes {
 	};
 	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
 
-	private final ClassWriter classWriter;
-
+	private ClassWriter classWriter;
 	private String className;
 	private String packageInternalName;
 	private String fullyQualifiedName;
 	private MethodVisitor methodVisitor;
 
 	public Generator() {
-		this(new TracingClassWriter(ClassWriter.COMPUTE_MAXS));
 	}
 
-	Generator(ClassWriter classWriter) {
+	public void initialize() {
+		initialize(new TracingClassWriter(ClassWriter.COMPUTE_MAXS));
+	}
+
+	void initialize(ClassWriter classWriter) {
 		this.classWriter = classWriter;
 	}
 
@@ -89,6 +91,10 @@ public class Generator implements Opcodes {
 		this.className = className;
 		this.packageInternalName = packageInternalName;
 		this.fullyQualifiedName = packageInternalName.equals("") ? className : packageInternalName + File.separator + className;
+	}
+
+	public String fullyQualifiedName() {
+		return fullyQualifiedName;
 	}
 
 	public void closeClass() {
