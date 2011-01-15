@@ -13,9 +13,9 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
@@ -23,6 +23,7 @@ package st.redline.smalltalk;
 public class Bootstrapper {
 
 	private static final String SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:";
+	private static final String NEW_SELECTOR = "new";
 
 	private final Smalltalk smalltalk;
 
@@ -31,11 +32,21 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
+		smalltalk.basicAtPut("String", bootstrapPrimitiveClass(new StringNewMethod()));
+		smalltalk.basicAtPut("Symbol", bootstrapPrimitiveClass(new SymbolNewMethod()));
 		RObject classClass = bootstrapClassClass();
 		RObject protoObjectClassMetaclass = bootstrapProtoObjectClassMetaclass(classClass);
 		RObject protoObjectClass = bootstrapProtoObjectClass(protoObjectClassMetaclass);
 		smalltalk.basicAtPut("Class", classClass);
 		smalltalk.basicAtPut("ProtoObject", protoObjectClass);
+	}
+
+	private RObject bootstrapPrimitiveClass(RMethod newMethod) {
+		RObject primClass = RObject.classInstance();
+		RObject primMetaclass = RObject.classInstance();
+		primClass.oop[RObject.CLASS_OFFSET] = primMetaclass;
+		primMetaclass.data.methodAtPut(NEW_SELECTOR, newMethod);
+		return primClass;
 	}
 
 	private RObject bootstrapClassClass() {
@@ -63,8 +74,26 @@ public class Bootstrapper {
 
 	public class SubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
-			System.out.println("SubclassMethod called.");
+			System.out.println("SubclassMethod called: #" + arg1.data.primitiveValue() + ", '"
+					+ arg2.data.primitiveValue() + "', '" + arg3.data.primitiveValue() + "', '"
+					+ arg4.data.primitiveValue() + "', '" + arg5.data.primitiveValue() + "'");
 			return null;
+		}
+	}
+
+	public class StringNewMethod extends RMethod {
+		public RObject applyTo(RObject receiver) {
+			RObject instance = RObject.primitiveInstance();
+			instance.oop[RObject.CLASS_OFFSET] = smalltalk.basicAt("String");
+			return instance;
+		}
+	}
+
+	public class SymbolNewMethod extends RMethod {
+		public RObject applyTo(RObject receiver) {
+			RObject instance = RObject.primitiveInstance();
+			instance.oop[RObject.CLASS_OFFSET] = smalltalk.basicAt("Symbol");
+			return instance;
 		}
 	}
 }

@@ -1,5 +1,12 @@
 
-14/01/2001 Changes
+15/01/2011 Changes
+
+Added bootstrap of Symbol and String class so we can create Classes.
+Need to implement bootstrapped Subclass creation method, and mechanism for turning
+bootstrapped classes into full classes from their source.
+
+
+14/01/2011 Changes
 
 Refactored Bootstrapper to correctly bootstrap ProtoObject hierarchy according to Smalltalk rules.
 Renamed a few methods to make their meaning more clear.
