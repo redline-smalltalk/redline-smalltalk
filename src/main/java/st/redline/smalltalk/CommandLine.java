@@ -9,11 +9,11 @@ import java.util.List;
 
 /**
  * Processes the raw arguments given in String[] format.
- * 
+ *
  * Command line options are different to command line arguments.
  * Arguments is the list of <source files>
  */
-class CommandLine {
+public class CommandLine {
 
 	private static final String SOURCEPATH_OPTION = "sourcepath";
 
@@ -38,6 +38,10 @@ class CommandLine {
 		return commandLine.getArgList();
 	}
 
+	boolean traceRequested() {
+		return haveTraceOption();
+	}
+
 	boolean helpRequested() {
 		return haveHelpOption() || haveNoArguments();
 	}
@@ -48,6 +52,10 @@ class CommandLine {
 
 	boolean haveHelpOption() {
 		return commandLine.hasOption('?');
+	}
+
+	boolean haveTraceOption() {
+		return commandLine.hasOption('t');
 	}
 
 	void tryParseArguments() {
@@ -84,6 +92,11 @@ class CommandLine {
 		public CommandLineOptions() {
 			addOption(help());
 			addOption(sourcePath());
+			addOption(trace());
+		}
+
+		private Option trace() {
+			return new Option("t", "trace", false, "output messages about what Redline is doing.");
 		}
 
 		private Option help() {

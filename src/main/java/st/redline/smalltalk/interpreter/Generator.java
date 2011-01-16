@@ -53,12 +53,22 @@ public class Generator implements Opcodes {
 	private String packageInternalName;
 	private String fullyQualifiedName;
 	private MethodVisitor methodVisitor;
+	private boolean traceOn;
 
-	public Generator() {
+	public Generator(boolean traceOn) {
+		this.traceOn = traceOn;
 	}
 
 	public void initialize() {
-		initialize(new TracingClassWriter(ClassWriter.COMPUTE_MAXS));
+		initialize(traceOn ? tracingClassWriter() : nonTracingClassWriter());
+	}
+
+	private ClassWriter nonTracingClassWriter() {
+		return new ClassWriter(ClassWriter.COMPUTE_MAXS);
+	}
+
+	private ClassWriter tracingClassWriter() {
+		return new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
 	}
 
 	void initialize(ClassWriter classWriter) {

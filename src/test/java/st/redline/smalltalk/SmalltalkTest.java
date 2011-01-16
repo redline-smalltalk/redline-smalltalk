@@ -46,6 +46,7 @@ public class SmalltalkTest {
 	@Mock SourceFile sourceFile;
 	@Mock FileReader fileReader;
 	@Mock Environment environment;
+	@Mock CommandLine commandLine;
 	@Mock Generator generator;
 	@Mock Interpreter interpreter;
 
@@ -55,6 +56,8 @@ public class SmalltalkTest {
 		MockitoAnnotations.initMocks(this);
 		when(fileReader.read(sourceFile)).thenReturn("");
 		when(file.getAbsolutePath()).thenReturn("");
+		when(environment.commandLine()).thenReturn(commandLine);
+		when(commandLine.traceRequested()).thenReturn(false);
 	}
 
 	@Test public void shouldBeContextClassLoader() {

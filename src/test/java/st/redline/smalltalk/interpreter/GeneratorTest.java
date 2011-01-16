@@ -54,7 +54,7 @@ public class GeneratorTest implements Opcodes {
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		generator = new Generator();
+		generator = new Generator(false);
 		generator.initialize(classWriter);
 		when(classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)).thenReturn(methodVisitor);
 		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);

@@ -48,6 +48,7 @@ public class Smalltalk extends ClassLoader {
 	private final Map<String, String> internedSymbols;
 
 	private SourceFile currentFile;
+	private boolean traceOn = false;
 
 	public static Smalltalk with(Environment environment) {
 		if (environment == null)
@@ -77,13 +78,22 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	protected void initialize() {
+		traceOn = traceRequested();
 		if (fileReader() == null)
 			fileReader(new FileReader());
 		if (interpreter() == null)
 			interpreter(new Interpreter());
 		if (generator() == null)
-			generator(new Generator());
+			generator(new Generator(traceOn));
 			Thread.currentThread().setContextClassLoader(this);
+	}
+
+	public boolean traceOn() {
+		return traceOn;
+	}
+
+	private boolean traceRequested() {
+		return commandLine().traceRequested();
 	}
 
 	public Environment environment() {

@@ -74,9 +74,6 @@ public class Bootstrapper {
 
 	public class SubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
-			System.out.println("SubclassMethod called: " + receiver + " #" + arg1.data.primitiveValue() + ", '"
-					+ arg2.data.primitiveValue() + "', '" + arg3.data.primitiveValue() + "', '"
-					+ arg4.data.primitiveValue() + "', '" + arg5.data.primitiveValue() + "'");
 			RObject newClass = RObject.classInstance();
 			RObject metaclass = RObject.classInstance();
 			newClass.oop[RObject.CLASS_OFFSET] = metaclass;
