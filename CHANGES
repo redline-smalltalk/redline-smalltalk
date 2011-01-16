@@ -1,4 +1,9 @@
 
+16/01/2011 Changes
+
+Loading classes from source to registered instances!
+
+
 15/01/2011 Changes
 
 Added bootstrap of Symbol and String class so we can create Classes.

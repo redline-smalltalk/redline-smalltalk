@@ -77,7 +77,13 @@ public class Bootstrapper {
 			System.out.println("SubclassMethod called: " + receiver + " #" + arg1.data.primitiveValue() + ", '"
 					+ arg2.data.primitiveValue() + "', '" + arg3.data.primitiveValue() + "', '"
 					+ arg4.data.primitiveValue() + "', '" + arg5.data.primitiveValue() + "'");
-			return null;
+			RObject newClass = RObject.classInstance();
+			RObject metaclass = RObject.classInstance();
+			newClass.oop[RObject.CLASS_OFFSET] = metaclass;
+			newClass.oop[RObject.SUPERCLASS_OFFSET] = receiver;
+			metaclass.oop[RObject.SUPERCLASS_OFFSET] = receiver.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET];
+			Smalltalk.instance().basicAtPut(arg1.data.primitiveValue().toString(), newClass);
+			return newClass;
 		}
 	}
 
