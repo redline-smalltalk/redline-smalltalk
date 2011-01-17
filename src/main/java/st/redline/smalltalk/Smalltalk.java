@@ -93,7 +93,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	private boolean traceRequested() {
-		return commandLine().traceRequested();
+		return commandLine().verboseRequested();
 	}
 
 	public Environment environment() {

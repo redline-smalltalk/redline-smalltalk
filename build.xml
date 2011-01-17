@@ -87,7 +87,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	<target name="jar" description="Create a Java Archive." depends="build">
 		<mkdir dir="${jar.out}"/>
 		<delete file="${jar.name}"/>
-		<jar destfile="${jar.name}" basedir="${out}" includes="st/**" excludes="st/**/*Test.class, st/redline/testsupport/**">
+		<copy file="log4j.xml" todir="${out}"/>
+		<jar destfile="${jar.name}" basedir="${out}" includes="st/**, log4j.xml" excludes="st/**/*Test.class, st/redline/testsupport/**">
 			<manifest>
 				<attribute name="Built-By" value="${user.name}"/>
 				<attribute name="Implementation-Vendor" value="Redline"/>

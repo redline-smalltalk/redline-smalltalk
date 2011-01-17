@@ -37,13 +37,13 @@ public class CommandLineTest {
 	private static final String[] HELP_ALIAS_IN_ARGUMENTS = new String[] {"--help"};
 	private static final String[] TWO_SOURCE_FILE_NAMES_IN_ARGUMENTS = new String[] {"foo.st", "bar.st"};
 	private static final String[] SOURCE_PATH_IN_ARGUMENTS = new String[] {"-sourcepath", "foo"};
-	private static final String[] TRACE_IN_ARGUMENTS = new String[] {"-t"};
-	private static final String[] TRACE_ALIAS_IN_ARGUMENTS = new String[] {"--trace"};
+	private static final String[] VERBOSE_IN_ARGUMENTS = new String[] {"-v"};
+	private static final String[] VERBOSE_ALIAS_IN_ARGUMENTS = new String[] {"--verbose"};
 	private static final String EXPECTED_HELP_MESSAGE =
 								"usage: stic [options] <source files>" + LF +
 								" -?,--help             print this message." + LF +
 								" -sourcepath <path>    where to find input source files." + LF +
-								" -t,--trace            output messages about what Redline is doing." + LF;
+								" -v,--verbose          output messages about what Redline is doing." + LF;
 
 	@Test public void shouldPrintHelpMessage() {
 		StringWriter stringWriter = new StringWriter();
@@ -101,18 +101,18 @@ public class CommandLineTest {
 		assertEquals(2, commandLine.arguments().size());
 	}
 
-	@Test public void shouldHaveTraceOnWhenTraceOptionInArguments() {
-		CommandLine commandLine = new CommandLine(TRACE_IN_ARGUMENTS);
-		assertTrue(commandLine.traceRequested());
+	@Test public void shouldHaveVerboseOnWhenVerboseOptionInArguments() {
+		CommandLine commandLine = new CommandLine(VERBOSE_IN_ARGUMENTS);
+		assertTrue(commandLine.verboseRequested());
 	}
 
-	@Test public void shouldHaveTraceOnWhenTraceAliasOptionInArguments() {
-		CommandLine commandLine = new CommandLine(TRACE_ALIAS_IN_ARGUMENTS);
-		assertTrue(commandLine.traceRequested());
+	@Test public void shouldHaveVerboseOnWhenVerboseAliasOptionInArguments() {
+		CommandLine commandLine = new CommandLine(VERBOSE_ALIAS_IN_ARGUMENTS);
+		assertTrue(commandLine.verboseRequested());
 	}
 
-	@Test public void shouldNotHaveTraceOnWhenNotSpecified() {
+	@Test public void shouldNotHaveVerboseOnWhenNotSpecified() {
 		CommandLine commandLine = new CommandLine(NO_ARGUMENTS);
-		assertFalse(commandLine.traceRequested());
+		assertFalse(commandLine.verboseRequested());
 	}
 }

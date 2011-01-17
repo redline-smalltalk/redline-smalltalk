@@ -28,7 +28,6 @@ import st.redline.smalltalk.interpreter.Generator;
 import st.redline.smalltalk.interpreter.Interpreter;
 
 import java.io.File;
-import java.net.URI;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -57,7 +56,7 @@ public class SmalltalkTest {
 		when(fileReader.read(sourceFile)).thenReturn("");
 		when(file.getAbsolutePath()).thenReturn("");
 		when(environment.commandLine()).thenReturn(commandLine);
-		when(commandLine.traceRequested()).thenReturn(false);
+		when(commandLine.verboseRequested()).thenReturn(false);
 	}
 
 	@Test public void shouldBeContextClassLoader() {

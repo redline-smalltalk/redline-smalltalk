@@ -1,4 +1,10 @@
 
+18/01/2011 Changes
+
+Added logging using a Java Logging Framework. Logging has to work for simple apps as well as
+those that run within a J2EE Web Container.
+
+
 16/01/2011 Changes
 
 Loading classes from source to registered instances!

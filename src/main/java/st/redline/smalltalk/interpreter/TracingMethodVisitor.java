@@ -24,8 +24,12 @@ import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Attribute;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TracingMethodVisitor implements MethodVisitor {
+
+	final Logger log = LoggerFactory.getLogger(TracingMethodVisitor.class);
 
 	private final MethodVisitor methodVisitor;
 
@@ -34,122 +38,122 @@ public class TracingMethodVisitor implements MethodVisitor {
 	}
 
 	public AnnotationVisitor visitAnnotationDefault() {
-		System.out.println("\tvisitAnnotationDefault()");
+		log.info("visitAnnotationDefault()");
 		return methodVisitor.visitAnnotationDefault();
 	}
 
 	public AnnotationVisitor visitAnnotation(String s, boolean b) {
-		System.out.println("\tvisitAnnotation('" + s + "', " + b + ")");
+		log.info("visitAnnotation('" + s + "', " + b + ")");
 		return methodVisitor.visitAnnotation(s, b);
 	}
 
 	public AnnotationVisitor visitParameterAnnotation(int i, String s, boolean b) {
-		System.out.println("\tvisitParameterAnnotation(" + i + ", '" + s + "', " + b + ")");
+		log.info("visitParameterAnnotation(" + i + ", '" + s + "', " + b + ")");
 		return methodVisitor.visitParameterAnnotation(i, s, b);
 	}
 
 	public void visitAttribute(Attribute attribute) {
-		System.out.println("\tvisitAttribute(" + attribute + ")");
+		log.info("visitAttribute(" + attribute + ")");
 		methodVisitor.visitAttribute(attribute);
 	}
 
 	public void visitCode() {
-		System.out.println("\tvisitCode()");
+		log.info("visitCode()");
 		methodVisitor.visitCode();
 	}
 
 	public void visitFrame(int i, int i1, Object[] objects, int i2, Object[] objects1) {
-		System.out.println("\tvisitFrame(" + i + ", " + i1 + ", " + objects + ", " + i2 + ", " + objects1 + ")");
+		log.info("visitFrame(" + i + ", " + i1 + ", " + objects + ", " + i2 + ", " + objects1 + ")");
 		methodVisitor.visitFrame(i, i1, objects, i2, objects1);
 	}
 
 	public void visitInsn(int i) {
-		System.out.println("\tvisitInsn(" + i + ")");
+		log.info("visitInsn(" + i + ")");
 		methodVisitor.visitInsn(i);
 	}
 
 	public void visitIntInsn(int i, int i1) {
-		System.out.println("\tvisitIntInsn(" + i + ", " + i1 + ")");
+		log.info("visitIntInsn(" + i + ", " + i1 + ")");
 		methodVisitor.visitIntInsn(i, i1);
 	}
 
 	public void visitVarInsn(int i, int i1) {
-		System.out.println("\tvisitVarInsn(" + i + ", " + i1 + ")");
+		log.info("visitVarInsn(" + i + ", " + i1 + ")");
 		methodVisitor.visitVarInsn(i, i1);
 	}
 
 	public void visitTypeInsn(int i, String s) {
-		System.out.println("\tvisitTypeInsn(" + i + ", '" + s + "')");
+		log.info("visitTypeInsn(" + i + ", '" + s + "')");
 		methodVisitor.visitTypeInsn(i, s);
 	}
 
 	public void visitFieldInsn(int i, String s, String s1, String s2) {
-		System.out.println("\tvisitFieldInsn(" + i + ", '" + s + "', '" + s1 + "', '" + s2 + "')");
+		log.info("visitFieldInsn(" + i + ", '" + s + "', '" + s1 + "', '" + s2 + "')");
 		methodVisitor.visitFieldInsn(i, s, s1, s2);
 	}
 
 	public void visitMethodInsn(int i, String s, String s1, String s2) {
-		System.out.println("\tvisitMethodInsn(" + i + ", '" + s + "', '" + s1 + "', '" + s2 + "')");
+		log.info("visitMethodInsn(" + i + ", '" + s + "', '" + s1 + "', '" + s2 + "')");
 		methodVisitor.visitMethodInsn(i, s, s1, s2);
 	}
 
 	public void visitJumpInsn(int i, Label label) {
-		System.out.println("\tvisitJumpInsn(" + i + ", " + label + ")");
+		log.info("visitJumpInsn(" + i + ", " + label + ")");
 		methodVisitor.visitJumpInsn(i, label);
 	}
 
 	public void visitLabel(Label label) {
-		System.out.println("\tvisitLabel(" + label + ")");
+		log.info("visitLabel(" + label + ")");
 		methodVisitor.visitLabel(label);
 	}
 
 	public void visitLdcInsn(Object o) {
-		System.out.println("\tvisitLdcInsn(" + o + ")");
+		log.info("visitLdcInsn(" + o + ")");
 		methodVisitor.visitLdcInsn(o);
 	}
 
 	public void visitIincInsn(int i, int i1) {
-		System.out.println("\tvisitIincInsn(" + i + ", " + i1 + ")");
+		log.info("visitIincInsn(" + i + ", " + i1 + ")");
 		methodVisitor.visitIincInsn(i, i1);
 	}
 
 	public void visitTableSwitchInsn(int i, int i1, Label label, Label[] labels) {
-		System.out.println("\tvisitTableSwitchInsn(" + i + ", " + i1 + ", " + label + ", " + labels + ")");
+		log.info("visitTableSwitchInsn(" + i + ", " + i1 + ", " + label + ", " + labels + ")");
 		methodVisitor.visitTableSwitchInsn(i, i1, label, labels);
 	}
 
 	public void visitLookupSwitchInsn(Label label, int[] ints, Label[] labels) {
-		System.out.println("\tvisitLookupSwitchInsn(" + label + ", " + ints + ", " + labels + ")");
+		log.info("visitLookupSwitchInsn(" + label + ", " + ints + ", " + labels + ")");
 		methodVisitor.visitLookupSwitchInsn(label, ints, labels);
 	}
 
 	public void visitMultiANewArrayInsn(String s, int i) {
-		System.out.println("\tvisitMultiANewArrayInsn('" + s + "', " + i + ")");
+		log.info("visitMultiANewArrayInsn('" + s + "', " + i + ")");
 		methodVisitor.visitMultiANewArrayInsn(s, i);
 	}
 
 	public void visitTryCatchBlock(Label label, Label label1, Label label2, String s) {
-		System.out.println("\tvisitTryCatchBlock(" + label + ", " + label1 + ", " + label2 + ", '" + s + "')");
+		log.info("visitTryCatchBlock(" + label + ", " + label1 + ", " + label2 + ", '" + s + "')");
 		methodVisitor.visitTryCatchBlock(label, label1, label2, s);
 	}
 
 	public void visitLocalVariable(String s, String s1, String s2, Label label, Label label1, int i) {
-		System.out.println("\tvisitLocalVariable('" + s + "', '" + s1 + "', '" + s2 + "', " + label + ", " + label1 + ", " + i + ")");
+		log.info("visitLocalVariable('" + s + "', '" + s1 + "', '" + s2 + "', " + label + ", " + label1 + ", " + i + ")");
 		methodVisitor.visitLocalVariable(s, s1, s2, label, label1, i);
 	}
 
 	public void visitLineNumber(int i, Label label) {
-		System.out.println("\tvisitLineNumber(" + i + ", " + label + ")");
+		log.info("visitLineNumber(" + i + ", " + label + ")");
 		methodVisitor.visitLineNumber(i, label);
 	}
 
 	public void visitMaxs(int i, int i1) {
-		System.out.println("\tvisitMaxs(" + i + ", " + i1 + ")");
+		log.info("visitMaxs(" + i + ", " + i1 + ")");
 		methodVisitor.visitMaxs(i, i1);
 	}
 
 	public void visitEnd() {
-		System.out.println("\tvisitEnd()");
+		log.info("visitEnd()");
 		methodVisitor.visitEnd();
 	}
 }

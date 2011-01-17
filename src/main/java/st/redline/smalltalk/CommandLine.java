@@ -38,8 +38,8 @@ public class CommandLine {
 		return commandLine.getArgList();
 	}
 
-	boolean traceRequested() {
-		return haveTraceOption();
+	boolean verboseRequested() {
+		return haveVerboseOption();
 	}
 
 	boolean helpRequested() {
@@ -54,8 +54,8 @@ public class CommandLine {
 		return commandLine.hasOption('?');
 	}
 
-	boolean haveTraceOption() {
-		return commandLine.hasOption('t');
+	boolean haveVerboseOption() {
+		return commandLine.hasOption('v');
 	}
 
 	void tryParseArguments() {
@@ -92,11 +92,11 @@ public class CommandLine {
 		public CommandLineOptions() {
 			addOption(help());
 			addOption(sourcePath());
-			addOption(trace());
+			addOption(verbose());
 		}
 
-		private Option trace() {
-			return new Option("t", "trace", false, "output messages about what Redline is doing.");
+		private Option verbose() {
+			return new Option("v", "verbose", false, "output messages about what Redline is doing.");
 		}
 
 		private Option help() {
