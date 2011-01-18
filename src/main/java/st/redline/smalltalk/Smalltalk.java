@@ -302,6 +302,10 @@ public class Smalltalk extends ClassLoader {
 		return object;
 	}
 
+	protected RObject cachedObject0(String name) {
+		return cachedObjects.get(name);
+	}
+
 	public void basicAtPut(String name, RObject rObject) {
 		cachedObjects.put(name, rObject);
 	}

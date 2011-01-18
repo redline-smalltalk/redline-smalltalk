@@ -1,4 +1,7 @@
 
+Implement mehanism during doesNotUnderstand to turn bootstrapped classes into
+proper classes.
+
 Optimise the calls to Smalltalk.instance() so they are done once per method
 or set of statements.
 

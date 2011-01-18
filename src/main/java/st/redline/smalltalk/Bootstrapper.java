@@ -32,13 +32,30 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
-		smalltalk.basicAtPut("String", bootstrapPrimitiveClass(new NewMethod()));
-		smalltalk.basicAtPut("Symbol", bootstrapPrimitiveClass(new NewMethod()));
+		bootstrapNil();
+		bootstrapLiterals();
+		bootstrapProtoObject();
+	}
+
+	private void bootstrapProtoObject() {
 		RObject classClass = bootstrapClassClass();
 		RObject protoObjectClassMetaclass = bootstrapProtoObjectClassMetaclass(classClass);
 		RObject protoObjectClass = bootstrapProtoObjectClass(protoObjectClassMetaclass);
 		smalltalk.basicAtPut("Class", classClass);
 		smalltalk.basicAtPut("ProtoObject", protoObjectClass);
+	}
+
+	private void bootstrapLiterals() {
+		smalltalk.basicAtPut("String", bootstrapPrimitiveClass(new NewMethod()));
+		smalltalk.basicAtPut("Symbol", bootstrapPrimitiveClass(new NewMethod()));
+	}
+
+	private void bootstrapNil() {
+		RObject undefinedObjectClass = bootstrapPrimitiveClass(new IllegalToNewMethod());
+		RObject undefinedObject = RObject.primitiveInstance();
+		undefinedObject.oop[RObject.CLASS_OFFSET] = undefinedObjectClass;
+		smalltalk.basicAtPut("nil", undefinedObject);
+		smalltalk.basicAtPut("UndefinedObject", undefinedObjectClass);
 	}
 
 	private RObject bootstrapPrimitiveClass(RMethod newMethod) {
@@ -74,14 +91,28 @@ public class Bootstrapper {
 
 	public class SubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
-			RObject newClass = RObject.classInstance();
-			RObject metaclass = RObject.classInstance();
+			String subclass = arg1.data.primitiveValue().toString();
+			RObject newClass = findOrCreateClass(subclass);
+			RObject metaclass = findOrCreateMetaclass(newClass);
 			newClass.oop[RObject.CLASS_OFFSET] = metaclass;
 			newClass.oop[RObject.SUPERCLASS_OFFSET] = receiver;
 			metaclass.oop[RObject.SUPERCLASS_OFFSET] = receiver.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET];
-			Smalltalk.instance().basicAtPut(arg1.data.primitiveValue().toString(), newClass);
+			Smalltalk.instance().basicAtPut(subclass, newClass);
 			return newClass;
 		}
+	}
+
+	private RObject findOrCreateMetaclass(RObject aClass) {
+		if (aClass.oop[RObject.CLASS_OFFSET] != null)
+			return aClass.oop[RObject.CLASS_OFFSET];
+		return RObject.classInstance();
+	}
+
+	private RObject findOrCreateClass(String subclassName) {
+		RObject subclass = smalltalk.cachedObject0(subclassName);
+		if (subclass != null)
+			return subclass;
+		return RObject.classInstance();
 	}
 
 	public class NewMethod extends RMethod {
@@ -89,6 +120,12 @@ public class Bootstrapper {
 			RObject instance = RObject.primitiveInstance();
 			instance.oop[RObject.CLASS_OFFSET] = receiver;
 			return instance;
+		}
+	}
+
+	public class IllegalToNewMethod extends RMethod {
+		public RObject applyTo(RObject receiver) {
+			throw new IllegalStateException("Can't new an instance of UndefinedObject.");
 		}
 	}
 }

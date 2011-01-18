@@ -4,6 +4,7 @@
 Added logging using a Java Logging Framework. Logging has to work for simple apps as well as
 those that run within a J2EE Web Container.
 Using SL4J for logging to users can choose their own framework.
+Added bootstrap of UndefinedObject and 'nil'.
 
 
 16/01/2011 Changes
