@@ -20,6 +20,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import st.redline.smalltalk.interpreter.Generator;
 import st.redline.smalltalk.interpreter.Interpreter;
 
@@ -48,7 +50,9 @@ public class Smalltalk extends ClassLoader {
 	private final Map<String, String> internedSymbols;
 
 	private SourceFile currentFile;
-	private boolean traceOn = false;
+	private boolean verboseOn = false;
+
+	private final Logger log = LoggerFactory.getLogger(Smalltalk.class);
 
 	public static Smalltalk with(Environment environment) {
 		if (environment == null)
@@ -78,21 +82,21 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	protected void initialize() {
-		traceOn = traceRequested();
+		verboseOn = verboseRequested();
 		if (fileReader() == null)
 			fileReader(new FileReader());
 		if (interpreter() == null)
 			interpreter(new Interpreter());
 		if (generator() == null)
-			generator(new Generator(traceOn));
+			generator(new Generator(verboseOn));
 			Thread.currentThread().setContextClassLoader(this);
 	}
 
-	public boolean traceOn() {
-		return traceOn;
+	public boolean verboseOn() {
+		return verboseOn;
 	}
 
-	private boolean traceRequested() {
+	private boolean verboseRequested() {
 		return commandLine().verboseRequested();
 	}
 
@@ -105,6 +109,8 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public void eval(File file) {
+		if (verboseOn())
+			log.info("eval('" + file + "')");
 		currentFile = new SourceFile(file.getAbsolutePath(), this);
 		evalFile();
 	}
@@ -211,14 +217,16 @@ public class Smalltalk extends ClassLoader {
 		return symbol;
 	}
 
-	public RObject basicAt(String className) {
-		if (isCachedObject(className))
-			return cachedObject(className);
-		String packageAndClassName = REDLINE_PACKAGE + "." + className;
+	public RObject basicAt(String objectName) {
+		if (verboseOn)
+			log.info("basicAt('" + objectName + "')");
+		if (isCachedObject(objectName))
+			return cachedObject(objectName);
+		String packageAndClassName = REDLINE_PACKAGE + "." + objectName;
 		if (isCachedObject(packageAndClassName))
 			return cachedObject(packageAndClassName);
-		resolveClassObject(className);
-		return cachedObject(className);
+		resolveClassObject(objectName);
+		return cachedObject(objectName);
 	}
 
 	private boolean isCachedObject(String className) {
@@ -227,6 +235,8 @@ public class Smalltalk extends ClassLoader {
 
 	private boolean resolveClassObject(String name) {
 		try {
+			if (verboseOn)
+				log.info("resolveClassObject('" + name + "')");
 			loadClass(name).newInstance();
 			return true;
 		} catch (Exception e) {
@@ -237,6 +247,8 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
+		if (verboseOn)
+			log.info("findClass('" + name + "')");
 		Class<?> cls = findClassInDefaultPackage(name);
 		if (cls != null)
 			return cls;
@@ -306,7 +318,9 @@ public class Smalltalk extends ClassLoader {
 		return cachedObjects.get(name);
 	}
 
-	public void basicAtPut(String name, RObject rObject) {
-		cachedObjects.put(name, rObject);
+	public void basicAtPut(String name, RObject object) {
+		if (verboseOn)
+			log.info("basicAtPut('" + name + "', " + object + ")");
+		cachedObjects.put(name, object);
 	}
 }

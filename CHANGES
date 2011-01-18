@@ -1,4 +1,9 @@
 
+19/01/2011 Changes
+
+Added logging around Smalltalk class so verbose option shows what is being done by Redline.
+
+
 18/01/2011 Changes
 
 Added logging using a Java Logging Framework. Logging has to work for simple apps as well as
