@@ -35,12 +35,20 @@ public class MessageSend extends BasicNode {
 		return (value() instanceof KeywordMessageSend);
 	}
 
+	public boolean isBinaryMessageSend() {
+		return (value() instanceof BinaryMessageSend);
+	}
+
 	public UnaryMessageSend unaryMessageSend() {
 		return (UnaryMessageSend) value();
 	}
 
 	public KeywordMessageSend keywordMessageSend() {
 		return (KeywordMessageSend) value();
+	}
+
+	public BinaryMessageSend binaryMessageSend() {
+		return (BinaryMessageSend) value();
 	}
 
 	public void accept(NodeVisitor visitor) {

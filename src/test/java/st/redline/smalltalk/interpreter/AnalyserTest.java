@@ -63,6 +63,9 @@ public class AnalyserTest {
 	@Mock KeywordMessage keywordMessage;
 	@Mock KeywordMessagePart keywordMessagePart;
 	@Mock KeywordArgument keywordArgument;
+	@Mock BinaryMessageSend binaryMessageSend;
+	@Mock BinaryMessage binaryMessage;
+	@Mock BinaryArgument binaryArgument;
 	@Mock StString string;
 	@Mock Symbol symbol;
 	@Mock Variable primary;
@@ -182,6 +185,36 @@ public class AnalyserTest {
 		analyser.visit(keywordMessageSend);
 		verify(primary).accept(analyser);
 		verify(keywordMessage).accept(analyser);
+	}
+
+	@Test public void shouldVisitBinaryMessageSendWhenMessageSendIsBinaryType() {
+		when(messageSend.isBinaryMessageSend()).thenReturn(true);
+		when(messageSend.binaryMessageSend()).thenReturn(binaryMessageSend);
+		analyser.visit(messageSend);
+		verify(binaryMessageSend).accept(analyser);
+	}
+
+	@Test public void shouldVisitPrimaryWhenLeftOfBinaryMessageSendIsPrimary() {
+		when(binaryMessageSend.isPrimary()).thenReturn(true);
+		when(binaryMessageSend.primary()).thenReturn(primary);
+		analyser.visit(binaryMessageSend);
+		verify(primary).accept(analyser);
+		verify(binaryMessageSend).eachAccept(analyser);
+	}
+
+	@Test public void shouldVisitUnaryMessageSendWhenLeftOfBinaryMessageSendIsUnaryMessageSend() {
+		when(binaryMessageSend.isUnaryMessageSend()).thenReturn(true);
+		when(binaryMessageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
+		analyser.visit(binaryMessageSend);
+		verify(unaryMessageSend).accept(analyser);
+		verify(binaryMessageSend).eachAccept(analyser);
+	}
+
+	@Test public void shouldVisitEachBinaryMessageOfBinaryMessageSend() {
+		when(binaryMessageSend.isUnaryMessageSend()).thenReturn(true);
+		when(binaryMessageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
+		analyser.visit(binaryMessageSend);
+		verify(binaryMessageSend).eachAccept(analyser);
 	}
 
 	@Test public void shouldVisitEachNodeOfKeywordMessageListNode() {

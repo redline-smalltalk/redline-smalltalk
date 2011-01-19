@@ -77,6 +77,8 @@ public class Analyser implements NodeVisitor {
 			messageSend.unaryMessageSend().accept(this);
 		else if (messageSend.isKeywordMessageSend())
 			messageSend.keywordMessageSend().accept(this);
+		else if (messageSend.isBinaryMessageSend())
+			messageSend.binaryMessageSend().accept(this);
 	}
 
 	public void visit(UnaryMessageSend unaryMessageSend) {
@@ -117,7 +119,19 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(BinaryMessageSend binaryMessageSend) {
-		// TODO.JCL - implement
+		visitLeftSideOfBinaryMessageSend(binaryMessageSend);
+		visitRightSideOfBinaryMessageSend(binaryMessageSend);
+	}
+
+	private void visitRightSideOfBinaryMessageSend(BinaryMessageSend binaryMessageSend) {
+		binaryMessageSend.eachAccept(this);
+	}
+
+	private void visitLeftSideOfBinaryMessageSend(BinaryMessageSend binaryMessageSend) {
+		if (binaryMessageSend.isPrimary())
+			binaryMessageSend.primary().accept(this);
+		else if (binaryMessageSend.isUnaryMessageSend())
+			binaryMessageSend.unaryMessageSend().accept(this);
 	}
 
 	public void visit(BinaryMessage binaryMessage) {
