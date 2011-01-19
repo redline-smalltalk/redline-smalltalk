@@ -13,6 +13,9 @@ public interface NodeVisitor {
 	void visit(KeywordMessage keywordMessage);
 	void visit(KeywordMessagePart keywordMessagePart);
 	void visit(KeywordArgument keywordArgument);
+	void visit(BinaryMessageSend binaryMessageSend);
+	void visit(BinaryMessage binaryMessage);
+	void visit(BinaryArgument binaryArgument);
 	void visit(UnaryMessage unaryMessage);
 	void visit(Variable variable);
 	void visit(Symbol symbol);

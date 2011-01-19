@@ -61,6 +61,7 @@ cascade returns [Cascade n]
 
 messageSend returns [MessageSend n]
 	:	keywordMessageSend {$n = new MessageSend($keywordMessageSend.n);}
+	|	binaryMessageSend {$n = new MessageSend($binaryMessageSend.n);}	
 	|	unaryMessageSend {$n = new MessageSend($unaryMessageSend.n);}
 	;
 
@@ -76,6 +77,20 @@ keywordArgument returns [KeywordArgument n]
 	:	primary {$n = new KeywordArgument($primary.n);}
 	;
 
+binaryMessageSend returns [BinaryMessageSend n]
+	:	unaryMessageSend {$n = new BinaryMessageSend($unaryMessageSend.n);} ( binaryMessage {$n.add($binaryMessage.n);} )+
+	|	primary {$n = new BinaryMessageSend($primary.n);} ( binaryMessage {$n.add($binaryMessage.n);} )+
+	;
+
+binaryMessage returns [BinaryMessage n]
+	:	BINARY_SYMBOL binaryArgument {$n = new BinaryMessage($BINARY_SYMBOL.text, $BINARY_SYMBOL.line, $binaryArgument.n);}
+	;
+
+binaryArgument returns [BinaryArgument n]
+	:	unaryMessageSend {$n = new BinaryArgument($unaryMessageSend.n);}
+	|	primary {$n = new BinaryArgument($primary.n);}
+	;
+		
 unaryMessageSend returns [UnaryMessageSend n]
 	:	primary {$n = new UnaryMessageSend($primary.n);} ( unaryMessage {$n.add($unaryMessage.n);} )+
 	;
@@ -103,4 +118,5 @@ KEYWORD: NAME ':';
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
 STRING: '\'' .* '\'';
+BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
  

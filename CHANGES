@@ -2,6 +2,7 @@
 19/01/2011 Changes
 
 Added logging around Smalltalk class so verbose option shows what is being done by Redline.
+Added parsing of BinaryMessageSends. Still need to support generating code from them.
 
 
 18/01/2011 Changes

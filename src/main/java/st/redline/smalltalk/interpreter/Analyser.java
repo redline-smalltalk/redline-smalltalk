@@ -116,6 +116,18 @@ public class Analyser implements NodeVisitor {
 		keywordArgument.primary().accept(this);
 	}
 
+	public void visit(BinaryMessageSend binaryMessageSend) {
+		// TODO.JCL - implement
+	}
+
+	public void visit(BinaryMessage binaryMessage) {
+		// TODO.JCL - implement
+	}
+
+	public void visit(BinaryArgument binaryArgument) {
+		// TODO.JCL - implement
+	}
+
 	public void visit(Variable variable) {
 		if (variable.isClassReference())
 			generator.classLookup(variable.name(), variable.line());
