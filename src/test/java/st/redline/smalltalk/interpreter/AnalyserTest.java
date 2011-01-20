@@ -41,12 +41,12 @@ public class AnalyserTest {
 	private static final String STRING = "'foo'";
 	private static final String SYMBOL = "foo";
 	private static final int LINE_NUMBER= 42;
+	private static final String BINARY_SELECTOR = "+";
 	private static final List<String> KEYWORD_MESSAGE_LIST = new ArrayList<String>();
 	static {
 		KEYWORD_MESSAGE_LIST.add("at:");
 		KEYWORD_MESSAGE_LIST.add("put:");
 	}
-
 	@Mock Smalltalk smalltalk;
 	@Mock Generator generator;
 	@Mock Program program;
@@ -215,6 +215,30 @@ public class AnalyserTest {
 		when(binaryMessageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
 		analyser.visit(binaryMessageSend);
 		verify(binaryMessageSend).eachAccept(analyser);
+	}
+
+	@Test public void shouldVisitBinaryMessageArgumentBeforeGeneratingSend() {
+		when(binaryMessage.binaryArgument()).thenReturn(binaryArgument);
+		when(binaryMessage.selector()).thenReturn(BINARY_SELECTOR);
+		when(binaryMessage.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(binaryMessage);
+		verify(binaryArgument).accept(analyser);
+		verify(generator).binarySend(BINARY_SELECTOR, LINE_NUMBER);
+	}
+
+	@Test public void shouldVisitPrimaryWhenBinaryArgumentIsPrimary() {
+		when(binaryArgument.isPrimary()).thenReturn(true);
+		when(binaryArgument.primary()).thenReturn(primary);
+		analyser.visit(binaryArgument);
+		verify(primary).accept(analyser);
+	}
+
+	@Test public void shouldVisitUnaryMessageSendWhenBinaryArgumentIsUnaryMessageSend() {
+		when(binaryArgument.isPrimary()).thenReturn(false);
+		when(binaryArgument.isUnaryMessageSend()).thenReturn(true);
+		when(binaryArgument.unaryMessageSend()).thenReturn(unaryMessageSend);
+		analyser.visit(binaryArgument);
+		verify(unaryMessageSend).accept(analyser);
 	}
 
 	@Test public void shouldVisitEachNodeOfKeywordMessageListNode() {

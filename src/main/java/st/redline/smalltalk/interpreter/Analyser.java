@@ -135,11 +135,15 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(BinaryMessage binaryMessage) {
-		// TODO.JCL - implement
+		binaryMessage.binaryArgument().accept(this);
+		generator.binarySend(binaryMessage.selector(), binaryMessage.line());
 	}
 
 	public void visit(BinaryArgument binaryArgument) {
-		// TODO.JCL - implement
+		if (binaryArgument.isPrimary())
+			binaryArgument.primary().accept(this);
+		else if (binaryArgument.isUnaryMessageSend())
+			binaryArgument.unaryMessageSend().accept(this);
 	}
 
 	public void visit(Variable variable) {

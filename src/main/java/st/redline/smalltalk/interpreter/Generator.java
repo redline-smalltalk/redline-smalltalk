@@ -168,4 +168,7 @@ public class Generator implements Opcodes {
 		methodVisitor.visitLdcInsn(keywordSelector);
 		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[countOfArguments]);
 	}
+
+	public void binarySend(String binarySelector, int lineNumber) {
+	}
 }
