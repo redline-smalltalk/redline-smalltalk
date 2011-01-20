@@ -41,6 +41,8 @@ public class GeneratorTest implements Opcodes {
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RObject";
 	private static final String UNARY_SELECTOR = "unarySelector";
 	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
+	private static final String BINARY_SELECTOR = "+";
+	private static final String BINARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String KEYWORD_SELECTOR = "at:put:";
 	private static final int KEYWORD_ARGUMENT_COUNT = 2;
@@ -86,6 +88,13 @@ public class GeneratorTest implements Opcodes {
 		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", UNARY_METHOD_DESCRIPTOR);
+	}
+
+	@Test public void shouldGenerateBinarySend() {
+		generator.binarySend(BINARY_SELECTOR, LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitLdcInsn(BINARY_SELECTOR);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", BINARY_METHOD_DESCRIPTOR);
 	}
 
 	@Test public void shouldGeneratePrimitiveStringConversion() {
