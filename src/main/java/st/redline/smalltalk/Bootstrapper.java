@@ -41,8 +41,8 @@ public class Bootstrapper {
 		RObject classClass = bootstrapClassClass();
 		RObject protoObjectClassMetaclass = bootstrapProtoObjectClassMetaclass(classClass);
 		RObject protoObjectClass = bootstrapProtoObjectClass(protoObjectClassMetaclass);
-		smalltalk.basicAtPut("Class", classClass);
-		smalltalk.basicAtPut("ProtoObject", protoObjectClass);
+		smalltalk.primitiveAtPut("Class", classClass);
+		smalltalk.primitiveAtPut("ProtoObject", protoObjectClass);
 	}
 
 	private void bootstrapLiterals() {
@@ -53,7 +53,7 @@ public class Bootstrapper {
 	private void bootstrapSymbolLiteral() {
 		RObject symbolSuperclass = RObject.classInstance();
 		RObject symbolClass = bootstrapPrimitiveClass(new NewMethod());
-		smalltalk.basicAtPut("Symbol", symbolClass);
+		smalltalk.primitiveAtPut("Symbol", symbolClass);
 		symbolClass.oop[RObject.SUPERCLASS_OFFSET] = symbolSuperclass;
 	}
 
@@ -61,15 +61,15 @@ public class Bootstrapper {
 		RObject stringSuperclass = RObject.classInstance();
 		RObject stringClass = bootstrapPrimitiveClass(new NewMethod());
 		stringClass.oop[RObject.SUPERCLASS_OFFSET] = stringSuperclass;
-		smalltalk.basicAtPut("String", stringClass);
+		smalltalk.primitiveAtPut("String", stringClass);
 	}
 
 	private void bootstrapNil() {
 		RObject undefinedObjectClass = bootstrapPrimitiveClass(new IllegalToNewMethod());
 		RObject undefinedObject = RObject.primitiveInstance();
 		undefinedObject.oop[RObject.CLASS_OFFSET] = undefinedObjectClass;
-		smalltalk.basicAtPut("nil", undefinedObject);
-		smalltalk.basicAtPut("UndefinedObject", undefinedObjectClass);
+		smalltalk.primitiveAtPut("nil", undefinedObject);
+		smalltalk.primitiveAtPut("UndefinedObject", undefinedObjectClass);
 	}
 
 	private RObject bootstrapPrimitiveClass(RMethod newMethod) {
@@ -111,7 +111,7 @@ public class Bootstrapper {
 			newClass.oop[RObject.CLASS_OFFSET] = metaclass;
 			newClass.oop[RObject.SUPERCLASS_OFFSET] = receiver;
 			metaclass.oop[RObject.SUPERCLASS_OFFSET] = receiver.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET];
-			Smalltalk.instance().basicAtPut(subclass, newClass);
+			Smalltalk.instance().primitiveAtPut(subclass, newClass);
 			return newClass;
 		}
 	}

@@ -80,7 +80,7 @@ public class GeneratorTest implements Opcodes {
 		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
 		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
-		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "basicAt", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "primitiveAt", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldGenerateUnarySend() {

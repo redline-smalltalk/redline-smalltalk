@@ -2,6 +2,8 @@
 
 Added bootstrap superclass to bootstrapped String and Symbol so that method lookup
 doesnt throw NPE.
+Renamed basicAt/basicAtPut to primitiveAt and primitiveAtPut to remove possible confusion with
+Smalltalk runtime method of same name.
 
 
 20/01/2011 Changes

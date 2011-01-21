@@ -1,4 +1,6 @@
 
+Boostrapper could be made more DRY.
+
 Implement mehanism during doesNotUnderstand to turn bootstrapped classes into
 proper classes.
 

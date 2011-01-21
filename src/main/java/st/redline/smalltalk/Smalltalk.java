@@ -193,7 +193,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	private RObject lookupMustHaveObject(String name) {
-		RObject object = basicAt(name);
+		RObject object = primitiveAt(name);
 		if (object != null)
 			return object;
 		throw new IllegalStateException("Can't find required object '" + name + "'.");
@@ -217,9 +217,9 @@ public class Smalltalk extends ClassLoader {
 		return symbol;
 	}
 
-	public RObject basicAt(String objectName) {
+	public RObject primitiveAt(String objectName) {
 		if (verboseOn)
-			log.info("basicAt('" + objectName + "')");
+			log.info("primitiveAt('" + objectName + "')");
 		if (isCachedObject(objectName))
 			return cachedObject(objectName);
 		String packageAndClassName = REDLINE_PACKAGE + "." + objectName;
@@ -318,9 +318,9 @@ public class Smalltalk extends ClassLoader {
 		return cachedObjects.get(name);
 	}
 
-	public void basicAtPut(String name, RObject object) {
+	public void primitiveAtPut(String name, RObject object) {
 		if (verboseOn)
-			log.info("basicAtPut('" + name + "', " + object + ")");
+			log.info("primitiveAtPut('" + name + "', " + object + ")");
 		cachedObjects.put(name, object);
 	}
 }

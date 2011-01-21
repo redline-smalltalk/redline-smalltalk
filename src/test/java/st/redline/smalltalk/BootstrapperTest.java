@@ -49,12 +49,12 @@ public class BootstrapperTest {
 
 	@Test public void shouldRegisterProtoObjectClass() {
 		bootstrapper.bootstrap();
-		verify(smalltalk).basicAtPut(eq("ProtoObject"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("ProtoObject"), (RObject) notNull());
 	}
 
 	@Test public void shouldRegisterClassClass() {
 		bootstrapper.bootstrap();
-		verify(smalltalk).basicAtPut(eq("Class"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("Class"), (RObject) notNull());
 	}
 
 	@Test public void shouldInitializeProtoObjectClassHierarchyAccordingToSmalltalkRules() {
@@ -81,7 +81,7 @@ public class BootstrapperTest {
 		}
 		protected void initialize() {
 		}
-		public void basicAtPut(String name, RObject object) {
+		public void primitiveAtPut(String name, RObject object) {
 			map.put(name, object);
 		}
 	}
