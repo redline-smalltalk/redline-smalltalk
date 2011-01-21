@@ -46,8 +46,22 @@ public class Bootstrapper {
 	}
 
 	private void bootstrapLiterals() {
-		smalltalk.basicAtPut("String", bootstrapPrimitiveClass(new NewMethod()));
-		smalltalk.basicAtPut("Symbol", bootstrapPrimitiveClass(new NewMethod()));
+		bootstrapStringLiteral();
+		bootstrapSymbolLiteral();
+	}
+
+	private void bootstrapSymbolLiteral() {
+		RObject symbolSuperclass = RObject.classInstance();
+		RObject symbolClass = bootstrapPrimitiveClass(new NewMethod());
+		smalltalk.basicAtPut("Symbol", symbolClass);
+		symbolClass.oop[RObject.SUPERCLASS_OFFSET] = symbolSuperclass;
+	}
+
+	private void bootstrapStringLiteral() {
+		RObject stringSuperclass = RObject.classInstance();
+		RObject stringClass = bootstrapPrimitiveClass(new NewMethod());
+		stringClass.oop[RObject.SUPERCLASS_OFFSET] = stringSuperclass;
+		smalltalk.basicAtPut("String", stringClass);
 	}
 
 	private void bootstrapNil() {

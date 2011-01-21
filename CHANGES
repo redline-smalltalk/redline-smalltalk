@@ -1,3 +1,8 @@
+21/01.2011 Changes
+
+Added bootstrap superclass to bootstrapped String and Symbol so that method lookup
+doesnt throw NPE.
+
 
 20/01/2011 Changes
 

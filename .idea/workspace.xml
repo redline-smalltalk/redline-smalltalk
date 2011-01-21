@@ -60,46 +60,28 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Analyser.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
+      <file leaf-file-name="Bootstrapper.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="59" selection-start="4789" selection-end="4789" vertical-scroll-proportion="0.0">
+            <state line="49" column="8" selection-start="2017" selection-end="2017" vertical-scroll-proportion="0.08583691">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnalyserTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
+      <file leaf-file-name="CommandLineTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/CommandLineTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="237" column="65" selection-start="9153" selection-end="9153" vertical-scroll-proportion="0.0">
+            <state line="31" column="13" selection-start="1393" selection-end="1393" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GeneratorTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java">
+      <file leaf-file-name="BootstrapperTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/BootstrapperTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Generator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="174" column="110" selection-start="8955" selection-end="8955" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RObject.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="1281" selection-end="1281" vertical-scroll-proportion="-0.8391813">
+            <state line="37" column="13" selection-start="1629" selection-end="1629" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -124,7 +106,6 @@
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/CommandLineTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/CommandLine.java" />
         <option value="$PROJECT_DIR$/log4j.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BinaryMessage.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BinaryArgument.java" />
@@ -135,6 +116,7 @@
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java" />
       </list>
     </option>
   </component>
@@ -176,6 +158,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -330,6 +314,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="smalltalk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="interpreter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redline-smalltalk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redline-smalltalk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="grammar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -337,8 +351,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -360,9 +372,9 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -742,13 +754,13 @@
       <method />
     </configuration>
     <list size="7">
-      <item index="0" class="java.lang.String" itemvalue="Application.Stic" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.SticTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldVisitBinaryMessageSendWhenMessageSendIsBinaryType" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.AnalyserTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldVisitUnaryMessageSendWhenBinaryArgumentUnaryMessageSend" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldVisitUnaryMessageSendWhenBinaryArgumentIsUnaryMessageSend" />
-      <item index="6" class="java.lang.String" itemvalue="JUnit.GeneratorTest" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldVisitBinaryMessageSendWhenMessageSendIsBinaryType" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.AnalyserTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldVisitUnaryMessageSendWhenBinaryArgumentUnaryMessageSend" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldVisitUnaryMessageSendWhenBinaryArgumentIsUnaryMessageSend" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.GeneratorTest" />
+      <item index="5" class="java.lang.String" itemvalue="Application.Stic" />
+      <item index="6" class="java.lang.String" itemvalue="JUnit.SticTest" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -783,7 +795,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1442" height="877" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -792,17 +804,17 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264177" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23220704" sideWeight="0.6616231" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23220704" sideWeight="0.6616231" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287483" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.54180986" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264177" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -842,21 +854,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/UnaryMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="1192" selection-end="1192" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/KeywordArgument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="1192" selection-end="1192" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/KeywordMessageSend.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="1192" selection-end="1192" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/UnaryMessageSend.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="13" selection-start="1192" selection-end="1192" vertical-scroll-proportion="0.0" />
@@ -897,33 +894,56 @@
         <state line="45" column="0" selection-start="1621" selection-end="1621" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="59" selection-start="4789" selection-end="4789" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="237" column="65" selection-start="9153" selection-end="9153" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="28" column="13" selection-start="1281" selection-end="1281" vertical-scroll-proportion="0.021929825">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="110" selection-start="8955" selection-end="8955" vertical-scroll-proportion="0.0">
+        <state line="174" column="110" selection-start="8955" selection-end="8955" vertical-scroll-proportion="0.80263156">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="1281" selection-end="1281" vertical-scroll-proportion="-0.8391813">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="237" column="65" selection-start="9153" selection-end="9153" vertical-scroll-proportion="0.35622317">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="145" column="59" selection-start="4789" selection-end="4789" vertical-scroll-proportion="0.021459227">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/CommandLineTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="13" selection-start="1393" selection-end="1393" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/BootstrapperTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="13" selection-start="1629" selection-end="1629" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="8" selection-start="2017" selection-end="2017" vertical-scroll-proportion="0.08583691">
           <folding />
         </state>
       </provider>
