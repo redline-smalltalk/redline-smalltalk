@@ -1,4 +1,12 @@
-21/01.2011 Changes
+25/01/2011 Changes
+
+Cleaned up Bootstrapper class and added more to the hierarchy of classes that gets
+bootstrapped. These placeholder skeleton classes will be reloaded from source at a later
+point.
+I think the hierarchy is correct and I need to double check.
+
+
+21/01/2011 Changes
 
 Added bootstrap superclass to bootstrapped String and Symbol so that method lookup
 doesnt throw NPE.
