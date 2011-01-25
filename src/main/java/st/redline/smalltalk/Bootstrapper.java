@@ -102,9 +102,7 @@ public class Bootstrapper {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
 			String name = arg1.data.primitiveValue().toString();
 			RObject metaclassClass = smalltalk.primitiveAt(METACLASS_NAME);
-			RObject subclass = createSubclass(name, receiver, metaclassClass);
-			smalltalk.primitiveAtPut(name, subclass);
-			return subclass;
+			return createSubclass(name, receiver, metaclassClass);
 		}
 	}
 }
