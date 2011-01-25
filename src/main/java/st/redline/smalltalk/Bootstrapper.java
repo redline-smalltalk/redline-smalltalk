@@ -24,6 +24,7 @@ public class Bootstrapper {
 
 	private static final String SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:";
 	private static final String NEW_SELECTOR = "new";
+	private static final String METACLASS_NAME = "Metaclass";
 
 	private final Smalltalk smalltalk;
 
@@ -32,7 +33,7 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
-		RObject metaclassClass = createClass("Metaclass");
+		RObject metaclassClass = createClass(METACLASS_NAME);
 		RObject protoObjectClass = createClass("ProtoObject", metaclassClass);
 		RObject objectClass = createSubclass("Object", protoObjectClass, metaclassClass);
 		RObject behaviorClass = createSubclass("Behavior", objectClass, metaclassClass);
@@ -99,9 +100,11 @@ public class Bootstrapper {
 
 	public class PrimitiveSubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
-			String subclass = arg1.data.primitiveValue().toString();
-			System.out.println("subclass #" + subclass + " - TODO");
-			return null;
+			String name = arg1.data.primitiveValue().toString();
+			RObject metaclassClass = smalltalk.primitiveAt(METACLASS_NAME);
+			RObject subclass = createSubclass(name, receiver, metaclassClass);
+			smalltalk.primitiveAtPut(name, subclass);
+			return subclass;
 		}
 	}
 }

@@ -1,4 +1,6 @@
 
+Work out where a new class is registered twice.
+
 Boostrapper could be made more DRY.
 
 Implement mehanism during doesNotUnderstand to turn bootstrapped classes into
