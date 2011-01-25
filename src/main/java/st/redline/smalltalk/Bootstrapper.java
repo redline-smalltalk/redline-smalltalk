@@ -102,6 +102,9 @@ public class Bootstrapper {
 	public class PrimitiveSubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
 			String name = arg1.data.primitiveValue().toString();
+			RObject existing = smalltalk.cachedObject0(name);
+			if (existing != null)
+				return existing;
 			RObject metaclassClass = smalltalk.primitiveAt(METACLASS_NAME);
 			return createSubclass(name, receiver, metaclassClass);
 		}

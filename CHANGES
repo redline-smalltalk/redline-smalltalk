@@ -1,3 +1,7 @@
+26/01/2011 Changes
+
+Lookup existing class when making subclass (dont assume it is a new class).
+
 25/01/2011 Changes
 
 Cleaned up Bootstrapper class and added more to the hierarchy of classes that gets
