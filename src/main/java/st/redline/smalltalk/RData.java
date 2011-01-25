@@ -21,6 +21,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk;
 
 public abstract class RData {
+	public abstract String primitiveName();
+	public abstract void primitiveName(String name);
 	public abstract Object primitiveValue();
 	public abstract void primitiveValue(Object value);
 	public abstract RMethod methodAt(String selector);

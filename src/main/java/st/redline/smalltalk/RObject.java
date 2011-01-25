@@ -82,6 +82,13 @@ public class RObject {
 		data = new PrimitiveInstanceData();
 	}
 
+	public String toString() {
+		String name = oop[CLASS_OFFSET].data.primitiveName();
+		if (name != null)
+			return name;
+		return data.primitiveName();
+	}
+
 	private static RMethod methodFor(RObject rObject, String selector) {
 		RMethod method;
 		RObject superclass = rObject;

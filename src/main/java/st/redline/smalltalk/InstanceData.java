@@ -26,6 +26,14 @@ public class InstanceData extends RData {
 		super();
 	}
 
+	public String primitiveName() {
+		throw instanceDoesntHavePrimitiveName();
+	}
+
+	public void primitiveName(String name) {
+		throw instanceDoesntHavePrimitiveName();
+	}
+
 	public Object primitiveValue() {
 		throw instanceDoesntHavePrimitiveValue();
 	}
@@ -47,6 +55,10 @@ public class InstanceData extends RData {
 	}
 
 	private IllegalStateException instanceDoesntHavePrimitiveValue() {
-		return new IllegalStateException("Object donesn't have primitive value.");
+		return new IllegalStateException("Object doesn't have primitive value.");
+	}
+
+	private IllegalStateException instanceDoesntHavePrimitiveName() {
+		return new IllegalStateException("Object instances doesn't have primitive names.");
 	}
 }

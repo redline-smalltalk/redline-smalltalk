@@ -74,6 +74,7 @@ public class Bootstrapper {
 		RObject aClass = RObject.classInstance();
 		RObject aMetaclass = RObject.classInstance();
 		aClass.oop[RObject.CLASS_OFFSET] = aMetaclass;
+		aClass.data.primitiveName(name);
 		smalltalk.primitiveAtPut(name, aClass);
 		return aClass;
 	}

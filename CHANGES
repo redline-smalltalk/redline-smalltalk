@@ -6,6 +6,7 @@ point.
 I think the hierarchy is correct and I need to double check.
 Reimplemented primitive subclassing to use cleaned up Bootstrapper methods.
 Removed duplicate registration of new class during subclass.
+Added primitive names to classes - java toString() returns this name. Helps debugging.
 
 
 21/01/2011 Changes

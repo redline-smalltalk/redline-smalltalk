@@ -91,7 +91,15 @@ public class BootstrapperTest {
 		RObject protoObjectClass = map.get("ProtoObject");
 		RObject protoObjectMetaclass = protoObjectClass.oop[RObject.CLASS_OFFSET];
 		RObject classClass = protoObjectMetaclass.oop[RObject.SUPERCLASS_OFFSET];
-		System.out.println(classClass.data.methodAt("subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:"));
+		assertNotNull(classClass.data.methodAt("subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:"));
+	}
+
+	@Test public void shouldInitializeClassNames() {
+		map = new Hashtable<String, RObject>();
+		bootstrapper = new Bootstrapper(smalltalkThatCapturesBasicAtPut());
+		bootstrapper.bootstrap();
+		RObject protoObjectClass = map.get("ProtoObject");
+		assertEquals("ProtoObject", protoObjectClass.data.primitiveName());
 	}
 
 	private Smalltalk smalltalkThatCapturesBasicAtPut() {

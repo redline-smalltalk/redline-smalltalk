@@ -25,10 +25,19 @@ import java.util.Map;
 public class ClassData extends RData {
 
 	private final Map<String, RMethod> methodDictionary;
+	private String name;
 
 	public ClassData(Map<String, RMethod> methodDictionary) {
 		super();
 		this.methodDictionary = methodDictionary;
+	}
+
+	public String primitiveName() {
+		return name;
+	}
+
+	public void primitiveName(String name) {
+		this.name = name;
 	}
 
 	public Object primitiveValue() {
