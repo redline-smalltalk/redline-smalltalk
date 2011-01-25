@@ -32,104 +32,58 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
-		bootstrapNil();
-		bootstrapLiterals();
-		bootstrapProtoObject();
+		RObject metaclassClass = createClass("Metaclass");
+		RObject protoObjectClass = createClass("ProtoObject", metaclassClass);
+		RObject objectClass = createSubclass("Object", protoObjectClass, metaclassClass);
+		RObject behaviorClass = createSubclass("Behavior", objectClass, metaclassClass);
+		RObject classDescriptionClass = createSubclass("ClassDescription", behaviorClass, metaclassClass);
+		RObject classClass = createSubclass("Class", classDescriptionClass, metaclassClass);
+		RObject collectionClass = createSubclass("Collection", objectClass, metaclassClass);
+		RObject sequenceableCollectionClass = createSubclass("SequenceableCollection", collectionClass, metaclassClass);
+		RObject arrayedCollectionClass = createSubclass("ArrayedCollection", sequenceableCollectionClass, metaclassClass);
+		RObject stringClass = createSubclass("String", arrayedCollectionClass, metaclassClass);
+		RObject symbolClass = createSubclass("Symbol", stringClass, metaclassClass);
+		RObject undefinedObjectClass = createSubclass("UndefinedObject", objectClass, metaclassClass);
+
+		// fixup hierarchy.
+		protoObjectClass.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET] = classClass;
+		metaclassClass.oop[RObject.SUPERCLASS_OFFSET] = classDescriptionClass;
+		metaclassClass.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET] = classDescriptionClass.oop[RObject.CLASS_OFFSET];
+
+		// create and register 'nil' instance.
+		RObject nil = RObject.instanceInstance();
+		nil.oop[RObject.CLASS_OFFSET] = undefinedObjectClass;
+		smalltalk.primitiveAtPut("nil", nil);
+
+		// add bootstrapped methods.
+		stringClass.oop[RObject.CLASS_OFFSET].data.methodAtPut(NEW_SELECTOR, new PrimitiveNewMethod());
+		undefinedObjectClass.oop[RObject.CLASS_OFFSET].data.methodAtPut(NEW_SELECTOR, new PrimitiveNewNotAllowedMethod());
+		classClass.data.methodAtPut(SUBCLASSING_SELECTOR, new PrimitiveSubclassMethod());
 	}
 
-	private void bootstrapProtoObject() {
-		RObject classClass = bootstrapClassClass();
-		RObject protoObjectClassMetaclass = bootstrapProtoObjectClassMetaclass(classClass);
-		RObject protoObjectClass = bootstrapProtoObjectClass(protoObjectClassMetaclass);
-		smalltalk.primitiveAtPut("Class", classClass);
-		smalltalk.primitiveAtPut("ProtoObject", protoObjectClass);
+	private RObject createSubclass(String name, RObject superclass, RObject metaclassClass) {
+		RObject aClass = createClass(name, metaclassClass);
+		// set aClass' superclass and the superclass of its metaclass (mirrored hierarchy).
+		aClass.oop[RObject.SUPERCLASS_OFFSET] = superclass;
+		aClass.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET] = superclass.oop[RObject.CLASS_OFFSET];
+		return aClass;
 	}
 
-	private void bootstrapLiterals() {
-		bootstrapStringLiteral();
-		bootstrapSymbolLiteral();
+	private RObject createClass(String name) {
+		RObject aClass = RObject.classInstance();
+		RObject aMetaclass = RObject.classInstance();
+		aClass.oop[RObject.CLASS_OFFSET] = aMetaclass;
+		smalltalk.primitiveAtPut(name, aClass);
+		return aClass;
 	}
 
-	private void bootstrapSymbolLiteral() {
-		RObject symbolSuperclass = RObject.classInstance();
-		RObject symbolClass = bootstrapPrimitiveClass(new NewMethod());
-		smalltalk.primitiveAtPut("Symbol", symbolClass);
-		symbolClass.oop[RObject.SUPERCLASS_OFFSET] = symbolSuperclass;
+	private RObject createClass(String name, RObject metaclassClass) {
+		RObject aClass = createClass(name);
+		aClass.oop[RObject.CLASS_OFFSET].oop[RObject.CLASS_OFFSET] = metaclassClass;
+		return aClass;
 	}
 
-	private void bootstrapStringLiteral() {
-		RObject stringSuperclass = RObject.classInstance();
-		RObject stringClass = bootstrapPrimitiveClass(new NewMethod());
-		stringClass.oop[RObject.SUPERCLASS_OFFSET] = stringSuperclass;
-		smalltalk.primitiveAtPut("String", stringClass);
-	}
-
-	private void bootstrapNil() {
-		RObject undefinedObjectClass = bootstrapPrimitiveClass(new IllegalToNewMethod());
-		RObject undefinedObject = RObject.primitiveInstance();
-		undefinedObject.oop[RObject.CLASS_OFFSET] = undefinedObjectClass;
-		smalltalk.primitiveAtPut("nil", undefinedObject);
-		smalltalk.primitiveAtPut("UndefinedObject", undefinedObjectClass);
-	}
-
-	private RObject bootstrapPrimitiveClass(RMethod newMethod) {
-		RObject primClass = RObject.classInstance();
-		RObject primMetaclass = RObject.classInstance();
-		primClass.oop[RObject.CLASS_OFFSET] = primMetaclass;
-		primMetaclass.data.methodAtPut(NEW_SELECTOR, newMethod);
-		return primClass;
-	}
-
-	private RObject bootstrapClassClass() {
-		// TODO.JCL initialize super and metaclass.
-		RObject classClass = RObject.classInstance();
-		classClass.oop[RObject.CLASS_OFFSET] = null;
-		classClass.oop[RObject.SUPERCLASS_OFFSET] = null;
-		classClass.data.methodAtPut(SUBCLASSING_SELECTOR, new SubclassMethod());
-		return classClass;
-	}
-
-	private RObject bootstrapProtoObjectClassMetaclass(RObject superclass) {
-		RObject protoObjectClassMetaclass = RObject.classInstance();
-		protoObjectClassMetaclass.oop[RObject.CLASS_OFFSET] = null;
-		protoObjectClassMetaclass.oop[RObject.SUPERCLASS_OFFSET] = superclass;
-		return protoObjectClassMetaclass;
-	}
-
-	private RObject bootstrapProtoObjectClass(RObject metaclass) {
-		RObject protoObjectClass = RObject.classInstance();
-		protoObjectClass.oop[RObject.CLASS_OFFSET] = metaclass;
-		protoObjectClass.oop[RObject.SUPERCLASS_OFFSET] = null;
-		return protoObjectClass;
-	}
-
-	public class SubclassMethod extends RMethod {
-		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
-			String subclass = arg1.data.primitiveValue().toString();
-			RObject newClass = findOrCreateClass(subclass);
-			RObject metaclass = findOrCreateMetaclass(newClass);
-			newClass.oop[RObject.CLASS_OFFSET] = metaclass;
-			newClass.oop[RObject.SUPERCLASS_OFFSET] = receiver;
-			metaclass.oop[RObject.SUPERCLASS_OFFSET] = receiver.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET];
-			Smalltalk.instance().primitiveAtPut(subclass, newClass);
-			return newClass;
-		}
-	}
-
-	private RObject findOrCreateMetaclass(RObject aClass) {
-		if (aClass.oop[RObject.CLASS_OFFSET] != null)
-			return aClass.oop[RObject.CLASS_OFFSET];
-		return RObject.classInstance();
-	}
-
-	private RObject findOrCreateClass(String subclassName) {
-		RObject subclass = smalltalk.cachedObject0(subclassName);
-		if (subclass != null)
-			return subclass;
-		return RObject.classInstance();
-	}
-
-	public class NewMethod extends RMethod {
+	public class PrimitiveNewMethod extends RMethod {
 		public RObject applyTo(RObject receiver) {
 			RObject instance = RObject.primitiveInstance();
 			instance.oop[RObject.CLASS_OFFSET] = receiver;
@@ -137,9 +91,17 @@ public class Bootstrapper {
 		}
 	}
 
-	public class IllegalToNewMethod extends RMethod {
+	public class PrimitiveNewNotAllowedMethod extends RMethod {
 		public RObject applyTo(RObject receiver) {
 			throw new IllegalStateException("Can't new an instance of UndefinedObject.");
+		}
+	}
+
+	public class PrimitiveSubclassMethod extends RMethod {
+		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
+			String subclass = arg1.data.primitiveValue().toString();
+			System.out.println("subclass #" + subclass + " - TODO");
+			return null;
 		}
 	}
 }

@@ -47,14 +47,21 @@ public class BootstrapperTest {
 		bootstrapper = new Bootstrapper(smalltalk);
 	}
 
-	@Test public void shouldRegisterProtoObjectClass() {
+	@Test public void shouldRegisterClasses() {
 		bootstrapper.bootstrap();
+		verify(smalltalk).primitiveAtPut(eq("Metaclass"), (RObject) notNull());
 		verify(smalltalk).primitiveAtPut(eq("ProtoObject"), (RObject) notNull());
-	}
-
-	@Test public void shouldRegisterClassClass() {
-		bootstrapper.bootstrap();
+		verify(smalltalk).primitiveAtPut(eq("Object"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("Behavior"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("ClassDescription"), (RObject) notNull());
 		verify(smalltalk).primitiveAtPut(eq("Class"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("Collection"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("SequenceableCollection"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("ArrayedCollection"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("String"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("Symbol"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("UndefinedObject"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("nil"), (RObject) notNull());
 	}
 
 	@Test public void shouldInitializeProtoObjectClassHierarchyAccordingToSmalltalkRules() {
@@ -62,13 +69,29 @@ public class BootstrapperTest {
 		bootstrapper = new Bootstrapper(smalltalkThatCapturesBasicAtPut());
 		bootstrapper.bootstrap();
 		assertTrue(map.containsKey("ProtoObject"));
+		assertTrue(map.containsKey("Class"));
+		assertTrue(map.containsKey("Metaclass"));
+		assertTrue(map.containsKey("ClassDescription"));
 		RObject protoObjectClass = map.get("ProtoObject");
-		assertNull(protoObjectClass.oop[RObject.SUPERCLASS_OFFSET]);
-		assertNotNull(protoObjectClass.oop[RObject.CLASS_OFFSET]);
-		RObject protoObjectClassMetaclass = protoObjectClass.oop[RObject.CLASS_OFFSET];
-		assertNull(protoObjectClassMetaclass.oop[RObject.CLASS_OFFSET]);
-		assertNotNull(protoObjectClassMetaclass.oop[RObject.SUPERCLASS_OFFSET]);
-		assertEquals(protoObjectClassMetaclass.oop[RObject.SUPERCLASS_OFFSET], map.get("Class"));
+		RObject classClass = map.get("Class");
+		RObject metaclassClass = map.get("Metaclass");
+		RObject classDescriptionClass = map.get("ClassDescription");
+		assertEquals(null, protoObjectClass.oop[RObject.SUPERCLASS_OFFSET]);
+		RObject protoObjectMetaclass = protoObjectClass.oop[RObject.CLASS_OFFSET];
+		assertEquals(protoObjectMetaclass.oop[RObject.SUPERCLASS_OFFSET], classClass);
+		assertEquals(protoObjectMetaclass.oop[RObject.CLASS_OFFSET], metaclassClass);
+		assertEquals(classClass.oop[RObject.SUPERCLASS_OFFSET], classDescriptionClass);
+		assertEquals(classClass.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET], classDescriptionClass.oop[RObject.CLASS_OFFSET]);
+	}
+
+	@Test public void shouldInitializeBootstrapMethods() {
+		map = new Hashtable<String, RObject>();
+		bootstrapper = new Bootstrapper(smalltalkThatCapturesBasicAtPut());
+		bootstrapper.bootstrap();
+		RObject protoObjectClass = map.get("ProtoObject");
+		RObject protoObjectMetaclass = protoObjectClass.oop[RObject.CLASS_OFFSET];
+		RObject classClass = protoObjectMetaclass.oop[RObject.SUPERCLASS_OFFSET];
+		System.out.println(classClass.data.methodAt("subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:"));
 	}
 
 	private Smalltalk smalltalkThatCapturesBasicAtPut() {
