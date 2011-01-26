@@ -102,6 +102,14 @@ public class BootstrapperTest {
 		assertEquals("ProtoObject", protoObjectClass.data.primitiveName());
 	}
 
+	@Test public void shouldInitializeClassAsBootstrapped() {
+		map = new Hashtable<String, RObject>();
+		bootstrapper = new Bootstrapper(smalltalkThatCapturesBasicAtPut());
+		bootstrapper.bootstrap();
+		RObject protoObjectClass = map.get("ProtoObject");
+		assertTrue(protoObjectClass.data.isBootstrapped());
+	}
+
 	private Smalltalk smalltalkThatCapturesBasicAtPut() {
 		return new SmalltalkThatCapturesBasicAtPut();
 	}

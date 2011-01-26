@@ -233,7 +233,7 @@ public class Smalltalk extends ClassLoader {
 		return cachedObjects.containsKey(className);
 	}
 
-	private boolean resolveClassObject(String name) {
+	protected boolean resolveClassObject(String name) {
 		try {
 			if (verboseOn)
 				log.info("resolveClassObject('" + name + "')");

@@ -26,6 +26,14 @@ public class InstanceData extends RData {
 		super();
 	}
 
+	public boolean isBootstrapped() {
+		return false;
+	}
+
+	public void bootstrapped(boolean flag) {
+		throw new IllegalStateException("Can't mark instance as abstract.");
+	}
+
 	public String primitiveName() {
 		throw instanceDoesntHavePrimitiveName();
 	}

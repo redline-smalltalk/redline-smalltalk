@@ -25,6 +25,8 @@ public class Bootstrapper {
 	private static final String SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:";
 	private static final String NEW_SELECTOR = "new";
 	private static final String METACLASS_NAME = "Metaclass";
+	private static final boolean BOOTSTRAPPED = true;
+	private static final boolean NOT_BOOSTRAPPED = false;
 
 	private final Smalltalk smalltalk;
 
@@ -33,18 +35,18 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
-		RObject metaclassClass = createClass(METACLASS_NAME);
-		RObject protoObjectClass = createClass("ProtoObject", metaclassClass);
-		RObject objectClass = createSubclass("Object", protoObjectClass, metaclassClass);
-		RObject behaviorClass = createSubclass("Behavior", objectClass, metaclassClass);
-		RObject classDescriptionClass = createSubclass("ClassDescription", behaviorClass, metaclassClass);
-		RObject classClass = createSubclass("Class", classDescriptionClass, metaclassClass);
-		RObject collectionClass = createSubclass("Collection", objectClass, metaclassClass);
-		RObject sequenceableCollectionClass = createSubclass("SequenceableCollection", collectionClass, metaclassClass);
-		RObject arrayedCollectionClass = createSubclass("ArrayedCollection", sequenceableCollectionClass, metaclassClass);
-		RObject stringClass = createSubclass("String", arrayedCollectionClass, metaclassClass);
-		RObject symbolClass = createSubclass("Symbol", stringClass, metaclassClass);
-		RObject undefinedObjectClass = createSubclass("UndefinedObject", objectClass, metaclassClass);
+		RObject metaclassClass = createBootstrappedClass(METACLASS_NAME);
+		RObject protoObjectClass = createBootstrappedClass("ProtoObject", metaclassClass);
+		RObject objectClass = createBootstrappedSubclass("Object", protoObjectClass, metaclassClass);
+		RObject behaviorClass = createBootstrappedSubclass("Behavior", objectClass, metaclassClass);
+		RObject classDescriptionClass = createBootstrappedSubclass("ClassDescription", behaviorClass, metaclassClass);
+		RObject classClass = createBootstrappedSubclass("Class", classDescriptionClass, metaclassClass);
+		RObject collectionClass = createBootstrappedSubclass("Collection", objectClass, metaclassClass);
+		RObject sequenceableCollectionClass = createBootstrappedSubclass("SequenceableCollection", collectionClass, metaclassClass);
+		RObject arrayedCollectionClass = createBootstrappedSubclass("ArrayedCollection", sequenceableCollectionClass, metaclassClass);
+		RObject stringClass = createBootstrappedSubclass("String", arrayedCollectionClass, metaclassClass);
+		RObject symbolClass = createBootstrappedSubclass("Symbol", stringClass, metaclassClass);
+		RObject undefinedObjectClass = createBootstrappedSubclass("UndefinedObject", objectClass, metaclassClass);
 
 		// fixup hierarchy.
 		protoObjectClass.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET] = classClass;
@@ -62,25 +64,38 @@ public class Bootstrapper {
 		classClass.data.methodAtPut(SUBCLASSING_SELECTOR, new PrimitiveSubclassMethod());
 	}
 
-	private RObject createSubclass(String name, RObject superclass, RObject metaclassClass) {
-		RObject aClass = createClass(name, metaclassClass);
+	private RObject createBootstrappedSubclass(String name, RObject superclass, RObject metaclassClass) {
+		return createSubclass(name, superclass, metaclassClass, BOOTSTRAPPED);
+	}
+
+	private RObject createSubclass(String name, RObject superclass, RObject metaclassClass, boolean bootstrapped) {
+		RObject aClass = createClass(name, metaclassClass, bootstrapped);
 		// set aClass' superclass and the superclass of its metaclass (mirrored hierarchy).
 		aClass.oop[RObject.SUPERCLASS_OFFSET] = superclass;
 		aClass.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET] = superclass.oop[RObject.CLASS_OFFSET];
 		return aClass;
 	}
 
-	private RObject createClass(String name) {
+	private RObject createBootstrappedClass(String name) {
+		return createClass(name, BOOTSTRAPPED);
+	}
+
+	private RObject createClass(String name, boolean bootstrapped) {
 		RObject aClass = RObject.classInstance();
 		RObject aMetaclass = RObject.classInstance();
 		aClass.oop[RObject.CLASS_OFFSET] = aMetaclass;
 		aClass.data.primitiveName(name);
+		aClass.data.bootstrapped(bootstrapped);
 		smalltalk.primitiveAtPut(name, aClass);
 		return aClass;
 	}
 
-	private RObject createClass(String name, RObject metaclassClass) {
-		RObject aClass = createClass(name);
+	private RObject createBootstrappedClass(String name, RObject metaclassClass) {
+		return createClass(name, metaclassClass, BOOTSTRAPPED);
+	}
+
+	private RObject createClass(String name, RObject metaclassClass, boolean bootstrapped) {
+		RObject aClass = createClass(name, bootstrapped);
 		aClass.oop[RObject.CLASS_OFFSET].oop[RObject.CLASS_OFFSET] = metaclassClass;
 		return aClass;
 	}
@@ -101,12 +116,15 @@ public class Bootstrapper {
 
 	public class PrimitiveSubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
+			// There is more to do here just not yet.
 			String name = arg1.data.primitiveValue().toString();
 			RObject existing = smalltalk.cachedObject0(name);
-			if (existing != null)
+			if (existing != null) {
+				existing.data.bootstrapped(false);
 				return existing;
+			}
 			RObject metaclassClass = smalltalk.primitiveAt(METACLASS_NAME);
-			return createSubclass(name, receiver, metaclassClass);
+			return createSubclass(name, receiver, metaclassClass, NOT_BOOSTRAPPED);
 		}
 	}
 }

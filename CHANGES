@@ -1,6 +1,9 @@
 26/01/2011 Changes
 
 Lookup existing class when making subclass (dont assume it is a new class).
+Modified message send handling to reload classes that are bootstrapped from source
+when they dont understand a message. After reload message is resent.
+
 
 25/01/2011 Changes
 

@@ -21,6 +21,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk;
 
 public abstract class RData {
+	public abstract boolean isBootstrapped();
+	public abstract void bootstrapped(boolean flag);
 	public abstract String primitiveName();
 	public abstract void primitiveName(String name);
 	public abstract Object primitiveValue();

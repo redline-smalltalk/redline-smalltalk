@@ -20,6 +20,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -27,6 +30,8 @@ import java.util.Map;
  * Provides base for all Smalltalk Objects.
  */
 public class RObject {
+
+	private final static Logger log = LoggerFactory.getLogger(RObject.class);
 
 	protected enum Datum { CLASS, INSTANCE, PRIMITIVEINSTANCE };
 
@@ -83,6 +88,10 @@ public class RObject {
 	}
 
 	public String toString() {
+		return name();
+	}
+
+	protected String name() {
 		String name = oop[CLASS_OFFSET].data.primitiveName();
 		if (name != null)
 			return name;
@@ -102,6 +111,18 @@ public class RObject {
 		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
 	}
 
+	private static boolean isBootstrapped(RObject object) {
+		return (object.data.isBootstrapped() || object.oop[CLASS_OFFSET].data.isBootstrapped());
+	}
+
+	private static boolean resolveClassObject(RObject object) {
+		String className = object.name();
+		Smalltalk smalltalk = Smalltalk.instance();
+		if (smalltalk.verboseOn())
+			log.info("Resolving bootstrapped class '" + className + "'");
+		return smalltalk.resolveClassObject(className);
+	}
+
 	//
 	// send(r,s) to send(r,a,a,a,a,a,a,a,a,a,a,s)
 	// Note: Selector (s) is last argument.
@@ -114,6 +135,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyTo(receiver);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, selector);
 		return sendDoesNotUnderstand(receiver, selector, null);
 	}
 
@@ -124,6 +148,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg});
 	}
 
@@ -134,6 +161,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg1, arg2);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg1, arg2, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2});
 	}
 
@@ -144,6 +174,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg1, arg2, arg3);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg1, arg2, arg3, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3});
 	}
 
@@ -154,6 +187,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg1, arg2, arg3, arg4);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg1, arg2, arg3, arg4, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4});
 	}
 
@@ -164,6 +200,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5});
 	}
 
@@ -174,6 +213,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6});
 	}
 
@@ -184,6 +226,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7});
 	}
 
@@ -204,6 +249,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9});
 	}
 
@@ -214,6 +262,9 @@ public class RObject {
 		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector);
 		if (method != null)
 			return method.applyToWith(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, selector);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10});
 	}
 }

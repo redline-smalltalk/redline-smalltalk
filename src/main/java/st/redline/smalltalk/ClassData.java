@@ -26,10 +26,19 @@ public class ClassData extends RData {
 
 	private final Map<String, RMethod> methodDictionary;
 	private String name;
+	private boolean bootstrapped;
 
 	public ClassData(Map<String, RMethod> methodDictionary) {
 		super();
 		this.methodDictionary = methodDictionary;
+	}
+
+	public boolean isBootstrapped() {
+		return bootstrapped;
+	}
+
+	public void bootstrapped(boolean bootstrapped) {
+		this.bootstrapped = bootstrapped;
 	}
 
 	public String primitiveName() {
