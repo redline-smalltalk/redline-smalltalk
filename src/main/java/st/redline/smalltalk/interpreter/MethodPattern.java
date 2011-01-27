@@ -20,14 +20,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public abstract class MethodPattern extends BasicNode {
-
-	public MethodPattern(Object value, int line) {
-		super(value, line);
-	}
+public abstract class MethodPattern extends BasicListNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	public Node value() {
+		return first();
 	}
 
 	public boolean isUnaryMethodPattern() {

@@ -22,12 +22,30 @@ package st.redline.smalltalk.interpreter;
 
 public class BinaryMethodPattern extends MethodPattern {
 
-	public BinaryMethodPattern(String value, int line, Variable variable) {
-		super(value, line);
-		add(variable);
+	private final String selector;
+	private final int line;
+	private final Variable variable;
+
+	public BinaryMethodPattern(String selector, int line, Variable variable) {
+		this.selector = selector;
+		this.line = line;
+		this.variable = variable;
+		add(this);
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	public String selector() {
+		return ((BinaryMethodPattern) value()).selector;
+	}
+
+	public int line() {
+		return ((BinaryMethodPattern) value()).line;
+	}
+
+	public Variable variable() {
+		return ((BinaryMethodPattern) value()).variable;
 	}
 }

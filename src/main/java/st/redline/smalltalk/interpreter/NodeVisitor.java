@@ -7,6 +7,9 @@ public interface NodeVisitor {
 	void visit(MethodChunk methodChunk);
 	void visit(Method method);
 	void visit(MethodPattern methodPattern);
+	void visit(UnaryMethodPattern unaryMethodPattern);
+	void visit(BinaryMethodPattern binaryMethodPattern);
+	void visit(KeywordMethodPattern keywordMethodPattern);
 	void visit(Sequence sequence);
 	void visit(Statements statements);
 	void visit(StatementList statementList);

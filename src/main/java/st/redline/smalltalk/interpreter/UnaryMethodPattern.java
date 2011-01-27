@@ -22,11 +22,24 @@ package st.redline.smalltalk.interpreter;
 
 public class UnaryMethodPattern extends MethodPattern {
 
-	public UnaryMethodPattern(String value, int line) {
-		super(value, line);
+	private final String selector;
+	private final int line;
+
+	public UnaryMethodPattern(String selector, int line) {
+		this.selector = selector;
+		this.line = line;
+		add(this);
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	public String selector() {
+		return ((UnaryMethodPattern) value()).selector;
+	}
+
+	public int line() {
+		return ((UnaryMethodPattern) value()).line;
 	}
 }

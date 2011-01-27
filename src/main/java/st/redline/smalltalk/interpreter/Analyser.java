@@ -36,8 +36,12 @@ public class Analyser implements NodeVisitor {
 		generator.initialize();
 	}
 
-	public byte[] result() {
+	public byte[] classResult() {
 		return generator.classBytes();
+	}
+
+	public byte[][] methodClassResults() {
+		return generator.methodClassesBytes();
 	}
 
 	public void visit(Program program) {
@@ -57,8 +61,10 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Method method) {
+		generator.openMethodClass();
 		method.methodPattern().accept(this);
 		method.sequence().accept(this);
+		generator.closeMethodClass();
 	}
 
 	public void visit(MethodPattern methodPattern) {
@@ -68,6 +74,21 @@ public class Analyser implements NodeVisitor {
 			methodPattern.keywordMethodPattern().accept(this);
 		else if (methodPattern.isBinaryMethodPattern())
 			methodPattern.binaryMethodPattern().accept(this);
+	}
+
+	public void visit(UnaryMethodPattern unaryMethodPattern) {
+		generator.nameMethodClass(unaryMethodPattern.selector());
+	}
+
+	public void visit(BinaryMethodPattern binaryMethodPattern) {
+		generator.nameMethodClass(binaryMethodPattern.selector());
+	}
+
+	public void visit(KeywordMethodPattern keywordMethodPattern) {
+		StringBuffer keywords = new StringBuffer();
+		for (String keyword : keywordMethodPattern.keywords())
+			keywords.append(keyword);
+		generator.nameMethodClass(keywords.toString());
 	}
 
 	private void writeClass(Program program) {

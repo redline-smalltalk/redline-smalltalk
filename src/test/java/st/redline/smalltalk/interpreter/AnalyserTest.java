@@ -36,7 +36,7 @@ public class AnalyserTest {
 
 	private static final String PACKAGE_INTERNAL_NAME = "st/redline/smalltalk";
 	private static final String CLASS_NAME = "Test";
-	private static final String UNARY_MESSAGE = "new";
+	private static final String UNARY_SELECTOR = "new";
 	private static final String KEYWORD_SELECTOR = "at:put:";
 	private static final String STRING = "'foo'";
 	private static final String SYMBOL = "foo";
@@ -104,6 +104,32 @@ public class AnalyserTest {
 		verify(generator).closeClass();
 	}
 
+	@Test public void shouldGenerateMethodClassFromMethodNode() {
+		analyser.visit(method);
+		verify(generator).openMethodClass();
+		verify(methodPattern).accept(analyser);
+		verify(sequence).accept(analyser);
+		verify(generator).closeMethodClass();
+	}
+
+	@Test public void shouldGenerateMethodClassNameFromUnaryMethodPattern() {
+		when(unaryMethodPattern.selector()).thenReturn(UNARY_SELECTOR);
+		analyser.visit(unaryMethodPattern);
+		verify(generator).nameMethodClass(UNARY_SELECTOR);
+	}
+
+	@Test public void shouldGenerateMethodClassNameFromBinaryMethodPattern() {
+		when(binaryMethodPattern.selector()).thenReturn(BINARY_SELECTOR);
+		analyser.visit(binaryMethodPattern);
+		verify(generator).nameMethodClass(BINARY_SELECTOR);
+	}
+
+	@Test public void shouldGenerateMethodClassNameFromKeywordMethodPattern() {
+		when(keywordMethodPattern.keywords()).thenReturn(KEYWORD_MESSAGE_LIST);
+		analyser.visit(keywordMethodPattern);
+		verify(generator).nameMethodClass(KEYWORD_SELECTOR);
+	}
+
 	@Test public void shouldGenerateClassLookupWhenPrimaryVariableIsClassName() {
 		when(variable.isClassReference()).thenReturn(true);
 		when(variable.name()).thenReturn(CLASS_NAME);
@@ -113,10 +139,10 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldGenerateUnarySendFromUnaryMessage() {
-		when(unaryMessage.selector()).thenReturn(UNARY_MESSAGE);
+		when(unaryMessage.selector()).thenReturn(UNARY_SELECTOR);
 		when(unaryMessage.line()).thenReturn(LINE_NUMBER);
 		analyser.visit(unaryMessage);
-		verify(generator).unarySend(UNARY_MESSAGE, LINE_NUMBER);
+		verify(generator).unarySend(UNARY_SELECTOR, LINE_NUMBER);
 	}
 
 	@Test public void shouldGenerateKeywordSendFromKeywordMessage() {

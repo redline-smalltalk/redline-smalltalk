@@ -1,3 +1,9 @@
+
+28/01/2011 Changes
+
+Adding tests to Analyser to drive out generation of method classes.
+
+
 27/01/2011 Changes
 
 Implemented parsing of 'chunk' file format fragments.

@@ -81,6 +81,15 @@ public class Generator implements Opcodes {
 		openInitializeMethod();
 	}
 
+	public void openMethodClass() {
+	}
+
+	public void closeMethodClass() {
+	}
+
+	public void nameMethodClass(String methodClassName) {
+	}
+
 	private void openInitializeMethod() {
 		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
 		methodVisitor.visitCode();
@@ -143,6 +152,10 @@ public class Generator implements Opcodes {
 
 	public byte[] classBytes() {
 		return classWriter.toByteArray();
+	}
+
+	public byte[][] methodClassesBytes() {
+		return new byte[0][];
 	}
 
 	public void stackPop() {

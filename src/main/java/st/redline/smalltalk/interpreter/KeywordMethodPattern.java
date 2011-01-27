@@ -20,11 +20,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class KeywordMethodPattern extends MethodPattern {
+import java.util.ArrayList;
+import java.util.List;
 
-	public KeywordMethodPattern() {
-		super(null, 0);
-	}
+public class KeywordMethodPattern extends MethodPattern {
 
 	public void add(String value, int line, Variable variable) {
 		add(new KeywordMethodPart(value, line, variable));
@@ -32,5 +31,15 @@ public class KeywordMethodPattern extends MethodPattern {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	public List<String> keywords() {
+		final List<String> keywords = new ArrayList<String>();
+		each(new NodeCommand() {
+			public void execute(Node node) {
+				keywords.add(((KeywordMethodPart) node).keyword());
+			}
+		});
+		return keywords;
 	}
 }
