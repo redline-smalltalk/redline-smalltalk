@@ -1,3 +1,8 @@
+27/01/2011 Changes
+
+Implemented parsing of 'chunk' file format fragments.
+
+
 26/01/2011 Changes
 
 Lookup existing class when making subclass (dont assume it is a new class).

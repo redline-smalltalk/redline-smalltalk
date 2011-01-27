@@ -33,8 +33,16 @@ options {
 }
 
 program returns [Program n]
-	:	sequence EOF {$n = new Program($sequence.n);}
-	;	
+	: 	{ $n = new Program(); }
+		(chunk {$n.add($chunk.n);})* EOF
+	; 
+
+chunk returns [Chunk n]
+	:	sequence {$n = new SequenceChunk($sequence.n);} EOF
+	|	sequence {$n = new SequenceChunk($sequence.n);} '!'
+	|	'!' sequence {$n = new DirectiveChunk($sequence.n);} '!'
+	/*|	messagePattern sequence {$n = new MethodChunk($messagePattern.n, $sequence.n); } '! !'*/
+	; 
 
 sequence returns [Sequence n]
 	:	statements {$n = new Sequence($statements.n);}

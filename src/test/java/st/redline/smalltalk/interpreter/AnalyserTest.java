@@ -50,6 +50,8 @@ public class AnalyserTest {
 	@Mock Smalltalk smalltalk;
 	@Mock Generator generator;
 	@Mock Program program;
+	@Mock SequenceChunk sequenceChunk;
+	@Mock DirectiveChunk directiveChunk;
 	@Mock Sequence sequence;
 	@Mock Statements statements;
 	@Mock SourceFile sourceFile;
@@ -75,7 +77,8 @@ public class AnalyserTest {
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		analyser = new Analyser(smalltalk, generator);
-		when(program.sequence()).thenReturn(sequence);
+		when(sequenceChunk.sequence()).thenReturn(sequence);
+		when(directiveChunk.sequence()).thenReturn(sequence);
 		when(sequence.statements()).thenReturn(statements);
 		when(statements.statementList()).thenReturn(statementList);
 		when(expression.cascade()).thenReturn(cascade);
@@ -135,8 +138,18 @@ public class AnalyserTest {
 		verify(generator).primitiveSymbolConversion(SYMBOL, LINE_NUMBER);
 	}
 
-	@Test public void shouldVisitChildOfProgramNode() {
+	@Test public void shouldVisitEachNodeOfProgramNode() {
 		analyser.visit(program);
+		verify(program).eachAccept(analyser);
+	}
+
+	@Test public void shouldVisitChildOfSequenceChunkNode() {
+		analyser.visit(sequenceChunk);
+		verify(sequence).accept(analyser);
+	}
+
+	@Test public void shouldVisitChildOfDirectiveChunkNode() {
+		analyser.visit(directiveChunk);
 		verify(sequence).accept(analyser);
 	}
 

@@ -2,6 +2,8 @@ package st.redline.smalltalk.interpreter;
 
 public interface NodeVisitor {
 	void visit(Program program);
+	void visit(SequenceChunk chunk);
+	void visit(DirectiveChunk chunk);
 	void visit(Sequence sequence);
 	void visit(Statements statements);
 	void visit(StatementList statementList);

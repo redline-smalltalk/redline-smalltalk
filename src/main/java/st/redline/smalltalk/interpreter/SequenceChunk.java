@@ -13,38 +13,24 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Program extends BasicListNode {
+public class SequenceChunk extends Chunk {
 
-	public Program() {
-	}
-
-	public void add(Chunk chunk) {
-		super.add(chunk);
+	public SequenceChunk(Sequence value) {
+		super(value);
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
 
-	public void eachAccept(final NodeVisitor visitor) {
-		each(new NodeCommand() {
-			public void execute(Node node) {
-				if (node instanceof SequenceChunk)
-					visitor.visit((SequenceChunk) node);
-				else if (node instanceof DirectiveChunk)
-					visitor.visit((DirectiveChunk) node);
-				else if (node instanceof MethodChunk)
-					visitor.visit((MethodChunk) node);
-				else
-					throw new IllegalStateException("Unknown 'Chunk' type.");
-			}
-		});
+	public Sequence sequence() {
+		return (Sequence) value();
 	}
 }

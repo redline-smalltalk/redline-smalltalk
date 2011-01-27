@@ -44,9 +44,20 @@ public class Analyser implements NodeVisitor {
 		writeClass(program);
 	}
 
+	public void visit(SequenceChunk sequenceChunk) {
+		sequenceChunk.sequence().accept(this);
+	}
+
+	public void visit(DirectiveChunk directiveChunk) {
+		directiveChunk.sequence().accept(this);
+	}
+
+	public void visit(MethodChunk methodChunk) {
+	}
+
 	private void writeClass(Program program) {
 		generator.openClass(sourceFileName(), sourceFileParentPathWithoutSourcePaths());
-		program.sequence().accept(this);
+		program.eachAccept(this);
 		generator.closeClass();
 	}
 
