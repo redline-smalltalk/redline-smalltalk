@@ -22,7 +22,7 @@ package st.redline.smalltalk.interpreter;
 
 public abstract class Chunk extends BasicNode {
 
-	public Chunk(Sequence value) {
+	public Chunk(Object value) {
 		super(value);
 	}
 

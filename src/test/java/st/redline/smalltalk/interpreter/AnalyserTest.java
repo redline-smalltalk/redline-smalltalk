@@ -52,6 +52,12 @@ public class AnalyserTest {
 	@Mock Program program;
 	@Mock SequenceChunk sequenceChunk;
 	@Mock DirectiveChunk directiveChunk;
+	@Mock MethodChunk methodChunk;
+	@Mock Method method;
+	@Mock MethodPattern methodPattern;
+	@Mock UnaryMethodPattern unaryMethodPattern;
+	@Mock BinaryMethodPattern binaryMethodPattern;
+	@Mock KeywordMethodPattern keywordMethodPattern;
 	@Mock Sequence sequence;
 	@Mock Statements statements;
 	@Mock SourceFile sourceFile;
@@ -79,6 +85,9 @@ public class AnalyserTest {
 		analyser = new Analyser(smalltalk, generator);
 		when(sequenceChunk.sequence()).thenReturn(sequence);
 		when(directiveChunk.sequence()).thenReturn(sequence);
+		when(methodChunk.method()).thenReturn(method);
+		when(method.methodPattern()).thenReturn(methodPattern);
+		when(method.sequence()).thenReturn(sequence);
 		when(sequence.statements()).thenReturn(statements);
 		when(statements.statementList()).thenReturn(statementList);
 		when(expression.cascade()).thenReturn(cascade);
@@ -151,6 +160,38 @@ public class AnalyserTest {
 	@Test public void shouldVisitChildOfDirectiveChunkNode() {
 		analyser.visit(directiveChunk);
 		verify(sequence).accept(analyser);
+	}
+
+	@Test public void shouldVisitChildOfMethodChunkNode() {
+		analyser.visit(methodChunk);
+		verify(method).accept(analyser);
+	}
+
+	@Test public void shouldVisitChildrenOfMethodNode() {
+		analyser.visit(method);
+		verify(methodPattern).accept(analyser);
+		verify(sequence).accept(analyser);
+	}
+
+	@Test public void shouldVisitUnaryMethodPatternWhenMethodPatternIsUnaryType() {
+		when(methodPattern.isUnaryMethodPattern()).thenReturn(true);
+		when(methodPattern.unaryMethodPattern()).thenReturn(unaryMethodPattern);
+		analyser.visit(methodPattern);
+		verify(unaryMethodPattern).accept(analyser);
+	}
+
+	@Test public void shouldVisitBinaryMethodPatternWhenMethodPatternIsBinaryType() {
+		when(methodPattern.isBinaryMethodPattern()).thenReturn(true);
+		when(methodPattern.binaryMethodPattern()).thenReturn(binaryMethodPattern);
+		analyser.visit(methodPattern);
+		verify(binaryMethodPattern).accept(analyser);
+	}
+
+	@Test public void shouldVisitKeywordMethodPatternWhenMethodPatternIsKeywordType() {
+		when(methodPattern.isKeywordMethodPattern()).thenReturn(true);
+		when(methodPattern.keywordMethodPattern()).thenReturn(keywordMethodPattern);
+		analyser.visit(methodPattern);
+		verify(keywordMethodPattern).accept(analyser);
 	}
 
 	@Test public void shouldVisitChildOfSequenceNode() {

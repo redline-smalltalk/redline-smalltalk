@@ -53,6 +53,21 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(MethodChunk methodChunk) {
+		methodChunk.method().accept(this);
+	}
+
+	public void visit(Method method) {
+		method.methodPattern().accept(this);
+		method.sequence().accept(this);
+	}
+
+	public void visit(MethodPattern methodPattern) {
+		if (methodPattern.isUnaryMethodPattern())
+			methodPattern.unaryMethodPattern().accept(this);
+		else if (methodPattern.isKeywordMethodPattern())
+			methodPattern.keywordMethodPattern().accept(this);
+		else if (methodPattern.isBinaryMethodPattern())
+			methodPattern.binaryMethodPattern().accept(this);
 	}
 
 	private void writeClass(Program program) {

@@ -20,31 +20,20 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
+public class KeywordMethodPart extends BasicNode {
 
-public abstract class BasicListNode implements Node {
+	private final Variable variable;
 
-	private final List<Node> nodes;
-
-	public BasicListNode() {
-		nodes = new ArrayList<Node>();
+	public KeywordMethodPart(String keyword, int line, Variable variable) {
+		super(keyword, line);
+		this.variable = variable;
 	}
 
-	public void add(Node node) {
-		nodes.add(node);
+	public String keyword() {
+		return (String) value();
 	}
 
-	public String toString() {
-		return nodes.toString();
-	}
-
-	public void each(NodeCommand command) {
-		for (Node node : nodes)
-			command.execute(node);
-	}
-
-	protected Node first() {
-		return nodes.get(0);
+	public Variable variable() {
+		return variable;
 	}
 }

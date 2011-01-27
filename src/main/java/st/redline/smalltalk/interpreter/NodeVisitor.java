@@ -4,6 +4,9 @@ public interface NodeVisitor {
 	void visit(Program program);
 	void visit(SequenceChunk chunk);
 	void visit(DirectiveChunk chunk);
+	void visit(MethodChunk methodChunk);
+	void visit(Method method);
+	void visit(MethodPattern methodPattern);
 	void visit(Sequence sequence);
 	void visit(Statements statements);
 	void visit(StatementList statementList);

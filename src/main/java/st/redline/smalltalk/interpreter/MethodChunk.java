@@ -20,9 +20,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class MethodChunk extends SequenceChunk {
+public class MethodChunk extends Chunk {
 
-	public MethodChunk(Sequence value) {
-		super(value);
+	public MethodChunk(Method method) {
+		super(method);
+	}
+
+	public Method method() {
+		return (Method) value();
 	}
 }

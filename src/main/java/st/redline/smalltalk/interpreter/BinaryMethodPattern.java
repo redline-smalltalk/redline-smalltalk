@@ -20,31 +20,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
+public class BinaryMethodPattern extends MethodPattern {
 
-public abstract class BasicListNode implements Node {
-
-	private final List<Node> nodes;
-
-	public BasicListNode() {
-		nodes = new ArrayList<Node>();
+	public BinaryMethodPattern(String value, int line, Variable variable) {
+		super(value, line);
+		add(variable);
 	}
 
-	public void add(Node node) {
-		nodes.add(node);
-	}
-
-	public String toString() {
-		return nodes.toString();
-	}
-
-	public void each(NodeCommand command) {
-		for (Node node : nodes)
-			command.execute(node);
-	}
-
-	protected Node first() {
-		return nodes.get(0);
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
 	}
 }

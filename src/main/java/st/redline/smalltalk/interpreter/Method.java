@@ -20,31 +20,24 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Method extends BasicListNode {
 
-public abstract class BasicListNode implements Node {
+	private Sequence sequence;
 
-	private final List<Node> nodes;
-
-	public BasicListNode() {
-		nodes = new ArrayList<Node>();
+	public Method(MethodPattern methodPattern, Sequence sequence) {
+		this.sequence = sequence;
+		add(sequence);
 	}
 
-	public void add(Node node) {
-		nodes.add(node);
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
 	}
 
-	public String toString() {
-		return nodes.toString();
+	public MethodPattern methodPattern() {
+		return (MethodPattern) first();
 	}
 
-	public void each(NodeCommand command) {
-		for (Node node : nodes)
-			command.execute(node);
-	}
-
-	protected Node first() {
-		return nodes.get(0);
+	public Sequence sequence() {
+		return sequence;
 	}
 }

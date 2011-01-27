@@ -41,9 +41,24 @@ chunk returns [Chunk n]
 	:	sequence EOF {$n = new SequenceChunk($sequence.n);}
 	|	sequence '!' {$n = new SequenceChunk($sequence.n);} 
 	|	'!' sequence '!' {$n = new DirectiveChunk($sequence.n);}
-	/*|	messagePattern sequence '! !' {$n = new MethodChunk($messagePattern.n, $sequence.n); } */
+	|	method '! !' {$n = new MethodChunk($method.n); }
 	; 
 
+method returns [Method n]
+	:	methodPattern sequence {$n = new Method($methodPattern.n, $sequence.n);}
+	;
+	
+methodPattern returns [MethodPattern n]
+	:	NAME {$n = new UnaryMethodPattern($NAME.text, $NAME.line);}
+	|	BINARY_SYMBOL variable {$n = new BinaryMethodPattern($BINARY_SYMBOL.text, $BINARY_SYMBOL.line, $variable.n);}	
+	|	keywordMethodPattern {$n = $keywordMethodPattern.n;}
+	;
+
+keywordMethodPattern returns [KeywordMethodPattern n]
+	:	{$n = new KeywordMethodPattern();}
+		(KEYWORD variable {$n.add($KEYWORD.text, $KEYWORD.line, $variable.n);})*
+	;
+			
 sequence returns [Sequence n]
 	:	statements {$n = new Sequence($statements.n);}
 	;

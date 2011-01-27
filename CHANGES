@@ -1,6 +1,7 @@
 27/01/2011 Changes
 
 Implemented parsing of 'chunk' file format fragments.
+Add node creation and analysis for chunks, including method patterns.
 
 
 26/01/2011 Changes
