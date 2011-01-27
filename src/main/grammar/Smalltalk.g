@@ -38,10 +38,10 @@ program returns [Program n]
 	; 
 
 chunk returns [Chunk n]
-	:	sequence {$n = new SequenceChunk($sequence.n);} EOF
-	|	sequence {$n = new SequenceChunk($sequence.n);} '!'
-	|	'!' sequence {$n = new DirectiveChunk($sequence.n);} '!'
-	/*|	messagePattern sequence {$n = new MethodChunk($messagePattern.n, $sequence.n); } '! !'*/
+	:	sequence EOF {$n = new SequenceChunk($sequence.n);}
+	|	sequence '!' {$n = new SequenceChunk($sequence.n);} 
+	|	'!' sequence '!' {$n = new DirectiveChunk($sequence.n);}
+	/*|	messagePattern sequence '! !' {$n = new MethodChunk($messagePattern.n, $sequence.n); } */
 	; 
 
 sequence returns [Sequence n]
