@@ -26,10 +26,6 @@ public class SequenceChunk extends Chunk {
 		super(value);
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-	}
-
 	public Sequence sequence() {
 		return (Sequence) value();
 	}

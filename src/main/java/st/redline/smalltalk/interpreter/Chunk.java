@@ -22,9 +22,18 @@ package st.redline.smalltalk.interpreter;
 
 public abstract class Chunk extends BasicNode {
 
-	abstract void accept(NodeVisitor visitor);
-
 	public Chunk(Sequence value) {
 		super(value);
+	}
+
+	public void accept(NodeVisitor visitor) {
+		if (this instanceof DirectiveChunk)
+			visitor.visit((DirectiveChunk) this);
+		else if (this instanceof SequenceChunk)
+			visitor.visit((SequenceChunk) this);
+		else if (this instanceof MethodChunk)
+			visitor.visit((MethodChunk) this);
+		else
+			throw new IllegalStateException("Unknown 'chunk' type.");
 	}
 }

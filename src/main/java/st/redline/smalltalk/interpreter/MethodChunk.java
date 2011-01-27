@@ -25,8 +25,4 @@ public class MethodChunk extends SequenceChunk {
 	public MethodChunk(Sequence value) {
 		super(value);
 	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-	}
 }

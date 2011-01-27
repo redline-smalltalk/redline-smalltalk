@@ -36,14 +36,7 @@ public class Program extends BasicListNode {
 	public void eachAccept(final NodeVisitor visitor) {
 		each(new NodeCommand() {
 			public void execute(Node node) {
-				if (node instanceof SequenceChunk)
-					visitor.visit((SequenceChunk) node);
-				else if (node instanceof DirectiveChunk)
-					visitor.visit((DirectiveChunk) node);
-				else if (node instanceof MethodChunk)
-					visitor.visit((MethodChunk) node);
-				else
-					throw new IllegalStateException("Unknown 'Chunk' type.");
+				((Chunk) node).accept(visitor);
 			}
 		});
 	}

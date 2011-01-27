@@ -21,12 +21,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk.interpreter;
 
 public class DirectiveChunk extends SequenceChunk {
-
 	public DirectiveChunk(Sequence value) {
 		super(value);
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
 	}
 }
