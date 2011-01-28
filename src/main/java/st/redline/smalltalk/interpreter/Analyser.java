@@ -40,10 +40,6 @@ public class Analyser implements NodeVisitor {
 		return generator.classBytes();
 	}
 
-	public byte[][] methodClassResults() {
-		return generator.methodClassesBytes();
-	}
-
 	public void visit(Program program) {
 		writeClass(program);
 	}
@@ -61,10 +57,10 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Method method) {
-		generator.openMethodClass();
 		method.methodPattern().accept(this);
 		method.sequence().accept(this);
-		generator.closeMethodClass();
+		generator.closeClass();
+		// TODO.jcl generate request to add method to dictionary of containing class.
 	}
 
 	public void visit(MethodPattern methodPattern) {
@@ -77,22 +73,26 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(UnaryMethodPattern unaryMethodPattern) {
-		generator.nameMethodClass(unaryMethodPattern.selector());
+		String sourceFileName = sourceFileName();
+		generator.openClass(sourceFileName + "." + unaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	public void visit(BinaryMethodPattern binaryMethodPattern) {
-		generator.nameMethodClass(binaryMethodPattern.selector());
+		String sourceFileName = sourceFileName();
+		generator.openClass(sourceFileName + "." + binaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	public void visit(KeywordMethodPattern keywordMethodPattern) {
 		StringBuffer keywords = new StringBuffer();
 		for (String keyword : keywordMethodPattern.keywords())
 			keywords.append(keyword);
-		generator.nameMethodClass(keywords.toString());
+		String sourceFileName = sourceFileName();
+		generator.openClass(sourceFileName + "." + keywords.toString(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	private void writeClass(Program program) {
-		generator.openClass(sourceFileName(), sourceFileParentPathWithoutSourcePaths());
+		String sourceFileName = sourceFileName();
+		generator.openClass(sourceFileName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 		program.eachAccept(this);
 		generator.closeClass();
 	}

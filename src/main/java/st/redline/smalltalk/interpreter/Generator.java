@@ -71,19 +71,10 @@ public class Generator implements Opcodes {
 		current.classWriter = classWriter;
 	}
 
-	public void openClass(String className, String packageInternalName) {
-		rememberNames(className, packageInternalName);
+	public void openClass(String className, String packageInternalName, String sourceName) {
+		rememberNames(className, packageInternalName, sourceName);
 		openClass();
 		openInitializeMethod();
-	}
-
-	public void openMethodClass() {
-	}
-
-	public void closeMethodClass() {
-	}
-
-	public void nameMethodClass(String methodClassName) {
 	}
 
 	private void openInitializeMethod() {
@@ -99,17 +90,14 @@ public class Generator implements Opcodes {
 
 	private void openClass() {
 		current.classWriter.visit(V1_5, ACC_PUBLIC + ACC_SUPER, current.fullyQualifiedName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
-		current.classWriter.visitSource(current.className + ".st", null);
+		current.classWriter.visitSource(current.sourceName + ".st", null);
 	}
 
-	private void rememberNames(String className, String packageInternalName) {
+	private void rememberNames(String className, String packageInternalName, String sourceName) {
 		current.className = className;
 		current.packageInternalName = packageInternalName;
 		current.fullyQualifiedName = packageInternalName.equals("") ? className : packageInternalName + File.separator + className;
-	}
-
-	public String fullyQualifiedName() {
-		return current.fullyQualifiedName;
+		current.sourceName = sourceName;
 	}
 
 	public void closeClass() {
@@ -150,10 +138,6 @@ public class Generator implements Opcodes {
 		return current.classWriter.toByteArray();
 	}
 
-	public byte[][] methodClassesBytes() {
-		return new byte[0][];
-	}
-
 	public void stackPop() {
 		current.methodVisitor.visitInsn(POP);
 	}
@@ -187,6 +171,7 @@ public class Generator implements Opcodes {
 	static class Context {
 		ClassWriter classWriter;
 		String className;
+		String sourceName;
 		String packageInternalName;
 		String fullyQualifiedName;
 		MethodVisitor methodVisitor;

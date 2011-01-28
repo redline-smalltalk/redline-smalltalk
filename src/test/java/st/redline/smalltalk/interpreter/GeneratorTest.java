@@ -59,7 +59,7 @@ public class GeneratorTest implements Opcodes {
 		generator = new Generator(false);
 		generator.initialize(classWriter);
 		when(classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)).thenReturn(methodVisitor);
-		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
+		generator.openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME, CLASS_NAME);
 	}
 
 	@Test public void shouldWriteClassAndInitMethodWhenClassOpened() {

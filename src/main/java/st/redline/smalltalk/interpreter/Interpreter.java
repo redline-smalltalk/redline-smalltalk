@@ -73,13 +73,7 @@ public class Interpreter {
 	}
 
 	private void loadProgram() {
-		loadMethods(analyser.methodClassResults());
 		programClass = smalltalk.defineClass(analyser.classResult());
-	}
-
-	private void loadMethods(byte[][] methodClasses) {
-		for (byte[] methodClass : methodClasses)
-			smalltalk.defineClass(methodClass);
 	}
 
 	private void compileProgram() {
