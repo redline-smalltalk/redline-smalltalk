@@ -30,6 +30,7 @@ import java.io.File;
 public class Generator implements Opcodes {
 
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RObject";
+	private static final String METHOD_SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RMethod";
 	private static final String SEND_METHOD_NAME = "send";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String[] METHOD_DESCRIPTORS = {
@@ -49,6 +50,7 @@ public class Generator implements Opcodes {
 	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
 
 	private Context current = new Context();
+	private byte[] classBytes;
 	private boolean traceOn;
 
 	public Generator(boolean traceOn) {
@@ -71,8 +73,17 @@ public class Generator implements Opcodes {
 		current.classWriter = classWriter;
 	}
 
-	public void openClass(String className, String packageInternalName, String sourceName) {
-		rememberNames(className, packageInternalName, sourceName);
+	public void openMethodClass(String className, String packageInternalName, String sourceName) {
+		openContext();
+		openClass(className, packageInternalName, sourceName, METHOD_SUPERCLASS_FULLY_QUALIFIED_NAME);
+	}
+
+	public void openClass(String className, String packageInternalName) {
+		openClass(className, packageInternalName, className, SUPERCLASS_FULLY_QUALIFIED_NAME);
+	}
+
+	protected void openClass(String className, String packageInternalName, String sourceName, String superclassFullyQualifiedName) {
+		rememberNames(className, packageInternalName, sourceName, superclassFullyQualifiedName);
 		openClass();
 		openInitializeMethod();
 	}
@@ -85,24 +96,41 @@ public class Generator implements Opcodes {
 
 	private void invokeSuperclassInitMethod() {
 		current.methodVisitor.visitVarInsn(ALOAD, 0);
-		current.methodVisitor.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, "<init>", "()V");
+		current.methodVisitor.visitMethodInsn(INVOKESPECIAL, current.superclassFullyQualifiedName, "<init>", "()V");
 	}
 
 	private void openClass() {
-		current.classWriter.visit(V1_5, ACC_PUBLIC + ACC_SUPER, current.fullyQualifiedName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
+		current.classWriter.visit(V1_5, ACC_PUBLIC + ACC_SUPER, current.fullyQualifiedName, null, current.superclassFullyQualifiedName, null);
 		current.classWriter.visitSource(current.sourceName + ".st", null);
 	}
 
-	private void rememberNames(String className, String packageInternalName, String sourceName) {
+	private void rememberNames(String className, String packageInternalName, String sourceName, String superclassFullyQualifiedName) {
 		current.className = className;
 		current.packageInternalName = packageInternalName;
 		current.fullyQualifiedName = packageInternalName.equals("") ? className : packageInternalName + File.separator + className;
 		current.sourceName = sourceName;
+		current.superclassFullyQualifiedName = superclassFullyQualifiedName;
+	}
+
+	public byte[] classBytes() {
+		return classBytes;
+	}
+
+	public void closeMethodClass() {
+		closeClass();
 	}
 
 	public void closeClass() {
 		closeInitializeMethod();
 		current.classWriter.visitEnd();
+		classBytes = current.classWriter.toByteArray();
+		closeContext();
+	}
+
+	protected void openContext() {
+	}
+
+	protected void closeContext() {
 	}
 
 	private void closeInitializeMethod() {
@@ -132,10 +160,6 @@ public class Generator implements Opcodes {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(unarySelector);
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
-	}
-
-	public byte[] classBytes() {
-		return current.classWriter.toByteArray();
 	}
 
 	public void stackPop() {
@@ -175,5 +199,6 @@ public class Generator implements Opcodes {
 		String packageInternalName;
 		String fullyQualifiedName;
 		MethodVisitor methodVisitor;
+		String superclassFullyQualifiedName;
 	}
 }

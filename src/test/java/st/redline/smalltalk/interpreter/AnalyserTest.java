@@ -100,7 +100,7 @@ public class AnalyserTest {
 
 	@Test public void shouldGenerateProgramFromProgramNode() {
 		analyser.visit(program);
-		verify(generator).openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME, CLASS_NAME);
+		verify(generator).openClass(CLASS_NAME, PACKAGE_INTERNAL_NAME);
 		verify(generator).closeClass();
 	}
 
@@ -108,25 +108,25 @@ public class AnalyserTest {
 		analyser.visit(method);
 		verify(methodPattern).accept(analyser);
 		verify(sequence).accept(analyser);
-		verify(generator).closeClass();
+		verify(generator).closeMethodClass();
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromUnaryMethodPattern() {
 		when(unaryMethodPattern.selector()).thenReturn(UNARY_SELECTOR);
 		analyser.visit(unaryMethodPattern);
-		verify(generator).openClass(CLASS_NAME + "." + UNARY_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
+		verify(generator).openMethodClass(CLASS_NAME + "." + UNARY_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromBinaryMethodPattern() {
 		when(binaryMethodPattern.selector()).thenReturn(BINARY_SELECTOR);
 		analyser.visit(binaryMethodPattern);
-		verify(generator).openClass(CLASS_NAME + "." + BINARY_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
+		verify(generator).openMethodClass(CLASS_NAME + "." + BINARY_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromKeywordMethodPattern() {
 		when(keywordMethodPattern.keywords()).thenReturn(KEYWORD_MESSAGE_LIST);
 		analyser.visit(keywordMethodPattern);
-		verify(generator).openClass(CLASS_NAME + "." + KEYWORD_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
+		verify(generator).openMethodClass(CLASS_NAME + "." + KEYWORD_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
 	}
 
 	@Test public void shouldGenerateClassLookupWhenPrimaryVariableIsClassName() {

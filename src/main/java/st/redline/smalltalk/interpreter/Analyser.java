@@ -57,10 +57,14 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Method method) {
+		writeMethodClass(method);
+		// TODO.jcl generate request to add method to dictionary of containing class.
+	}
+
+	private void writeMethodClass(Method method) {
 		method.methodPattern().accept(this);
 		method.sequence().accept(this);
-		generator.closeClass();
-		// TODO.jcl generate request to add method to dictionary of containing class.
+		generator.closeMethodClass();
 	}
 
 	public void visit(MethodPattern methodPattern) {
@@ -74,12 +78,12 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(UnaryMethodPattern unaryMethodPattern) {
 		String sourceFileName = sourceFileName();
-		generator.openClass(sourceFileName + "." + unaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethodClass(sourceFileName + "." + unaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	public void visit(BinaryMethodPattern binaryMethodPattern) {
 		String sourceFileName = sourceFileName();
-		generator.openClass(sourceFileName + "." + binaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethodClass(sourceFileName + "." + binaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	public void visit(KeywordMethodPattern keywordMethodPattern) {
@@ -87,12 +91,12 @@ public class Analyser implements NodeVisitor {
 		for (String keyword : keywordMethodPattern.keywords())
 			keywords.append(keyword);
 		String sourceFileName = sourceFileName();
-		generator.openClass(sourceFileName + "." + keywords.toString(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethodClass(sourceFileName + "." + keywords.toString(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	private void writeClass(Program program) {
 		String sourceFileName = sourceFileName();
-		generator.openClass(sourceFileName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openClass(sourceFileName, sourceFileParentPathWithoutSourcePaths());
 		program.eachAccept(this);
 		generator.closeClass();
 	}
