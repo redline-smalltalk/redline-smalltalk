@@ -50,9 +50,20 @@ public class Generator implements Opcodes {
 	};
 	private static final String[] APPLY_METHOD_DESCRIPTORS = {
 		"(Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
-		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;"
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;"
 	};
 	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
+	private static final boolean NORMAL_METHOD = true;
+	private static final boolean INIT_METHOD = false;
 
 	private Context current = new Context();
 	private Stack<Context> contexts = new Stack<Context>();
@@ -118,15 +129,17 @@ public class Generator implements Opcodes {
 		current.superclassFullyQualifiedName = superclassFullyQualifiedName;
 	}
 
-	public void openMethod(int argumentCount) {
+	public void openMethod(int countOfArguments) {
+		if (countOfArguments > MAXIMUM_KEYWORD_ARGUMENTS)
+			throw new IllegalArgumentException("More than " + MAXIMUM_KEYWORD_ARGUMENTS + " applyTo method arguments!");
 		cloneContext();
-		String selector = argumentCount == 0 ? "applyTo" : "applyToWith";
-		current.methodVisitor = current.classWriter.visitMethod(ACC_PUBLIC, selector, APPLY_METHOD_DESCRIPTORS[argumentCount], null, null);
+		String selector = countOfArguments == 0 ? "applyTo" : "applyToWith";
+		current.methodVisitor = current.classWriter.visitMethod(ACC_PUBLIC, selector, APPLY_METHOD_DESCRIPTORS[countOfArguments], null, null);
 		current.methodVisitor.visitCode();
 	}
 
 	public void closeMethod() {
-		closeCurrentMethod(true);
+		closeCurrentMethod(NORMAL_METHOD);
 		closeContext();
 	}
 
@@ -139,7 +152,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void closeClass() {
-		closeCurrentMethod(false);
+		closeCurrentMethod(INIT_METHOD);
 		current.classWriter.visitEnd();
 		classBytes = current.classWriter.toByteArray();
 		closeContext();
@@ -160,8 +173,9 @@ public class Generator implements Opcodes {
 		current = current.restoreFrom(contexts);
 	}
 
-	private void closeCurrentMethod(boolean returnTopOfStack) {
-		if (returnTopOfStack)
+	private void closeCurrentMethod(boolean normalMethod) {
+		// <init> methods dont have a return value, normal methods do.
+		if (normalMethod)
 			current.methodVisitor.visitInsn(ARETURN);
 		else
 			current.methodVisitor.visitInsn(RETURN);

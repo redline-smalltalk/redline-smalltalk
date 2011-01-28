@@ -130,12 +130,13 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(StatementList statementList) {
+		statementList.markLast();
 		statementList.eachAccept(this);
 	}
 
 	public void visit(Expression expression) {
 		expression.cascade().accept(this);
-		if (!expression.isAnswered())
+		if (!expression.isAnswered() || !expression.isLast())
 			generator.stackPop();
 	}
 

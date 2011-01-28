@@ -23,10 +23,12 @@ package st.redline.smalltalk.interpreter;
 public class Expression extends BasicNode {
 
 	private boolean answered;
+	private boolean last;
 
 	public Expression(Node value) {
 		super(value);
 		answered = false;
+		last = false;
 	}
 
 	public Cascade cascade() {
@@ -43,5 +45,13 @@ public class Expression extends BasicNode {
 
 	public boolean isAnswered() {
 		return answered;
+	}
+
+	public void markLast() {
+		last = true;
+	}
+
+	public boolean isLast() {
+		return last;
 	}
 }

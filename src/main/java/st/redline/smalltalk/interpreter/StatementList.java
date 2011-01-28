@@ -33,4 +33,8 @@ public class StatementList extends BasicListNode {
 			}
 		});
 	}
+
+	public void markLast() {
+		((Expression) last()).markLast();
+	}
 }

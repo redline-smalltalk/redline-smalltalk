@@ -1,4 +1,11 @@
 
+29/01/2011 Changes
+
+Checked balancing of stack for <init> methods and normal methods.
+Added additional 'applyToWith' signatures. We support 10 arguments.
+Added additional tests to generator.
+
+
 28/01/2011 Changes
 
 Adding tests to Analyser to drive out generation of method classes.

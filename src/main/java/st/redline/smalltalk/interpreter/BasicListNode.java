@@ -47,4 +47,8 @@ public abstract class BasicListNode implements Node {
 	protected Node first() {
 		return nodes.get(0);
 	}
+
+	protected Node last() {
+		return nodes.get(nodes.size() - 1);
+	}
 }

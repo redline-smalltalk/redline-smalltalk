@@ -135,6 +135,11 @@ public class GeneratorTest implements Opcodes {
 		generator.keywordSend(KEYWORD_SELECTOR, 12, LINE_NUMBER);
 	}
 
+	@Test (expected=IllegalArgumentException.class)
+	public void shouldGenerateExceptionWhenMoreThanTenMethodArguments() {
+		generator.openMethod(12);
+	}
+
 	private void verifyLineNumber(int lineNumber) {
 		verify(methodVisitor).visitLabel((Label) notNull());
 		verify(methodVisitor).visitLineNumber(eq(lineNumber), (Label) notNull());

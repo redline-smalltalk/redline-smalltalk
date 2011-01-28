@@ -164,6 +164,13 @@ public class AnalyserTest {
 		verify(generator).stackPop();
 	}
 
+	@Test public void shouldGeneratePopWhenNotLastExpression() {
+		when(expression.isAnswered()).thenReturn(false);
+		when(expression.isLast()).thenReturn(false);
+		analyser.visit(expression);
+		verify(generator).stackPop();
+	}
+
 	@Test public void shouldGeneratePrimitiveConversionForString() {
 		when(string.string()).thenReturn(STRING);
 		when(string.line()).thenReturn(LINE_NUMBER);
@@ -242,6 +249,7 @@ public class AnalyserTest {
 
 	@Test public void shouldVisitEachNodeOfStatementListNode() {
 		analyser.visit(statementList);
+		verify(statementList).markLast();
 		verify(statementList).eachAccept(analyser);
 	}
 
