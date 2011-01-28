@@ -2,6 +2,7 @@
 28/01/2011 Changes
 
 Adding tests to Analyser to drive out generation of method classes.
+Added concept of current "Context" to generator to support coming method generation.
 
 
 27/01/2011 Changes

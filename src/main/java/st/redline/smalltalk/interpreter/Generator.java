@@ -48,11 +48,7 @@ public class Generator implements Opcodes {
 	};
 	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
 
-	private ClassWriter classWriter;
-	private String className;
-	private String packageInternalName;
-	private String fullyQualifiedName;
-	private MethodVisitor methodVisitor;
+	private Context current = new Context();
 	private boolean traceOn;
 
 	public Generator(boolean traceOn) {
@@ -72,7 +68,7 @@ public class Generator implements Opcodes {
 	}
 
 	void initialize(ClassWriter classWriter) {
-		this.classWriter = classWriter;
+		current.classWriter = classWriter;
 	}
 
 	public void openClass(String className, String packageInternalName) {
@@ -91,67 +87,67 @@ public class Generator implements Opcodes {
 	}
 
 	private void openInitializeMethod() {
-		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
-		methodVisitor.visitCode();
+		current.methodVisitor = current.classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+		current.methodVisitor.visitCode();
 		invokeSuperclassInitMethod();
 	}
 
 	private void invokeSuperclassInitMethod() {
-		methodVisitor.visitVarInsn(ALOAD, 0);
-		methodVisitor.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, "<init>", "()V");
+		current.methodVisitor.visitVarInsn(ALOAD, 0);
+		current.methodVisitor.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, "<init>", "()V");
 	}
 
 	private void openClass() {
-		classWriter.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
-		classWriter.visitSource(className + ".st", null);
+		current.classWriter.visit(V1_5, ACC_PUBLIC + ACC_SUPER, current.fullyQualifiedName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
+		current.classWriter.visitSource(current.className + ".st", null);
 	}
 
 	private void rememberNames(String className, String packageInternalName) {
-		this.className = className;
-		this.packageInternalName = packageInternalName;
-		this.fullyQualifiedName = packageInternalName.equals("") ? className : packageInternalName + File.separator + className;
+		current.className = className;
+		current.packageInternalName = packageInternalName;
+		current.fullyQualifiedName = packageInternalName.equals("") ? className : packageInternalName + File.separator + className;
 	}
 
 	public String fullyQualifiedName() {
-		return fullyQualifiedName;
+		return current.fullyQualifiedName;
 	}
 
 	public void closeClass() {
 		closeInitializeMethod();
-		classWriter.visitEnd();
+		current.classWriter.visitEnd();
 	}
 
 	private void closeInitializeMethod() {
-		methodVisitor.visitInsn(RETURN);
-		methodVisitor.visitMaxs(1, 1);
-		methodVisitor.visitEnd();
+		current.methodVisitor.visitInsn(RETURN);
+		current.methodVisitor.visitMaxs(1, 1);
+		current.methodVisitor.visitEnd();
 	}
 
 	public void classLookup(String className, int line) {
 		visitLine(line);
 		currentSmalltalkClass();
-		methodVisitor.visitLdcInsn(className);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "primitiveAt", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+		current.methodVisitor.visitLdcInsn(className);
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "primitiveAt", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	private void visitLine(int line) {
 		Label label = new Label();
-		methodVisitor.visitLabel(label);
-		methodVisitor.visitLineNumber(line, label);
+		current.methodVisitor.visitLabel(label);
+		current.methodVisitor.visitLineNumber(line, label);
 	}
 
 	private void currentSmalltalkClass() {
-		methodVisitor.visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
 	}
 
 	public void unarySend(String unarySelector, int line) {
 		visitLine(line);
-		methodVisitor.visitLdcInsn(unarySelector);
-		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
+		current.methodVisitor.visitLdcInsn(unarySelector);
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
 	}
 
 	public byte[] classBytes() {
-		return classWriter.toByteArray();
+		return current.classWriter.toByteArray();
 	}
 
 	public byte[][] methodClassesBytes() {
@@ -159,32 +155,40 @@ public class Generator implements Opcodes {
 	}
 
 	public void stackPop() {
-		methodVisitor.visitInsn(POP);
+		current.methodVisitor.visitInsn(POP);
 	}
 
 	public void primitiveStringConversion(String string, int line) {
 		currentSmalltalkClass();
-		methodVisitor.visitLdcInsn(string.substring(1, string.length() - 1));  // remove ''
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+		current.methodVisitor.visitLdcInsn(string.substring(1, string.length() - 1));  // remove ''
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	public void primitiveSymbolConversion(String symbol, int line) {
 		currentSmalltalkClass();
-		methodVisitor.visitLdcInsn(symbol);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+		current.methodVisitor.visitLdcInsn(symbol);
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	public void keywordSend(String keywordSelector, int countOfArguments, int line) {
 		if (countOfArguments > MAXIMUM_KEYWORD_ARGUMENTS)
 			throw new IllegalArgumentException("More than " + MAXIMUM_KEYWORD_ARGUMENTS + " keyword arguments!");
 		visitLine(line);
-		methodVisitor.visitLdcInsn(keywordSelector);
-		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[countOfArguments]);
+		current.methodVisitor.visitLdcInsn(keywordSelector);
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[countOfArguments]);
 	}
 
 	public void binarySend(String binarySelector, int line) {
 		visitLine(line);
-		methodVisitor.visitLdcInsn(binarySelector);
-		methodVisitor.visitMethodInsn(INVOKESTATIC, fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[1]);
+		current.methodVisitor.visitLdcInsn(binarySelector);
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[1]);
+	}
+
+	static class Context {
+		ClassWriter classWriter;
+		String className;
+		String packageInternalName;
+		String fullyQualifiedName;
+		MethodVisitor methodVisitor;
 	}
 }
