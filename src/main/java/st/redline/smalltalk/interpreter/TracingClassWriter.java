@@ -35,6 +35,7 @@ public class TracingClassWriter extends ClassWriter {
 
 	@Override
 	public void visit(int i, int i1, String s, String s1, String s2, String[] strings) {
+		log.info("");
 		log.info("visit(" + i + ", " + i1 + ", '" + s + "', '" + s1 + "', '" + s2 + "', " + strings + ")");
 		super.visit(i, i1, s, s1, s2, strings);
 	}

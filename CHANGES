@@ -3,6 +3,10 @@
 
 Adding tests to Analyser to drive out generation of method classes.
 Added concept of current "Context" to generator to support coming method generation.
+Modifed generator to use contexts and push and pop them.
+Methods are being generated. Now to add code to instantiate and put into an Objects
+method dictionary.
+
 
 
 27/01/2011 Changes

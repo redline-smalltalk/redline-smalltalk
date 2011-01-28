@@ -26,6 +26,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import java.io.File;
+import java.util.Stack;
 
 public class Generator implements Opcodes {
 
@@ -50,6 +51,7 @@ public class Generator implements Opcodes {
 	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
 
 	private Context current = new Context();
+	private Stack<Context> contexts = new Stack<Context>();
 	private byte[] classBytes;
 	private boolean traceOn;
 
@@ -128,9 +130,13 @@ public class Generator implements Opcodes {
 	}
 
 	protected void openContext() {
+		current.storeOn(contexts);
+		current = new Context();
+		initialize();
 	}
 
 	protected void closeContext() {
+		current = current.restoreFrom(contexts);
 	}
 
 	private void closeInitializeMethod() {
@@ -200,5 +206,15 @@ public class Generator implements Opcodes {
 		String fullyQualifiedName;
 		MethodVisitor methodVisitor;
 		String superclassFullyQualifiedName;
+
+		void storeOn(Stack<Context> contexts) {
+			contexts.push(this);
+		}
+
+		Context restoreFrom(Stack<Context> contexts) {
+			if (contexts.isEmpty())
+				return this;
+			return contexts.pop();
+		}
 	}
 }

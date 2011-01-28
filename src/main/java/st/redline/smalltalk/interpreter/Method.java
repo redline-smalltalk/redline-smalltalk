@@ -26,7 +26,7 @@ public class Method extends BasicListNode {
 
 	public Method(MethodPattern methodPattern, Sequence sequence) {
 		this.sequence = sequence;
-		add(sequence);
+		add(methodPattern);
 	}
 
 	public void accept(NodeVisitor visitor) {

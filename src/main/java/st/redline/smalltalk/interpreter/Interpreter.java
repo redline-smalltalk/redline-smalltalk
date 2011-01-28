@@ -26,6 +26,7 @@ import org.antlr.runtime.RecognitionException;
 import st.redline.smalltalk.Smalltalk;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 public class Interpreter {
 
@@ -73,7 +74,13 @@ public class Interpreter {
 	}
 
 	private void loadProgram() {
+		loadMethods(analyser.methodClassResults());
 		programClass = smalltalk.defineClass(analyser.classResult());
+	}
+
+	private void loadMethods(List<byte[]> bytesOfMethodClasses) {
+		for (byte[] methodClassBytes : bytesOfMethodClasses)
+			smalltalk.defineClass(methodClassBytes);
 	}
 
 	private void compileProgram() {

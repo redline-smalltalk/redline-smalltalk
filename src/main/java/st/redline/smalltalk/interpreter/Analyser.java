@@ -23,21 +23,32 @@ package st.redline.smalltalk.interpreter;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Analyser implements NodeVisitor {
 
+	private static final String CLASS_NAME_SEPARATOR = "_";
+
 	private final Smalltalk smalltalk;
 	private final Generator generator;
+	private final List<byte[]> methodClasses;
+
+	private String methodClassName;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
 		this.generator = generator;
+		this.methodClasses = new ArrayList<byte[]>();
 		generator.initialize();
 	}
 
 	public byte[] classResult() {
 		return generator.classBytes();
+	}
+
+	public List<byte[]> methodClassResults() {
+		return methodClasses;
 	}
 
 	public void visit(Program program) {
@@ -58,6 +69,8 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Method method) {
 		writeMethodClass(method);
+		methodClasses.add(generator.classBytes());
+
 		// TODO.jcl generate request to add method to dictionary of containing class.
 	}
 
@@ -78,12 +91,12 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(UnaryMethodPattern unaryMethodPattern) {
 		String sourceFileName = sourceFileName();
-		generator.openMethodClass(sourceFileName + "." + unaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + unaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	public void visit(BinaryMethodPattern binaryMethodPattern) {
 		String sourceFileName = sourceFileName();
-		generator.openMethodClass(sourceFileName + "." + binaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + binaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	public void visit(KeywordMethodPattern keywordMethodPattern) {
@@ -91,7 +104,7 @@ public class Analyser implements NodeVisitor {
 		for (String keyword : keywordMethodPattern.keywords())
 			keywords.append(keyword);
 		String sourceFileName = sourceFileName();
-		generator.openMethodClass(sourceFileName + "." + keywords.toString(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + keywords.toString(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 	}
 
 	private void writeClass(Program program) {
