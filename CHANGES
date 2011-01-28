@@ -8,7 +8,6 @@ Methods are being generated. Now to add code to instantiate and put into an Obje
 method dictionary.
 
 
-
 27/01/2011 Changes
 
 Implemented parsing of 'chunk' file format fragments.

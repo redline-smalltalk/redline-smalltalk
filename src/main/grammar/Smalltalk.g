@@ -134,6 +134,7 @@ variable returns [Variable n]
 literal returns [Literal n]
 	:	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
 	|	STRING {$n = new StString($STRING.text, $STRING.line);}
+	|	l = 'self' {$n = new Self($l.text, $l.line);}
 	;
 		
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;

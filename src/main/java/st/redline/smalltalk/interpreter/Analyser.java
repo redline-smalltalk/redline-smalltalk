@@ -34,8 +34,6 @@ public class Analyser implements NodeVisitor {
 	private final Generator generator;
 	private final List<byte[]> methodClasses;
 
-	private String methodClassName;
-
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
 		this.generator = generator;
@@ -70,13 +68,13 @@ public class Analyser implements NodeVisitor {
 	public void visit(Method method) {
 		writeMethodClass(method);
 		methodClasses.add(generator.classBytes());
-
 		// TODO.jcl generate request to add method to dictionary of containing class.
 	}
 
 	private void writeMethodClass(Method method) {
 		method.methodPattern().accept(this);
 		method.sequence().accept(this);
+		generator.closeMethod();
 		generator.closeMethodClass();
 	}
 
@@ -90,21 +88,30 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(UnaryMethodPattern unaryMethodPattern) {
+		String selector = unaryMethodPattern.selector();
 		String sourceFileName = sourceFileName();
-		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + unaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + selector, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethod(0);
 	}
 
 	public void visit(BinaryMethodPattern binaryMethodPattern) {
+		String selector = binaryMethodPattern.selector();
 		String sourceFileName = sourceFileName();
-		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + binaryMethodPattern.selector(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + selector, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethod(1);
 	}
 
 	public void visit(KeywordMethodPattern keywordMethodPattern) {
+		int keywordArguments = 0;
 		StringBuffer keywords = new StringBuffer();
-		for (String keyword : keywordMethodPattern.keywords())
+		for (String keyword : keywordMethodPattern.keywords()) {
 			keywords.append(keyword);
+			keywordArguments++;
+		}
 		String sourceFileName = sourceFileName();
-		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + keywords.toString(), sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		String selector = keywords.toString();
+		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + selector, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethod(keywordArguments);
 	}
 
 	private void writeClass(Program program) {
@@ -221,6 +228,10 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(StString string) {
 		generator.primitiveStringConversion(string.string(), string.line());
+	}
+
+	public void visit(Self self) {
+		generator.pushReceiver();
 	}
 
 	public void visit(UnaryMessage unaryMessage) {

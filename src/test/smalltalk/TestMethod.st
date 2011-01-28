@@ -8,6 +8,6 @@ Object subclass: #TestKeyword
 	category: 'Test'!
 
 example
-  ^ 'foo' + 'bar'
+  ^ self + 'bar'
 ! !
 

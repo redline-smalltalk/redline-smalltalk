@@ -125,6 +125,11 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", KEYWORD_METHOD_DESCRIPTOR);
 	}
 
+	@Test public void shouldGeneratePushOfReceiver() {
+		generator.pushReceiver();
+		verify(methodVisitor).visitVarInsn(ALOAD, 1); // receiver/self is always first argument.
+	}
+
 	@Test (expected=IllegalArgumentException.class)
 	public void shouldGenerateExceptionWhenMoreThanTenKeywordArguments() {
 		generator.keywordSend(KEYWORD_SELECTOR, 12, LINE_NUMBER);

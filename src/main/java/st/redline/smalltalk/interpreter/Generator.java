@@ -34,7 +34,7 @@ public class Generator implements Opcodes {
 	private static final String METHOD_SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RMethod";
 	private static final String SEND_METHOD_NAME = "send";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
-	private static final String[] METHOD_DESCRIPTORS = {
+	private static final String[] SEND_METHOD_DESCRIPTORS = {
 			"(Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
@@ -47,6 +47,10 @@ public class Generator implements Opcodes {
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
+	};
+	private static final String[] APPLY_METHOD_DESCRIPTORS = {
+		"(Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;"
 	};
 	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
 
@@ -114,6 +118,18 @@ public class Generator implements Opcodes {
 		current.superclassFullyQualifiedName = superclassFullyQualifiedName;
 	}
 
+	public void openMethod(int argumentCount) {
+		cloneContext();
+		String selector = argumentCount == 0 ? "applyTo" : "applyToWith";
+		current.methodVisitor = current.classWriter.visitMethod(ACC_PUBLIC, selector, APPLY_METHOD_DESCRIPTORS[argumentCount], null, null);
+		current.methodVisitor.visitCode();
+	}
+
+	public void closeMethod() {
+		closeCurrentMethod(true);
+		closeContext();
+	}
+
 	public byte[] classBytes() {
 		return classBytes;
 	}
@@ -123,10 +139,15 @@ public class Generator implements Opcodes {
 	}
 
 	public void closeClass() {
-		closeInitializeMethod();
+		closeCurrentMethod(false);
 		current.classWriter.visitEnd();
 		classBytes = current.classWriter.toByteArray();
 		closeContext();
+	}
+
+	protected void cloneContext() {
+		current.storeOn(contexts);
+		current = current.copy();
 	}
 
 	protected void openContext() {
@@ -139,8 +160,11 @@ public class Generator implements Opcodes {
 		current = current.restoreFrom(contexts);
 	}
 
-	private void closeInitializeMethod() {
-		current.methodVisitor.visitInsn(RETURN);
+	private void closeCurrentMethod(boolean returnTopOfStack) {
+		if (returnTopOfStack)
+			current.methodVisitor.visitInsn(ARETURN);
+		else
+			current.methodVisitor.visitInsn(RETURN);
 		current.methodVisitor.visitMaxs(1, 1);
 		current.methodVisitor.visitEnd();
 	}
@@ -165,7 +189,7 @@ public class Generator implements Opcodes {
 	public void unarySend(String unarySelector, int line) {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(unarySelector);
-		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[0]);
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[0]);
 	}
 
 	public void stackPop() {
@@ -189,13 +213,17 @@ public class Generator implements Opcodes {
 			throw new IllegalArgumentException("More than " + MAXIMUM_KEYWORD_ARGUMENTS + " keyword arguments!");
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(keywordSelector);
-		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[countOfArguments]);
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[countOfArguments]);
 	}
 
 	public void binarySend(String binarySelector, int line) {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(binarySelector);
-		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, METHOD_DESCRIPTORS[1]);
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[1]);
+	}
+
+	public void pushReceiver() {
+		current.methodVisitor.visitVarInsn(ALOAD, 1);
 	}
 
 	static class Context {
@@ -206,6 +234,18 @@ public class Generator implements Opcodes {
 		String fullyQualifiedName;
 		MethodVisitor methodVisitor;
 		String superclassFullyQualifiedName;
+
+		Context copy() {
+			Context clone = new Context();
+			clone.classWriter = classWriter;
+			clone.className = className;
+			clone.sourceName = sourceName;
+			clone.packageInternalName = packageInternalName;
+			clone.fullyQualifiedName = fullyQualifiedName;
+			clone.methodVisitor = methodVisitor;
+			clone.superclassFullyQualifiedName = superclassFullyQualifiedName;
+			return clone;
+		}
 
 		void storeOn(Stack<Context> contexts) {
 			contexts.push(this);

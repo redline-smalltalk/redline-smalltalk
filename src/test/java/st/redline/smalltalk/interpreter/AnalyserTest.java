@@ -77,6 +77,7 @@ public class AnalyserTest {
 	@Mock StString string;
 	@Mock Symbol symbol;
 	@Mock Variable primary;
+	@Mock Self self;
 	@Mock Variable variable;
 	private Analyser analyser;
 
@@ -108,6 +109,7 @@ public class AnalyserTest {
 		analyser.visit(method);
 		verify(methodPattern).accept(analyser);
 		verify(sequence).accept(analyser);
+		verify(generator).closeMethod();
 		verify(generator).closeMethodClass();
 		verify(generator).classBytes();
 	}
@@ -116,18 +118,21 @@ public class AnalyserTest {
 		when(unaryMethodPattern.selector()).thenReturn(UNARY_SELECTOR);
 		analyser.visit(unaryMethodPattern);
 		verify(generator).openMethodClass(CLASS_NAME + "_" + UNARY_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
+		verify(generator).openMethod(0);
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromBinaryMethodPattern() {
 		when(binaryMethodPattern.selector()).thenReturn(BINARY_SELECTOR);
 		analyser.visit(binaryMethodPattern);
 		verify(generator).openMethodClass(CLASS_NAME + "_" + BINARY_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
+		verify(generator).openMethod(1);
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromKeywordMethodPattern() {
 		when(keywordMethodPattern.keywords()).thenReturn(KEYWORD_MESSAGE_LIST);
 		analyser.visit(keywordMethodPattern);
 		verify(generator).openMethodClass(CLASS_NAME + "_" + KEYWORD_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
+		verify(generator).openMethod(2);
 	}
 
 	@Test public void shouldGenerateClassLookupWhenPrimaryVariableIsClassName() {
@@ -171,6 +176,11 @@ public class AnalyserTest {
 		when(symbol.line()).thenReturn(LINE_NUMBER);
 		analyser.visit(symbol);
 		verify(generator).primitiveSymbolConversion(SYMBOL, LINE_NUMBER);
+	}
+
+	@Test public void shouldGeneratePushOfThisForSelf() {
+		analyser.visit(self);
+		verify(generator).pushReceiver();
 	}
 
 	@Test public void shouldVisitEachNodeOfProgramNode() {
