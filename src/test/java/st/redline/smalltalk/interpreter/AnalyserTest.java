@@ -105,13 +105,20 @@ public class AnalyserTest {
 		verify(generator).closeClass();
 	}
 
-	@Test public void shouldCloseMethodClassAfterVisit() {
+	@Test public void shouldCloseMethodClassAfterMethodVisit() {
 		analyser.visit(method);
 		verify(methodPattern).accept(analyser);
 		verify(sequence).accept(analyser);
 		verify(generator).closeMethod();
 		verify(generator).closeMethodClass();
 		verify(generator).classBytes();
+	}
+
+	@Test public void shouldGenerateMethodBindAfterMethodVisit() {
+		analyser.currentMethodSelector = UNARY_SELECTOR;
+		analyser.currentMethodClassName = CLASS_NAME + "_" + UNARY_SELECTOR;
+		analyser.visit(method);
+		verify(generator).methodBinding(UNARY_SELECTOR, CLASS_NAME + "_" + UNARY_SELECTOR);
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromUnaryMethodPattern() {

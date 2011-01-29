@@ -34,6 +34,9 @@ public class Analyser implements NodeVisitor {
 	private final Generator generator;
 	private final List<byte[]> methodClasses;
 
+	protected String currentMethodClassName;
+	protected String currentMethodSelector;
+
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
 		this.generator = generator;
@@ -68,7 +71,7 @@ public class Analyser implements NodeVisitor {
 	public void visit(Method method) {
 		writeMethodClass(method);
 		methodClasses.add(generator.classBytes());
-		// TODO.jcl generate request to add method to dictionary of containing class.
+		generator.methodBinding(currentMethodSelector, currentMethodClassName);
 	}
 
 	private void writeMethodClass(Method method) {
@@ -90,14 +93,18 @@ public class Analyser implements NodeVisitor {
 	public void visit(UnaryMethodPattern unaryMethodPattern) {
 		String selector = unaryMethodPattern.selector();
 		String sourceFileName = sourceFileName();
-		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + selector, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		currentMethodClassName = sourceFileName + CLASS_NAME_SEPARATOR + selector;
+		currentMethodSelector = selector;
+		generator.openMethodClass(currentMethodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 		generator.openMethod(0);
 	}
 
 	public void visit(BinaryMethodPattern binaryMethodPattern) {
 		String selector = binaryMethodPattern.selector();
 		String sourceFileName = sourceFileName();
-		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + selector, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		currentMethodClassName = sourceFileName + CLASS_NAME_SEPARATOR + selector;
+		currentMethodSelector = selector;
+		generator.openMethodClass(currentMethodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 		generator.openMethod(1);
 	}
 
@@ -110,7 +117,9 @@ public class Analyser implements NodeVisitor {
 		}
 		String sourceFileName = sourceFileName();
 		String selector = keywords.toString();
-		generator.openMethodClass(sourceFileName + CLASS_NAME_SEPARATOR + selector, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		currentMethodClassName = sourceFileName + CLASS_NAME_SEPARATOR + selector;
+		currentMethodSelector = selector;
+		generator.openMethodClass(currentMethodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
 		generator.openMethod(keywordArguments);
 	}
 

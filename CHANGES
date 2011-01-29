@@ -1,4 +1,9 @@
 
+30/01/2011 Changes
+
+Adding call to bind method into dictionary of owning object.
+
+
 29/01/2011 Changes
 
 Checked balancing of stack for <init> methods and normal methods.

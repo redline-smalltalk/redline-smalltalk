@@ -240,6 +240,13 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitVarInsn(ALOAD, 1);
 	}
 
+	public void pushThis() {
+		current.methodVisitor.visitVarInsn(ALOAD, 0);
+	}
+
+	public void methodBinding(String methodName, String methodClassName) {
+	}
+
 	static class Context {
 		ClassWriter classWriter;
 		String className;
