@@ -130,6 +130,29 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitVarInsn(ALOAD, 1); // receiver/self is always first argument.
 	}
 
+	@Test public void shouldGenerateInstanceMethodBinding() {
+		reset(methodVisitor);
+		generator.methodBinding(CLASS_NAME, UNARY_SELECTOR, CLASS_NAME + "_" + UNARY_SELECTOR, false);
+		verifyMethodBindingCall(false);
+	}
+
+	@Test public void shouldGenerateClassMethodBinding() {
+		reset(methodVisitor);
+		generator.methodBinding(CLASS_NAME, UNARY_SELECTOR, CLASS_NAME + "_" + UNARY_SELECTOR, true);
+		verifyMethodBindingCall(true);
+	}
+
+	private void verifyMethodBindingCall(boolean isClassMethod) {
+		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
+		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
+		verify(methodVisitor).visitLdcInsn(CLASS_NAME + "_" + UNARY_SELECTOR);
+		if (isClassMethod)
+			verify(methodVisitor).visitInsn(ICONST_1);
+		else
+			verify(methodVisitor).visitInsn(ICONST_0);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "bindMethod", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+	}
+
 	@Test (expected=IllegalArgumentException.class)
 	public void shouldGenerateExceptionWhenMoreThanTenKeywordArguments() {
 		generator.keywordSend(KEYWORD_SELECTOR, 12, LINE_NUMBER);

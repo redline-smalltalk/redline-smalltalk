@@ -36,6 +36,7 @@ public class Analyser implements NodeVisitor {
 
 	protected String currentMethodClassName;
 	protected String currentMethodSelector;
+	protected boolean currentMethodIsClassMethod = false;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
@@ -71,7 +72,7 @@ public class Analyser implements NodeVisitor {
 	public void visit(Method method) {
 		writeMethodClass(method);
 		methodClasses.add(generator.classBytes());
-		generator.methodBinding(currentMethodSelector, currentMethodClassName);
+		generator.methodBinding(sourceFileName(), currentMethodSelector, currentMethodClassName, currentMethodIsClassMethod);
 	}
 
 	private void writeMethodClass(Method method) {

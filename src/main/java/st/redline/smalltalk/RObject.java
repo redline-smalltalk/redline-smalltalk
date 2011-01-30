@@ -98,6 +98,26 @@ public class RObject {
 		return data.primitiveName();
 	}
 
+	public static void bindMethod(String className, String methodName, String methodClassName, boolean classMethod) {
+		Smalltalk smalltalk = Smalltalk.instance();
+		if (smalltalk.verboseOn())
+			log.info("binding " + (classMethod ? "class" : "instance") + " method '" + methodClassName + "' as '" + methodName + "' in " + className);
+		RObject aClass = smalltalk.cachedObject0(className);
+		RMethod method = tryInstantiateMethod(smalltalk, methodClassName);
+		RData binding = classMethod ? aClass.oop[CLASS_OFFSET].data : aClass.data;
+		binding.methodAtPut(methodName, method);
+	}
+
+	private static RMethod tryInstantiateMethod(Smalltalk classLoader, String methodClassName) {
+		RMethod method;
+		try {
+			method = (RMethod) classLoader.loadClass(methodClassName).newInstance();
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+		return method;
+	}
+
 	private static RMethod methodFor(RObject rObject, String selector) {
 		RMethod method;
 		RObject superclass = rObject;

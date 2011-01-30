@@ -28,6 +28,8 @@ import org.objectweb.asm.Opcodes;
 import java.io.File;
 import java.util.Stack;
 
+import static org.mockito.Mockito.verify;
+
 public class Generator implements Opcodes {
 
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RObject";
@@ -244,7 +246,12 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitVarInsn(ALOAD, 0);
 	}
 
-	public void methodBinding(String methodName, String methodClassName) {
+	public void methodBinding(String className, String methodName, String methodClassName, boolean isClassMethod) {
+		current.methodVisitor.visitLdcInsn(className);
+		current.methodVisitor.visitLdcInsn(methodName);
+		current.methodVisitor.visitLdcInsn(methodClassName);
+		current.methodVisitor.visitInsn(isClassMethod ? ICONST_1 : ICONST_0);
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "bindMethod", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
 	}
 
 	static class Context {

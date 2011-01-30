@@ -117,8 +117,9 @@ public class AnalyserTest {
 	@Test public void shouldGenerateMethodBindAfterMethodVisit() {
 		analyser.currentMethodSelector = UNARY_SELECTOR;
 		analyser.currentMethodClassName = CLASS_NAME + "_" + UNARY_SELECTOR;
+		analyser.currentMethodIsClassMethod = false;
 		analyser.visit(method);
-		verify(generator).methodBinding(UNARY_SELECTOR, CLASS_NAME + "_" + UNARY_SELECTOR);
+		verify(generator).methodBinding(CLASS_NAME, UNARY_SELECTOR, CLASS_NAME + "_" + UNARY_SELECTOR, false);
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromUnaryMethodPattern() {

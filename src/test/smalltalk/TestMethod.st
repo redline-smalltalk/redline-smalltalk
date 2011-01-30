@@ -1,7 +1,7 @@
 
 "im a comment"
 
-Object subclass: #TestKeyword
+Object subclass: #TestMethod
 	instanceVariableNames: 'instVars'
 	classVariableNames: 'ClassVars'
 	poolDictionaries: 'Pool'
