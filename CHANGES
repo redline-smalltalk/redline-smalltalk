@@ -1,4 +1,11 @@
 
+02/01/2011 Changes
+
+Ensured turning bootstrapped class into real class resolved the superclass chain, not just
+current class.
+Added method comment chunk to TestMethod to ensure !! chunks were processed correctly.
+
+
 31/01/2011 Changes
 
 Binding method into dictionary of owning object.

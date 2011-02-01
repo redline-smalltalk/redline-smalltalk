@@ -7,6 +7,8 @@ Object subclass: #TestMethod
 	poolDictionaries: 'Pool'
 	category: 'Test'!
 
+!Object methodsFor: '*Polymorph-EventEnhancements' stamp: 'gvc 10/25/2006 18:18'!
+
 example
   ^ self + 'bar'
 ! !

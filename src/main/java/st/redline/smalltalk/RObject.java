@@ -136,11 +136,21 @@ public class RObject {
 	}
 
 	private static boolean resolveClassObject(RObject object) {
+		if (!resolveObjectSuperclass(object))
+			return false;
 		String className = object.name();
 		Smalltalk smalltalk = Smalltalk.instance();
 		if (smalltalk.verboseOn())
 			log.info("Resolving bootstrapped class '" + className + "'");
 		return smalltalk.resolveClassObject(className);
+	}
+
+	private static boolean resolveObjectSuperclass(RObject object) {
+		RObject superclass = object.oop[SUPERCLASS_OFFSET];
+		if (superclass != null)
+			if (isBootstrapped(superclass))
+				return resolveClassObject(superclass);
+		return true;
 	}
 
 	//
