@@ -5,6 +5,7 @@ Ensured turning bootstrapped class into real class resolved the superclass chain
 current class. Including metaclass chain.
 Added method comment chunk to TestMethod to ensure !! chunks were processed correctly.
 Added parsing of Characters and conversion to Character instances.
+Added paring of additional # symbols.
 
 
 31/01/2011 Changes

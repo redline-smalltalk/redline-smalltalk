@@ -136,10 +136,16 @@ literal returns [Literal n]
 	|	STRING {$n = new StString($STRING.text, $STRING.line);}	
 	|	CHARACTER {$n = new StCharacter($CHARACTER.text, $CHARACTER.line);}
  	|	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
+ 	|	'#' BINARY_SYMBOL {$n = new Symbol($BINARY_SYMBOL.text, $BINARY_SYMBOL.line);}
+ 	|	'#' KEYWORD {$n = new Symbol($KEYWORD.text, $KEYWORD.line);}
+ 	|	'#' MULTI_KEYWORD {$n = new Symbol($MULTI_KEYWORD.text, $MULTI_KEYWORD.line);} 
+ 	|	'#' ALTERNATE_KEYWORD {$n = new Symbol($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}  	
 	;
 		
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
+MULTI_KEYWORD: NAME ':' (NAME ':')+;
+ALTERNATE_KEYWORD: ':' NAME ':' (NAME ':')*;
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
 STRING: '\'' .* '\'';
