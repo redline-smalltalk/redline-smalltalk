@@ -26,6 +26,10 @@ public class InstanceData extends RData {
 		super();
 	}
 
+	public boolean isClass() {
+		return false;
+	}
+
 	public boolean isBootstrapped() {
 		return false;
 	}

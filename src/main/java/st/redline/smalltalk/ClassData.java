@@ -33,6 +33,10 @@ public class ClassData extends RData {
 		this.methodDictionary = methodDictionary;
 	}
 
+	public boolean isClass() {
+		return true;
+	}
+
 	public boolean isBootstrapped() {
 		return bootstrapped;
 	}

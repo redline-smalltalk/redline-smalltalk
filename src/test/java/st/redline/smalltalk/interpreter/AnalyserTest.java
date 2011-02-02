@@ -38,6 +38,7 @@ public class AnalyserTest {
 	private static final String CLASS_NAME = "Test";
 	private static final String UNARY_SELECTOR = "new";
 	private static final String KEYWORD_SELECTOR = "at:put:";
+	private static final String CHARACTER = "$x";
 	private static final String STRING = "'foo'";
 	private static final String SYMBOL = "foo";
 	private static final int LINE_NUMBER= 42;
@@ -76,6 +77,7 @@ public class AnalyserTest {
 	@Mock BinaryArgument binaryArgument;
 	@Mock StString string;
 	@Mock Symbol symbol;
+	@Mock StCharacter character;
 	@Mock Variable primary;
 	@Mock Self self;
 	@Mock Variable variable;
@@ -177,6 +179,13 @@ public class AnalyserTest {
 		when(expression.isLast()).thenReturn(false);
 		analyser.visit(expression);
 		verify(generator).stackPop();
+	}
+
+	@Test public void shouldGeneratePrimitiveConversionForCharacter() {
+		when(character.string()).thenReturn(CHARACTER);
+		when(character.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(character);
+		verify(generator).primitiveCharacterConversion(CHARACTER, LINE_NUMBER);
 	}
 
 	@Test public void shouldGeneratePrimitiveConversionForString() {

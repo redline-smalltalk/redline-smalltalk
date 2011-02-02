@@ -192,6 +192,10 @@ public class Smalltalk extends ClassLoader {
 		return createObjectWithPrimitiveValue("String", value);
 	}
 
+	public RObject characterFromPrimitive(String value) {
+		return createObjectWithPrimitiveValue("Character", value);
+	}
+
 	private RObject lookupMustHaveObject(String name) {
 		RObject object = primitiveAt(name);
 		if (object != null)

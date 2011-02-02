@@ -158,6 +158,8 @@ public class RObject {
 	private static boolean resolveObjectSuperclass(RObject object, RObject other) {
 		if (object == null)
 			return true;
+		if (!object.data.isClass())
+			return resolveObjectSuperclass(object.oop[CLASS_OFFSET], other);
 		RObject superclass = object.oop[SUPERCLASS_OFFSET];
 		if (superclass != other)
 			return resolveClassObject(superclass, other);

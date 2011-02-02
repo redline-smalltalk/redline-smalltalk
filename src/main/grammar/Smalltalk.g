@@ -132,9 +132,10 @@ variable returns [Variable n]
 	;
 
 literal returns [Literal n]
-	:	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
-	|	STRING {$n = new StString($STRING.text, $STRING.line);}
-	|	l = 'self' {$n = new Self($l.text, $l.line);}
+	:	l = 'self' {$n = new Self($l.text, $l.line);}
+	|	STRING {$n = new StString($STRING.text, $STRING.line);}	
+	|	CHARACTER {$n = new StCharacter($CHARACTER.text, $CHARACTER.line);}
+ 	|	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
 	;
 		
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
@@ -143,4 +144,5 @@ WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
 STRING: '\'' .* '\'';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
+CHARACTER: '$' . ;
  

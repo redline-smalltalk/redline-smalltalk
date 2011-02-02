@@ -241,6 +241,10 @@ public class Analyser implements NodeVisitor {
 		generator.primitiveStringConversion(string.string(), string.line());
 	}
 
+	public void visit(StCharacter character) {
+		generator.primitiveCharacterConversion(character.string(), character.line());
+	}
+
 	public void visit(Self self) {
 		generator.pushReceiver();
 	}

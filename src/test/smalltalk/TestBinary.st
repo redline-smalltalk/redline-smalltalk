@@ -1,4 +1,4 @@
 
 "im a comment"
-'foo' + 'bar'.
+$f + 'bar'.
 

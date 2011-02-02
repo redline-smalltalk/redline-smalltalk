@@ -104,6 +104,13 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
+	@Test public void shouldGeneratePrimitiveCharacterConversion() {
+		generator.primitiveCharacterConversion("$a", LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitLdcInsn("a");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "characterFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+	}
+
 	@Test public void shouldHandleStringConversionOfEmptyString() {
 		generator.primitiveStringConversion("''", LINE_NUMBER);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");

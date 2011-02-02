@@ -20,9 +20,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Variable extends Primary {
+public class StCharacter extends Literal {
 
-	public Variable(String value, int line) {
+	public StCharacter(String value, int line) {
 		super(value, line);
 	}
 
@@ -30,15 +30,7 @@ public class Variable extends Primary {
 		visitor.visit(this);
 	}
 
-	public String name() {
+	public String string() {
 		return (String) value();
-	}
-
-	public boolean isClassReference() {
-		return isFirstCharacterUppercase(name());
-	}
-
-	private boolean isFirstCharacterUppercase(String string) {
-		return java.lang.Character.isUpperCase(string.charAt(0));
 	}
 }

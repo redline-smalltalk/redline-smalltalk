@@ -28,5 +28,6 @@ public interface NodeVisitor {
 	void visit(Variable variable);
 	void visit(Symbol symbol);
 	void visit(StString string);
+	void visit(StCharacter stCharacter);
 	void visit(Self self);
 }

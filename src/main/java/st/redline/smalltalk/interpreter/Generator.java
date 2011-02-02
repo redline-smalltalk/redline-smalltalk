@@ -212,6 +212,12 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitInsn(POP);
 	}
 
+	public void primitiveCharacterConversion(String string, int line) {
+		currentSmalltalkClass();
+		current.methodVisitor.visitLdcInsn(string.substring(1));  // remove leading $
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "characterFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+	}
+
 	public void primitiveStringConversion(String string, int line) {
 		currentSmalltalkClass();
 		current.methodVisitor.visitLdcInsn(string.substring(1, string.length() - 1));  // remove ''
