@@ -132,12 +132,22 @@ public class RObject {
 	}
 
 	private static boolean isBootstrapped(RObject object) {
-		return (object.data.isBootstrapped() || object.oop[CLASS_OFFSET].data.isBootstrapped());
+		return (object != null && (object.data.isBootstrapped() || object.oop[CLASS_OFFSET].data.isBootstrapped()));
+	}
+
+	private static boolean notBootstrapped(RObject object) {
+		return !isBootstrapped(object);
 	}
 
 	private static boolean resolveClassObject(RObject object) {
-		if (!resolveObjectSuperclass(object))
+		return resolveClassObject(object, null);
+	}
+
+	private static boolean resolveClassObject(RObject object, RObject other) {
+		if (!resolveObjectSuperclass(object, other))
 			return false;
+		if (notBootstrapped(object))
+			return true;
 		String className = object.name();
 		Smalltalk smalltalk = Smalltalk.instance();
 		if (smalltalk.verboseOn())
@@ -145,12 +155,14 @@ public class RObject {
 		return smalltalk.resolveClassObject(className);
 	}
 
-	private static boolean resolveObjectSuperclass(RObject object) {
+	private static boolean resolveObjectSuperclass(RObject object, RObject other) {
+		if (object == null)
+			return true;
 		RObject superclass = object.oop[SUPERCLASS_OFFSET];
-		if (superclass != null)
-			if (isBootstrapped(superclass))
-				return resolveClassObject(superclass);
-		return true;
+		if (superclass != other)
+			return resolveClassObject(superclass, other);
+		RObject metaclass = object.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET];
+		return resolveClassObject(metaclass, metaclass);
 	}
 
 	//

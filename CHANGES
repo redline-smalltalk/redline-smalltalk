@@ -2,7 +2,7 @@
 02/01/2011 Changes
 
 Ensured turning bootstrapped class into real class resolved the superclass chain, not just
-current class.
+current class. Including metaclass chain.
 Added method comment chunk to TestMethod to ensure !! chunks were processed correctly.
 
 
