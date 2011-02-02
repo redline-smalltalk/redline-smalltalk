@@ -44,15 +44,21 @@ public class Smalltalk extends ClassLoader {
 	public static final String GENERATOR = "GENERATOR";
 	public static final String FILE_READER = "FILE_READER";
 	public static final String NIL = "nil";
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
+	public static final String NEW_SELECTOR = "new";
 
 	private final Environment environment;
 	private final Map<String, RObject> cachedObjects;
 	private final Map<String, String> internedSymbols;
 
+	private final Logger log = LoggerFactory.getLogger(Smalltalk.class);
+
 	private SourceFile currentFile;
 	private boolean verboseOn = false;
-
-	private final Logger log = LoggerFactory.getLogger(Smalltalk.class);
+	private RObject trueInstance;
+	private RObject falseInstance;
+	private RObject nilInstance;
 
 	public static Smalltalk with(Environment environment) {
 		if (environment == null)
@@ -208,8 +214,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	private RObject createObjectWithPrimitiveValue(String objectName, String primitiveValue) {
-		RObject aClass = lookupMustHaveObject(objectName);
-		RObject anInstance = aClass.send(aClass, "new");
+		RObject anInstance = newInstanceOf(objectName);
 		anInstance.data.primitiveValue(primitiveValue);
 		return anInstance;
 	}
@@ -326,5 +331,31 @@ public class Smalltalk extends ClassLoader {
 		if (verboseOn)
 			log.info("primitiveAtPut('" + name + "', " + object + ")");
 		cachedObjects.put(name, object);
+	}
+
+	public RObject nilInstance() {
+		if (nilInstance != null)
+			return nilInstance;
+		nilInstance = primitiveAt(NIL);
+		return nilInstance;
+	}
+
+	public RObject trueInstance() {
+		if (trueInstance != null)
+			return trueInstance;
+		trueInstance = newInstanceOf(TRUE);
+		return trueInstance;
+	}
+
+	public RObject falseInstance() {
+		if (falseInstance != null)
+			return falseInstance;
+		falseInstance = newInstanceOf(FALSE);
+		return falseInstance;
+	}
+
+	private RObject newInstanceOf(String className) {
+		RObject aClass = lookupMustHaveObject(className);
+		return aClass.send(aClass, NEW_SELECTOR);
 	}
 }

@@ -80,6 +80,9 @@ public class AnalyserTest {
 	@Mock StCharacter character;
 	@Mock Variable primary;
 	@Mock Self self;
+	@Mock True literalTrue;
+	@Mock False literalFalse;
+	@Mock Nil nil;
 	@Mock Variable variable;
 	private Analyser analyser;
 
@@ -205,6 +208,24 @@ public class AnalyserTest {
 	@Test public void shouldGeneratePushOfThisForSelf() {
 		analyser.visit(self);
 		verify(generator).pushReceiver();
+	}
+
+	@Test public void shouldGenerateTrueLookupForLiteralTrue() {
+		when(literalTrue.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(literalTrue);
+		verify(generator).trueLookup(LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateFalseLookupForLiteralFalse() {
+		when(literalFalse.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(literalFalse);
+		verify(generator).falseLookup(LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateNilLookupForNil() {
+		when(nil.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(nil);
+		verify(generator).nilLookup(LINE_NUMBER);
 	}
 
 	@Test public void shouldVisitEachNodeOfProgramNode() {

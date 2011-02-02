@@ -1,4 +1,9 @@
 
+03/01/2011 Changes
+
+Parsing literals for True, False and Nil and resolving them to instances of the associated class.
+
+
 02/01/2011 Changes
 
 Ensured turning bootstrapped class into real class resolved the superclass chain, not just

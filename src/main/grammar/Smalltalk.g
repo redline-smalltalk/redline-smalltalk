@@ -133,8 +133,11 @@ variable returns [Variable n]
 
 literal returns [Literal n]
 	:	l = 'self' {$n = new Self($l.text, $l.line);}
-	|	STRING {$n = new StString($STRING.text, $STRING.line);}	
+	|	l = 'true' {$n = new True($l.text, $l.line);}
+	|	l = 'false' {$n = new False($l.text, $l.line);}
+	|	l = 'nil' {$n = new Nil($l.text, $l.line);}
 	|	CHARACTER {$n = new StCharacter($CHARACTER.text, $CHARACTER.line);}
+	|	STRING {$n = new StString($STRING.text, $STRING.line);}
  	|	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
  	|	'#' BINARY_SYMBOL {$n = new Symbol($BINARY_SYMBOL.text, $BINARY_SYMBOL.line);}
  	|	'#' KEYWORD {$n = new Symbol($KEYWORD.text, $KEYWORD.line);}

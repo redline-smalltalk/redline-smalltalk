@@ -30,4 +30,7 @@ public interface NodeVisitor {
 	void visit(StString string);
 	void visit(StCharacter stCharacter);
 	void visit(Self self);
+	void visit(True literalTrue);
+	void visit(False literalFalse);
+	void visit(Nil nil);
 }

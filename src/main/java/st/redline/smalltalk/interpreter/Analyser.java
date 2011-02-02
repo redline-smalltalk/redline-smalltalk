@@ -249,6 +249,18 @@ public class Analyser implements NodeVisitor {
 		generator.pushReceiver();
 	}
 
+	public void visit(True literalTrue) {
+		generator.trueLookup(literalTrue.line());
+	}
+
+	public void visit(False literalFalse) {
+		generator.falseLookup(literalFalse.line());
+	}
+
+	public void visit(Nil nil) {
+		generator.nilLookup(nil.line());
+	}
+
 	public void visit(UnaryMessage unaryMessage) {
 		generator.unarySend(unaryMessage.selector(), unaryMessage.line());
 	}

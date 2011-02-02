@@ -260,6 +260,24 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "bindMethod", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
 	}
 
+	public void trueLookup(int line) {
+		specialLiteralLookup(line, "trueInstance");
+	}
+
+	public void falseLookup(int line) {
+		specialLiteralLookup(line, "falseInstance");
+	}
+
+	public void nilLookup(int line) {
+		specialLiteralLookup(line, "nilInstance");
+	}
+
+	private void specialLiteralLookup(int line, String methodName) {
+		visitLine(line);
+		currentSmalltalkClass();
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, methodName, "()Lst/redline/smalltalk/RObject;");
+	}
+
 	static class Context {
 		ClassWriter classWriter;
 		String className;

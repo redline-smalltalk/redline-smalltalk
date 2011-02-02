@@ -149,6 +149,27 @@ public class GeneratorTest implements Opcodes {
 		verifyMethodBindingCall(true);
 	}
 
+	@Test public void shouldGenerateTrueLookup() {
+		generator.trueLookup(LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "trueInstance", "()Lst/redline/smalltalk/RObject;");
+	}
+
+	@Test public void shouldGenerateFalseLookup() {
+		generator.falseLookup(LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "falseInstance", "()Lst/redline/smalltalk/RObject;");
+	}
+
+	@Test public void shouldGenerateNilLookup() {
+		generator.nilLookup(LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "nilInstance", "()Lst/redline/smalltalk/RObject;");
+	}
+
 	private void verifyMethodBindingCall(boolean isClassMethod) {
 		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
 		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
