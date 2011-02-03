@@ -2,6 +2,7 @@
 03/01/2011 Changes
 
 Parsing literals for True, False and Nil and resolving them to instances of the associated class.
+Added a few placeholder Smalltalk Runtime sources.
 
 
 02/01/2011 Changes
