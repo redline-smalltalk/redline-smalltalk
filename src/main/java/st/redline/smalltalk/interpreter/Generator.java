@@ -226,7 +226,10 @@ public class Generator implements Opcodes {
 
 	public void primitiveSymbolConversion(String symbol, int line) {
 		currentSmalltalkClass();
-		current.methodVisitor.visitLdcInsn(symbol);
+		if (symbol.startsWith("'"))
+			current.methodVisitor.visitLdcInsn(symbol.substring(1, symbol.length() - 1));  // remove ''
+		else
+			current.methodVisitor.visitLdcInsn(symbol);
 		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 

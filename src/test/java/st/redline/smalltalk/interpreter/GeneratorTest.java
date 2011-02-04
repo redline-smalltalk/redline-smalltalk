@@ -125,6 +125,20 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
+	@Test public void shouldGeneratePrimitiveStringSymbolConversion() {
+		generator.primitiveSymbolConversion("'symbol'", LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitLdcInsn("symbol");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+	}
+
+	@Test public void shouldHandleEmptyStringSymbolConversion() {
+		generator.primitiveSymbolConversion("''", LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitLdcInsn("");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+	}
+
 	@Test public void shouldGenerateKeywordSend() {
 		generator.keywordSend(KEYWORD_SELECTOR, KEYWORD_ARGUMENT_COUNT, LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);

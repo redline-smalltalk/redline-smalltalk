@@ -139,6 +139,7 @@ literal returns [Literal n]
 	|	CHARACTER {$n = new StCharacter($CHARACTER.text, $CHARACTER.line);}
 	|	STRING {$n = new StString($STRING.text, $STRING.line);}
  	|	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
+ 	|	'#' STRING {$n = new Symbol($STRING.text, $STRING.line);}
  	|	'#' BINARY_SYMBOL {$n = new Symbol($BINARY_SYMBOL.text, $BINARY_SYMBOL.line);}
  	|	'#' KEYWORD {$n = new Symbol($KEYWORD.text, $KEYWORD.line);}
  	|	'#' MULTI_KEYWORD {$n = new Symbol($MULTI_KEYWORD.text, $MULTI_KEYWORD.line);} 

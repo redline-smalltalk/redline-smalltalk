@@ -1,4 +1,9 @@
 
+04/01/2011 Changes
+
+Parsing String Symbols.
+
+
 03/01/2011 Changes
 
 Parsing literals for True, False and Nil and resolving them to instances of the associated class.
