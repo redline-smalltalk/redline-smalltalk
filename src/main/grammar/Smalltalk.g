@@ -143,9 +143,24 @@ literal returns [Literal n]
  	|	'#' BINARY_SYMBOL {$n = new Symbol($BINARY_SYMBOL.text, $BINARY_SYMBOL.line);}
  	|	'#' KEYWORD {$n = new Symbol($KEYWORD.text, $KEYWORD.line);}
  	|	'#' MULTI_KEYWORD {$n = new Symbol($MULTI_KEYWORD.text, $MULTI_KEYWORD.line);} 
- 	|	'#' ALTERNATE_KEYWORD {$n = new Symbol($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}  	
+ 	|	'#' ALTERNATE_KEYWORD {$n = new Symbol($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}
+ 	|	l = '#:' {$n = new Symbol("':'", $l.line);}
+ 	|	l = '#' '(' literalArray {$literalArray.n.line($l.line); $n = $literalArray.n;} ')' 
 	;
-		
+
+literalArray returns [LiteralArray n]
+	:	{$n = new LiteralArray(); }
+		( arrayLiteral {$n.add($arrayLiteral.n);} )*
+	;
+
+arrayLiteral returns [ArrayLiteral n]
+	:	NAME {$n = new ArrayLiteral($NAME.text, $NAME.line);}
+ 	|	BINARY_SYMBOL {$n = new ArrayLiteral($BINARY_SYMBOL.text, $BINARY_SYMBOL.line);}
+ 	|	KEYWORD {$n = new ArrayLiteral($KEYWORD.text, $KEYWORD.line);}
+ 	|	MULTI_KEYWORD {$n = new ArrayLiteral($MULTI_KEYWORD.text, $MULTI_KEYWORD.line);} 
+ 	|	ALTERNATE_KEYWORD {$n = new ArrayLiteral($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}
+	;
+
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 MULTI_KEYWORD: NAME ':' (NAME ':')+;
@@ -155,4 +170,3 @@ COMMENT: '"' .* '"' {$channel = HIDDEN;};
 STRING: '\'' .* '\'';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
- 

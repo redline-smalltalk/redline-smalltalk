@@ -2,6 +2,7 @@
 04/01/2011 Changes
 
 Parsing String Symbols.
+Parsing Literal arrays. Still need to handled nested literal arrays.
 
 
 03/01/2011 Changes

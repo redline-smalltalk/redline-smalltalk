@@ -237,6 +237,14 @@ public class Analyser implements NodeVisitor {
 		generator.primitiveSymbolConversion(symbol.symbol(), symbol.line());
 	}
 
+	public void visit(ArrayLiteral arrayLiteral) {
+		// TODO.JCL
+	}
+
+	public void visit(LiteralArray literalArray) {
+		// TODO.JCL
+	}
+
 	public void visit(StString string) {
 		generator.primitiveStringConversion(string.string(), string.line());
 	}

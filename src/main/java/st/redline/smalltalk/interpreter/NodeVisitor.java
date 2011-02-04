@@ -27,6 +27,8 @@ public interface NodeVisitor {
 	void visit(UnaryMessage unaryMessage);
 	void visit(Variable variable);
 	void visit(Symbol symbol);
+	void visit(ArrayLiteral arrayLiteral);
+	void visit(LiteralArray literalArray);
 	void visit(StString string);
 	void visit(StCharacter stCharacter);
 	void visit(Self self);
