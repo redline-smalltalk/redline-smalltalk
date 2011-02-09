@@ -46,6 +46,7 @@ public class Smalltalk extends ClassLoader {
 	public static final String NIL = "nil";
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
+	public static final String ARRAY = "Array";
 	public static final String NEW_SELECTOR = "new";
 
 	private final Environment environment;
@@ -352,6 +353,10 @@ public class Smalltalk extends ClassLoader {
 			return falseInstance;
 		falseInstance = newInstanceOf(FALSE);
 		return falseInstance;
+	}
+
+	public RObject arrayInstance() {
+		return newInstanceOf(ARRAY);
 	}
 
 	private RObject newInstanceOf(String className) {

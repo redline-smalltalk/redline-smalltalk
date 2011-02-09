@@ -41,6 +41,7 @@ public class AnalyserTest {
 	private static final String CHARACTER = "$x";
 	private static final String STRING = "'foo'";
 	private static final String SYMBOL = "foo";
+	private static final String ADD_KEYWORD = "add:";
 	private static final int LINE_NUMBER= 42;
 	private static final String BINARY_SELECTOR = "+";
 	private static final List<String> KEYWORD_MESSAGE_LIST = new ArrayList<String>();
@@ -84,6 +85,8 @@ public class AnalyserTest {
 	@Mock False literalFalse;
 	@Mock Nil nil;
 	@Mock Variable variable;
+	@Mock LiteralArray literalArray;
+	@Mock ArrayLiteral arrayLiteral;
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
@@ -226,6 +229,21 @@ public class AnalyserTest {
 		when(nil.line()).thenReturn(LINE_NUMBER);
 		analyser.visit(nil);
 		verify(generator).nilLookup(LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateArrayLookupForLiteralArray() {
+		when(literalArray.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(literalArray);
+		verify(generator).createArray(LINE_NUMBER);
+		verify(literalArray).eachAccept(analyser);
+	}
+
+	@Test public void shouldGenerateCreationAndStoreForArrayLiteral() {
+		when(arrayLiteral.line()).thenReturn(LINE_NUMBER);
+		when(arrayLiteral.string()).thenReturn(SYMBOL);
+		analyser.visit(arrayLiteral);
+		verify(generator).primitiveSymbolConversion(SYMBOL, LINE_NUMBER);
+		verify(generator).keywordSend(ADD_KEYWORD, 1, LINE_NUMBER);
 	}
 
 	@Test public void shouldVisitEachNodeOfProgramNode() {

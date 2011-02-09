@@ -264,21 +264,25 @@ public class Generator implements Opcodes {
 	}
 
 	public void trueLookup(int line) {
-		specialLiteralLookup(line, "trueInstance");
+		invokeSmalltalkObjectMethod(line, "trueInstance");
 	}
 
 	public void falseLookup(int line) {
-		specialLiteralLookup(line, "falseInstance");
+		invokeSmalltalkObjectMethod(line, "falseInstance");
 	}
 
 	public void nilLookup(int line) {
-		specialLiteralLookup(line, "nilInstance");
+		invokeSmalltalkObjectMethod(line, "nilInstance");
 	}
 
-	private void specialLiteralLookup(int line, String methodName) {
+	private void invokeSmalltalkObjectMethod(int line, String methodName) {
 		visitLine(line);
 		currentSmalltalkClass();
 		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, methodName, "()Lst/redline/smalltalk/RObject;");
+	}
+
+	public void createArray(int line) {
+		invokeSmalltalkObjectMethod(line, "createArray");
 	}
 
 	static class Context {

@@ -1,4 +1,9 @@
 
+09/01/2011 Changes
+
+Parsing LiteralArrays and generating code for them.
+
+
 04/01/2011 Changes
 
 Parsing String Symbols.

@@ -29,6 +29,7 @@ import java.util.List;
 public class Analyser implements NodeVisitor {
 
 	private static final String CLASS_NAME_SEPARATOR = "_";
+	private static final String ADD_KEYWORD = "add:";
 
 	private final Smalltalk smalltalk;
 	private final Generator generator;
@@ -238,11 +239,13 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(ArrayLiteral arrayLiteral) {
-		// TODO.JCL
+		generator.primitiveSymbolConversion(arrayLiteral.string(), arrayLiteral.line());
+		generator.keywordSend(ADD_KEYWORD, 1, arrayLiteral.line());
 	}
 
 	public void visit(LiteralArray literalArray) {
-		// TODO.JCL
+		generator.createArray(literalArray.line());
+		literalArray.eachAccept(this);
 	}
 
 	public void visit(StString string) {
