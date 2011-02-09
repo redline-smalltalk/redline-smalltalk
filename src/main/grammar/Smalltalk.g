@@ -150,7 +150,13 @@ literal returns [Literal n]
 
 literalArray returns [LiteralArray n]
 	:	{$n = new LiteralArray(); }
-		( arrayLiteral {$n.add($arrayLiteral.n);} )*
+		( nestedArrayLiteral {$n.add($nestedArrayLiteral.n);} )*
+	;
+
+nestedArrayLiteral returns [Literal n]
+	:	arrayLiteral {$n = $arrayLiteral.n; }
+	|	'(' ( arrayLiteral )* ')'
+	|	'(' ( arrayLiteral )* '(' ( arrayLiteral )* ')' ( arrayLiteral )* ')'
 	;
 
 arrayLiteral returns [ArrayLiteral n]
@@ -161,6 +167,7 @@ arrayLiteral returns [ArrayLiteral n]
  	|	ALTERNATE_KEYWORD {$n = new ArrayLiteral($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}
 	;
 
+	
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 MULTI_KEYWORD: NAME ':' (NAME ':')+;

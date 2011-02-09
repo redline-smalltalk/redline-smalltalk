@@ -1,4 +1,9 @@
 
+10/01/2011 Changes
+
+Added grammar rules to parse nested literals.
+
+
 09/01/2011 Changes
 
 Parsing LiteralArrays and generating code for them.
