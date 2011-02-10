@@ -170,7 +170,12 @@ arrayLiteral returns [ArrayLiteral n]
  	|	ALTERNATE_KEYWORD {$n = new ArrayLiteral($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}
 	;
 
-	
+
+DECIMAL_NUMBER:	('0'..'9')+ ('.' ('0'..'9')+)?;
+RADIX_NUMBER: ('0'..'9')+ 'r' ('0'..'9' | 'A'..'Z')+ ('.' ('0'..'9' | 'A'..'Z')+)?;
+SCALED_NUMBER: DECIMAL_NUMBER 's' ('0'..'9')+;
+EXPONENT_NUMBER: (DECIMAL_NUMBER | RADIX_NUMBER) 'e' '-'? ('0'..'9')+;
+NEGATIVE_NUMBER: '-' DECIMAL_NUMBER | '-' RADIX_NUMBER | '-' SCALED_NUMBER | '-' EXPONENT_NUMBER;
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 MULTI_KEYWORD: NAME ':' (NAME ':')+;
