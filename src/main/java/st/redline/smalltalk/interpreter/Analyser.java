@@ -38,6 +38,7 @@ public class Analyser implements NodeVisitor {
 	protected String currentMethodClassName;
 	protected String currentMethodSelector;
 	protected boolean currentMethodIsClassMethod = false;
+	protected int literalArrayNesting = 0;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
@@ -244,8 +245,12 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralArray literalArray) {
+		literalArrayNesting++;
 		generator.createArray(literalArray.line());
 		literalArray.eachAccept(this);
+		literalArrayNesting--;
+		if (literalArrayNesting != 0)
+			generator.keywordSend(ADD_KEYWORD, 1, literalArray.line());
 	}
 
 	public void visit(StString string) {

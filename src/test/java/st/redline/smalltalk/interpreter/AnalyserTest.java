@@ -238,6 +238,23 @@ public class AnalyserTest {
 		verify(literalArray).eachAccept(analyser);
 	}
 
+	@Test public void shouldNotGenerateAddAfterLiteralArrayWhenLiteralArrayNotNested() {
+		when(literalArray.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(literalArray);
+		verify(generator).createArray(LINE_NUMBER);
+		verify(literalArray).eachAccept(analyser);
+		verify(generator, never()).keywordSend(ADD_KEYWORD, 1, LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateAddAfterLiteralArrayWhenNestedLiteralArray() {
+		when(literalArray.line()).thenReturn(LINE_NUMBER);
+		analyser.literalArrayNesting = 2;
+		analyser.visit(literalArray);
+		verify(generator).createArray(LINE_NUMBER);
+		verify(generator).keywordSend(ADD_KEYWORD, 1, LINE_NUMBER);
+		verify(literalArray).eachAccept(analyser);
+	}
+
 	@Test public void shouldGenerateCreationAndStoreForArrayLiteral() {
 		when(arrayLiteral.line()).thenReturn(LINE_NUMBER);
 		when(arrayLiteral.string()).thenReturn(SYMBOL);

@@ -2,6 +2,7 @@
 10/01/2011 Changes
 
 Added grammar rules to parse nested literals.
+Added Analyser rules for nested literal arrays.
 
 
 09/01/2011 Changes
