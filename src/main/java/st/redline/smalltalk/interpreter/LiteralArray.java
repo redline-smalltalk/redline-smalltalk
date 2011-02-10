@@ -25,12 +25,12 @@ import java.util.List;
 
 public class LiteralArray extends Literal {
 
-	private final List<ArrayLiteral> arrayLiterals;
+	private final List<Literal> literals;
 	private int line;
 
 	public LiteralArray() {
 		super(null, 0);
-		arrayLiterals = new ArrayList<ArrayLiteral>();
+		literals = new ArrayList<Literal>();
 	}
 
 	public void accept(NodeVisitor visitor) {
@@ -38,12 +38,15 @@ public class LiteralArray extends Literal {
 	}
 
 	public void eachAccept(final NodeVisitor visitor) {
-		for (ArrayLiteral arrayLiteral : arrayLiterals)
-			visitor.visit(arrayLiteral);
+		for (Literal literal : literals)
+			if (literal instanceof ArrayLiteral)
+				visitor.visit((ArrayLiteral) literal);
+			else if (literal instanceof LiteralArray)
+				visitor.visit((LiteralArray) literal);
 	}
 
-	public void add(ArrayLiteral arrayLiteral) {
-		arrayLiterals.add(arrayLiteral);
+	public void add(Literal literal) {
+		literals.add(literal);
 	}
 
 	public void line(int line) {

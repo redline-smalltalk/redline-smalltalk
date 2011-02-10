@@ -282,7 +282,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void createArray(int line) {
-		invokeSmalltalkObjectMethod(line, "createArray");
+		invokeSmalltalkObjectMethod(line, "arrayInstance");
 	}
 
 	static class Context {

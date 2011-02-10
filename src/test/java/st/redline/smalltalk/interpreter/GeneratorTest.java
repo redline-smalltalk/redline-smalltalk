@@ -184,6 +184,13 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "nilInstance", "()Lst/redline/smalltalk/RObject;");
 	}
 
+	@Test public void shouldGenerateArrayCreation() {
+		generator.createArray(LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "arrayInstance", "()Lst/redline/smalltalk/RObject;");
+	}
+
 	private void verifyMethodBindingCall(boolean isClassMethod) {
 		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
 		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);

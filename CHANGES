@@ -1,4 +1,10 @@
 
+11/01/2011 Changes
+
+Added generation of array creation and add of array elements for Literal arrays.
++ tests around this.
+
+
 10/01/2011 Changes
 
 Added grammar rules to parse nested literals.

@@ -153,10 +153,13 @@ literalArray returns [LiteralArray n]
 		( nestedArrayLiteral {$n.add($nestedArrayLiteral.n);} )*
 	;
 
-nestedArrayLiteral returns [Literal n]
+nestedArrayLiteral returns [Literal n, LiteralArray outside, LiteralArray inside]
 	:	arrayLiteral {$n = $arrayLiteral.n; }
-	|	'(' ( arrayLiteral )* ')'
-	|	'(' ( arrayLiteral )* '(' ( arrayLiteral )* ')' ( arrayLiteral )* ')'
+	|	{$n = new LiteralArray(); }
+		'(' ( arrayLiteral {((LiteralArray)$n).add($arrayLiteral.n);} )* ')'
+	|	{$n = new LiteralArray();}
+		'(' ( a1 = arrayLiteral {$outside.add($a1.n);} )* '(' ( a2 = arrayLiteral {$inside.add($a2.n);} )* ')' {$outside.add($inside);} ( a3 = arrayLiteral {$outside.add($a3.n);} )* ')'
+		{((LiteralArray)$n).add($outside);}
 	;
 
 arrayLiteral returns [ArrayLiteral n]
