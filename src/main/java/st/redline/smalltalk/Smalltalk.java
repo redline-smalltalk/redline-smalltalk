@@ -71,8 +71,22 @@ public class Smalltalk extends ClassLoader {
 		return Thread.currentThread().getContextClassLoader();
 	}
 
+	private static final ThreadLocal<Smalltalk> INSTANCE = new ThreadLocal<Smalltalk>();
+
 	public static Smalltalk instance() {
-		return (Smalltalk) Thread.currentThread().getContextClassLoader();
+		Smalltalk smalltalk = INSTANCE.get();
+		if (smalltalk == null)
+			smalltalk = initThreadLocal();
+		return smalltalk;
+	}
+
+	private synchronized static Smalltalk initThreadLocal() {
+		Smalltalk smalltalk = INSTANCE.get();
+		if (smalltalk == null) {
+			smalltalk = (Smalltalk) currentClassLoader();
+			INSTANCE.set(smalltalk);
+		}
+		return smalltalk;
 	}
 
 	protected Smalltalk(Environment environment, ClassLoader parentClassLoader) {

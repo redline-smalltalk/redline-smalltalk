@@ -1,4 +1,10 @@
 
+12/02/2011 Changes
+
+Implemented smalltalk instance resolution enhancement suggested by Jose Antonio Illescas del Olmo.
+(We now use a thread local to cache instance, rather than lookup current thread.) 
+
+
 11/01/2011 Changes
 
 Added generation of array creation and add of array elements for Literal arrays.
