@@ -214,7 +214,15 @@ public class Smalltalk extends ClassLoader {
 		return createObjectWithPrimitiveValue("Symbol", internedSymbol(value));
 	}
 
-	private RObject createObjectWithPrimitiveValue(String objectName, String primitiveValue) {
+	public RObject numberFromPrimitive(String value) {
+		return createObjectWithPrimitiveValue("Number", valueAsNumber(value));
+	}
+
+	private Number valueAsNumber(String value) {
+		return new Integer(value);
+	}
+
+	private RObject createObjectWithPrimitiveValue(String objectName, Object primitiveValue) {
 		RObject anInstance = newInstanceOf(objectName);
 		anInstance.data.primitiveValue(primitiveValue);
 		return anInstance;

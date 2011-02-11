@@ -4,6 +4,7 @@
 Added generation of array creation and add of array elements for Literal arrays.
 + tests around this.
 Added grammar for numbers.
+Added generation of Number instances from primitive numbers.
 
 
 10/01/2011 Changes

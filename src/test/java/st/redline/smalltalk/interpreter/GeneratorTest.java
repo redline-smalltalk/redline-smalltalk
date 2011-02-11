@@ -97,6 +97,13 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", BINARY_METHOD_DESCRIPTOR);
 	}
 
+	@Test public void shouldGeneratePrimitiveNumberConversion() {
+		generator.primitiveNumberConversion("64", LINE_NUMBER);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor).visitLdcInsn("64");
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "numberFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+	}
+
 	@Test public void shouldGeneratePrimitiveStringConversion() {
 		generator.primitiveStringConversion("'a-string'", LINE_NUMBER);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");

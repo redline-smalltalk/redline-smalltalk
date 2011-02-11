@@ -224,6 +224,12 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
+	public void primitiveNumberConversion(String string, int line) {
+		currentSmalltalkClass();
+		current.methodVisitor.visitLdcInsn(string);
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "numberFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
+	}
+
 	public void primitiveSymbolConversion(String symbol, int line) {
 		currentSmalltalkClass();
 		if (symbol.startsWith("'"))

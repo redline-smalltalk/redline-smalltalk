@@ -136,6 +136,11 @@ literal returns [Literal n]
 	|	l = 'true' {$n = new True($l.text, $l.line);}
 	|	l = 'false' {$n = new False($l.text, $l.line);}
 	|	l = 'nil' {$n = new Nil($l.text, $l.line);}
+	|	l = DECIMAL_NUMBER {$n = new LiteralNumber($l.text, $l.line);}	
+	|	l = RADIX_NUMBER {$n = new LiteralNumber($l.text, $l.line);}
+	|	l = SCALED_NUMBER {$n = new LiteralNumber($l.text, $l.line);}
+	|	l = EXPONENT_NUMBER {$n = new LiteralNumber($l.text, $l.line);}
+	|	l = NEGATIVE_NUMBER {$n = new LiteralNumber($l.text, $l.line);}
 	|	CHARACTER {$n = new StCharacter($CHARACTER.text, $CHARACTER.line);}
 	|	STRING {$n = new StString($STRING.text, $STRING.line);}
  	|	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}

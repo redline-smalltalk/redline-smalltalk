@@ -253,6 +253,10 @@ public class Analyser implements NodeVisitor {
 			generator.keywordSend(ADD_KEYWORD, 1, literalArray.line());
 	}
 
+	public void visit(LiteralNumber literalNumber) {
+		generator.primitiveNumberConversion(literalNumber.string(), literalNumber.line());
+	}
+
 	public void visit(StString string) {
 		generator.primitiveStringConversion(string.string(), string.line());
 	}

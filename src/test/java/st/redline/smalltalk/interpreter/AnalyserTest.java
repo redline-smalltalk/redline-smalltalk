@@ -41,6 +41,7 @@ public class AnalyserTest {
 	private static final String CHARACTER = "$x";
 	private static final String STRING = "'foo'";
 	private static final String SYMBOL = "foo";
+	private static final String NUMBER = "64";
 	private static final String ADD_KEYWORD = "add:";
 	private static final int LINE_NUMBER= 42;
 	private static final String BINARY_SELECTOR = "+";
@@ -78,6 +79,7 @@ public class AnalyserTest {
 	@Mock BinaryArgument binaryArgument;
 	@Mock StString string;
 	@Mock Symbol symbol;
+	@Mock LiteralNumber literalNumber;
 	@Mock StCharacter character;
 	@Mock Variable primary;
 	@Mock Self self;
@@ -206,6 +208,13 @@ public class AnalyserTest {
 		when(symbol.line()).thenReturn(LINE_NUMBER);
 		analyser.visit(symbol);
 		verify(generator).primitiveSymbolConversion(SYMBOL, LINE_NUMBER);
+	}
+
+	@Test public void shouldGeneratePrimitiveConversionForLiteralNumber() {
+		when(literalNumber.string()).thenReturn(NUMBER);
+		when(literalNumber.line()).thenReturn(LINE_NUMBER);
+		analyser.visit(literalNumber);
+		verify(generator).primitiveNumberConversion(NUMBER, LINE_NUMBER);
 	}
 
 	@Test public void shouldGeneratePushOfThisForSelf() {

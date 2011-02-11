@@ -29,6 +29,7 @@ public interface NodeVisitor {
 	void visit(Symbol symbol);
 	void visit(ArrayLiteral arrayLiteral);
 	void visit(LiteralArray literalArray);
+	void visit(LiteralNumber literalNumber);
 	void visit(StString string);
 	void visit(StCharacter stCharacter);
 	void visit(Self self);
