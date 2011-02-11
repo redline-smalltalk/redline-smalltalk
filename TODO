@@ -1,3 +1,8 @@
+Change to Smalltalk.instance are an improvement, but also highlight a problem with
+being able to use proper class loader. When Class A needs a smalltalk instance it
+should ask the class for it's class loader and use that as Smalltalk instance.
+*NOTE* until this change is made, two apps with see each others changes to a class.
+Not what we want.
 
 
 Boostrapper could be made more DRY.
