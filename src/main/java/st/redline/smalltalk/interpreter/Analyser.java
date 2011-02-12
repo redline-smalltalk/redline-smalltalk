@@ -239,6 +239,10 @@ public class Analyser implements NodeVisitor {
 		generator.primitiveSymbolConversion(symbol.symbol(), symbol.line());
 	}
 
+	public void visit(Array array) {
+		// TODO.jcl handle this.
+	}
+
 	public void visit(ArrayLiteral arrayLiteral) {
 		generator.primitiveSymbolConversion(arrayLiteral.string(), arrayLiteral.line());
 		generator.keywordSend(ADD_KEYWORD, 1, arrayLiteral.line());
