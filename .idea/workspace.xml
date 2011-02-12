@@ -63,7 +63,7 @@
       <file leaf-file-name="Generator.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="201" column="0" selection-start="11824" selection-end="11824" vertical-scroll-proportion="0.18448023">
+            <state line="201" column="0" selection-start="11824" selection-end="11824" vertical-scroll-proportion="0.42313322">
               <folding />
             </state>
           </provider>
@@ -72,16 +72,7 @@
       <file leaf-file-name="GeneratorTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="238" column="38" selection-start="10716" selection-end="10716" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RObject.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="34" selection-start="2953" selection-end="2953" vertical-scroll-proportion="0.0">
+            <state line="215" column="21" selection-start="9947" selection-end="9947" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -114,9 +105,9 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java" />
       </list>
     </option>
   </component>
@@ -158,7 +149,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -327,8 +317,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -350,9 +341,9 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -382,34 +373,6 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.GeneratorTest">
-    <configuration default="false" name="AnalyserTest.shouldGeneratePrimitiveConversionForCharacter" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false">
-        <pattern>
-          <option name="PATTERN" value="st.redline.smalltalk.interpreter.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="snapshooter" />
-      <module name="redline-smalltalk" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="st.redline.smalltalk.interpreter" />
-      <option name="MAIN_CLASS_NAME" value="st.redline.smalltalk.interpreter.AnalyserTest" />
-      <option name="METHOD_NAME" value="shouldGeneratePrimitiveConversionForCharacter" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
     <configuration default="false" name="AnalyserTest" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false">
         <pattern>
@@ -509,6 +472,34 @@
       <option name="MAIN_CLASS_NAME" value="st.redline.smalltalk.interpreter.GeneratorTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="GeneratorTest.shouldGenerateClassLookup" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false">
+        <pattern>
+          <option name="PATTERN" value="st.redline.smalltalk.interpreter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="snapshooter" />
+      <module name="redline-smalltalk" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="st.redline.smalltalk.interpreter" />
+      <option name="MAIN_CLASS_NAME" value="st.redline.smalltalk.interpreter.GeneratorTest" />
+      <option name="METHOD_NAME" value="shouldGenerateClassLookup" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -698,13 +689,13 @@
       <method />
     </configuration>
     <list size="7">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldGeneratePrimitiveConversionForCharacter" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.AnalyserTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.GeneratorTest.shouldHandleEmptyStringSymbolConversion" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldGenerateCreationAndStoreForArrayLiteral" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.GeneratorTest" />
-      <item index="5" class="java.lang.String" itemvalue="Application.Stic" />
-      <item index="6" class="java.lang.String" itemvalue="JUnit.SticTest" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.AnalyserTest" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.GeneratorTest.shouldHandleEmptyStringSymbolConversion" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.AnalyserTest.shouldGenerateCreationAndStoreForArrayLiteral" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.GeneratorTest" />
+      <item index="4" class="java.lang.String" itemvalue="Application.Stic" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.SticTest" />
+      <item index="6" class="java.lang.String" itemvalue="JUnit.GeneratorTest.shouldGenerateClassLookup" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -848,35 +839,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="0" selection-start="2918" selection-end="2918" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="76" column="0" selection-start="2918" selection-end="2918" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="21" selection-start="1600" selection-end="1600" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="37" column="21" selection-start="1600" selection-end="1600" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="34" selection-start="2953" selection-end="2953" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="100" column="34" selection-start="2953" selection-end="2953" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="238" column="38" selection-start="10716" selection-end="10716" vertical-scroll-proportion="0.0">
+        <state line="215" column="21" selection-start="9947" selection-end="9947" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="0" selection-start="11824" selection-end="11824" vertical-scroll-proportion="0.18448023">
+        <state line="201" column="0" selection-start="11824" selection-end="11824" vertical-scroll-proportion="0.42313322">
           <folding />
         </state>
       </provider>

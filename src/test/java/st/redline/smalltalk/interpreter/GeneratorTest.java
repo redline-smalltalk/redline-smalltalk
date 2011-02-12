@@ -22,6 +22,7 @@ package st.redline.smalltalk.interpreter;
 
 import java.io.File;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -236,6 +237,7 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	private void verifySmalltalkInstanceFetch() {
+		// Note: im not sure wht times(2) is required here!
 		verify(methodVisitor, times(2)).visitVarInsn(ALOAD, 0);
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, CLASS_FULLY_QUALIFIED_NAME, "smalltalk", "()Lst/redline/smalltalk/Smalltalk;");
 	}
