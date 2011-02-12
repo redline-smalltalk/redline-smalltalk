@@ -72,7 +72,7 @@
       <file leaf-file-name="GeneratorTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="56" selection-start="7303" selection-end="7303" vertical-scroll-proportion="0.12884334">
+            <state line="239" column="5" selection-start="10808" selection-end="10808" vertical-scroll-proportion="0.9121523">
               <folding />
             </state>
           </provider>
@@ -106,8 +106,8 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java" />
+        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java" />
       </list>
     </option>
   </component>
@@ -860,7 +860,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="56" selection-start="7303" selection-end="7303" vertical-scroll-proportion="0.12884334">
+        <state line="239" column="5" selection-start="10808" selection-end="10808" vertical-scroll-proportion="0.9121523">
           <folding />
         </state>
       </provider>

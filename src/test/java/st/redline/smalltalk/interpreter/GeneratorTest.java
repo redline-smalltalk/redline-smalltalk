@@ -78,7 +78,7 @@ public class GeneratorTest implements Opcodes {
 	@Test public void shouldGenerateClassLookup() {
 		generator.classLookup(CLASS_NAME, LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "primitiveAt", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
@@ -99,49 +99,49 @@ public class GeneratorTest implements Opcodes {
 
 	@Test public void shouldGeneratePrimitiveNumberConversion() {
 		generator.primitiveNumberConversion("64", LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitLdcInsn("64");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "numberFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldGeneratePrimitiveStringConversion() {
 		generator.primitiveStringConversion("'a-string'", LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitLdcInsn("a-string");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldGeneratePrimitiveCharacterConversion() {
 		generator.primitiveCharacterConversion("$a", LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitLdcInsn("a");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "characterFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldHandleStringConversionOfEmptyString() {
 		generator.primitiveStringConversion("''", LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitLdcInsn("");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "stringFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldGeneratePrimitiveSymbolConversion() {
 		generator.primitiveSymbolConversion("symbol", LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitLdcInsn("symbol");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldGeneratePrimitiveStringSymbolConversion() {
 		generator.primitiveSymbolConversion("'symbol'", LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitLdcInsn("symbol");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldHandleEmptyStringSymbolConversion() {
 		generator.primitiveSymbolConversion("''", LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitLdcInsn("");
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
@@ -173,28 +173,28 @@ public class GeneratorTest implements Opcodes {
 	@Test public void shouldGenerateTrueLookup() {
 		generator.trueLookup(LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "trueInstance", "()Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldGenerateFalseLookup() {
 		generator.falseLookup(LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "falseInstance", "()Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldGenerateNilLookup() {
 		generator.nilLookup(LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "nilInstance", "()Lst/redline/smalltalk/RObject;");
 	}
 
 	@Test public void shouldGenerateArrayCreation() {
 		generator.createArray(LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "arrayInstance", "()Lst/redline/smalltalk/RObject;");
 	}
 
@@ -233,5 +233,9 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitInsn(RETURN);
 		verify(methodVisitor).visitMaxs(1, 1);
 		verify(methodVisitor).visitEnd();
+	}
+
+	private void verifySmalltalkInstanceFetch() {
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
 	}
 }
