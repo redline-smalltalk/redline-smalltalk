@@ -6,6 +6,7 @@ Implemented smalltalk instance resolution enhancement suggested by Jose Antonio 
 Backed out enhancement, however it did help reveal a logic error. We need to use current instance
 (this) class classloader to get Smalltalk instance.
 Refactored test to make it easier to change the way Smalltalk instance is fetched.
+Now we fetch the smalltalk instance by looking at the receiver class' classloader.
 
 
 11/01/2011 Changes

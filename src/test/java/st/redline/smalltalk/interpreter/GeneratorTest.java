@@ -236,6 +236,7 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	private void verifySmalltalkInstanceFetch() {
-		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		verify(methodVisitor, times(2)).visitVarInsn(ALOAD, 0);
+		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, CLASS_FULLY_QUALIFIED_NAME, "smalltalk", "()Lst/redline/smalltalk/Smalltalk;");
 	}
 }

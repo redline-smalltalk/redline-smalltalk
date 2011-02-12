@@ -98,6 +98,10 @@ public class RObject {
 		return data.primitiveName();
 	}
 
+	public Smalltalk smalltalk() {
+		return (Smalltalk) getClass().getClassLoader();
+	}
+
 	public static void bindMethod(String className, String methodName, String methodClassName, boolean classMethod) {
 		Smalltalk smalltalk = Smalltalk.instance();
 		if (smalltalk.verboseOn())

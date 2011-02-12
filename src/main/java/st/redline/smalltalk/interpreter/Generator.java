@@ -199,7 +199,8 @@ public class Generator implements Opcodes {
 	}
 
 	private void currentSmalltalkClass() {
-		current.methodVisitor.visitMethodInsn(INVOKESTATIC, SMALLTALK_CLASS, "instance", "()Lst/redline/smalltalk/Smalltalk;");
+		current.methodVisitor.visitVarInsn(ALOAD, 0);
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, current.fullyQualifiedName, "smalltalk", "()Lst/redline/smalltalk/Smalltalk;");
 	}
 
 	public void unarySend(String unarySelector, int line) {
