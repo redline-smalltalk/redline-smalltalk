@@ -22,6 +22,7 @@ grammar Smalltalk;
 
 options {
 	language = Java;
+	backtrack = true;
 }
 
 @header {
@@ -125,8 +126,13 @@ unaryMessage returns [UnaryMessage n]
 primary returns [Primary n]
 	:	variable {$n = $variable.n;}
 	|	literal {$n = $literal.n;}
+	|	array {$n = $array.n;}
 	;
-	
+
+array returns [Array n]
+	:	l = '{' statementList {$n = new Array($statementList.n, $l.line);} '}'
+	;
+		
 variable returns [Variable n]
 	:	NAME {$n = new Variable($NAME.text, $NAME.line);}
 	;

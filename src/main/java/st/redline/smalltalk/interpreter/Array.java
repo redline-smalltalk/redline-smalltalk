@@ -22,7 +22,7 @@ package st.redline.smalltalk.interpreter;
 
 public class Array extends Primary {
 
-	public Array(Statements value, int line) {
+	public Array(StatementList value, int line) {
 		super(value, line);
 	}
 
@@ -30,7 +30,7 @@ public class Array extends Primary {
 		visitor.visit(this);
 	}
 
-	public Statements statements() {
-		return (Statements) value();
+	public StatementList statementList() {
+		return (StatementList) value();
 	}
 }

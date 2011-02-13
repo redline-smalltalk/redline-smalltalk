@@ -1,4 +1,9 @@
 
+14/02/2011 Changes
+
+Parsing Arrays "{ statements }", and generating code.
+
+
 13/02/2011 Changes
 
 Looking into array {statements} support.

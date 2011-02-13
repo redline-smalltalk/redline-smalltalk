@@ -79,6 +79,7 @@ public class AnalyserTest {
 	@Mock BinaryArgument binaryArgument;
 	@Mock StString string;
 	@Mock Symbol symbol;
+	@Mock Array array;
 	@Mock LiteralNumber literalNumber;
 	@Mock StCharacter character;
 	@Mock Variable primary;
@@ -270,6 +271,13 @@ public class AnalyserTest {
 		analyser.visit(arrayLiteral);
 		verify(generator).primitiveSymbolConversion(SYMBOL, LINE_NUMBER);
 		verify(generator).keywordSend(ADD_KEYWORD, 1, LINE_NUMBER);
+	}
+
+	@Test public void shouldVisitArray() {
+		when(array.line()).thenReturn(LINE_NUMBER);
+		when(array.statementList()).thenReturn(statementList);
+		analyser.visit(array);
+		verify(generator).createArray(LINE_NUMBER);
 	}
 
 	@Test public void shouldVisitEachNodeOfProgramNode() {
