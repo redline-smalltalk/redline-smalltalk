@@ -124,7 +124,8 @@ unaryMessage returns [UnaryMessage n]
 	;
 
 primary returns [Primary n]
-	:	variable {$n = $variable.n;}
+	:	l = '(' expression {$n = new PrimaryExpression($expression.n, $l.line);} ')'
+	|	variable {$n = $variable.n;}
 	|	literal {$n = $literal.n;}
 	|	array {$n = $array.n;}
 	;

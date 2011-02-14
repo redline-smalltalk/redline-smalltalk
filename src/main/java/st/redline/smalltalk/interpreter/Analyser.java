@@ -40,6 +40,7 @@ public class Analyser implements NodeVisitor {
 	protected boolean currentMethodIsClassMethod = false;
 	protected int literalArrayNesting = 0;
 	protected int arrayNesting = 0;
+	protected int primaryExpressionNesting = 0;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
@@ -149,13 +150,17 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Expression expression) {
 		expression.cascade().accept(this);
-		if (!insideArrayExpression())
-			if (!expression.isAnswered() || !expression.isLast())
+		if (!insideArrayExpression() && !insidePrimaryExpression())
+			if (!expression.isAnswered() && !expression.isLast())
 				generator.stackPop();
 	}
 
 	private boolean insideArrayExpression() {
 		return arrayNesting != 0;
+	}
+
+	private boolean insidePrimaryExpression() {
+		return primaryExpressionNesting != 0;
 	}
 
 	public void visit(Cascade cascade) {
@@ -239,6 +244,12 @@ public class Analyser implements NodeVisitor {
 	public void visit(Variable variable) {
 		if (variable.isClassReference())
 			generator.classLookup(variable.name(), variable.line());
+	}
+
+	public void visit(PrimaryExpression primaryExpression) {
+		primaryExpressionNesting++;
+		primaryExpression.expression().accept(this);
+		primaryExpressionNesting--;
 	}
 
 	public void visit(Symbol symbol) {
