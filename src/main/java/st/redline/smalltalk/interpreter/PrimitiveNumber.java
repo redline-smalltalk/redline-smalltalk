@@ -13,43 +13,24 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Method extends BasicListNode {
+public class PrimitiveNumber extends Primitive {
 
-	private final Pragmas pragmas;
-	private final Sequence sequence;
-
-	public Method(MethodPattern methodPattern, Sequence sequence) {
-		this.sequence = sequence;
-		this.pragmas = null;
-		add(methodPattern);
-	}
-
-	public Method(MethodPattern methodPattern, Pragmas pragmas, Sequence sequence) {
-		this.pragmas = pragmas;
-		this.sequence = sequence;
-		add(methodPattern);
+	public PrimitiveNumber(String value, int line) {
+		super(value, line);
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
 
-	public MethodPattern methodPattern() {
-		return (MethodPattern) first();
-	}
-
-	public Pragmas pragmas() {
-		return pragmas;
-	}
-
-	public Sequence sequence() {
-		return sequence;
+	public String number() {
+		return (String) value();
 	}
 }

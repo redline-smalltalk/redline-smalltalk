@@ -47,6 +47,7 @@ chunk returns [Chunk n]
 
 method returns [Method n]
 	:	methodPattern sequence {$n = new Method($methodPattern.n, $sequence.n);}
+	|	methodPattern pragmas sequence {$n = new Method($methodPattern.n, $pragmas.n, $sequence.n);}
 	;
 	
 methodPattern returns [MethodPattern n]
@@ -58,6 +59,10 @@ methodPattern returns [MethodPattern n]
 keywordMethodPattern returns [KeywordMethodPattern n]
 	:	{$n = new KeywordMethodPattern();}
 		(KEYWORD variable {$n.add($KEYWORD.text, $KEYWORD.line, $variable.n);})*
+	;
+	
+pragmas returns [Pragmas n]
+	:	'<' pragmaMessage {$n = $pragmaMessage.n;} '>' 
 	;
 			
 sequence returns [Sequence n]
@@ -182,6 +187,15 @@ arrayLiteral returns [ArrayLiteral n]
  	|	ALTERNATE_KEYWORD {$n = new ArrayLiteral($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}
 	;
 
+pragmaMessage returns [PragmaMessage n]
+	:	primitive {$n = new PragmaMessage($primitive.n);}
+	;
+	
+primitive returns [Primitive n]
+	:	l = 'primitive:' STRING {$n = new PrimitiveString($STRING.text, $l.line);}
+	|	l = 'primitive:' DECIMAL_NUMBER {$n = new PrimitiveNumber($DECIMAL_NUMBER.text, $l.line);}
+	|	l = 'primitive:' s1 = STRING 'module:' s2 = STRING {$n = new PrimitiveModule($s1.text, $s2.text, $l.line);}
+	;
 
 DECIMAL_NUMBER:	('0'..'9')+ ('.' ('0'..'9')+)?;
 RADIX_NUMBER: ('0'..'9')+ 'r' ('0'..'9' | 'A'..'Z')+ ('.' ('0'..'9' | 'A'..'Z')+)?;

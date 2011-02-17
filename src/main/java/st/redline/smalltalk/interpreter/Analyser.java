@@ -81,6 +81,8 @@ public class Analyser implements NodeVisitor {
 
 	private void writeMethodClass(Method method) {
 		method.methodPattern().accept(this);
+		if (method.pragmas() != null)
+			method.pragmas().accept(this);
 		method.sequence().accept(this);
 		generator.closeMethod();
 		generator.closeMethodClass();
@@ -305,6 +307,22 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Nil nil) {
 		generator.nilLookup(nil.line());
+	}
+
+	public void visit(PragmaMessage pragmaMessage) {
+		pragmaMessage.primitive().accept(this);
+	}
+
+	public void visit(PrimitiveString primitiveString) {
+		// TODO.JCL implement this.
+	}
+
+	public void visit(PrimitiveNumber primitiveNumber) {
+		// TODO.JCL implement this.
+	}
+
+	public void visit(PrimitiveModule primitiveModule) {
+		// TODO.JCL implement this.
 	}
 
 	public void visit(UnaryMessage unaryMessage) {

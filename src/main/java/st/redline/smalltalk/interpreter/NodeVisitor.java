@@ -38,4 +38,8 @@ public interface NodeVisitor {
 	void visit(True literalTrue);
 	void visit(False literalFalse);
 	void visit(Nil nil);
+	void visit(PragmaMessage pragmaMessage);
+	void visit(PrimitiveString primitiveString);
+	void visit(PrimitiveNumber primitiveNumber);
+	void visit(PrimitiveModule primitiveModule);
 }

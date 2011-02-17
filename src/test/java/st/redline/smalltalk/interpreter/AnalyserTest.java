@@ -58,6 +58,9 @@ public class AnalyserTest {
 	@Mock MethodChunk methodChunk;
 	@Mock Method method;
 	@Mock MethodPattern methodPattern;
+	@Mock Pragmas pragmas;
+	@Mock PragmaMessage pragmaMessage;
+	@Mock Primitive primitive;
 	@Mock UnaryMethodPattern unaryMethodPattern;
 	@Mock BinaryMethodPattern binaryMethodPattern;
 	@Mock KeywordMethodPattern keywordMethodPattern;
@@ -118,12 +121,27 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldCloseMethodClassAfterMethodVisit() {
+		when(method.pragmas()).thenReturn(null);
 		analyser.visit(method);
 		verify(methodPattern).accept(analyser);
 		verify(sequence).accept(analyser);
 		verify(generator).closeMethod();
 		verify(generator).closeMethodClass();
 		verify(generator).classBytes();
+	}
+
+	@Test public void shouldVisitMethodPragmas() {
+		when(method.pragmas()).thenReturn(pragmas);
+		analyser.visit(method);
+		verify(methodPattern).accept(analyser);
+		verify(pragmas).accept(analyser);
+		verify(sequence).accept(analyser);
+	}
+
+	@Test public void shouldVisitPragmaMessage() {
+		when(pragmaMessage.primitive()).thenReturn(primitive);
+		analyser.visit(pragmaMessage);
+		verify(primitive).accept(analyser);
 	}
 
 	@Test public void shouldGenerateMethodBindAfterMethodVisit() {

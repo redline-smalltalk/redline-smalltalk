@@ -1,4 +1,9 @@
 
+17/02/2011 Changes
+
+Parsing pragmas ie: <primitive:>. Need to add generation of primitive system calls.
+
+
 14/02/2011 Changes
 
 Parsing Arrays "{ statements }", and generating code.
