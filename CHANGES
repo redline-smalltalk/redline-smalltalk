@@ -1,4 +1,10 @@
 
+18/02/2011 Changes
+
+Generating code for call of primitives. ie: <primitive: x>. Not complete.
+
+
+
 17/02/2011 Changes
 
 Parsing pragmas ie: <primitive:>. Need to add generation of primitive system calls.

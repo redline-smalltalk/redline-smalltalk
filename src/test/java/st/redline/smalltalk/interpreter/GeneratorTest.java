@@ -49,6 +49,7 @@ public class GeneratorTest implements Opcodes {
 	private static final int KEYWORD_ARGUMENT_COUNT = 2;
 	private static final String KEYWORD_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
 	private static final int LINE_NUMBER= 42;
+	private static final int ARGUMENT_COUNT = 5;
 
 	@Mock ClassWriter classWriter;
 	@Mock MethodVisitor methodVisitor;
@@ -197,6 +198,21 @@ public class GeneratorTest implements Opcodes {
 		verifyLineNumber(LINE_NUMBER);
 		verifySmalltalkInstanceFetch();
 		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "arrayInstance", "()Lst/redline/smalltalk/RObject;");
+	}
+
+	@Test public void shouldGenerateCallToPrimitiveByNumber() {
+		generator.callToPrimitiveByNumber(ARGUMENT_COUNT, "32", LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateCallToPrimitiveByString() {
+		generator.callToPrimitiveByString(ARGUMENT_COUNT, "string", LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateCallToPrimitiveByModule() {
+		generator.callToPrimitiveByModule(ARGUMENT_COUNT, "string", "module", LINE_NUMBER);
+		verifyLineNumber(LINE_NUMBER);
 	}
 
 	private void verifyMethodBindingCall(boolean isClassMethod) {

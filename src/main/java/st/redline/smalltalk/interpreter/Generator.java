@@ -292,6 +292,18 @@ public class Generator implements Opcodes {
 		invokeSmalltalkObjectMethod(line, "arrayInstance");
 	}
 
+	public void callToPrimitiveByNumber(int containingMethodArgumentCount, String number, int line) {
+		visitLine(line);
+	}
+
+	public void callToPrimitiveByString(int containingMethodArgumentCount, String string, int line) {
+		visitLine(line);
+	}
+
+	public void callToPrimitiveByModule(int containingMethodArgumentCount, String string, String module, int line) {
+		visitLine(line);
+	}
+
 	static class Context {
 		ClassWriter classWriter;
 		String className;

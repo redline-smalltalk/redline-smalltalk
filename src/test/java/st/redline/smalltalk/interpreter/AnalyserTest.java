@@ -30,6 +30,7 @@ import st.redline.smalltalk.SourceFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class AnalyserTest {
@@ -44,6 +45,7 @@ public class AnalyserTest {
 	private static final String NUMBER = "64";
 	private static final String ADD_KEYWORD = "add:";
 	private static final int LINE_NUMBER= 42;
+	private static final int ARGUMENT_COUNT = 3;
 	private static final String BINARY_SELECTOR = "+";
 	private static final List<String> KEYWORD_MESSAGE_LIST = new ArrayList<String>();
 	static {
@@ -61,6 +63,9 @@ public class AnalyserTest {
 	@Mock Pragmas pragmas;
 	@Mock PragmaMessage pragmaMessage;
 	@Mock Primitive primitive;
+	@Mock PrimitiveString primitiveString;
+	@Mock PrimitiveNumber primitiveNumber;
+	@Mock PrimitiveModule primitiveModule;
 	@Mock UnaryMethodPattern unaryMethodPattern;
 	@Mock BinaryMethodPattern binaryMethodPattern;
 	@Mock KeywordMethodPattern keywordMethodPattern;
@@ -144,6 +149,31 @@ public class AnalyserTest {
 		verify(primitive).accept(analyser);
 	}
 
+	@Test public void shouldGenerateCallToPrimitiveByNumber() {
+		analyser.currentMethodArgumentCount = ARGUMENT_COUNT;
+		when(primitiveNumber.line()).thenReturn(LINE_NUMBER);
+		when(primitiveNumber.number()).thenReturn("32");
+		analyser.visit(primitiveNumber);
+		verify(generator).callToPrimitiveByNumber(ARGUMENT_COUNT, "32", LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateCallToPrimitiveByString() {
+		analyser.currentMethodArgumentCount = ARGUMENT_COUNT;
+		when(primitiveString.line()).thenReturn(LINE_NUMBER);
+		when(primitiveString.string()).thenReturn("foo");
+		analyser.visit(primitiveString);
+		verify(generator).callToPrimitiveByString(ARGUMENT_COUNT, "foo", LINE_NUMBER);
+	}
+
+	@Test public void shouldGenerateCallToPrimitiveByModule() {
+		analyser.currentMethodArgumentCount = ARGUMENT_COUNT;
+		when(primitiveModule.line()).thenReturn(LINE_NUMBER);
+		when(primitiveModule.string()).thenReturn("string");
+		when(primitiveModule.module()).thenReturn("module");
+		analyser.visit(primitiveModule);
+		verify(generator).callToPrimitiveByModule(ARGUMENT_COUNT, "string", "module", LINE_NUMBER);
+	}
+
 	@Test public void shouldGenerateMethodBindAfterMethodVisit() {
 		analyser.currentMethodSelector = UNARY_SELECTOR;
 		analyser.currentMethodClassName = CLASS_NAME + "_" + UNARY_SELECTOR;
@@ -157,6 +187,7 @@ public class AnalyserTest {
 		analyser.visit(unaryMethodPattern);
 		verify(generator).openMethodClass(CLASS_NAME + "_" + UNARY_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
 		verify(generator).openMethod(0);
+		assertEquals(0, analyser.currentMethodArgumentCount);
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromBinaryMethodPattern() {
@@ -164,6 +195,7 @@ public class AnalyserTest {
 		analyser.visit(binaryMethodPattern);
 		verify(generator).openMethodClass(CLASS_NAME + "_" + BINARY_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
 		verify(generator).openMethod(1);
+		assertEquals(1, analyser.currentMethodArgumentCount);
 	}
 
 	@Test public void shouldGenerateMethodClassNameFromKeywordMethodPattern() {
@@ -171,6 +203,7 @@ public class AnalyserTest {
 		analyser.visit(keywordMethodPattern);
 		verify(generator).openMethodClass(CLASS_NAME + "_" + KEYWORD_SELECTOR, PACKAGE_INTERNAL_NAME, CLASS_NAME);
 		verify(generator).openMethod(2);
+		assertEquals(2, analyser.currentMethodArgumentCount);
 	}
 
 	@Test public void shouldGenerateClassLookupWhenPrimaryVariableIsClassName() {

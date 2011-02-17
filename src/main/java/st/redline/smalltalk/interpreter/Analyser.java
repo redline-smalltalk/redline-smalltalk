@@ -37,6 +37,7 @@ public class Analyser implements NodeVisitor {
 
 	protected String currentMethodClassName;
 	protected String currentMethodSelector;
+	protected int currentMethodArgumentCount = 0;
 	protected boolean currentMethodIsClassMethod = false;
 	protected int literalArrayNesting = 0;
 	protected int arrayNesting = 0;
@@ -102,8 +103,9 @@ public class Analyser implements NodeVisitor {
 		String sourceFileName = sourceFileName();
 		currentMethodClassName = sourceFileName + CLASS_NAME_SEPARATOR + selector;
 		currentMethodSelector = selector;
+		currentMethodArgumentCount = 0;
 		generator.openMethodClass(currentMethodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
-		generator.openMethod(0);
+		generator.openMethod(currentMethodArgumentCount);
 	}
 
 	public void visit(BinaryMethodPattern binaryMethodPattern) {
@@ -111,8 +113,9 @@ public class Analyser implements NodeVisitor {
 		String sourceFileName = sourceFileName();
 		currentMethodClassName = sourceFileName + CLASS_NAME_SEPARATOR + selector;
 		currentMethodSelector = selector;
+		currentMethodArgumentCount = 1;
 		generator.openMethodClass(currentMethodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
-		generator.openMethod(1);
+		generator.openMethod(currentMethodArgumentCount);
 	}
 
 	public void visit(KeywordMethodPattern keywordMethodPattern) {
@@ -126,8 +129,9 @@ public class Analyser implements NodeVisitor {
 		String selector = keywords.toString();
 		currentMethodClassName = sourceFileName + CLASS_NAME_SEPARATOR + selector;
 		currentMethodSelector = selector;
+		currentMethodArgumentCount = keywordArguments;
 		generator.openMethodClass(currentMethodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
-		generator.openMethod(keywordArguments);
+		generator.openMethod(currentMethodArgumentCount);
 	}
 
 	private void writeClass(Program program) {
@@ -314,15 +318,15 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(PrimitiveString primitiveString) {
-		// TODO.JCL implement this.
+		generator.callToPrimitiveByString(currentMethodArgumentCount, primitiveString.string(), primitiveString.line());
 	}
 
 	public void visit(PrimitiveNumber primitiveNumber) {
-		// TODO.JCL implement this.
+		generator.callToPrimitiveByNumber(currentMethodArgumentCount, primitiveNumber.number(), primitiveNumber.line());
 	}
 
 	public void visit(PrimitiveModule primitiveModule) {
-		// TODO.JCL implement this.
+		generator.callToPrimitiveByModule(currentMethodArgumentCount, primitiveModule.string(), primitiveModule.module(), primitiveModule.line());
 	}
 
 	public void visit(UnaryMessage unaryMessage) {
