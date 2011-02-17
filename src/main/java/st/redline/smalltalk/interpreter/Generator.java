@@ -293,14 +293,17 @@ public class Generator implements Opcodes {
 	}
 
 	public void callToPrimitiveByNumber(int containingMethodArgumentCount, String number, int line) {
+		// TODO.JCL - containingMethodArgumentCount needs a +1 for receiver
 		visitLine(line);
 	}
 
 	public void callToPrimitiveByString(int containingMethodArgumentCount, String string, int line) {
+		// TODO.JCL - containingMethodArgumentCount needs a +1 for receiver
 		visitLine(line);
 	}
 
 	public void callToPrimitiveByModule(int containingMethodArgumentCount, String string, String module, int line) {
+		// TODO.JCL - containingMethodArgumentCount needs a +1 for receiver
 		visitLine(line);
 	}
 
