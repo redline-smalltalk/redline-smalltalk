@@ -131,6 +131,10 @@ public class RObject {
 		return method;
 	}
 
+	private static RObject primitive_1(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, RObject arg10) {
+		throw new RuntimeException("TODO -  need to implement primitives!");
+	}
+
 	private static RObject sendDoesNotUnderstand(RObject receiver, String selector, RObject[] arguments) {
 		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
 	}

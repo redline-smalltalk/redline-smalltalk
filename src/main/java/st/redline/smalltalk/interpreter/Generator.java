@@ -28,6 +28,7 @@ import org.objectweb.asm.Opcodes;
 import java.io.File;
 import java.util.Stack;
 
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.verify;
 
 public class Generator implements Opcodes {
@@ -293,18 +294,52 @@ public class Generator implements Opcodes {
 	}
 
 	public void callToPrimitiveByNumber(int containingMethodArgumentCount, String number, int line) {
-		// TODO.JCL - containingMethodArgumentCount needs a +1 for receiver
 		visitLine(line);
+
+		// push arguments that were given to method object + actual receiver (not 'this').
+		pushMethodArguments(containingMethodArgumentCount);
+
+		// push null for remainder of arguments upto MAXIMUM_KEYWORD_ARGUMENTS
+		pushNulls(MAXIMUM_KEYWORD_ARGUMENTS - containingMethodArgumentCount);
+
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "primitive_"+number, APPLY_METHOD_DESCRIPTORS[10]);
+		int primitiveResultLocalVariableIndex = containingMethodArgumentCount + 2;   // Nb: +2 because 0 is 'this' and '1' is actual receiver.
+		storeIntoLocal(primitiveResultLocalVariableIndex);
+
+		// generate if (result != null) return result;
+		current.methodVisitor.visitVarInsn(ALOAD, primitiveResultLocalVariableIndex);
+		Label labelAfterReturnResult = new Label();
+		current.methodVisitor.visitLabel(labelAfterReturnResult);
+		current.methodVisitor.visitJumpInsn(IFNULL, labelAfterReturnResult);
+		current.methodVisitor.visitVarInsn(ALOAD, primitiveResultLocalVariableIndex);
+		current.methodVisitor.visitInsn(ARETURN);
+		current.methodVisitor.visitLabel(labelAfterReturnResult);
+
+		// fixup frame after return.
+		current.methodVisitor.visitLineNumber(line + 1, labelAfterReturnResult);
+		current.methodVisitor.visitFrame(Opcodes.F_APPEND, 1, new Object[] {"st/redline/smalltalk/RObject"}, 0, null);
 	}
 
 	public void callToPrimitiveByString(int containingMethodArgumentCount, String string, int line) {
-		// TODO.JCL - containingMethodArgumentCount needs a +1 for receiver
 		visitLine(line);
 	}
 
 	public void callToPrimitiveByModule(int containingMethodArgumentCount, String string, String module, int line) {
-		// TODO.JCL - containingMethodArgumentCount needs a +1 for receiver
 		visitLine(line);
+	}
+
+	public void pushMethodArguments(int countOfArgumentsToPush) {
+		for (int i = 0; i < countOfArgumentsToPush + 1; i++)
+			current.methodVisitor.visitVarInsn(ALOAD, (i + 1));
+	}
+
+	public void pushNulls(int countOfNullsToPush) {
+		for (int i = 0; i < countOfNullsToPush; i++)
+			current.methodVisitor.visitInsn(ACONST_NULL);
+	}
+
+	public void storeIntoLocal(int index) {
+		current.methodVisitor.visitVarInsn(ASTORE, index);
 	}
 
 	static class Context {

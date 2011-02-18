@@ -32,6 +32,7 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 public class GeneratorTest implements Opcodes {
@@ -47,9 +48,12 @@ public class GeneratorTest implements Opcodes {
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String KEYWORD_SELECTOR = "at:put:";
 	private static final int KEYWORD_ARGUMENT_COUNT = 2;
-	private static final String KEYWORD_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
+	private static final String KEYWORD_METHOD_DESCRIPTOR =
+			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
+	private static final String PRIMITIVE_BY_NUMBER_METHOD_DESCRIPTOR =
+			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;";
 	private static final int LINE_NUMBER= 42;
-	private static final int ARGUMENT_COUNT = 5;
+	private static final int ARGUMENT_COUNT = 2;
 
 	@Mock ClassWriter classWriter;
 	@Mock MethodVisitor methodVisitor;
@@ -201,8 +205,24 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByNumber() {
+		int primitiveResultLocalVariableIndex = ARGUMENT_COUNT + 1 + 1;
 		generator.callToPrimitiveByNumber(ARGUMENT_COUNT, "32", LINE_NUMBER);
-		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor, times(3)).visitLabel((Label) notNull());
+		verify(methodVisitor).visitLineNumber(eq(LINE_NUMBER), (Label) notNull());
+		verify(methodVisitor).visitVarInsn(ALOAD, 1);   // Nb - index 1 is 'receiver' passed to method.
+		verify(methodVisitor).visitVarInsn(ALOAD, 2);   // first argument
+		verify(methodVisitor).visitVarInsn(ALOAD, 3);   // second argument
+		verify(methodVisitor, times(8)).visitInsn(ACONST_NULL);   // ... upto 10 arguments.
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "primitive_32", PRIMITIVE_BY_NUMBER_METHOD_DESCRIPTOR);
+		// Store result of primitive call into local variable.
+		verify(methodVisitor).visitVarInsn(ASTORE, primitiveResultLocalVariableIndex);
+		// Do a "if (result != null) return result;"
+		verify(methodVisitor, times(2)).visitVarInsn(ALOAD, primitiveResultLocalVariableIndex);
+		verify(methodVisitor).visitJumpInsn(eq(IFNULL), (Label) notNull());
+		verify(methodVisitor).visitInsn(ARETURN);
+		// fixup frame
+		verify(methodVisitor).visitLineNumber(eq(LINE_NUMBER + 1), (Label) notNull());
+		verify(methodVisitor).visitFrame(Opcodes.F_APPEND, 1, new Object[] {"st/redline/smalltalk/RObject"}, 0, null);
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByString() {
