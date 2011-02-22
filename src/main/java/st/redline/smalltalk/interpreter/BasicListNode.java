@@ -44,6 +44,10 @@ public abstract class BasicListNode implements Node {
 			command.execute(node);
 	}
 
+	protected int count() {
+		return nodes.size();
+	}
+
 	protected Node first() {
 		return nodes.get(0);
 	}

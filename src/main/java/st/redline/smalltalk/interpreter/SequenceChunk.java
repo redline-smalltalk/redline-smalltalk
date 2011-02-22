@@ -22,11 +22,23 @@ package st.redline.smalltalk.interpreter;
 
 public class SequenceChunk extends Chunk {
 
+	private final Temporaries temporaries;
+
 	public SequenceChunk(Sequence value) {
 		super(value);
+		this.temporaries = null;
+	}
+
+	public SequenceChunk(Sequence value, Temporaries temporaries) {
+		super(value);
+		this.temporaries = temporaries;
 	}
 
 	public Sequence sequence() {
 		return (Sequence) value();
+	}
+
+	public Temporaries temporaries() {
+		return temporaries;
 	}
 }

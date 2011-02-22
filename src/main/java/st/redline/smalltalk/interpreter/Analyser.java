@@ -63,6 +63,8 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(SequenceChunk sequenceChunk) {
+		if (sequenceChunk.temporaries() != null)
+			sequenceChunk.temporaries().accept(this);
 		sequenceChunk.sequence().accept(this);
 	}
 
@@ -82,6 +84,8 @@ public class Analyser implements NodeVisitor {
 
 	private void writeMethodClass(Method method) {
 		method.methodPattern().accept(this);
+		if (method.temporaries() != null)
+			method.temporaries().accept(this);
 		if (method.pragmas() != null)
 			method.pragmas().accept(this);
 		method.sequence().accept(this);
@@ -311,6 +315,14 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Nil nil) {
 		generator.nilLookup(nil.line());
+	}
+
+	public void visit(Temporaries temporaries) {
+		temporaries.eachAccept(this);
+	}
+
+	public void visit(Temporary temporary) {
+		// TODO.JCL Handle this.
 	}
 
 	public void visit(PragmaMessage pragmaMessage) {

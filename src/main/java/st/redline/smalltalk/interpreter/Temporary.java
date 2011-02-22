@@ -20,36 +20,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Method extends BasicListNode {
+public class Temporary extends BasicNode {
 
-	private final Temporaries temporaries;
-	private final Pragmas pragmas;
-	private final Sequence sequence;
-
-	public Method(MethodPattern methodPattern, Temporaries temporaries, Pragmas pragmas, Sequence sequence) {
-		this.temporaries = temporaries;
-		this.pragmas = pragmas;
-		this.sequence = sequence;
-		add(methodPattern);
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-	}
-
-	public MethodPattern methodPattern() {
-		return (MethodPattern) first();
-	}
-
-	public Pragmas pragmas() {
-		return pragmas;
-	}
-
-	public Temporaries temporaries() {
-		return temporaries;
-	}
-
-	public Sequence sequence() {
-		return sequence;
+	public Temporary(String value, int line) {
+		super(value, line);
 	}
 }

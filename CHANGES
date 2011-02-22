@@ -1,4 +1,9 @@
 
+23/02/2011 Changes
+
+Parsing temporaries in methods and scripts. Still need to generate bytecode for method local slots.
+
+
 18/02/2011 Changes
 
 Generating code for call of primitives. ie: <primitive: x>. Not complete - need to create a method

@@ -39,15 +39,14 @@ program returns [Program n]
 	; 
 
 chunk returns [Chunk n]
-	:	sequence EOF {$n = new SequenceChunk($sequence.n);}
-	|	sequence '!' {$n = new SequenceChunk($sequence.n);} 
+	:	(temporaries)? sequence EOF {$n = new SequenceChunk($sequence.n, $temporaries.n);}
+	|	(temporaries)? sequence '!' {$n = new SequenceChunk($sequence.n, $temporaries.n);}
 	|	'!' sequence '!' {$n = new DirectiveChunk($sequence.n);}
-	|	method '! !' {$n = new MethodChunk($method.n); }
+	|	method CHUNK_END {$n = new MethodChunk($method.n); }
 	; 
 
 method returns [Method n]
-	:	methodPattern sequence {$n = new Method($methodPattern.n, $sequence.n);}
-	|	methodPattern pragmas sequence {$n = new Method($methodPattern.n, $pragmas.n, $sequence.n);}
+	:	methodPattern (temporaries)? (pragmas)? sequence {$n = new Method($methodPattern.n, $temporaries.n, $pragmas.n, $sequence.n);}
 	;
 	
 methodPattern returns [MethodPattern n]
@@ -60,7 +59,13 @@ keywordMethodPattern returns [KeywordMethodPattern n]
 	:	{$n = new KeywordMethodPattern();}
 		(KEYWORD variable {$n.add($KEYWORD.text, $KEYWORD.line, $variable.n);})*
 	;
-	
+
+temporaries returns [Temporaries n]
+	:	'||' {$n = new Temporaries();}
+	|	{$n = new Temporaries();}
+		'|' ( NAME {$n.add(new Temporary($NAME.text, $NAME.line));} )+ '|'
+	;
+
 pragmas returns [Pragmas n]
 	:	'<' pragmaMessage {$n = $pragmaMessage.n;} '>' 
 	;
@@ -211,3 +216,4 @@ COMMENT: '"' .* '"' {$channel = HIDDEN;};
 STRING: '\'' .* '\'';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
+CHUNK_END: '! !' ;

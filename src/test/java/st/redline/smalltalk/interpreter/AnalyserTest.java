@@ -60,6 +60,8 @@ public class AnalyserTest {
 	@Mock MethodChunk methodChunk;
 	@Mock Method method;
 	@Mock MethodPattern methodPattern;
+	@Mock Temporaries temporaries;
+	@Mock Temporary temporary;
 	@Mock Pragmas pragmas;
 	@Mock PragmaMessage pragmaMessage;
 	@Mock Primitive primitive;
@@ -126,6 +128,7 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldCloseMethodClassAfterMethodVisit() {
+		when(method.temporaries()).thenReturn(null);
 		when(method.pragmas()).thenReturn(null);
 		analyser.visit(method);
 		verify(methodPattern).accept(analyser);
@@ -143,10 +146,24 @@ public class AnalyserTest {
 		verify(sequence).accept(analyser);
 	}
 
+	@Test public void shouldVisitMethodTemporaries() {
+		when(method.temporaries()).thenReturn(temporaries);
+		when(method.pragmas()).thenReturn(null);
+		analyser.visit(method);
+		verify(methodPattern).accept(analyser);
+		verify(temporaries).accept(analyser);
+		verify(sequence).accept(analyser);
+	}
+
 	@Test public void shouldVisitPragmaMessage() {
 		when(pragmaMessage.primitive()).thenReturn(primitive);
 		analyser.visit(pragmaMessage);
 		verify(primitive).accept(analyser);
+	}
+
+	@Test public void shouldVisitTemporaries() {
+		analyser.visit(temporaries);
+		verify(temporaries).eachAccept(analyser);
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByNumber() {
@@ -344,7 +361,9 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldVisitChildOfSequenceChunkNode() {
+		when(sequenceChunk.temporaries()).thenReturn(temporaries);
 		analyser.visit(sequenceChunk);
+		verify(temporaries).accept(analyser);
 		verify(sequence).accept(analyser);
 	}
 
