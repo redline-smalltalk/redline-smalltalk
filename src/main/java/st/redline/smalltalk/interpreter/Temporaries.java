@@ -22,6 +22,8 @@ package st.redline.smalltalk.interpreter;
 
 public class Temporaries extends BasicListNode {
 
+	private int runningIndex = 0;
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
@@ -32,5 +34,22 @@ public class Temporaries extends BasicListNode {
 				visitor.visit((Temporary) node);
 			}
 		});
+	}
+
+	public void indexFrom(int index) {
+		runningIndex(index);
+		each(new NodeCommand() {
+			public void execute(Node node) {
+				((Temporary) node).index(runningIndex());
+			}
+		});
+	}
+
+	public void runningIndex(int index) {
+		runningIndex = index;
+	}
+
+	public int runningIndex() {
+		return runningIndex++;
 	}
 }

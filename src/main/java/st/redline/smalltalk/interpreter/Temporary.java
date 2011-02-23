@@ -22,7 +22,17 @@ package st.redline.smalltalk.interpreter;
 
 public class Temporary extends BasicNode {
 
+	private int index = 0;
+
 	public Temporary(String value, int line) {
 		super(value, line);
+	}
+
+	public int index() {
+		return index;
+	}
+
+	public void index(int index) {
+		this.index = index;
 	}
 }

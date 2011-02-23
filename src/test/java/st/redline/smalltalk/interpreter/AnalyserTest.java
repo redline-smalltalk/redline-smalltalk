@@ -46,6 +46,7 @@ public class AnalyserTest {
 	private static final String ADD_KEYWORD = "add:";
 	private static final int LINE_NUMBER= 42;
 	private static final int ARGUMENT_COUNT = 3;
+	private static final int TEMPORARIES_COUNT = 2;
 	private static final String BINARY_SELECTOR = "+";
 	private static final List<String> KEYWORD_MESSAGE_LIST = new ArrayList<String>();
 	static {
@@ -155,6 +156,19 @@ public class AnalyserTest {
 		verify(sequence).accept(analyser);
 	}
 
+	@Test public void shouldSetMethodTemporariesIndexes() {
+		analyser.currentMethodArgumentCount = ARGUMENT_COUNT;
+		analyser.visit(temporaries);
+		verify(temporaries).indexFrom(ARGUMENT_COUNT + 2);
+	}
+
+	@Test public void shouldRememberCountOfMethodTemporaries() {
+		analyser.currentMethodTemporariesCount = 0;
+		when(temporaries.count()).thenReturn(3);
+		analyser.visit(temporaries);
+		assertEquals(3, analyser.currentMethodTemporariesCount);
+	}
+
 	@Test public void shouldVisitPragmaMessage() {
 		when(pragmaMessage.primitive()).thenReturn(primitive);
 		analyser.visit(pragmaMessage);
@@ -168,27 +182,30 @@ public class AnalyserTest {
 
 	@Test public void shouldGenerateCallToPrimitiveByNumber() {
 		analyser.currentMethodArgumentCount = ARGUMENT_COUNT;
+		analyser.currentMethodTemporariesCount = TEMPORARIES_COUNT;
 		when(primitiveNumber.line()).thenReturn(LINE_NUMBER);
 		when(primitiveNumber.number()).thenReturn("32");
 		analyser.visit(primitiveNumber);
-		verify(generator).callToPrimitiveByNumber(ARGUMENT_COUNT, "32", LINE_NUMBER);
+		verify(generator).callToPrimitiveByNumber(ARGUMENT_COUNT, TEMPORARIES_COUNT, "32", LINE_NUMBER);
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByString() {
 		analyser.currentMethodArgumentCount = ARGUMENT_COUNT;
+		analyser.currentMethodTemporariesCount = TEMPORARIES_COUNT;
 		when(primitiveString.line()).thenReturn(LINE_NUMBER);
 		when(primitiveString.string()).thenReturn("foo");
 		analyser.visit(primitiveString);
-		verify(generator).callToPrimitiveByString(ARGUMENT_COUNT, "foo", LINE_NUMBER);
+		verify(generator).callToPrimitiveByString(ARGUMENT_COUNT, TEMPORARIES_COUNT, "foo", LINE_NUMBER);
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByModule() {
 		analyser.currentMethodArgumentCount = ARGUMENT_COUNT;
+		analyser.currentMethodTemporariesCount = TEMPORARIES_COUNT;
 		when(primitiveModule.line()).thenReturn(LINE_NUMBER);
 		when(primitiveModule.string()).thenReturn("string");
 		when(primitiveModule.module()).thenReturn("module");
 		analyser.visit(primitiveModule);
-		verify(generator).callToPrimitiveByModule(ARGUMENT_COUNT, "string", "module", LINE_NUMBER);
+		verify(generator).callToPrimitiveByModule(ARGUMENT_COUNT, TEMPORARIES_COUNT, "string", "module", LINE_NUMBER);
 	}
 
 	@Test public void shouldGenerateMethodBindAfterMethodVisit() {

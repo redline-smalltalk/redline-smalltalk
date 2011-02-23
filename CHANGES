@@ -1,7 +1,8 @@
 
 23/02/2011 Changes
 
-Parsing temporaries in methods and scripts. Still need to generate bytecode for method local slots.
+Parsing temporaries in methods and scripts.
+Assigning local variable slot index to each temporary.
 
 
 18/02/2011 Changes

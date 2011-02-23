@@ -54,6 +54,7 @@ public class GeneratorTest implements Opcodes {
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;";
 	private static final int LINE_NUMBER= 42;
 	private static final int ARGUMENT_COUNT = 2;
+	private static final int TEMPORARIES_COUNT = 3;
 
 	@Mock ClassWriter classWriter;
 	@Mock MethodVisitor methodVisitor;
@@ -205,8 +206,8 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByNumber() {
-		int primitiveResultLocalVariableIndex = ARGUMENT_COUNT + 1 + 1;
-		generator.callToPrimitiveByNumber(ARGUMENT_COUNT, "32", LINE_NUMBER);
+		int primitiveResultLocalVariableIndex = ARGUMENT_COUNT + 2 + TEMPORARIES_COUNT; // +2 because 0 = this and 1 = receiver.
+		generator.callToPrimitiveByNumber(ARGUMENT_COUNT, TEMPORARIES_COUNT, "32", LINE_NUMBER);
 		verify(methodVisitor, times(3)).visitLabel((Label) notNull());
 		verify(methodVisitor).visitLineNumber(eq(LINE_NUMBER), (Label) notNull());
 		verify(methodVisitor).visitVarInsn(ALOAD, 1);   // Nb - index 1 is 'receiver' passed to method.
@@ -226,12 +227,12 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByString() {
-		generator.callToPrimitiveByString(ARGUMENT_COUNT, "string", LINE_NUMBER);
+		generator.callToPrimitiveByString(ARGUMENT_COUNT, 2, "string", LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByModule() {
-		generator.callToPrimitiveByModule(ARGUMENT_COUNT, "string", "module", LINE_NUMBER);
+		generator.callToPrimitiveByModule(ARGUMENT_COUNT, 2, "string", "module", LINE_NUMBER);
 		verifyLineNumber(LINE_NUMBER);
 	}
 

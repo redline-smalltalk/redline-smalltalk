@@ -38,6 +38,7 @@ public class Analyser implements NodeVisitor {
 	protected String currentMethodClassName;
 	protected String currentMethodSelector;
 	protected int currentMethodArgumentCount = 0;
+	protected int currentMethodTemporariesCount = 0;
 	protected boolean currentMethodIsClassMethod = false;
 	protected int literalArrayNesting = 0;
 	protected int arrayNesting = 0;
@@ -94,6 +95,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(MethodPattern methodPattern) {
+		currentMethodTemporariesCount = 0;
 		if (methodPattern.isUnaryMethodPattern())
 			methodPattern.unaryMethodPattern().accept(this);
 		else if (methodPattern.isKeywordMethodPattern())
@@ -318,6 +320,8 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Temporaries temporaries) {
+		currentMethodTemporariesCount = temporaries.count();
+		temporaries.indexFrom(currentMethodArgumentCount + 2);  // + 2 because receiver is passed as argument and 'this' is at index 0.
 		temporaries.eachAccept(this);
 	}
 
@@ -330,15 +334,15 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(PrimitiveString primitiveString) {
-		generator.callToPrimitiveByString(currentMethodArgumentCount, primitiveString.string(), primitiveString.line());
+		generator.callToPrimitiveByString(currentMethodArgumentCount, currentMethodTemporariesCount, primitiveString.string(), primitiveString.line());
 	}
 
 	public void visit(PrimitiveNumber primitiveNumber) {
-		generator.callToPrimitiveByNumber(currentMethodArgumentCount, primitiveNumber.number(), primitiveNumber.line());
+		generator.callToPrimitiveByNumber(currentMethodArgumentCount, currentMethodTemporariesCount, primitiveNumber.number(), primitiveNumber.line());
 	}
 
 	public void visit(PrimitiveModule primitiveModule) {
-		generator.callToPrimitiveByModule(currentMethodArgumentCount, primitiveModule.string(), primitiveModule.module(), primitiveModule.line());
+		generator.callToPrimitiveByModule(currentMethodArgumentCount, currentMethodTemporariesCount, primitiveModule.string(), primitiveModule.module(), primitiveModule.line());
 	}
 
 	public void visit(UnaryMessage unaryMessage) {

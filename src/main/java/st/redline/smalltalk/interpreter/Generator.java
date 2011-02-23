@@ -293,7 +293,7 @@ public class Generator implements Opcodes {
 		invokeSmalltalkObjectMethod(line, "arrayInstance");
 	}
 
-	public void callToPrimitiveByNumber(int containingMethodArgumentCount, String number, int line) {
+	public void callToPrimitiveByNumber(int containingMethodArgumentCount, int containingMethodTemporariesCount, String number, int line) {
 		visitLine(line);
 
 		// push arguments that were given to method object + actual receiver (not 'this').
@@ -303,7 +303,7 @@ public class Generator implements Opcodes {
 		pushNulls(MAXIMUM_KEYWORD_ARGUMENTS - containingMethodArgumentCount);
 
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "primitive_"+number, APPLY_METHOD_DESCRIPTORS[10]);
-		int primitiveResultLocalVariableIndex = containingMethodArgumentCount + 2;   // Nb: +2 because 0 is 'this' and '1' is actual receiver.
+		int primitiveResultLocalVariableIndex = (containingMethodArgumentCount + 2 + containingMethodTemporariesCount);   // Nb: +2 because 0 is 'this' and '1' is actual receiver.
 		storeIntoLocal(primitiveResultLocalVariableIndex);
 
 		// generate if (result != null) return result;
@@ -320,11 +320,11 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitFrame(Opcodes.F_APPEND, 1, new Object[] {"st/redline/smalltalk/RObject"}, 0, null);
 	}
 
-	public void callToPrimitiveByString(int containingMethodArgumentCount, String string, int line) {
+	public void callToPrimitiveByString(int containingMethodArgumentCount, int containingMethodTemporariesCount, String string, int line) {
 		visitLine(line);
 	}
 
-	public void callToPrimitiveByModule(int containingMethodArgumentCount, String string, String module, int line) {
+	public void callToPrimitiveByModule(int containingMethodArgumentCount, int containingMethodTemporariesCount, String string, String module, int line) {
 		visitLine(line);
 	}
 
