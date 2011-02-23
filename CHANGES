@@ -1,4 +1,10 @@
 
+24/02/2011 Changes
+
+Adding index to local variables, so they can be referenced in load or store.
+Added load and store of temporary and method argument variables.
+
+
 23/02/2011 Changes
 
 Parsing temporaries in methods and scripts.

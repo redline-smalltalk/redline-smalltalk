@@ -338,6 +338,10 @@ public class Generator implements Opcodes {
 			current.methodVisitor.visitInsn(ACONST_NULL);
 	}
 
+	public void loadFromLocal(int index) {
+		current.methodVisitor.visitVarInsn(ALOAD, index);
+	}
+
 	public void storeIntoLocal(int index) {
 		current.methodVisitor.visitVarInsn(ASTORE, index);
 	}

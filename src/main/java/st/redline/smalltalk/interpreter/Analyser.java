@@ -96,6 +96,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(MethodPattern methodPattern) {
 		currentMethodTemporariesCount = 0;
+		methodPattern.indexArgumentsFrom(2);
 		if (methodPattern.isUnaryMethodPattern())
 			methodPattern.unaryMethodPattern().accept(this);
 		else if (methodPattern.isKeywordMethodPattern())
@@ -256,6 +257,12 @@ public class Analyser implements NodeVisitor {
 	public void visit(Variable variable) {
 		if (variable.isClassReference())
 			generator.classLookup(variable.name(), variable.line());
+		else {
+			if (variable.isOnLoadSideOfExpression())
+				generator.loadFromLocal(variable.index());
+			else
+				generator.storeIntoLocal(variable.index());
+		}
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
@@ -326,7 +333,10 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Temporary temporary) {
-		// TODO.JCL Handle this.
+		if (temporary.isOnLoadSideOfExpression())
+			generator.loadFromLocal(temporary.index());
+		else
+			generator.storeIntoLocal(temporary.index());
 	}
 
 	public void visit(PragmaMessage pragmaMessage) {

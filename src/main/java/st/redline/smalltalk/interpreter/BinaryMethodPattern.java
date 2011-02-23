@@ -33,6 +33,10 @@ public class BinaryMethodPattern extends MethodPattern {
 		add(this);
 	}
 
+	public void indexArgumentsFrom(int index) {
+		variable().index(index);
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}

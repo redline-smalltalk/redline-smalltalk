@@ -236,6 +236,26 @@ public class GeneratorTest implements Opcodes {
 		verifyLineNumber(LINE_NUMBER);
 	}
 
+	@Test (expected=IllegalArgumentException.class)
+	public void shouldGenerateExceptionWhenMoreThanTenKeywordArguments() {
+		generator.keywordSend(KEYWORD_SELECTOR, 12, LINE_NUMBER);
+	}
+
+	@Test (expected=IllegalArgumentException.class)
+	public void shouldGenerateExceptionWhenMoreThanTenMethodArguments() {
+		generator.openMethod(12);
+	}
+
+	@Test public void shouldGenerateLoadOfVariable() {
+		generator.loadFromLocal(3);
+		verify(methodVisitor).visitVarInsn(ALOAD, 3);
+	}
+
+	@Test public void shouldGenerateStoreOfVariable() {
+		generator.storeIntoLocal(3);
+		verify(methodVisitor).visitVarInsn(ASTORE, 3);
+	}
+
 	private void verifyMethodBindingCall(boolean isClassMethod) {
 		verify(methodVisitor).visitLdcInsn(CLASS_NAME);
 		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
@@ -245,16 +265,6 @@ public class GeneratorTest implements Opcodes {
 		else
 			verify(methodVisitor).visitInsn(ICONST_0);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "bindMethod", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
-	}
-
-	@Test (expected=IllegalArgumentException.class)
-	public void shouldGenerateExceptionWhenMoreThanTenKeywordArguments() {
-		generator.keywordSend(KEYWORD_SELECTOR, 12, LINE_NUMBER);
-	}
-
-	@Test (expected=IllegalArgumentException.class)
-	public void shouldGenerateExceptionWhenMoreThanTenMethodArguments() {
-		generator.openMethod(12);
 	}
 
 	private void verifyLineNumber(int lineNumber) {

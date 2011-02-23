@@ -30,6 +30,8 @@ public abstract class MethodPattern extends BasicListNode {
 		return first();
 	}
 
+	public abstract void indexArgumentsFrom(int index);
+
 	public boolean isUnaryMethodPattern() {
 		return (value() instanceof UnaryMethodPattern);
 	}

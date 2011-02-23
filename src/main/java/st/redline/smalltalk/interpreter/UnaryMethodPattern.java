@@ -31,6 +31,10 @@ public class UnaryMethodPattern extends MethodPattern {
 		add(this);
 	}
 
+	public void indexArgumentsFrom(int index) {
+		/* ignored - no arguments */
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}

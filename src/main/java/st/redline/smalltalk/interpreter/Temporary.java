@@ -23,9 +23,14 @@ package st.redline.smalltalk.interpreter;
 public class Temporary extends BasicNode {
 
 	private int index = 0;
+	private boolean loadSideOfExpression = true;
 
 	public Temporary(String value, int line) {
 		super(value, line);
+	}
+
+	public boolean isOnLoadSideOfExpression() {
+		return loadSideOfExpression;
 	}
 
 	public int index() {

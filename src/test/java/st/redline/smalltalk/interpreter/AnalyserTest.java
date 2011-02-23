@@ -248,6 +248,36 @@ public class AnalyserTest {
 		verify(generator).classLookup(CLASS_NAME, LINE_NUMBER);
 	}
 
+	@Test public void shouldGenerateLoadWhenPrimaryVariableIsOnLoadSideOfExpression() {
+		when(variable.isClassReference()).thenReturn(false);
+		when(variable.isOnLoadSideOfExpression()).thenReturn(true);
+		when(variable.index()).thenReturn(2);
+		analyser.visit(variable);
+		verify(generator).loadFromLocal(2);
+	}
+
+	@Test public void shouldGenerateStoreWhenPrimaryVariableIsNotOnLoadSideOfExpression() {
+		when(variable.isClassReference()).thenReturn(false);
+		when(variable.isOnLoadSideOfExpression()).thenReturn(false);
+		when(variable.index()).thenReturn(2);
+		analyser.visit(variable);
+		verify(generator).storeIntoLocal(2);
+	}
+
+	@Test public void shouldGenerateLoadWhenTemporaryIsOnLoadSideOfExpression() {
+		when(temporary.isOnLoadSideOfExpression()).thenReturn(true);
+		when(temporary.index()).thenReturn(3);
+		analyser.visit(temporary);
+		verify(generator).loadFromLocal(3);
+	}
+
+	@Test public void shouldGenerateStoreWhenTemporaryIsNotOnLoadSideOfExpression() {
+		when(temporary.isOnLoadSideOfExpression()).thenReturn(false);
+		when(temporary.index()).thenReturn(3);
+		analyser.visit(temporary);
+		verify(generator).storeIntoLocal(3);
+	}
+
 	@Test public void shouldGenerateUnarySendFromUnaryMessage() {
 		when(unaryMessage.selector()).thenReturn(UNARY_SELECTOR);
 		when(unaryMessage.line()).thenReturn(LINE_NUMBER);
@@ -404,6 +434,7 @@ public class AnalyserTest {
 		when(methodPattern.isUnaryMethodPattern()).thenReturn(true);
 		when(methodPattern.unaryMethodPattern()).thenReturn(unaryMethodPattern);
 		analyser.visit(methodPattern);
+		verify(methodPattern).indexArgumentsFrom(2);
 		verify(unaryMethodPattern).accept(analyser);
 	}
 
@@ -411,6 +442,7 @@ public class AnalyserTest {
 		when(methodPattern.isBinaryMethodPattern()).thenReturn(true);
 		when(methodPattern.binaryMethodPattern()).thenReturn(binaryMethodPattern);
 		analyser.visit(methodPattern);
+		verify(methodPattern).indexArgumentsFrom(2);
 		verify(binaryMethodPattern).accept(analyser);
 	}
 
@@ -418,6 +450,7 @@ public class AnalyserTest {
 		when(methodPattern.isKeywordMethodPattern()).thenReturn(true);
 		when(methodPattern.keywordMethodPattern()).thenReturn(keywordMethodPattern);
 		analyser.visit(methodPattern);
+		verify(methodPattern).indexArgumentsFrom(2);
 		verify(keywordMethodPattern).accept(analyser);
 	}
 

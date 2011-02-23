@@ -25,6 +25,8 @@ import java.util.List;
 
 public class KeywordMethodPattern extends MethodPattern {
 
+	private int runningIndex;
+
 	public void add(String value, int line, Variable variable) {
 		add(new KeywordMethodPart(value, line, variable));
 	}
@@ -41,5 +43,22 @@ public class KeywordMethodPattern extends MethodPattern {
 			}
 		});
 		return keywords;
+	}
+
+	public void indexArgumentsFrom(int index) {
+		runningIndex(index);
+		each(new NodeCommand() {
+			public void execute(Node node) {
+				((KeywordMethodPart) node).argumentIndex(runningIndex());
+			}
+		});
+	}
+
+	public void runningIndex(int index) {
+		runningIndex = index;
+	}
+
+	public int runningIndex() {
+		return runningIndex++;
 	}
 }

@@ -22,6 +22,9 @@ package st.redline.smalltalk.interpreter;
 
 public class Variable extends Primary {
 
+	private int index = 0;
+	private boolean loadSideOfExpression = true;
+
 	public Variable(String value, int line) {
 		super(value, line);
 	}
@@ -32,6 +35,18 @@ public class Variable extends Primary {
 
 	public String name() {
 		return (String) value();
+	}
+
+	public boolean isOnLoadSideOfExpression() {
+		return loadSideOfExpression;
+	}
+
+	public int index() {
+		return index;
+	}
+
+	public void index(int index) {
+		this.index = index;
 	}
 
 	public boolean isClassReference() {

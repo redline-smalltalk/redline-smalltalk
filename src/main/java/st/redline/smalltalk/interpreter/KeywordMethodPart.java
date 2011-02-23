@@ -36,4 +36,8 @@ public class KeywordMethodPart extends BasicNode {
 	public Variable variable() {
 		return variable;
 	}
+
+	public void argumentIndex(int index) {
+		variable.index(index);
+	}
 }
