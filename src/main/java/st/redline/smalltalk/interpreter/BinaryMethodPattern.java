@@ -20,6 +20,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.Map;
+
 public class BinaryMethodPattern extends MethodPattern {
 
 	private final String selector;
@@ -33,8 +35,10 @@ public class BinaryMethodPattern extends MethodPattern {
 		add(this);
 	}
 
-	public void indexArgumentsFrom(int index) {
-		variable().index(index);
+	public void indexArgumentsFromAndRegisterIn(int index, Map<String, BasicNode> variableAndTemporaryRegistry) {
+		Variable variable = variable();
+		variable.index(index);
+		variable.registerIn(variableAndTemporaryRegistry);
 	}
 
 	public void accept(NodeVisitor visitor) {

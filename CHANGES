@@ -3,6 +3,7 @@
 
 Adding index to local variables, so they can be referenced in load or store.
 Added load and store of temporary and method argument variables.
+Added registry of temporaries and variables. Used for lookup when a variable is referenced.
 
 
 23/02/2011 Changes

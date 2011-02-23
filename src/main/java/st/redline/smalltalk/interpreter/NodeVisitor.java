@@ -39,7 +39,6 @@ public interface NodeVisitor {
 	void visit(False literalFalse);
 	void visit(Nil nil);
 	void visit(Temporaries temporaries);
-	void visit(Temporary temporary);
 	void visit(PragmaMessage pragmaMessage);
 	void visit(PrimitiveString primitiveString);
 	void visit(PrimitiveNumber primitiveNumber);

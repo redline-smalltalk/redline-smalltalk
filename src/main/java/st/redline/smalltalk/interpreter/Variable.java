@@ -20,10 +20,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Variable extends Primary {
+import java.util.Map;
 
-	private int index = 0;
-	private boolean loadSideOfExpression = true;
+public class Variable extends Primary {
 
 	public Variable(String value, int line) {
 		super(value, line);
@@ -37,16 +36,8 @@ public class Variable extends Primary {
 		return (String) value();
 	}
 
-	public boolean isOnLoadSideOfExpression() {
-		return loadSideOfExpression;
-	}
-
-	public int index() {
-		return index;
-	}
-
-	public void index(int index) {
-		this.index = index;
+	public void registerIn(Map<String, BasicNode> variableAndTemporaryRegistry) {
+		registerIn(name(), variableAndTemporaryRegistry);
 	}
 
 	public boolean isClassReference() {

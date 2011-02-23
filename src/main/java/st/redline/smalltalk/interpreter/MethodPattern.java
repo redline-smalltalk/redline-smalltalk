@@ -20,6 +20,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.List;
+import java.util.Map;
+
 public abstract class MethodPattern extends BasicListNode {
 
 	public void accept(NodeVisitor visitor) {
@@ -30,7 +33,7 @@ public abstract class MethodPattern extends BasicListNode {
 		return first();
 	}
 
-	public abstract void indexArgumentsFrom(int index);
+	public abstract void indexArgumentsFromAndRegisterIn(int index, Map<String, BasicNode> variableAndTemporaryRegistry);
 
 	public boolean isUnaryMethodPattern() {
 		return (value() instanceof UnaryMethodPattern);

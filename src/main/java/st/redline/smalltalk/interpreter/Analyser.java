@@ -23,8 +23,7 @@ package st.redline.smalltalk.interpreter;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Analyser implements NodeVisitor {
 
@@ -39,6 +38,7 @@ public class Analyser implements NodeVisitor {
 	protected String currentMethodSelector;
 	protected int currentMethodArgumentCount = 0;
 	protected int currentMethodTemporariesCount = 0;
+	protected Map<String, BasicNode> currentMethodVariableAndTemporaryRegistry = new HashMap<String, BasicNode>();  // need initial map for scripts with vars.
 	protected boolean currentMethodIsClassMethod = false;
 	protected int literalArrayNesting = 0;
 	protected int arrayNesting = 0;
@@ -78,9 +78,16 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Method method) {
+		initializePerMethodItems();
 		writeMethodClass(method);
 		methodClasses.add(generator.classBytes());
 		generator.methodBinding(sourceFileName(), currentMethodSelector, currentMethodClassName, currentMethodIsClassMethod);
+	}
+
+	private void initializePerMethodItems() {
+		currentMethodArgumentCount = 0;
+		currentMethodTemporariesCount = 0;
+		currentMethodVariableAndTemporaryRegistry = new HashMap<String, BasicNode>();
 	}
 
 	private void writeMethodClass(Method method) {
@@ -95,8 +102,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(MethodPattern methodPattern) {
-		currentMethodTemporariesCount = 0;
-		methodPattern.indexArgumentsFrom(2);
+		methodPattern.indexArgumentsFromAndRegisterIn(2, currentMethodVariableAndTemporaryRegistry);
 		if (methodPattern.isUnaryMethodPattern())
 			methodPattern.unaryMethodPattern().accept(this);
 		else if (methodPattern.isKeywordMethodPattern())
@@ -258,10 +264,13 @@ public class Analyser implements NodeVisitor {
 		if (variable.isClassReference())
 			generator.classLookup(variable.name(), variable.line());
 		else {
-			if (variable.isOnLoadSideOfExpression())
-				generator.loadFromLocal(variable.index());
+			BasicNode reference = currentMethodVariableAndTemporaryRegistry.get(variable.name());
+			if (reference == null)
+				throw new IllegalStateException("Reference of undefined variable '" + variable.name() + "'.");
+			if (reference.isOnLoadSideOfExpression())
+				generator.loadFromLocal(reference.index());
 			else
-				generator.storeIntoLocal(variable.index());
+				generator.storeIntoLocal(reference.index());
 		}
 	}
 
@@ -328,15 +337,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Temporaries temporaries) {
 		currentMethodTemporariesCount = temporaries.count();
-		temporaries.indexFrom(currentMethodArgumentCount + 2);  // + 2 because receiver is passed as argument and 'this' is at index 0.
-		temporaries.eachAccept(this);
-	}
-
-	public void visit(Temporary temporary) {
-		if (temporary.isOnLoadSideOfExpression())
-			generator.loadFromLocal(temporary.index());
-		else
-			generator.storeIntoLocal(temporary.index());
+		temporaries.indexFromAndRegisterIn(currentMethodArgumentCount + 2, currentMethodVariableAndTemporaryRegistry);  // + 2 because receiver is passed as argument and 'this' is at index 0.
 	}
 
 	public void visit(PragmaMessage pragmaMessage) {

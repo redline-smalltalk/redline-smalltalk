@@ -20,6 +20,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.Map;
+
 public class UnaryMethodPattern extends MethodPattern {
 
 	private final String selector;
@@ -31,7 +33,7 @@ public class UnaryMethodPattern extends MethodPattern {
 		add(this);
 	}
 
-	public void indexArgumentsFrom(int index) {
+	public void indexArgumentsFromAndRegisterIn(int index, Map<String, BasicNode> variableAndTemporaryRegistry) {
 		/* ignored - no arguments */
 	}
 

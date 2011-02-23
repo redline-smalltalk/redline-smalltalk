@@ -27,10 +27,11 @@ import org.mockito.MockitoAnnotations;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class AnalyserTest {
@@ -102,11 +103,13 @@ public class AnalyserTest {
 	@Mock Variable variable;
 	@Mock LiteralArray literalArray;
 	@Mock ArrayLiteral arrayLiteral;
+	@Mock Map<String, BasicNode> variableAndTemporaryRegistry;
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		analyser = new Analyser(smalltalk, generator);
+		analyser.currentMethodVariableAndTemporaryRegistry = new HashMap<String, BasicNode>();
 		when(sequenceChunk.sequence()).thenReturn(sequence);
 		when(directiveChunk.sequence()).thenReturn(sequence);
 		when(methodChunk.method()).thenReturn(method);
@@ -120,6 +123,10 @@ public class AnalyserTest {
 		when(smalltalk.currentFile()).thenReturn(sourceFile);
 		when(sourceFile.nameWithoutExtension()).thenReturn(CLASS_NAME);
 		when(sourceFile.parentPathWithoutUserPath()).thenReturn(PACKAGE_INTERNAL_NAME);
+	}
+
+	@Test public void shouldHaveVariableAndTemporaryRegistryAfterConstructionForScriptsThatContainTemporaries() {
+		assertNotNull(new Analyser(smalltalk, generator).currentMethodVariableAndTemporaryRegistry);
 	}
 
 	@Test public void shouldGenerateProgramFromProgramNode() {
@@ -156,12 +163,6 @@ public class AnalyserTest {
 		verify(sequence).accept(analyser);
 	}
 
-	@Test public void shouldSetMethodTemporariesIndexes() {
-		analyser.currentMethodArgumentCount = ARGUMENT_COUNT;
-		analyser.visit(temporaries);
-		verify(temporaries).indexFrom(ARGUMENT_COUNT + 2);
-	}
-
 	@Test public void shouldRememberCountOfMethodTemporaries() {
 		analyser.currentMethodTemporariesCount = 0;
 		when(temporaries.count()).thenReturn(3);
@@ -175,9 +176,15 @@ public class AnalyserTest {
 		verify(primitive).accept(analyser);
 	}
 
+	@Test public void shouldUseHashMapAsRegistrySoWeCanGetNullWhenNoKeyPresent() {
+		assertTrue(analyser.currentMethodVariableAndTemporaryRegistry instanceof HashMap);
+	}
+
 	@Test public void shouldVisitTemporaries() {
+		analyser.currentMethodArgumentCount = 1;
+		analyser.currentMethodTemporariesCount = 2;
 		analyser.visit(temporaries);
-		verify(temporaries).eachAccept(analyser);
+		verify(temporaries).indexFromAndRegisterIn(3, analyser.currentMethodVariableAndTemporaryRegistry);
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByNumber() {
@@ -249,33 +256,36 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldGenerateLoadWhenPrimaryVariableIsOnLoadSideOfExpression() {
+		analyser.currentMethodVariableAndTemporaryRegistry = variableAndTemporaryRegistry;
+		when(variableAndTemporaryRegistry.get("var")).thenReturn(variable);
 		when(variable.isClassReference()).thenReturn(false);
 		when(variable.isOnLoadSideOfExpression()).thenReturn(true);
 		when(variable.index()).thenReturn(2);
+		when(variable.name()).thenReturn("var");
 		analyser.visit(variable);
 		verify(generator).loadFromLocal(2);
 	}
 
 	@Test public void shouldGenerateStoreWhenPrimaryVariableIsNotOnLoadSideOfExpression() {
+		analyser.currentMethodVariableAndTemporaryRegistry = variableAndTemporaryRegistry;
+		when(variableAndTemporaryRegistry.get("var")).thenReturn(variable);
 		when(variable.isClassReference()).thenReturn(false);
 		when(variable.isOnLoadSideOfExpression()).thenReturn(false);
 		when(variable.index()).thenReturn(2);
+		when(variable.name()).thenReturn("var");
 		analyser.visit(variable);
 		verify(generator).storeIntoLocal(2);
 	}
 
-	@Test public void shouldGenerateLoadWhenTemporaryIsOnLoadSideOfExpression() {
-		when(temporary.isOnLoadSideOfExpression()).thenReturn(true);
-		when(temporary.index()).thenReturn(3);
-		analyser.visit(temporary);
-		verify(generator).loadFromLocal(3);
-	}
-
-	@Test public void shouldGenerateStoreWhenTemporaryIsNotOnLoadSideOfExpression() {
-		when(temporary.isOnLoadSideOfExpression()).thenReturn(false);
-		when(temporary.index()).thenReturn(3);
-		analyser.visit(temporary);
-		verify(generator).storeIntoLocal(3);
+	@Test (expected=IllegalStateException.class)
+	public void shouldGenerateExceptionWhenReferencingUnregisteredVariableOrTemporary() {
+		analyser.currentMethodVariableAndTemporaryRegistry = variableAndTemporaryRegistry;
+		when(variableAndTemporaryRegistry.get("var")).thenReturn(null);
+		when(variable.isClassReference()).thenReturn(false);
+		when(variable.isOnLoadSideOfExpression()).thenReturn(false);
+		when(variable.index()).thenReturn(2);
+		when(variable.name()).thenReturn("var");
+		analyser.visit(variable);
 	}
 
 	@Test public void shouldGenerateUnarySendFromUnaryMessage() {
@@ -431,26 +441,29 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldVisitUnaryMethodPatternWhenMethodPatternIsUnaryType() {
+		analyser.currentMethodVariableAndTemporaryRegistry = new Hashtable<String, BasicNode>();
 		when(methodPattern.isUnaryMethodPattern()).thenReturn(true);
 		when(methodPattern.unaryMethodPattern()).thenReturn(unaryMethodPattern);
 		analyser.visit(methodPattern);
-		verify(methodPattern).indexArgumentsFrom(2);
+		verify(methodPattern).indexArgumentsFromAndRegisterIn(2, analyser.currentMethodVariableAndTemporaryRegistry);
 		verify(unaryMethodPattern).accept(analyser);
 	}
 
 	@Test public void shouldVisitBinaryMethodPatternWhenMethodPatternIsBinaryType() {
+		analyser.currentMethodVariableAndTemporaryRegistry = new Hashtable<String, BasicNode>();
 		when(methodPattern.isBinaryMethodPattern()).thenReturn(true);
 		when(methodPattern.binaryMethodPattern()).thenReturn(binaryMethodPattern);
 		analyser.visit(methodPattern);
-		verify(methodPattern).indexArgumentsFrom(2);
+		verify(methodPattern).indexArgumentsFromAndRegisterIn(2, analyser.currentMethodVariableAndTemporaryRegistry);
 		verify(binaryMethodPattern).accept(analyser);
 	}
 
 	@Test public void shouldVisitKeywordMethodPatternWhenMethodPatternIsKeywordType() {
+		analyser.currentMethodVariableAndTemporaryRegistry = new Hashtable<String, BasicNode>();
 		when(methodPattern.isKeywordMethodPattern()).thenReturn(true);
 		when(methodPattern.keywordMethodPattern()).thenReturn(keywordMethodPattern);
 		analyser.visit(methodPattern);
-		verify(methodPattern).indexArgumentsFrom(2);
+		verify(methodPattern).indexArgumentsFromAndRegisterIn(2, analyser.currentMethodVariableAndTemporaryRegistry);
 		verify(keywordMethodPattern).accept(analyser);
 	}
 

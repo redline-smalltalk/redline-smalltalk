@@ -14,8 +14,3 @@ example
   ^ self + 'bar'
 ! !
 
-methodWithPrimitive
-  <primitive: 1>
-  ^ self
-! !
-

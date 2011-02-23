@@ -20,24 +20,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Temporary extends BasicNode {
+import java.util.Map;
 
-	private int index = 0;
-	private boolean loadSideOfExpression = true;
+public class Temporary extends BasicNode {
 
 	public Temporary(String value, int line) {
 		super(value, line);
 	}
 
-	public boolean isOnLoadSideOfExpression() {
-		return loadSideOfExpression;
-	}
-
-	public int index() {
-		return index;
-	}
-
-	public void index(int index) {
-		this.index = index;
+	public void indexAndRegisterIn(int index, Map<String, BasicNode> variableAndTemporaryRegistry) {
+		index(index);
+		registerIn((String) value(), variableAndTemporaryRegistry);
 	}
 }

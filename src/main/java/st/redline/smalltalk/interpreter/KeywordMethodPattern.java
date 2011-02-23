@@ -22,6 +22,7 @@ package st.redline.smalltalk.interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class KeywordMethodPattern extends MethodPattern {
 
@@ -45,11 +46,11 @@ public class KeywordMethodPattern extends MethodPattern {
 		return keywords;
 	}
 
-	public void indexArgumentsFrom(int index) {
+	public void indexArgumentsFromAndRegisterIn(int index, final Map<String, BasicNode> variableAndTemporaryRegistry) {
 		runningIndex(index);
 		each(new NodeCommand() {
 			public void execute(Node node) {
-				((KeywordMethodPart) node).argumentIndex(runningIndex());
+				((KeywordMethodPart) node).indexArgumentAndRegisterIn(runningIndex(), variableAndTemporaryRegistry);
 			}
 		});
 	}

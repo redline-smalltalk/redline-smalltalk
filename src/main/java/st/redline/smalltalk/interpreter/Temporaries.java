@@ -20,6 +20,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.Map;
+
 public class Temporaries extends BasicListNode {
 
 	private int runningIndex = 0;
@@ -28,19 +30,11 @@ public class Temporaries extends BasicListNode {
 		visitor.visit(this);
 	}
 
-	public void eachAccept(final NodeVisitor visitor) {
-		each(new NodeCommand() {
-			public void execute(Node node) {
-				visitor.visit((Temporary) node);
-			}
-		});
-	}
-
-	public void indexFrom(int index) {
+	public void indexFromAndRegisterIn(int index, final Map<String, BasicNode> variableAndTemporaryRegistry) {
 		runningIndex(index);
 		each(new NodeCommand() {
 			public void execute(Node node) {
-				((Temporary) node).index(runningIndex());
+				((Temporary) node).indexAndRegisterIn(runningIndex(), variableAndTemporaryRegistry);
 			}
 		});
 	}

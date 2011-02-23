@@ -20,6 +20,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.List;
+import java.util.Map;
+
 public class KeywordMethodPart extends BasicNode {
 
 	private final Variable variable;
@@ -37,7 +40,8 @@ public class KeywordMethodPart extends BasicNode {
 		return variable;
 	}
 
-	public void argumentIndex(int index) {
+	public void indexArgumentAndRegisterIn(int index, Map<String, BasicNode> variableAndTemporaryRegistry) {
 		variable.index(index);
+		variable.registerIn(variableAndTemporaryRegistry);
 	}
 }
