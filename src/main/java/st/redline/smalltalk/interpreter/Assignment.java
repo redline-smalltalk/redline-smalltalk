@@ -20,60 +20,26 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Expression extends BasicNode {
+public class Assignment extends BasicNode {
 
-	private boolean answered;
-	private boolean rightSideOfAssignment;
-	private boolean last;
+	private final Expression expression;
 
-	public Expression(Node value) {
-		super(value);
-		answered = false;
-		rightSideOfAssignment = false;
-		last = false;
-	}
-
-	public boolean isCascade() {
-		return value() instanceof Cascade;
-	}
-
-	public Cascade cascade() {
-		return (Cascade) value();
-	}
-
-	public boolean isRightSideOfAssignment() {
-		return rightSideOfAssignment;
-	}
-
-	public void rightSideOfAssignment() {
-		rightSideOfAssignment = true;
-	}
-
-	public boolean isAssignment() {
-		return value() instanceof Assignment;
-	}
-
-	public Assignment assignment() {
-		return (Assignment) value();
+	public Assignment(Variable variable, Expression expression) {
+		super(variable);
+		this.expression = expression;
+		expression.rightSideOfAssignment();
+		variable.onStoreSideOfExpression();
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
 
-	public void answered() {
-		answered = true;
+	public Variable variable() {
+		return (Variable) value();
 	}
 
-	public boolean isAnswered() {
-		return answered;
-	}
-
-	public void markLast() {
-		last = true;
-	}
-
-	public boolean isLast() {
-		return last;
+	public Expression expression() {
+		return expression;
 	}
 }

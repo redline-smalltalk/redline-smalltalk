@@ -28,7 +28,7 @@ public abstract class BasicNode implements Node {
 	private final int line;
 
 	private int index = 0;
-	private boolean loadSideOfExpression = false;
+	private boolean loadSideOfExpression = true;
 
 	public BasicNode(Object value) {
 		this(value, 0);
@@ -57,6 +57,10 @@ public abstract class BasicNode implements Node {
 
 	public boolean isOnLoadSideOfExpression() {
 		return loadSideOfExpression;
+	}
+
+	public void onStoreSideOfExpression() {
+		loadSideOfExpression = false;
 	}
 
 	public int index() {

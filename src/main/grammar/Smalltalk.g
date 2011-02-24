@@ -86,9 +86,14 @@ statementList returns [StatementList n]
 	;
 	
 expression returns [Expression n]
-	:	cascade {$n = new Expression($cascade.n);}
+	:	assignment {$n = new Expression($assignment.n);}
+	|	cascade {$n = new Expression($cascade.n);}
 	;
 
+assignment returns [Assignment n]
+	:	variable ASSIGNMENT expression {$n = new Assignment($variable.n, $expression.n);}
+	;
+	
 cascade returns [Cascade n]
 	:	messageSend {$n = new Cascade($messageSend.n);}
 	;
@@ -217,3 +222,5 @@ STRING: '\'' .* '\'';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
 CHUNK_END: '! !' ;
+ASSIGNMENT: ':=' | '_';
+

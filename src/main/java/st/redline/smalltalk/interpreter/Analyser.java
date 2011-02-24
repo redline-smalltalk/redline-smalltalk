@@ -168,9 +168,24 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Expression expression) {
-		expression.cascade().accept(this);
+		if (expression.isAssignment())
+			expression.assignment().accept(this);
+		else if (expression.isCascade())
+			expression.cascade().accept(this);
+		popStackIfRequired(expression);
+	}
+
+	public void visit(Assignment assignment) {
+		Expression expression = assignment.expression();
+		expression.accept(this);
+		if (expression.isAssignment())
+			generator.loadFromLocal(expression.assignment().variable().index());
+		assignment.variable().accept(this);
+	}
+
+	private void popStackIfRequired(Expression expression) {
 		if (!insideArrayExpression() && !insidePrimaryExpression())
-			if (!expression.isAnswered() && !expression.isLast())
+			if (!expression.isAnswered() && !expression.isLast() && !expression.isRightSideOfAssignment())
 				generator.stackPop();
 	}
 
@@ -267,7 +282,7 @@ public class Analyser implements NodeVisitor {
 			BasicNode reference = currentMethodVariableAndTemporaryRegistry.get(variable.name());
 			if (reference == null)
 				throw new IllegalStateException("Reference of undefined variable '" + variable.name() + "'.");
-			if (reference.isOnLoadSideOfExpression())
+			if (variable.isOnLoadSideOfExpression())
 				generator.loadFromLocal(reference.index());
 			else
 				generator.storeIntoLocal(reference.index());

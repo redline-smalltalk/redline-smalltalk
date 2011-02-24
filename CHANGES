@@ -1,4 +1,9 @@
 
+25/01/2011 Changes
+
+Added handling of Assignment expressions.
+
+
 24/02/2011 Changes
 
 Adding index to local variables, so they can be referenced in load or store.

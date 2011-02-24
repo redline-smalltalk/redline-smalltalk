@@ -14,6 +14,7 @@ public interface NodeVisitor {
 	void visit(Statements statements);
 	void visit(StatementList statementList);
 	void visit(Expression expression);
+	void visit(Assignment assignment);
 	void visit(Cascade cascade);
 	void visit(MessageSend messageSend);
 	void visit(UnaryMessageSend unaryMessageSend);

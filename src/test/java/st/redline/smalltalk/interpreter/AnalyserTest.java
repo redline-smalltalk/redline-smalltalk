@@ -80,6 +80,7 @@ public class AnalyserTest {
 	@Mock Cascade cascade;
 	@Mock MessageSend messageSend;
 	@Mock Expression expression;
+	@Mock Assignment assignment;
 	@Mock UnaryMessageSend unaryMessageSend;
 	@Mock UnaryMessage unaryMessage;
 	@Mock KeywordMessageSend keywordMessageSend;
@@ -118,6 +119,7 @@ public class AnalyserTest {
 		when(sequence.statements()).thenReturn(statements);
 		when(statements.statementList()).thenReturn(statementList);
 		when(expression.cascade()).thenReturn(cascade);
+		when(expression.assignment()).thenReturn(assignment);
 		when(cascade.messageSend()).thenReturn(messageSend);
 		when(messageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
 		when(smalltalk.currentFile()).thenReturn(sourceFile);
@@ -316,6 +318,14 @@ public class AnalyserTest {
 		verify(generator).stackPop();
 	}
 
+	@Test public void shouldGeneratePopWhenNotExpressionOnRightSideOfAssignment() {
+		when(expression.isAnswered()).thenReturn(false);
+		when(expression.isLast()).thenReturn(false);
+		when(expression.isRightSideOfAssignment()).thenReturn(false);
+		analyser.visit(expression);
+		verify(generator).stackPop();
+	}
+
 	@Test public void shouldGeneratePrimitiveConversionForCharacter() {
 		when(character.string()).thenReturn(CHARACTER);
 		when(character.line()).thenReturn(LINE_NUMBER);
@@ -483,9 +493,39 @@ public class AnalyserTest {
 		verify(statementList).eachAccept(analyser);
 	}
 
-	@Test public void shouldVisitExpressionNode() {
+	@Test public void shouldVisitAssignmentWhenExpressionIsAssignment() {
+		when(expression.isAssignment()).thenReturn(true);
+		analyser.visit(expression);
+		verify(assignment).accept(analyser);
+	}
+
+	@Test public void shouldVisitCascadeWhenExpressionIsCascade() {
+		when(expression.isAssignment()).thenReturn(false);
+		when(expression.isCascade()).thenReturn(true);
 		analyser.visit(expression);
 		verify(cascade).accept(analyser);
+	}
+
+	@Test public void shouldVisitChildOfAssignmentNode() {
+		when(assignment.expression()).thenReturn(expression);
+		when(expression.isAssignment()).thenReturn(false);
+		when(assignment.variable()).thenReturn(variable);
+		analyser.visit(assignment);
+		verify(expression).accept(analyser);
+		verify(variable).accept(analyser);
+	}
+
+	@Test public void shouldReloadLocalVariableStoredIntoWhenMultipleAssignments() {
+		when(assignment.expression()).thenReturn(expression);
+		when(expression.isAssignment()).thenReturn(true);
+		when(expression.assignment()).thenReturn(assignment);
+		when(variable.index()).thenReturn(4);
+		when(assignment.variable()).thenReturn(variable);
+		analyser.visit(assignment);
+		verify(expression).accept(analyser);
+		verify(expression).assignment();
+		verify(generator).loadFromLocal(4);
+		verify(variable).accept(analyser);
 	}
 
 	@Test public void shouldVisitChildOfCascadeNode() {
