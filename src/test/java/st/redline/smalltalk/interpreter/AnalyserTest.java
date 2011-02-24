@@ -120,6 +120,7 @@ public class AnalyserTest {
 		when(statements.statementList()).thenReturn(statementList);
 		when(expression.cascade()).thenReturn(cascade);
 		when(expression.assignment()).thenReturn(assignment);
+		when(expression.primary()).thenReturn(variable);
 		when(cascade.messageSend()).thenReturn(messageSend);
 		when(messageSend.unaryMessageSend()).thenReturn(unaryMessageSend);
 		when(smalltalk.currentFile()).thenReturn(sourceFile);
@@ -504,6 +505,15 @@ public class AnalyserTest {
 		when(expression.isCascade()).thenReturn(true);
 		analyser.visit(expression);
 		verify(cascade).accept(analyser);
+	}
+
+	@Test public void shouldVisitPrimaryWhenExpressionIsPrimary() {
+		when(expression.isAssignment()).thenReturn(false);
+		when(expression.isCascade()).thenReturn(false);
+		when(expression.isPrimary()).thenReturn(true);
+		when(expression.primary()).thenReturn(variable);
+		analyser.visit(expression);
+		verify(variable).accept(analyser);
 	}
 
 	@Test public void shouldVisitChildOfAssignmentNode() {

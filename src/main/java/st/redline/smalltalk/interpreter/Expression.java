@@ -41,6 +41,14 @@ public class Expression extends BasicNode {
 		return (Cascade) value();
 	}
 
+	public boolean isPrimary() {
+		return value() instanceof Primary;
+	}
+
+	public Primary primary() {
+		return (Primary) value();
+	}
+
 	public boolean isRightSideOfAssignment() {
 		return rightSideOfAssignment;
 	}

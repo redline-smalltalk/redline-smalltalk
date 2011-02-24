@@ -172,6 +172,8 @@ public class Analyser implements NodeVisitor {
 			expression.assignment().accept(this);
 		else if (expression.isCascade())
 			expression.cascade().accept(this);
+		else if (expression.isPrimary())
+			expression.primary().accept(this);
 		popStackIfRequired(expression);
 	}
 

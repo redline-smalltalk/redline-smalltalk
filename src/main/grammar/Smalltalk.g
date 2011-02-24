@@ -88,6 +88,7 @@ statementList returns [StatementList n]
 expression returns [Expression n]
 	:	assignment {$n = new Expression($assignment.n);}
 	|	cascade {$n = new Expression($cascade.n);}
+	|	primary {$n = new Expression($primary.n);}
 	;
 
 assignment returns [Assignment n]

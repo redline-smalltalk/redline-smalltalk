@@ -3,5 +3,5 @@
 
 | var |
 
-var := 'foo' uppercase.
+var := 'foo'.
 
