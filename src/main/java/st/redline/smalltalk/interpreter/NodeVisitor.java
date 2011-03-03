@@ -16,6 +16,7 @@ public interface NodeVisitor {
 	void visit(Expression expression);
 	void visit(Assignment assignment);
 	void visit(Cascade cascade);
+	void visit(Message message);
 	void visit(MessageSend messageSend);
 	void visit(UnaryMessageSend unaryMessageSend);
 	void visit(KeywordMessageSend keywordMessageSend);

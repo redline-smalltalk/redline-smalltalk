@@ -201,6 +201,16 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Cascade cascade) {
 		cascade.messageSend().accept(this);
+		if (cascade.hasMessages()) {
+			// push top of stack (receiver)
+			// do message
+			// pop stack
+			// push top again (receiver)
+		}
+	}
+
+	public void visit(Message message) {
+		// TODO.JCL implement this.
 	}
 
 	public void visit(MessageSend messageSend) {

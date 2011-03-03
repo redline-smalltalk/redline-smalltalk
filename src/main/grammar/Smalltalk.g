@@ -96,9 +96,15 @@ assignment returns [Assignment n]
 	;
 	
 cascade returns [Cascade n]
-	:	messageSend {$n = new Cascade($messageSend.n);}
+	:	messageSend {$n = new Cascade($messageSend.n);} (';' message {$n.add($message.n);})*
 	;
 
+message returns [Message n]
+	:	unaryMessage {$n = new Message($unaryMessage.n);}
+	|	binaryMessage {$n = new Message($binaryMessage.n);}
+	|	keywordMessage {$n = new Message($keywordMessage.n);}
+	;
+	
 messageSend returns [MessageSend n]
 	:	keywordMessageSend {$n = new MessageSend($keywordMessageSend.n);}
 	|	binaryMessageSend {$n = new MessageSend($binaryMessageSend.n);}	
