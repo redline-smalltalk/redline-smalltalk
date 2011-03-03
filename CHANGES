@@ -1,5 +1,10 @@
 
-25/01/2011 Changes
+03/03/2011 Changes
+
+Added output of string for ASM mnemonic to provide more meaningful trace of bytecodes being generated.
+
+
+25/02/2011 Changes
 
 Added handling of Assignment expressions.
 Added handling of expressions made up of only a Primary.

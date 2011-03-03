@@ -369,6 +369,6 @@ public class Smalltalk extends ClassLoader {
 
 	private RObject newInstanceOf(String className) {
 		RObject aClass = lookupMustHaveObject(className);
-		return aClass.send(aClass, NEW_SELECTOR);
+		return RObject.send(aClass, NEW_SELECTOR);
 	}
 }

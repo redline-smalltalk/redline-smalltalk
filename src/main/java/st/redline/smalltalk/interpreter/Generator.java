@@ -28,9 +28,6 @@ import org.objectweb.asm.Opcodes;
 import java.io.File;
 import java.util.Stack;
 
-import static org.mockito.Matchers.notNull;
-import static org.mockito.Mockito.verify;
-
 public class Generator implements Opcodes {
 
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RObject";
