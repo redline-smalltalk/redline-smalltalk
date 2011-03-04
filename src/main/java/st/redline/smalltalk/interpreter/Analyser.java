@@ -202,15 +202,20 @@ public class Analyser implements NodeVisitor {
 	public void visit(Cascade cascade) {
 		cascade.messageSend().accept(this);
 		if (cascade.hasMessages()) {
-			// push top of stack (receiver)
-			// do message
-			// pop stack
-			// push top again (receiver)
+			cascade.eachAccept(this);
 		}
 	}
 
 	public void visit(Message message) {
-		// TODO.JCL implement this.
+		generator.pushStackTop();
+        if (message.isUnaryMessage())
+            message.unaryMessage().accept(this);
+        else if (message.isBinaryMessage())
+            message.binaryMessage().accept(this);
+        else if (message.isKeywordMessage())
+            message.keywordMessage().accept(this);
+        else throw new IllegalStateException("Unknown Message type.");
+        generator.popStackTop();
 	}
 
 	public void visit(MessageSend messageSend) {

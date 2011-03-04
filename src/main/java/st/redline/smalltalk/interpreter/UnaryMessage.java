@@ -29,4 +29,8 @@ public class UnaryMessage extends BasicNode {
 	public String selector() {
 		return (String) value();
 	}
+
+    public void accept(NodeVisitor visitor) {
+        visitor.visit(this);
+    }
 }

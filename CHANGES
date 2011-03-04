@@ -1,7 +1,7 @@
 
 04/03/2011 Changes
 
-Added parsing of cascaded messages. Still need to handle generation of sends.
+Added parsing of cascaded messages and generation of cascaded message sends.
 
 
 03/03/2011 Changes

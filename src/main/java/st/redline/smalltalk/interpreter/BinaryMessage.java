@@ -36,4 +36,8 @@ public class BinaryMessage extends BasicNode {
 	public BinaryArgument binaryArgument() {
 		return binaryArgument;
 	}
+
+    public void accept(NodeVisitor visitor) {
+        visitor.visit(this);
+    }
 }

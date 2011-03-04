@@ -79,6 +79,7 @@ public class AnalyserTest {
 	@Mock StatementList statementList;
 	@Mock Cascade cascade;
 	@Mock MessageSend messageSend;
+    @Mock Message message;
 	@Mock Expression expression;
 	@Mock Assignment assignment;
 	@Mock UnaryMessageSend unaryMessageSend;
@@ -538,10 +539,52 @@ public class AnalyserTest {
 		verify(variable).accept(analyser);
 	}
 
-	@Test public void shouldVisitChildOfCascadeNode() {
+	@Test public void shouldVisitCascadeMessageSend() {
+        when(cascade.hasMessages()).thenReturn(false);
 		analyser.visit(cascade);
 		verify(messageSend).accept(analyser);
+        verify(cascade, never()).eachAccept(analyser);
 	}
+
+    @Test public void shouldVisitCascadedMessages() {
+        when(cascade.hasMessages()).thenReturn(true);
+        analyser.visit(cascade);
+        verify(messageSend).accept(analyser);
+        verify(cascade).eachAccept(analyser);
+    }
+
+    @Test public void shouldKeepStackTopWhenCascadedMessages() {
+        when(message.isUnaryMessage()).thenReturn(true);
+        when(message.unaryMessage()).thenReturn(unaryMessage);
+        analyser.visit(message);
+        verify(generator).pushStackTop();
+        verify(unaryMessage).accept(analyser);
+        verify(generator).popStackTop();
+    }
+
+    @Test public void shouldVisitUnaryMessageWhenCascadedMessageIsUnaryType() {
+        when(message.isUnaryMessage()).thenReturn(true);
+        when(message.unaryMessage()).thenReturn(unaryMessage);
+        analyser.visit(message);
+        verify(unaryMessage).accept(analyser);
+    }
+
+    @Test public void shouldVisitBinaryMessageWhenCascadedMessageIsBinaryType() {
+        when(message.isUnaryMessage()).thenReturn(false);
+        when(message.isBinaryMessage()).thenReturn(true);
+        when(message.binaryMessage()).thenReturn(binaryMessage);
+        analyser.visit(message);
+        verify(binaryMessage).accept(analyser);
+    }
+
+    @Test public void shouldVisitKeywordMessageWhenCascadedMessageIsKeywordType() {
+        when(message.isUnaryMessage()).thenReturn(false);
+        when(message.isBinaryMessage()).thenReturn(false);
+        when(message.isKeywordMessage()).thenReturn(true);
+        when(message.keywordMessage()).thenReturn(keywordMessage);
+        analyser.visit(message);
+        verify(keywordMessage).accept(analyser);
+    }
 
 	@Test public void shouldVisitUnaryMessageSendWhenMessageSendIsUnaryType() {
 		when(messageSend.isUnaryMessageSend()).thenReturn(true);

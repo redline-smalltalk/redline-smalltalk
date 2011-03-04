@@ -246,6 +246,16 @@ public class GeneratorTest implements Opcodes {
 		generator.openMethod(12);
 	}
 
+    @Test public void shouldGeneratePushStackTop() {
+        generator.pushStackTop();
+        verify(methodVisitor).visitInsn(DUP);
+    }
+
+    @Test public void shouldGenerateStackPop() {
+        generator.popStackTop();
+        verify(methodVisitor).visitInsn(POP);
+    }
+
 	@Test public void shouldGenerateLoadOfVariable() {
 		generator.loadFromLocal(3);
 		verify(methodVisitor).visitVarInsn(ALOAD, 3);

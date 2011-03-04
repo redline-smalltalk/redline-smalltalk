@@ -343,7 +343,15 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitVarInsn(ASTORE, index);
 	}
 
-	static class Context {
+    public void pushStackTop() {
+        current.methodVisitor.visitInsn(DUP);
+    }
+
+    public void popStackTop() {
+        current.methodVisitor.visitInsn(POP);
+    }
+
+    static class Context {
 		ClassWriter classWriter;
 		String className;
 		String sourceName;

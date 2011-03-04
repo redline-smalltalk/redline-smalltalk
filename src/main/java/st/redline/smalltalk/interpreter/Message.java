@@ -34,6 +34,30 @@ public class Message extends BasicNode {
 		super(keywordMessage);
 	}
 
+    public boolean isUnaryMessage() {
+        return value() instanceof UnaryMessage;
+    }
+
+    public UnaryMessage unaryMessage() {
+        return (UnaryMessage) value();
+    }
+
+    public boolean isBinaryMessage() {
+        return value() instanceof BinaryMessage;
+    }
+
+    public BinaryMessage binaryMessage() {
+        return (BinaryMessage) value();
+    }
+
+    public boolean isKeywordMessage() {
+        return value() instanceof KeywordMessage;
+    }
+
+    public KeywordMessage keywordMessage() {
+        return (KeywordMessage) value();
+    }
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}

@@ -20,27 +20,32 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Cascade extends BasicListNode {
 
-public class Cascade extends BasicNode {
+	private MessageSend messageSend;
 
-	private final List<Message> messages = new ArrayList<Message>();
-
-	public Cascade(Node value) {
-		super(value);
-	}
-
-	public boolean hasMessages() {
-		return !messages.isEmpty();
+	public Cascade(MessageSend messageSend) {
+        this.messageSend = messageSend;
 	}
 
 	public void add(Message message) {
-		message.add(message);
+		super.add(message);
 	}
 
+    public boolean hasMessages() {
+        return count() > 0;
+    }
+
+    public void eachAccept(final NodeVisitor visitor) {
+        each(new NodeCommand() {
+            public void execute(Node node) {
+                visitor.visit((Message) node);
+            }
+        });
+    }
+
 	public MessageSend messageSend() {
-		return (MessageSend) value();
+		return messageSend;
 	}
 
 	public void accept(NodeVisitor visitor) {
