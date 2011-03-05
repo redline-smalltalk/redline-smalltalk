@@ -33,12 +33,14 @@ public class Cascade extends BasicListNode {
 	}
 
     public boolean hasMessages() {
-        return count() > 0;
+        return count() != 0;
     }
 
     public void eachAccept(final NodeVisitor visitor) {
+        System.out.println("***** cascade - eachAccept");
         each(new NodeCommand() {
             public void execute(Node node) {
+                System.out.println("***** cascade - visiting message");
                 visitor.visit((Message) node);
             }
         });

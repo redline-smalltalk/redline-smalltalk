@@ -38,13 +38,14 @@ public class Analyser implements NodeVisitor {
 	protected String currentMethodSelector;
 	protected int currentMethodArgumentCount = 0;
 	protected int currentMethodTemporariesCount = 0;
-	protected Map<String, BasicNode> currentMethodVariableAndTemporaryRegistry = new HashMap<String, BasicNode>();  // need initial map for scripts with vars.
-	protected boolean currentMethodIsClassMethod = false;
-	protected int literalArrayNesting = 0;
-	protected int arrayNesting = 0;
-	protected int primaryExpressionNesting = 0;
+    protected boolean currentMethodDuplicateReceiverForCascadedMessages = false;
+    protected Map<String, BasicNode> currentMethodVariableAndTemporaryRegistry = new HashMap<String, BasicNode>();  // need initial map for scripts with vars.
+    protected boolean currentMethodIsClassMethod = false;
+    protected int literalArrayNesting = 0;
+    protected int arrayNesting = 0;
+    protected int primaryExpressionNesting = 0;
 
-	public Analyser(Smalltalk smalltalk, Generator generator) {
+    public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.smalltalk = smalltalk;
 		this.generator = generator;
 		this.methodClasses = new ArrayList<byte[]>();
@@ -200,8 +201,10 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Cascade cascade) {
+        currentMethodDuplicateReceiverForCascadedMessages = cascade.hasMessages();
 		cascade.messageSend().accept(this);
 		if (cascade.hasMessages()) {
+            generator.popStackTop();
 			cascade.eachAccept(this);
 		}
 	}
@@ -229,12 +232,21 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(UnaryMessageSend unaryMessageSend) {
 		unaryMessageSend.primary().accept(this);
-		unaryMessageSend.eachAccept(this);
+        duplicateReceiverForCascadedMessages();
+        unaryMessageSend.eachAccept(this);
 	}
 
-	public void visit(KeywordMessageSend keywordMessageSend) {
+    private void duplicateReceiverForCascadedMessages() {
+        if (currentMethodDuplicateReceiverForCascadedMessages) {
+            currentMethodDuplicateReceiverForCascadedMessages = false;
+            generator.pushStackTop();
+        }
+    }
+
+    public void visit(KeywordMessageSend keywordMessageSend) {
 		keywordMessageSend.primary().accept(this);
-		keywordMessageSend.keywordMessage().accept(this);
+        duplicateReceiverForCascadedMessages();
+        keywordMessageSend.keywordMessage().accept(this);
 	}
 
 	public void visit(KeywordMessage keywordMessage) {
@@ -274,9 +286,10 @@ public class Analyser implements NodeVisitor {
 	}
 
 	private void visitLeftSideOfBinaryMessageSend(BinaryMessageSend binaryMessageSend) {
-		if (binaryMessageSend.isPrimary())
+		if (binaryMessageSend.isPrimary()) {
 			binaryMessageSend.primary().accept(this);
-		else if (binaryMessageSend.isUnaryMessageSend())
+            duplicateReceiverForCascadedMessages();
+        } else if (binaryMessageSend.isUnaryMessageSend())
 			binaryMessageSend.unaryMessageSend().accept(this);
 	}
 

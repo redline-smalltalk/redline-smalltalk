@@ -2,6 +2,7 @@
 04/03/2011 Changes
 
 Added parsing of cascaded messages and generation of cascaded message sends.
+Fixed bug with which object is kept for subsequent message sends in cascade.
 
 
 03/03/2011 Changes
