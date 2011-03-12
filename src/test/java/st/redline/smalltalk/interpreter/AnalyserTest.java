@@ -94,6 +94,7 @@ public class AnalyserTest {
 	@Mock StString string;
 	@Mock Symbol symbol;
 	@Mock PrimaryExpression primaryExpression;
+	@Mock Block block;
 	@Mock Array array;
 	@Mock LiteralNumber literalNumber;
 	@Mock StCharacter character;
@@ -415,6 +416,10 @@ public class AnalyserTest {
 		when(primaryExpression.expression()).thenReturn(expression);
 		analyser.visit(primaryExpression);
 		verify(expression).accept(analyser);
+	}
+
+	@Test public void shouldVisitBlock() {
+		analyser.visit(block);
 	}
 
 	@Test public void shouldVisitArray() {

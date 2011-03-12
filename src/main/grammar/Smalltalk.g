@@ -148,10 +148,15 @@ unaryMessage returns [UnaryMessage n]
 primary returns [Primary n]
 	:	l = '(' expression {$n = new PrimaryExpression($expression.n, $l.line);} ')'
 	|	variable {$n = $variable.n;}
+	|	block {$n = $block.n;}
 	|	literal {$n = $literal.n;}
 	|	array {$n = $array.n;}
 	;
 
+block returns [Block n]
+	:	l = '[' {$n = new Block($l.line);} ']'
+	;
+	
 array returns [Array n]
 	:	l = '{' statementList {$n = new Array($statementList.n, $l.line);} '}'
 	;

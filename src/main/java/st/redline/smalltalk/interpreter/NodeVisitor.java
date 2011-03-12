@@ -30,6 +30,7 @@ public interface NodeVisitor {
 	void visit(Variable variable);
 	void visit(PrimaryExpression primaryExpression);
 	void visit(Array array);
+	void visit(Block block);
 	void visit(Symbol symbol);
 	void visit(ArrayLiteral arrayLiteral);
 	void visit(LiteralArray literalArray);

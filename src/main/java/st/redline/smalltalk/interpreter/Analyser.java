@@ -338,6 +338,10 @@ public class Analyser implements NodeVisitor {
 			generator.keywordSend(ADD_KEYWORD, 1, array.line());
 	}
 
+	public void visit(Block block) {
+		System.out.println("*** BLOCK ***");
+	}
+
 	public void visit(ArrayLiteral arrayLiteral) {
 		generator.primitiveSymbolConversion(arrayLiteral.string(), arrayLiteral.line());
 		generator.keywordSend(ADD_KEYWORD, 1, arrayLiteral.line());
