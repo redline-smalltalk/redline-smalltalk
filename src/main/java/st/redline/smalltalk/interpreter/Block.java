@@ -29,4 +29,8 @@ public class Block extends Primary {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
+
+	public boolean hasSequence() {
+		return value() != null;
+	}
 }

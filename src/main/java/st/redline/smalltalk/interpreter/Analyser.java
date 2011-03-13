@@ -339,7 +339,22 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-		generator.createBlock();
+		String blockName = writeBlockClass(block);
+		methodClasses.add(generator.classBytes());
+		generator.createBlock(blockName);
+	}
+
+	private String writeBlockClass(Block block) {
+		String selector = "B1";
+		String sourceFileName = sourceFileName();
+		currentMethodClassName = sourceFileName + CLASS_NAME_SEPARATOR + selector;
+		currentMethodSelector = selector;
+		currentMethodArgumentCount = 0;
+		generator.openBlockClass(currentMethodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openBlock(currentMethodArgumentCount, block.hasSequence());
+		generator.closeBlock();
+		generator.closeBlockClass();
+		return currentMethodClassName;
 	}
 
 	public void visit(ArrayLiteral arrayLiteral) {

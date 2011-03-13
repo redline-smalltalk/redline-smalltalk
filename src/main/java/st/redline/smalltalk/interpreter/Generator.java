@@ -32,6 +32,7 @@ public class Generator implements Opcodes {
 
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RObject";
 	private static final String METHOD_SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RMethod";
+	private static final String BLOCK_SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RBlock";
 	private static final String SEND_METHOD_NAME = "send";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String[] SEND_METHOD_DESCRIPTORS = {
@@ -90,6 +91,11 @@ public class Generator implements Opcodes {
 		current.classWriter = classWriter;
 	}
 
+	public void openBlockClass(String className, String packageInternalName, String sourceName) {
+		openContext();
+		openClass(className, packageInternalName, sourceName, BLOCK_SUPERCLASS_FULLY_QUALIFIED_NAME);
+	}
+
 	public void openMethodClass(String className, String packageInternalName, String sourceName) {
 		openContext();
 		openClass(className, packageInternalName, sourceName, METHOD_SUPERCLASS_FULLY_QUALIFIED_NAME);
@@ -138,7 +144,23 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitCode();
 	}
 
+	public void openBlock(int countOfArguments, boolean hasSequence) {
+		if (countOfArguments > MAXIMUM_KEYWORD_ARGUMENTS)
+			throw new IllegalArgumentException("More than " + MAXIMUM_KEYWORD_ARGUMENTS + " block arguments!");
+		cloneContext();
+		String selector = countOfArguments == 0 ? "applyTo" : "applyToWith";
+		current.methodVisitor = current.classWriter.visitMethod(ACC_PUBLIC, selector, APPLY_METHOD_DESCRIPTORS[countOfArguments], null, null);
+		if (!hasSequence)
+			current.methodVisitor.visitVarInsn(ALOAD, 0);
+		current.methodVisitor.visitCode();
+	}
+
 	public void closeMethod() {
+		closeCurrentMethod(NORMAL_METHOD);
+		closeContext();
+	}
+
+	public void closeBlock() {
 		closeCurrentMethod(NORMAL_METHOD);
 		closeContext();
 	}
@@ -148,6 +170,10 @@ public class Generator implements Opcodes {
 	}
 
 	public void closeMethodClass() {
+		closeClass();
+	}
+
+	public void closeBlockClass() {
 		closeClass();
 	}
 
@@ -351,8 +377,8 @@ public class Generator implements Opcodes {
         current.methodVisitor.visitInsn(POP);
     }
 
-	public void createBlock() {
-		current.methodVisitor.visitLdcInsn("blockName");
+	public void createBlock(String blockName) {
+		current.methodVisitor.visitLdcInsn(blockName);
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "createBlock", "(Ljava/lang/String;)Lst/redline/smalltalk/RBlock;");
 	}
 
