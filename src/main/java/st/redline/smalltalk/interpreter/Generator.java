@@ -351,7 +351,12 @@ public class Generator implements Opcodes {
         current.methodVisitor.visitInsn(POP);
     }
 
-    static class Context {
+	public void createBlock() {
+		current.methodVisitor.visitLdcInsn("blockName");
+		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "createBlock", "(Ljava/lang/String;)Lst/redline/smalltalk/RBlock;");
+	}
+
+	static class Context {
 		ClassWriter classWriter;
 		String className;
 		String sourceName;

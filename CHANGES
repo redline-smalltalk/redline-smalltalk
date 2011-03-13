@@ -2,6 +2,7 @@
 13/03/2011 Changes
 
 Added parsing of primary blocks, as start of block support.
+Added start of generating block class.
 
 
 04/03/2011 Changes

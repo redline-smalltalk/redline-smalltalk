@@ -102,6 +102,10 @@ public class RObject {
 		return (Smalltalk) getClass().getClassLoader();
 	}
 
+	public static RBlock createBlock(String blockName) {
+		return new RBlock();
+	}
+
 	public static void bindMethod(String className, String methodName, String methodClassName, boolean classMethod) {
 		Smalltalk smalltalk = Smalltalk.instance();
 		if (smalltalk.verboseOn())

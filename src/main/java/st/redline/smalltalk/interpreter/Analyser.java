@@ -339,7 +339,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-		System.out.println("*** BLOCK ***");
+		generator.createBlock();
 	}
 
 	public void visit(ArrayLiteral arrayLiteral) {
