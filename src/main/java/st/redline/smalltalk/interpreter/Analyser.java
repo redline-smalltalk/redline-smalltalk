@@ -232,21 +232,23 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(UnaryMessageSend unaryMessageSend) {
 		unaryMessageSend.primary().accept(this);
-        duplicateReceiverForCascadedMessages();
-        unaryMessageSend.eachAccept(this);
+		duplicateReceiverForCascadedMessages();
+		unaryMessageSend.eachAccept(this);
 	}
 
-    private void duplicateReceiverForCascadedMessages() {
-        if (currentMethodDuplicateReceiverForCascadedMessages) {
-            currentMethodDuplicateReceiverForCascadedMessages = false;
-            generator.pushStackTop();
-        }
-    }
+	private void duplicateReceiverForCascadedMessages() {
+		if (currentMethodDuplicateReceiverForCascadedMessages) {
+			currentMethodDuplicateReceiverForCascadedMessages = false;
+			generator.pushStackTop();
+		}
+	}
 
-    public void visit(KeywordMessageSend keywordMessageSend) {
+	public void visit(KeywordMessageSend keywordMessageSend) {
+		if (keywordMessageSend.isBinaryMessageSend() || keywordMessageSend.isUnaryMessageSend())
+			throw new IllegalStateException("**** I HAVE NOT DONE THIS YET ****");
 		keywordMessageSend.primary().accept(this);
-        duplicateReceiverForCascadedMessages();
-        keywordMessageSend.keywordMessage().accept(this);
+		duplicateReceiverForCascadedMessages();
+		keywordMessageSend.keywordMessage().accept(this);
 	}
 
 	public void visit(KeywordMessage keywordMessage) {

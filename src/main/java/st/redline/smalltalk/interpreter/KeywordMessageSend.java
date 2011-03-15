@@ -29,8 +29,38 @@ public class KeywordMessageSend extends BasicNode {
 		this.keywordMessage = keywordMessage;
 	}
 
+	public KeywordMessageSend(BinaryMessageSend binaryMessageSend, KeywordMessage keywordMessage) {
+		super(binaryMessageSend);
+		this.keywordMessage = keywordMessage;
+	}
+
+	public KeywordMessageSend(UnaryMessageSend unaryMessageSend, KeywordMessage keywordMessage) {
+		super(unaryMessageSend);
+		this.keywordMessage = keywordMessage;
+	}
+
 	public Primary primary() {
 		return (Primary) value();
+	}
+
+	public boolean isPrimary() {
+		return value() instanceof Primary;
+	}
+
+	public BinaryMessageSend binaryMessageSend() {
+		return (BinaryMessageSend) value();
+	}
+
+	public boolean isBinaryMessageSend() {
+		return value() instanceof BinaryMessageSend;
+	}
+
+	public UnaryMessageSend unaryMessageSend() {
+		return (UnaryMessageSend) value();
+	}
+
+	public boolean isUnaryMessageSend() {
+		return value() instanceof UnaryMessageSend;
 	}
 
 	public KeywordMessage keywordMessage() {

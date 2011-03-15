@@ -1,0 +1,5 @@
+
+| aVar |
+
+aVar value ifTrue: [].
+

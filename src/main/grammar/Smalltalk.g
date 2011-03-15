@@ -113,6 +113,8 @@ messageSend returns [MessageSend n]
 
 keywordMessageSend returns [KeywordMessageSend n]
 	:	primary keywordMessage {$n = new KeywordMessageSend($primary.n, $keywordMessage.n);}
+	|	binaryMessageSend keywordMessage {$n = new KeywordMessageSend($binaryMessageSend.n, $keywordMessage.n);}
+	|	unaryMessageSend keywordMessage {$n = new KeywordMessageSend($unaryMessageSend.n, $keywordMessage.n);}	
 	;
 	
 keywordMessage returns [KeywordMessage n]
