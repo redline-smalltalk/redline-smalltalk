@@ -154,7 +154,8 @@ primary returns [Primary n]
 	;
 
 block returns [Block n]
-	:	l = '[' {$n = new Block($l.line);} ']'
+	:	l = '[' {$n = new Block($l.line, null);} ']'
+	|	l = '[' sequence {$n = new Block($l.line, $sequence.n);} ']'
 	;
 	
 array returns [Array n]

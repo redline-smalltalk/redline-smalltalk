@@ -22,8 +22,8 @@ package st.redline.smalltalk.interpreter;
 
 public class Block extends Primary {
 
-	public Block(int line) {
-		super(null, line);
+	public Block(int line, Sequence sequence) {
+		super(sequence, line);
 	}
 
 	public void accept(NodeVisitor visitor) {
@@ -32,5 +32,9 @@ public class Block extends Primary {
 
 	public boolean hasSequence() {
 		return value() != null;
+	}
+
+	public Sequence sequence() {
+		return (Sequence) value();
 	}
 }
