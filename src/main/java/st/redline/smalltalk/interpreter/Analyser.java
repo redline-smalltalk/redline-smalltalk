@@ -245,7 +245,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(KeywordMessageSend keywordMessageSend) {
 		if (keywordMessageSend.isBinaryMessageSend() || keywordMessageSend.isUnaryMessageSend())
-			throw new IllegalStateException("**** I HAVE NOT DONE THIS YET ****");
+			throw new IllegalStateException("**** I HAVE NOT DONE THIS YET (keywordMessageSend) ****");
 		keywordMessageSend.primary().accept(this);
 		duplicateReceiverForCascadedMessages();
 		keywordMessageSend.keywordMessage().accept(this);
@@ -351,6 +351,16 @@ public class Analyser implements NodeVisitor {
 		String blockName = writeBlockClass(block);
 		methodClasses.add(generator.classBytes());
 		generator.createBlock(blockName);
+		System.out.println("**** I HAVE NOT DONE THIS YET (blockArgs) ****");
+		System.out.println("**** I HAVE NOT DONE THIS YET (block temporaries) ****");
+	}
+
+	public void visit(BlockArgs blockArgs) {
+		blockArgs.eachAccept(this);
+	}
+
+	public void visit(BlockArg blockArg) {
+		throw new IllegalStateException("**** I HAVE NOT DONE THIS YET (blockArg) ****");
 	}
 
 	private String writeBlockClass(Block block) {

@@ -20,58 +20,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Block extends Primary {
-
-	private final Temporaries temporaries;
-	private final BlockArgs blockArgs;
-
-	public Block(int line) {
-		super(null, line);
-		blockArgs = new BlockArgs();
-		temporaries = new Temporaries();
-	}
-
-	public Block(int line, Sequence sequence) {
-		super(sequence, line);
-		blockArgs = new BlockArgs();
-		temporaries = new Temporaries();
-	}
-
-	public Block(int line, Temporaries temporaries, Sequence sequence) {
-		super(sequence, line);
-		blockArgs = new BlockArgs();
-		this.temporaries = temporaries;
-	}
-
-	public Block(int line, BlockArgs blockArgs, Sequence sequence) {
-		super(sequence, line);
-		this.blockArgs = blockArgs;
-		temporaries = new Temporaries();
-	}
-
-	public Block(int line, BlockArgs blockArgs, Temporaries temporaries, Sequence sequence) {
-		super(sequence, line);
-		this.blockArgs = blockArgs;
-		this.temporaries = temporaries;
-	}
+public class BlockArgs extends BasicListNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
 
-	public boolean hasSequence() {
-		return value() != null;
-	}
-
-	public Sequence sequence() {
-		return (Sequence) value();
-	}
-
-	public BlockArgs blockArgs() {
-		return blockArgs;
-	}
-
-	public Temporaries temporaries() {
-		return temporaries;
+	public void eachAccept(final NodeVisitor visitor) {
+		each(new NodeCommand() {
+			public void execute(Node node) {
+				visitor.visit((BlockArg) node);
+			}
+		});
 	}
 }

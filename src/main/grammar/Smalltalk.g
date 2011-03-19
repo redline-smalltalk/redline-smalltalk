@@ -66,6 +66,11 @@ temporaries returns [Temporaries n]
 		'|' ( NAME {$n.add(new Temporary($NAME.text, $NAME.line));} )+ '|'
 	;
 
+temporaryVariables returns [Temporaries n]
+	:	{$n = new Temporaries();}
+		 ( NAME {$n.add(new Temporary($NAME.text, $NAME.line));} )+
+	;
+
 pragmas returns [Pragmas n]
 	:	'<' pragmaMessage {$n = $pragmaMessage.n;} '>' 
 	;
@@ -158,10 +163,18 @@ primary returns [Primary n]
 	;
 
 block returns [Block n]
-	:	l = '[' {$n = new Block($l.line, null);} ']'
-	|	l = '[' sequence {$n = new Block($l.line, $sequence.n);} ']'
+	:	l = OPEN_BLOCK blockArgs '||' temporaryVariables '|' sequence {$n = new Block($l.line, $blockArgs.n, $temporaryVariables.n, $sequence.n);} CLOSE_BLOCK
+	|	l = OPEN_BLOCK blockArgs '|' sequence {$n = new Block($l.line, $blockArgs.n, $sequence.n);} CLOSE_BLOCK
+	|	l = OPEN_BLOCK '|' temporaryVariables '|' sequence {$n = new Block($l.line, $temporaryVariables.n, $sequence.n);} CLOSE_BLOCK
+	|	l = OPEN_BLOCK sequence {$n = new Block($l.line, $sequence.n);} CLOSE_BLOCK
+	|	l = OPEN_BLOCK {$n = new Block($l.line, null);} CLOSE_BLOCK
 	;
 	
+blockArgs returns [BlockArgs n]
+	:	{ $n = new BlockArgs(); }	
+		( BLOCK_ARG {$n.add(new BlockArg($BLOCK_ARG.text, $BLOCK_ARG.line));} )*
+	;
+
 array returns [Array n]
 	:	l = '{' statementList {$n = new Array($statementList.n, $l.line);} '}'
 	;
@@ -240,3 +253,7 @@ BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|','
 CHARACTER: '$' . ;
 CHUNK_END: '! !' ;
 ASSIGNMENT: ':=' | '_';
+OPEN_BLOCK:	'[';
+CLOSE_BLOCK:	']';
+BLOCK_ARG:	':' NAME;
+
