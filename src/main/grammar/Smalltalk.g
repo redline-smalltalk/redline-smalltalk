@@ -75,9 +75,9 @@ sequence returns [Sequence n]
 	;
 
 statements returns [Statements n]
-	:	statementList '.'? {$n = new Statements($statementList.n);}
-	|	statementList '.'  {$n = new Statements($statementList.n);} '^' expression {$n.answer($expression.n);} '.'?
-	|	'^' expression {$n = new Statements($expression.n);} '.'?
+	:	statementList ('.')? {$n = new Statements($statementList.n);}
+	|	statementList '.'  {$n = new Statements($statementList.n);} '^' expression {$n.answer($expression.n);} ('.')?
+	|	'^' expression {$n = new Statements($expression.n);} ('.')?
 	;
 	
 statementList returns [StatementList n]
@@ -122,7 +122,9 @@ keywordMessage returns [KeywordMessage n]
 	;
 
 keywordArgument returns [KeywordArgument n]
-	:	primary {$n = new KeywordArgument($primary.n);}
+	:	binaryMessageSend {$n = new KeywordArgument($binaryMessageSend.n);}
+	|	unaryMessageSend {$n = new KeywordArgument($unaryMessageSend.n);}
+	|	primary {$n = new KeywordArgument($primary.n);}
 	;
 
 binaryMessageSend returns [BinaryMessageSend n]
@@ -238,4 +240,3 @@ BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|','
 CHARACTER: '$' . ;
 CHUNK_END: '! !' ;
 ASSIGNMENT: ':=' | '_';
-

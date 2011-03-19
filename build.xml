@@ -32,7 +32,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	<property name="grammar.src" location="${src}/main/grammar"/>
 	<property name="grammar.out" location="${src}/main/generated"/>
 	<property name="java.src" location="${src}/main/java"/>
-    <property name="java.out" location="${out}"/>
+	<property name="java.out" location="${out}"/>
 	<property name="java.test.src" location="${src}/test/java"/>
 	<property name="java.test.out" location="${java.out}"/>
 	<property name="java.src.version" value="1.5"/>
@@ -54,7 +54,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 	<target name="generate" description="Generate sources from grammar." depends="init">
 		<java jar="${grammar.lib}" fork="true">
-			<arg value="-trace"/>
 			<arg value="-o"/>
 			<arg value="${grammar.out}/st/redline/smalltalk/interpreter"/>
 			<arg value="${grammar.src}/Smalltalk.g"/>

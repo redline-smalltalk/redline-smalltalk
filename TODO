@@ -1,3 +1,7 @@
+Remove instanceof checks by making a subclass of each node (this may not work out
+well since a higher level will then be used to access the subnode with type erasure).
+
+
 Change to Smalltalk.instance are an improvement, but also highlight a problem with
 being able to use proper class loader. When Class A needs a smalltalk instance it
 should ask the class for it's class loader and use that as Smalltalk instance.

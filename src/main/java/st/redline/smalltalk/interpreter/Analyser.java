@@ -275,7 +275,14 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(KeywordArgument keywordArgument) {
-		keywordArgument.primary().accept(this);
+		if (keywordArgument.isPrimary())
+			keywordArgument.primary().accept(this);
+		else if (keywordArgument.isUnaryMessageSend())
+			keywordArgument.unaryMessageSend().accept(this);
+		else if (keywordArgument.isBinaryMessageSend())
+			keywordArgument.binaryMessageSend().accept(this);
+		else
+			throw new IllegalStateException("Unknown KeywordArgument type.");
 	}
 
 	public void visit(BinaryMessageSend binaryMessageSend) {

@@ -26,11 +26,39 @@ public class KeywordArgument extends BasicNode {
 		super(primary);
 	}
 
+	public KeywordArgument(UnaryMessageSend unaryMessageSend) {
+		super(unaryMessageSend);
+	}
+
+	public KeywordArgument(BinaryMessageSend binaryMessageSend) {
+		super(binaryMessageSend);
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
 
+	public boolean isPrimary() {
+		return value() instanceof Primary;
+	}
+
 	public Primary primary() {
 		return (Primary) value();
+	}
+
+	public boolean isUnaryMessageSend() {
+		return value() instanceof UnaryMessageSend;
+	}
+
+	public UnaryMessageSend unaryMessageSend() {
+		return (UnaryMessageSend) value();
+	}
+
+	public boolean isBinaryMessageSend() {
+		return value() instanceof BinaryMessageSend;
+	}
+
+	public BinaryMessageSend binaryMessageSend() {
+		return (BinaryMessageSend) value();
 	}
 }
