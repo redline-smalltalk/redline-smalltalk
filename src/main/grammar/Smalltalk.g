@@ -47,6 +47,7 @@ chunk returns [Chunk n]
 
 method returns [Method n]
 	:	methodPattern (temporaries)? (pragmas)? sequence {$n = new Method($methodPattern.n, $temporaries.n, $pragmas.n, $sequence.n);}
+	|	methodPattern {$n = new Method($methodPattern.n, null, null, null);}	
 	;
 	
 methodPattern returns [MethodPattern n]
