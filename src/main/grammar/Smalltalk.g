@@ -80,9 +80,9 @@ sequence returns [Sequence n]
 	;
 
 statements returns [Statements n]
-	:	statementList ('.')? {$n = new Statements($statementList.n);}
-	|	statementList '.'  {$n = new Statements($statementList.n);} '^' expression {$n.answer($expression.n);} ('.')?
-	|	'^' expression {$n = new Statements($expression.n);} ('.')?
+	:	statementList '.'  {$n = new Statements($statementList.n);} '^' expression {$n.answer($expression.n);} '.'?
+	|	'^' expression {$n = new Statements($expression.n);} '.'?
+	|	statementList '.'? {$n = new Statements($statementList.n);}
 	;
 	
 statementList returns [StatementList n]
