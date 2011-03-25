@@ -22,7 +22,6 @@ grammar Smalltalk;
 
 options {
 	language = Java;
-	backtrack = true;
 }
 
 @header {
@@ -156,11 +155,11 @@ unaryMessage returns [UnaryMessage n]
 	;
 
 primary returns [Primary n]
-	:	l = '(' expression {$n = new PrimaryExpression($expression.n, $l.line);} ')'
-	|	variable {$n = $variable.n;}
-	|	block {$n = $block.n;}
+	:	('(') => l = '(' expression {$n = new PrimaryExpression($expression.n, $l.line);} ')'
+	|	(NAME) => variable {$n = $variable.n;}
+	|	(OPEN_BLOCK) => block {$n = $block.n;}
 	|	literal {$n = $literal.n;}
-	|	array {$n = $array.n;}
+	|	('{') => array {$n = $array.n;}
 	;
 
 block returns [Block n]
