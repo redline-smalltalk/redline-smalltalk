@@ -39,8 +39,7 @@ program returns [Program n]
 	; 
 
 chunk returns [Chunk n]
-	:	(temporaries)? sequence EOF {$n = new SequenceChunk($sequence.n, $temporaries.n);}
-	|	(temporaries)? sequence '!' {$n = new SequenceChunk($sequence.n, $temporaries.n);}
+	:	(temporaries)? sequence (EOF|'!') {$n = new SequenceChunk($sequence.n, $temporaries.n);}
 	|	'!' sequence '!' {$n = new DirectiveChunk($sequence.n);}
 	|	method CHUNK_END {$n = new MethodChunk($method.n); }
 	; 
@@ -71,13 +70,13 @@ pragmas returns [Pragmas n]
 	;
 			
 sequence returns [Sequence n]
-	:	statements {$n = new Sequence($statements.n);}
+	:	statements {$n = new Sequence($statements.n);} '.'?
 	;
 
 statements returns [Statements n]
-	:	statementList '.'? {$n = new Statements($statementList.n);}
-	|	statementList '.'  {$n = new Statements($statementList.n);} '^' expression {$n.answer($expression.n);} '.'?
-	|	'^' expression {$n = new Statements($expression.n);} '.'?
+	:	statementList {$n = new Statements($statementList.n);}
+	|	statementList '.'  {$n = new Statements($statementList.n);} '^' expression {$n.answer($expression.n);}
+	|	'^' expression {$n = new Statements($expression.n);}
 	;
 	
 statementList returns [StatementList n]
@@ -169,21 +168,29 @@ variable returns [Variable n]
 	;
 
 literal returns [Literal n]
+	:	('self' | 'true' | 'false' | 'nil') => reservedWordLiteral {$n = $reservedWordLiteral.n;}
+	|	number {$n = $number.n;}	
+	|	CHARACTER {$n = new StCharacter($CHARACTER.text, $CHARACTER.line);}
+	|	STRING {$n = new StString($STRING.text, $STRING.line);}
+	|	'#' hashedLiteral {$n = $hashedLiteral.n;}
+	;
+
+reservedWordLiteral returns [Literal n]
 	:	l = 'self' {$n = new Self($l.text, $l.line);}
 	|	l = 'true' {$n = new True($l.text, $l.line);}
 	|	l = 'false' {$n = new False($l.text, $l.line);}
 	|	l = 'nil' {$n = new Nil($l.text, $l.line);}
-	|	number {$n = $number.n;}	
-	|	CHARACTER {$n = new StCharacter($CHARACTER.text, $CHARACTER.line);}
-	|	STRING {$n = new StString($STRING.text, $STRING.line);}
- 	|	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
- 	|	'#' STRING {$n = new Symbol($STRING.text, $STRING.line);}
- 	|	'#' BINARY_SYMBOL {$n = new Symbol($BINARY_SYMBOL.text, $BINARY_SYMBOL.line);}
- 	|	'#' KEYWORD {$n = new Symbol($KEYWORD.text, $KEYWORD.line);}
- 	|	'#' MULTI_KEYWORD {$n = new Symbol($MULTI_KEYWORD.text, $MULTI_KEYWORD.line);} 
- 	|	'#' ALTERNATE_KEYWORD {$n = new Symbol($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}
- 	|	l = '#:' {$n = new Symbol("':'", $l.line);}
- 	|	l = '#' '(' literalArray {$literalArray.n.line($l.line); $n = $literalArray.n;} ')' 
+	;
+		
+hashedLiteral returns [Literal n]
+ 	:	NAME {$n = new Symbol($NAME.text, $NAME.line);}
+ 	|	STRING {$n = new Symbol($STRING.text, $STRING.line);}
+ 	|	BINARY_SYMBOL {$n = new Symbol($BINARY_SYMBOL.text, $BINARY_SYMBOL.line);}
+ 	|	KEYWORD {$n = new Symbol($KEYWORD.text, $KEYWORD.line);}
+ 	|	MULTI_KEYWORD {$n = new Symbol($MULTI_KEYWORD.text, $MULTI_KEYWORD.line);} 
+ 	|	ALTERNATE_KEYWORD {$n = new Symbol($ALTERNATE_KEYWORD.text, $ALTERNATE_KEYWORD.line);}
+ 	|	l = ':' {$n = new Symbol("':'", $l.line);}
+ 	|	l = '(' literalArray {$literalArray.n.line($l.line); $n = $literalArray.n;} ')' 
 	;
 
 number returns [LiteralNumber n]

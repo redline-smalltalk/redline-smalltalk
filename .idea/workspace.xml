@@ -59,10 +59,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Smalltalk.g" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Smalltalk.g" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g">
           <provider selected="true" editor-type-id="grammar">
             <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Smalltalk.g.bak" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g.bak">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="152" column="26" selection-start="5656" selection-end="5661" vertical-scroll-proportion="0.33264676">
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -792,6 +801,13 @@
     <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g">
       <provider selected="true" editor-type-id="grammar">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g.bak">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="152" column="26" selection-start="5656" selection-end="5661" vertical-scroll-proportion="0.33264676">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>
