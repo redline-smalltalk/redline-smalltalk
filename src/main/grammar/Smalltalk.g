@@ -22,6 +22,7 @@ grammar Smalltalk;
 
 options {
 	language = Java;
+	backtrack = true;
 }
 
 @header {
@@ -46,7 +47,6 @@ chunk returns [Chunk n]
 
 method returns [Method n]
 	:	methodPattern (temporaries)? (pragmas)? sequence {$n = new Method($methodPattern.n, $temporaries.n, $pragmas.n, $sequence.n);}
-	|	methodPattern {$n = new Method($methodPattern.n, null, null, null);}	
 	;
 	
 methodPattern returns [MethodPattern n]
@@ -66,11 +66,6 @@ temporaries returns [Temporaries n]
 		'|' ( NAME {$n.add(new Temporary($NAME.text, $NAME.line));} )+ '|'
 	;
 
-temporaryVariables returns [Temporaries n]
-	:	{$n = new Temporaries();}
-		 ( NAME {$n.add(new Temporary($NAME.text, $NAME.line));} )+
-	;
-
 pragmas returns [Pragmas n]
 	:	'<' pragmaMessage {$n = $pragmaMessage.n;} '>' 
 	;
@@ -80,9 +75,9 @@ sequence returns [Sequence n]
 	;
 
 statements returns [Statements n]
-	:	statementList '.'  {$n = new Statements($statementList.n);} '^' expression {$n.answer($expression.n);} '.'?
+	:	statementList '.'? {$n = new Statements($statementList.n);}
+	|	statementList '.'  {$n = new Statements($statementList.n);} '^' expression {$n.answer($expression.n);} '.'?
 	|	'^' expression {$n = new Statements($expression.n);} '.'?
-	|	statementList '.'? {$n = new Statements($statementList.n);}
 	;
 	
 statementList returns [StatementList n]
@@ -127,9 +122,7 @@ keywordMessage returns [KeywordMessage n]
 	;
 
 keywordArgument returns [KeywordArgument n]
-	:	binaryMessageSend {$n = new KeywordArgument($binaryMessageSend.n);}
-	|	unaryMessageSend {$n = new KeywordArgument($unaryMessageSend.n);}
-	|	primary {$n = new KeywordArgument($primary.n);}
+	:	primary {$n = new KeywordArgument($primary.n);}
 	;
 
 binaryMessageSend returns [BinaryMessageSend n]
@@ -155,26 +148,18 @@ unaryMessage returns [UnaryMessage n]
 	;
 
 primary returns [Primary n]
-	:	('(') => l = '(' expression {$n = new PrimaryExpression($expression.n, $l.line);} ')'
-	|	(NAME) => variable {$n = $variable.n;}
-	|	(OPEN_BLOCK) => block {$n = $block.n;}
+	:	l = '(' expression {$n = new PrimaryExpression($expression.n, $l.line);} ')'
+	|	variable {$n = $variable.n;}
+	|	block {$n = $block.n;}
 	|	literal {$n = $literal.n;}
-	|	('{') => array {$n = $array.n;}
+	|	array {$n = $array.n;}
 	;
 
 block returns [Block n]
-	:	l = OPEN_BLOCK blockArgs '||' temporaryVariables '|' sequence {$n = new Block($l.line, $blockArgs.n, $temporaryVariables.n, $sequence.n);} CLOSE_BLOCK
-	|	l = OPEN_BLOCK blockArgs '|' sequence {$n = new Block($l.line, $blockArgs.n, $sequence.n);} CLOSE_BLOCK
-	|	l = OPEN_BLOCK '|' temporaryVariables '|' sequence {$n = new Block($l.line, $temporaryVariables.n, $sequence.n);} CLOSE_BLOCK
-	|	l = OPEN_BLOCK sequence {$n = new Block($l.line, $sequence.n);} CLOSE_BLOCK
-	|	l = OPEN_BLOCK {$n = new Block($l.line, null);} CLOSE_BLOCK
+	:	l = '[' {$n = new Block($l.line, null);} ']'
+	|	l = '[' sequence {$n = new Block($l.line, $sequence.n);} ']'
 	;
 	
-blockArgs returns [BlockArgs n]
-	:	{ $n = new BlockArgs(); }	
-		( BLOCK_ARG {$n.add(new BlockArg($BLOCK_ARG.text, $BLOCK_ARG.line));} )*
-	;
-
 array returns [Array n]
 	:	l = '{' statementList {$n = new Array($statementList.n, $l.line);} '}'
 	;
@@ -188,11 +173,7 @@ literal returns [Literal n]
 	|	l = 'true' {$n = new True($l.text, $l.line);}
 	|	l = 'false' {$n = new False($l.text, $l.line);}
 	|	l = 'nil' {$n = new Nil($l.text, $l.line);}
-	|	l = DECIMAL_NUMBER {$n = new LiteralNumber($l.text, $l.line);}	
-	|	l = RADIX_NUMBER {$n = new LiteralNumber($l.text, $l.line);}
-	|	l = SCALED_NUMBER {$n = new LiteralNumber($l.text, $l.line);}
-	|	l = EXPONENT_NUMBER {$n = new LiteralNumber($l.text, $l.line);}
-	|	l = NEGATIVE_NUMBER {$n = new LiteralNumber($l.text, $l.line);}
+	|	number {$n = $number.n;}	
 	|	CHARACTER {$n = new StCharacter($CHARACTER.text, $CHARACTER.line);}
 	|	STRING {$n = new StString($STRING.text, $STRING.line);}
  	|	'#' NAME {$n = new Symbol($NAME.text, $NAME.line);}
@@ -205,6 +186,11 @@ literal returns [Literal n]
  	|	l = '#' '(' literalArray {$literalArray.n.line($l.line); $n = $literalArray.n;} ')' 
 	;
 
+number returns [LiteralNumber n]
+	:	(DIGITS PERIOD) => l = DIGITS PERIOD DIGITS {$n = new LiteralNumber(".", $l.line);}
+	|	l = DIGITS {$n = new LiteralNumber($DIGITS.text, $l.line);}
+	;
+	
 literalArray returns [LiteralArray n]
 	:	{$n = new LiteralArray(); }
 		( nestedArrayLiteral {$n.add($nestedArrayLiteral.n);} )*
@@ -233,15 +219,10 @@ pragmaMessage returns [PragmaMessage n]
 	
 primitive returns [Primitive n]
 	:	l = 'primitive:' STRING {$n = new PrimitiveString($STRING.text, $l.line);}
-	|	l = 'primitive:' DECIMAL_NUMBER {$n = new PrimitiveNumber($DECIMAL_NUMBER.text, $l.line);}
+	|	l = 'primitive:' DIGITS {$n = new PrimitiveNumber($DIGITS.text, $l.line);}
 	|	l = 'primitive:' s1 = STRING 'module:' s2 = STRING {$n = new PrimitiveModule($s1.text, $s2.text, $l.line);}
 	;
 
-DECIMAL_NUMBER:	('0'..'9')+ ('.' ('0'..'9')+)?;
-RADIX_NUMBER: ('0'..'9')+ 'r' ('0'..'9' | 'A'..'Z')+ ('.' ('0'..'9' | 'A'..'Z')+)?;
-SCALED_NUMBER: DECIMAL_NUMBER 's' ('0'..'9')+;
-EXPONENT_NUMBER: (DECIMAL_NUMBER | RADIX_NUMBER) 'e' '-'? ('0'..'9')+;
-NEGATIVE_NUMBER: '-' DECIMAL_NUMBER | '-' RADIX_NUMBER | '-' SCALED_NUMBER | '-' EXPONENT_NUMBER;
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 MULTI_KEYWORD: NAME ':' (NAME ':')+;
@@ -253,7 +234,5 @@ BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|','
 CHARACTER: '$' . ;
 CHUNK_END: '! !' ;
 ASSIGNMENT: ':=' | '_';
-OPEN_BLOCK:	'[';
-CLOSE_BLOCK:	']';
-BLOCK_ARG:	':' NAME;
-
+DIGITS: ('0'..'9')+;
+PERIOD:	'.';
