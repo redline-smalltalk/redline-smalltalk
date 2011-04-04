@@ -20,17 +20,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class PrimitiveNumber extends Primitive {
-
-	public PrimitiveNumber(String value, int line) {
-		super(value, line);
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-	}
-
-	public String number() {
-		return (String) value();
-	}
+public interface VisitableNode {
+	void accept(NodeVisitor nodeVisitor);
 }

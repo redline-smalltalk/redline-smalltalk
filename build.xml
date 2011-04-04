@@ -53,7 +53,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	</target>
 
 	<target name="generate" description="Generate sources from grammar." depends="init">
+		<condition property="trace.flag" value="-trace" else="-notrace">
+			<isset property="trace"/>
+		</condition>
 		<java jar="${grammar.lib}" fork="true">
+			<arg value="${trace.flag}"/>
 			<arg value="-o"/>
 			<arg value="${grammar.out}/st/redline/smalltalk/interpreter"/>
 			<arg value="${grammar.src}/Smalltalk.g"/>

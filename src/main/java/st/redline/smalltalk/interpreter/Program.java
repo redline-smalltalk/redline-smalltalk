@@ -20,24 +20,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Program extends BasicListNode {
+public class Program implements VisitableNode {
 
 	public Program() {
 	}
 
-	public void add(Chunk chunk) {
-		super.add(chunk);
-	}
-
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
-	}
-
-	public void eachAccept(final NodeVisitor visitor) {
-		each(new NodeCommand() {
-			public void execute(Node node) {
-				((Chunk) node).accept(visitor);
-			}
-		});
 	}
 }
