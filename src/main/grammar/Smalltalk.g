@@ -37,7 +37,7 @@ program returns [Program n]
 	;
 
 methods	
-	:	((PLUS | MINUS)  method)*
+	:	(method)*
 	;
 	
 method 
@@ -45,9 +45,14 @@ method
 	;
 
 messagePattern
-	:	unarySelector
-	|	binarySelector variableName
-	|	(keyword variableName)+
+	:	PLUS unarySelector
+	|	MINUS unarySelector
+	|	PLUS binarySelector variableName
+	|	PLUS PLUS variableName	
+	|	MINUS binarySelector variableName	
+	|	MINUS MINUS variableName	
+	|	PLUS (keyword variableName)+
+	|	MINUS (keyword variableName)+	
 	;
 
 temporaries
@@ -118,7 +123,7 @@ literal
 	;
 
 block 
-	:	'[' ((':' variableName)+ '|')? statements ']'
+	:	'[' ((':' variableName)+ '|')? (temporaries)? statements ']'
 	;
 
 array 
@@ -175,7 +180,7 @@ DIGITS: ('0'..'9')+;
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 STRING_LITERAL: '\'' .* '\'';
-BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|MINUS|PLUS|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|MINUS|PLUS|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
+BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
