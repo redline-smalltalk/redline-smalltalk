@@ -33,7 +33,7 @@ options {
 }
 
 program returns [Program n]
-	:	statements methods {$n = new Program();}
+	:	(temporaries)? statements methods {$n = new Program();}
 	;
 
 methods	
@@ -64,15 +64,15 @@ nonEmptyStatements
 	;
 
 expression 
-	:	variableName assign expression
+	:	variableName (':=' | '_') expression
 	|	simpleExpression
 	;
 
 simpleExpression
-	:	primary (messageExpression (';' messageElt)*)?
+	:	primary (messageExpression (';' messageElement)*)?
 	;
 
-messageElt
+messageElement
 	:	(unarySelector | binarySelector unaryObjectDescription | (keyword binaryObjectDescription)+)
 	;
 
@@ -122,10 +122,10 @@ block
 	;
 
 array 
-	:	'(' (arrayConstantElt)* ')'
+	:	'(' (arrayConstantElement)* ')'
 	;
 
-arrayConstantElt
+arrayConstantElement
 	 :	numberConstant
 	|	characterConstant
 	|	stringConstant
@@ -147,10 +147,6 @@ binarySelector
 
 variableName 
 	:	NAME
-	;
-
-assign
-	:	':=' | '_'
 	;
 
 keyword 
