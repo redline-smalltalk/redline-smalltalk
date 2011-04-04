@@ -4,4 +4,5 @@ smalltalk.tokens
 src/main/generated
 src/main/grammar/output
 src/main/grammar/Smalltalk.tokens
+src/main/grammar/*.java
 

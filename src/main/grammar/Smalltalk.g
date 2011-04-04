@@ -33,9 +33,13 @@ options {
 }
 
 program returns [Program n]
-	:	statements (('-' | '+')  method)* {$n = new Program();}
+	:	statements methods {$n = new Program();}
 	;
 
+methods	
+	:	((PLUS | MINUS)  method)*
+	;
+	
 method 
 	:	messagePattern (temporaries)? statements
 	;
@@ -169,11 +173,13 @@ numberConstant
 	:	DIGITS
 	;
 
+PLUS:	'+';
+MINUS:	'-';
 DIGITS: ('0'..'9')+;
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 STRING_LITERAL: '\'' .* '\'';
-BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
+BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|MINUS|PLUS|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|MINUS|PLUS|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
