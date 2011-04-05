@@ -41,7 +41,7 @@ methods
 	;
 	
 method 
-	:	messagePattern (temporaries)? statements
+	:	TAB messagePattern (tabbedTemporaries)? tabbedStatements
 	;
 
 messagePattern
@@ -55,10 +55,18 @@ messagePattern
 	|	MINUS (keyword variableName)+	
 	;
 
+tabbedTemporaries
+  : TAB TAB temporaries
+  ;
+
 temporaries
 	:	'|' (variableName)* '|'
 	;
 
+tabbedStatements
+  : TAB TAB statements
+  ;
+ 
 statements
 	:	(nonEmptyStatements)?
 	;
@@ -183,4 +191,5 @@ STRING_LITERAL: '\'' .* '\'';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
-WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
+TAB: '\t';
+WHITESPACE: (' ' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
