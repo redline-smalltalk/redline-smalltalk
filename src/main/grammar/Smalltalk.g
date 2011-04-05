@@ -41,22 +41,17 @@ methods
 	;
 	
 method 
-	:	TAB messagePattern (tabbedTemporaries)? tabbedStatements
+	:	METHOD_INDENT (PLUS | MINUS) messagePattern (tabbedTemporaries)? tabbedStatements
 	;
 
 messagePattern
-	:	PLUS unarySelector
-	|	MINUS unarySelector
-	|	PLUS binarySelector variableName
-	|	PLUS PLUS variableName	
-	|	MINUS binarySelector variableName	
-	|	MINUS MINUS variableName	
-	|	PLUS (keyword variableName)+
-	|	MINUS (keyword variableName)+	
+	:	unarySelector
+	|	binarySelector variableName
+	|	(keyword variableName)+
 	;
 
 tabbedTemporaries
-  : TAB TAB temporaries
+  : STATEMENT_INDENT temporaries
   ;
 
 temporaries
@@ -64,7 +59,7 @@ temporaries
 	;
 
 tabbedStatements
-  : TAB TAB statements
+  : STATEMENT_INDENT statements
   ;
  
 statements
@@ -73,7 +68,7 @@ statements
 
 nonEmptyStatements
 	:	'^' expression ('.')?
-	|	expression ('.' statements)?
+	|	expression ('.' (STATEMENT_INDENT)? statements)?
 	;
 
 expression 
@@ -191,5 +186,6 @@ STRING_LITERAL: '\'' .* '\'';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
-TAB: '\t';
 WHITESPACE: (' ' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
+STATEMENT_INDENT: ('\t\t') ('\t')*;
+METHOD_INDENT: '\t';
