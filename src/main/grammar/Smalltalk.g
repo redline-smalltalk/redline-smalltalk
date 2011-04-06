@@ -41,7 +41,7 @@ methods
 	;
 	
 method 
-	:  (PLUS | MINUS) messagePattern temporaries? statements
+	:  ('\t+' | '\t-') messagePattern temporaries? statements
 	;
 
 messagePattern
@@ -169,8 +169,6 @@ numberConstant
 	:	DIGITS
 	;
 
-PLUS:	'+';
-MINUS:	'-';
 DIGITS: ('0'..'9')+;
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
@@ -179,4 +177,3 @@ BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|','
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
-
