@@ -33,42 +33,34 @@ options {
 }
 
 program returns [Program n]
-	:	(temporaries)? statements methods {$n = new Program();}
+	:	temporaries? statements methods {$n = new Program();}
 	;
 
 methods	
-	:	(method)*
+	:	method*
 	;
 	
 method 
-	:	METHOD_INDENT (PLUS | MINUS) messagePattern (tabbedTemporaries)? tabbedStatements
+	:  (PLUS | MINUS) messagePattern temporaries? statements
 	;
 
 messagePattern
-	:	unarySelector
-	|	binarySelector variableName
-	|	(keyword variableName)+
+	:  unarySelector
+	|  binarySelector variableName
+	|  (keyword variableName)+
 	;
-
-tabbedTemporaries
-  : STATEMENT_INDENT temporaries
-  ;
 
 temporaries
-	:	'|' (variableName)* '|'
+	:	'|' variableName* '|'
 	;
 
-tabbedStatements
-  : STATEMENT_INDENT statements
-  ;
- 
 statements
-	:	(nonEmptyStatements)?
+	:  nonEmptyStatements?
 	;
 
 nonEmptyStatements
-	:	'^' expression ('.')?
-	|	expression ('.' (STATEMENT_INDENT)? statements)?
+	:	'^' expression '.'?
+	|	expression ('.' statements)?
 	;
 
 expression 
@@ -81,7 +73,7 @@ simpleExpression
 	;
 
 messageElement
-	:	(unarySelector | binarySelector unaryObjectDescription | (keyword binaryObjectDescription)+)
+	:	unarySelector | binarySelector unaryObjectDescription | (keyword binaryObjectDescription)+
 	;
 
 messageExpression
@@ -91,11 +83,11 @@ messageExpression
 	;
 
 unaryExpression
-	:	(unarySelector)+ (binaryExpression | keywordExpression)?
+	:	unarySelector+ (binaryExpression | keywordExpression)?
 	;
 
 binaryExpression
-	:	(binarySelector unaryObjectDescription)+ (keywordExpression)?
+	:	(binarySelector unaryObjectDescription)+ keywordExpression?
 	;
 
 keywordExpression
@@ -103,11 +95,11 @@ keywordExpression
 	;
 
 unaryObjectDescription
-	:	primary (unarySelector)*
+	:	primary unarySelector*
 	;
 
 binaryObjectDescription
-	:	primary (unarySelector)* (binarySelector unaryObjectDescription)*
+	:	primary unarySelector* (binarySelector unaryObjectDescription)*
 	;
 
 primary 	
@@ -126,15 +118,15 @@ literal
 	;
 
 block 
-	:	'[' ((':' variableName)+ '|')? (temporaries)? statements ']'
+	:	'[' ((':' variableName)+ '|')? temporaries? statements ']'
 	;
 
 array 
-	:	'(' (arrayConstantElement)* ')'
+	:	'(' arrayConstantElement* ')'
 	;
 
 arrayConstantElement
-	 :	numberConstant
+  :	numberConstant
 	|	characterConstant
 	|	stringConstant
 	|	symbol
@@ -142,7 +134,7 @@ arrayConstantElement
 	;
 
 symbol 
-	:	 (identifier | binarySelector | keyword)
+	:	 identifier | binarySelector | keyword
 	;
 
 unarySelector 
@@ -186,6 +178,5 @@ STRING_LITERAL: '\'' .* '\'';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
-WHITESPACE: (' ' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
-STATEMENT_INDENT: ('\t\t') ('\t')*;
-METHOD_INDENT: '\t';
+WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
+
