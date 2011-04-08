@@ -41,13 +41,13 @@ methods
 	;
 	
 method 
-	:  ('\t+' | '\t-') messagePattern temporaries? statements
+	: 	('\t+' | '\t-') messagePattern temporaries? statements
 	;
 
 messagePattern
-	:  unarySelector
-	|  binarySelector variableName
-	|  (keyword variableName)+
+	:	unarySelector
+	|	binarySelector variableName
+	|	(keyword variableName)+
 	;
 
 temporaries
@@ -55,7 +55,7 @@ temporaries
 	;
 
 statements
-	:  nonEmptyStatements?
+	: 	nonEmptyStatements?
 	;
 
 nonEmptyStatements
@@ -126,7 +126,7 @@ array
 	;
 
 arrayConstantElement
-  :	numberConstant
+ 	 :	numberConstant
 	|	characterConstant
 	|	stringConstant
 	|	symbol
