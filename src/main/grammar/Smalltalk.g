@@ -126,7 +126,7 @@ array
 	;
 
 arrayConstantElement
- 	 :	numberConstant
+ 	:	numberConstant
 	|	characterConstant
 	|	stringConstant
 	|	symbol
