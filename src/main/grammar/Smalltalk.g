@@ -51,11 +51,11 @@ messagePattern
 	;
 
 temporaries
-	:	'|' variableName* '|'
+	:  '\t'* '|' variableName* '|'
 	;
 
 statements
-	: 	nonEmptyStatements?
+	: 	'\t'* nonEmptyStatements?
 	;
 
 nonEmptyStatements
