@@ -32,8 +32,8 @@ options {
 	package st.redline.smalltalk.interpreter;
 }
 
-program returns [Program n]
-	:	temporaries? statements methods {$n = new Program();}
+program
+	:	temporaries? statements methods
 	;
 
 methods	
@@ -41,7 +41,7 @@ methods
 	;
 	
 method 
-	: 	('\t+' | '\t-') messagePattern temporaries? statements
+	: 	messagePattern temporaries? statements
 	;
 
 messagePattern
@@ -51,11 +51,11 @@ messagePattern
 	;
 
 temporaries
-	:  '\t'* '|' variableName* '|'
+	:	 '|' variableName* '|'
 	;
 
 statements
-	: 	'\t'* nonEmptyStatements?
+	: 	nonEmptyStatements?
 	;
 
 nonEmptyStatements
@@ -176,5 +176,5 @@ STRING_LITERAL: '\'' .* '\'';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
-WHITESPACE: (' ' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
+WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
 
