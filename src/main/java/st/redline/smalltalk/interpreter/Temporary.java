@@ -20,17 +20,15 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Program implements VisitableNode {
+public class Temporary implements VisitableNode {
 
-	private final Temporaries temporaries;
+	private final VariableName variableName;
 
-	public Program(Temporaries temporaries) {
-		this.temporaries = temporaries;
+	public Temporary(VariableName variableName) {
+		this.variableName = variableName;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		if (temporaries != null)
-			temporaries.accept(visitor);
+		visitor.visit(this, variableName.value, variableName.line);
 	}
 }

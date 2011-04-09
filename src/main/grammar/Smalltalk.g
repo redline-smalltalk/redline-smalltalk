@@ -32,8 +32,8 @@ options {
 	package st.redline.smalltalk.interpreter;
 }
 
-program
-	:	temporaries? statements methods
+program returns [Program n]
+	:	temporaries? statements methods {$n = new Program($temporaries.n);}
 	;
 
 methods	
@@ -50,8 +50,10 @@ messagePattern
 	|	(keyword variableName)+
 	;
 
-temporaries
-	:	 '|' variableName* '|'
+temporaries returns [Temporaries n]
+	:	 
+		 {$n = new Temporaries();}
+		 '|' (variableName {$n.add(new Temporary($variableName.n));})* '|'
 	;
 
 statements
@@ -145,8 +147,8 @@ binarySelector
 	:	BINARY_SYMBOL
 	;
 
-variableName 
-	:	NAME
+variableName returns [VariableName n]
+	:	NAME {$n = new VariableName($NAME.text, $NAME.line);}
 	;
 
 keyword 
