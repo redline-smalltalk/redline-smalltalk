@@ -31,6 +31,10 @@ public class Temporaries implements VisitableNode {
 		temporaries = new ArrayList<Temporary>();
 	}
 
+	public boolean isEmpty() {
+		return temporaries.isEmpty();
+	}
+
 	public void add(Temporary temporary) {
 		temporaries.add(temporary);
 	}

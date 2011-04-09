@@ -30,7 +30,7 @@ public class Program implements VisitableNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
-		if (temporaries != null)
+		if (!temporaries.isEmpty())
 			temporaries.accept(visitor);
 	}
 }
