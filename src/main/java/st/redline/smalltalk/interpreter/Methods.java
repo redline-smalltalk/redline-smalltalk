@@ -20,25 +20,28 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Program implements VisitableNode {
+import java.util.ArrayList;
+import java.util.List;
 
-	private final Temporaries temporaries;
-	private final Statements statements;
-	private final Methods methods;
+public class Methods implements VisitableNode {
 
-	public Program(Temporaries temporaries, Statements statements, Methods methods) {
-		this.temporaries = temporaries;
-		this.statements = statements;
-		this.methods = methods;
+	private final List<Method> methods;
+
+	public Methods() {
+		methods = new ArrayList<Method>();
+	}
+
+	public boolean isEmpty() {
+		return methods.isEmpty();
+	}
+
+	public void add(Method method) {
+		methods.add(method);
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
-		if (!temporaries.isEmpty())
-			temporaries.accept(visitor);
-		if (!statements.isEmpty())
-			statements.accept(visitor);
-		if (!methods.isEmpty())
-			methods.accept(visitor);
+		for (Method method : methods)
+			method.accept(visitor);
 	}
 }

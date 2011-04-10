@@ -57,4 +57,13 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(VariableName variableName, String value, int line) {
 	}
+
+	public void visit(Statements statements) {
+	}
+
+	public void visit(AnswerExpression answerExpression) {
+	}
+
+	public void visit(Methods methods) {
+	}
 }

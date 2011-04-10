@@ -33,11 +33,13 @@ public class ProgramTest {
 
 	@Mock NodeVisitor visitor;
 	@Mock Temporaries temporaries;
+	@Mock Statements statements;
+	@Mock Methods methods;
 	private Program program;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		program = new Program(temporaries);
+		program = new Program(temporaries, statements, methods);
 	}
 
 	@Test public void shouldVisitProgram() {
@@ -55,5 +57,29 @@ public class ProgramTest {
 		when(temporaries.isEmpty()).thenReturn(true);
 		program.accept(visitor);
 		verify(temporaries, never()).accept(visitor);
+	}
+
+	@Test public void shouldVisitStatementsWhenStatementsNotEmpty() {
+		when(statements.isEmpty()).thenReturn(false);
+		program.accept(visitor);
+		verify(statements).accept(visitor);
+	}
+
+	@Test public void shouldNotVisitStatementsWhenStatementsEmpty() {
+		when(statements.isEmpty()).thenReturn(true);
+		program.accept(visitor);
+		verify(statements, never()).accept(visitor);
+	}
+
+	@Test public void shouldVisitMethodsWhenMethodsNotEmpty() {
+		when(methods.isEmpty()).thenReturn(false);
+		program.accept(visitor);
+		verify(methods).accept(visitor);
+	}
+
+	@Test public void shouldNotVisitMethodsWhenMethodsEmpty() {
+		when(methods.isEmpty()).thenReturn(true);
+		program.accept(visitor);
+		verify(methods, never()).accept(visitor);
 	}
 }

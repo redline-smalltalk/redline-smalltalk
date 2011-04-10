@@ -20,25 +20,5 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Program implements VisitableNode {
-
-	private final Temporaries temporaries;
-	private final Statements statements;
-	private final Methods methods;
-
-	public Program(Temporaries temporaries, Statements statements, Methods methods) {
-		this.temporaries = temporaries;
-		this.statements = statements;
-		this.methods = methods;
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		if (!temporaries.isEmpty())
-			temporaries.accept(visitor);
-		if (!statements.isEmpty())
-			statements.accept(visitor);
-		if (!methods.isEmpty())
-			methods.accept(visitor);
-	}
+public interface Expression extends VisitableNode {
 }
