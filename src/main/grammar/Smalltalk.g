@@ -38,10 +38,10 @@ program returns [Program n]
 
 methods	returns [Methods n]
 	:   {$n = new Methods();}
-		method*
+		( method {$n.add($method.n);} )*
 	;
 	
-method 
+method returns [Method n]
 	: 	('\t-' | '\t+') messagePattern temporaries? statements
 	;
 
@@ -53,17 +53,17 @@ messagePattern
 
 temporaries returns [Temporaries n]
 	:	{$n = new Temporaries();}
-		'|' (variableName {$n.add(new Temporary($variableName.n));})* '|'
+		'|' ( variableName {$n.add(new Temporary($variableName.n));} )* '|'
 	;
 
 statements returns [Statements n]
-	: 	(nonEmptyStatements {$n = $nonEmptyStatements.n;})?
+	: 	( nonEmptyStatements {$n = $nonEmptyStatements.n;} )?
 	;
 
 nonEmptyStatements returns [Statements n]
 	:   {$n = new Statements();}
 	    '^' expression {$n.add(new AnswerExpression($expression.n));} '.'?
-	|	expression {$n.add($expression.n);} ('.' statements {$n.add($statements.n);})?
+	|	expression {$n.add($expression.n);} ( '.' statements {$n.add($statements.n);} )?
 	;
 
 expression returns [Expression n]
