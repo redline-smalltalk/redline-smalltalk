@@ -73,7 +73,7 @@
       <file leaf-file-name="TemporariesTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/TemporariesTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="51" selection-start="2120" selection-end="2120" vertical-scroll-proportion="0.82808024">
+            <state line="55" column="35" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.80659026">
               <folding />
             </state>
           </provider>
@@ -900,13 +900,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Temporaries.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="25" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Temporary.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="13" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.0">
@@ -914,9 +907,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Temporaries.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="25" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/TemporariesTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="51" selection-start="2120" selection-end="2120" vertical-scroll-proportion="0.82808024">
+        <state line="55" column="35" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.80659026">
           <folding />
         </state>
       </provider>
