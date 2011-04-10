@@ -41,7 +41,7 @@ methods
 	;
 	
 method 
-	: 	('-' | '+') messagePattern temporaries? statements
+	: 	('\t-' | '\t+') messagePattern temporaries? statements
 	;
 
 messagePattern
