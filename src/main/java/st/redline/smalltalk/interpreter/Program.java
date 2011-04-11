@@ -34,11 +34,8 @@ public class Program implements VisitableNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
-		if (!temporaries.isEmpty())
-			temporaries.accept(visitor);
-		if (!statements.isEmpty())
-			statements.accept(visitor);
-		if (!methods.isEmpty())
-			methods.accept(visitor);
+		temporaries.accept(visitor);
+		statements.accept(visitor);
+		methods.accept(visitor);
 	}
 }

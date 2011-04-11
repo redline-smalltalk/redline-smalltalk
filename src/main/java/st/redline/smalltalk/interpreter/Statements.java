@@ -31,10 +31,6 @@ public class Statements implements VisitableNode {
 		expressions = new ArrayList<Expression>();
 	}
 
-	public boolean isEmpty() {
-		return expressions.isEmpty();
-	}
-
 	public void add(Expression expression) {
 		expressions.add(expression);
 	}
@@ -47,5 +43,9 @@ public class Statements implements VisitableNode {
 		visitor.visit(this);
 		for (Expression expression : expressions)
 			expression.accept(visitor);
+	}
+
+	public boolean isEmpty() {
+		return expressions.isEmpty();
 	}
 }

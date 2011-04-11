@@ -32,14 +32,11 @@ import static org.mockito.Mockito.*;
 public class TemporariesTest {
 
 	@Mock NodeVisitor visitor;
-	private VariableName variableName;
-	private Temporary temporary;
+	@Mock Temporary temporary;
 	private Temporaries temporaries;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		variableName = new VariableName("name", 32);
-		temporary = new Temporary(variableName);
 		temporaries = new Temporaries();
 	}
 
@@ -56,6 +53,6 @@ public class TemporariesTest {
 		temporaries.add(temporary);
 		temporaries.accept(visitor);
 		verify(visitor).visit(temporaries);
-		verify(visitor).visit(temporary, "name", 32);
+		verify(temporary).accept(visitor);
 	}
 }

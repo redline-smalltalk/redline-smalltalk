@@ -37,7 +37,7 @@ program returns [Program n]
 	;
 
 methods	returns [Methods n]
-	:   {$n = new Methods();}
+	:	{$n = new Methods();}
 		( method {$n.add($method.n);} )*
 	;
 	

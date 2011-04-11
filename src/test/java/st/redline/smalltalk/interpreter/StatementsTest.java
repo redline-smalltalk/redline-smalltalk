@@ -25,40 +25,34 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.never;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-public class ProgramTest {
+public class StatementsTest {
 
 	@Mock NodeVisitor visitor;
-	@Mock Temporaries temporaries;
-	@Mock Statements statements;
-	@Mock Methods methods;
-	private Program program;
+	@Mock Expression expression;
+	private Statements statements;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		program = new Program(temporaries, statements, methods);
+		statements = new Statements();
 	}
 
-	@Test public void shouldBeVisitable() {
-		program.accept(visitor);
-		verify(visitor).visit(program);
+	@Test public void shouldBeEmptyWhenCreated() {
+		assertTrue(statements.isEmpty());
 	}
 
-	@Test public void shouldVisitTemporaries() {
-		program.accept(visitor);
-		verify(temporaries).accept(visitor);
+	@Test public void shouldAddExpressions() {
+		statements.add(expression);
+		assertFalse(statements.isEmpty());
 	}
 
-	@Test public void shouldVisitStatements() {
-		program.accept(visitor);
-		verify(statements).accept(visitor);
-	}
-
-	@Test public void shouldVisitMethods() {
-		program.accept(visitor);
-		verify(methods).accept(visitor);
+	@Test public void shouldVisitEachExpression() {
+		statements.add(expression);
+		statements.accept(visitor);
+		verify(visitor).visit(statements);
+		verify(expression).accept(visitor);
 	}
 }
