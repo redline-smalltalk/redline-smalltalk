@@ -20,13 +20,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class ClassMethod extends AbstractMethod {
+public class Keyword implements VisitableNode {
 
-	public ClassMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
-		super(messagePattern, temporaries, statements);
+	protected final String value;
+	protected final int line;
+
+	public Keyword(String value, int line) {
+		this.value = value;
+		this.line = line;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+		visitor.visit(this, value, line);
 	}
 }

@@ -20,7 +20,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class InstanceMethod implements Method {
+public class InstanceMethod extends AbstractMethod {
+
+	public InstanceMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
+		super(messagePattern, temporaries, statements);
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}

@@ -20,10 +20,20 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class ClassMethod extends AbstractMethod {
+import java.util.ArrayList;
+import java.util.List;
 
-	public ClassMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
-		super(messagePattern, temporaries, statements);
+public class KeywordMessagePattern implements MessagePattern {
+
+	private final List<KeywordAndVariableName> keywordAndVariableNames;
+
+	public KeywordMessagePattern(KeywordAndVariableName keywordAndVariableName) {
+		keywordAndVariableNames = new ArrayList<KeywordAndVariableName>();
+		add(keywordAndVariableName);
+	}
+
+	public void add(KeywordAndVariableName keywordAndVariableName) {
+		keywordAndVariableNames.add(keywordAndVariableName);
 	}
 
 	public void accept(NodeVisitor visitor) {

@@ -4,6 +4,12 @@ Object subclass: #TestCase instanceVariableNames: 'testSelector'
         poolDictionaries: ''
         category: 'SUnit-Kernel'.
 
+	def + value
+		^ self
+
+	def yourself
+		^ self
+
 	def assert: aBoolean
 		aBoolean ifFalse: [self signalFailure: 'Assertion failed']
 

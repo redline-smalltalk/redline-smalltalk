@@ -72,4 +72,22 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(ClassMethod classMethod) {
 	}
+
+	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
+	}
+
+	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine) {
+	}
+
+	public void visit(KeywordMessagePattern keywordMessagePattern) {
+	}
+
+	public void visit(UnarySelector unarySelector, String value, int line) {
+	}
+
+	public void visit(BinarySelector binarySelector, String value, int line) {
+	}
+
+	public void visit(Keyword keyword, String value, int line) {
+	}
 }

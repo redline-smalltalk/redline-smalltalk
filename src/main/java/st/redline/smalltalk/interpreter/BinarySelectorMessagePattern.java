@@ -20,13 +20,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class ClassMethod extends AbstractMethod {
+public class BinarySelectorMessagePattern implements MessagePattern {
 
-	public ClassMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
-		super(messagePattern, temporaries, statements);
+	private final BinarySelector binarySelector;
+	private final VariableName variableName;
+
+	public BinarySelectorMessagePattern(BinarySelector binarySelector, VariableName variableName) {
+		this.binarySelector = binarySelector;
+		this.variableName = variableName;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+		visitor.visit(this, binarySelector.value, binarySelector.line, variableName.value, variableName.line);
 	}
 }

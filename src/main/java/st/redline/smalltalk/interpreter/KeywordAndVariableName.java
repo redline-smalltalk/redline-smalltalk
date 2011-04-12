@@ -20,13 +20,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class ClassMethod extends AbstractMethod {
+public class KeywordAndVariableName {
 
-	public ClassMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
-		super(messagePattern, temporaries, statements);
-	}
+	protected final Keyword keyword;
+	protected final VariableName variableName;
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+	public KeywordAndVariableName(Keyword keyword, VariableName variableName) {
+		this.keyword = keyword;
+		this.variableName = variableName;
 	}
 }

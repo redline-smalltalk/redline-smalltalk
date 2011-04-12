@@ -10,4 +10,10 @@ public interface NodeVisitor {
 	void visit(Methods methods);
 	void visit(InstanceMethod instanceMethod);
 	void visit(ClassMethod classMethod);
+	void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line);
+	void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine);
+	void visit(KeywordMessagePattern keywordMessagePattern);
+	void visit(UnarySelector unarySelector, String value, int line);
+	void visit(BinarySelector binarySelector, String value, int line);
+	void visit(Keyword keyword, String value, int line);
 }

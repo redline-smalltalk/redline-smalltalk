@@ -38,22 +38,22 @@ program returns [Program n]
 
 methods returns [Methods n]
 	:	{$n = new Methods();}
-		method* {$n.add($method.n);}
+		( method {$n.add($method.n);} )*
 	;
 	
 method returns [Method n]
-	: 	(i = 'def' | c = 'cdef') messagePattern temporaries? statements {$n = MethodFactory.create($i.text, $c.text, null, null);}
+	: 	(i = 'def' | c = 'cdef') messagePattern temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, null);}
 	;
 
-messagePattern
-	:	unarySelector
-	|	binarySelector variableName
-	|	(keyword variableName)+
+messagePattern returns [MessagePattern n]
+	:	unarySelector {$n = new UnarySelectorMessagePattern($unarySelector.n);}
+	|	binarySelector variableName {$n = new BinarySelectorMessagePattern($binarySelector.n, $variableName.n);}
+	|	( keyword variableName {if ($n != null) ((KeywordMessagePattern)$n).add(new KeywordAndVariableName($keyword.n, $variableName.n)); else $n = new KeywordMessagePattern(new KeywordAndVariableName($keyword.n, $variableName.n));} )+ 
 	;
 
 temporaries	 returns [Temporaries n]
 	:	{$n = new Temporaries();}
-		'|' variableName* {$n.add(new Temporary($variableName.n));} '|'
+		'|' ( variableName {$n.add(new Temporary($variableName.n));} )* '|'
 	;
 
 statements
@@ -139,20 +139,20 @@ symbol
 	:	 identifier | binarySelector | keyword
 	;
 
-unarySelector 
-	:	NAME
+unarySelector returns [UnarySelector n] 
+	:	NAME {$n = new UnarySelector($NAME.text, $NAME.line);}
 	;
 
-binarySelector 
-	:	BINARY_SYMBOL
+binarySelector returns [BinarySelector n]
+	:	BINARY_SYMBOL {$n = new BinarySelector($BINARY_SYMBOL.text, $BINARY_SYMBOL.line);}
 	;
 
 variableName returns [VariableName n]
 	:	NAME {$n = new VariableName($NAME.text, $NAME.line);}
 	;
 
-keyword 
-	:	KEYWORD
+keyword returns [Keyword n]
+	:	KEYWORD {$n = new Keyword($KEYWORD.text, $KEYWORD.line);}
 	;
 
 identifier 

@@ -20,13 +20,15 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class ClassMethod extends AbstractMethod {
+public abstract class AbstractMethod implements Method {
 
-	public ClassMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
-		super(messagePattern, temporaries, statements);
-	}
+	protected final MessagePattern messagePattern;
+	protected final Temporaries temporaries;
+	protected final Statements statements;
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+	public AbstractMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
+		this.messagePattern = messagePattern;
+		this.temporaries = temporaries;
+		this.statements = statements;
 	}
 }

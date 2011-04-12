@@ -20,13 +20,15 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class ClassMethod extends AbstractMethod {
+public class UnarySelectorMessagePattern implements MessagePattern {
 
-	public ClassMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
-		super(messagePattern, temporaries, statements);
+	private final UnarySelector unarySelector;
+
+	public UnarySelectorMessagePattern(UnarySelector unarySelector) {
+		this.unarySelector = unarySelector;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+		visitor.visit(this, unarySelector.value, unarySelector.line);
 	}
 }
