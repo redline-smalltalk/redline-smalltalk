@@ -33,16 +33,15 @@ options {
 }
 
 program returns [Program n] 
-	:	temporaries? statements methods {$n = new Program($temporaries.n, $statements.n, $methods.n);}
+	:	temporaries? statements methods {$n = new Program($temporaries.n, null, null);}
 	;
 
-methods	returns [Methods n]
-	:	{$n = new Methods();}
-		( method {$n.add($method.n);} )*
+methods
+	:	method*
 	;
 	
-method returns [Method n]
-	: 	('\t-' | '\t+') messagePattern temporaries? statements
+method
+	: 	('def' | 'cdef') messagePattern temporaries? statements
 	;
 
 messagePattern
@@ -51,23 +50,22 @@ messagePattern
 	|	(keyword variableName)+
 	;
 
-temporaries returns [Temporaries n]
+temporaries	 returns [Temporaries n]
 	:	{$n = new Temporaries();}
-		'|' ( variableName {$n.add(new Temporary($variableName.n));} )* '|'
+		'|' variableName* {$n.add(new Temporary($variableName.n));} '|'
 	;
 
-statements returns [Statements n]
-	: 	( nonEmptyStatements {$n = $nonEmptyStatements.n;} )?
+statements
+	: 	nonEmptyStatements?
 	;
 
-nonEmptyStatements returns [Statements n]
-	:   {$n = new Statements();}
-	    '^' expression {$n.add(new AnswerExpression($expression.n));} '.'?
-	|	expression {$n.add($expression.n);} ( '.' statements {$n.add($statements.n);} )?
+nonEmptyStatements
+	:	'^' expression '.'?
+	|	expression ( '.' statements )?
 	;
 
-expression returns [Expression n]
-	:   variableName (':=' | '_') expression
+expression
+	:	variableName (':=' | '_') expression
 	|	simpleExpression
 	;
 
@@ -180,3 +178,4 @@ BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|','
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
 WHITESPACE: (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
+
