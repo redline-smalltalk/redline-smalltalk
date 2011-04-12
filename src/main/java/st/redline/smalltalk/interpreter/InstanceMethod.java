@@ -20,11 +20,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class MethodFactory {
-	public static Method create(String instance, String cls, Temporaries temporaries, Statements statements) {
-		if (instance != null)
-			return new InstanceMethod();
-		else
-			return new ClassMethod();
+public class InstanceMethod implements Method {
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
 	}
 }

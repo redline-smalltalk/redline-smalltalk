@@ -8,4 +8,6 @@ public interface NodeVisitor {
 	void visit(Statements statements);
 	void visit(AnswerExpression answerExpression);
 	void visit(Methods methods);
+	void visit(InstanceMethod instanceMethod);
+	void visit(ClassMethod classMethod);
 }

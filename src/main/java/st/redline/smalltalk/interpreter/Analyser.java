@@ -66,4 +66,10 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Methods methods) {
 	}
+
+	public void visit(InstanceMethod instanceMethod) {
+	}
+
+	public void visit(ClassMethod classMethod) {
+	}
 }

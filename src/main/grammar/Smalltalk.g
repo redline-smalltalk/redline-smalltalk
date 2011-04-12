@@ -33,15 +33,16 @@ options {
 }
 
 program returns [Program n] 
-	:	temporaries? statements methods {$n = new Program($temporaries.n, null, null);}
+	:	temporaries? statements methods {$n = new Program($temporaries.n, null, $methods.n);}
 	;
 
-methods
-	:	method*
+methods returns [Methods n]
+	:	{$n = new Methods();}
+		method* {$n.add($method.n);}
 	;
 	
-method
-	: 	('def' | 'cdef') messagePattern temporaries? statements
+method returns [Method n]
+	: 	(i = 'def' | c = 'cdef') messagePattern temporaries? statements {$n = MethodFactory.create($i.text, $c.text, null, null);}
 	;
 
 messagePattern
