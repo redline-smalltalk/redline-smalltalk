@@ -67,15 +67,18 @@ nonEmptyStatements returns [Statements n]
 
 expression returns [Expression n]
 	:	variableName (':=' | '_') e = expression {$n = new AssignmentExpression($variableName.n, $e.n);}
-	|	simpleExpression
+	|	simpleExpression {$n = $simpleExpression.n;}
 	;
 
-simpleExpression
-	:	primary (messageExpression (';' messageElement)*)?
+simpleExpression returns [SimpleExpression n]
+	:	{$n = new SimpleExpression();}
+		primary (messageExpression (';' messageElement)*)?
 	;
 
 messageElement
-	:	unarySelector | binarySelector unaryObjectDescription | (keyword binaryObjectDescription)+
+	:	unarySelector 
+	|	binarySelector unaryObjectDescription 
+	|	( keyword binaryObjectDescription )+
 	;
 
 messageExpression

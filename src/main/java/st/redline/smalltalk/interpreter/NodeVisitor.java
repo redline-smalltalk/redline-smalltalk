@@ -1,5 +1,7 @@
 package st.redline.smalltalk.interpreter;
 
+import java.util.List;
+
 public interface NodeVisitor {
 	void visit(Program program);
 	void visit(Temporaries temporaries);
@@ -12,9 +14,10 @@ public interface NodeVisitor {
 	void visit(ClassMethod classMethod);
 	void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line);
 	void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine);
-	void visit(KeywordMessagePattern keywordMessagePattern);
+	void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames);
 	void visit(UnarySelector unarySelector, String value, int line);
 	void visit(BinarySelector binarySelector, String value, int line);
 	void visit(Keyword keyword, String value, int line);
 	void visit(AssignmentExpression assignmentExpression);
+	void visit(SimpleExpression simpleExpression);
 }

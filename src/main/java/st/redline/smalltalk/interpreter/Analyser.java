@@ -79,7 +79,7 @@ public class Analyser implements NodeVisitor {
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine) {
 	}
 
-	public void visit(KeywordMessagePattern keywordMessagePattern) {
+	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
 	}
 
 	public void visit(UnarySelector unarySelector, String value, int line) {
@@ -92,5 +92,8 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(AssignmentExpression assignmentExpression) {
+	}
+
+	public void visit(SimpleExpression simpleExpression) {
 	}
 }

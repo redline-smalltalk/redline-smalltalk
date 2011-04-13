@@ -25,18 +25,23 @@ import java.util.List;
 
 public class KeywordMessagePattern implements MessagePattern {
 
-	private final List<KeywordAndVariableName> keywordAndVariableNames;
+	private final List<VariableName> variableNames;
+	private final StringBuffer keywords;
+	private final int line;
 
 	public KeywordMessagePattern(KeywordAndVariableName keywordAndVariableName) {
-		keywordAndVariableNames = new ArrayList<KeywordAndVariableName>();
+		variableNames = new ArrayList<VariableName>();
+		keywords = new StringBuffer();
+		line = keywordAndVariableName.keyword.line;
 		add(keywordAndVariableName);
 	}
 
 	public void add(KeywordAndVariableName keywordAndVariableName) {
-		keywordAndVariableNames.add(keywordAndVariableName);
+		keywords.append(keywordAndVariableName.keyword.value);
+		variableNames.add(keywordAndVariableName.variableName);
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+		visitor.visit(this, keywords.toString(), line, variableNames);
 	}
 }
