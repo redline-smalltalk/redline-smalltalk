@@ -61,12 +61,12 @@ statements returns [Statements n]
 	;
 
 nonEmptyStatements returns [Statements n]
-	:	'^' expression {$n = new Statements(null);} '.'?
+	:	'^' expression {$n = new Statements(new AnswerExpression($expression.n));} '.'?
 	|	expression ( '.' statements )? {$n = new Statements($expression.n, $statements.n);}
 	;
 
 expression returns [Expression n]
-	:	variableName (':=' | '_') expression
+	:	variableName (':=' | '_') e = expression {$n = new AssignmentExpression($variableName.n, $e.n);}
 	|	simpleExpression
 	;
 

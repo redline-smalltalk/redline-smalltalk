@@ -90,4 +90,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Keyword keyword, String value, int line) {
 	}
+
+	public void visit(AssignmentExpression assignmentExpression) {
+	}
 }

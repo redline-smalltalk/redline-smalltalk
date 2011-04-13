@@ -16,4 +16,5 @@ public interface NodeVisitor {
 	void visit(UnarySelector unarySelector, String value, int line);
 	void visit(BinarySelector binarySelector, String value, int line);
 	void visit(Keyword keyword, String value, int line);
+	void visit(AssignmentExpression assignmentExpression);
 }
