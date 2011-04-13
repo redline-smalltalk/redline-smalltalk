@@ -72,7 +72,7 @@ expression returns [Expression n]
 
 simpleExpression returns [SimpleExpression n]
 	:	{$n = new SimpleExpression();}
-		primary (messageExpression (';' messageElement)*)?
+		primary ( messageExpression ( ';' messageElement )* )?
 	;
 
 messageElement
