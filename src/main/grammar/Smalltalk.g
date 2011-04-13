@@ -62,10 +62,10 @@ statements returns [Statements n]
 
 nonEmptyStatements returns [Statements n]
 	:	'^' expression {$n = new Statements(null);} '.'?
-	|	expression ( '.' statements )?
+	|	expression ( '.' statements )? {$n = new Statements($expression.n, $statements.n);}
 	;
 
-expression
+expression returns [Expression n]
 	:	variableName (':=' | '_') expression
 	|	simpleExpression
 	;

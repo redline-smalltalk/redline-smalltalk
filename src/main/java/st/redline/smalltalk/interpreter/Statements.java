@@ -32,6 +32,12 @@ public class Statements implements VisitableNode {
 		add(expression);
 	}
 
+	public Statements(Expression expression, Statements statements) {
+		expressions = new ArrayList<Expression>();
+		add(expression);
+		System.out.println("TODO - Handle this case.");
+	}
+
 	public void add(Expression expression) {
 		expressions.add(expression);
 	}
