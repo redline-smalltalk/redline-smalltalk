@@ -37,11 +37,11 @@ public class StatementsTest {
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		statements = new Statements();
+		statements = new Statements(expression);
 	}
 
-	@Test public void shouldBeEmptyWhenCreated() {
-		assertTrue(statements.isEmpty());
+	@Test public void shouldNotBeEmptyWhenCreated() {
+		assertFalse(statements.isEmpty());
 	}
 
 	@Test public void shouldAddExpressions() {
@@ -50,7 +50,6 @@ public class StatementsTest {
 	}
 
 	@Test public void shouldVisitEachExpression() {
-		statements.add(expression);
 		statements.accept(visitor);
 		verify(visitor).visit(statements);
 		verify(expression).accept(visitor);

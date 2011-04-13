@@ -27,8 +27,9 @@ public class Statements implements VisitableNode {
 
 	private final List<Expression> expressions;
 
-	public Statements() {
+	public Statements(Expression expression) {
 		expressions = new ArrayList<Expression>();
+		add(expression);
 	}
 
 	public void add(Expression expression) {

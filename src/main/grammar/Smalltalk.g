@@ -33,7 +33,7 @@ options {
 }
 
 program returns [Program n] 
-	:	temporaries? statements methods {$n = new Program($temporaries.n, null, $methods.n);}
+	:	temporaries? statements methods {$n = new Program($temporaries.n, $statements.n, $methods.n);}
 	;
 
 methods returns [Methods n]
@@ -42,7 +42,7 @@ methods returns [Methods n]
 	;
 	
 method returns [Method n]
-	: 	(i = 'def' | c = 'cdef') messagePattern temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, null);}
+	: 	(i = 'def' | c = 'cdef') messagePattern temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, $statements.n);}
 	;
 
 messagePattern returns [MessagePattern n]
@@ -56,12 +56,12 @@ temporaries	 returns [Temporaries n]
 		'|' ( variableName {$n.add(new Temporary($variableName.n));} )* '|'
 	;
 
-statements
-	: 	nonEmptyStatements?
+statements returns [Statements n]
+	: 	( nonEmptyStatements {$n = $nonEmptyStatements.n;} )?
 	;
 
-nonEmptyStatements
-	:	'^' expression '.'?
+nonEmptyStatements returns [Statements n]
+	:	'^' expression {$n = new Statements(null);} '.'?
 	|	expression ( '.' statements )?
 	;
 
