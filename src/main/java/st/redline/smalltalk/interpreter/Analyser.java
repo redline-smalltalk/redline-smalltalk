@@ -96,4 +96,19 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(SimpleExpression simpleExpression) {
 	}
+
+	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
+	}
+
+	public void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription) {
+	}
+
+	public void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions) {
+	}
+
+	public void visit(UnaryObjectDescription unaryObjectDescription) {
+	}
+
+	public void visit(BinaryObjectDescription binaryObjectDescription) {
+	}
 }

@@ -23,29 +23,25 @@ package st.redline.smalltalk.interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleExpression implements Expression {
+public class KeywordMessageElement implements MessageElement {
 
-	private Primary primary;
-	private MessageExpression messageExpression;
-	private final List<MessageElement> messageElements;
+	private final StringBuffer keywords;
+	private final int line;
+	private final List<BinaryObjectDescription> binaryObjectDescriptions;
 
-	public SimpleExpression() {
-		messageElements = new ArrayList<MessageElement>();
+	public KeywordMessageElement(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
+		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
+		keywords = new StringBuffer();
+		line = keyword.line;
+		add(keyword, binaryObjectDescription);
 	}
 
-	public void add(Primary primary) {
-		this.primary = primary;
-	}
-
-	public void add(MessageExpression messageExpression) {
-		this.messageExpression = messageExpression;
-	}
-
-	public void add(MessageElement messageElement) {
-		messageElements.add(messageElement);
+	public void add(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
+		keywords.append(keyword.value);
+		binaryObjectDescriptions.add(binaryObjectDescription);
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+		visitor.visit(this, keywords.toString(), line, binaryObjectDescriptions);
 	}
 }

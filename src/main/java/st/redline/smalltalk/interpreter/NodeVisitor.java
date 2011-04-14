@@ -20,4 +20,9 @@ public interface NodeVisitor {
 	void visit(Keyword keyword, String value, int line);
 	void visit(AssignmentExpression assignmentExpression);
 	void visit(SimpleExpression simpleExpression);
+	void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line);
+	void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription);
+	void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions);
+	void visit(UnaryObjectDescription unaryObjectDescription);
+	void visit(BinaryObjectDescription binaryObjectDescription);
 }

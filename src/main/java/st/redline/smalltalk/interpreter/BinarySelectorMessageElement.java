@@ -20,32 +20,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
+public class BinarySelectorMessageElement implements MessageElement {
 
-public class SimpleExpression implements Expression {
+	private final BinarySelector binarySelector;
+	private final UnaryObjectDescription unaryObjectDescription;
 
-	private Primary primary;
-	private MessageExpression messageExpression;
-	private final List<MessageElement> messageElements;
-
-	public SimpleExpression() {
-		messageElements = new ArrayList<MessageElement>();
-	}
-
-	public void add(Primary primary) {
-		this.primary = primary;
-	}
-
-	public void add(MessageExpression messageExpression) {
-		this.messageExpression = messageExpression;
-	}
-
-	public void add(MessageElement messageElement) {
-		messageElements.add(messageElement);
+	public BinarySelectorMessageElement(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
+		this.binarySelector = binarySelector;
+		this.unaryObjectDescription = unaryObjectDescription;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+		visitor.visit(this, binarySelector.value, binarySelector.line, unaryObjectDescription);
 	}
 }

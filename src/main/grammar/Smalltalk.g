@@ -72,16 +72,16 @@ expression returns [Expression n]
 
 simpleExpression returns [SimpleExpression n]
 	:	{$n = new SimpleExpression();}
-		primary ( messageExpression ( ';' messageElement )* )?
+		primary {$n.add($primary.n);} ( messageExpression {$n.add($messageExpression.n);} ( ';' messageElement {$n.add($messageElement.n);} )* )?
 	;
 
-messageElement
-	:	unarySelector 
-	|	binarySelector unaryObjectDescription 
-	|	( keyword binaryObjectDescription )+
+messageElement returns [MessageElement n]
+	:	unarySelector {$n = new UnarySelectorMessageElement($unarySelector.n);}
+	|	binarySelector unaryObjectDescription {$n = new BinarySelectorMessageElement($binarySelector.n, $unaryObjectDescription.n);}
+	|	( keyword binaryObjectDescription {if ($n != null) ((KeywordMessageElement)$n).add($keyword.n, $binaryObjectDescription.n); else $n = new KeywordMessageElement($keyword.n, $binaryObjectDescription.n);} )+
 	;
 
-messageExpression
+messageExpression returns [MessageExpression n]
 	:	unaryExpression
 	|	binaryExpression
 	|	keywordExpression
@@ -99,15 +99,15 @@ keywordExpression
 	:	(keyword binaryObjectDescription)+
 	;
 
-unaryObjectDescription
+unaryObjectDescription returns [UnaryObjectDescription n]
 	:	primary unarySelector*
 	;
 
-binaryObjectDescription
+binaryObjectDescription returns [BinaryObjectDescription n]
 	:	primary unarySelector* (binarySelector unaryObjectDescription)*
 	;
 
-primary 	
+primary returns [Primary n]	
 	:	literal
 	|	variableName
 	|	block

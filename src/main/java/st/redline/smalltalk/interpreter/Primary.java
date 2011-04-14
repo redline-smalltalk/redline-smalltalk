@@ -20,32 +20,5 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class SimpleExpression implements Expression {
-
-	private Primary primary;
-	private MessageExpression messageExpression;
-	private final List<MessageElement> messageElements;
-
-	public SimpleExpression() {
-		messageElements = new ArrayList<MessageElement>();
-	}
-
-	public void add(Primary primary) {
-		this.primary = primary;
-	}
-
-	public void add(MessageExpression messageExpression) {
-		this.messageExpression = messageExpression;
-	}
-
-	public void add(MessageElement messageElement) {
-		messageElements.add(messageElement);
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-	}
+public interface Primary extends VisitableNode {
 }
