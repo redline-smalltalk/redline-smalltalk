@@ -120,4 +120,10 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(KeywordExpression keywordExpression) {
 	}
+
+	public void visit(PrimaryExpression primaryExpression) {
+	}
+
+	public void visit(PrimaryStatements primaryStatements) {
+	}
 }

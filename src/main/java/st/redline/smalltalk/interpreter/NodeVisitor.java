@@ -28,4 +28,6 @@ public interface NodeVisitor {
 	void visit(UnaryExpression unaryExpression);
 	void visit(BinaryExpression binaryExpression);
 	void visit(KeywordExpression keywordExpression);
+	void visit(PrimaryExpression primaryExpression);
+	void visit(PrimaryStatements primaryStatements);
 }

@@ -111,14 +111,14 @@ binaryObjectDescription returns [BinaryObjectDescription n]
 	;
 
 primary returns [Primary n]	
-	:	literal
-	|	variableName
+	:	literal {$n = $literal.n;}
+	|	variableName {$n = $variableName.n;}
 	|	block
-	|	'(' expression ')'
-	|	'{' statements '}'
+	|	'(' expression {$n = new PrimaryExpression($expression.n);} ')'
+	|	'{' statements {$n = new PrimaryStatements($statements.n);} '}'
 	;
 
-literal 
+literal returns [Literal n]
 	:	numberConstant
 	|	characterConstant
 	|	stringConstant

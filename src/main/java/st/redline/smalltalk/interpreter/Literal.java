@@ -20,17 +20,5 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class VariableName implements Primary {
-
-	protected final String value;
-	protected final int line;
-
-	public VariableName(String value, int line) {
-		this.value = value;
-		this.line = line;
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, value, line);
-	}
+public interface Literal extends Primary {
 }

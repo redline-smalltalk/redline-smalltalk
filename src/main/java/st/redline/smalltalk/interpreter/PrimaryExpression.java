@@ -20,17 +20,15 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class VariableName implements Primary {
+public class PrimaryExpression implements Primary {
 
-	protected final String value;
-	protected final int line;
+	protected final Expression expression;
 
-	public VariableName(String value, int line) {
-		this.value = value;
-		this.line = line;
+	public PrimaryExpression(Expression expression) {
+		this.expression = expression;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, value, line);
+		visitor.visit(this);
 	}
 }
