@@ -82,20 +82,20 @@ messageElement returns [MessageElement n]
 	;
 
 messageExpression returns [MessageExpression n]
-	:	unaryExpression
-	|	binaryExpression
-	|	keywordExpression
+	:	unaryExpression {$n = $unaryExpression.n;}
+	|	binaryExpression {$n = $binaryExpression.n;}
+	|	keywordExpression {$n = $keywordExpression.n;}
 	;
 
-unaryExpression
+unaryExpression returns [UnaryExpression n]
 	:	unarySelector+ (binaryExpression | keywordExpression)?
 	;
 
-binaryExpression
+binaryExpression returns [BinaryExpression n]
 	:	(binarySelector unaryObjectDescription)+ keywordExpression?
 	;
 
-keywordExpression
+keywordExpression returns [KeywordExpression n]
 	:	(keyword binaryObjectDescription)+
 	;
 
