@@ -20,9 +20,27 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinaryObjectDescription implements VisitableNode {
 
-	public BinaryObjectDescription() {
+	private final Primary primary;
+	private final List<UnarySelector> unarySelectors;
+	private final List<BinarySelectorUnaryObjectDescription> binarySelectorUnaryObjectDescriptions;
+
+	public BinaryObjectDescription(Primary primary) {
+		this.primary = primary;
+		this.unarySelectors = new ArrayList<UnarySelector>();
+		this.binarySelectorUnaryObjectDescriptions = new ArrayList<BinarySelectorUnaryObjectDescription>();
+	}
+
+	public void add(UnarySelector unarySelector) {
+		unarySelectors.add(unarySelector);
+	}
+
+	public void add(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
+		binarySelectorUnaryObjectDescriptions.add(new BinarySelectorUnaryObjectDescription(binarySelector, unaryObjectDescription));
 	}
 
 	public void accept(NodeVisitor visitor) {

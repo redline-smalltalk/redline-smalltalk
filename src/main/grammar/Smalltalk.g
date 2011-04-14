@@ -88,23 +88,26 @@ messageExpression returns [MessageExpression n]
 	;
 
 unaryExpression returns [UnaryExpression n]
-	:	unarySelector+ (binaryExpression | keywordExpression)?
+	:	{$n = new UnaryExpression();}
+	    ( unarySelector {$n.add($unarySelector.n);} )+ (binaryExpression {$n.add($binaryExpression.n);} | keywordExpression {$n.add($keywordExpression.n);})?
 	;
 
 binaryExpression returns [BinaryExpression n]
-	:	(binarySelector unaryObjectDescription)+ keywordExpression?
+	:	{$n = new BinaryExpression();}
+	    ( binarySelector unaryObjectDescription {$n.add($binarySelector.n, $unaryObjectDescription.n);} )+ (keywordExpression {$n.add($keywordExpression.n);})?
 	;
 
 keywordExpression returns [KeywordExpression n]
-	:	(keyword binaryObjectDescription)+
+	:	{$n = new KeywordExpression();}
+	    ( keyword binaryObjectDescription {$n.add($keyword.n, $binaryObjectDescription.n);} )+
 	;
 
 unaryObjectDescription returns [UnaryObjectDescription n]
-	:	primary unarySelector*
+	:	primary {$n = new UnaryObjectDescription($primary.n);} ( unarySelector {$n.add($unarySelector.n);} )*
 	;
 
 binaryObjectDescription returns [BinaryObjectDescription n]
-	:	primary unarySelector* (binarySelector unaryObjectDescription)*
+	:	primary {$n = new BinaryObjectDescription($primary.n);} ( unarySelector {$n.add($unarySelector.n);} )* ( binarySelector unaryObjectDescription {$n.add($binarySelector.n, $unaryObjectDescription.n);} )*
 	;
 
 primary returns [Primary n]	

@@ -111,4 +111,13 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
 	}
+
+	public void visit(UnaryExpression unaryExpression) {
+	}
+
+	public void visit(BinaryExpression binaryExpression) {
+	}
+
+	public void visit(KeywordExpression keywordExpression) {
+	}
 }

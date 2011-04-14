@@ -13,31 +13,20 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
+class BinarySelectorUnaryObjectDescription {
 
-public class UnaryObjectDescription implements VisitableNode {
+	private final BinarySelector binarySelector;
+	private final UnaryObjectDescription unaryObjectDescription;
 
-	private final Primary primary;
-	private final List<UnarySelector> unarySelectors;
-
-	public UnaryObjectDescription(Primary primary) {
-		this.primary = primary;
-		this.unarySelectors = new ArrayList<UnarySelector>();
-	}
-
-	public void add(UnarySelector unarySelector) {
-		unarySelectors.add(unarySelector);
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+	public BinarySelectorUnaryObjectDescription(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
+		this.binarySelector = binarySelector;
+		this.unaryObjectDescription = unaryObjectDescription;
 	}
 }

@@ -20,7 +20,33 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UnaryExpression implements MessageExpression {
-	public void accept(NodeVisitor nodeVisitor) {
+
+	private final List<UnarySelector> unarySelectors;
+	private BinaryExpression binaryExpression;
+	private KeywordExpression keywordExpression;
+
+	public UnaryExpression() {
+		unarySelectors = new ArrayList<UnarySelector>();
+	}
+
+	public void add(UnarySelector unarySelector) {
+		unarySelectors.add(unarySelector);
+	}
+
+	public void add(BinaryExpression binaryExpression) {
+		this.binaryExpression = binaryExpression;
+	}
+
+	public void add(KeywordExpression keywordExpression) {
+		this.keywordExpression = keywordExpression;
+	}
+
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this);
+		// visit binaryExpression or keywordExpression - one will be null.
 	}
 }

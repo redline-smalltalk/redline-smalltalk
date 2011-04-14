@@ -25,4 +25,7 @@ public interface NodeVisitor {
 	void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions);
 	void visit(UnaryObjectDescription unaryObjectDescription);
 	void visit(BinaryObjectDescription binaryObjectDescription);
+	void visit(UnaryExpression unaryExpression);
+	void visit(BinaryExpression binaryExpression);
+	void visit(KeywordExpression keywordExpression);
 }

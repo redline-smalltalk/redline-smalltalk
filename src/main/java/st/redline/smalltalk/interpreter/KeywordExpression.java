@@ -20,7 +20,33 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class KeywordExpression implements MessageExpression {
+
+	private final List<KeywordBinaryObjectDescription> keywordBinaryObjectDescriptions;
+
+	public KeywordExpression() {
+		keywordBinaryObjectDescriptions = new ArrayList<KeywordBinaryObjectDescription>();
+	}
+
+	public void add(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
+		keywordBinaryObjectDescriptions.add(new KeywordBinaryObjectDescription(keyword, binaryObjectDescription));
+	}
+
 	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this);
+	}
+
+	class KeywordBinaryObjectDescription {
+
+		private final Keyword keyword;
+		private final BinaryObjectDescription binaryObjectDescription;
+
+		public KeywordBinaryObjectDescription(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
+			this.keyword = keyword;
+			this.binaryObjectDescription = binaryObjectDescription;
+		}
 	}
 }
