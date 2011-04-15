@@ -20,7 +20,31 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Block implements Primary {
+
+	private final List<VariableName> variableNames;
+	private Temporaries temporaries;
+	private Statements statements;
+
+	public Block() {
+		this.variableNames = new ArrayList<VariableName>();
+	}
+
+	public void add(VariableName variableName) {
+		variableNames.add(variableName);
+	}
+
+	public void add(Temporaries temporaries) {
+		this.temporaries = temporaries;
+	}
+
+	public void add(Statements statements) {
+		this.statements = statements;
+	}
+
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visit(this);
 	}

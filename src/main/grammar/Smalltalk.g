@@ -126,7 +126,8 @@ literal returns [Literal n]
 	;
 
 block returns [Block n]
-	:	'[' ((':' variableName)+ '|')? temporaries? statements ']'
+	:	{$n = new Block();}
+		'[' ((':' variableName {$n.add($variableName.n);})+ '|')? ( temporaries {$n.add($temporaries.n);} )? statements {$n.add($statements.n);} ']'
 	;
 
 array returns [Array n]
