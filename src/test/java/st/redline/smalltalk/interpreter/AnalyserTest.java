@@ -36,14 +36,14 @@ import static org.mockito.Mockito.*;
 
 public class AnalyserTest {
 
-	@Mock Smalltalk smalltalk;
 	@Mock Generator generator;
+	@Mock AnalyserContexts analyserContexts;
 	@Mock Program program;
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		analyser = new Analyser(smalltalk, generator);
+		analyser = new Analyser(generator, analyserContexts);
 	}
 
 	@Test public void should() {

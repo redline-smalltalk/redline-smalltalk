@@ -31,9 +31,13 @@ public class Analyser implements NodeVisitor {
 	private final AnalyserContexts analyserContexts;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
-		this.methodClasses = new ArrayList<byte[]>();
+		this(generator, AnalyserContexts.create(smalltalk, generator));
+	}
+
+	protected Analyser(Generator generator, AnalyserContexts analyserContexts) {
 		generator.initialize();
-		analyserContexts = AnalyserContexts.create(smalltalk, generator);
+		methodClasses = new ArrayList<byte[]>();
+		this.analyserContexts = analyserContexts;
 	}
 
 	public byte[] classResult() {
