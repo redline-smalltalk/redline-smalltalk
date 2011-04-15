@@ -27,19 +27,17 @@ import java.util.*;
 
 public class Analyser implements NodeVisitor {
 
-	private final Smalltalk smalltalk;
-	private final Generator generator;
 	private final List<byte[]> methodClasses;
+	private final AnalyserContexts analyserContexts;
 
-    public Analyser(Smalltalk smalltalk, Generator generator) {
-		this.smalltalk = smalltalk;
-		this.generator = generator;
+	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this.methodClasses = new ArrayList<byte[]>();
 		generator.initialize();
+		analyserContexts = AnalyserContexts.create(smalltalk, generator);
 	}
 
 	public byte[] classResult() {
-		return generator.classBytes();
+		return context().classResult();
 	}
 
 	public List<byte[]> methodClassResults() {
@@ -47,6 +45,11 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Program program) {
+		generator().openClass(sourceFileName(), sourceFileParentPathWithoutSourcePaths());
+	}
+
+	public void visitEnd(Program program) {
+		generator().closeClass();
 	}
 
 	public void visit(Temporaries temporaries) {
@@ -167,5 +170,21 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
+	}
+
+	private AnalyserContexts.AnalyserContext context() {
+		return analyserContexts.current();
+	}
+
+	private Generator generator() {
+		return context().generator();
+	}
+
+	private String sourceFileName() {
+		return context().sourceFileName();
+	}
+
+	private String sourceFileParentPathWithoutSourcePaths() {
+		return context().sourceFileParentPathWithoutSourcePaths();
 	}
 }
