@@ -62,7 +62,7 @@
       <file leaf-file-name="Smalltalk.g" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="129" column="141" selection-start="5565" selection-end="5565" vertical-scroll-proportion="0.7766423">
+            <state line="192" column="0" selection-start="7417" selection-end="7417" vertical-scroll-proportion="0.95620435">
               <folding />
             </state>
           </provider>
@@ -116,8 +116,8 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Array.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/NodeVisitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java" />
-        <option value="$PROJECT_DIR$/src/main/grammar/Smalltalk.g" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Block.java" />
+        <option value="$PROJECT_DIR$/src/main/grammar/Smalltalk.g" />
       </list>
     </option>
   </component>
@@ -856,7 +856,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="141" selection-start="5565" selection-end="5565" vertical-scroll-proportion="0.7766423">
+        <state line="192" column="0" selection-start="7417" selection-end="7417" vertical-scroll-proportion="0.95620435">
           <folding />
         </state>
       </provider>

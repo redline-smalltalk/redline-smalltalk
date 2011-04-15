@@ -42,7 +42,7 @@ methods returns [Methods n]
 	;
 	
 method returns [Method n]
-	: 	(i = 'def' | c = 'cdef') messagePattern temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, $statements.n);}
+	:	(i = 'def' | c = 'cdef') messagePattern temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, $statements.n);}
 	;
 
 messagePattern returns [MessagePattern n]
@@ -57,7 +57,7 @@ temporaries	 returns [Temporaries n]
 	;
 
 statements returns [Statements n]
-	: 	( nonEmptyStatements {$n = $nonEmptyStatements.n;} )?
+	:	( nonEmptyStatements {$n = $nonEmptyStatements.n;} )?
 	;
 
 nonEmptyStatements returns [Statements n]
@@ -89,17 +89,17 @@ messageExpression returns [MessageExpression n]
 
 unaryExpression returns [UnaryExpression n]
 	:	{$n = new UnaryExpression();}
-	    ( unarySelector {$n.add($unarySelector.n);} )+ (binaryExpression {$n.add($binaryExpression.n);} | keywordExpression {$n.add($keywordExpression.n);})?
+		( unarySelector {$n.add($unarySelector.n);} )+ (binaryExpression {$n.add($binaryExpression.n);} | keywordExpression {$n.add($keywordExpression.n);})?
 	;
 
 binaryExpression returns [BinaryExpression n]
 	:	{$n = new BinaryExpression();}
-	    ( binarySelector unaryObjectDescription {$n.add($binarySelector.n, $unaryObjectDescription.n);} )+ (keywordExpression {$n.add($keywordExpression.n);})?
+		( binarySelector unaryObjectDescription {$n.add($binarySelector.n, $unaryObjectDescription.n);} )+ (keywordExpression {$n.add($keywordExpression.n);})?
 	;
 
 keywordExpression returns [KeywordExpression n]
 	:	{$n = new KeywordExpression();}
-	    ( keyword binaryObjectDescription {$n.add($keyword.n, $binaryObjectDescription.n);} )+
+		( keyword binaryObjectDescription {$n.add($keyword.n, $binaryObjectDescription.n);} )+
 	;
 
 unaryObjectDescription returns [UnaryObjectDescription n]
