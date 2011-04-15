@@ -30,4 +30,10 @@ public interface NodeVisitor {
 	void visit(KeywordExpression keywordExpression);
 	void visit(PrimaryExpression primaryExpression);
 	void visit(PrimaryStatements primaryStatements);
+	void visit(Symbol symbol);
+	void visit(Array array);
+	void visit(Identifier identifier, String value, int line);
+	void visit(LiteralSymbol literalSymbol);
+	void visit(LiteralArray literalArray);
+	void visit(ArrayConstantElement arrayConstantElement);
 }

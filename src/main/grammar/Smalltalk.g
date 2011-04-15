@@ -110,7 +110,7 @@ binaryObjectDescription returns [BinaryObjectDescription n]
 	:	primary {$n = new BinaryObjectDescription($primary.n);} ( unarySelector {$n.add($unarySelector.n);} )* ( binarySelector unaryObjectDescription {$n.add($binarySelector.n, $unaryObjectDescription.n);} )*
 	;
 
-primary returns [Primary n]	
+primary returns [Primary n]
 	:	literal {$n = $literal.n;}
 	|	variableName {$n = $variableName.n;}
 	|	block
@@ -122,18 +122,19 @@ literal returns [Literal n]
 	:	numberConstant
 	|	characterConstant
 	|	stringConstant
-	|	'#' ( symbol | array )
+	|	'#' ( symbol {$n = new LiteralSymbol($symbol.n);} | array {$n = new LiteralArray($array.n);} )
 	;
 
 block 
 	:	'[' ((':' variableName)+ '|')? temporaries? statements ']'
 	;
 
-array 
-	:	'(' arrayConstantElement* ')'
+array returns [Array n]
+	:	{$n = new Array();}
+		'(' ( arrayConstantElement {$n.add($arrayConstantElement.n);})* ')'
 	;
 
-arrayConstantElement
+arrayConstantElement returns [ArrayConstantElement n]
  	:	numberConstant
 	|	characterConstant
 	|	stringConstant
@@ -141,8 +142,10 @@ arrayConstantElement
 	|	array
 	;
 
-symbol 
-	:	 identifier | binarySelector | keyword
+symbol returns [Symbol n]
+	:	identifier {$n = new Symbol($identifier.n);}
+	|	binarySelector {$n = new Symbol($binarySelector.n);}
+	|	keyword {$n = new Symbol($keyword.n);}
 	;
 
 unarySelector returns [UnarySelector n] 
@@ -161,8 +164,8 @@ keyword returns [Keyword n]
 	:	KEYWORD {$n = new Keyword($KEYWORD.text, $KEYWORD.line);}
 	;
 
-identifier 
-	:	NAME
+identifier returns [Identifier n]
+	:	NAME {$n = new Identifier($NAME.text, $NAME.line);}
 	;
 
 characterConstant

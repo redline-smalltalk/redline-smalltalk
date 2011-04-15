@@ -126,4 +126,22 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(PrimaryStatements primaryStatements) {
 	}
+
+	public void visit(Symbol symbol) {
+	}
+
+	public void visit(Array array) {
+	}
+
+	public void visit(Identifier identifier, String value, int line) {
+	}
+
+	public void visit(LiteralSymbol literalSymbol) {
+	}
+
+	public void visit(LiteralArray literalArray) {
+	}
+
+	public void visit(ArrayConstantElement arrayConstantElement) {
+	}
 }
