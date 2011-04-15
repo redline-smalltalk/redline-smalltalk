@@ -36,4 +36,12 @@ public interface NodeVisitor {
 	void visit(LiteralSymbol literalSymbol);
 	void visit(LiteralArray literalArray);
 	void visit(ArrayConstantElement arrayConstantElement);
+	void visit(NumberConstant numberConstant);
+	void visit(CharacterConstant characterConstant, String value, int line);
+	void visit(StringConstant stringConstant, String value, int line);
+	void visit(LiteralString literalString, String value, int line);
+	void visit(LiteralCharacter literalCharacter, String value, int line);
+	void visit(NumberConstant numberConstant, String value, int line);
+	void visit(LiteralNumber literalNumber, String value, int line);
+	void visit(Block block);
 }

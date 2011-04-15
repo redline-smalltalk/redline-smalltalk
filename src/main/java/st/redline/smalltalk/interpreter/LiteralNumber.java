@@ -20,22 +20,15 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
+public class LiteralNumber implements Literal {
 
-public class Array implements VisitableNode {
+	private final NumberConstant numberConstant;
 
-	private final List<VisitableNode> visitableNodes;
-
-	public Array() {
-		visitableNodes = new ArrayList<VisitableNode>();
-	}
-
-	public void add(VisitableNode visitableNode) {
-		visitableNodes.add(visitableNode);
+	public LiteralNumber(NumberConstant numberConstant) {
+		this.numberConstant = numberConstant;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+		visitor.visit(this, numberConstant.value, numberConstant.line);
 	}
 }

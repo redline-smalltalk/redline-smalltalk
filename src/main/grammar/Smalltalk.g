@@ -113,19 +113,19 @@ binaryObjectDescription returns [BinaryObjectDescription n]
 primary returns [Primary n]
 	:	literal {$n = $literal.n;}
 	|	variableName {$n = $variableName.n;}
-	|	block
+	|	block {$n = $block.n;}
 	|	'(' expression {$n = new PrimaryExpression($expression.n);} ')'
 	|	'{' statements {$n = new PrimaryStatements($statements.n);} '}'
 	;
 
 literal returns [Literal n]
-	:	numberConstant
-	|	characterConstant
-	|	stringConstant
+	:	numberConstant {$n = new LiteralNumber($numberConstant.n);}
+	|	characterConstant {$n = new LiteralCharacter($characterConstant.n);}
+	|	stringConstant {$n = new LiteralString($stringConstant.n);}
 	|	'#' ( symbol {$n = new LiteralSymbol($symbol.n);} | array {$n = new LiteralArray($array.n);} )
 	;
 
-block 
+block returns [Block n]
 	:	'[' ((':' variableName)+ '|')? temporaries? statements ']'
 	;
 
@@ -134,12 +134,12 @@ array returns [Array n]
 		'(' ( arrayConstantElement {$n.add($arrayConstantElement.n);})* ')'
 	;
 
-arrayConstantElement returns [ArrayConstantElement n]
- 	:	numberConstant
-	|	characterConstant
-	|	stringConstant
-	|	symbol
-	|	array
+arrayConstantElement returns [VisitableNode n]
+ 	:	numberConstant {$n = $numberConstant.n;}
+	|	characterConstant {$n = $characterConstant.n;}
+	|	stringConstant {$n = $stringConstant.n;}
+	|	symbol {$n = $symbol.n;}
+	|	array {$n = $array.n;}
 	;
 
 symbol returns [Symbol n]
@@ -168,16 +168,16 @@ identifier returns [Identifier n]
 	:	NAME {$n = new Identifier($NAME.text, $NAME.line);}
 	;
 
-characterConstant
-	:	CHARACTER
+characterConstant returns [CharacterConstant n]
+	:	CHARACTER {$n = new CharacterConstant($CHARACTER.text, $CHARACTER.line);}
 	;
 
-stringConstant
-	:	STRING_LITERAL
+stringConstant returns [StringConstant n]
+	:	STRING_LITERAL {$n = new StringConstant($STRING_LITERAL.text, $STRING_LITERAL.line);}
 	;
 
-numberConstant 
-	:	DIGITS
+numberConstant returns [NumberConstant n]
+	:	DIGITS {$n = new NumberConstant($DIGITS.text, $DIGITS.line);}
 	;
 
 DIGITS: ('0'..'9')+;

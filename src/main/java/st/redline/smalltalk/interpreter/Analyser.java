@@ -144,4 +144,28 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(ArrayConstantElement arrayConstantElement) {
 	}
+
+	public void visit(NumberConstant numberConstant) {
+	}
+
+	public void visit(CharacterConstant characterConstant, String value, int line) {
+	}
+
+	public void visit(StringConstant stringConstant, String value, int line) {
+	}
+
+	public void visit(LiteralString literalString, String value, int line) {
+	}
+
+	public void visit(LiteralCharacter literalCharacter, String value, int line) {
+	}
+
+	public void visit(NumberConstant numberConstant, String value, int line) {
+	}
+
+	public void visit(LiteralNumber literalNumber, String value, int line) {
+	}
+
+	public void visit(Block block) {
+	}
 }
