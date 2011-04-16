@@ -47,6 +47,11 @@ public class ProgramTest {
 		verify(visitor).visit(program);
 	}
 
+	@Test public void shouldEndVisitation() {
+		program.accept(visitor);
+		verify(visitor).visitEnd(program);
+	}
+
 	@Test public void shouldVisitTemporaries() {
 		program.accept(visitor);
 		verify(temporaries).accept(visitor);
