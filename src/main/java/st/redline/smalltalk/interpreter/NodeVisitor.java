@@ -6,7 +6,8 @@ public interface NodeVisitor {
 	void visit(Program program);
 	void visitEnd(Program program);
 	void visit(Temporaries temporaries);
-	void visit(Temporary temporary, String value, int line);
+	void visitEnd(Temporaries temporaries);
+	void visit(Temporary temporary, int index, String value, int line);
 	void visit(VariableName variableName, String value, int line);
 	void visit(Statements statements);
 	void visit(AnswerExpression answerExpression);

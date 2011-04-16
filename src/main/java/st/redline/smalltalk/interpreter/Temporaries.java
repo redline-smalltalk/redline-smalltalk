@@ -26,6 +26,7 @@ import java.util.List;
 public class Temporaries implements VisitableNode {
 
 	private final List<Temporary> temporaries;
+	private int index = 1;
 
 	public Temporaries() {
 		temporaries = new ArrayList<Temporary>();
@@ -36,6 +37,7 @@ public class Temporaries implements VisitableNode {
 	}
 
 	public void add(Temporary temporary) {
+		temporary.index(index++);
 		temporaries.add(temporary);
 	}
 
@@ -43,5 +45,6 @@ public class Temporaries implements VisitableNode {
 		visitor.visit(this);
 		for (Temporary temporary : temporaries)
 			temporary.accept(visitor);
+		visitor.visitEnd(this);
 	}
 }

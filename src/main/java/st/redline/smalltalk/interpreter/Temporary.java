@@ -23,12 +23,17 @@ package st.redline.smalltalk.interpreter;
 public class Temporary implements VisitableNode {
 
 	private final VariableName variableName;
+	private int index;
 
 	public Temporary(VariableName variableName) {
 		this.variableName = variableName;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, variableName.value, variableName.line);
+		visitor.visit(this, index, variableName.value, variableName.line);
+	}
+
+	public void index(int index) {
+		this.index = index;
 	}
 }

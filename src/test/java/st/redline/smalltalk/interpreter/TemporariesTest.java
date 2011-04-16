@@ -49,10 +49,21 @@ public class TemporariesTest {
 		assertFalse(temporaries.isEmpty());
 	}
 
+	@Test public void shouldIndexEachTemporary() {
+		temporaries.add(temporary);
+		temporaries.add(temporary);
+		verify(temporary).index(2);
+	}
+
 	@Test public void shouldVisitEachTemporary() {
 		temporaries.add(temporary);
 		temporaries.accept(visitor);
 		verify(visitor).visit(temporaries);
 		verify(temporary).accept(visitor);
+	}
+
+	@Test public void shouldEndVisitation() {
+		temporaries.accept(visitor);
+		verify(visitor).visitEnd(temporaries);
 	}
 }

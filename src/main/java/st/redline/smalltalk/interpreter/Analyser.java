@@ -59,7 +59,10 @@ public class Analyser implements NodeVisitor {
 	public void visit(Temporaries temporaries) {
 	}
 
-	public void visit(Temporary temporary, String value, int line) {
+	public void visitEnd(Temporaries temporaries) {
+	}
+
+	public void visit(Temporary temporary, int index, String value, int line) {
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
