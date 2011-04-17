@@ -56,6 +56,9 @@ public class Analyser implements NodeVisitor {
 		generator().closeClass();
 	}
 
+	public void visit(Primitive primitive, String value, int line) {
+	}
+
 	public void visit(Temporaries temporaries) {
 	}
 
@@ -69,6 +72,9 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Statements statements) {
+	}
+
+	public void visitEnd(Statements statements) {
 	}
 
 	public void visit(AnswerExpression answerExpression) {

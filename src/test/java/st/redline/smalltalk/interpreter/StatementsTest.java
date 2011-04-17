@@ -54,4 +54,9 @@ public class StatementsTest {
 		verify(visitor).visit(statements);
 		verify(expression).accept(visitor);
 	}
+
+	@Test public void shouldEndVisitation() {
+		statements.accept(visitor);
+		verify(visitor).visitEnd(statements);
+	}
 }

@@ -42,13 +42,17 @@ methods returns [Methods n]
 	;
 	
 method returns [Method n]
-	:	(i = 'def' | c = 'cdef') messagePattern temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, $statements.n);}
+	:	(i = 'def' | c = 'cdef') messagePattern primitive temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, $statements.n);}
 	;
 
 messagePattern returns [MessagePattern n]
 	:	unarySelector {$n = new UnarySelectorMessagePattern($unarySelector.n);}
 	|	binarySelector variableName {$n = new BinarySelectorMessagePattern($binarySelector.n, $variableName.n);}
 	|	( keyword variableName {if ($n != null) ((KeywordMessagePattern)$n).add(new KeywordAndVariableName($keyword.n, $variableName.n)); else $n = new KeywordMessagePattern(new KeywordAndVariableName($keyword.n, $variableName.n));} )+ 
+	;
+
+primitive returns [Primitive n]
+	:	'<primitive:' DIGITS '>' {$n = new Primitive($DIGITS.text, $DIGITS.line);}
 	;
 
 temporaries	 returns [Temporaries n]

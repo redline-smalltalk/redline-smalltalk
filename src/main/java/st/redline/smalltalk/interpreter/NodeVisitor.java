@@ -10,6 +10,7 @@ public interface NodeVisitor {
 	void visit(Temporary temporary, int index, String value, int line);
 	void visit(VariableName variableName, String value, int line);
 	void visit(Statements statements);
+	void visitEnd(Statements statements);
 	void visit(AnswerExpression answerExpression);
 	void visit(Methods methods);
 	void visit(InstanceMethod instanceMethod);
@@ -32,6 +33,7 @@ public interface NodeVisitor {
 	void visit(KeywordExpression keywordExpression);
 	void visit(PrimaryExpression primaryExpression);
 	void visit(PrimaryStatements primaryStatements);
+	void visit(Primitive primitive, String value, int line);
 	void visit(Symbol symbol);
 	void visit(Array array);
 	void visit(Identifier identifier, String value, int line);
