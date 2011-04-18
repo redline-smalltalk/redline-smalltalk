@@ -169,8 +169,12 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(BinaryExpression)");
 	}
 
-	public void visit(KeywordExpression keywordExpression) {
-		System.out.println("visit(KeywordExpression)");
+	public void visit(KeywordExpression keywordExpression, String keywords, int line) {
+		System.out.println("visit(KeywordExpression) " + keywords);
+	}
+
+	public void visitEnd(KeywordExpression keywordExpression, String keywords, int line) {
+		System.out.println("visitEnd(KeywordExpression) " + keywords);
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {

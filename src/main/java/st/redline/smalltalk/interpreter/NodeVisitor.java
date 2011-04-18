@@ -31,7 +31,8 @@ public interface NodeVisitor {
 	void visit(BinaryObjectDescription binaryObjectDescription);
 	void visit(UnaryExpression unaryExpression);
 	void visit(BinaryExpression binaryExpression);
-	void visit(KeywordExpression keywordExpression);
+	void visit(KeywordExpression keywordExpression, String keywords, int line);
+	void visitEnd(KeywordExpression keywordExpression, String keywords, int line);
 	void visit(PrimaryExpression primaryExpression);
 	void visit(PrimaryStatements primaryStatements);
 	void visit(Primitive primitive, String value, int line);

@@ -25,28 +25,27 @@ import java.util.List;
 
 public class KeywordExpression implements MessageExpression {
 
-	private final List<KeywordBinaryObjectDescription> keywordBinaryObjectDescriptions;
+	private final List<BinaryObjectDescription> binaryObjectDescriptions;
+	private final StringBuffer keywords;
+	private int line = -1;
 
 	public KeywordExpression() {
-		keywordBinaryObjectDescriptions = new ArrayList<KeywordBinaryObjectDescription>();
+		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
+		keywords = new StringBuffer();
 	}
 
 	public void add(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
-		keywordBinaryObjectDescriptions.add(new KeywordBinaryObjectDescription(keyword, binaryObjectDescription));
+		if (line == -1)
+			line = keyword.line;
+		keywords.append(keyword.value);
+		binaryObjectDescriptions.add(binaryObjectDescription);
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this);
-	}
-
-	class KeywordBinaryObjectDescription {
-
-		private final Keyword keyword;
-		private final BinaryObjectDescription binaryObjectDescription;
-
-		public KeywordBinaryObjectDescription(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
-			this.keyword = keyword;
-			this.binaryObjectDescription = binaryObjectDescription;
-		}
+		String keywords = this.keywords.toString();
+		nodeVisitor.visit(this, keywords, line);
+		for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
+			binaryObjectDescription.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this, keywords, line);
 	}
 }
