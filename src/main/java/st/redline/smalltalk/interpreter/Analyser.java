@@ -57,21 +57,27 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Primitive primitive, String value, int line) {
+		System.out.println("visit(Primitive)");
 	}
 
 	public void visit(Temporaries temporaries) {
+		System.out.println("visit(Temporaries)");
 	}
 
 	public void visitEnd(Temporaries temporaries) {
+		System.out.println("visitEnd(Temporaries)");
 	}
 
 	public void visit(Temporary temporary, int index, String value, int line) {
+		System.out.println("visit(Temporary) " + value);
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
+		System.out.println("visit(VariableName) " + value);
 	}
 
 	public void visit(Statements statements) {
+		System.out.println("visit(Statements)");
 	}
 
 	public void visitEnd(Statements statements) {
@@ -79,111 +85,147 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(AnswerExpression answerExpression) {
+		System.out.println("visit(AnswerExpression)");
 	}
 
 	public void visit(Methods methods) {
+		System.out.println("visit(Methods)");
 	}
 
 	public void visit(InstanceMethod instanceMethod) {
+		System.out.println("visit(InstanceMethod)");
 	}
 
 	public void visit(ClassMethod classMethod) {
+		System.out.println("visit(ClassMethod)");
 	}
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
+		System.out.println("visit(UnarySelectorMessagePattern) " + value);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine) {
+		System.out.println("visit(BinarySelectorMessagePattern) " + binarySelector + " " + variableName);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
+		System.out.println("visit(KeywordMessagePattern) " + keywords);
 	}
 
 	public void visit(UnarySelector unarySelector, String value, int line) {
+		System.out.println("visit(UnarySelector) " + value);
 	}
 
 	public void visit(BinarySelector binarySelector, String value, int line) {
+		System.out.println("visit(BinarySelector) " + value);
 	}
 
 	public void visit(Keyword keyword, String value, int line) {
+		System.out.println("visit(Keyword) " + value);
 	}
 
 	public void visit(AssignmentExpression assignmentExpression) {
+		System.out.println("visit(ArgumentExpression)");
 	}
 
 	public void visit(SimpleExpression simpleExpression) {
+		System.out.println("visit(SimpleExpression)");
 	}
 
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
+		System.out.println("visit(UnarySelectorMessageElement) " + value);
 	}
 
 	public void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription) {
+		System.out.println("visit(BinarySelectorElement) " + value);
 	}
 
 	public void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions) {
+		System.out.println("visit(KeywordMessageElement) " + keyword);
 	}
 
 	public void visit(UnaryObjectDescription unaryObjectDescription) {
+		System.out.println("visit(UnaryObjectDescription)");
 	}
 
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
+		System.out.println("visit(BinaryObjectDescription)");
 	}
 
 	public void visit(UnaryExpression unaryExpression) {
+		System.out.println("visit(UnaryExpression)");
 	}
 
 	public void visit(BinaryExpression binaryExpression) {
+		System.out.println("visit(BinaryExpression)");
 	}
 
 	public void visit(KeywordExpression keywordExpression) {
+		System.out.println("visit(KeywordExpression)");
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
+		System.out.println("visit(PrimaryExpression)");
 	}
 
 	public void visit(PrimaryStatements primaryStatements) {
+		System.out.println("visit(PrimaryStatements)");
 	}
 
 	public void visit(Symbol symbol) {
+		System.out.println("visit(Symbol)");
 	}
 
 	public void visit(Array array) {
+		System.out.println("visit(Array)");
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
+		System.out.println("visit(Identifier) " + value);
 	}
 
 	public void visit(LiteralSymbol literalSymbol) {
+		System.out.println("visit(LiteralSymbol)");
 	}
 
 	public void visit(LiteralArray literalArray) {
+		System.out.println("visit(LiteralArray)");
 	}
 
 	public void visit(ArrayConstantElement arrayConstantElement) {
+		System.out.println("visit(ArrayConstantElement)");
 	}
 
 	public void visit(NumberConstant numberConstant) {
+		System.out.println("visit(NumberConstant)");
 	}
 
 	public void visit(CharacterConstant characterConstant, String value, int line) {
+		System.out.println("visit(CharacterConstant) " + value);
 	}
 
 	public void visit(StringConstant stringConstant, String value, int line) {
+		System.out.println("visit(StringConstant) " + value);
 	}
 
 	public void visit(LiteralString literalString, String value, int line) {
+		System.out.println("visit(LiteralString) " + value);
 	}
 
 	public void visit(LiteralCharacter literalCharacter, String value, int line) {
+		System.out.println("visit(LiteralCharacter) " + value);
 	}
 
 	public void visit(NumberConstant numberConstant, String value, int line) {
+		System.out.println("visit(NumberConstant) " + value);
 	}
 
 	public void visit(LiteralNumber literalNumber, String value, int line) {
+		System.out.println("visit(LiteralNumber) " + value);
 	}
 
 	public void visit(Block block) {
+		System.out.println("visit(block)");
 	}
 
 	private AnalyserContexts.AnalyserContext context() {

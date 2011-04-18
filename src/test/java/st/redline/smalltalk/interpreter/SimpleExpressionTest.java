@@ -39,10 +39,10 @@ public class SimpleExpressionTest {
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		simpleExpression = new SimpleExpression();
+		simpleExpression.add(primary);
 	}
 
 	@Test public void shouldVisitPrimary() {
-		simpleExpression.add(primary);
 		simpleExpression.accept(visitor);
 		verify(primary).accept(visitor);
 	}
