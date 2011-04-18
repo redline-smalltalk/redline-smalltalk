@@ -47,5 +47,10 @@ public class SimpleExpression implements Expression {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		primary.accept(visitor);
+		if (messageExpression != null)
+			messageExpression.accept(visitor);
+		for (MessageElement messageElement : messageElements)
+			messageElement.accept(visitor);
 	}
 }

@@ -24,6 +24,7 @@ public class VariableName implements Primary {
 
 	protected final String value;
 	protected final int line;
+	protected int index;
 
 	public VariableName(String value, int line) {
 		this.value = value;
@@ -32,5 +33,9 @@ public class VariableName implements Primary {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, value, line);
+	}
+
+	public void index(int index) {
+		this.index = index;
 	}
 }

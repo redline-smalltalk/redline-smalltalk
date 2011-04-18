@@ -28,6 +28,7 @@ public class KeywordMessagePattern implements MessagePattern {
 	private final List<VariableName> variableNames;
 	private final StringBuffer keywords;
 	private final int line;
+	private int index = 1;
 
 	public KeywordMessagePattern(KeywordAndVariableName keywordAndVariableName) {
 		variableNames = new ArrayList<VariableName>();
@@ -38,6 +39,7 @@ public class KeywordMessagePattern implements MessagePattern {
 
 	public void add(KeywordAndVariableName keywordAndVariableName) {
 		keywords.append(keywordAndVariableName.keyword.value);
+		keywordAndVariableName.variableName.index(index++);
 		variableNames.add(keywordAndVariableName.variableName);
 	}
 

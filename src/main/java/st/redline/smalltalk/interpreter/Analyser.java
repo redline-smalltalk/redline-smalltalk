@@ -75,6 +75,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visitEnd(Statements statements) {
+		generator().stackPop();
 	}
 
 	public void visit(AnswerExpression answerExpression) {

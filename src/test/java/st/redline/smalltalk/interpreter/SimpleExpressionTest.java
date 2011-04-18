@@ -25,36 +25,37 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.verify;
 
-public class AnalyserTest {
+public class SimpleExpressionTest {
 
-	@Mock Generator generator;
-	@Mock AnalyserContexts.AnalyserContext analyserContext;
-	@Mock AnalyserContexts analyserContexts;
-	@Mock Program program;
-	@Mock Statements statements;
-	private Analyser analyser;
+	@Mock NodeVisitor visitor;
+	@Mock Primary primary;
+	@Mock MessageExpression messageExpression;
+	@Mock MessageElement messageElement;
+	private SimpleExpression simpleExpression;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(analyserContexts.current()).thenReturn(analyserContext);
-		when(analyserContext.generator()).thenReturn(generator);
-		analyser = new Analyser(generator, analyserContexts);
+		simpleExpression = new SimpleExpression();
 	}
 
-	@Test public void shouldOpenClassWhenVisitingProgram() {
-		analyser.visit(program);
-		verify(generator).openClass((String) any(), (String) any());
+	@Test public void shouldVisitPrimary() {
+		simpleExpression.add(primary);
+		simpleExpression.accept(visitor);
+		verify(primary).accept(visitor);
 	}
 
-	@Test public void shouldCloseClassWhenEndProgram() {
-		analyser.visitEnd(program);
-		verify(generator).closeClass();
+	@Test public void shouldVisitMessageExpression() {
+		simpleExpression.add(messageExpression);
+		simpleExpression.accept(visitor);
+		verify(messageExpression).accept(visitor);
 	}
 
-	@Test public void shouldPopStackWhenEndStatements() {
-		analyser.visitEnd(statements);
-		verify(generator).stackPop();
+	@Test public void shouldVisitMessageElements() {
+		simpleExpression.add(messageElement);
+		simpleExpression.accept(visitor);
+		verify(messageElement).accept(visitor);
 	}
 }
