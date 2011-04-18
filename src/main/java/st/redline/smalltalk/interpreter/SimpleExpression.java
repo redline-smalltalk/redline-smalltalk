@@ -52,5 +52,6 @@ public class SimpleExpression implements Expression {
 			messageExpression.accept(visitor);
 		for (MessageElement messageElement : messageElements)
 			messageElement.accept(visitor);
+		visitor.visitEnd(this);
 	}
 }

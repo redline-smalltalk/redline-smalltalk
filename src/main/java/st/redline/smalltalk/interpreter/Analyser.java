@@ -74,6 +74,10 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(VariableName variableName, String value, int line) {
 		System.out.println("visit(VariableName) " + value);
+		if (variableName.isClassReference())
+			generator().classLookup(value, line);
+		else
+			throw new RuntimeException("TODO - variableName");
 	}
 
 	public void visit(Statements statements) {
@@ -81,6 +85,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visitEnd(Statements statements) {
+		System.out.println("visitEnd(Statements)");
 		generator().stackPop();
 	}
 
@@ -130,6 +135,10 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(SimpleExpression simpleExpression) {
 		System.out.println("visit(SimpleExpression)");
+	}
+
+	public void visitEnd(SimpleExpression simpleExpression) {
+		System.out.println("visitEnd(SimpleExpression)");
 	}
 
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {

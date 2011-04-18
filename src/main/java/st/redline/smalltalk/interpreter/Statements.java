@@ -20,40 +20,27 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Statements implements VisitableNode {
 
-	private final List<Expression> expressions;
+	private final Expression expression;
+	private final Statements statements;
 
 	public Statements(Expression expression) {
-		expressions = new ArrayList<Expression>();
-		add(expression);
+		this.expression = expression;
+		this.statements = null;
 	}
 
 	public Statements(Expression expression, Statements statements) {
-		expressions = new ArrayList<Expression>();
-		add(expression);
-		System.out.println("TODO - Handle this case.");
-	}
-
-	public void add(Expression expression) {
-		expressions.add(expression);
-	}
-
-	public void add(Statements statements) {
-		throw new IllegalStateException("TODO - handle add of statements.");
+		this.expression = expression;
+		this.statements = statements;
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
-		for (Expression expression : expressions)
-			expression.accept(visitor);
+		expression.accept(visitor);
 		visitor.visitEnd(this);
-	}
-
-	public boolean isEmpty() {
-		return expressions.isEmpty();
+		if (statements != null) {
+			statements.accept(visitor);
+		}
 	}
 }

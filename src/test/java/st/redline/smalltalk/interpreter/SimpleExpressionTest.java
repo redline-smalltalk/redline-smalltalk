@@ -58,4 +58,9 @@ public class SimpleExpressionTest {
 		simpleExpression.accept(visitor);
 		verify(messageElement).accept(visitor);
 	}
+
+	@Test public void shouldEndVisitation() {
+		simpleExpression.accept(visitor);
+		verify(visitor).visitEnd(simpleExpression);
+	}
 }

@@ -29,32 +29,34 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
-public class StatementsTest {
+public class VariableNameTest {
 
 	@Mock NodeVisitor visitor;
-	@Mock Expression expression;
-	@Mock Statements followingStatements;
-	private Statements statements;
+	private VariableName variableName;
+	private VariableName className;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		statements = new Statements(expression, followingStatements);
+		variableName = new VariableName("var", 10);
+		className = new VariableName("Object", 10);
 	}
 
-	@Test public void shouldVisitExpression() {
-		statements.accept(visitor);
-		verify(visitor).visit(statements);
-		verify(expression).accept(visitor);
+	@Test public void shouldVisitVariableName() {
+		variableName.accept(visitor);
+		verify(visitor).visit(variableName, "var", 10);
 	}
 
-	@Test public void shouldVisitFollowingStatements() {
-		statements.accept(visitor);
-		verify(visitor).visit(statements);
-		verify(followingStatements).accept(visitor);
+	@Test public void shouldBeOnLoadSideOfExpressionWhenCreated() {
+		assertTrue(variableName.isOnLoadSideOfExpression());
 	}
 
-	@Test public void shouldEndVisitation() {
-		statements.accept(visitor);
-		verify(visitor).visitEnd(statements);
+	@Test public void shouldBeOnStoreSideOfExpressionWhenIndicated() {
+		variableName.onStoreSideOfExpression();
+		assertFalse(variableName.isOnLoadSideOfExpression());
+	}
+
+	@Test public void shouldKnowWhenClassReference() {
+		assertFalse(variableName.isClassReference());
+		assertTrue(className.isClassReference());
 	}
 }

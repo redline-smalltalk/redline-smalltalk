@@ -34,6 +34,7 @@ public class AnalyserTest {
 	@Mock AnalyserContexts analyserContexts;
 	@Mock Program program;
 	@Mock Statements statements;
+	@Mock VariableName className;
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
@@ -56,5 +57,11 @@ public class AnalyserTest {
 	@Test public void shouldPopStackWhenEndStatements() {
 		analyser.visitEnd(statements);
 		verify(generator).stackPop();
+	}
+
+	@Test public void shouldLookupClassWhenVariableNameIsClassReference() {
+		when(className.isClassReference()).thenReturn(true);
+		analyser.visit(className, "Object", 10);
+		verify(generator).classLookup("Object", 10);
 	}
 }

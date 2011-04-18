@@ -25,10 +25,12 @@ public class VariableName implements Primary {
 	protected final String value;
 	protected final int line;
 	protected int index;
+	private boolean onLoadSideOfExpression;
 
 	public VariableName(String value, int line) {
 		this.value = value;
 		this.line = line;
+		onLoadSideOfExpression = true;
 	}
 
 	public void accept(NodeVisitor visitor) {
@@ -37,5 +39,21 @@ public class VariableName implements Primary {
 
 	public void index(int index) {
 		this.index = index;
+	}
+
+	public boolean isClassReference() {
+		return isFirstCharacterUppercase();
+	}
+
+	public void onStoreSideOfExpression() {
+		onLoadSideOfExpression = false;
+	}
+
+	private boolean isFirstCharacterUppercase() {
+		return java.lang.Character.isUpperCase(value.charAt(0));
+	}
+
+	public boolean isOnLoadSideOfExpression() {
+		return onLoadSideOfExpression;
 	}
 }
