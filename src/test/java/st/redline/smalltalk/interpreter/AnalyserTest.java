@@ -33,6 +33,7 @@ public class AnalyserTest {
 	@Mock AnalyserContexts.AnalyserContext analyserContext;
 	@Mock AnalyserContexts analyserContexts;
 	@Mock Program program;
+	@Mock SimpleExpression simpleExpression;
 	@Mock Statements statements;
 	@Mock VariableName className;
 	private Analyser analyser;
@@ -54,8 +55,9 @@ public class AnalyserTest {
 		verify(generator).closeClass();
 	}
 
-	@Test public void shouldPopStackWhenEndStatements() {
-		analyser.visitEnd(statements);
+	@Test public void shouldPopStackWhenEndSimpleExpressionAndResultShouldNotBeLeftOnStack() {
+		when(simpleExpression.leaveResultOnStack()).thenReturn(false);
+		analyser.visitEnd(simpleExpression);
 		verify(generator).stackPop();
 	}
 

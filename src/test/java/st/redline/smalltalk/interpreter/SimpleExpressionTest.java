@@ -42,6 +42,10 @@ public class SimpleExpressionTest {
 		simpleExpression.add(primary);
 	}
 
+	@Test public void shouldDefaultToNotLeavingResultOnStack() {
+		assertFalse(simpleExpression.leaveResultOnStack());
+	}
+
 	@Test public void shouldVisitPrimary() {
 		simpleExpression.accept(visitor);
 		verify(primary).accept(visitor);

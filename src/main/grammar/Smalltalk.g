@@ -42,7 +42,7 @@ methods returns [Methods n]
 	;
 	
 method returns [Method n]
-	:	(i = 'def' | c = 'cdef') messagePattern primitive temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, $statements.n);}
+	:	(i = 'def' | c = 'cdef') messagePattern primitive? temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $temporaries.n, $statements.n);}
 	;
 
 messagePattern returns [MessagePattern n]

@@ -86,7 +86,6 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(Statements statements) {
 		System.out.println("visitEnd(Statements)");
-		generator().stackPop();
 	}
 
 	public void visit(AnswerExpression answerExpression) {
@@ -139,6 +138,8 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(SimpleExpression simpleExpression) {
 		System.out.println("visitEnd(SimpleExpression)");
+		if (!simpleExpression.leaveResultOnStack())
+			generator().stackPop();
 	}
 
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
