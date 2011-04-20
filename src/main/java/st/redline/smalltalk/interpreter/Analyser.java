@@ -96,12 +96,24 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(Methods)");
 	}
 
+	public void visitEnd(Methods methods) {
+		System.out.println("visitEnd(Methods)");
+	}
+
 	public void visit(InstanceMethod instanceMethod) {
 		System.out.println("visit(InstanceMethod)");
 	}
 
+	public void visitEnd(InstanceMethod instanceMethod) {
+		System.out.println("visitEnd(InstanceMethod)");
+	}
+
 	public void visit(ClassMethod classMethod) {
 		System.out.println("visit(ClassMethod)");
+	}
+
+	public void visitEnd(ClassMethod classMethod) {
+		System.out.println("visitEnd(ClassMethod)");
 	}
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {

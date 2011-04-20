@@ -28,5 +28,7 @@ public class InstanceMethod extends AbstractMethod {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		super.accept(visitor);
+		visitor.visitEnd(this);
 	}
 }

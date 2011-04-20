@@ -33,4 +33,14 @@ public abstract class AbstractMethod implements Method {
 		this.temporaries = temporaries;
 		this.statements = statements;
 	}
+
+	public void accept(NodeVisitor visitor) {
+		messagePattern.accept(visitor);
+		if (primitive != null)
+			primitive.accept(visitor);
+		if (temporaries != null)
+			temporaries.accept(visitor);
+		if (statements != null)
+			statements.accept(visitor);
+	}
 }

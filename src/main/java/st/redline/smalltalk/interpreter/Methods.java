@@ -43,5 +43,6 @@ public class Methods implements VisitableNode {
 		visitor.visit(this);
 		for (Method method : methods)
 			method.accept(visitor);
+		visitor.visitEnd(this);
 	}
 }

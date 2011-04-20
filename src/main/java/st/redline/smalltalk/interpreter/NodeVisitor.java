@@ -13,8 +13,11 @@ public interface NodeVisitor {
 	void visitEnd(Statements statements);
 	void visit(AnswerExpression answerExpression);
 	void visit(Methods methods);
+	void visitEnd(Methods methods);
 	void visit(InstanceMethod instanceMethod);
+	void visitEnd(InstanceMethod instanceMethod);
 	void visit(ClassMethod classMethod);
+	void visitEnd(ClassMethod classMethod);
 	void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line);
 	void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine);
 	void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames);

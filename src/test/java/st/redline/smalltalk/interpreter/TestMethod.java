@@ -25,39 +25,41 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
-public class MethodsTest {
+public abstract class TestMethod {
 
 	@Mock NodeVisitor visitor;
-	@Mock Method method;
-	private Methods methods;
+	@Mock MessagePattern messagePattern;
+	@Mock Primitive primitive;
+	@Mock Temporaries temporaries;
+	@Mock Statements statements;
+	protected Method method;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		methods = new Methods();
+		initialiseClassUnderTest();
 	}
 
-	@Test public void shouldBeEmptyWhenCreated() {
-		assertTrue(methods.isEmpty());
+	protected abstract void initialiseClassUnderTest();
+
+	@Test public void shouldVisitMessagePattern() {
+		method.accept(visitor);
+		verify(messagePattern).accept(visitor);
 	}
 
-	@Test public void shouldAddMethods() {
-		methods.add(method);
-		assertFalse(methods.isEmpty());
+	@Test public void shouldVisitPrimitive() {
+		method.accept(visitor);
+		verify(primitive).accept(visitor);
 	}
 
-	@Test public void shouldVisitEachMethod() {
-		methods.add(method);
-		methods.accept(visitor);
-		verify(visitor).visit(methods);
-		verify(method).accept(visitor);
+	@Test public void shouldVisitTemporaries() {
+		method.accept(visitor);
+		verify(temporaries).accept(visitor);
 	}
 
-	@Test public void shouldEndVisitation() {
-		methods.accept(visitor);
-		verify(visitor).visitEnd(methods);
+	@Test public void shouldVisitStatements() {
+		method.accept(visitor);
+		verify(statements).accept(visitor);
 	}
 }
