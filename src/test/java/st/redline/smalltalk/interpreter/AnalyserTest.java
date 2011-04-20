@@ -34,7 +34,11 @@ public class AnalyserTest {
 	@Mock AnalyserContexts analyserContexts;
 	@Mock Program program;
 	@Mock Statements statements;
+	@Mock LiteralSymbol literalSymbol;
+	@Mock LiteralString literalString;
 	@Mock VariableName className;
+	@Mock KeywordExpression keywordExpression;
+	@Mock SimpleExpression simpleExpression;
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
@@ -54,8 +58,9 @@ public class AnalyserTest {
 		verify(generator).closeClass();
 	}
 
-	@Test public void shouldPopStackWhenEndStatements() {
-		analyser.visitEnd(statements);
+	@Test public void shouldPopStackWhenEndSimpleExpressionAndPopRequired() {
+		when(simpleExpression.leaveResultOnStack()).thenReturn(false);
+		analyser.visitEnd(simpleExpression);
 		verify(generator).stackPop();
 	}
 
@@ -63,5 +68,20 @@ public class AnalyserTest {
 		when(className.isClassReference()).thenReturn(true);
 		analyser.visit(className, "Object", 10);
 		verify(generator).classLookup("Object", 10);
+	}
+
+	@Test public void shouldConvertPrimitiveSymbols() {
+		analyser.visit(literalSymbol, "Object", 10);
+		verify(generator).primitiveSymbolConversion("Object", 10);
+	}
+
+	@Test public void shouldConvertPrimitiveStrings() {
+		analyser.visit(literalString, "'Object'", 10);
+		verify(generator).primitiveStringConversion("'Object'", 10);
+	}
+
+	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {
+		analyser.visitEnd(keywordExpression, "at:", 1, 10);
+		verify(generator).keywordSend("at:", 1, 10);
 	}
 }

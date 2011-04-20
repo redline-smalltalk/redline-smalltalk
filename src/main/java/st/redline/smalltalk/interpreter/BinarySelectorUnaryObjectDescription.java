@@ -20,7 +20,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-class BinarySelectorUnaryObjectDescription {
+class BinarySelectorUnaryObjectDescription implements VisitableNode {
 
 	private final BinarySelector binarySelector;
 	private final UnaryObjectDescription unaryObjectDescription;
@@ -28,5 +28,10 @@ class BinarySelectorUnaryObjectDescription {
 	public BinarySelectorUnaryObjectDescription(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
 		this.binarySelector = binarySelector;
 		this.unaryObjectDescription = unaryObjectDescription;
+	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(binarySelector, binarySelector.value, binarySelector.line);
+		unaryObjectDescription.accept(nodeVisitor);
 	}
 }

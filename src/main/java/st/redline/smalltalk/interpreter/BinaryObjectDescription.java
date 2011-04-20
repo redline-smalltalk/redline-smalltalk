@@ -40,10 +40,19 @@ public class BinaryObjectDescription implements VisitableNode {
 	}
 
 	public void add(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
-		binarySelectorUnaryObjectDescriptions.add(new BinarySelectorUnaryObjectDescription(binarySelector, unaryObjectDescription));
+		add(new BinarySelectorUnaryObjectDescription(binarySelector, unaryObjectDescription));
+	}
+
+	protected void add(BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription) {
+		binarySelectorUnaryObjectDescriptions.add(binarySelectorUnaryObjectDescription);
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		primary.accept(visitor);
+		for (UnarySelector unarySelector : unarySelectors)
+			unarySelector.accept(visitor);
+		for (BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription : binarySelectorUnaryObjectDescriptions)
+			binarySelectorUnaryObjectDescription.accept(visitor);
 	}
 }

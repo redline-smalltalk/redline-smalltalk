@@ -43,9 +43,9 @@ public class KeywordExpression implements MessageExpression {
 
 	public void accept(NodeVisitor nodeVisitor) {
 		String keywords = this.keywords.toString();
-		nodeVisitor.visit(this, keywords, line);
+		nodeVisitor.visit(this, keywords, binaryObjectDescriptions.size(), line);
 		for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
 			binaryObjectDescription.accept(nodeVisitor);
-		nodeVisitor.visitEnd(this, keywords, line);
+		nodeVisitor.visitEnd(this, keywords, binaryObjectDescriptions.size(), line);
 	}
 }

@@ -22,13 +22,15 @@ package st.redline.smalltalk.interpreter;
 
 public class LiteralString implements Literal {
 
-	private final StringConstant stringConstant;
+	public final String value;
+	public final int line;
 
 	public LiteralString(StringConstant stringConstant) {
-		this.stringConstant = stringConstant;
+		value = stringConstant.value;
+		line = stringConstant.line;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, stringConstant.value, stringConstant.line);
+		visitor.visit(this, value, line);
 	}
 }

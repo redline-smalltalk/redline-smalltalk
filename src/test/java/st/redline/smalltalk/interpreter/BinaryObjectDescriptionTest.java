@@ -26,30 +26,39 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-public class KeywordExpressionTest {
+public class BinaryObjectDescriptionTest {
 
 	@Mock NodeVisitor visitor;
-	@Mock BinaryObjectDescription binaryObjectDescription;
-	private Keyword keyword;
-	private KeywordExpression keywordExpression;
+	@Mock Primary primary;
+	@Mock UnarySelector unarySelector;
+	@Mock BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription;
+	private BinaryObjectDescription binaryObjectDescription;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		keyword = new Keyword("at:", 10);
-		keywordExpression = new KeywordExpression();
-		keywordExpression.add(keyword, binaryObjectDescription);
+		binaryObjectDescription = new BinaryObjectDescription(primary);
 	}
 
-	@Test public void shouldVisitKeywordExpression() {
-		keywordExpression.accept(visitor);
-		verify(visitor).visit(keywordExpression, "at:", 1, 10);
-		verify(binaryObjectDescription).accept(visitor);
+	@Test public void shouldVisitBinaryObjectExpression() {
+		binaryObjectDescription.accept(visitor);
+		verify(visitor).visit(binaryObjectDescription);
 	}
 
-	@Test public void shouldEndVisitation() {
-		keywordExpression.accept(visitor);
-		verify(visitor).visitEnd(keywordExpression, "at:", 1, 10);
+	@Test public void shouldVisitPrimary() {
+		binaryObjectDescription.accept(visitor);
+		verify(primary).accept(visitor);
+	}
+
+	@Test public void shouldVisitUnarySelectors() {
+		binaryObjectDescription.add(unarySelector);
+		binaryObjectDescription.accept(visitor);
+		verify(unarySelector).accept(visitor);
+	}
+
+	@Test public void shouldVisitBinarySelectorUnaryObjectDescriptions() {
+		binaryObjectDescription.add(binarySelectorUnaryObjectDescription);
+		binaryObjectDescription.accept(visitor);
+		verify(binarySelectorUnaryObjectDescription).accept(visitor);
 	}
 }

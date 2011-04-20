@@ -22,13 +22,15 @@ package st.redline.smalltalk.interpreter;
 
 public class LiteralSymbol implements Literal {
 
-	public final Symbol symbol;
+	public final String value;
+	public final int line;
 
 	public LiteralSymbol(Symbol symbol) {
-		this.symbol = symbol;
+		value = symbol.value;
+		line = symbol.line;
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+		visitor.visit(this, value, line);
 	}
 }

@@ -86,7 +86,6 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(Statements statements) {
 		System.out.println("visitEnd(Statements)");
-		generator().stackPop();
 	}
 
 	public void visit(AnswerExpression answerExpression) {
@@ -139,6 +138,8 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(SimpleExpression simpleExpression) {
 		System.out.println("visitEnd(SimpleExpression)");
+		if (!simpleExpression.leaveResultOnStack())
+			generator().stackPop();
 	}
 
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
@@ -169,12 +170,13 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(BinaryExpression)");
 	}
 
-	public void visit(KeywordExpression keywordExpression, String keywords, int line) {
+	public void visit(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visit(KeywordExpression) " + keywords);
 	}
 
-	public void visitEnd(KeywordExpression keywordExpression, String keywords, int line) {
+	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visitEnd(KeywordExpression) " + keywords);
+		generator().keywordSend(keywords, argumentCount, line);
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
@@ -185,8 +187,8 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(PrimaryStatements)");
 	}
 
-	public void visit(Symbol symbol) {
-		System.out.println("visit(Symbol)");
+	public void visit(Symbol symbol, String value, int line) {
+		System.out.println("visit(Symbol) " + value);
 	}
 
 	public void visit(Array array) {
@@ -197,8 +199,9 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(Identifier) " + value);
 	}
 
-	public void visit(LiteralSymbol literalSymbol) {
-		System.out.println("visit(LiteralSymbol)");
+	public void visit(LiteralSymbol literalSymbol, String value, int line) {
+		System.out.println("visit(LiteralSymbol) " + literalSymbol.value);
+		generator().primitiveSymbolConversion(value, line);
 	}
 
 	public void visit(LiteralArray literalArray) {
@@ -223,6 +226,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(LiteralString literalString, String value, int line) {
 		System.out.println("visit(LiteralString) " + value);
+		generator().primitiveStringConversion(value, line);
 	}
 
 	public void visit(LiteralCharacter literalCharacter, String value, int line) {

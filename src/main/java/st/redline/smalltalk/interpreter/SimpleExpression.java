@@ -28,9 +28,15 @@ public class SimpleExpression implements Expression {
 	private Primary primary;
 	private MessageExpression messageExpression;
 	private final List<MessageElement> messageElements;
+	private boolean resultLeftOnStack;
 
 	public SimpleExpression() {
 		messageElements = new ArrayList<MessageElement>();
+		resultLeftOnStack = false;
+	}
+
+	public boolean leaveResultOnStack() {
+		return resultLeftOnStack;
 	}
 
 	public void add(Primary primary) {
