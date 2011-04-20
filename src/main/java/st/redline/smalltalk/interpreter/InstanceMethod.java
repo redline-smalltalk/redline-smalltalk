@@ -22,8 +22,8 @@ package st.redline.smalltalk.interpreter;
 
 public class InstanceMethod extends AbstractMethod {
 
-	public InstanceMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
-		super(messagePattern, temporaries, statements);
+	public InstanceMethod(MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
+		super(messagePattern, primitive, temporaries, statements);
 	}
 
 	public void accept(NodeVisitor visitor) {

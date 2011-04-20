@@ -21,10 +21,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk.interpreter;
 
 public class MethodFactory {
-	public static Method create(String instance, String cls, MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
+	public static Method create(String instance, String cls, MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
 		if (instance != null)
-			return new InstanceMethod(messagePattern, temporaries, statements);
+			return new InstanceMethod(messagePattern, primitive, temporaries, statements);
 		else
-			return new ClassMethod(messagePattern, temporaries, statements);
+			return new ClassMethod(messagePattern, primitive, temporaries, statements);
 	}
 }

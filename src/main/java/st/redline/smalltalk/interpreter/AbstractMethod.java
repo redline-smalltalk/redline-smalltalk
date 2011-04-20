@@ -23,11 +23,13 @@ package st.redline.smalltalk.interpreter;
 public abstract class AbstractMethod implements Method {
 
 	protected final MessagePattern messagePattern;
+	protected final Primitive primitive;
 	protected final Temporaries temporaries;
 	protected final Statements statements;
 
-	public AbstractMethod(MessagePattern messagePattern, Temporaries temporaries, Statements statements) {
+	public AbstractMethod(MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
 		this.messagePattern = messagePattern;
+		this.primitive = primitive;
 		this.temporaries = temporaries;
 		this.statements = statements;
 	}
