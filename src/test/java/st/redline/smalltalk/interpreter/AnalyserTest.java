@@ -58,7 +58,7 @@ public class AnalyserTest {
 		verify(generator).closeClass();
 	}
 
-	@Test public void shouldPopStackWhenEndSimpleExpressionAndPopRequired() {
+	@Test public void shouldPopStackWhenEndSimpleExpressionAndResultShouldNotBeLeftOnStack() {
 		when(simpleExpression.leaveResultOnStack()).thenReturn(false);
 		analyser.visitEnd(simpleExpression);
 		verify(generator).stackPop();
