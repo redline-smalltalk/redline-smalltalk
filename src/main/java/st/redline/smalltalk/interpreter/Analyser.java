@@ -145,6 +145,15 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine) {
 		System.out.println("visit(BinarySelectorMessagePattern) " + binarySelector + " " + variableName);
+		AnalyserContexts.AnalyserContext context = context();
+		String sourceFileName = context.sourceFileName();
+		String methodClassName = sourceFileName + CLASS_NAME_SEPARATOR + binarySelector;
+		context.methodClassName(methodClassName);
+		context.methodSelector(binarySelector);
+		context.methodArgumentCount(1);
+		Generator generator = generator();
+		generator.openMethodClass(methodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethod(1);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {

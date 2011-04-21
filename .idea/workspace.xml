@@ -62,7 +62,7 @@
       <file leaf-file-name="AnalyserTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="0" selection-start="2989" selection-end="3109" vertical-scroll-proportion="0.0">
+            <state line="85" column="10" selection-start="3580" selection-end="3580" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -80,7 +80,7 @@
       <file leaf-file-name="Analyser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="141" column="42" selection-start="4803" selection-end="4803" vertical-scroll-proportion="0.33722627">
+            <state line="155" column="30" selection-start="5648" selection-end="5648" vertical-scroll-proportion="0.6437956">
               <folding />
             </state>
           </provider>
@@ -98,7 +98,7 @@
       <file leaf-file-name="NodeVisitor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/NodeVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="22" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0">
+            <state line="21" column="164" selection-start="824" selection-end="984" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -852,13 +852,6 @@
         <state line="33" column="0" selection-start="1423" selection-end="1543" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/NodeVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="22" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="298" column="0" selection-start="16081" selection-end="16081" vertical-scroll-proportion="0.0">
@@ -873,16 +866,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/NodeVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="164" selection-start="824" selection-end="984" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="0" selection-start="2989" selection-end="3109" vertical-scroll-proportion="0.0">
+        <state line="85" column="10" selection-start="3580" selection-end="3580" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="141" column="42" selection-start="4803" selection-end="4803" vertical-scroll-proportion="0.33722627">
+        <state line="155" column="30" selection-start="5648" selection-end="5648" vertical-scroll-proportion="0.6437956">
           <folding />
         </state>
       </provider>

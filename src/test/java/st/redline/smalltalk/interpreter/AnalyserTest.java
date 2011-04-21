@@ -42,6 +42,7 @@ public class AnalyserTest {
 	@Mock KeywordExpression keywordExpression;
 	@Mock SimpleExpression simpleExpression;
 	@Mock UnarySelectorMessagePattern unarySelectorMessagePattern;
+	@Mock BinarySelectorMessagePattern binarySelectorMessagePattern;
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
@@ -74,6 +75,15 @@ public class AnalyserTest {
 		verify(analyserContext).methodArgumentCount(0);
 		verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
 		verify(generator).openMethod(0);
+	}
+
+	@Test public void shouldInitializeMethodItemsWhenVisitBinarySelectorMessagePattern() {
+		analyser.visit(binarySelectorMessagePattern, "+", 10, "arg", 10);
+		verify(analyserContext).methodClassName("SourceFile_+");
+		verify(analyserContext).methodSelector("+");
+		verify(analyserContext).methodArgumentCount(1);
+		verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
+		verify(generator).openMethod(1);
 	}
 
 	@Test public void shouldCloseMethodClassWhenEndInstanceMethod() {
