@@ -23,7 +23,9 @@ package st.redline.smalltalk.interpreter;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 public class AnalyserContexts {
@@ -43,10 +45,6 @@ public class AnalyserContexts {
 		return analyserContexts.peek();
 	}
 
-	public byte[] classResult() {
-		return current().classResult();
-	}
-
 	private void push(AnalyserContext analyserContext) {
 		analyserContexts.push(analyserContext);
 	}
@@ -55,6 +53,12 @@ public class AnalyserContexts {
 
 		private final Smalltalk smalltalk;
 		private final Generator generator;
+
+		private String methodClassName;
+		private String methodSelector;
+		private int methodArgumentCount;
+		private int methodTemporariesCount;
+		private Map<String, Object> methodVariableAndTemporaryRegistry = new HashMap<String, Object>();
 
 		public AnalyserContext(Smalltalk smalltalk, Generator generator) {
 			this.smalltalk = smalltalk;
@@ -67,6 +71,14 @@ public class AnalyserContexts {
 
 		public Generator generator() {
 			return generator;
+		}
+
+		public String methodClassName() {
+			return methodClassName;
+		}
+
+		public String methodSelector() {
+			return methodSelector;
 		}
 
 		public String sourceFileName() {
@@ -90,6 +102,12 @@ public class AnalyserContexts {
 					return parentPath.substring(path.length() + 1);
 			}
 			return parentPath;
+		}
+
+		public void initializePerMethodItems() {
+			methodArgumentCount = 0;
+			methodTemporariesCount = 0;
+			methodVariableAndTemporaryRegistry = new HashMap<String, Object>();
 		}
 	}
 }

@@ -33,6 +33,8 @@ public class AnalyserTest {
 	@Mock AnalyserContexts.AnalyserContext analyserContext;
 	@Mock AnalyserContexts analyserContexts;
 	@Mock Program program;
+	@Mock InstanceMethod instanceMethod;
+	@Mock ClassMethod classMethod;
 	@Mock Statements statements;
 	@Mock LiteralSymbol literalSymbol;
 	@Mock LiteralString literalString;
@@ -56,6 +58,32 @@ public class AnalyserTest {
 	@Test public void shouldCloseClassWhenEndProgram() {
 		analyser.visitEnd(program);
 		verify(generator).closeClass();
+	}
+
+	@Test public void shouldInitializePerMethodItemsWhenVisitInstanceMethod() {
+		analyser.visit(instanceMethod);
+		verify(analyserContext).initializePerMethodItems();
+	}
+
+	@Test public void shouldCloseMethodClassWhenEndInstanceMethod() {
+		analyser.visitEnd(instanceMethod);
+		verify(generator).closeMethod();
+		verify(generator).closeMethodClass();
+		verify(generator).classBytes();
+		verify(generator).instanceMethodBinding((String) any(), (String) any(), (String) any());
+	}
+
+	@Test public void shouldInitializePerMethodItemsWhenVisitClassMethod() {
+		analyser.visit(classMethod);
+		verify(analyserContext).initializePerMethodItems();
+	}
+
+	@Test public void shouldCloseMethodClassWhenEndClassMethod() {
+		analyser.visitEnd(classMethod);
+		verify(generator).closeMethod();
+		verify(generator).closeMethodClass();
+		verify(generator).classBytes();
+		verify(generator).classMethodBinding((String) any(), (String) any(), (String) any());
 	}
 
 	@Test public void shouldPopStackWhenEndSimpleExpressionAndResultShouldNotBeLeftOnStack() {

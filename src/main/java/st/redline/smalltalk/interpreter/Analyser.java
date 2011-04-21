@@ -102,18 +102,30 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(InstanceMethod instanceMethod) {
 		System.out.println("visit(InstanceMethod)");
+		context().initializePerMethodItems();
 	}
 
 	public void visitEnd(InstanceMethod instanceMethod) {
 		System.out.println("visitEnd(InstanceMethod)");
+		Generator generator = generator();
+		generator.closeMethod();
+		generator.closeMethodClass();
+		methodClasses.add(generator.classBytes());
+		generator.instanceMethodBinding(sourceFileName(), methodSelector(), methodClassName());
 	}
 
 	public void visit(ClassMethod classMethod) {
 		System.out.println("visit(ClassMethod)");
+		context().initializePerMethodItems();
 	}
 
 	public void visitEnd(ClassMethod classMethod) {
 		System.out.println("visitEnd(ClassMethod)");
+		Generator generator = generator();
+		generator.closeMethod();
+		generator.closeMethodClass();
+		methodClasses.add(generator.classBytes());
+		generator.classMethodBinding(sourceFileName(), methodSelector(), methodClassName());
 	}
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
@@ -267,6 +279,14 @@ public class Analyser implements NodeVisitor {
 
 	private String sourceFileName() {
 		return context().sourceFileName();
+	}
+
+	private String methodSelector() {
+		return context().methodSelector();
+	}
+
+	private String methodClassName() {
+		return context().methodClassName();
 	}
 
 	private String sourceFileParentPathWithoutSourcePaths() {

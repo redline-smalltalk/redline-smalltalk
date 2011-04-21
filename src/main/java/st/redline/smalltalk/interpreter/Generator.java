@@ -286,6 +286,14 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitVarInsn(ALOAD, 0);
 	}
 
+	public void classMethodBinding(String className, String methodName, String methodClassName) {
+		methodBinding(className, methodName, methodClassName, true);
+	}
+
+	public void instanceMethodBinding(String className, String methodName, String methodClassName) {
+		methodBinding(className, methodName, methodClassName, false);
+	}
+
 	public void methodBinding(String className, String methodName, String methodClassName, boolean isClassMethod) {
 		current.methodVisitor.visitLdcInsn(className);
 		current.methodVisitor.visitLdcInsn(methodName);
