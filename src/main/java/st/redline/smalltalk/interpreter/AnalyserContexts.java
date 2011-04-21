@@ -109,5 +109,17 @@ public class AnalyserContexts {
 			methodTemporariesCount = 0;
 			methodVariableAndTemporaryRegistry = new HashMap<String, Object>();
 		}
+
+		public void methodArgumentCount(int methodArgumentCount) {
+			this.methodArgumentCount = methodArgumentCount;
+		}
+
+		public void methodClassName(String methodClassName) {
+			this.methodClassName = methodClassName;
+		}
+
+		public void methodSelector(String methodSelector) {
+			this.methodSelector = methodSelector;
+		}
 	}
 }

@@ -41,12 +41,14 @@ public class AnalyserTest {
 	@Mock VariableName className;
 	@Mock KeywordExpression keywordExpression;
 	@Mock SimpleExpression simpleExpression;
+	@Mock UnarySelectorMessagePattern unarySelectorMessagePattern;
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(analyserContexts.current()).thenReturn(analyserContext);
 		when(analyserContext.generator()).thenReturn(generator);
+		when(analyserContext.sourceFileName()).thenReturn("SourceFile");
 		analyser = new Analyser(generator, analyserContexts);
 	}
 
@@ -63,6 +65,15 @@ public class AnalyserTest {
 	@Test public void shouldInitializePerMethodItemsWhenVisitInstanceMethod() {
 		analyser.visit(instanceMethod);
 		verify(analyserContext).initializePerMethodItems();
+	}
+
+	@Test public void shouldInitializeMethodItemsWhenVisitUnarySelectorMessagePattern() {
+		analyser.visit(unarySelectorMessagePattern, "yourself", 10);
+		verify(analyserContext).methodClassName("SourceFile_yourself");
+		verify(analyserContext).methodSelector("yourself");
+		verify(analyserContext).methodArgumentCount(0);
+		verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
+		verify(generator).openMethod(0);
 	}
 
 	@Test public void shouldCloseMethodClassWhenEndInstanceMethod() {

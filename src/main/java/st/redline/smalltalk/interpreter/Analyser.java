@@ -27,6 +27,8 @@ import java.util.*;
 
 public class Analyser implements NodeVisitor {
 
+	private static final String CLASS_NAME_SEPARATOR = "_";
+
 	private final List<byte[]> methodClasses;
 	private final AnalyserContexts analyserContexts;
 
@@ -130,6 +132,15 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
 		System.out.println("visit(UnarySelectorMessagePattern) " + value);
+		AnalyserContexts.AnalyserContext context = context();
+		String sourceFileName = context.sourceFileName();
+		String methodClassName = sourceFileName + CLASS_NAME_SEPARATOR + value;
+		context.methodClassName(methodClassName);
+		context.methodSelector(value);
+		context.methodArgumentCount(0);
+		Generator generator = generator();
+		generator.openMethodClass(methodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethod(0);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine) {
