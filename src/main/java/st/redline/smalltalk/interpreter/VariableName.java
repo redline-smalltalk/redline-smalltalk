@@ -30,7 +30,8 @@ public class VariableName implements Primary {
 	public VariableName(String value, int line) {
 		this.value = value;
 		this.line = line;
-		onLoadSideOfExpression = true;
+		this.onLoadSideOfExpression = true;
+		this.index = 0;
 	}
 
 	public void accept(NodeVisitor visitor) {

@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -58,5 +59,9 @@ public class VariableNameTest {
 	@Test public void shouldKnowWhenClassReference() {
 		assertFalse(variableName.isClassReference());
 		assertTrue(className.isClassReference());
+	}
+
+	@Test public void shouldBeIndexable() {
+		assertEquals(variableName.index, 0);
 	}
 }
