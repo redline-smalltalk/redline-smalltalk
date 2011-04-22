@@ -58,7 +58,7 @@ public class AnalyserContexts {
 		private String methodSelector;
 		private int methodArgumentCount;
 		private int methodTemporariesCount;
-		private Map<String, Object> methodVariableAndTemporaryRegistry = new HashMap<String, Object>();
+		private Map<String, VariableName> methodVariableAndTemporaryRegistry = new HashMap<String, VariableName>();
 
 		public AnalyserContext(Smalltalk smalltalk, Generator generator) {
 			this.smalltalk = smalltalk;
@@ -79,6 +79,10 @@ public class AnalyserContexts {
 
 		public String methodSelector() {
 			return methodSelector;
+		}
+
+		public int methodArgumentCount() {
+			return methodArgumentCount;
 		}
 
 		public String sourceFileName() {
@@ -107,7 +111,11 @@ public class AnalyserContexts {
 		public void initializePerMethodItems() {
 			methodArgumentCount = 0;
 			methodTemporariesCount = 0;
-			methodVariableAndTemporaryRegistry = new HashMap<String, Object>();
+			methodVariableAndTemporaryRegistry = new HashMap<String, VariableName>();
+		}
+
+		public VariableName variableLookup(String variableName) {
+			return methodVariableAndTemporaryRegistry.get(variableName);
 		}
 
 		public void methodArgumentCount(int methodArgumentCount) {

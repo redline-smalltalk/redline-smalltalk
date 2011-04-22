@@ -64,6 +64,9 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Temporaries temporaries) {
 		System.out.println("visit(Temporaries)");
+		temporaries.indexFrom(2 + context().methodArgumentCount());
+		// 0 = this.
+		// 1 = receiver.
 	}
 
 	public void visitEnd(Temporaries temporaries) {
@@ -78,16 +81,15 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(VariableName) " + value);
 		if (variableName.isClassReference())
 			generator().classLookup(value, line);
-		else
-			throw new RuntimeException("TODO - variableName");
-
-//			BasicNode reference = currentMethodVariableAndTemporaryRegistry.get(variable.name());
-//			if (reference == null)
-//				throw new IllegalStateException("Reference of undefined variable '" + variable.name() + "'.");
-//			if (variable.isOnLoadSideOfExpression())
-//				generator.loadFromLocal(reference.index());
-//			else
-//				generator.storeIntoLocal(reference.index());
+		else {
+			VariableName reference = context().variableLookup(value);
+			if (reference == null)
+				throw new IllegalStateException("Reference of undefined variable or temporary '" + value + "'.");
+			if (variableName.isOnLoadSideOfExpression())
+				generator().loadFromLocal(reference.index);
+			else
+				generator().storeIntoLocal(reference.index);
+		}
 	}
 
 	public void visit(Statements statements) {

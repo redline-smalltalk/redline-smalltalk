@@ -48,6 +48,7 @@ public class AnalyserTest {
 	@Mock UnarySelectorMessagePattern unarySelectorMessagePattern;
 	@Mock BinarySelectorMessagePattern binarySelectorMessagePattern;
 	@Mock KeywordMessagePattern keywordMessagePattern;
+	@Mock Temporaries temporaries;
     private List<VariableName> variableNames = new ArrayList<VariableName>();
 	private Analyser analyser;
 
@@ -56,6 +57,7 @@ public class AnalyserTest {
 		when(analyserContexts.current()).thenReturn(analyserContext);
 		when(analyserContext.generator()).thenReturn(generator);
 		when(analyserContext.sourceFileName()).thenReturn("SourceFile");
+		when(analyserContext.variableLookup("Object")).thenReturn(variableName);
         variableNames.add(variableName);
 		analyser = new Analyser(generator, analyserContexts);
 	}
@@ -133,6 +135,23 @@ public class AnalyserTest {
 		when(className.isClassReference()).thenReturn(true);
 		analyser.visit(className, "Object", 10);
 		verify(generator).classLookup("Object", 10);
+	}
+
+	@Test public void shouldIndexTemporariesFromLastMethodArgumentIndex() {
+		when(analyserContext.methodArgumentCount()).thenReturn(2);
+		analyser.visit(temporaries);
+		verify(temporaries).indexFrom(4);
+		// 0 = this
+		// 1 = receiver
+		// 2 = arg 1
+		// 3 = arg 2
+		// 4 = first temporary
+	}
+
+	@Test public void shouldLookupVariableNameDeclarationToGetItsProperIndex() {
+		when(variableName.isClassReference()).thenReturn(false);
+		analyser.visit(variableName, "Object", 10);
+		verify(analyserContext).variableLookup("Object");
 	}
 
 	@Test public void shouldConvertPrimitiveSymbols() {

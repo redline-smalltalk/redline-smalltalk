@@ -51,7 +51,7 @@ public class TemporariesTest {
 
 	@Test public void shouldIndexEachTemporary() {
 		temporaries.add(temporary);
-		temporaries.add(temporary);
+		temporaries.indexFrom(2);
 		verify(temporary).index(2);
 	}
 

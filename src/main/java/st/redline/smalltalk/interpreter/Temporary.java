@@ -20,20 +20,21 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class Temporary implements VisitableNode {
-
-	private final VariableName variableName;
-	private int index;
+public class Temporary extends VariableName {
 
 	public Temporary(VariableName variableName) {
-		this.variableName = variableName;
+		super(variableName.value, variableName.line);
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, index, variableName.value, variableName.line);
+		visitor.visit(this, index, value, line);
 	}
 
 	public void index(int index) {
 		this.index = index;
+	}
+
+	public boolean isClassReference() {
+		return false;
 	}
 }
