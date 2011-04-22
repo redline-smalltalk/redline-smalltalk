@@ -80,6 +80,14 @@ public class Analyser implements NodeVisitor {
 			generator().classLookup(value, line);
 		else
 			throw new RuntimeException("TODO - variableName");
+
+//			BasicNode reference = currentMethodVariableAndTemporaryRegistry.get(variable.name());
+//			if (reference == null)
+//				throw new IllegalStateException("Reference of undefined variable '" + variable.name() + "'.");
+//			if (variable.isOnLoadSideOfExpression())
+//				generator.loadFromLocal(reference.index());
+//			else
+//				generator.storeIntoLocal(reference.index());
 	}
 
 	public void visit(Statements statements) {
