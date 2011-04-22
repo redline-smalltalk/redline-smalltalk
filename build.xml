@@ -72,7 +72,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	<target name="unit-test" description="Unit-Test." depends="compile">
 		<delete dir="${test.results.out}"/>
 		<mkdir dir="${test.results.out}"/>
-		<junit printsummary="yes" haltonerror="true">
+		<junit printsummary="yes" haltonerror="true" haltonfailure="true">
 			<classpath>
 				<path refid="build-classpath"/>
 				<path location="${java.out}"/>

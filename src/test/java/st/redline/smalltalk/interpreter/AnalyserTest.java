@@ -25,6 +25,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 public class AnalyserTest {
@@ -39,10 +42,13 @@ public class AnalyserTest {
 	@Mock LiteralSymbol literalSymbol;
 	@Mock LiteralString literalString;
 	@Mock VariableName className;
+	@Mock VariableName variableName;
 	@Mock KeywordExpression keywordExpression;
 	@Mock SimpleExpression simpleExpression;
 	@Mock UnarySelectorMessagePattern unarySelectorMessagePattern;
 	@Mock BinarySelectorMessagePattern binarySelectorMessagePattern;
+	@Mock KeywordMessagePattern keywordMessagePattern;
+    private List<VariableName> variableNames = new ArrayList<VariableName>();
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
@@ -50,6 +56,7 @@ public class AnalyserTest {
 		when(analyserContexts.current()).thenReturn(analyserContext);
 		when(analyserContext.generator()).thenReturn(generator);
 		when(analyserContext.sourceFileName()).thenReturn("SourceFile");
+        variableNames.add(variableName);
 		analyser = new Analyser(generator, analyserContexts);
 	}
 
@@ -85,6 +92,15 @@ public class AnalyserTest {
 		verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
 		verify(generator).openMethod(1);
 	}
+
+    @Test public void shouldInitializeMethodItemsWhenVisitKeywordSelectorMessagePattern() {
+        analyser.visit(keywordMessagePattern, "at:", 10, variableNames);
+        verify(analyserContext).methodClassName("SourceFile_at:");
+        verify(analyserContext).methodSelector("at:");
+        verify(analyserContext).methodArgumentCount(1);
+        verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
+        verify(generator).openMethod(1);
+    }
 
 	@Test public void shouldCloseMethodClassWhenEndInstanceMethod() {
 		analyser.visitEnd(instanceMethod);
