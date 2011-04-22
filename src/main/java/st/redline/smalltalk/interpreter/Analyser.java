@@ -158,15 +158,15 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
 		System.out.println("visit(KeywordMessagePattern) " + keywords);
-        AnalyserContexts.AnalyserContext context = context();
-        String sourceFileName = context.sourceFileName();
-        String methodClassName = sourceFileName + CLASS_NAME_SEPARATOR + keywords;
-        context.methodClassName(methodClassName);
-        context.methodSelector(keywords);
-        context.methodArgumentCount(1);
-        Generator generator = generator();
-        generator.openMethodClass(methodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
-        generator.openMethod(1);
+		AnalyserContexts.AnalyserContext context = context();
+		String sourceFileName = context.sourceFileName();
+		String methodClassName = sourceFileName + CLASS_NAME_SEPARATOR + keywords;
+		context.methodClassName(methodClassName);
+		context.methodSelector(keywords);
+		context.methodArgumentCount(variableNames.size());
+		Generator generator = generator();
+		generator.openMethodClass(methodClassName, sourceFileParentPathWithoutSourcePaths(), sourceFileName);
+		generator.openMethod(variableNames.size());
 	}
 
 	public void visit(UnarySelector unarySelector, String value, int line) {

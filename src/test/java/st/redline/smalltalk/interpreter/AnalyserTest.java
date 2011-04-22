@@ -97,9 +97,9 @@ public class AnalyserTest {
         analyser.visit(keywordMessagePattern, "at:", 10, variableNames);
         verify(analyserContext).methodClassName("SourceFile_at:");
         verify(analyserContext).methodSelector("at:");
-        verify(analyserContext).methodArgumentCount(1);
+        verify(analyserContext).methodArgumentCount(variableNames.size());
         verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
-        verify(generator).openMethod(1);
+        verify(generator).openMethod(variableNames.size());
     }
 
 	@Test public void shouldCloseMethodClassWhenEndInstanceMethod() {
