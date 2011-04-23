@@ -99,7 +99,7 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldInitializeMethodItemsWhenVisitBinarySelectorMessagePattern() {
-		analyser.visit(binarySelectorMessagePattern, "+", 10, "arg", 10);
+		analyser.visit(binarySelectorMessagePattern, "+", 10, variableName);
 		verify(analyserContext).methodClassName("SourceFile_+");
 		verify(analyserContext).methodSelector("+");
 		verify(analyserContext).methodArgumentCount(1);
@@ -107,14 +107,36 @@ public class AnalyserTest {
 		verify(generator).openMethod(1);
 	}
 
-    @Test public void shouldInitializeMethodItemsWhenVisitKeywordSelectorMessagePattern() {
-        analyser.visit(keywordMessagePattern, "at:", 10, variableNames);
-        verify(analyserContext).methodClassName("SourceFile_at:");
-        verify(analyserContext).methodSelector("at:");
-        verify(analyserContext).methodArgumentCount(variableNames.size());
-        verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
-        verify(generator).openMethod(variableNames.size());
-    }
+	@Test public void shouldOpenMethodClassWhenVisitBinarySelectorMessagePattern() {
+		analyser.visit(binarySelectorMessagePattern, "+", 10, variableName);
+		verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
+		verify(generator).openMethod(1);
+	}
+
+	@Test public void shouldRegisterMethodArgumentWhenVisitBinarySelectorMessagePattern() {
+		analyser.visit(binarySelectorMessagePattern, "+", 10, variableName);
+		verify(analyserContext).registerVariable(variableName);
+	}
+
+	@Test public void shouldInitializeMethodItemsWhenVisitKeywordSelectorMessagePattern() {
+		analyser.visit(keywordMessagePattern, "at:", 10, variableNames);
+		verify(analyserContext).methodClassName("SourceFile_at:");
+		verify(analyserContext).methodSelector("at:");
+		verify(analyserContext).methodArgumentCount(variableNames.size());
+		verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
+		verify(generator).openMethod(variableNames.size());
+	}
+
+	@Test public void shouldOpenMethodClassWhenVisitKeywordSelectorMessagePattern() {
+		analyser.visit(keywordMessagePattern, "at:", 10, variableNames);
+		verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
+		verify(generator).openMethod(variableNames.size());
+	}
+
+	@Test public void shouldRegisterMethodArgumentsWhenVisitKeywordSelectorMessagePattern() {
+		analyser.visit(keywordMessagePattern, "at:", 10, variableNames);
+		verify(analyserContext).registerVariables(variableNames);
+	}
 
 	@Test public void shouldCloseMethodClassWhenEndInstanceMethod() {
 		analyser.visitEnd(instanceMethod);

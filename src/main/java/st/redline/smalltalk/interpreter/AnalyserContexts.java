@@ -89,6 +89,11 @@ public class AnalyserContexts {
 			return methodTemporariesCount;
 		}
 
+		public void registerVariables(List<VariableName> variableNames) {
+			for (VariableName variableName : variableNames)
+				registerVariable(variableName);
+		}
+
 		public void registerVariable(VariableName variableName) {
 			if (methodVariableAndTemporaryRegistry.containsKey(variableName.value))
 				throw new IllegalStateException("Variable '" + variableName.value + "' already defined.");

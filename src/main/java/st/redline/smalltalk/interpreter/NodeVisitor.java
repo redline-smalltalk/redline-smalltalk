@@ -19,7 +19,7 @@ public interface NodeVisitor {
 	void visit(ClassMethod classMethod);
 	void visitEnd(ClassMethod classMethod);
 	void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line);
-	void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, String variableName, int variableNameLine);
+	void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName);
 	void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames);
 	void visit(UnarySelector unarySelector, String value, int line);
 	void visit(BinarySelector binarySelector, String value, int line);

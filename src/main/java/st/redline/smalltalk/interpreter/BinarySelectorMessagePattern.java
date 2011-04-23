@@ -32,6 +32,6 @@ public class BinarySelectorMessagePattern implements MessagePattern {
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, binarySelector.value, binarySelector.line, variableName.value, variableName.line);
+		visitor.visit(this, binarySelector.value, binarySelector.line, variableName);
 	}
 }
