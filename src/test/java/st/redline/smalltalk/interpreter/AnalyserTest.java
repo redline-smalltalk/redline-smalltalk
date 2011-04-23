@@ -50,7 +50,8 @@ public class AnalyserTest {
 	@Mock KeywordMessagePattern keywordMessagePattern;
 	@Mock Temporaries temporaries;
 	@Mock Primitive primitive;
-    private List<VariableName> variableNames = new ArrayList<VariableName>();
+	private Temporary temporary;
+	private List<VariableName> variableNames = new ArrayList<VariableName>();
 	private Analyser analyser;
 
 	@Before public void setUp() throws Exception {
@@ -59,7 +60,8 @@ public class AnalyserTest {
 		when(analyserContext.generator()).thenReturn(generator);
 		when(analyserContext.sourceFileName()).thenReturn("SourceFile");
 		when(analyserContext.variableLookup("Object")).thenReturn(variableName);
-        variableNames.add(variableName);
+		variableNames.add(variableName);
+		temporary = new Temporary(new VariableName("Object", 32));
 		analyser = new Analyser(generator, analyserContexts);
 	}
 
@@ -83,8 +85,17 @@ public class AnalyserTest {
 		verify(analyserContext).methodClassName("SourceFile_yourself");
 		verify(analyserContext).methodSelector("yourself");
 		verify(analyserContext).methodArgumentCount(0);
+	}
+
+	@Test public void shouldOpenMethodClassWhenVisitUnarySelectorMessagePattern() {
+		analyser.visit(unarySelectorMessagePattern, "yourself", 10);
 		verify(generator).openMethodClass((String) any(), (String) any(), (String) any());
 		verify(generator).openMethod(0);
+	}
+
+	@Test public void shouldNotRegisterMethodArgumentsWhenVisitUnarySelectorMessagePattern() {
+		analyser.visit(unarySelectorMessagePattern, "yourself", 10);
+		verify(analyserContext, never()).registerVariable((VariableName) any());
 	}
 
 	@Test public void shouldInitializeMethodItemsWhenVisitBinarySelectorMessagePattern() {
@@ -149,6 +160,11 @@ public class AnalyserTest {
 		// 4 = first temporary
 	}
 
+	@Test public void shouldRegisterTemporaryVariable() {
+		analyser.visit(temporary, 1, "Object", 32);
+		verify(analyserContext).registerVariable(temporary);
+	}
+
 	@Test public void shouldLookupVariableNameDeclarationToGetItsProperIndex() {
 		when(variableName.isClassReference()).thenReturn(false);
 		analyser.visit(variableName, "Object", 10);
@@ -170,7 +186,6 @@ public class AnalyserTest {
 		verify(generator).keywordSend("at:", 1, 10);
 	}
 
-	// generator.callToPrimitiveByNumber(currentMethodArgumentCount, currentMethodTemporariesCount, primitiveNumber.number(), primitiveNumber.line());
 	@Test public void shouldCallPrimitiveByNumberWhenVisitingPrimitive() {
 		when(analyserContext.methodArgumentCount()).thenReturn(1);
 		when(analyserContext.methodTemporariesCount()).thenReturn(2);

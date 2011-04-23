@@ -89,6 +89,12 @@ public class AnalyserContexts {
 			return methodTemporariesCount;
 		}
 
+		public void registerVariable(VariableName variableName) {
+			if (methodVariableAndTemporaryRegistry.containsKey(variableName.value))
+				throw new IllegalStateException("Variable '" + variableName.value + "' already defined.");
+			methodVariableAndTemporaryRegistry.put(variableName.value, variableName);
+		}
+
 		public String sourceFileName() {
 			return sourceFile().nameWithoutExtension();
 		}

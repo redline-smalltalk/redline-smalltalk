@@ -79,6 +79,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Temporary temporary, int index, String value, int line) {
 		System.out.println("visit(Temporary) " + value);
+		context().registerVariable(temporary);
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
