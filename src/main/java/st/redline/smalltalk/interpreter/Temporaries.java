@@ -50,4 +50,8 @@ public class Temporaries implements VisitableNode {
 			temporary.accept(visitor);
 		visitor.visitEnd(this);
 	}
+
+	public int size() {
+		return temporaries.size();
+	}
 }

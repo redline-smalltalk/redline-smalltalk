@@ -60,11 +60,14 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Primitive primitive, String value, int line) {
-		System.out.println("visit(Primitive)");
+		System.out.println("visit(Primitive) "  + value);
+		AnalyserContexts.AnalyserContext context = context();
+		generator().callToPrimitiveByNumber(context.methodArgumentCount(), context.methodTemporariesCount(), value, line);
 	}
 
 	public void visit(Temporaries temporaries) {
 		System.out.println("visit(Temporaries)");
+		context().methodTemporariesCount(temporaries.size());
 		temporaries.indexFrom(START_METHOD_ARGUMENT_OFFSET + context().methodArgumentCount());
 		// 0 = this.
 		// 1 = receiver.

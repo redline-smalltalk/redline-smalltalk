@@ -85,6 +85,10 @@ public class AnalyserContexts {
 			return methodArgumentCount;
 		}
 
+		public int methodTemporariesCount() {
+			return methodTemporariesCount;
+		}
+
 		public String sourceFileName() {
 			return sourceFile().nameWithoutExtension();
 		}
@@ -120,6 +124,10 @@ public class AnalyserContexts {
 
 		public void methodArgumentCount(int methodArgumentCount) {
 			this.methodArgumentCount = methodArgumentCount;
+		}
+
+		public void methodTemporariesCount(int methodTemporariesCount) {
+			this.methodTemporariesCount = methodTemporariesCount;
 		}
 
 		public void methodClassName(String methodClassName) {

@@ -49,6 +49,7 @@ public class AnalyserTest {
 	@Mock BinarySelectorMessagePattern binarySelectorMessagePattern;
 	@Mock KeywordMessagePattern keywordMessagePattern;
 	@Mock Temporaries temporaries;
+	@Mock Primitive primitive;
     private List<VariableName> variableNames = new ArrayList<VariableName>();
 	private Analyser analyser;
 
@@ -167,5 +168,13 @@ public class AnalyserTest {
 	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {
 		analyser.visitEnd(keywordExpression, "at:", 1, 10);
 		verify(generator).keywordSend("at:", 1, 10);
+	}
+
+	// generator.callToPrimitiveByNumber(currentMethodArgumentCount, currentMethodTemporariesCount, primitiveNumber.number(), primitiveNumber.line());
+	@Test public void shouldCallPrimitiveByNumberWhenVisitingPrimitive() {
+		when(analyserContext.methodArgumentCount()).thenReturn(1);
+		when(analyserContext.methodTemporariesCount()).thenReturn(2);
+		analyser.visit(primitive, "1", 10);
+		verify(generator).callToPrimitiveByNumber(1, 2, "1", 10);
 	}
 }
