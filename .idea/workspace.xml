@@ -72,10 +72,8 @@
       <file leaf-file-name="Analyser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="177" column="47" selection-start="6740" selection-end="6740" vertical-scroll-proportion="0.32846716">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="23" column="0" selection-start="1216" selection-end="1216" vertical-scroll-proportion="-4.420438">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -529,10 +527,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="47" selection-start="6740" selection-end="6740" vertical-scroll-proportion="0.32846716">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="23" column="0" selection-start="1216" selection-end="1216" vertical-scroll-proportion="-4.420438">
+          <folding />
         </state>
       </provider>
     </entry>

@@ -21,7 +21,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk.interpreter;
 
 import st.redline.smalltalk.Smalltalk;
-import st.redline.smalltalk.SourceFile;
 
 import java.util.*;
 
