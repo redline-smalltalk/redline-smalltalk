@@ -32,8 +32,13 @@ public class AnswerExpression implements Expression {
 		expression.leaveResultOnStack();
 	}
 
+	public void duplicateResultOnStack() {
+		throw new IllegalStateException("Answer expression asked to duplicate stack top!");
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		leaveResultOnStack();
 		expression.accept(visitor);
 	}
 }

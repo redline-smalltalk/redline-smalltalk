@@ -29,10 +29,12 @@ public class SimpleExpression implements Expression {
 	private MessageExpression messageExpression;
 	private final List<MessageElement> messageElements;
 	private boolean resultLeftOnStack;
+	private boolean duplicateResultOnStack;
 
 	public SimpleExpression() {
 		messageElements = new ArrayList<MessageElement>();
 		resultLeftOnStack = false;
+		duplicateResultOnStack = false;
 	}
 
 	public boolean isResultLeftOnStack() {
@@ -41,6 +43,14 @@ public class SimpleExpression implements Expression {
 
 	public void leaveResultOnStack() {
 		resultLeftOnStack = true;
+	}
+
+	public boolean isResultDuplicatedOnStack() {
+		return duplicateResultOnStack;
+	}
+
+	public void duplicateResultOnStack() {
+		duplicateResultOnStack = true;
 	}
 
 	public void add(Primary primary) {

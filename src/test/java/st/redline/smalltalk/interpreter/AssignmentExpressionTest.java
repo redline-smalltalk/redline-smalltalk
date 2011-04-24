@@ -41,7 +41,7 @@ public class AssignmentExpressionTest {
 
 	@Test public void shouldIndicateAssignedExpressionsResultIsLeftOnStack() {
 		assignmentExpression.leaveResultOnStack();
-		verify(simpleExpression).leaveResultOnStack();
+		verify(simpleExpression).duplicateResultOnStack();
 	}
 
 	@Test public void shouldVisitExpressionAndThenAssignedVariableName() {

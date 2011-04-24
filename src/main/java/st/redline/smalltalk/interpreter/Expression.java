@@ -22,4 +22,5 @@ package st.redline.smalltalk.interpreter;
 
 public interface Expression extends VisitableNode {
 	void leaveResultOnStack();
+	void duplicateResultOnStack();
 }

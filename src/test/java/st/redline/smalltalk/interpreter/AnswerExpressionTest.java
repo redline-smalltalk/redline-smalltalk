@@ -46,6 +46,7 @@ public class AnswerExpressionTest {
 
 	@Test public void shouldVisitAnsweredExpression() {
 		answerExpression.accept(visitor);
+		verify(simpleExpression).leaveResultOnStack();
 		verify(simpleExpression).accept(visitor);
 	}
 }
