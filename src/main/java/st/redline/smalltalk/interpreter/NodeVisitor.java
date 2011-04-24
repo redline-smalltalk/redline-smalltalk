@@ -53,4 +53,8 @@ public interface NodeVisitor {
 	void visit(NumberConstant numberConstant, String value, int line);
 	void visit(LiteralNumber literalNumber, String value, int line);
 	void visit(Block block);
+	void visit(SelfReservedWord selfReservedWord, int line);
+	void visit(TrueReservedWord selfReservedWord, int line);
+	void visit(FalseReservedWord selfReservedWord, int line);
+	void visit(NilReservedWord selfReservedWord, int line);
 }

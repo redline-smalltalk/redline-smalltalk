@@ -314,6 +314,26 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(block)");
 	}
 
+	public void visit(SelfReservedWord selfReservedWord, int line) {
+		System.out.println("visit(self)");
+		generator().pushReceiver();
+	}
+
+	public void visit(TrueReservedWord trueReservedWord, int line) {
+		System.out.println("visit(true)");
+		generator().trueLookup(line);
+	}
+
+	public void visit(FalseReservedWord falseReservedWord, int line) {
+		System.out.println("visit(false)");
+		generator().falseLookup(line);
+	}
+
+	public void visit(NilReservedWord nilReservedWord, int line) {
+		System.out.println("visit(nil)");
+		generator().nilLookup(line);
+	}
+
 	private AnalyserContexts.AnalyserContext context() {
 		return analyserContexts.current();
 	}

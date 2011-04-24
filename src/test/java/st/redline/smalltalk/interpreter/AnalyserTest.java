@@ -50,6 +50,10 @@ public class AnalyserTest {
 	@Mock KeywordMessagePattern keywordMessagePattern;
 	@Mock Temporaries temporaries;
 	@Mock Primitive primitive;
+	@Mock SelfReservedWord selfReservedWord;
+	@Mock TrueReservedWord trueReservedWord;
+	@Mock FalseReservedWord falseReservedWord;
+	@Mock NilReservedWord nilReservedWord;
 	private Temporary temporary;
 	private List<VariableName> variableNames = new ArrayList<VariableName>();
 	private Analyser analyser;
@@ -213,5 +217,25 @@ public class AnalyserTest {
 		when(analyserContext.methodTemporariesCount()).thenReturn(2);
 		analyser.visit(primitive, "1", 10);
 		verify(generator).callToPrimitiveByNumber(1, 2, "1", 10);
+	}
+
+	@Test public void shouldPutReceiverOnStackWhenVisitSelfReservedWord() {
+		analyser.visit(selfReservedWord, 1);
+		verify(generator).pushReceiver();
+	}
+
+	@Test public void shouldLookupTrueWhenVisitTrueReservedWord() {
+		analyser.visit(trueReservedWord, 1);
+		verify(generator).trueLookup(1);
+	}
+
+	@Test public void shouldLookupFalseWhenVisitFalseReservedWord() {
+		analyser.visit(falseReservedWord, 1);
+		verify(generator).falseLookup(1);
+	}
+
+	@Test public void shouldLookupNilWhenVisitNilReservedWord() {
+		analyser.visit(nilReservedWord, 1);
+		verify(generator).nilLookup(1);
 	}
 }
