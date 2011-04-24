@@ -63,7 +63,16 @@
       <file leaf-file-name="AssignmentExpression.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AssignmentExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="0" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.0">
+            <state line="33" column="0" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AnswerExpression.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnswerExpression.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="0" selection-start="1465" selection-end="1465" vertical-scroll-proportion="0.752149">
               <folding />
             </state>
           </provider>
@@ -78,10 +87,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AssignmentExpressionTest.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AssignmentExpressionTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AssignmentExpressionTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="0" selection-start="1873" selection-end="1873" vertical-scroll-proportion="0.80659026">
+            <state line="49" column="27" selection-start="2050" selection-end="2050" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -109,10 +118,10 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/SimpleExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Expression.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnswerExpression.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnswerExpressionTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AssignmentExpression.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AssignmentExpressionTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AssignmentExpression.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnswerExpression.java" />
       </list>
     </option>
   </component>
@@ -571,13 +580,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnswerExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="1500" selection-end="1554" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnswerExpressionTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="13" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.0">
@@ -585,16 +587,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AssignmentExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AssignmentExpressionTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="0" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.0">
+        <state line="49" column="27" selection-start="2050" selection-end="2050" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AssignmentExpressionTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AssignmentExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="1873" selection-end="1873" vertical-scroll-proportion="0.80659026">
+        <state line="33" column="0" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnswerExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="1465" selection-end="1465" vertical-scroll-proportion="0.752149">
           <folding />
         </state>
       </provider>

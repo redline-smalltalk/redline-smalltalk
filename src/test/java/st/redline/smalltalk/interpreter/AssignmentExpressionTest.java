@@ -44,8 +44,9 @@ public class AssignmentExpressionTest {
 		verify(simpleExpression).leaveResultOnStack();
 	}
 
-	@Test public void shouldVisitAssignedExpression() {
+	@Test public void shouldVisitExpressionAndThenAssignedVariableName() {
 		assignmentExpression.accept(visitor);
 		verify(simpleExpression).accept(visitor);
+		verify(variableName).accept(visitor);
 	}
 }
