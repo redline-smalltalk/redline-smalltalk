@@ -169,6 +169,12 @@ public class AnalyserTest {
 		verify(generator).stackPop();
 	}
 
+	@Test public void shouldDuplicateStackTopWhenEndSimpleExpressionAndResultShouldBeDuplicatedOnStack() {
+		when(simpleExpression.isResultDuplicatedOnStack()).thenReturn(true);
+		analyser.visitEnd(simpleExpression);
+		verify(generator).pushStackTop();
+	}
+
 	@Test public void shouldLookupClassWhenVariableNameIsClassReference() {
 		when(className.isClassReference()).thenReturn(true);
 		analyser.visit(className, "Object", 10);
