@@ -116,7 +116,7 @@ public class Bootstrapper {
 
 	public class PrimitiveSubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
-			System.out.println("** HERE **");
+			System.out.println("** CREATING SUBCLASS ** " + arg1.data.primitiveValue().toString());
 			// There is more to do here just not yet.
 			String name = arg1.data.primitiveValue().toString();
 			RObject existing = smalltalk.cachedObject0(name);
