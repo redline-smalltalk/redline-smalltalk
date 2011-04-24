@@ -35,8 +35,12 @@ public class SimpleExpression implements Expression {
 		resultLeftOnStack = false;
 	}
 
-	public boolean leaveResultOnStack() {
+	public boolean isResultLeftOnStack() {
 		return resultLeftOnStack;
+	}
+
+	public void leaveResultOnStack() {
+		resultLeftOnStack = true;
 	}
 
 	public void add(Primary primary) {

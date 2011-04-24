@@ -25,46 +25,27 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.verify;
 
-public class SimpleExpressionTest {
+public class AssignmentExpressionTest {
 
 	@Mock NodeVisitor visitor;
-	@Mock Primary primary;
-	@Mock MessageExpression messageExpression;
-	@Mock MessageElement messageElement;
-	private SimpleExpression simpleExpression;
+	@Mock VariableName variableName;
+	@Mock SimpleExpression simpleExpression;
+	private AssignmentExpression assignmentExpression;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		simpleExpression = new SimpleExpression();
-		simpleExpression.add(primary);
+		assignmentExpression = new AssignmentExpression(variableName, simpleExpression);
 	}
 
-	@Test public void shouldDefaultToNotLeavingResultOnStack() {
-		assertFalse(simpleExpression.isResultLeftOnStack());
+	@Test public void shouldIndicateAssignedExpressionsResultIsLeftOnStack() {
+		assignmentExpression.accept(visitor);
+		verify(simpleExpression).leaveResultOnStack();
 	}
 
-	@Test public void shouldVisitPrimary() {
-		simpleExpression.accept(visitor);
-		verify(primary).accept(visitor);
-	}
-
-	@Test public void shouldVisitMessageExpression() {
-		simpleExpression.add(messageExpression);
-		simpleExpression.accept(visitor);
-		verify(messageExpression).accept(visitor);
-	}
-
-	@Test public void shouldVisitMessageElements() {
-		simpleExpression.add(messageElement);
-		simpleExpression.accept(visitor);
-		verify(messageElement).accept(visitor);
-	}
-
-	@Test public void shouldEndVisitation() {
-		simpleExpression.accept(visitor);
-		verify(visitor).visitEnd(simpleExpression);
+	@Test public void shouldVisitAssignedExpression() {
+		assignmentExpression.accept(visitor);
+		verify(simpleExpression).accept(visitor);
 	}
 }

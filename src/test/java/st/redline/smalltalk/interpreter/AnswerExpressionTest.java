@@ -13,30 +13,39 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 package st.redline.smalltalk.interpreter;
 
-public class AssignmentExpression implements Expression {
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-	private final VariableName variableName;
-	private final Expression expression;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.verify;
 
-	public AssignmentExpression(VariableName variableName, Expression expression) {
-		this.variableName = variableName;
-		this.expression = expression;
+public class AnswerExpressionTest {
+
+	@Mock NodeVisitor visitor;
+	@Mock SimpleExpression simpleExpression;
+	private AnswerExpression answerExpression;
+
+	@Before public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		answerExpression = new AnswerExpression(simpleExpression);
 	}
 
-	public void leaveResultOnStack() {
-		expression.leaveResultOnStack();
+	@Test public void shouldIndicateAnsweredExpressionsResultIsLeftOnStack() {
+		answerExpression.accept(visitor);
+		verify(simpleExpression).leaveResultOnStack();
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		leaveResultOnStack();
-		expression.accept(visitor);
+	@Test public void shouldVisitAnsweredExpression() {
+		answerExpression.accept(visitor);
+		verify(simpleExpression).accept(visitor);
 	}
 }

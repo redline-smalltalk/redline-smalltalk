@@ -28,7 +28,13 @@ public class AnswerExpression implements Expression {
 		this.expression = expression;
 	}
 
+	public void leaveResultOnStack() {
+		expression.leaveResultOnStack();
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		leaveResultOnStack();
+		expression.accept(visitor);
 	}
 }

@@ -207,7 +207,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(SimpleExpression simpleExpression) {
 		System.out.println("visitEnd(SimpleExpression)");
-		if (!simpleExpression.leaveResultOnStack())
+		if (!simpleExpression.isResultLeftOnStack())
 			generator().stackPop();
 	}
 
