@@ -29,11 +29,11 @@ public class AnswerExpression implements Expression {
 	}
 
 	public void leaveResultOnStack() {
+		expression.leaveResultOnStack();
 	}
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
-		expression.leaveResultOnStack();
 		expression.accept(visitor);
 	}
 }

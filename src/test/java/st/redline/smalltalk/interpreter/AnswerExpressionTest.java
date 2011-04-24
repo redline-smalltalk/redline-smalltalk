@@ -40,7 +40,7 @@ public class AnswerExpressionTest {
 	}
 
 	@Test public void shouldIndicateAnsweredExpressionsResultIsLeftOnStack() {
-		answerExpression.accept(visitor);
+		answerExpression.leaveResultOnStack();
 		verify(simpleExpression).leaveResultOnStack();
 	}
 
