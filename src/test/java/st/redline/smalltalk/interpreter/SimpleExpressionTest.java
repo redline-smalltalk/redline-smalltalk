@@ -46,6 +46,10 @@ public class SimpleExpressionTest {
 		assertFalse(simpleExpression.isResultLeftOnStack());
 	}
 
+	@Test public void shouldDefaultToNotDuplicatingResultOnStack() {
+		assertFalse(simpleExpression.isResultDuplicatedOnStack());
+	}
+
 	@Test public void shouldVisitPrimary() {
 		simpleExpression.accept(visitor);
 		verify(primary).accept(visitor);

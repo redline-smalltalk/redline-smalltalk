@@ -60,10 +60,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AssignmentExpression.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AssignmentExpression.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AssignmentExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="21" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.4627507">
+            <state line="24" column="21" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SimpleExpressionTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/SimpleExpressionTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="65" selection-start="2007" selection-end="2007" vertical-scroll-proportion="0.42406878">
               <folding />
             </state>
           </provider>
@@ -88,7 +97,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Temporaries.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BinarySelectorMessagePattern.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/TrueReservedWord.java" />
@@ -104,6 +112,7 @@
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnswerExpressionTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnswerExpression.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AssignmentExpressionTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/SimpleExpressionTest.java" />
       </list>
     </option>
   </component>
@@ -536,13 +545,6 @@
         <state line="55" column="13" selection-start="2263" selection-end="2263" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/SimpleExpressionTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="1414" selection-end="1442" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Expression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="18" selection-start="1274" selection-end="1274" vertical-scroll-proportion="0.5157593">
@@ -587,7 +589,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AssignmentExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="21" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.4627507">
+        <state line="24" column="21" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/SimpleExpressionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="65" selection-start="2007" selection-end="2007" vertical-scroll-proportion="0.42406878">
           <folding />
         </state>
       </provider>
