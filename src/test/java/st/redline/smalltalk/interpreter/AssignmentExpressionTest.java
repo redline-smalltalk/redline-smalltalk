@@ -44,6 +44,11 @@ public class AssignmentExpressionTest {
 		verify(simpleExpression).duplicateResultOnStack();
 	}
 
+	@Test public void shouldIndicateVariableNameIsLeftOnStoreSideOfExpression() {
+		assignmentExpression.accept(visitor);
+		verify(variableName).onStoreSideOfExpression();
+	}
+
 	@Test public void shouldVisitExpressionAndThenAssignedVariableName() {
 		assignmentExpression.accept(visitor);
 		verify(simpleExpression).accept(visitor);

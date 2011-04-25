@@ -42,6 +42,7 @@ public class AssignmentExpression implements Expression {
 		visitor.visit(this);
 		expression.leaveResultOnStack();
 		expression.accept(visitor);
+		variableName.onStoreSideOfExpression();
 		variableName.accept(visitor);
 	}
 }
