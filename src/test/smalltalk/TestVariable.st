@@ -1,7 +1,7 @@
 
 "im a comment"
 
-| var |
+| var1 var2 |
 
-var := 'foo'.
+var1 := var2 := 'foo'.
 
