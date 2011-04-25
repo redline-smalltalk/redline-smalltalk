@@ -185,6 +185,10 @@ public class Analyser implements NodeVisitor {
 		generator.openMethod(variableNames.size());
 	}
 
+	private void registerClassRelatedVariables(List<VariableName> variableNames) {
+		System.out.println("** registerClassRelatedVariables ** " + variableNames);
+	}
+
 	public void visit(UnarySelector unarySelector, String value, int line) {
 		System.out.println("visit(UnarySelector) " + value);
 	}
@@ -247,6 +251,9 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visitEnd(KeywordExpression) " + keywords);
+		if (keywords.startsWith("s"))
+			if (keywords.startsWith("subclass:instanceVariableNames:classVariableNames:poolDictionaries"))
+				registerClassRelatedVariables(null);
 		generator().keywordSend(keywords, argumentCount, line);
 	}
 
