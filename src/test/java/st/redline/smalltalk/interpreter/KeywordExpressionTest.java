@@ -54,7 +54,7 @@ public class KeywordExpressionTest {
 		verify(visitor).visitEnd(keywordExpression, "at:", 1, 10);
 	}
 
-	@Test public void shouldKnowWhenExpressionDefinesClass() {
+	@Test public void shouldKnowWhenExpressionDefinesClassFields() {
 		keywordExpression.add(new Keyword("subclass:", 10), binaryObjectDescription);
 		keywordExpression.add(new Keyword("instanceVariableNames:", 10), binaryObjectDescription);
 		keywordExpression.add(new Keyword("classVariableNames:", 10), binaryObjectDescription);

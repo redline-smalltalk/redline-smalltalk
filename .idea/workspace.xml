@@ -99,7 +99,7 @@
       <file leaf-file-name="KeywordExpressionTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/KeywordExpressionTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="61" selection-start="2555" selection-end="2574" vertical-scroll-proportion="0.8761792">
+            <state line="56" column="64" selection-start="2257" selection-end="2257" vertical-scroll-proportion="0.8054245">
               <folding />
             </state>
           </provider>
@@ -129,8 +129,8 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AssignmentExpression.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AssignmentExpressionTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java" />
-        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/KeywordExpressionTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/KeywordExpression.java" />
+        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/KeywordExpressionTest.java" />
       </list>
     </option>
   </component>
@@ -608,7 +608,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/KeywordExpressionTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="61" selection-start="2555" selection-end="2574" vertical-scroll-proportion="0.8761792">
+        <state line="56" column="64" selection-start="2257" selection-end="2257" vertical-scroll-proportion="0.8054245">
           <folding />
         </state>
       </provider>
