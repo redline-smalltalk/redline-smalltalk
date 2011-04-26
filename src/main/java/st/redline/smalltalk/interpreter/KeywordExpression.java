@@ -28,6 +28,11 @@ public class KeywordExpression implements MessageExpression {
 	private final List<BinaryObjectDescription> binaryObjectDescriptions;
 	private final StringBuffer keywords;
 	private int line = -1;
+	private boolean monitoringSubclassFields = false;
+	private boolean definesClassFields = false;
+	private BinaryObjectDescription instanceVariableNames;
+	private BinaryObjectDescription classVariableNames;
+	private BinaryObjectDescription poolDictionaries;
 
 	public KeywordExpression() {
 		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
@@ -39,6 +44,27 @@ public class KeywordExpression implements MessageExpression {
 			line = keyword.line;
 		keywords.append(keyword.value);
 		binaryObjectDescriptions.add(binaryObjectDescription);
+		if (monitoringSubclassFields)
+			monitorSubclassField(keyword.value, binaryObjectDescription);
+		else
+			monitoringSubclassFields = keyword.value.startsWith("subclass:");
+	}
+
+	private void monitorSubclassField(String keyword, BinaryObjectDescription binaryObjectDescription) {
+		if (instanceVariableNames == null && keyword.startsWith("instanceVariableNames:")) {
+			definesClassFields = true;
+			instanceVariableNames = binaryObjectDescription;
+		} else if (classVariableNames == null && keyword.startsWith("classVariableNames:")) {
+			definesClassFields = true;
+			classVariableNames = binaryObjectDescription;
+		} else if (poolDictionaries == null && keyword.startsWith("poolDictionaries:")) {
+			definesClassFields = true;
+			poolDictionaries = binaryObjectDescription;
+		}
+	}
+
+	public boolean definesClassFields() {
+		return definesClassFields;
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
