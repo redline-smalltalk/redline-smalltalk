@@ -57,4 +57,12 @@ public class VariableName implements Primary {
 	public boolean isOnLoadSideOfExpression() {
 		return onLoadSideOfExpression;
 	}
+
+	public int line() {
+		return line;
+	}
+
+	public String value() {
+		return value;
+	}
 }

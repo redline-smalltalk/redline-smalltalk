@@ -31,4 +31,12 @@ public class LiteralNumber implements Literal {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, numberConstant.value, numberConstant.line);
 	}
+
+	public int line() {
+		return numberConstant.line;
+	}
+
+	public String value() {
+		return numberConstant.value;
+	}
 }

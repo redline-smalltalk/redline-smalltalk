@@ -22,6 +22,7 @@ package st.redline.smalltalk.interpreter;
 
 public class NilReservedWord implements Literal {
 
+	private static final String NIL = "nil";
 	public final int line;
 
 	public NilReservedWord(int line) {
@@ -31,4 +32,13 @@ public class NilReservedWord implements Literal {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, line);
 	}
+
+	public int line() {
+		return line;
+	}
+
+	public String value() {
+		return NIL;
+	}
+
 }

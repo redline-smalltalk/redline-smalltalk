@@ -22,6 +22,7 @@ package st.redline.smalltalk.interpreter;
 
 public class TrueReservedWord implements Literal {
 
+	private static final String TRUE = "TRUE";
 	public final int line;
 
 	public TrueReservedWord(int line) {
@@ -30,5 +31,13 @@ public class TrueReservedWord implements Literal {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, line);
+	}
+
+	public int line() {
+		return line;
+	}
+
+	public String value() {
+		return TRUE;
 	}
 }

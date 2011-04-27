@@ -22,6 +22,7 @@ package st.redline.smalltalk.interpreter;
 
 public class SelfReservedWord implements Literal {
 
+	private static final String SELF = "self";
 	public final int line;
 
 	public SelfReservedWord(int line) {
@@ -30,5 +31,13 @@ public class SelfReservedWord implements Literal {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, line);
+	}
+
+	public int line() {
+		return line;
+	}
+
+	public String value() {
+		return SELF;
 	}
 }

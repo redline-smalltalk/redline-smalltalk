@@ -33,4 +33,12 @@ public class NumberConstant implements Literal {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, value, line);
 	}
+
+	public int line() {
+		return line;
+	}
+
+	public String value() {
+		return value;
+	}
 }

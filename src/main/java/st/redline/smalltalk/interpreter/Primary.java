@@ -21,4 +21,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package st.redline.smalltalk.interpreter;
 
 public interface Primary extends VisitableNode {
+	int line();
+	String value();
 }

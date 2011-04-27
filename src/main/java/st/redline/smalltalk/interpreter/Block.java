@@ -48,4 +48,12 @@ public class Block implements Primary {
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visit(this);
 	}
+
+	public int line() {
+		return 0;
+	}
+
+	public String value() {
+		return "";
+	}
 }

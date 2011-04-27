@@ -31,4 +31,12 @@ public class LiteralCharacter implements Literal {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, characterConstant.value, characterConstant.line);
 	}
+
+	public int line() {
+		return characterConstant.line;
+	}
+
+	public String value() {
+		return characterConstant.value;
+	}
 }

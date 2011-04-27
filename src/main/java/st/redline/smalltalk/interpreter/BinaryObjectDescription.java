@@ -55,4 +55,13 @@ public class BinaryObjectDescription implements VisitableNode {
 		for (BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription : binarySelectorUnaryObjectDescriptions)
 			binarySelectorUnaryObjectDescription.accept(visitor);
 	}
+
+	public List<VariableName> toVariableNames() {
+		int line = primary.line();
+		String[] names = primary.value().split(" ");
+		List<VariableName> variableNames = new ArrayList<VariableName>();
+		for (String name : names)
+			variableNames.add(new VariableName(name, line));
+		return variableNames;
+	}
 }
