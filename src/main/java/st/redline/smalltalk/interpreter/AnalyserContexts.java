@@ -33,6 +33,7 @@ import java.util.Stack;
 public class AnalyserContexts {
 
 	private final Stack<AnalyserContext> analyserContexts;
+	private final VariableRegistry variableRegistry;
 
 	public static AnalyserContexts create(Smalltalk smalltalk, Generator generator) {
 		return new AnalyserContexts(smalltalk, generator);
@@ -40,7 +41,8 @@ public class AnalyserContexts {
 
 	private AnalyserContexts(Smalltalk smalltalk, Generator generator) {
 		analyserContexts = new Stack<AnalyserContext>();
-		push(new AnalyserContext(smalltalk, generator));
+		variableRegistry = new VariableRegistry();
+		push(new AnalyserContext(smalltalk, generator, variableRegistry));
 	}
 
 	public AnalyserContext current() {
@@ -55,16 +57,18 @@ public class AnalyserContexts {
 
 		private final Smalltalk smalltalk;
 		private final Generator generator;
+		private final VariableRegistry parentVariableRegistry;
 
 		private String methodClassName;
 		private String methodSelector;
 		private int methodArgumentCount;
 		private int methodTemporariesCount;
-		private Map<String, VariableName> methodVariableAndTemporaryRegistry = new HashMap<String, VariableName>();
+		private VariableRegistry methodVariableRegistry;
 
-		public AnalyserContext(Smalltalk smalltalk, Generator generator) {
+		public AnalyserContext(Smalltalk smalltalk, Generator generator, VariableRegistry parentVariableRegistry) {
 			this.smalltalk = smalltalk;
 			this.generator = generator;
+			this.parentVariableRegistry = parentVariableRegistry;
 		}
 
 		public byte[] classResult() {
@@ -97,9 +101,9 @@ public class AnalyserContexts {
 		}
 
 		public void registerVariable(VariableName variableName) {
-			if (methodVariableAndTemporaryRegistry.containsKey(variableName.value))
+			if (variableRegistry.containsKey(variableName.value))
 				throw new IllegalStateException("Variable '" + variableName.value + "' already defined.");
-			methodVariableAndTemporaryRegistry.put(variableName.value, variableName);
+			variableRegistry.put(variableName.value, variableName);
 		}
 
 		public String sourceFileName() {
@@ -128,11 +132,11 @@ public class AnalyserContexts {
 		public void initializePerMethodItems() {
 			methodArgumentCount = 0;
 			methodTemporariesCount = 0;
-			methodVariableAndTemporaryRegistry = new HashMap<String, VariableName>();
+			methodVariableRegistry = new VariableRegistry(parentVariableRegistry);
 		}
 
 		public VariableName variableLookup(String variableName) {
-			return methodVariableAndTemporaryRegistry.get(variableName);
+			return methodVariableRegistry.get(variableName);
 		}
 
 		public void methodArgumentCount(int methodArgumentCount) {
