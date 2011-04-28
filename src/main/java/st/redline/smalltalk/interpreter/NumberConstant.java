@@ -22,7 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
-public class NumberConstant implements Literal {
+public class NumberConstant extends BaseLiteral {
 
 	protected final String value;
 	protected final int line;
@@ -34,13 +34,5 @@ public class NumberConstant implements Literal {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, value, line);
-	}
-
-	public int line() {
-		return line;
-	}
-
-	public String value() {
-		return value;
 	}
 }

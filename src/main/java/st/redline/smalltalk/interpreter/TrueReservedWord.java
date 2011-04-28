@@ -22,7 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
-public class TrueReservedWord implements Literal {
+public class TrueReservedWord extends BaseLiteral {
 
 	private static final String TRUE = "TRUE";
 	public final int line;
@@ -33,13 +33,5 @@ public class TrueReservedWord implements Literal {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, line);
-	}
-
-	public int line() {
-		return line;
-	}
-
-	public String value() {
-		return TRUE;
 	}
 }

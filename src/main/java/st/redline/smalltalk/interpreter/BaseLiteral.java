@@ -22,16 +22,15 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
-public class FalseReservedWord extends BaseLiteral {
+public abstract class BaseLiteral implements Literal {
 
-	private static final String FALSE = "FALSE";
-	public final int line;
-
-	public FalseReservedWord(int line) {
-		this.line = line;
+	public int line() {
+		return 0;
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, line);
+	public String value() {
+		return "";
 	}
+
+	public void foo() {}
 }

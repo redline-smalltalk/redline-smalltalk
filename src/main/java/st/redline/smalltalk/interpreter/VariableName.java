@@ -22,7 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
-public class VariableName implements Primary {
+public class VariableName extends BasePrimary {
 
 	protected final String value;
 	protected final int line;

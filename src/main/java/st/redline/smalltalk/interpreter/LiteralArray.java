@@ -22,7 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
-public class LiteralArray implements Literal {
+public class LiteralArray extends BaseLiteral {
 
 	public final Array array;
 
@@ -32,13 +32,5 @@ public class LiteralArray implements Literal {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
-	}
-
-	public int line() {
-		return 0;
-	}
-
-	public String value() {
-		return "";
 	}
 }

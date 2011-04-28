@@ -22,7 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
-public class LiteralString implements Literal {
+public class LiteralString extends BaseLiteral {
 
 	public final String value;
 	public final int line;

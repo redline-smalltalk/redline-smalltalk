@@ -25,7 +25,7 @@ package st.redline.smalltalk.interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Block implements Primary {
+public class Block extends BasePrimary {
 
 	private final List<VariableName> variableNames;
 	private Temporaries temporaries;
@@ -49,13 +49,5 @@ public class Block implements Primary {
 
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visit(this);
-	}
-
-	public int line() {
-		return 0;
-	}
-
-	public String value() {
-		return "";
 	}
 }

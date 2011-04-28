@@ -25,4 +25,5 @@ package st.redline.smalltalk.interpreter;
 public interface Primary extends VisitableNode {
 	int line();
 	String value();
+	void foo();
 }

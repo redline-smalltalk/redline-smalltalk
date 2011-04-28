@@ -22,7 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
-public class PrimaryStatements implements Primary {
+public class PrimaryStatements extends BasePrimary {
 
 	protected final Statements statements;
 
@@ -32,13 +32,5 @@ public class PrimaryStatements implements Primary {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
-	}
-
-	public int line() {
-		return 0;
-	}
-
-	public String value() {
-		return "";
 	}
 }
