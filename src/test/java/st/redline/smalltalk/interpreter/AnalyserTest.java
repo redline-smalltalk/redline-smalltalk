@@ -215,6 +215,12 @@ public class AnalyserTest {
 		verify(generator).primitiveStringConversion("'Object'", 10);
 	}
 
+	@Test public void shouldRegisterClassFieldWhenKeywordExpressionIsSubclassExpression() {
+		when(keywordExpression.definesClassFields()).thenReturn(true);
+		analyser.visit(keywordExpression, "subclass:instanceVariableNames:", 1, 10);
+		verify(analyserContext, times(3)).registerVariables((List<VariableName>) any());
+	}
+
 	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {
 		analyser.visitEnd(keywordExpression, "at:", 1, 10);
 		verify(generator).keywordSend("at:", 1, 10);

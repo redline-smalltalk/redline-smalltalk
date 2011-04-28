@@ -249,13 +249,16 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visit(KeywordExpression) " + keywords);
+		if (keywordExpression.definesClassFields()) {
+			AnalyserContexts.AnalyserContext context = context();
+			context.registerVariables(keywordExpression.instanceVariableNames());
+			context.registerVariables(keywordExpression.classVariableNames());
+			context.registerVariables(keywordExpression.poolDictionaries());
+		}
 	}
 
 	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visitEnd(KeywordExpression) " + keywords);
-		if (keywords.startsWith("s"))
-			if (keywords.startsWith("subclass:instanceVariableNames:classVariableNames:poolDictionaries"))
-				registerClassRelatedVariables(null);
 		generator().keywordSend(keywords, argumentCount, line);
 	}
 
