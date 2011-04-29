@@ -251,9 +251,9 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(KeywordExpression) " + keywords);
 		if (keywordExpression.definesClassFields()) {
 			AnalyserContexts.AnalyserContext context = context();
-			context.registerVariables(keywordExpression.instanceVariableNames());
-			context.registerVariables(keywordExpression.classVariableNames());
-			context.registerVariables(keywordExpression.poolDictionaries());
+			context.registerInstanceVariables(keywordExpression.instanceVariableNames());
+			context.registerClassVariables(keywordExpression.classVariableNames());
+			context.registerPoolVariables(keywordExpression.poolDictionaries());
 		}
 	}
 

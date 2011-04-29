@@ -58,12 +58,32 @@ public class BinaryObjectDescription implements VisitableNode {
 			binarySelectorUnaryObjectDescription.accept(visitor);
 	}
 
-	public List<VariableName> toVariableNames() {
+	// todo.jcl - work out how to use generics here.
+
+	public List<InstanceVariableName> toInstanceVariableNames() {
 		int line = primary.line();
 		String[] names = primary.value().split(" ");
-		List<VariableName> variableNames = new ArrayList<VariableName>();
+		List<InstanceVariableName> variableNames = new ArrayList<InstanceVariableName>();
 		for (String name : names)
-			variableNames.add(new VariableName(name, line));
+			variableNames.add(new InstanceVariableName(name, line));
+		return variableNames;
+	}
+
+	public List<ClassVariableName> toClassVariableNames() {
+		int line = primary.line();
+		String[] names = primary.value().split(" ");
+		List<ClassVariableName> variableNames = new ArrayList<ClassVariableName>();
+		for (String name : names)
+			variableNames.add(new ClassVariableName(name, line));
+		return variableNames;
+	}
+
+	public List<PoolVariableName> toPoolVariableNames() {
+		int line = primary.line();
+		String[] names = primary.value().split(" ");
+		List<PoolVariableName> variableNames = new ArrayList<PoolVariableName>();
+		for (String name : names)
+			variableNames.add(new PoolVariableName(name, line));
 		return variableNames;
 	}
 }

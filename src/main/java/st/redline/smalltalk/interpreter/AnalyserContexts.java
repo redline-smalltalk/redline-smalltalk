@@ -95,6 +95,21 @@ public class AnalyserContexts {
 			return methodTemporariesCount;
 		}
 
+		public void registerInstanceVariables(List<InstanceVariableName> variableNames) {
+			for (InstanceVariableName variableName : variableNames)
+				registerVariable(variableName);
+		}
+
+		public void registerClassVariables(List<ClassVariableName> variableNames) {
+			for (ClassVariableName variableName : variableNames)
+				registerVariable(variableName);
+		}
+
+		public void registerPoolVariables(List<PoolVariableName> variableNames) {
+			for (PoolVariableName variableName : variableNames)
+				registerVariable(variableName);
+		}
+
 		public void registerVariables(List<VariableName> variableNames) {
 			for (VariableName variableName : variableNames)
 				registerVariable(variableName);

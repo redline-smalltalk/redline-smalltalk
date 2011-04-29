@@ -218,7 +218,7 @@ public class AnalyserTest {
 	@Test public void shouldRegisterClassFieldWhenKeywordExpressionIsSubclassExpression() {
 		when(keywordExpression.definesClassFields()).thenReturn(true);
 		analyser.visit(keywordExpression, "subclass:instanceVariableNames:", 1, 10);
-		verify(analyserContext, times(3)).registerVariables((List<VariableName>) any());
+		verify(analyserContext).registerInstanceVariables((List<InstanceVariableName>) any());
 	}
 
 	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {

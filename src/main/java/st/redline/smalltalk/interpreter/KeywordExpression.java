@@ -32,9 +32,9 @@ public class KeywordExpression implements MessageExpression {
 	private int line = -1;
 	private boolean monitoringSubclassFields = false;
 	private boolean definesClassFields = false;
-	private List<VariableName> instanceVariableNames;
-	private List<VariableName> classVariableNames;
-	private List<VariableName> poolDictionaries;
+	private List<InstanceVariableName> instanceVariableNames;
+	private List<ClassVariableName> classVariableNames;
+	private List<PoolVariableName> poolDictionaries;
 
 	public KeywordExpression() {
 		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
@@ -55,25 +55,25 @@ public class KeywordExpression implements MessageExpression {
 	private void monitorSubclassField(String keyword, BinaryObjectDescription binaryObjectDescription) {
 		if (instanceVariableNames == null && keyword.startsWith("instanceVariableNames:")) {
 			definesClassFields = true;
-			instanceVariableNames = binaryObjectDescription.toVariableNames();
+			instanceVariableNames = binaryObjectDescription.toInstanceVariableNames();
 		} else if (classVariableNames == null && keyword.startsWith("classVariableNames:")) {
 			definesClassFields = true;
-			classVariableNames = binaryObjectDescription.toVariableNames();
+			classVariableNames = binaryObjectDescription.toClassVariableNames();
 		} else if (poolDictionaries == null && keyword.startsWith("poolDictionaries:")) {
 			definesClassFields = true;
-			poolDictionaries = binaryObjectDescription.toVariableNames();
+			poolDictionaries = binaryObjectDescription.toPoolVariableNames();
 		}
 	}
 
-	public List<VariableName> instanceVariableNames() {
+	public List<InstanceVariableName> instanceVariableNames() {
 		return instanceVariableNames;
 	}
 
-	public List<VariableName> classVariableNames() {
+	public List<ClassVariableName> classVariableNames() {
 		return classVariableNames;
 	}
 
-	public List<VariableName> poolDictionaries() {
+	public List<PoolVariableName> poolDictionaries() {
 		return poolDictionaries;
 	}
 

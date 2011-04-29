@@ -63,7 +63,52 @@
       <file leaf-file-name="KeywordExpression.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/KeywordExpression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="13" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.0">
+            <state line="74" column="0" selection-start="3181" selection-end="3181" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BinaryObjectDescriptionTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/BinaryObjectDescriptionTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="74" column="21" selection-start="2911" selection-end="2911" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InstanceVariableName.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/InstanceVariableName.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="13" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassVariableName.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/ClassVariableName.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="19" selection-start="1292" selection-end="1309" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PoolVariableName.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/PoolVariableName.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="13" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BinaryObjectDescription.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BinaryObjectDescription.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="85" column="38" selection-start="3620" selection-end="3620" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -72,7 +117,7 @@
       <file leaf-file-name="Analyser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="330" column="45" selection-start="12189" selection-end="12189" vertical-scroll-proportion="0.0">
+            <state line="178" column="16" selection-start="6795" selection-end="6795" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -81,19 +126,26 @@
       <file leaf-file-name="AnalyserContexts.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="0" selection-start="3373" selection-end="3373" vertical-scroll-proportion="0.0">
+            <state line="113" column="17" selection-start="3760" selection-end="3760" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VariableRegistry.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AnalyserTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="220" column="72" selection-start="9037" selection-end="9037" vertical-scroll-proportion="0.6045455">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VariableRegistry.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/VariableRegistry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="20" selection-start="2328" selection-end="2328" vertical-scroll-proportion="0.83381087">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="27" column="13" selection-start="1339" selection-end="1339" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -108,22 +160,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/TrueReservedWord.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/SelfReservedWord.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralNumber.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralString.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralSymbol.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/NilReservedWord.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralCharacter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralArray.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BasePrimary.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/PrimaryStatements.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/PrimaryExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/VariableName.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/NumberConstant.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Block.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/VariableRegistry.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/InstanceVariableName.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/CLassVariableName.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/PoolVariableName.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/ClassVariableName.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BinaryObjectDescription.java" />
+        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/BinaryObjectDescriptionTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/KeywordExpression.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java" />
+        <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java" />
       </list>
     </option>
   </component>
@@ -160,6 +212,9 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Favorites" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -328,21 +383,18 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="OverrideImplement.combined" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -527,117 +579,105 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="5" selection-start="1584" selection-end="1584" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralSymbol.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="39" selection-start="1418" selection-end="1418" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/NilReservedWord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="26" selection-start="1354" selection-end="1354" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralCharacter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/LiteralArray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="5" selection-start="1486" selection-end="1486" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BasePrimary.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="1413" selection-end="1413" vertical-scroll-proportion="0.70916903">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BaseLiteral.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="22" selection-start="1301" selection-end="1301" vertical-scroll-proportion="0.5157593">
-          <folding />
-        </state>
+        <state line="24" column="22" selection-start="1301" selection-end="1301" vertical-scroll-proportion="0.5157593" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/PrimaryStatements.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="5" selection-start="1529" selection-end="1529" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="34" column="5" selection-start="1529" selection-end="1529" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/PrimaryExpression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="5" selection-start="1529" selection-end="1529" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/VariableName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="0" selection-start="2090" selection-end="2090" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="34" column="5" selection-start="1529" selection-end="1529" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/NumberConstant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="5" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="36" column="5" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Block.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="5" selection-start="1886" selection-end="1886" vertical-scroll-proportion="0.82808024">
+        <state line="51" column="5" selection-start="1886" selection-end="1886" vertical-scroll-proportion="0.82808024" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/VariableName.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/KeywordExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/InstanceVariableName.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.0">
+        <state line="24" column="13" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/PoolVariableName.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="330" column="45" selection-start="12189" selection-end="12189" vertical-scroll-proportion="0.0">
+        <state line="24" column="13" selection-start="1292" selection-end="1292" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/ClassVariableName.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="0" selection-start="3373" selection-end="3373" vertical-scroll-proportion="0.0">
+        <state line="24" column="19" selection-start="1292" selection-end="1309" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/VariableRegistry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="20" selection-start="2328" selection-end="2328" vertical-scroll-proportion="0.83381087">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="27" column="13" selection-start="1339" selection-end="1339" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BinaryObjectDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="38" selection-start="3620" selection-end="3620" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/BinaryObjectDescriptionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="21" selection-start="2911" selection-end="2911" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/KeywordExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="0" selection-start="3181" selection-end="3181" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="178" column="16" selection-start="6795" selection-end="6795" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="113" column="17" selection-start="3760" selection-end="3760" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="220" column="72" selection-start="9037" selection-end="9037" vertical-scroll-proportion="0.6045455">
+          <folding />
         </state>
       </provider>
     </entry>
