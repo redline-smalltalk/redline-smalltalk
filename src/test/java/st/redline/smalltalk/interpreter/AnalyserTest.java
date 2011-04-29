@@ -101,7 +101,7 @@ public class AnalyserTest {
 
 	@Test public void shouldNotRegisterMethodArgumentsWhenVisitUnarySelectorMessagePattern() {
 		analyser.visit(unarySelectorMessagePattern, "yourself", 10);
-		verify(analyserContext, never()).registerVariable((VariableName) any());
+		verify(analyserContext, never()).registerVariable((VariableName) any(), eq(false));
 	}
 
 	@Test public void shouldInitializeMethodItemsWhenVisitBinarySelectorMessagePattern() {
@@ -121,7 +121,7 @@ public class AnalyserTest {
 
 	@Test public void shouldRegisterMethodArgumentWhenVisitBinarySelectorMessagePattern() {
 		analyser.visit(binarySelectorMessagePattern, "+", 10, variableName);
-		verify(analyserContext).registerVariable(variableName);
+		verify(analyserContext).registerVariable(variableName, false);
 	}
 
 	@Test public void shouldInitializeMethodItemsWhenVisitKeywordSelectorMessagePattern() {
@@ -196,7 +196,7 @@ public class AnalyserTest {
 
 	@Test public void shouldRegisterTemporaryVariable() {
 		analyser.visit(temporary, 1, "Object", 32);
-		verify(analyserContext).registerVariable(temporary);
+		verify(analyserContext).registerVariable(temporary, false);
 	}
 
 	@Test public void shouldLookupVariableNameDeclarationToGetItsProperIndex() {

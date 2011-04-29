@@ -27,4 +27,8 @@ public class PoolVariableName extends VariableName {
 	public PoolVariableName(String value, int line) {
 		super(value, line);
 	}
+
+	public boolean isClassField() {
+		return true;
+	}
 }

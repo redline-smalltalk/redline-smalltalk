@@ -80,7 +80,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Temporary temporary, int index, String value, int line) {
 		System.out.println("visit(Temporary) " + value + " @ " + temporary.index);
-		context().registerVariable(temporary);
+		context().registerVariable(temporary, false);
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
@@ -162,7 +162,7 @@ public class Analyser implements NodeVisitor {
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
 		System.out.println("visit(BinarySelectorMessagePattern) " + binarySelector + " " + variableName.value);
 		AnalyserContexts.AnalyserContext context = context();
-		context.registerVariable(variableName);
+		context.registerVariable(variableName, false);
 		String sourceFileName = context.sourceFileName();
 		String methodClassName = sourceFileName + CLASS_NAME_SEPARATOR + binarySelector;
 		context.methodClassName(methodClassName);

@@ -27,4 +27,8 @@ public class InstanceVariableName extends VariableName {
 	public InstanceVariableName(String value, int line) {
 		super(value, line);
 	}
+
+	public boolean isClassField() {
+		return true;
+	}
 }

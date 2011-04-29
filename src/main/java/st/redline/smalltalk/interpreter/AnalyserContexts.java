@@ -25,15 +25,12 @@ package st.redline.smalltalk.interpreter;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class AnalyserContexts {
 
 	private final Stack<AnalyserContext> analyserContexts;
-	private final VariableRegistry variableRegistry;
+	private final Map<String, VariableName> classVariableRegistry;
 
 	public static AnalyserContexts create(Smalltalk smalltalk, Generator generator) {
 		return new AnalyserContexts(smalltalk, generator);
@@ -41,8 +38,8 @@ public class AnalyserContexts {
 
 	private AnalyserContexts(Smalltalk smalltalk, Generator generator) {
 		analyserContexts = new Stack<AnalyserContext>();
-		variableRegistry = new VariableRegistry();
-		push(new AnalyserContext(smalltalk, generator, variableRegistry));
+		classVariableRegistry = new Hashtable<String, VariableName>();
+		push(new AnalyserContext(smalltalk, generator));
 	}
 
 	public AnalyserContext current() {
@@ -57,18 +54,16 @@ public class AnalyserContexts {
 
 		private final Smalltalk smalltalk;
 		private final Generator generator;
-		private final VariableRegistry parentVariableRegistry;
 
 		private String methodClassName;
 		private String methodSelector;
 		private int methodArgumentCount;
 		private int methodTemporariesCount;
-		private VariableRegistry methodVariableRegistry;
+		private Map<String, VariableName> methodVariableRegistry = new HashMap<String, VariableName>();
 
-		public AnalyserContext(Smalltalk smalltalk, Generator generator, VariableRegistry parentVariableRegistry) {
+		public AnalyserContext(Smalltalk smalltalk, Generator generator) {
 			this.smalltalk = smalltalk;
 			this.generator = generator;
-			this.parentVariableRegistry = parentVariableRegistry;
 		}
 
 		public byte[] classResult() {
@@ -97,28 +92,32 @@ public class AnalyserContexts {
 
 		public void registerInstanceVariables(List<InstanceVariableName> variableNames) {
 			for (InstanceVariableName variableName : variableNames)
-				registerVariable(variableName);
+				registerVariable(variableName, true);
 		}
 
 		public void registerClassVariables(List<ClassVariableName> variableNames) {
 			for (ClassVariableName variableName : variableNames)
-				registerVariable(variableName);
+				registerVariable(variableName, true);
 		}
 
 		public void registerPoolVariables(List<PoolVariableName> variableNames) {
 			for (PoolVariableName variableName : variableNames)
-				registerVariable(variableName);
+				registerVariable(variableName, true);
 		}
 
 		public void registerVariables(List<VariableName> variableNames) {
 			for (VariableName variableName : variableNames)
-				registerVariable(variableName);
+				registerVariable(variableName, false);
 		}
 
-		public void registerVariable(VariableName variableName) {
-			if (variableRegistry.containsKey(variableName.value))
-				throw new IllegalStateException("Variable '" + variableName.value + "' already defined.");
-			variableRegistry.put(variableName.value, variableName);
+		public void registerVariable(VariableName variableName, boolean isClassField) {
+			System.out.println("registerVariable " + variableName.value + " " + isClassField);
+			if (methodVariableRegistry.containsKey(variableName.value) || classVariableRegistry.containsKey(variableName.value))
+				throw new IllegalStateException("Variable '" + variableName.value + "' already defined. Could be a Class field?");
+			if (isClassField)
+				classVariableRegistry.put(variableName.value, variableName);
+			else
+				methodVariableRegistry.put(variableName.value, variableName);
 		}
 
 		public String sourceFileName() {
@@ -147,11 +146,14 @@ public class AnalyserContexts {
 		public void initializePerMethodItems() {
 			methodArgumentCount = 0;
 			methodTemporariesCount = 0;
-			methodVariableRegistry = new VariableRegistry(parentVariableRegistry);
+			methodVariableRegistry = new HashMap<String, VariableName>();
 		}
 
 		public VariableName variableLookup(String variableName) {
-			return methodVariableRegistry.get(variableName);
+			VariableName foundVariableName = methodVariableRegistry.get(variableName);
+			if (foundVariableName != null)
+				return foundVariableName;
+			return classVariableRegistry.get(variableName);
 		}
 
 		public void methodArgumentCount(int methodArgumentCount) {
