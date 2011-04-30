@@ -194,9 +194,9 @@ public class Analyser implements NodeVisitor {
 		generator.openMethod(variableNames.size());
 	}
 
-	private void registerClassRelatedVariables(List<VariableName> variableNames) {
-		System.out.println("** registerClassRelatedVariables ** " + variableNames);
-	}
+//	private void registerClassRelatedVariables(List<VariableName> variableNames) {
+//		System.out.println("** registerClassRelatedVariables ** " + variableNames);
+//	}
 
 	public void visit(UnarySelector unarySelector, String value, int line) {
 		System.out.println("visit(UnarySelector) " + value);

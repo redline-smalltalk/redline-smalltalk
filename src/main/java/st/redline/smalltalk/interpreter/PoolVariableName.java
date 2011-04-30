@@ -24,8 +24,9 @@ package st.redline.smalltalk.interpreter;
 
 public class PoolVariableName extends VariableName {
 
-	public PoolVariableName(String value, int line) {
+	public PoolVariableName(String value, int line, int fieldOffset) {
 		super(value, line);
+		index = fieldOffset;
 	}
 
 	public boolean isClassField() {

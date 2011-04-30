@@ -62,28 +62,34 @@ public class BinaryObjectDescription implements VisitableNode {
 
 	public List<InstanceVariableName> toInstanceVariableNames() {
 		int line = primary.line();
-		String[] names = primary.value().split(" ");
+		String value = primary.value().substring(1, primary.value().length() - 1);
+		String[] names = value.split(" ");
+		int fieldOffset = 0;
 		List<InstanceVariableName> variableNames = new ArrayList<InstanceVariableName>();
 		for (String name : names)
-			variableNames.add(new InstanceVariableName(name, line));
+			variableNames.add(new InstanceVariableName(name, line, fieldOffset++));
 		return variableNames;
 	}
 
 	public List<ClassVariableName> toClassVariableNames() {
 		int line = primary.line();
-		String[] names = primary.value().split(" ");
+		String value = primary.value().substring(1, primary.value().length() - 1);
+		String[] names = value.split(" ");
+		int fieldOffset = 0;
 		List<ClassVariableName> variableNames = new ArrayList<ClassVariableName>();
 		for (String name : names)
-			variableNames.add(new ClassVariableName(name, line));
+			variableNames.add(new ClassVariableName(name, line, fieldOffset++));
 		return variableNames;
 	}
 
 	public List<PoolVariableName> toPoolVariableNames() {
 		int line = primary.line();
-		String[] names = primary.value().split(" ");
+		String value = primary.value().substring(1, primary.value().length() - 1);
+		String[] names = value.split(" ");
+		int fieldOffset = 0;
 		List<PoolVariableName> variableNames = new ArrayList<PoolVariableName>();
 		for (String name : names)
-			variableNames.add(new PoolVariableName(name, line));
+			variableNames.add(new PoolVariableName(name, line, fieldOffset++));
 		return variableNames;
 	}
 }

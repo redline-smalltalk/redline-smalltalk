@@ -2,8 +2,8 @@
 "im a comment"
 
 Object subclass: #TestClass
-	instanceVariableNames: 'instVars'
+	instanceVariableNames: 'instVarOne instVarTwo'
 	classVariableNames: 'ClassVars'
-	poolDictionaries: 'PooliVars'
+	poolDictionaries: 'PoolVars'
 	category: 'Test'
 
