@@ -111,7 +111,7 @@ public class AnalyserContexts {
 		}
 
 		public void registerVariable(VariableName variableName, boolean isClassField) {
-			System.out.println("registerVariable " + variableName.value + " " + isClassField);
+			System.out.println("registerVariable " + variableName.value + " @ " + variableName.index + " " + isClassField);
 			if (methodVariableRegistry.containsKey(variableName.value) || classVariableRegistry.containsKey(variableName.value))
 				throw new IllegalStateException("Variable '" + variableName.value + "' already defined. Could be a Class field?");
 			if (isClassField)

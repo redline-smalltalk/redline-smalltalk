@@ -69,10 +69,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnalyserContexts.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AnalyserContexts.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="93" column="0" selection-start="3070" selection-end="3070" vertical-scroll-proportion="0.0">
+            <state line="113" column="109" selection-start="3884" selection-end="3884" vertical-scroll-proportion="0.8748159">
               <folding />
             </state>
           </provider>
@@ -87,10 +87,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BinaryObjectDescriptionTest.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BinaryObjectDescriptionTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/BinaryObjectDescriptionTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="60" selection-start="2894" selection-end="2894" vertical-scroll-proportion="0.71281296">
+            <state line="73" column="60" selection-start="2894" selection-end="2894" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -143,12 +143,12 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RData.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/InstanceVariableName.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/ClassVariableName.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/PoolVariableName.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/BinaryObjectDescription.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/BinaryObjectDescriptionTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java" />
       </list>
     </option>
   </component>
@@ -620,13 +620,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="0" selection-start="3070" selection-end="3070" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/InstanceVariableName.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="71" selection-start="1405" selection-end="1405" vertical-scroll-proportion="0.0">
@@ -657,7 +650,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/BinaryObjectDescriptionTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="60" selection-start="2894" selection-end="2894" vertical-scroll-proportion="0.71281296">
+        <state line="73" column="60" selection-start="2894" selection-end="2894" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AnalyserContexts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="113" column="109" selection-start="3884" selection-end="3884" vertical-scroll-proportion="0.8748159">
           <folding />
         </state>
       </provider>
