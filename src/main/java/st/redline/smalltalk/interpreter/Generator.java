@@ -392,6 +392,16 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "createBlock", "(Ljava/lang/String;)Lst/redline/smalltalk/RBlock;");
 	}
 
+	public void storeIntoField(int index) {
+		System.out.println("STORE field " + index);
+		throw new IllegalArgumentException("TODO - add generation of field store.");
+	}
+
+	public void loadFromField(int index) {
+		System.out.println("LOAD field " + index);
+		throw new IllegalArgumentException("TODO - add generation of field load.");
+	}
+
 	static class Context {
 		ClassWriter classWriter;
 		String className;

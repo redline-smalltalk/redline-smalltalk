@@ -22,6 +22,8 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk;
 
+import java.util.ArrayList;
+
 public abstract class RData {
 	public abstract boolean isClass();
 	public abstract boolean isBootstrapped();
@@ -32,4 +34,20 @@ public abstract class RData {
 	public abstract void primitiveValue(Object value);
 	public abstract RMethod methodAt(String selector);
 	public abstract void methodAtPut(String selector, RMethod method);
+
+	public RObject fieldAt(int index) {
+		if (fields != null && index < fields.size()) {
+			return fields.get(index);
+		}
+		throw new IllegalStateException("Field access (" + index + ") out of bounds.");
+	}
+
+	public void fieldAtPut(int index, RObject object) {
+		if (fields == null)
+			fields = new ArrayList<RObject>();
+		fields.ensureCapacity(index);
+		fields.add(index, object);
+	}
+
+	public ArrayList<RObject> fields;
 }

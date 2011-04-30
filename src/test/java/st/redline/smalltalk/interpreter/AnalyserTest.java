@@ -45,6 +45,7 @@ public class AnalyserTest {
 	@Mock LiteralString literalString;
 	@Mock VariableName className;
 	@Mock VariableName variableName;
+	@Mock VariableName reference;
 	@Mock KeywordExpression keywordExpression;
 	@Mock SimpleExpression simpleExpression;
 	@Mock UnarySelectorMessagePattern unarySelectorMessagePattern;
@@ -201,8 +202,19 @@ public class AnalyserTest {
 
 	@Test public void shouldLookupVariableNameDeclarationToGetItsProperIndex() {
 		when(variableName.isClassReference()).thenReturn(false);
+		when(variableName.isClassField()).thenReturn(false);
 		analyser.visit(variableName, "Object", 10);
 		verify(analyserContext).variableLookup("Object");
+	}
+
+	@Test public void shouldLoadVariableFromLocalWhenVariableIsLocal() {
+		when(variableName.isClassReference()).thenReturn(false);
+		when(variableName.isClassField()).thenReturn(false);
+		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
+		when(reference.isClassField()).thenReturn(false);
+		when(analyserContext.variableLookup("Object")).thenReturn(reference);
+		analyser.visit(variableName, "Object", 10);
+		verify(generator).loadFromLocal(0);
 	}
 
 	@Test public void shouldConvertPrimitiveSymbols() {

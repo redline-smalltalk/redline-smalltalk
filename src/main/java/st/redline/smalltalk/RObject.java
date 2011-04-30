@@ -35,7 +35,7 @@ public class RObject {
 
 	private final static Logger log = LoggerFactory.getLogger(RObject.class);
 
-	protected enum Datum { CLASS, INSTANCE, PRIMITIVEINSTANCE };
+	protected enum Datum { CLASS, INSTANCE, PRIMITIVEINSTANCE }
 
 	public static final int CLASS_OFFSET = 0;
 	public static final int SUPERCLASS_OFFSET = 1;
