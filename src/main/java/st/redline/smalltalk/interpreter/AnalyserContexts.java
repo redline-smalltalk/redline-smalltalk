@@ -93,8 +93,8 @@ public class AnalyserContexts {
 			return methodTemporariesCount;
 		}
 
-		public void configureInstanceAndClassSize(String superclassName) {
-			System.out.println("configureInstanceAndClassSize( " + superclassName + " )");
+		public void configureInstanceClassAndPoolSize(String superclassName) {
+			System.out.println("configureInstanceClassAndPoolSize( " + superclassName + " )");
 		}
 
 		public void registerInstanceVariables(List<InstanceVariableName> variableNames) {
