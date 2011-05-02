@@ -24,9 +24,8 @@ package st.redline.smalltalk.interpreter;
 
 public class InstanceVariableName extends VariableName {
 
-	public InstanceVariableName(String value, int line, int fieldOffset) {
+	public InstanceVariableName(String value, int line) {
 		super(value, line);
-		index = fieldOffset;
 	}
 
 	public boolean isClassField() {

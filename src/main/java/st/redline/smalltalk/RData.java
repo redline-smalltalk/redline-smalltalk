@@ -36,17 +36,17 @@ public abstract class RData {
 	public abstract void methodAtPut(String selector, RMethod method);
 
 	public RObject fieldAt(int index) {
-		if (fields != null && index < fields.size()) {
-			return fields.get(index);
-		}
-		throw new IllegalStateException("Field access (" + index + ") out of bounds.");
+		return fields.get(index);
 	}
 
 	public void fieldAtPut(int index, RObject object) {
+		fields.add(index, object);
+	}
+
+	protected void ensureFieldCapacity(int size) {
 		if (fields == null)
 			fields = new ArrayList<RObject>();
-		fields.ensureCapacity(index);
-		fields.add(index, object);
+		fields.ensureCapacity(size);
 	}
 
 	public ArrayList<RObject> fields;

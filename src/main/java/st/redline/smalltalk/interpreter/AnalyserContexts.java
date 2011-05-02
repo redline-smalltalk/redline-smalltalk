@@ -60,6 +60,9 @@ public class AnalyserContexts {
 		private int methodArgumentCount;
 		private int methodTemporariesCount;
 		private Map<String, VariableName> methodVariableRegistry = new HashMap<String, VariableName>();
+		private int instanceSize;
+		private int classSize;
+		private int poolSize;
 
 		public AnalyserContext(Smalltalk smalltalk, Generator generator) {
 			this.smalltalk = smalltalk;
@@ -90,19 +93,29 @@ public class AnalyserContexts {
 			return methodTemporariesCount;
 		}
 
+		public void configureInstanceAndClassSize(String superclassName) {
+			System.out.println("configureInstanceAndClassSize( " + superclassName + " )");
+		}
+
 		public void registerInstanceVariables(List<InstanceVariableName> variableNames) {
-			for (InstanceVariableName variableName : variableNames)
+			for (InstanceVariableName variableName : variableNames) {
+				variableName.index(instanceSize++);
 				registerVariable(variableName, true);
+			}
 		}
 
 		public void registerClassVariables(List<ClassVariableName> variableNames) {
-			for (ClassVariableName variableName : variableNames)
+			for (ClassVariableName variableName : variableNames) {
+				variableName.index(classSize++);
 				registerVariable(variableName, true);
+			}
 		}
 
 		public void registerPoolVariables(List<PoolVariableName> variableNames) {
-			for (PoolVariableName variableName : variableNames)
+			for (PoolVariableName variableName : variableNames) {
+				variableName.index(poolSize++);
 				registerVariable(variableName, true);
+			}
 		}
 
 		public void registerVariables(List<VariableName> variableNames) {

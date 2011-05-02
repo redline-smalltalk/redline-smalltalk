@@ -64,10 +64,9 @@ public class BinaryObjectDescription implements VisitableNode {
 		int line = primary.line();
 		String value = primary.value().substring(1, primary.value().length() - 1);
 		String[] names = value.split(" ");
-		int fieldOffset = 0;
 		List<InstanceVariableName> variableNames = new ArrayList<InstanceVariableName>();
 		for (String name : names)
-			variableNames.add(new InstanceVariableName(name, line, fieldOffset++));
+			variableNames.add(new InstanceVariableName(name, line));
 		return variableNames;
 	}
 
@@ -75,10 +74,9 @@ public class BinaryObjectDescription implements VisitableNode {
 		int line = primary.line();
 		String value = primary.value().substring(1, primary.value().length() - 1);
 		String[] names = value.split(" ");
-		int fieldOffset = 0;
 		List<ClassVariableName> variableNames = new ArrayList<ClassVariableName>();
 		for (String name : names)
-			variableNames.add(new ClassVariableName(name, line, fieldOffset++));
+			variableNames.add(new ClassVariableName(name, line));
 		return variableNames;
 	}
 
@@ -89,7 +87,7 @@ public class BinaryObjectDescription implements VisitableNode {
 		int fieldOffset = 0;
 		List<PoolVariableName> variableNames = new ArrayList<PoolVariableName>();
 		for (String name : names)
-			variableNames.add(new PoolVariableName(name, line, fieldOffset++));
+			variableNames.add(new PoolVariableName(name, line));
 		return variableNames;
 	}
 }

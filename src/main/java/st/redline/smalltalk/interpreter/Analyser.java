@@ -33,6 +33,7 @@ public class Analyser implements NodeVisitor {
 
 	private final List<byte[]> methodClasses;
 	private final AnalyserContexts analyserContexts;
+	private String classReferenced;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this(generator, AnalyserContexts.create(smalltalk, generator));
@@ -85,9 +86,11 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(VariableName variableName, String value, int line) {
 		System.out.println("visit(VariableName) " + value);
-		if (variableName.isClassReference())
+		if (variableName.isClassReference()) {
 			generator().classLookup(value, line);
-		else {
+			if (classReferenced == null)
+				classReferenced = value;
+		} else {
 			VariableName reference = context().variableLookup(value);
 			if (reference == null)
 				throw new IllegalStateException("Reference of undefined variable or temporary '" + value + "'.");
@@ -194,10 +197,6 @@ public class Analyser implements NodeVisitor {
 		generator.openMethod(variableNames.size());
 	}
 
-//	private void registerClassRelatedVariables(List<VariableName> variableNames) {
-//		System.out.println("** registerClassRelatedVariables ** " + variableNames);
-//	}
-
 	public void visit(UnarySelector unarySelector, String value, int line) {
 		System.out.println("visit(UnarySelector) " + value);
 	}
@@ -258,6 +257,8 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(KeywordExpression) " + keywords);
 		if (keywordExpression.definesClassFields()) {
 			AnalyserContexts.AnalyserContext context = context();
+			context.configureInstanceAndClassSize(classReferenced);
+			classReferenced = null;
 			context.registerInstanceVariables(keywordExpression.instanceVariableNames());
 			context.registerClassVariables(keywordExpression.classVariableNames());
 			context.registerPoolVariables(keywordExpression.poolDictionaries());

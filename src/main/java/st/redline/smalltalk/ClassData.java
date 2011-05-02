@@ -29,10 +29,33 @@ public class ClassData extends RData {
 	private final Map<String, RMethod> methodDictionary;
 	private String name;
 	private boolean bootstrapped;
+	private int instanceSize;
+	private int classSize;
+
+	// todo.jcl - need to handle pool variables at some point.
 
 	public ClassData(Map<String, RMethod> methodDictionary) {
 		super();
 		this.methodDictionary = methodDictionary;
+		this.instanceSize = 0;
+		this.classSize = 0;
+	}
+
+	public int instanceSize() {
+		return instanceSize;
+	}
+
+	public void instanceSize(int size) {
+		instanceSize = size;
+	}
+
+	public int classSize() {
+		return classSize;
+	}
+
+	public void classSize(int size) {
+		ensureFieldCapacity(size);
+		classSize = size;
 	}
 
 	public boolean isClass() {
