@@ -31,6 +31,7 @@ public class ClassData extends RData {
 	private boolean bootstrapped;
 	private int instanceSize;
 	private int classSize;
+	private int poolSize;
 
 	// todo.jcl - need to handle pool variables at some point.
 
@@ -39,6 +40,7 @@ public class ClassData extends RData {
 		this.methodDictionary = methodDictionary;
 		this.instanceSize = 0;
 		this.classSize = 0;
+		this.poolSize = 0;
 	}
 
 	public int instanceSize() {
@@ -56,6 +58,14 @@ public class ClassData extends RData {
 	public void classSize(int size) {
 		ensureFieldCapacity(size);
 		classSize = size;
+	}
+
+	public int poolSize() {
+		return poolSize;
+	}
+
+	public void poolSize(int size) {
+		poolSize = size;
 	}
 
 	public boolean isClass() {

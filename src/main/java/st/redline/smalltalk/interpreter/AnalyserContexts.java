@@ -95,6 +95,9 @@ public class AnalyserContexts {
 
 		public void configureInstanceClassAndPoolSize(String superclassName) {
 			System.out.println("configureInstanceClassAndPoolSize( " + superclassName + " )");
+			// use Smalltalk.primitiveAt() to get superclass and then inspect it's values.
+			// using methods on data field like classSize().
+			// eg: instanceSize = superclass.data.instanceSize();
 		}
 
 		public void registerInstanceVariables(List<InstanceVariableName> variableNames) {

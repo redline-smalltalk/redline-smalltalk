@@ -34,6 +34,9 @@ public abstract class RData {
 	public abstract void primitiveValue(Object value);
 	public abstract RMethod methodAt(String selector);
 	public abstract void methodAtPut(String selector, RMethod method);
+	public abstract int instanceSize();
+	public abstract int classSize();
+	public abstract int poolSize();
 
 	public RObject fieldAt(int index) {
 		return fields.get(index);

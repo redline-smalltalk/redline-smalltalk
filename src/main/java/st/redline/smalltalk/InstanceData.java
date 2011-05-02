@@ -64,6 +64,22 @@ public class InstanceData extends RData {
 		throw instancesDontHaveMethodDictionaries();
 	}
 
+	public int instanceSize() {
+		throw instancesCantBeQueriedForSize();
+	}
+
+	public int classSize() {
+		throw instancesCantBeQueriedForSize();
+	}
+
+	public int poolSize() {
+		throw instancesCantBeQueriedForSize();
+	}
+
+	private IllegalStateException instancesCantBeQueriedForSize() {
+		return new IllegalStateException("Object instances cant be queried for size.");
+	}
+
 	private IllegalStateException instancesDontHaveMethodDictionaries() {
 		return new IllegalStateException("Object instances don't have method dictionaries.");
 	}
