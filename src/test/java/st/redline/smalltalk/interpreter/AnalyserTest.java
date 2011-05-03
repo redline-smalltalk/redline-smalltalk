@@ -233,6 +233,15 @@ public class AnalyserTest {
 		verify(analyserContext).registerInstanceVariables((List<InstanceVariableName>) any());
 	}
 
+	@Test public void shouldInitializeSizesAfterSubclassExpression() {
+		when(analyserContext.instanceSize()).thenReturn(1);
+		when(analyserContext.classSize()).thenReturn(2);
+		when(analyserContext.poolSize()).thenReturn(3);
+		when(keywordExpression.definesClass()).thenReturn(true);
+		analyser.visitEnd(keywordExpression, "at:", 1, 10);
+		verify(generator).initializeSizes(1, 2, 3);
+	}
+
 	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {
 		analyser.visitEnd(keywordExpression, "at:", 1, 10);
 		verify(generator).keywordSend("at:", 1, 10);

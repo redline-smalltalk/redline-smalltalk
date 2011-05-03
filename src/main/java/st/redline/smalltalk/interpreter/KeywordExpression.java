@@ -31,6 +31,7 @@ public class KeywordExpression implements MessageExpression {
 	private final StringBuffer keywords;
 	private int line = -1;
 	private boolean monitoringSubclassFields = false;
+	private boolean definesClass = false;
 	private boolean definesClassFields = false;
 	private List<InstanceVariableName> instanceVariableNames;
 	private List<ClassVariableName> classVariableNames;
@@ -53,6 +54,7 @@ public class KeywordExpression implements MessageExpression {
 	}
 
 	private void monitorSubclassField(String keyword, BinaryObjectDescription binaryObjectDescription) {
+		definesClass = true;
 		if (instanceVariableNames == null && keyword.startsWith("instanceVariableNames:")) {
 			definesClassFields = true;
 			instanceVariableNames = binaryObjectDescription.toInstanceVariableNames();
@@ -75,6 +77,10 @@ public class KeywordExpression implements MessageExpression {
 
 	public List<PoolVariableName> poolDictionaries() {
 		return poolDictionaries;
+	}
+
+	public boolean definesClass() {
+		return definesClass;
 	}
 
 	public boolean definesClassFields() {

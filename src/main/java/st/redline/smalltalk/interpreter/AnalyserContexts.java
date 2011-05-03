@@ -94,6 +94,18 @@ public class AnalyserContexts {
 			return methodTemporariesCount;
 		}
 
+		public int instanceSize() {
+			return instanceSize;
+		}
+
+		public int classSize() {
+			return classSize;
+		}
+
+		public int poolSize() {
+			return poolSize;
+		}
+
 		public void configureInstanceClassAndPoolSize(String superclassName) {
 			System.out.println("configureInstanceClassAndPoolSize( " + superclassName + " )");
 			RObject superclass = smalltalk.primitiveAt(superclassName);
