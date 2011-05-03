@@ -99,7 +99,7 @@
       <file leaf-file-name="Generator.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="405" column="104" selection-start="20446" selection-end="20446" vertical-scroll-proportion="0.38922155">
+            <state line="405" column="83" selection-start="20425" selection-end="20425" vertical-scroll-proportion="0.38922155">
               <folding />
             </state>
           </provider>
@@ -648,7 +648,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Generator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="405" column="104" selection-start="20446" selection-end="20446" vertical-scroll-proportion="0.38922155">
+        <state line="405" column="83" selection-start="20425" selection-end="20425" vertical-scroll-proportion="0.38922155">
           <folding />
         </state>
       </provider>
