@@ -22,6 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
+import st.redline.smalltalk.RObject;
 import st.redline.smalltalk.Smalltalk;
 import st.redline.smalltalk.SourceFile;
 
@@ -95,9 +96,10 @@ public class AnalyserContexts {
 
 		public void configureInstanceClassAndPoolSize(String superclassName) {
 			System.out.println("configureInstanceClassAndPoolSize( " + superclassName + " )");
-			// use Smalltalk.primitiveAt() to get superclass and then inspect it's values.
-			// using methods on data field like classSize().
-			// eg: instanceSize = superclass.data.instanceSize();
+			RObject superclass = smalltalk.primitiveAt(superclassName);
+			instanceSize = superclass.data.instanceSize();
+			classSize = superclass.data.classSize();
+			poolSize = superclass.data.poolSize();
 		}
 
 		public void registerInstanceVariables(List<InstanceVariableName> variableNames) {

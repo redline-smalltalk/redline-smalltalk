@@ -55,6 +55,10 @@ public class Bootstrapper {
 		metaclassClass.oop[RObject.SUPERCLASS_OFFSET] = classDescriptionClass;
 		metaclassClass.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET] = classDescriptionClass.oop[RObject.CLASS_OFFSET];
 
+		// fixup sizes
+		// TODO.jcl - fixup the other bootstrapped classes.
+		((ClassData) objectClass.data).classSize(1); // DependentsFields
+
 		// create and register 'nil' instance.
 		RObject nil = RObject.instanceInstance();
 		nil.oop[RObject.CLASS_OFFSET] = undefinedObjectClass;
