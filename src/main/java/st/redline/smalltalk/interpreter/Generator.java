@@ -403,6 +403,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void initializeSizes(int instanceSize, int classSize, int poolSize) {
+		System.out.println("initializeSizes(" + instanceSize + " , " + classSize + " , " + poolSize + ")");
 	}
 
 	static class Context {
