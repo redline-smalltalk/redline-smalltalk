@@ -28,6 +28,10 @@ public class ClassVariableName extends VariableName {
 		super(value, line);
 	}
 
+	public boolean isField() {
+		return true;
+	}
+
 	public boolean isClassField() {
 		return true;
 	}

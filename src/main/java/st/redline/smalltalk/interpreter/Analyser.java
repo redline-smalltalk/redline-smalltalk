@@ -95,7 +95,7 @@ public class Analyser implements NodeVisitor {
 			VariableName reference = context().variableLookup(value);
 			if (reference == null)
 				throw new IllegalStateException("Reference of undefined variable or temporary '" + value + "'.");
-			if (reference.isClassField())
+			if (reference.isField())
 				handleOperationOnClassField(variableName.isOnLoadSideOfExpression(), reference);
 			else
 				handleOperationOnLocalField(variableName.isOnLoadSideOfExpression(), reference);

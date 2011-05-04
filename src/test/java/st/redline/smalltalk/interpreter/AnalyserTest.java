@@ -202,16 +202,16 @@ public class AnalyserTest {
 
 	@Test public void shouldLookupVariableNameDeclarationToGetItsProperIndex() {
 		when(variableName.isClassReference()).thenReturn(false);
-		when(variableName.isClassField()).thenReturn(false);
+		when(variableName.isField()).thenReturn(false);
 		analyser.visit(variableName, "Object", 10);
 		verify(analyserContext).variableLookup("Object");
 	}
 
 	@Test public void shouldLoadVariableFromLocalWhenVariableIsLocal() {
 		when(variableName.isClassReference()).thenReturn(false);
-		when(variableName.isClassField()).thenReturn(false);
+		when(variableName.isField()).thenReturn(false);
 		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
-		when(reference.isClassField()).thenReturn(false);
+		when(reference.isField()).thenReturn(false);
 		when(analyserContext.variableLookup("Object")).thenReturn(reference);
 		analyser.visit(variableName, "Object", 10);
 		verify(generator).loadFromLocal(0);

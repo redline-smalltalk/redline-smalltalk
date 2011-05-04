@@ -44,7 +44,19 @@ public class VariableName extends BasePrimary {
 		this.index = index;
 	}
 
+	public boolean isField() {
+		return false;
+	}
+
 	public boolean isClassField() {
+		return false;
+	}
+
+	public boolean isClassInstanceField() {
+		return false;
+	}
+
+	public boolean isInstanceField() {
 		return false;
 	}
 

@@ -28,7 +28,11 @@ public class InstanceVariableName extends VariableName {
 		super(value, line);
 	}
 
-	public boolean isClassField() {
+	public boolean isField() {
+		return true;
+	}
+
+	public boolean isInstanceField() {
 		return true;
 	}
 }

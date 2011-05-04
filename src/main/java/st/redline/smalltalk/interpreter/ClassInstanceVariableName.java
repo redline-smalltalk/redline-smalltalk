@@ -22,13 +22,17 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk.interpreter;
 
-public class PoolVariableName extends VariableName {
+public class ClassInstanceVariableName extends VariableName {
 
-	public PoolVariableName(String value, int line) {
+	public ClassInstanceVariableName(String value, int line) {
 		super(value, line);
 	}
 
 	public boolean isField() {
+		return true;
+	}
+
+	public boolean isClassInstanceField() {
 		return true;
 	}
 }
