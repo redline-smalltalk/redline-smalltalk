@@ -34,6 +34,7 @@ public class Analyser implements NodeVisitor {
 	private final List<byte[]> methodClasses;
 	private final AnalyserContexts analyserContexts;
 	private String classReferenced;
+	private boolean inClassMethod = false;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this(generator, AnalyserContexts.create(smalltalk, generator));
@@ -94,18 +95,25 @@ public class Analyser implements NodeVisitor {
 			VariableName reference = context().variableLookup(value);
 			if (reference == null)
 				throw new IllegalStateException("Reference of undefined variable or temporary '" + value + "'.");
-			if (reference.isClassField()) {
-				if (variableName.isOnLoadSideOfExpression())
-					generator().loadFromField(reference.index);
-				else
-					generator().storeIntoField(reference.index);
-			} else {
-				if (variableName.isOnLoadSideOfExpression())
-					generator().loadFromLocal(reference.index);
-				else
-					generator().storeIntoLocal(reference.index);
-			}
+			if (reference.isClassField())
+				handleOperationOnClassField(variableName.isOnLoadSideOfExpression(), reference);
+			else
+				handleOperationOnLocalField(variableName.isOnLoadSideOfExpression(), reference);
 		}
+	}
+
+	private void handleOperationOnClassField(boolean onLoadSideOfExpression, VariableName reference) {
+		if (onLoadSideOfExpression)
+			generator().loadFromField(reference.index);
+		else
+			generator().storeIntoField(reference.index);
+	}
+
+	private void handleOperationOnLocalField(boolean onLoadSideOfExpression, VariableName reference) {
+		if (onLoadSideOfExpression)
+			generator().loadFromLocal(reference.index);
+		else
+			generator().storeIntoLocal(reference.index);
 	}
 
 	public void visit(Statements statements) {
@@ -130,6 +138,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(InstanceMethod instanceMethod) {
 		System.out.println("visit(InstanceMethod)");
+		inClassMethod = false;
 		context().initializePerMethodItems();
 	}
 
@@ -144,6 +153,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(ClassMethod classMethod) {
 		System.out.println("visit(ClassMethod)");
+		inClassMethod = true;
 		context().initializePerMethodItems();
 	}
 
