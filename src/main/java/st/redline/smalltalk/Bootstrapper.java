@@ -24,7 +24,7 @@ package st.redline.smalltalk;
 
 public class Bootstrapper {
 
-	private static final String SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:";
+	private static final String SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:classInstanceVariableNames:poolDictionaries:category:";
 	private static final String NEW_SELECTOR = "new";
 	private static final String METACLASS_NAME = "Metaclass";
 	private static final boolean BOOTSTRAPPED = true;
@@ -121,7 +121,7 @@ public class Bootstrapper {
 	}
 
 	public class PrimitiveSubclassMethod extends RMethod {
-		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
+		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6) {
 			System.out.println("** CREATING SUBCLASS ** " + arg1.data.primitiveValue().toString() + " subclass of " + receiver);
 			// There is more to do here just not yet.
 			String name = arg1.data.primitiveValue().toString();

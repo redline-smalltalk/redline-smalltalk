@@ -93,7 +93,7 @@ public class BootstrapperTest {
 		RObject protoObjectClass = map.get("ProtoObject");
 		RObject protoObjectMetaclass = protoObjectClass.oop[RObject.CLASS_OFFSET];
 		RObject classClass = protoObjectMetaclass.oop[RObject.SUPERCLASS_OFFSET];
-		assertNotNull(classClass.data.methodAt("subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:"));
+		assertNotNull(classClass.data.methodAt("subclass:instanceVariableNames:classVariableNames:classInstanceVariableNames:poolDictionaries:category:"));
 	}
 
 	@Test public void shouldInitializeClassNames() {
