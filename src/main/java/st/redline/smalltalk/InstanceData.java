@@ -72,6 +72,10 @@ public class InstanceData extends RData {
 		throw instancesCantBeQueriedForSize();
 	}
 
+	public int classInstanceSize() {
+		throw instancesCantBeQueriedForSize();
+	}
+
 	public int poolSize() {
 		throw instancesCantBeQueriedForSize();
 	}

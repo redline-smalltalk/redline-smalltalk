@@ -82,6 +82,17 @@ public class BinaryObjectDescription implements VisitableNode {
 		return variableNames;
 	}
 
+	public List<ClassInstanceVariableName> toClassInstanceVariableNames() {
+		int line = primary.line();
+		String value = primary.value().substring(1, primary.value().length() - 1);
+		String[] names = value.split(" ");
+		List<ClassInstanceVariableName> variableNames = new ArrayList<ClassInstanceVariableName>();
+		if (names[0].length() != 0)
+			for (String name : names)
+				variableNames.add(new ClassInstanceVariableName(name, line));
+		return variableNames;
+	}
+
 	public List<PoolVariableName> toPoolVariableNames() {
 		int line = primary.line();
 		String value = primary.value().substring(1, primary.value().length() - 1);

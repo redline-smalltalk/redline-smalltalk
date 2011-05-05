@@ -36,6 +36,7 @@ public abstract class RData {
 	public abstract void methodAtPut(String selector, RMethod method);
 	public abstract int instanceSize();
 	public abstract int classSize();
+	public abstract int classInstanceSize();
 	public abstract int poolSize();
 
 	public RObject fieldAt(int index) {

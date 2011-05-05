@@ -271,6 +271,7 @@ public class Analyser implements NodeVisitor {
 			classReferenced = null;
 			context.registerInstanceVariables(keywordExpression.instanceVariableNames());
 			context.registerClassVariables(keywordExpression.classVariableNames());
+			context.registerClassInstanceVariables(keywordExpression.classInstanceVariableNames());
 			context.registerPoolVariables(keywordExpression.poolDictionaries());
 		}
 	}
@@ -280,7 +281,7 @@ public class Analyser implements NodeVisitor {
 		generator().keywordSend(keywords, argumentCount, line);
 		if (keywordExpression.definesClass()) {
 			AnalyserContexts.AnalyserContext context = context();
-			generator().initializeSizes(context.instanceSize(), context.classSize(), context.poolSize());
+			generator().initializeSizes(context.instanceSize(), context.classSize(), context.classInstanceSize(), context.poolSize());
 		}
 	}
 

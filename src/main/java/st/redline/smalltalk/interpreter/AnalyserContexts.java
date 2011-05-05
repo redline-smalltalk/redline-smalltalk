@@ -63,6 +63,7 @@ public class AnalyserContexts {
 		private Map<String, VariableName> methodVariableRegistry = new HashMap<String, VariableName>();
 		private int instanceSize;
 		private int classSize;
+		private int classInstanceSize;
 		private int poolSize;
 
 		public AnalyserContext(Smalltalk smalltalk, Generator generator) {
@@ -102,6 +103,10 @@ public class AnalyserContexts {
 			return classSize;
 		}
 
+		public int classInstanceSize() {
+			return classInstanceSize;
+		}
+
 		public int poolSize() {
 			return poolSize;
 		}
@@ -111,6 +116,7 @@ public class AnalyserContexts {
 			RObject superclass = smalltalk.primitiveAt(superclassName);
 			instanceSize = superclass.data.instanceSize();
 			classSize = superclass.data.classSize();
+			classInstanceSize = superclass.data.classInstanceSize();
 			poolSize = superclass.data.poolSize();
 		}
 
@@ -124,6 +130,13 @@ public class AnalyserContexts {
 		public void registerClassVariables(List<ClassVariableName> variableNames) {
 			for (ClassVariableName variableName : variableNames) {
 				variableName.index(classSize++);
+				registerVariable(variableName, true);
+			}
+		}
+
+		public void registerClassInstanceVariables(List<ClassInstanceVariableName> variableNames) {
+			for (ClassInstanceVariableName variableName : variableNames) {
+				variableName.index(classInstanceSize++);
 				registerVariable(variableName, true);
 			}
 		}

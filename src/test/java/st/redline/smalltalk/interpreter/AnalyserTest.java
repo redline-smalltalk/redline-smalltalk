@@ -236,10 +236,11 @@ public class AnalyserTest {
 	@Test public void shouldInitializeSizesAfterSubclassExpression() {
 		when(analyserContext.instanceSize()).thenReturn(1);
 		when(analyserContext.classSize()).thenReturn(2);
-		when(analyserContext.poolSize()).thenReturn(3);
+		when(analyserContext.classInstanceSize()).thenReturn(3);
+		when(analyserContext.poolSize()).thenReturn(4);
 		when(keywordExpression.definesClass()).thenReturn(true);
 		analyser.visitEnd(keywordExpression, "at:", 1, 10);
-		verify(generator).initializeSizes(1, 2, 3);
+		verify(generator).initializeSizes(1, 2, 3, 4);
 	}
 
 	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {
