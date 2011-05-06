@@ -34,7 +34,7 @@ public class Analyser implements NodeVisitor {
 	private final List<byte[]> methodClasses;
 	private final AnalyserContexts analyserContexts;
 	private String classReferenced;
-	private boolean inClassMethod = false;
+	protected boolean inClassMethod = false;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this(generator, AnalyserContexts.create(smalltalk, generator));
@@ -85,6 +85,42 @@ public class Analyser implements NodeVisitor {
 		context().registerVariable(temporary, false);
 	}
 
+	//        I    C    Ci
+	//   CM   N    Y    Y
+	//   IM   Y    Y    N
+
+	private void handleOperationOnClassField(boolean onLoadSideOfExpression, VariableName reference) {
+		if (inClassMethod) {
+			if (reference.isInstanceField()) {
+				throw new IllegalStateException("Can't access instance variable from Class method.");
+			} else if (reference.isClassField()) {
+				if (onLoadSideOfExpression)
+					generator().loadFromField(reference.index);
+				else
+					generator().storeIntoField(reference.index);
+			} else if (reference.isClassInstanceField()) {
+				if (onLoadSideOfExpression)
+					generator().loadFromField(reference.index);
+				else
+					generator().storeIntoField(reference.index);
+			}
+		} else {
+			if (reference.isInstanceField()) {
+				if (onLoadSideOfExpression)
+					generator().loadFromField(reference.index);
+				else
+					generator().storeIntoField(reference.index);
+			} else if (reference.isClassField()) {
+				if (onLoadSideOfExpression)
+					generator().loadFromField(reference.index);
+				else
+					generator().storeIntoField(reference.index);
+			} else if (reference.isClassInstanceField()) {
+				throw new IllegalStateException("Can't access Class instance variable from instance method.");
+			}
+		}
+	}
+
 	public void visit(VariableName variableName, String value, int line) {
 		System.out.println("visit(VariableName) " + value);
 		if (variableName.isClassReference()) {
@@ -100,13 +136,6 @@ public class Analyser implements NodeVisitor {
 			else
 				handleOperationOnLocalField(variableName.isOnLoadSideOfExpression(), reference);
 		}
-	}
-
-	private void handleOperationOnClassField(boolean onLoadSideOfExpression, VariableName reference) {
-		if (onLoadSideOfExpression)
-			generator().loadFromField(reference.index);
-		else
-			generator().storeIntoField(reference.index);
 	}
 
 	private void handleOperationOnLocalField(boolean onLoadSideOfExpression, VariableName reference) {

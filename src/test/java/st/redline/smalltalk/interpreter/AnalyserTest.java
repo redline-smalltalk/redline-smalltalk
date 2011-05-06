@@ -26,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import st.redline.smalltalk.MissingArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -209,12 +210,87 @@ public class AnalyserTest {
 
 	@Test public void shouldLoadVariableFromLocalWhenVariableIsLocal() {
 		when(variableName.isClassReference()).thenReturn(false);
-		when(variableName.isField()).thenReturn(false);
 		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
 		when(reference.isField()).thenReturn(false);
 		when(analyserContext.variableLookup("Object")).thenReturn(reference);
 		analyser.visit(variableName, "Object", 10);
 		verify(generator).loadFromLocal(0);
+	}
+
+	@Test public void shouldAllowInstanceMethodAccessToInstanceVariable() {
+		when(variableName.isClassReference()).thenReturn(false);
+		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
+		when(analyserContext.variableLookup("Object")).thenReturn(reference);
+		when(reference.isField()).thenReturn(true);
+		when(reference.isInstanceField()).thenReturn(true);
+		analyser.inClassMethod = false;
+		analyser.visit(variableName, "Object", 10);
+		verify(generator).loadFromField(0);
+	}
+
+	@Test public void shouldAllowInstanceMethodAccessToClassVariable() {
+		when(variableName.isClassReference()).thenReturn(false);
+		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
+		when(analyserContext.variableLookup("Object")).thenReturn(reference);
+		when(reference.isField()).thenReturn(true);
+		when(reference.isInstanceField()).thenReturn(false);
+		when(reference.isClassField()).thenReturn(true);
+		analyser.inClassMethod = false;
+		analyser.visit(variableName, "Object", 10);
+		verify(generator).loadFromField(0);
+	}
+
+	@Test(expected=IllegalStateException.class)
+	public void shouldNotAllowInstanceMethodAccessToClassInstanceVariable() {
+		when(variableName.isClassReference()).thenReturn(false);
+		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
+		when(analyserContext.variableLookup("Object")).thenReturn(reference);
+		when(reference.isField()).thenReturn(true);
+		when(reference.isInstanceField()).thenReturn(false);
+		when(reference.isClassField()).thenReturn(false);
+		when(reference.isClassInstanceField()).thenReturn(true);
+		analyser.inClassMethod = false;
+		analyser.visit(variableName, "Object", 10);
+	}
+
+	@Test public void shouldAllowClassMethodAccessToClassVariable() {
+		when(variableName.isClassReference()).thenReturn(false);
+		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
+		when(analyserContext.variableLookup("Object")).thenReturn(reference);
+		when(reference.isField()).thenReturn(true);
+		when(reference.isInstanceField()).thenReturn(false);
+		when(reference.isClassInstanceField()).thenReturn(false);
+		when(reference.isClassField()).thenReturn(true);
+		analyser.inClassMethod = true;
+		analyser.visit(variableName, "Object", 10);
+		verify(generator).loadFromField(0);
+	}
+
+	@Test public void shouldAllowClassMethodAccessToClassInstanceVariable() {
+		when(variableName.isClassReference()).thenReturn(false);
+		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
+		when(analyserContext.variableLookup("Object")).thenReturn(reference);
+		when(reference.isField()).thenReturn(true);
+		when(reference.isInstanceField()).thenReturn(false);
+		when(reference.isClassField()).thenReturn(false);
+		when(reference.isClassInstanceField()).thenReturn(true);
+		analyser.inClassMethod = true;
+		analyser.visit(variableName, "Object", 10);
+		verify(generator).loadFromField(0);
+	}
+
+	@Test(expected=IllegalStateException.class)
+	public void shouldNotAllowClassMethodAccessToInstanceVariable() {
+		when(variableName.isClassReference()).thenReturn(false);
+		when(variableName.isOnLoadSideOfExpression()).thenReturn(true);
+		when(analyserContext.variableLookup("Object")).thenReturn(reference);
+		when(reference.isField()).thenReturn(true);
+		when(reference.isInstanceField()).thenReturn(true);
+		when(reference.isClassField()).thenReturn(false);
+		when(reference.isClassInstanceField()).thenReturn(false);
+		analyser.inClassMethod = true;
+		analyser.visit(variableName, "Object", 10);
+		verify(generator).loadFromField(0);
 	}
 
 	@Test public void shouldConvertPrimitiveSymbols() {
