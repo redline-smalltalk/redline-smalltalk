@@ -8,6 +8,9 @@ Object subclass: #TestMethod
 	poolDictionaries: 'Pool'
 	category: 'Test'
 
-def yourself
-	^ self
+def empty
+	"im empty"
+
+def emptyToo
+	"im empty too"
 

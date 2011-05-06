@@ -94,7 +94,7 @@ public class RObject {
 	}
 
 	protected String name() {
-		String name = oop[CLASS_OFFSET].data.primitiveName();
+		String name = oop[CLASS_OFFSET].data != null ? oop[CLASS_OFFSET].data.primitiveName() : null;
 		if (name != null)
 			return name;
 		return data.primitiveName();
@@ -120,7 +120,9 @@ public class RObject {
 		if (smalltalk.verboseOn())
 			log.info("binding " + (classMethod ? "class" : "instance") + " method '" + methodClassName + "' as '" + methodName + "' in " + className);
 		RObject aClass = smalltalk.cachedObject0(className);
+		System.out.println("aclass " + aClass);
 		RMethod method = tryInstantiateMethod(smalltalk, methodClassName);
+		System.out.println("method " + method.getClass());
 		RData binding = classMethod ? aClass.oop[CLASS_OFFSET].data : aClass.data;
 		binding.methodAtPut(methodName, method);
 	}
