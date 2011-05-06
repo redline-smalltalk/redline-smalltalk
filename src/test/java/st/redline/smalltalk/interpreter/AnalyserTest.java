@@ -225,7 +225,7 @@ public class AnalyserTest {
 		when(reference.isInstanceField()).thenReturn(true);
 		analyser.inClassMethod = false;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromField(0);
+		verify(generator).loadFromInstanceField(0);
 	}
 
 	@Test public void shouldAllowInstanceMethodAccessToClassVariable() {
@@ -237,7 +237,7 @@ public class AnalyserTest {
 		when(reference.isClassField()).thenReturn(true);
 		analyser.inClassMethod = false;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromField(0);
+		verify(generator).loadFromClassField(0);
 	}
 
 	@Test(expected=IllegalStateException.class)
@@ -263,7 +263,7 @@ public class AnalyserTest {
 		when(reference.isClassField()).thenReturn(true);
 		analyser.inClassMethod = true;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromField(0);
+		verify(generator).loadFromInstanceField(0);
 	}
 
 	@Test public void shouldAllowClassMethodAccessToClassInstanceVariable() {
@@ -276,7 +276,7 @@ public class AnalyserTest {
 		when(reference.isClassInstanceField()).thenReturn(true);
 		analyser.inClassMethod = true;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromField(0);
+		verify(generator).loadFromClassInstanceField(0);
 	}
 
 	@Test(expected=IllegalStateException.class)
@@ -290,7 +290,6 @@ public class AnalyserTest {
 		when(reference.isClassInstanceField()).thenReturn(false);
 		analyser.inClassMethod = true;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromField(0);
 	}
 
 	@Test public void shouldConvertPrimitiveSymbols() {

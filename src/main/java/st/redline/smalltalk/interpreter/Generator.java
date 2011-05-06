@@ -392,19 +392,34 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "createBlock", "(Ljava/lang/String;)Lst/redline/smalltalk/RBlock;");
 	}
 
-	public void storeIntoField(int index) {
-		System.out.println("STORE field " + index);
+	public void loadFromInstanceField(int index) {
+		System.out.println("LOAD instance field " + index);
+		throw new IllegalArgumentException("TODO - add generation of field load.");
+	}
+
+	public void storeIntoInstanceField(int index) {
+		System.out.println("STORE instance field " + index);
 		throw new IllegalArgumentException("TODO - add generation of field store.");
 	}
 
-	public void loadFromField(int index) {
-		System.out.println("LOAD field " + index);
+	public void loadFromClassField(int index) {
+		System.out.println("LOAD class field " + index);
 		throw new IllegalArgumentException("TODO - add generation of field load.");
 	}
 
-	public void loadFromInstanceField(int index) {
-		System.out.println("LOAD field " + index);
+	public void storeIntoClassField(int index) {
+		System.out.println("STORE class field " + index);
+		throw new IllegalArgumentException("TODO - add generation of field store.");
+	}
+
+	public void loadFromClassInstanceField(int index) {
+		System.out.println("LOAD class instance field " + index);
 		throw new IllegalArgumentException("TODO - add generation of field load.");
+	}
+
+	public void storeIntoClassInstanceField(int index) {
+		System.out.println("STORE class instance field " + index);
+		throw new IllegalArgumentException("TODO - add generation of field store.");
 	}
 
 	public void initializeSizes(int instanceSize, int classSize, int classInstanceSize, int poolSize) {
