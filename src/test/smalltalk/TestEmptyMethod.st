@@ -11,3 +11,6 @@ Object subclass: #TestEmptyMethod
 def empty
 	"im empty"
 
+def emptyAsWell
+	"im empty as well"
+
