@@ -311,10 +311,11 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visitEnd(KeywordExpression) " + keywords);
-		generator().keywordSend(keywords, argumentCount, line);
+		Generator generator = generator();
+		generator.keywordSend(keywords, argumentCount, line);
 		if (keywordExpression.definesClass()) {
 			AnalyserContexts.AnalyserContext context = context();
-			generator().initializeSizes(context.instanceSize(), context.classSize(), context.classInstanceSize(), context.poolSize());
+			generator.initializeSizes(context.instanceSize(), context.classSize(), context.classInstanceSize(), context.poolSize());
 		}
 	}
 

@@ -49,6 +49,7 @@ public class ClassData extends RData {
 	}
 
 	public void instanceSize(int size) {
+		System.out.println("instanceSize() " + size);
 		instanceSize = size;
 	}
 
@@ -57,6 +58,7 @@ public class ClassData extends RData {
 	}
 
 	public void classSize(int size) {
+		System.out.println("classSize() " + size);
 		ensureFieldCapacity(size);
 		classSize = size;
 	}
@@ -66,6 +68,7 @@ public class ClassData extends RData {
 	}
 
 	public void classInstanceSize(int size) {
+		System.out.println("classInstanceSize() " + size);
 		classInstanceSize = size;
 	}
 
@@ -74,6 +77,7 @@ public class ClassData extends RData {
 	}
 
 	public void poolSize(int size) {
+		System.out.println("poolSize() " + size);
 		poolSize = size;
 	}
 

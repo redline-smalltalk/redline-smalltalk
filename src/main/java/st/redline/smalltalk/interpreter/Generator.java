@@ -27,6 +27,9 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import st.redline.smalltalk.RObject;
+import st.redline.smalltalk.ClassData;
+
 import java.io.File;
 import java.util.Stack;
 
@@ -424,6 +427,22 @@ public class Generator implements Opcodes {
 
 	public void initializeSizes(int instanceSize, int classSize, int classInstanceSize, int poolSize) {
 		System.out.println("initializeSizes(" + instanceSize + ", " + classSize + ", " + classInstanceSize + ", " + poolSize + ")");
+		initializeSizeField("instanceSize", 10);
+		initializeSizeField("classSize", 20);
+		initializeSizeField("classInstanceSize", 30);
+		initializeSizeField("poolSize", 40);
+	}
+
+	private void initializeSizeField(String fieldName, int size) {
+		if (size == 0)
+			return;
+
+		pushStackTop();
+		current.methodVisitor.visitFieldInsn(GETFIELD, "st/redline/smalltalk/RObject", "data", "Lst/redline/smalltalk/RData;");
+		current.methodVisitor.visitTypeInsn(CHECKCAST, "st/redline/smalltalk/ClassData");
+		// pushNumericValue(size);
+		current.methodVisitor.visitIntInsn(BIPUSH, 20);
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "st/redline/smalltalk/ClassData", fieldName, "(I)V");
 	}
 
 	static class Context {
