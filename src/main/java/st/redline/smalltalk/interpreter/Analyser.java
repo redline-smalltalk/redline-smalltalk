@@ -174,6 +174,8 @@ public class Analyser implements NodeVisitor {
 	public void visitEnd(InstanceMethod instanceMethod) {
 		System.out.println("visitEnd(InstanceMethod)");
 		Generator generator = generator();
+		if (instanceMethod.isEmpty())
+			generator.pushReceiver();
 		generator.closeMethod();
 		generator.closeMethodClass();
 		methodClasses.add(generator.classBytes());
@@ -189,6 +191,8 @@ public class Analyser implements NodeVisitor {
 	public void visitEnd(ClassMethod classMethod) {
 		System.out.println("visitEnd(ClassMethod)");
 		Generator generator = generator();
+		if (classMethod.isEmpty())
+			generator.pushReceiver();
 		generator.closeMethod();
 		generator.closeMethodClass();
 		methodClasses.add(generator.classBytes());

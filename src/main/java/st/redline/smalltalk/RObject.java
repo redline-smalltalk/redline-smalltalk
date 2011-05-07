@@ -120,9 +120,9 @@ public class RObject {
 		if (smalltalk.verboseOn())
 			log.info("binding " + (classMethod ? "class" : "instance") + " method '" + methodClassName + "' as '" + methodName + "' in " + className);
 		RObject aClass = smalltalk.cachedObject0(className);
-		System.out.println("aclass " + aClass);
+		if (aClass == null)
+			throw new IllegalStateException("Can't find class '" + className + "'. Did you name your class the same as the file?");
 		RMethod method = tryInstantiateMethod(smalltalk, methodClassName);
-		System.out.println("method " + method.getClass());
 		RData binding = classMethod ? aClass.oop[CLASS_OFFSET].data : aClass.data;
 		binding.methodAtPut(methodName, method);
 	}

@@ -1,7 +1,7 @@
 
 "im a comment"
 
-Object subclass: #TestMethod
+Object subclass: #TestEmptyMethod
 	instanceVariableNames: 'instVars'
 	classVariableNames: 'classVars'
 	classInstanceVariableNames: 'classInstVar'
@@ -10,7 +10,4 @@ Object subclass: #TestMethod
 
 def empty
 	"im empty"
-
-def emptyToo
-	"im empty too"
 

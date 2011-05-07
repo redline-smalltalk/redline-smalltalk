@@ -28,12 +28,18 @@ public abstract class AbstractMethod implements Method {
 	protected final Primitive primitive;
 	protected final Temporaries temporaries;
 	protected final Statements statements;
+	protected final boolean empty;
 
 	public AbstractMethod(MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
 		this.messagePattern = messagePattern;
 		this.primitive = primitive;
 		this.temporaries = temporaries;
 		this.statements = statements;
+		this.empty = primitive == null && statements == null;
+	}
+
+	public boolean isEmpty() {
+		return empty;
 	}
 
 	public void accept(NodeVisitor visitor) {

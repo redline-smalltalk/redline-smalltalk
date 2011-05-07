@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
 public class InstanceMethodTest {
@@ -41,6 +42,10 @@ public class InstanceMethodTest {
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		method = new InstanceMethod(messagePattern, primitive, temporaries, statements);
+	}
+
+	@Test public void shouldKnowWhenMethodIsEmpty() {
+		assertTrue(new InstanceMethod(messagePattern, null, temporaries, null).isEmpty());
 	}
 
 	@Test public void shouldVisitMessagePattern() {

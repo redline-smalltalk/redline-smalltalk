@@ -154,6 +154,12 @@ public class AnalyserTest {
 		verify(generator).instanceMethodBinding((String) any(), (String) any(), (String) any());
 	}
 
+	@Test public void shouldAnswerReceiverWhenInstanceMethodEmpty() {
+		when(instanceMethod.isEmpty()).thenReturn(true);
+		analyser.visitEnd(instanceMethod);
+		verify(generator).pushReceiver();
+	}
+
 	@Test public void shouldInitializePerMethodItemsWhenVisitClassMethod() {
 		analyser.visit(classMethod);
 		verify(analyserContext).initializePerMethodItems();
@@ -165,6 +171,12 @@ public class AnalyserTest {
 		verify(generator).closeMethodClass();
 		verify(generator).classBytes();
 		verify(generator).classMethodBinding((String) any(), (String) any(), (String) any());
+	}
+
+	@Test public void shouldAnswerReceiverWhenClassMethodEmpty() {
+		when(classMethod.isEmpty()).thenReturn(true);
+		analyser.visitEnd(classMethod);
+		verify(generator).pushReceiver();
 	}
 
 	@Test public void shouldPopStackWhenEndSimpleExpressionAndResultShouldNotBeLeftOnStack() {
