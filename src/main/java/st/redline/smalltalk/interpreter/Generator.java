@@ -427,22 +427,36 @@ public class Generator implements Opcodes {
 
 	public void initializeSizes(int instanceSize, int classSize, int classInstanceSize, int poolSize) {
 		System.out.println("initializeSizes(" + instanceSize + ", " + classSize + ", " + classInstanceSize + ", " + poolSize + ")");
-		initializeSizeField("instanceSize", 10);
-		initializeSizeField("classSize", 20);
-		initializeSizeField("classInstanceSize", 30);
-		initializeSizeField("poolSize", 40);
+		initializeSizeField("instanceSize", instanceSize);
+		initializeSizeField("classSize", classSize);
+		initializeSizeField("classInstanceSize", classInstanceSize);
+		initializeSizeField("poolSize", poolSize);
 	}
 
 	private void initializeSizeField(String fieldName, int size) {
 		if (size == 0)
 			return;
-
 		pushStackTop();
 		current.methodVisitor.visitFieldInsn(GETFIELD, "st/redline/smalltalk/RObject", "data", "Lst/redline/smalltalk/RData;");
 		current.methodVisitor.visitTypeInsn(CHECKCAST, "st/redline/smalltalk/ClassData");
-		// pushNumericValue(size);
-		current.methodVisitor.visitIntInsn(BIPUSH, 20);
+		pushNumericValue(size);
 		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "st/redline/smalltalk/ClassData", fieldName, "(I)V");
+	}
+
+	private void pushNumericValue(int value) {
+		switch (value) {
+			case 0: current.methodVisitor.visitInsn(ICONST_0); break;
+			case 1: current.methodVisitor.visitInsn(ICONST_1); break;
+			case 2: current.methodVisitor.visitInsn(ICONST_2); break;
+			case 3: current.methodVisitor.visitInsn(ICONST_3); break;
+			case 4: current.methodVisitor.visitInsn(ICONST_4); break;
+			case 5: current.methodVisitor.visitInsn(ICONST_5); break;
+			default:
+				if (value > 5 && value < 128)
+					current.methodVisitor.visitIntInsn(BIPUSH, value);
+				else // SIPUSH not supported yet.
+					throw new IllegalStateException("push of integer value " + value + " not yet supported.");
+		}
 	}
 
 	static class Context {
