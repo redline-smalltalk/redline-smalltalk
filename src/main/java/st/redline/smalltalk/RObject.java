@@ -130,6 +130,7 @@ public class RObject {
 	private static RMethod tryInstantiateMethod(Smalltalk classLoader, String methodClassName) {
 		RMethod method;
 		try {
+			System.out.println("tryInstantiateMethod() " + methodClassName);
 			method = (RMethod) classLoader.loadClass(methodClassName).newInstance();
 		} catch (Exception e) {
 			throw new IllegalStateException(e);

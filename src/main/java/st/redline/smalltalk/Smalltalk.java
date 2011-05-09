@@ -194,7 +194,9 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public Class defineClass(byte[] classBytes) {
-		return defineClass(null, classBytes, 0, classBytes.length);
+		Class cls = defineClass(null, classBytes, 0, classBytes.length);
+		System.out.println("defineClass() " + cls);
+		return cls;
 	}
 
 	public RObject stringFromPrimitive(String value) {
