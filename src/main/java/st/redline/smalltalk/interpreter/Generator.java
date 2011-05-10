@@ -425,6 +425,10 @@ public class Generator implements Opcodes {
 		throw new IllegalArgumentException("TODO - add generation of field store.");
 	}
 
+	public void initializeFieldNames(String instanceVariables, String classVariables, String classInstanceVariables, String poolDictionaries) {
+		System.out.println("initializeFieldNames(" + instanceVariables + ", " + classVariables + ", " + classInstanceVariables + ", " + poolDictionaries + ")");
+	}
+
 	public void initializeSizes(int instanceSize, int classSize, int classInstanceSize, int poolSize) {
 		System.out.println("initializeSizes(" + instanceSize + ", " + classSize + ", " + classInstanceSize + ", " + poolSize + ")");
 		initializeSizeField("instanceSize", instanceSize);

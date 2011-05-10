@@ -330,6 +330,16 @@ public class AnalyserTest {
 		verify(generator).initializeSizes(1, 2, 3, 4);
 	}
 
+	@Test public void shouldInitializeFieldNamesAfterSubclassExpression() {
+		analyser.rawInstanceVariableNames = "instance";
+		analyser.rawClassVariableNames = "class";
+		analyser.rawClassInstanceVariableNames = "classInstance";
+		analyser.rawPoolDictionaries = "pool";
+		when(keywordExpression.definesClass()).thenReturn(true);
+		analyser.visitEnd(keywordExpression, "at:", 1, 10);
+		verify(generator).initializeFieldNames("instance", "class", "classInstance", "pool");
+	}
+
 	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {
 		analyser.visitEnd(keywordExpression, "at:", 1, 10);
 		verify(generator).keywordSend("at:", 1, 10);

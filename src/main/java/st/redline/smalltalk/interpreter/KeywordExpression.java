@@ -37,6 +37,10 @@ public class KeywordExpression implements MessageExpression {
 	private List<ClassVariableName> classVariableNames;
 	private List<ClassInstanceVariableName> classInstanceVariableNames;
 	private List<PoolVariableName> poolDictionaries;
+	private String rawInstanceVariableNames;
+	private String rawClassVariableNames;
+	private String rawClassInstanceVariableNames;
+	private String rawPoolDictionaries;
 
 	public KeywordExpression() {
 		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
@@ -58,17 +62,37 @@ public class KeywordExpression implements MessageExpression {
 		definesClass = true;
 		if (instanceVariableNames == null && keyword.startsWith("instanceVariableNames:")) {
 			definesClassFields = true;
+			rawInstanceVariableNames = binaryObjectDescription.rawInstanceVariableNames();
 			instanceVariableNames = binaryObjectDescription.toInstanceVariableNames();
 		} else if (classVariableNames == null && keyword.startsWith("classVariableNames:")) {
 			definesClassFields = true;
+			rawClassVariableNames = binaryObjectDescription.rawClassVariableNames();
 			classVariableNames = binaryObjectDescription.toClassVariableNames();
 		} else if (classInstanceVariableNames == null && keyword.startsWith("classInstanceVariableNames:")) {
 			definesClassFields = true;
+			rawClassInstanceVariableNames = binaryObjectDescription.rawClassInstanceVariableNames();
 			classInstanceVariableNames = binaryObjectDescription.toClassInstanceVariableNames();
 		} else if (poolDictionaries == null && keyword.startsWith("poolDictionaries:")) {
 			definesClassFields = true;
+			rawPoolDictionaries = binaryObjectDescription.rawPoolVariableNames();
 			poolDictionaries = binaryObjectDescription.toPoolVariableNames();
 		}
+	}
+
+	public String rawInstanceVariableNames() {
+		return rawInstanceVariableNames;
+	}
+
+	public String rawClassVariableNames() {
+		return rawClassVariableNames;
+	}
+
+	public String rawClassInstanceVariableNames() {
+		return rawClassInstanceVariableNames;
+	}
+
+	public String rawPoolDictionaries() {
+		return rawPoolDictionaries;
 	}
 
 	public List<InstanceVariableName> instanceVariableNames() {

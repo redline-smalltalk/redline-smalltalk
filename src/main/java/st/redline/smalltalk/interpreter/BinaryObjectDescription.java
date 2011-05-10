@@ -60,6 +60,22 @@ public class BinaryObjectDescription implements VisitableNode {
 
 	// todo.jcl - work out how to use generics here.
 
+	public String rawInstanceVariableNames() {
+		return primary.value().substring(1, primary.value().length() - 1);
+	}
+
+	public String rawClassVariableNames() {
+		return primary.value().substring(1, primary.value().length() - 1);
+	}
+
+	public String rawClassInstanceVariableNames() {
+		return primary.value().substring(1, primary.value().length() - 1);
+	}
+
+	public String rawPoolVariableNames() {
+		return primary.value().substring(1, primary.value().length() - 1);
+	}
+
 	public List<InstanceVariableName> toInstanceVariableNames() {
 		int line = primary.line();
 		String value = primary.value().substring(1, primary.value().length() - 1);

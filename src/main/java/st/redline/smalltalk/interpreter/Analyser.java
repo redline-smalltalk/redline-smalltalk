@@ -35,6 +35,10 @@ public class Analyser implements NodeVisitor {
 	private final AnalyserContexts analyserContexts;
 	private String classReferenced;
 	protected boolean inClassMethod = false;
+	protected String rawInstanceVariableNames = "";
+	protected String rawClassVariableNames = "";
+	protected String rawClassInstanceVariableNames = "";
+	protected String rawPoolDictionaries = "";
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this(generator, AnalyserContexts.create(smalltalk, generator));
@@ -303,9 +307,13 @@ public class Analyser implements NodeVisitor {
 			context.configureInstanceClassAndPoolSize(classReferenced);
 			classReferenced = null;
 			context.registerInstanceVariables(keywordExpression.instanceVariableNames());
+			rawInstanceVariableNames = keywordExpression.rawInstanceVariableNames();
 			context.registerClassVariables(keywordExpression.classVariableNames());
+			rawClassVariableNames = keywordExpression.rawClassVariableNames();
 			context.registerClassInstanceVariables(keywordExpression.classInstanceVariableNames());
+			rawClassInstanceVariableNames = keywordExpression.rawClassInstanceVariableNames();
 			context.registerPoolVariables(keywordExpression.poolDictionaries());
+			rawPoolDictionaries = keywordExpression.rawPoolDictionaries();
 		}
 	}
 
@@ -316,6 +324,7 @@ public class Analyser implements NodeVisitor {
 		if (keywordExpression.definesClass()) {
 			AnalyserContexts.AnalyserContext context = context();
 			generator.initializeSizes(context.instanceSize(), context.classSize(), context.classInstanceSize(), context.poolSize());
+			generator.initializeFieldNames(rawInstanceVariableNames, rawClassVariableNames, rawClassInstanceVariableNames, rawPoolDictionaries);
 		}
 	}
 
