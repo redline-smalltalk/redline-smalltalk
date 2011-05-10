@@ -116,7 +116,7 @@ public class AnalyserContexts {
 			RObject superclass = smalltalk.primitiveAt(superclassName);
 			instanceSize = superclass.data.instanceSize();
 			classSize = superclass.data.classSize();
-			classInstanceSize = superclass.data.classInstanceSize();
+			classInstanceSize = superclass.data.classInstanceSize() * 2;
 			poolSize = superclass.data.poolSize();
 		}
 

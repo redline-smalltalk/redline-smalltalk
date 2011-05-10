@@ -397,7 +397,10 @@ public class Generator implements Opcodes {
 
 	public void loadFromInstanceField(int index) {
 		System.out.println("LOAD instance field " + index);
-		throw new IllegalArgumentException("TODO - add generation of field load.");
+		pushReceiver();
+		current.methodVisitor.visitFieldInsn(GETFIELD, "st/redline/smalltalk/RObject", "data", "Lst/redline/smalltalk/RData;");
+		pushNumericValue(index);
+		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "st/redline/smalltalk/ClassData", "fieldAt", "(I)V");
 	}
 
 	public void storeIntoInstanceField(int index) {
