@@ -411,6 +411,8 @@ public class Generator implements Opcodes {
 	public void loadFromClassField(int index) {
 		System.out.println("LOAD class field " + index);
 		throw new IllegalArgumentException("TODO - add generation of field load.");
+//		RObject object = null;
+//		object.oop[RObject.CLASS_OFFSET].data.fieldAt(index);
 	}
 
 	public void storeIntoClassField(int index) {
