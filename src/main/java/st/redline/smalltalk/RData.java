@@ -38,6 +38,10 @@ public abstract class RData {
 	public abstract int classSize();
 	public abstract int classInstanceSize();
 	public abstract int poolSize();
+	public abstract String instanceVariables();
+	public abstract String classVariables();
+	public abstract String classInstanceVariables();
+	public abstract String poolDictionaries();
 
 	public RObject fieldAt(int index) {
 		return fields.get(index);

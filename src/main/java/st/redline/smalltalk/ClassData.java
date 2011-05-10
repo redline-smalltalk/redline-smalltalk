@@ -33,6 +33,10 @@ public class ClassData extends RData {
 	private int classSize;
 	private int classInstanceSize;
 	private int poolSize;
+	private String instanceVariables;
+	private String classVariables;
+	private String classInstanceVariables;
+	private String poolDictionaries;
 
 	// todo.jcl - need to handle pool variables at some point.
 
@@ -42,6 +46,46 @@ public class ClassData extends RData {
 		this.instanceSize = 0;
 		this.classSize = 0;
 		this.poolSize = 0;
+		instanceVariables = "";
+		classVariables = "";
+		classInstanceVariables = "";
+		poolDictionaries = "";
+	}
+
+	public String instanceVariables() {
+		return instanceVariables;
+	}
+
+	public void instanceVariables(String value) {
+		System.out.println("instanceVariables() " + value);
+		instanceVariables = value;
+	}
+
+	public String classVariables() {
+		return classVariables;
+	}
+
+	public void classVariables(String value) {
+		System.out.println("classVariables() " + value);
+		classVariables = value;
+	}
+
+	public String classInstanceVariables() {
+		return classInstanceVariables;
+	}
+
+	public void classInstanceVariables(String value) {
+		System.out.println("classInstanceVariables() " + value);
+		classInstanceVariables = value;
+	}
+
+	public String poolDictionaries() {
+		return poolDictionaries;
+	}
+
+	public void poolDictionaries(String value) {
+		System.out.println("poolDictionaries() " + value);
+		poolDictionaries = value;
 	}
 
 	public int instanceSize() {

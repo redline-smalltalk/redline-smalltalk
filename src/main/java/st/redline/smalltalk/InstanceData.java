@@ -80,6 +80,22 @@ public class InstanceData extends RData {
 		throw instancesCantBeQueriedForSize();
 	}
 
+	public String instanceVariables() {
+		throw new IllegalStateException("Object instances cant be queried for instance variables.");
+	}
+
+	public String classVariables() {
+		throw new IllegalStateException("Object instances cant be queried for class variables.");
+	}
+
+	public String classInstanceVariables() {
+		throw new IllegalStateException("Object instances cant be queried for class instance variables.");
+	}
+
+	public String poolDictionaries() {
+		throw new IllegalStateException("Object instances cant be queried for pool dictionaries.");
+	}
+
 	private IllegalStateException instancesCantBeQueriedForSize() {
 		return new IllegalStateException("Object instances cant be queried for size.");
 	}
