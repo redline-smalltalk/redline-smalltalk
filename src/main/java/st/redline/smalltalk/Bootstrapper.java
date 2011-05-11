@@ -131,7 +131,7 @@ public class Bootstrapper {
 			}
 			subclass.data.bootstrapped(false);
 			// todo.jcl call addSubclass: on superclass.
-			// todo.jcl initialize variables etc.
+			// todo.jcl initialize variables etc.  send addVarNamed: / addClassVarNamed:
 			return subclass;
 		}
 	}
