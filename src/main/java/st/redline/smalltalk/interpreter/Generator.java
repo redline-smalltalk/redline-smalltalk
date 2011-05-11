@@ -430,42 +430,6 @@ public class Generator implements Opcodes {
 		throw new IllegalArgumentException("TODO - add generation of field store.");
 	}
 
-	public void initializeFieldNames(String instanceVariables, String classVariables, String classInstanceVariables, String poolDictionaries) {
-		System.out.println("initializeFieldNames(" + instanceVariables + ", " + classVariables + ", " + classInstanceVariables + ", " + poolDictionaries + ")");
-		initializeFieldNames("instanceVariables", instanceVariables);
-		initializeFieldNames("classVariables", classVariables);
-		initializeFieldNames("classInstanceVariables", classInstanceVariables);
-		initializeFieldNames("poolDictionaries", poolDictionaries);
-	}
-
-	private void initializeFieldNames(String fieldName, String value) {
-		if (value.length() == 0)
-			return;
-		pushStackTop();
-		current.methodVisitor.visitFieldInsn(GETFIELD, "st/redline/smalltalk/RObject", "data", "Lst/redline/smalltalk/RData;");
-		current.methodVisitor.visitTypeInsn(CHECKCAST, "st/redline/smalltalk/ClassData");
-		current.methodVisitor.visitLdcInsn(value);
-		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "st/redline/smalltalk/ClassData", fieldName, "(Ljava/lang/String;)V");
-	}
-
-	public void initializeSizes(int instanceSize, int classSize, int classInstanceSize, int poolSize) {
-		System.out.println("initializeSizes(" + instanceSize + ", " + classSize + ", " + classInstanceSize + ", " + poolSize + ")");
-		initializeSizeField("instanceSize", instanceSize);
-		initializeSizeField("classSize", classSize);
-		initializeSizeField("classInstanceSize", classInstanceSize);
-		initializeSizeField("poolSize", poolSize);
-	}
-
-	private void initializeSizeField(String fieldName, int size) {
-		if (size == 0)
-			return;
-		pushStackTop();
-		current.methodVisitor.visitFieldInsn(GETFIELD, "st/redline/smalltalk/RObject", "data", "Lst/redline/smalltalk/RData;");
-		current.methodVisitor.visitTypeInsn(CHECKCAST, "st/redline/smalltalk/ClassData");
-		pushNumericValue(size);
-		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "st/redline/smalltalk/ClassData", fieldName, "(I)V");
-	}
-
 	private void pushNumericValue(int value) {
 		switch (value) {
 			case 0: current.methodVisitor.visitInsn(ICONST_0); break;

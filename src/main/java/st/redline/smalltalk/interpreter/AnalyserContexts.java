@@ -61,10 +61,6 @@ public class AnalyserContexts {
 		private int methodArgumentCount;
 		private int methodTemporariesCount;
 		private Map<String, VariableName> methodVariableRegistry = new HashMap<String, VariableName>();
-		private int instanceSize;
-		private int classSize;
-		private int classInstanceSize;
-		private int poolSize;
 
 		public AnalyserContext(Smalltalk smalltalk, Generator generator) {
 			this.smalltalk = smalltalk;
@@ -93,59 +89,6 @@ public class AnalyserContexts {
 
 		public int methodTemporariesCount() {
 			return methodTemporariesCount;
-		}
-
-		public int instanceSize() {
-			return instanceSize;
-		}
-
-		public int classSize() {
-			return classSize;
-		}
-
-		public int classInstanceSize() {
-			return classInstanceSize;
-		}
-
-		public int poolSize() {
-			return poolSize;
-		}
-
-		public void configureInstanceClassAndPoolSize(String superclassName) {
-			System.out.println("configureInstanceClassAndPoolSize( " + superclassName + " )");
-			RObject superclass = smalltalk.primitiveAt(superclassName);
-			instanceSize = superclass.data.instanceSize();
-			classSize = superclass.data.classSize();
-			classInstanceSize = superclass.data.classInstanceSize() * 2;
-			poolSize = superclass.data.poolSize();
-		}
-
-		public void registerInstanceVariables(List<InstanceVariableName> variableNames) {
-			for (InstanceVariableName variableName : variableNames) {
-				variableName.index(instanceSize++);
-				registerVariable(variableName, true);
-			}
-		}
-
-		public void registerClassVariables(List<ClassVariableName> variableNames) {
-			for (ClassVariableName variableName : variableNames) {
-				variableName.index(classSize++);
-				registerVariable(variableName, true);
-			}
-		}
-
-		public void registerClassInstanceVariables(List<ClassInstanceVariableName> variableNames) {
-			for (ClassInstanceVariableName variableName : variableNames) {
-				variableName.index(classInstanceSize++);
-				registerVariable(variableName, true);
-			}
-		}
-
-		public void registerPoolVariables(List<PoolVariableName> variableNames) {
-			for (PoolVariableName variableName : variableNames) {
-				variableName.index(poolSize++);
-				registerVariable(variableName, true);
-			}
 		}
 
 		public void registerVariables(List<VariableName> variableNames) {

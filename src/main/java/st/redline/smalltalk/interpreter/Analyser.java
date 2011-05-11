@@ -302,30 +302,11 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visit(KeywordExpression) " + keywords);
-		if (keywordExpression.definesClassFields()) {
-			AnalyserContexts.AnalyserContext context = context();
-			context.configureInstanceClassAndPoolSize(classReferenced);
-			classReferenced = null;
-			context.registerInstanceVariables(keywordExpression.instanceVariableNames());
-			rawInstanceVariableNames = keywordExpression.rawInstanceVariableNames();
-			context.registerClassVariables(keywordExpression.classVariableNames());
-			rawClassVariableNames = keywordExpression.rawClassVariableNames();
-			context.registerClassInstanceVariables(keywordExpression.classInstanceVariableNames());
-			rawClassInstanceVariableNames = keywordExpression.rawClassInstanceVariableNames();
-			context.registerPoolVariables(keywordExpression.poolDictionaries());
-			rawPoolDictionaries = keywordExpression.rawPoolDictionaries();
-		}
 	}
 
 	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visitEnd(KeywordExpression) " + keywords);
-		Generator generator = generator();
-		generator.keywordSend(keywords, argumentCount, line);
-		if (keywordExpression.definesClass()) {
-			AnalyserContexts.AnalyserContext context = context();
-			generator.initializeSizes(context.instanceSize(), context.classSize(), context.classInstanceSize(), context.poolSize());
-			generator.initializeFieldNames(rawInstanceVariableNames, rawClassVariableNames, rawClassInstanceVariableNames, rawPoolDictionaries);
-		}
+		generator().keywordSend(keywords, argumentCount, line);
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {

@@ -314,32 +314,6 @@ public class AnalyserTest {
 		verify(generator).primitiveStringConversion("'Object'", 10);
 	}
 
-	@Test public void shouldRegisterClassFieldWhenKeywordExpressionIsSubclassExpression() {
-		when(keywordExpression.definesClassFields()).thenReturn(true);
-		analyser.visit(keywordExpression, "subclass:instanceVariableNames:", 1, 10);
-		verify(analyserContext).registerInstanceVariables((List<InstanceVariableName>) any());
-	}
-
-	@Test public void shouldInitializeSizesAfterSubclassExpression() {
-		when(analyserContext.instanceSize()).thenReturn(1);
-		when(analyserContext.classSize()).thenReturn(2);
-		when(analyserContext.classInstanceSize()).thenReturn(3);
-		when(analyserContext.poolSize()).thenReturn(4);
-		when(keywordExpression.definesClass()).thenReturn(true);
-		analyser.visitEnd(keywordExpression, "at:", 1, 10);
-		verify(generator).initializeSizes(1, 2, 3, 4);
-	}
-
-	@Test public void shouldInitializeFieldNamesAfterSubclassExpression() {
-		analyser.rawInstanceVariableNames = "instance";
-		analyser.rawClassVariableNames = "class";
-		analyser.rawClassInstanceVariableNames = "classInstance";
-		analyser.rawPoolDictionaries = "pool";
-		when(keywordExpression.definesClass()).thenReturn(true);
-		analyser.visitEnd(keywordExpression, "at:", 1, 10);
-		verify(generator).initializeFieldNames("instance", "class", "classInstance", "pool");
-	}
-
 	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {
 		analyser.visitEnd(keywordExpression, "at:", 1, 10);
 		verify(generator).keywordSend("at:", 1, 10);

@@ -68,14 +68,4 @@ public class BinaryObjectDescriptionTest {
 		binaryObjectDescription.accept(visitor);
 		verify(binarySelectorUnaryObjectDescription).accept(visitor);
 	}
-
-	@Test public void shouldConvertPrimaryToVariableNameList() {
-		when(primary.line()).thenReturn(32);
-		when(primary.value()).thenReturn("'instanceVariable'");
-		List<InstanceVariableName> variableNames = binaryObjectDescription.toInstanceVariableNames();
-		assertEquals(variableNames.size(), 1);
-		assertEquals(variableNames.get(0).line, 32);
-		assertEquals(variableNames.get(0).value, "instanceVariable");
-		assertEquals(variableNames.get(0).index, 0);
-	}
 }

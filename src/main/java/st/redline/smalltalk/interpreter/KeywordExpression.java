@@ -30,17 +30,6 @@ public class KeywordExpression implements MessageExpression {
 	private final List<BinaryObjectDescription> binaryObjectDescriptions;
 	private final StringBuffer keywords;
 	private int line = -1;
-	private boolean monitoringSubclassFields = false;
-	private boolean definesClass = false;
-	private boolean definesClassFields = false;
-	private List<InstanceVariableName> instanceVariableNames;
-	private List<ClassVariableName> classVariableNames;
-	private List<ClassInstanceVariableName> classInstanceVariableNames;
-	private List<PoolVariableName> poolDictionaries;
-	private String rawInstanceVariableNames;
-	private String rawClassVariableNames;
-	private String rawClassInstanceVariableNames;
-	private String rawPoolDictionaries;
 
 	public KeywordExpression() {
 		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
@@ -52,71 +41,6 @@ public class KeywordExpression implements MessageExpression {
 			line = keyword.line;
 		keywords.append(keyword.value);
 		binaryObjectDescriptions.add(binaryObjectDescription);
-		if (monitoringSubclassFields)
-			monitorSubclassField(keyword.value, binaryObjectDescription);
-		else
-			monitoringSubclassFields = keyword.value.startsWith("subclass:");
-	}
-
-	private void monitorSubclassField(String keyword, BinaryObjectDescription binaryObjectDescription) {
-		definesClass = true;
-		if (instanceVariableNames == null && keyword.startsWith("instanceVariableNames:")) {
-			definesClassFields = true;
-			rawInstanceVariableNames = binaryObjectDescription.rawInstanceVariableNames();
-			instanceVariableNames = binaryObjectDescription.toInstanceVariableNames();
-		} else if (classVariableNames == null && keyword.startsWith("classVariableNames:")) {
-			definesClassFields = true;
-			rawClassVariableNames = binaryObjectDescription.rawClassVariableNames();
-			classVariableNames = binaryObjectDescription.toClassVariableNames();
-		} else if (classInstanceVariableNames == null && keyword.startsWith("classInstanceVariableNames:")) {
-			definesClassFields = true;
-			rawClassInstanceVariableNames = binaryObjectDescription.rawClassInstanceVariableNames();
-			classInstanceVariableNames = binaryObjectDescription.toClassInstanceVariableNames();
-		} else if (poolDictionaries == null && keyword.startsWith("poolDictionaries:")) {
-			definesClassFields = true;
-			rawPoolDictionaries = binaryObjectDescription.rawPoolVariableNames();
-			poolDictionaries = binaryObjectDescription.toPoolVariableNames();
-		}
-	}
-
-	public String rawInstanceVariableNames() {
-		return rawInstanceVariableNames;
-	}
-
-	public String rawClassVariableNames() {
-		return rawClassVariableNames;
-	}
-
-	public String rawClassInstanceVariableNames() {
-		return rawClassInstanceVariableNames;
-	}
-
-	public String rawPoolDictionaries() {
-		return rawPoolDictionaries;
-	}
-
-	public List<InstanceVariableName> instanceVariableNames() {
-		return instanceVariableNames == null ? new ArrayList<InstanceVariableName>() : instanceVariableNames;
-	}
-
-	public List<ClassVariableName> classVariableNames() {
-		return classVariableNames == null ? new ArrayList<ClassVariableName>() : classVariableNames;
-	}
-
-	public List<ClassInstanceVariableName> classInstanceVariableNames() {
-		return classInstanceVariableNames == null ? new ArrayList<ClassInstanceVariableName>() : classInstanceVariableNames;
-	}
-
-	public List<PoolVariableName> poolDictionaries() {
-		return poolDictionaries == null ? new ArrayList<PoolVariableName>() : poolDictionaries;
-	}
-
-	public boolean definesClass() {
-		return definesClass;
-	}
-
-	public boolean definesClassFields() {
-		return definesClassFields;
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
