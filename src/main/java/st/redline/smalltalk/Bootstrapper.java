@@ -123,15 +123,16 @@ public class Bootstrapper {
 	public class PrimitiveSubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6) {
 			System.out.println("** CREATING SUBCLASS ** " + arg1.data.primitiveValue().toString() + " subclass of " + receiver);
-			// There is more to do here just not yet.
 			String name = arg1.data.primitiveValue().toString();
-			RObject existing = smalltalk.cachedObject0(name);
-			if (existing != null) {
-				existing.data.bootstrapped(false);
-				return existing;
+			RObject subclass = smalltalk.cachedObject0(name);
+			if (subclass == null) {
+				RObject metaclassClass = smalltalk.primitiveAt(METACLASS_NAME);
+				subclass = createSubclass(name, receiver, metaclassClass, NOT_BOOSTRAPPED);
 			}
-			RObject metaclassClass = smalltalk.primitiveAt(METACLASS_NAME);
-			return createSubclass(name, receiver, metaclassClass, NOT_BOOSTRAPPED);
+			subclass.data.bootstrapped(false);
+			// todo.jcl call addSubclass: on superclass.
+			// todo.jcl initialize variables etc.
+			return subclass;
 		}
 	}
 }

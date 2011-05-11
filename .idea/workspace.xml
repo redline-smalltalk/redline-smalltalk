@@ -60,19 +60,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Analyser.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
+      <file leaf-file-name="Bootstrapper.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="309" column="0" selection-start="11752" selection-end="11752" vertical-scroll-proportion="1.057783">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AnalyserTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="317" column="0" selection-start="13241" selection-end="13241" vertical-scroll-proportion="0.0">
+            <state line="133" column="49" selection-start="6597" selection-end="6597" vertical-scroll-proportion="0.8408019">
               <folding />
             </state>
           </provider>
@@ -85,10 +76,13 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
+    <option name="UPDATE_CHANGES_POLICY" value="STASH" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/AbstractMethod.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/InstanceMethodTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Smalltalk.java" />
@@ -104,6 +98,7 @@
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/KeywordExpressionTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/BinaryObjectDescriptionTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java" />
       </list>
     </option>
   </component>
@@ -514,11 +509,6 @@
         <state line="198" column="0" selection-start="5639" selection-end="5639" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="1278" selection-end="1278" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/ClassData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="86" column="44" selection-start="2807" selection-end="2807" vertical-scroll-proportion="0.38915095" />
@@ -583,7 +573,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/AnalyserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="317" column="0" selection-start="13241" selection-end="13241" vertical-scroll-proportion="0.0">
+        <state line="317" column="0" selection-start="13241" selection-end="13241" vertical-scroll-proportion="0.34551886">
           <folding />
         </state>
       </provider>
@@ -591,6 +581,13 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/interpreter/Analyser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="309" column="0" selection-start="11752" selection-end="11752" vertical-scroll-proportion="1.057783">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="49" selection-start="6597" selection-end="6597" vertical-scroll-proportion="0.8408019">
           <folding />
         </state>
       </provider>
