@@ -35,10 +35,6 @@ public class Analyser implements NodeVisitor {
 	private final AnalyserContexts analyserContexts;
 	private String classReferenced;
 	protected boolean inClassMethod = false;
-	protected String rawInstanceVariableNames = "";
-	protected String rawClassVariableNames = "";
-	protected String rawClassInstanceVariableNames = "";
-	protected String rawPoolDictionaries = "";
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this(generator, AnalyserContexts.create(smalltalk, generator));

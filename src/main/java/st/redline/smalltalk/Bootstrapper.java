@@ -121,9 +121,15 @@ public class Bootstrapper {
 	}
 
 	public class PrimitiveSubclassMethod extends RMethod {
-		public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6) {
-			System.out.println("** CREATING SUBCLASS ** " + arg1.data.primitiveValue().toString() + " subclass of " + receiver);
-			String name = arg1.data.primitiveValue().toString();
+		public RObject applyToWith(RObject receiver, RObject subclassName, RObject instanceVariableNames, RObject classVariableNames,
+								   RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
+			System.out.println("** CREATING SUBCLASS ** " + subclassName.data.primitiveValue().toString() + " subclass of " + receiver);
+			System.out.println("instanceVariableNames: " + instanceVariableNames.data.primitiveValue().toString());
+			System.out.println("classVariableNames: " + classVariableNames.data.primitiveValue().toString());
+			System.out.println("classInstanceVariableNames: " + classInstanceVariableNames.data.primitiveValue().toString());
+			System.out.println("poolDictionaries: " + poolDictionaries.data.primitiveValue().toString());
+			System.out.println("category: " + category.data.primitiveValue().toString());
+			String name = subclassName.data.primitiveValue().toString();
 			RObject subclass = smalltalk.cachedObject0(name);
 			if (subclass == null) {
 				RObject metaclassClass = smalltalk.primitiveAt(METACLASS_NAME);
@@ -132,6 +138,17 @@ public class Bootstrapper {
 			subclass.data.bootstrapped(false);
 			// todo.jcl call addSubclass: on superclass.
 			// todo.jcl initialize variables etc.  send addVarNamed: / addClassVarNamed:
+			
+//			"This is the standard initialization message for creating a new class as a
+//			subclass of an existing class (the receiver)."
+//			^(ClassBuilder new)
+//				superclass: self
+//				subclass: t
+//				instanceVariableNames: f
+//				classVariableNames: d
+//				poolDictionaries: s
+//				category: cat
+
 			return subclass;
 		}
 	}
