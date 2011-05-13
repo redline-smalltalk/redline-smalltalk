@@ -63,7 +63,7 @@
       <file leaf-file-name="Bootstrapper.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="158" column="44" selection-start="8249" selection-end="8249" vertical-scroll-proportion="0.82481754">
+            <state line="140" column="35" selection-start="7200" selection-end="7200" vertical-scroll-proportion="0.43065694">
               <folding />
             </state>
           </provider>
@@ -569,7 +569,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/smalltalk/Bootstrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="158" column="44" selection-start="8249" selection-end="8249" vertical-scroll-proportion="0.82481754">
+        <state line="140" column="35" selection-start="7200" selection-end="7200" vertical-scroll-proportion="0.43065694">
           <folding />
         </state>
       </provider>

@@ -138,7 +138,7 @@ public class Bootstrapper {
 
 	public class PrimitiveSubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject subclassName, RObject instanceVariableNames, RObject classVariableNames,
-									RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
+								   RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
 			String name = subclassName.data.primitiveValue().toString();
 			RObject subclass = smalltalk.cachedObject0(name);
 			if (subclass == null) {
@@ -152,7 +152,7 @@ public class Bootstrapper {
 
 	public class ClassBuilderBuildSubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject superclass, RObject subclass, RObject instanceVariableNames, RObject classVariableNames,
-									RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
+								   RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
 			System.out.println("** BUILDING CLASS **");
 			System.out.println("superclass: " + superclass);
 			System.out.println("subclass: " + subclass);
