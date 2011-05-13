@@ -64,6 +64,7 @@ public class BootstrapperTest {
 		verify(smalltalk).primitiveAtPut(eq("Symbol"), (RObject) notNull());
 		verify(smalltalk).primitiveAtPut(eq("UndefinedObject"), (RObject) notNull());
 		verify(smalltalk).primitiveAtPut(eq("nil"), (RObject) notNull());
+		verify(smalltalk).primitiveAtPut(eq("ClassBuilder"), (RObject) notNull());
 	}
 
 	@Test public void shouldInitializeProtoObjectClassHierarchyAccordingToSmalltalkRules() {

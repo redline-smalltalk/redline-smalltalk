@@ -25,6 +25,7 @@ package st.redline.smalltalk;
 public class Bootstrapper {
 
 	private static final String SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:classInstanceVariableNames:poolDictionaries:category:";
+	private static final String CLASSBUILDER_SELECTOR = "superclass:subclass:instanceVariableNames:classVariableNames:classInstanceVariableNames:poolDictionaries:category:";
 	private static final String NEW_SELECTOR = "new";
 	private static final String METACLASS_NAME = "Metaclass";
 	private static final boolean BOOTSTRAPPED = true;
@@ -49,6 +50,7 @@ public class Bootstrapper {
 		RObject stringClass = createBootstrappedSubclass("String", arrayedCollectionClass, metaclassClass);
 		RObject symbolClass = createBootstrappedSubclass("Symbol", stringClass, metaclassClass);
 		RObject undefinedObjectClass = createBootstrappedSubclass("UndefinedObject", objectClass, metaclassClass);
+		RObject classBuilderClass = createBootstrappedSubclass("ClassBuilder", objectClass, metaclassClass);
 
 		// fixup hierarchy.
 		protoObjectClass.oop[RObject.CLASS_OFFSET].oop[RObject.SUPERCLASS_OFFSET] = classClass;
@@ -66,6 +68,8 @@ public class Bootstrapper {
 
 		// add bootstrapped methods.
 		stringClass.oop[RObject.CLASS_OFFSET].data.methodAtPut(NEW_SELECTOR, new PrimitiveNewMethod());
+		classBuilderClass.oop[RObject.CLASS_OFFSET].data.methodAtPut(NEW_SELECTOR, new PrimitiveNewMethod());
+		classBuilderClass.data.methodAtPut(CLASSBUILDER_SELECTOR, new ClassBuilderBuildSubclassMethod());
 		undefinedObjectClass.oop[RObject.CLASS_OFFSET].data.methodAtPut(NEW_SELECTOR, new PrimitiveNewNotAllowedMethod());
 		classClass.data.methodAtPut(SUBCLASSING_SELECTOR, new PrimitiveSubclassMethod());
 	}
@@ -120,15 +124,21 @@ public class Bootstrapper {
 		}
 	}
 
+	public RObject classBuilder() {
+		return RObject.send(smalltalk.cachedObject0("ClassBuilder"), "new");
+	}
+
+	public RObject buildClassWith(RObject superclass, RObject subclass, RObject instanceVariableNames, RObject classVariableNames,
+								  RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
+		// "This is the standard initialization message for creating a new class as a
+		// subclass of an existing class (the receiver)."
+		return RObject.send(classBuilder(), superclass, subclass, instanceVariableNames, classVariableNames, classInstanceVariableNames, poolDictionaries, category,
+							CLASSBUILDER_SELECTOR);
+	}
+
 	public class PrimitiveSubclassMethod extends RMethod {
 		public RObject applyToWith(RObject receiver, RObject subclassName, RObject instanceVariableNames, RObject classVariableNames,
-								   RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
-			System.out.println("** CREATING SUBCLASS ** " + subclassName.data.primitiveValue().toString() + " subclass of " + receiver);
-			System.out.println("instanceVariableNames: " + instanceVariableNames.data.primitiveValue().toString());
-			System.out.println("classVariableNames: " + classVariableNames.data.primitiveValue().toString());
-			System.out.println("classInstanceVariableNames: " + classInstanceVariableNames.data.primitiveValue().toString());
-			System.out.println("poolDictionaries: " + poolDictionaries.data.primitiveValue().toString());
-			System.out.println("category: " + category.data.primitiveValue().toString());
+									RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
 			String name = subclassName.data.primitiveValue().toString();
 			RObject subclass = smalltalk.cachedObject0(name);
 			if (subclass == null) {
@@ -136,19 +146,21 @@ public class Bootstrapper {
 				subclass = createSubclass(name, receiver, metaclassClass, NOT_BOOSTRAPPED);
 			}
 			subclass.data.bootstrapped(false);
-			// todo.jcl call addSubclass: on superclass.
-			// todo.jcl initialize variables etc.  send addVarNamed: / addClassVarNamed:
-			
-//			"This is the standard initialization message for creating a new class as a
-//			subclass of an existing class (the receiver)."
-//			^(ClassBuilder new)
-//				superclass: self
-//				subclass: t
-//				instanceVariableNames: f
-//				classVariableNames: d
-//				poolDictionaries: s
-//				category: cat
+			return buildClassWith(receiver, subclass, instanceVariableNames, classVariableNames, classInstanceVariableNames, poolDictionaries, category);
+		}
+	}
 
+	public class ClassBuilderBuildSubclassMethod extends RMethod {
+		public RObject applyToWith(RObject receiver, RObject superclass, RObject subclass, RObject instanceVariableNames, RObject classVariableNames,
+									RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
+			System.out.println("** BUILDING CLASS **");
+			System.out.println("superclass: " + superclass);
+			System.out.println("subclass: " + subclass);
+			System.out.println("instanceVariableNames: " + instanceVariableNames.data.primitiveValue().toString());
+			System.out.println("classVariableNames: " + classVariableNames.data.primitiveValue().toString());
+			System.out.println("classInstanceVariableNames: " + classInstanceVariableNames.data.primitiveValue().toString());
+			System.out.println("poolDictionaries: " + poolDictionaries.data.primitiveValue().toString());
+			System.out.println("category: " + category.data.primitiveValue().toString());
 			return subclass;
 		}
 	}
