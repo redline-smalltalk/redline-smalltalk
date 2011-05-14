@@ -98,7 +98,7 @@ public class Smalltalk extends ClassLoader {
 			interpreter(new Interpreter());
 		if (generator() == null)
 			generator(new Generator(verboseOn));
-			Thread.currentThread().setContextClassLoader(this);
+		Thread.currentThread().setContextClassLoader(this);
 	}
 
 	public boolean verboseOn() {

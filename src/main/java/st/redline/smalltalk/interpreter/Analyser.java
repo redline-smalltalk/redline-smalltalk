@@ -132,11 +132,11 @@ public class Analyser implements NodeVisitor {
 			if (reference.isField())
 				handleOperationOnClassField(variableName.isOnLoadSideOfExpression(), reference);
 			else
-				handleOperationOnLocalField(variableName.isOnLoadSideOfExpression(), reference);
+				handleOperationOnLocalVariable(variableName.isOnLoadSideOfExpression(), reference);
 		}
 	}
 
-	private void handleOperationOnLocalField(boolean onLoadSideOfExpression, VariableName reference) {
+	private void handleOperationOnLocalVariable(boolean onLoadSideOfExpression, VariableName reference) {
 		if (onLoadSideOfExpression)
 			generator().loadFromLocal(reference.index);
 		else
