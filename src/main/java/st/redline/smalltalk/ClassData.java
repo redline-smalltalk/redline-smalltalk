@@ -29,100 +29,10 @@ public class ClassData extends RData {
 	private final Map<String, RMethod> methodDictionary;
 	private String name;
 	private boolean bootstrapped;
-	private int instanceSize;
-	private int classSize;
-	private int classInstanceSize;
-	private int poolSize;
-	private String instanceVariables;
-	private String classVariables;
-	private String classInstanceVariables;
-	private String poolDictionaries;
-
-	// todo.jcl - need to handle pool variables at some point.
 
 	public ClassData(Map<String, RMethod> methodDictionary) {
 		super();
 		this.methodDictionary = methodDictionary;
-		this.instanceSize = 0;
-		this.classSize = 0;
-		this.poolSize = 0;
-		instanceVariables = "";
-		classVariables = "";
-		classInstanceVariables = "";
-		poolDictionaries = "";
-	}
-
-	public String instanceVariables() {
-		return instanceVariables;
-	}
-
-	public void instanceVariables(String value) {
-		System.out.println("instanceVariables() " + value);
-		instanceVariables = value;
-	}
-
-	public String classVariables() {
-		return classVariables;
-	}
-
-	public void classVariables(String value) {
-		System.out.println("classVariables() " + value);
-		classVariables = value;
-	}
-
-	public String classInstanceVariables() {
-		return classInstanceVariables;
-	}
-
-	public void classInstanceVariables(String value) {
-		System.out.println("classInstanceVariables() " + value);
-		classInstanceVariables = value;
-	}
-
-	public String poolDictionaries() {
-		return poolDictionaries;
-	}
-
-	public void poolDictionaries(String value) {
-		System.out.println("poolDictionaries() " + value);
-		poolDictionaries = value;
-	}
-
-	public int instanceSize() {
-		return instanceSize;
-	}
-
-	public void instanceSize(int size) {
-		System.out.println("instanceSize() " + size);
-		instanceSize = size;
-	}
-
-	public int classSize() {
-		return classSize;
-	}
-
-	public void classSize(int size) {
-		System.out.println("classSize() " + size);
-		ensureFieldCapacity(size);
-		classSize = size;
-	}
-
-	public int classInstanceSize() {
-		return classInstanceSize;
-	}
-
-	public void classInstanceSize(int size) {
-		System.out.println("classInstanceSize() " + size);
-		classInstanceSize = size;
-	}
-
-	public int poolSize() {
-		return poolSize;
-	}
-
-	public void poolSize(int size) {
-		System.out.println("poolSize() " + size);
-		poolSize = size;
 	}
 
 	public boolean isClass() {

@@ -269,11 +269,7 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldLoadFromInstanceField() {
-		generator.loadFromInstanceField(2);
-		verify(methodVisitor).visitVarInsn(ALOAD, 1); // receiver/self is always first argument.
-		verify(methodVisitor).visitFieldInsn(GETFIELD, "st/redline/smalltalk/RObject", "data", "Lst/redline/smalltalk/RData;");
-		verify(methodVisitor).visitInsn(ICONST_2);
-		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, "st/redline/smalltalk/ClassData", "fieldAt", "(I)V");
+		generator.loadFromInstanceField("foo");
 	}
 
 //	@Test public void shouldLoadFromClassField() {

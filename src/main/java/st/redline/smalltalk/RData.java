@@ -22,8 +22,6 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk;
 
-import java.util.ArrayList;
-
 public abstract class RData {
 	public abstract boolean isClass();
 	public abstract boolean isBootstrapped();
@@ -34,28 +32,4 @@ public abstract class RData {
 	public abstract void primitiveValue(Object value);
 	public abstract RMethod methodAt(String selector);
 	public abstract void methodAtPut(String selector, RMethod method);
-	public abstract int instanceSize();
-	public abstract int classSize();
-	public abstract int classInstanceSize();
-	public abstract int poolSize();
-	public abstract String instanceVariables();
-	public abstract String classVariables();
-	public abstract String classInstanceVariables();
-	public abstract String poolDictionaries();
-
-	public RObject fieldAt(int index) {
-		return fields.get(index);
-	}
-
-	public void fieldAtPut(int index, RObject object) {
-		fields.add(index, object);
-	}
-
-	protected void ensureFieldCapacity(int size) {
-		if (fields == null)
-			fields = new ArrayList<RObject>();
-		fields.ensureCapacity(size);
-	}
-
-	public ArrayList<RObject> fields;
 }

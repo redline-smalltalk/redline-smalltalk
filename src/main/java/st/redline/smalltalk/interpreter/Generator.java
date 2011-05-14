@@ -395,38 +395,34 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "createBlock", "(Ljava/lang/String;)Lst/redline/smalltalk/RBlock;");
 	}
 
-	public void loadFromInstanceField(int index) {
-		System.out.println("LOAD instance field " + index);
-		pushReceiver();
-		current.methodVisitor.visitFieldInsn(GETFIELD, "st/redline/smalltalk/RObject", "data", "Lst/redline/smalltalk/RData;");
-		pushNumericValue(index);
-		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "st/redline/smalltalk/ClassData", "fieldAt", "(I)V");
+	public void loadFromInstanceField(String field) {
+		System.out.println("LOAD instance field " + field);
 	}
 
-	public void storeIntoInstanceField(int index) {
-		System.out.println("STORE instance field " + index);
+	public void storeIntoInstanceField(String field) {
+		System.out.println("STORE instance field " + field);
 		throw new IllegalArgumentException("TODO - add generation of field store.");
 	}
 
-	public void loadFromClassField(int index) {
-		System.out.println("LOAD class field " + index);
+	public void loadFromClassField(String field) {
+		System.out.println("LOAD class field " + field);
 		throw new IllegalArgumentException("TODO - add generation of field load.");
 //		RObject object = null;
 //		object.oop[RObject.CLASS_OFFSET].data.fieldAt(index);
 	}
 
-	public void storeIntoClassField(int index) {
-		System.out.println("STORE class field " + index);
+	public void storeIntoClassField(String field) {
+		System.out.println("STORE class field " + field);
 		throw new IllegalArgumentException("TODO - add generation of field store.");
 	}
 
-	public void loadFromClassInstanceField(int index) {
-		System.out.println("LOAD class instance field " + index);
+	public void loadFromClassInstanceField(String field) {
+		System.out.println("LOAD class instance field " + field);
 		throw new IllegalArgumentException("TODO - add generation of field load.");
 	}
 
-	public void storeIntoClassInstanceField(int index) {
-		System.out.println("STORE class instance field " + index);
+	public void storeIntoClassInstanceField(String field) {
+		System.out.println("STORE class instance field " + field);
 		throw new IllegalArgumentException("TODO - add generation of field store.");
 	}
 

@@ -236,9 +236,10 @@ public class AnalyserTest {
 		when(analyserContext.variableLookup("Object")).thenReturn(reference);
 		when(reference.isField()).thenReturn(true);
 		when(reference.isInstanceField()).thenReturn(true);
+		when(reference.value()).thenReturn("Object");
 		analyser.inClassMethod = false;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromInstanceField(0);
+		verify(generator).loadFromInstanceField("Object");
 	}
 
 	@Test public void shouldAllowInstanceMethodAccessToClassVariable() {
@@ -248,9 +249,10 @@ public class AnalyserTest {
 		when(reference.isField()).thenReturn(true);
 		when(reference.isInstanceField()).thenReturn(false);
 		when(reference.isClassField()).thenReturn(true);
+		when(reference.value()).thenReturn("Object");
 		analyser.inClassMethod = false;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromClassField(0);
+		verify(generator).loadFromClassField("Object");
 	}
 
 	@Test(expected=IllegalStateException.class)
@@ -274,9 +276,10 @@ public class AnalyserTest {
 		when(reference.isInstanceField()).thenReturn(false);
 		when(reference.isClassInstanceField()).thenReturn(false);
 		when(reference.isClassField()).thenReturn(true);
+		when(reference.value()).thenReturn("Object");
 		analyser.inClassMethod = true;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromInstanceField(0);
+		verify(generator).loadFromInstanceField("Object");
 	}
 
 	@Test public void shouldAllowClassMethodAccessToClassInstanceVariable() {
@@ -287,9 +290,10 @@ public class AnalyserTest {
 		when(reference.isInstanceField()).thenReturn(false);
 		when(reference.isClassField()).thenReturn(false);
 		when(reference.isClassInstanceField()).thenReturn(true);
+		when(reference.value()).thenReturn("Object");
 		analyser.inClassMethod = true;
 		analyser.visit(variableName, "Object", 10);
-		verify(generator).loadFromClassInstanceField(0);
+		verify(generator).loadFromClassInstanceField("Object");
 	}
 
 	@Test(expected=IllegalStateException.class)

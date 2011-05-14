@@ -94,26 +94,26 @@ public class Analyser implements NodeVisitor {
 				throw new IllegalStateException("Can't access instance variable from Class method.");
 			} else if (reference.isClassField()) {
 				if (onLoadSideOfExpression)
-					generator().loadFromInstanceField(reference.index);
+					generator().loadFromInstanceField(reference.value());
 				else
-					generator().storeIntoInstanceField(reference.index);
+					generator().storeIntoInstanceField(reference.value());
 			} else if (reference.isClassInstanceField()) {
 				if (onLoadSideOfExpression)
-					generator().loadFromClassInstanceField(reference.index);
+					generator().loadFromClassInstanceField(reference.value());
 				else
-					generator().storeIntoClassInstanceField(reference.index);
+					generator().storeIntoClassInstanceField(reference.value());
 			}
 		} else {
 			if (reference.isInstanceField()) {
 				if (onLoadSideOfExpression)
-					generator().loadFromInstanceField(reference.index);
+					generator().loadFromInstanceField(reference.value());
 				else
-					generator().storeIntoInstanceField(reference.index);
+					generator().storeIntoInstanceField(reference.value());
 			} else if (reference.isClassField()) {
 				if (onLoadSideOfExpression)
-					generator().loadFromClassField(reference.index);
+					generator().loadFromClassField(reference.value());
 				else
-					generator().storeIntoClassField(reference.index);
+					generator().storeIntoClassField(reference.value());
 			} else if (reference.isClassInstanceField()) {
 				throw new IllegalStateException("Can't access Class instance variable from instance method.");
 			}
