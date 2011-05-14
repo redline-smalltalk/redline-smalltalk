@@ -192,6 +192,7 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldLookupClassWhenVariableNameIsClassReference() {
+		when(analyserContext.variableLookup("Object")).thenReturn(null);
 		when(className.isClassReference()).thenReturn(true);
 		analyser.visit(className, "Object", 10);
 		verify(generator).classLookup("Object", 10);

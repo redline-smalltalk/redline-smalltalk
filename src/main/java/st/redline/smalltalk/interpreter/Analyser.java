@@ -33,7 +33,6 @@ public class Analyser implements NodeVisitor {
 
 	private final List<byte[]> methodClasses;
 	private final AnalyserContexts analyserContexts;
-	private String classReferenced;
 	protected boolean inClassMethod = false;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
@@ -123,14 +122,13 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(VariableName variableName, String value, int line) {
 		System.out.println("visit(VariableName) " + value);
-		if (variableName.isClassReference()) {
-			generator().classLookup(value, line);
-			if (classReferenced == null)
-				classReferenced = value;
-		} else {
-			VariableName reference = context().variableLookup(value);
-			if (reference == null)
+		VariableName reference = context().variableLookup(value);
+		if (reference == null) {
+			if (variableName.isClassReference())
+				generator().classLookup(value, line);
+			else
 				throw new IllegalStateException("Reference of undefined variable or temporary '" + value + "'.");
+		} else {
 			if (reference.isField())
 				handleOperationOnClassField(variableName.isOnLoadSideOfExpression(), reference);
 			else
