@@ -64,6 +64,22 @@ public class InstanceData extends RData {
 		throw instancesDontHaveMethodDictionaries();
 	}
 
+	public void primitiveAddInstanceVariableNamed(RObject variable) {
+		throw new IllegalStateException("Object instances can't change their variables. Use a Class.");
+	}
+
+	public void primitiveAddClassVariableNamed(RObject variable) {
+		throw new IllegalStateException("Object instances doesn't have class variables.");
+	}
+
+	public void primitiveAddPoolNamed(RObject category) {
+		throw new IllegalStateException("Object instances doesn't have class variables.");
+	}
+
+	public void primitiveCategory(RObject category) {
+		throw new IllegalStateException("Object instances doesn't have categories.");
+	}
+
 	private IllegalStateException instancesCantBeQueriedForSize() {
 		return new IllegalStateException("Object instances cant be queried for size.");
 	}

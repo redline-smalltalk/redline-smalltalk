@@ -29,6 +29,7 @@ public class ClassData extends RData {
 	private final Map<String, RMethod> methodDictionary;
 	private String name;
 	private boolean bootstrapped;
+	private RObject category;
 
 	public ClassData(Map<String, RMethod> methodDictionary) {
 		super();
@@ -53,6 +54,19 @@ public class ClassData extends RData {
 
 	public void primitiveName(String name) {
 		this.name = name;
+	}
+
+	public void primitiveAddInstanceVariableNamed(RObject variable) {
+	}
+
+	public void primitiveAddClassVariableNamed(RObject variable) {
+	}
+
+	public void primitiveAddPoolNamed(RObject category) {
+	}
+
+	public void primitiveCategory(RObject category) {
+		this.category = category;
 	}
 
 	public Object primitiveValue() {

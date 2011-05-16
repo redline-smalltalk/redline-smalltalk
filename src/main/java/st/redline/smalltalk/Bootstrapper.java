@@ -77,7 +77,7 @@ public class Bootstrapper {
 		classClass.data.methodAtPut(ADDINSTVAR_SELECTOR, new AddInstVarNamedMethod());
 		classClass.data.methodAtPut(ADDCLASSVAR_SELECTOR, new AddClassVarNamedMethod());
 		classClass.data.methodAtPut(ADDSHAREDPOOL_SELECTOR, new AddSharedPoolMethod());
-		classClass.data.methodAtPut(CATEGORY_SELECTOR, new CategoryMethod());
+		classClass.data.methodAtPut(CATEGORY_SELECTOR, new SetCategoryMethod());
 	}
 
 	private RObject createBootstrappedSubclass(String name, RObject superclass, RObject metaclassClass) {
@@ -196,7 +196,7 @@ public class Bootstrapper {
 	public class AddInstVarNamedMethod extends RMethod {
 
 		public RObject applyToWith(RObject receiver, RObject variable) {
-			System.out.println("addInstVarNamed: " + variable.data.primitiveValue().toString() + " to " + receiver);
+			receiver.data.primitiveAddInstanceVariableNamed(variable);
 			return receiver;
 		}
 	}
@@ -204,7 +204,7 @@ public class Bootstrapper {
 	public class AddClassVarNamedMethod extends RMethod {
 
 		public RObject applyToWith(RObject receiver, RObject variable) {
-			System.out.println("addClassVarNamed: " + variable.data.primitiveValue().toString() + " to " + receiver);
+			receiver.data.primitiveAddClassVariableNamed(variable);
 			return receiver;
 		}
 	}
@@ -212,15 +212,15 @@ public class Bootstrapper {
 	public class AddSharedPoolMethod extends RMethod {
 
 		public RObject applyToWith(RObject receiver, RObject variable) {
-			System.out.println("addSharedPool: " + variable.data.primitiveValue().toString() + " to " + receiver);
+			receiver.data.primitiveAddPoolNamed(variable);
 			return receiver;
 		}
 	}
 
-	public class CategoryMethod extends RMethod {
+	public class SetCategoryMethod extends RMethod {
 
 		public RObject applyToWith(RObject receiver, RObject category) {
-			System.out.println("category: of " + receiver + " is " + category.data.primitiveValue().toString());
+			receiver.data.primitiveCategory(category);
 			return receiver;
 		}
 	}

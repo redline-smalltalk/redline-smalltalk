@@ -23,6 +23,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline.smalltalk;
 
 public abstract class RData {
+
 	public abstract boolean isClass();
 	public abstract boolean isBootstrapped();
 	public abstract void bootstrapped(boolean flag);
@@ -32,4 +33,8 @@ public abstract class RData {
 	public abstract void primitiveValue(Object value);
 	public abstract RMethod methodAt(String selector);
 	public abstract void methodAtPut(String selector, RMethod method);
+	public abstract void primitiveCategory(RObject category);
+	public abstract void primitiveAddInstanceVariableNamed(RObject category);
+	public abstract void primitiveAddClassVariableNamed(RObject category);
+	public abstract void primitiveAddPoolNamed(RObject category);
 }
