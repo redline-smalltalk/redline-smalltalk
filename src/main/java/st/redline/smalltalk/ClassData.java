@@ -22,14 +22,20 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk;
 
+import java.util.Hashtable;
 import java.util.Map;
 
 public class ClassData extends RData {
 
 	private final Map<String, RMethod> methodDictionary;
+
 	private String name;
 	private boolean bootstrapped;
 	private RObject category;
+	private Map<String, String> instanceVariables;
+	private Map<String, String> classVariables;
+	private Map<String, String> classInstanceVariables;
+	private Map<String, String> poolDictionaries;
 
 	public ClassData(Map<String, RMethod> methodDictionary) {
 		super();
@@ -57,12 +63,31 @@ public class ClassData extends RData {
 	}
 
 	public void primitiveAddInstanceVariableNamed(RObject variable) {
+		if (instanceVariables == null)
+			instanceVariables = new Hashtable<String, String>();
+		String key = variable.data.primitiveValue().toString();
+		instanceVariables.put(key, key);
 	}
 
 	public void primitiveAddClassVariableNamed(RObject variable) {
+		if (classVariables == null)
+			classVariables = new Hashtable<String, String>();
+		String key = variable.data.primitiveValue().toString();
+		classVariables.put(key, key);
 	}
 
-	public void primitiveAddPoolNamed(RObject category) {
+	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
+		if (classInstanceVariables == null)
+			classInstanceVariables = new Hashtable<String, String>();
+		String key = variable.data.primitiveValue().toString();
+		classInstanceVariables.put(key, key);
+	}
+
+	public void primitiveAddPoolNamed(RObject pool) {
+		if (poolDictionaries == null)
+			poolDictionaries = new Hashtable<String, String>();
+		String key = pool.data.primitiveValue().toString();
+		poolDictionaries.put(key, key);
 	}
 
 	public void primitiveCategory(RObject category) {

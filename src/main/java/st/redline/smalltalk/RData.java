@@ -36,5 +36,6 @@ public abstract class RData {
 	public abstract void primitiveCategory(RObject category);
 	public abstract void primitiveAddInstanceVariableNamed(RObject category);
 	public abstract void primitiveAddClassVariableNamed(RObject category);
+	public abstract void primitiveAddClassInstanceVariableNamed(RObject category);
 	public abstract void primitiveAddPoolNamed(RObject category);
 }

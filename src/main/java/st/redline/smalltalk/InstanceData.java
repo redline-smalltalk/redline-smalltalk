@@ -72,6 +72,10 @@ public class InstanceData extends RData {
 		throw new IllegalStateException("Object instances doesn't have class variables.");
 	}
 
+	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
+		throw new IllegalStateException("Object instances doesn't have class instance variables.");
+	}
+
 	public void primitiveAddPoolNamed(RObject category) {
 		throw new IllegalStateException("Object instances doesn't have class variables.");
 	}
