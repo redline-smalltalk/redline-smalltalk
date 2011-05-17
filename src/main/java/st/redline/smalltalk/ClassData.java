@@ -63,19 +63,19 @@ public class ClassData extends RData {
 	}
 
 	public boolean hasInstanceVariableNamed(String key) {
-		return instanceVariables == null ? false : instanceVariables.containsKey(key);
+		return instanceVariables != null && instanceVariables.containsKey(key);
 	}
 
 	public boolean hasClassVariableNamed(String key) {
-		return classVariables == null ? false : classVariables.containsKey(key);
+		return classVariables != null && classVariables.containsKey(key);
 	}
 
 	public boolean hasClassInstanceVariableNamed(String key) {
-		return classInstanceVariables == null ? false : classInstanceVariables.containsKey(key);
+		return classInstanceVariables != null && classInstanceVariables.containsKey(key);
 	}
 
 	public boolean hasPoolDictionaryNamed(String key) {
-		return poolDictionaries == null ? false : poolDictionaries.containsKey(key);
+		return poolDictionaries != null && poolDictionaries.containsKey(key);
 	}
 
 	public void primitiveAddInstanceVariableNamed(RObject variable) {
