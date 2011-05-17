@@ -22,6 +22,8 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.smalltalk;
 
+import java.util.Map;
+
 public abstract class RData {
 
 	public abstract boolean isClass();
@@ -43,9 +45,10 @@ public abstract class RData {
 	public abstract boolean hasClassInstanceVariableNamed(String key);
 	public abstract boolean hasPoolDictionaryNamed(String key);
 
-	protected final RObject container;
+	protected final RObject containingObject;
+	protected Map<String, RObject> variables;
 
-	public RData(RObject container) {
-		this.container = container;
+	public RData(RObject containingObject) {
+		this.containingObject = containingObject;
 	}
 }
