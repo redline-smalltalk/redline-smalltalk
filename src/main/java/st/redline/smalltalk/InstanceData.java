@@ -24,8 +24,8 @@ package st.redline.smalltalk;
 
 public class InstanceData extends RData {
 
-	public InstanceData() {
-		super();
+	public InstanceData(RObject container) {
+		super(container);
 	}
 
 	public boolean isClass() {
@@ -78,6 +78,22 @@ public class InstanceData extends RData {
 
 	public void primitiveAddPoolNamed(RObject category) {
 		throw new IllegalStateException("Object instances doesn't have class variables.");
+	}
+
+	public boolean hasClassVariableNamed(String key) {
+		throw new IllegalStateException("Can't query Object instances for class variables.");
+	}
+
+	public boolean hasInstanceVariableNamed(String key) {
+		throw new IllegalStateException("Can't query Object instances for instance variables.");
+	}
+
+	public boolean hasClassInstanceVariableNamed(String key) {
+		throw new IllegalStateException("Can't query Object instances for class instance variables.");
+	}
+
+	public boolean hasPoolDictionaryNamed(String key) {
+		throw new IllegalStateException("Can't query Object instances for pool variables.");
 	}
 
 	public void primitiveCategory(RObject category) {

@@ -38,4 +38,14 @@ public abstract class RData {
 	public abstract void primitiveAddClassVariableNamed(RObject category);
 	public abstract void primitiveAddClassInstanceVariableNamed(RObject category);
 	public abstract void primitiveAddPoolNamed(RObject category);
+	public abstract boolean hasInstanceVariableNamed(String key);
+	public abstract boolean hasClassVariableNamed(String key);
+	public abstract boolean hasClassInstanceVariableNamed(String key);
+	public abstract boolean hasPoolDictionaryNamed(String key);
+
+	protected final RObject container;
+
+	public RData(RObject container) {
+		this.container = container;
+	}
 }

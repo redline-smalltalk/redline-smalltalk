@@ -26,8 +26,8 @@ public class PrimitiveInstanceData extends InstanceData {
 
 	private Object primitiveValue;
 
-	public PrimitiveInstanceData() {
-		super();
+	public PrimitiveInstanceData(RObject container) {
+		super(container);
 	}
 
 	public Object primitiveValue() {

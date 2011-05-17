@@ -76,17 +76,17 @@ public class RObject {
 
 	private void initializeAsClass() {
 		oop = new RObject[CLASS_OOP_SIZE];
-		data = new ClassData(createBasicMethodDictionary());
+		data = new ClassData(createBasicMethodDictionary(), this);
 	}
 
 	private void initializeAsInstance() {
 		oop = new RObject[INSTANCE_OOP_SIZE];
-		data = new InstanceData();
+		data = new InstanceData(this);
 	}
 
 	private void initializeAsPrimitiveInstance() {
 		oop = new RObject[INSTANCE_OOP_SIZE];
-		data = new PrimitiveInstanceData();
+		data = new PrimitiveInstanceData(this);
 	}
 
 	public String toString() {

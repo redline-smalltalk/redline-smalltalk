@@ -37,8 +37,8 @@ public class ClassData extends RData {
 	private Map<String, String> classInstanceVariables;
 	private Map<String, String> poolDictionaries;
 
-	public ClassData(Map<String, RMethod> methodDictionary) {
-		super();
+	public ClassData(Map<String, RMethod> methodDictionary, RObject container) {
+		super(container);
 		this.methodDictionary = methodDictionary;
 	}
 
@@ -62,32 +62,72 @@ public class ClassData extends RData {
 		this.name = name;
 	}
 
+	public boolean hasInstanceVariableNamed(String key) {
+		return instanceVariables == null ? false : instanceVariables.containsKey(key);
+	}
+
+	public boolean hasClassVariableNamed(String key) {
+		return classVariables == null ? false : classVariables.containsKey(key);
+	}
+
+	public boolean hasClassInstanceVariableNamed(String key) {
+		return classInstanceVariables == null ? false : classInstanceVariables.containsKey(key);
+	}
+
+	public boolean hasPoolDictionaryNamed(String key) {
+		return poolDictionaries == null ? false : poolDictionaries.containsKey(key);
+	}
+
 	public void primitiveAddInstanceVariableNamed(RObject variable) {
+		String value = variable.data.primitiveValue().toString();
+		RObject superclass = this.container.oop[RObject.SUPERCLASS_OFFSET];
+		while (superclass != null) {
+			if (superclass.data.hasInstanceVariableNamed(value))
+				throw new IllegalStateException("Superclass " + superclass + " already defined instance variable '" + value + "'.");
+			superclass = superclass.oop[RObject.SUPERCLASS_OFFSET];
+		}
 		if (instanceVariables == null)
 			instanceVariables = new Hashtable<String, String>();
-		String key = variable.data.primitiveValue().toString();
-		instanceVariables.put(key, key);
+		instanceVariables.put(value, value);
 	}
 
 	public void primitiveAddClassVariableNamed(RObject variable) {
+		String value = variable.data.primitiveValue().toString();
+		RObject superclass = this.container.oop[RObject.SUPERCLASS_OFFSET];
+		while (superclass != null) {
+			if (superclass.data.hasClassVariableNamed(value))
+				throw new IllegalStateException("Superclass " + superclass + " already defined class variable '" + value + "'.");
+			superclass = superclass.oop[RObject.SUPERCLASS_OFFSET];
+		}
 		if (classVariables == null)
 			classVariables = new Hashtable<String, String>();
-		String key = variable.data.primitiveValue().toString();
-		classVariables.put(key, key);
+		classVariables.put(value, value);
 	}
 
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
+		String value = variable.data.primitiveValue().toString();
+		RObject superclass = this.container.oop[RObject.SUPERCLASS_OFFSET];
+		while (superclass != null) {
+			if (superclass.data.hasClassInstanceVariableNamed(value))
+				throw new IllegalStateException("Superclass " + superclass + " already defined class instance variable '" + value + "'.");
+			superclass = superclass.oop[RObject.SUPERCLASS_OFFSET];
+		}
 		if (classInstanceVariables == null)
 			classInstanceVariables = new Hashtable<String, String>();
-		String key = variable.data.primitiveValue().toString();
-		classInstanceVariables.put(key, key);
+		classInstanceVariables.put(value, value);
 	}
 
 	public void primitiveAddPoolNamed(RObject pool) {
+		String value = pool.data.primitiveValue().toString();
+		RObject superclass = this.container.oop[RObject.SUPERCLASS_OFFSET];
+		while (superclass != null) {
+			if (superclass.data.hasPoolDictionaryNamed(value))
+				throw new IllegalStateException("Superclass " + superclass + " already defined pool variable '" + value + "'.");
+			superclass = superclass.oop[RObject.SUPERCLASS_OFFSET];
+		}
 		if (poolDictionaries == null)
 			poolDictionaries = new Hashtable<String, String>();
-		String key = pool.data.primitiveValue().toString();
-		poolDictionaries.put(key, key);
+		poolDictionaries.put(value, value);
 	}
 
 	public void primitiveCategory(RObject category) {
