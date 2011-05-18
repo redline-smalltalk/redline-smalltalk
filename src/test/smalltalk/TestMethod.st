@@ -8,6 +8,6 @@ Object subclass: #TestMethod
 	poolDictionaries: 'Pool'
 	category: 'Test'
 
-def yourself
-	^ self
+def initialize
+	super initialize
 

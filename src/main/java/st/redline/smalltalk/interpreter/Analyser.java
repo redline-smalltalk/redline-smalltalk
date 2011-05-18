@@ -34,6 +34,7 @@ public class Analyser implements NodeVisitor {
 	private final List<byte[]> methodClasses;
 	private final AnalyserContexts analyserContexts;
 	protected boolean inClassMethod = false;
+	protected boolean sendIsToSuper = false;
 
 	public Analyser(Smalltalk smalltalk, Generator generator) {
 		this(generator, AnalyserContexts.create(smalltalk, generator));
@@ -256,6 +257,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(SimpleExpression simpleExpression) {
 		System.out.println("visit(SimpleExpression)");
+		sendIsToSuper = false;
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
@@ -372,6 +374,12 @@ public class Analyser implements NodeVisitor {
 	public void visit(SelfReservedWord selfReservedWord, int line) {
 		System.out.println("visit(self)");
 		generator().pushReceiver();
+	}
+
+	public void visit(SuperReservedWord superReservedWord, int line) {
+		System.out.println("visit(super)");
+		sendIsToSuper = true;
+		generator().pushClassMethodFoundIn();
 	}
 
 	public void visit(TrueReservedWord trueReservedWord, int line) {

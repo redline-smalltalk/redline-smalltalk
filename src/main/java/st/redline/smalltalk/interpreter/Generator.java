@@ -287,6 +287,10 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitVarInsn(ALOAD, 1);
 	}
 
+	public void pushClassMethodFoundIn() {
+		throw new IllegalStateException("Need to implement push of class method was found in (SUPER).");
+	}
+
 	public void pushThis() {
 		current.methodVisitor.visitVarInsn(ALOAD, 0);
 	}
@@ -407,8 +411,6 @@ public class Generator implements Opcodes {
 	public void loadFromClassField(String field) {
 		System.out.println("LOAD class field " + field);
 		throw new IllegalArgumentException("TODO - add generation of field load.");
-//		RObject object = null;
-//		object.oop[RObject.CLASS_OFFSET].data.fieldAt(index);
 	}
 
 	public void storeIntoClassField(String field) {

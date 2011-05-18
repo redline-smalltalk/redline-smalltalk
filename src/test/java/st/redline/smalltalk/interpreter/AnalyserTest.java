@@ -31,6 +31,7 @@ import st.redline.smalltalk.MissingArgumentException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class AnalyserTest {
@@ -55,6 +56,7 @@ public class AnalyserTest {
 	@Mock Temporaries temporaries;
 	@Mock Primitive primitive;
 	@Mock SelfReservedWord selfReservedWord;
+	@Mock SuperReservedWord superReservedWord;
 	@Mock TrueReservedWord trueReservedWord;
 	@Mock FalseReservedWord falseReservedWord;
 	@Mock NilReservedWord nilReservedWord;
@@ -334,6 +336,12 @@ public class AnalyserTest {
 	@Test public void shouldPutReceiverOnStackWhenVisitSelfReservedWord() {
 		analyser.visit(selfReservedWord, 1);
 		verify(generator).pushReceiver();
+	}
+
+	@Test public void shouldSetSendToSuperFlagWhenVisitSuperReservedWord() {
+		analyser.visit(superReservedWord, 1);
+		assertTrue(analyser.sendIsToSuper);
+		verify(generator).pushClassMethodFoundIn();
 	}
 
 	@Test public void shouldLookupTrueWhenVisitTrueReservedWord() {

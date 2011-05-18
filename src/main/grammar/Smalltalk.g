@@ -129,11 +129,12 @@ literal returns [Literal n]
 	|	characterConstant {$n = new LiteralCharacter($characterConstant.n);}
 	|	stringConstant {$n = new LiteralString($stringConstant.n);}
 	|	'#' ( symbol {$n = new LiteralSymbol($symbol.n);} | array {$n = new LiteralArray($array.n);} )
-	|	('self' | 'true' | 'false' | 'nil') => reservedWordLiteral {$n = $reservedWordLiteral.n;}
+	|	('self' | 'super' | 'true' | 'false' | 'nil') => reservedWordLiteral {$n = $reservedWordLiteral.n;}
 	;
 
 reservedWordLiteral returns [Literal n]
 	:	l = 'self' {$n = new SelfReservedWord($l.line);}
+	|	l = 'super' {$n = new SuperReservedWord($l.line);}
 	|	l = 'true' {$n = new TrueReservedWord($l.line);}
 	|	l = 'false' {$n = new FalseReservedWord($l.line);}
 	| 	l = 'nil' {$n = new NilReservedWord($l.line);}
