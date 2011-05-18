@@ -106,14 +106,16 @@ public class ClassData extends RData {
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
 		String key = variable.data.primitiveValue().toString();
 		RObject superclass = this.containingObject.oop[RObject.SUPERCLASS_OFFSET];
-		while (superclass != null) {
-			if (superclass.data.hasClassInstanceVariableNamed(key))
+		if (superclass != null && superclass.data.hasClassInstanceVariableNamed(key))
 				throw new IllegalStateException("Superclass " + superclass + " already defined class instance variable '" + key + "'.");
-			superclass = superclass.oop[RObject.SUPERCLASS_OFFSET];
-		}
 		// class instance variables are variables on the metaclass instance.
 		if (this.containingObject.oop[RObject.CLASS_OFFSET].data.variables == null)
 			this.containingObject.oop[RObject.CLASS_OFFSET].data.variables = new Hashtable<String, RObject>();
+		RObject nil = Smalltalk.instance().nilInstance();
+		// copy across any class instance variables in superclass. Each class gets it's own instance.
+		if (superclass.oop[RObject.CLASS_OFFSET].data.variables != null)
+			for (String string : superclass.oop[RObject.CLASS_OFFSET].data.variables.keySet())
+				this.containingObject.oop[RObject.CLASS_OFFSET].data.variables.put(key, nil);
 		this.containingObject.oop[RObject.CLASS_OFFSET].data.variables.put(key, variable);
 	}
 
