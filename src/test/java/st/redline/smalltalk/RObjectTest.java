@@ -73,7 +73,7 @@ public class RObjectTest {
 		classObject.data = classData;
 		when(classData.methodAt(MESSAGE)).thenReturn(method);
 		RObject.send(object, MESSAGE);
-		verify(method).applyTo(object);
+		verify(method).applyTo(object, classObject);
 	}
 
 	@Test public void shouldLookupMethodInSuperclassOfReceiversClassWhenNotFoundInReceiver() {
@@ -85,6 +85,6 @@ public class RObjectTest {
 		when(classData.methodAt(MESSAGE)).thenReturn(null);
 		when(superclassData.methodAt(MESSAGE)).thenReturn(method);
 		RObject.send(object, MESSAGE);
-		verify(method).applyTo(object);
+		verify(method).applyTo(object, superclassObject);
 	}
 }

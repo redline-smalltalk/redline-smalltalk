@@ -119,7 +119,7 @@ public class Bootstrapper {
 	}
 
 	public class PrimitiveNewMethod extends RMethod {
-		public RObject applyTo(RObject receiver) {
+		public RObject applyTo(RObject receiver, RObject classMethodWasFoundIn) {
 			RObject instance = RObject.primitiveInstance();
 			instance.oop[RObject.CLASS_OFFSET] = receiver;
 			return instance;
@@ -127,7 +127,7 @@ public class Bootstrapper {
 	}
 
 	public class PrimitiveNewNotAllowedMethod extends RMethod {
-		public RObject applyTo(RObject receiver) {
+		public RObject applyTo(RObject receiver, RObject classMethodWasFoundIn) {
 			throw new IllegalStateException("Can't new an instance of UndefinedObject.");
 		}
 	}
@@ -146,7 +146,7 @@ public class Bootstrapper {
 
 	public class PrimitiveFullSubclassMethod extends RMethod {
 
-		public RObject applyToWith(RObject receiver, RObject subclassName, RObject instanceVariableNames, RObject classVariableNames,
+		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject subclassName, RObject instanceVariableNames, RObject classVariableNames,
 								   RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
 			String name = subclassName.data.primitiveValue().toString();
 			RObject subclass = smalltalk.cachedObject0(name);
@@ -161,7 +161,7 @@ public class Bootstrapper {
 
 	public class PrimitiveShortSubclassMethod extends RMethod {
 
-		public RObject applyToWith(RObject receiver, RObject subclassName) {
+		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject subclassName) {
 			RObject empty = Smalltalk.instance().stringFromPrimitive("");
 			return RObject.send(receiver, subclassName, empty, empty, empty, empty, empty, FULL_SUBCLASSING_SELECTOR);
 		}
@@ -169,11 +169,11 @@ public class Bootstrapper {
 
 	public class ClassBuilderBuildSubclassMethod extends RMethod {
 
-		public RObject applyToWith(RObject receiver, RObject superclass, RObject subclass, RObject instanceVariableNames, RObject classVariableNames,
+		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject superclass, RObject subclass, RObject instanceVariableNames, RObject classVariableNames,
 								   RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
 			// This is where we build a class.
 			// we are doing the minimum to get us moving.
-			System.out.println("** BUILDING CLASS ** superclass: " + superclass + " subclass: " + subclass);
+			System.out.println("** BUILDING CLASS ** superclass: " + superclass + " subclass: " + subclass + " [Method was found in " + classMethodWasFoundIn + "]");
 			subclass = send(subclass, ADDINSTVAR_SELECTOR, instanceVariableNames);
 			subclass = send(subclass, ADDCLASSVAR_SELECTOR, classVariableNames);
 			subclass = send(subclass, ADDCLASSINSTVAR_SELECTOR, classInstanceVariableNames);
@@ -199,7 +199,7 @@ public class Bootstrapper {
 
 	public class AddInstVarNamedMethod extends RMethod {
 
-		public RObject applyToWith(RObject receiver, RObject variable) {
+		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject variable) {
 			receiver.data.primitiveAddInstanceVariableNamed(variable);
 			return receiver;
 		}
@@ -207,7 +207,7 @@ public class Bootstrapper {
 
 	public class AddClassVarNamedMethod extends RMethod {
 
-		public RObject applyToWith(RObject receiver, RObject variable) {
+		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject variable) {
 			receiver.data.primitiveAddClassVariableNamed(variable);
 			return receiver;
 		}
@@ -215,7 +215,7 @@ public class Bootstrapper {
 
 	public class AddClassInstVarNamedMethod extends RMethod {
 
-		public RObject applyToWith(RObject receiver, RObject variable) {
+		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject variable) {
 			receiver.data.primitiveAddClassInstanceVariableNamed(variable);
 			return receiver;
 		}
@@ -223,7 +223,7 @@ public class Bootstrapper {
 
 	public class AddSharedPoolMethod extends RMethod {
 
-		public RObject applyToWith(RObject receiver, RObject variable) {
+		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject variable) {
 			receiver.data.primitiveAddPoolNamed(variable);
 			return receiver;
 		}
@@ -231,7 +231,7 @@ public class Bootstrapper {
 
 	public class SetCategoryMethod extends RMethod {
 
-		public RObject applyToWith(RObject receiver, RObject category) {
+		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject category) {
 			receiver.data.primitiveCategory(category);
 			return receiver;
 		}

@@ -53,7 +53,7 @@ public class GeneratorTest implements Opcodes {
 	private static final String KEYWORD_METHOD_DESCRIPTOR =
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
 	private static final String PRIMITIVE_BY_NUMBER_METHOD_DESCRIPTOR =
-			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;";
+			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;";
 	private static final int LINE_NUMBER= 42;
 	private static final int ARGUMENT_COUNT = 2;
 	private static final int TEMPORARIES_COUNT = 3;
@@ -208,13 +208,14 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldGenerateCallToPrimitiveByNumber() {
-		int primitiveResultLocalVariableIndex = ARGUMENT_COUNT + 2 + TEMPORARIES_COUNT; // +2 because 0 = this and 1 = receiver.
+		int primitiveResultLocalVariableIndex = ARGUMENT_COUNT + 3 + TEMPORARIES_COUNT; // +3 because 0 = this, 1 = receiver, and 2 = class method found in.
 		generator.callToPrimitiveByNumber(ARGUMENT_COUNT, TEMPORARIES_COUNT, "32", LINE_NUMBER);
 		verify(methodVisitor, times(3)).visitLabel((Label) notNull());
 		verify(methodVisitor).visitLineNumber(eq(LINE_NUMBER), (Label) notNull());
 		verify(methodVisitor).visitVarInsn(ALOAD, 1);   // Nb - index 1 is 'receiver' passed to method.
-		verify(methodVisitor).visitVarInsn(ALOAD, 2);   // first argument
-		verify(methodVisitor).visitVarInsn(ALOAD, 3);   // second argument
+		verify(methodVisitor).visitVarInsn(ALOAD, 2);   // class method was found in.
+		verify(methodVisitor).visitVarInsn(ALOAD, 3);   // first argument
+		verify(methodVisitor).visitVarInsn(ALOAD, 4);   // second argument
 		verify(methodVisitor, times(8)).visitInsn(ACONST_NULL);   // ... upto 10 arguments.
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "primitive_32", PRIMITIVE_BY_NUMBER_METHOD_DESCRIPTOR);
 		// Store result of primitive call into local variable.

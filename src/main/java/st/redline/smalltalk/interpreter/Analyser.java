@@ -28,7 +28,7 @@ import java.util.*;
 
 public class Analyser implements NodeVisitor {
 
-	public static final int START_METHOD_ARGUMENT_OFFSET = 2;
+	public static final int START_METHOD_ARGUMENT_OFFSET = 3;
 	private static final String CLASS_NAME_SEPARATOR = "_";
 
 	private final List<byte[]> methodClasses;
@@ -74,6 +74,7 @@ public class Analyser implements NodeVisitor {
 		temporaries.indexFrom(START_METHOD_ARGUMENT_OFFSET + context().methodArgumentCount());
 		// 0 = this.
 		// 1 = receiver.
+		// 2 = class method was found in.
 	}
 
 	public void visitEnd(Temporaries temporaries) {
@@ -379,7 +380,7 @@ public class Analyser implements NodeVisitor {
 	public void visit(SuperReservedWord superReservedWord, int line) {
 		System.out.println("visit(super)");
 		sendIsToSuper = true;
-		generator().pushClassMethodFoundIn();
+		generator().pushForSuperCall();
 	}
 
 	public void visit(TrueReservedWord trueReservedWord, int line) {

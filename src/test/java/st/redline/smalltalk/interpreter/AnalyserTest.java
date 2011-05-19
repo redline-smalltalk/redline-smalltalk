@@ -26,7 +26,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import st.redline.smalltalk.MissingArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,12 +202,13 @@ public class AnalyserTest {
 	@Test public void shouldIndexTemporariesFromLastMethodArgumentIndex() {
 		when(analyserContext.methodArgumentCount()).thenReturn(2);
 		analyser.visit(temporaries);
-		verify(temporaries).indexFrom(4);
+		verify(temporaries).indexFrom(5);
 		// 0 = this
 		// 1 = receiver
-		// 2 = arg 1
-		// 3 = arg 2
-		// 4 = first temporary
+		// 2 = class method was found in.
+		// 3 = arg 1
+		// 4 = arg 2
+		// 5 = first temporary
 	}
 
 	@Test public void shouldRegisterTemporaryVariable() {
@@ -341,7 +341,7 @@ public class AnalyserTest {
 	@Test public void shouldSetSendToSuperFlagWhenVisitSuperReservedWord() {
 		analyser.visit(superReservedWord, 1);
 		assertTrue(analyser.sendIsToSuper);
-		verify(generator).pushClassMethodFoundIn();
+		verify(generator).pushForSuperCall();
 	}
 
 	@Test public void shouldLookupTrueWhenVisitTrueReservedWord() {

@@ -55,7 +55,6 @@ public class Generator implements Opcodes {
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;",
 	};
 	private static final String[] APPLY_METHOD_DESCRIPTORS = {
-		"(Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
 		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
 		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
 		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
@@ -65,7 +64,8 @@ public class Generator implements Opcodes {
 		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
 		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
 		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
-		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;"
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
+		"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;"
 	};
 	private static final int MAXIMUM_KEYWORD_ARGUMENTS = 10;
 	private static final boolean NORMAL_METHOD = true;
@@ -287,8 +287,9 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitVarInsn(ALOAD, 1);
 	}
 
-	public void pushClassMethodFoundIn() {
-		throw new IllegalStateException("Need to implement push of class method was found in (SUPER).");
+	public void pushForSuperCall() {
+		pushReceiver();
+		current.methodVisitor.visitVarInsn(ALOAD, 2);  // class method was found in.
 	}
 
 	public void pushThis() {
@@ -343,7 +344,7 @@ public class Generator implements Opcodes {
 		pushNulls(MAXIMUM_KEYWORD_ARGUMENTS - containingMethodArgumentCount);
 
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, "primitive_"+number, APPLY_METHOD_DESCRIPTORS[10]);
-		int primitiveResultLocalVariableIndex = (containingMethodArgumentCount + 2 + containingMethodTemporariesCount);   // Nb: +2 because 0 is 'this' and '1' is actual receiver.
+		int primitiveResultLocalVariableIndex = (containingMethodArgumentCount + 3 + containingMethodTemporariesCount);   // Nb: +2 because 0 is 'this' and '1' is actual receiver.
 		storeIntoLocal(primitiveResultLocalVariableIndex);
 
 		// generate if (result != null) return result;
@@ -369,7 +370,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void pushMethodArguments(int countOfArgumentsToPush) {
-		for (int i = 0; i < countOfArgumentsToPush + 1; i++)
+		for (int i = 0; i < countOfArgumentsToPush + 2; i++)
 			current.methodVisitor.visitVarInsn(ALOAD, (i + 1));
 	}
 

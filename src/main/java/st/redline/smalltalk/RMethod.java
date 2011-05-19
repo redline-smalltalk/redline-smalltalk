@@ -27,7 +27,7 @@ package st.redline.smalltalk;
  */
 public class RMethod extends RObject {
 
-	public RObject applyTo(RObject receiver) {
+	public RObject applyTo(RObject receiver, RObject classMethodWasFoundIn) {
 		throw subclassShouldHaveImplemented(0);
 	}
 
@@ -35,43 +35,43 @@ public class RMethod extends RObject {
 		return new IllegalStateException("A subclass of RMethod should implement 'applyToWith' " + argumentCount + " arguments.");
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg) {
 		throw subclassShouldHaveImplemented(1);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2) {
 		throw subclassShouldHaveImplemented(2);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2, RObject arg3) {
 		throw subclassShouldHaveImplemented(3);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2, RObject arg3, RObject arg4) {
 		throw subclassShouldHaveImplemented(4);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5) {
 		throw subclassShouldHaveImplemented(5);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6) {
 		throw subclassShouldHaveImplemented(6);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7) {
 		throw subclassShouldHaveImplemented(7);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8) {
 		throw subclassShouldHaveImplemented(8);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9) {
 		throw subclassShouldHaveImplemented(9);
 	}
 
-	public RObject applyToWith(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, RObject arg10) {
+	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, RObject arg10) {
 		throw subclassShouldHaveImplemented(10);
 	}
 }
