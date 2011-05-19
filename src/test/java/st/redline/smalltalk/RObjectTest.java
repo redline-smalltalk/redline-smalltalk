@@ -72,7 +72,7 @@ public class RObjectTest {
 		object.oop[0] = classObject;
 		classObject.data = classData;
 		when(classData.methodAt(MESSAGE)).thenReturn(method);
-		RObject.send(object, MESSAGE);
+		RObject.send(object, MESSAGE, null);
 		verify(method).applyTo(object, classObject);
 	}
 
@@ -84,7 +84,7 @@ public class RObjectTest {
 		superclassObject.data = superclassData;
 		when(classData.methodAt(MESSAGE)).thenReturn(null);
 		when(superclassData.methodAt(MESSAGE)).thenReturn(method);
-		RObject.send(object, MESSAGE);
+		RObject.send(object, MESSAGE, null);
 		verify(method).applyTo(object, superclassObject);
 	}
 }

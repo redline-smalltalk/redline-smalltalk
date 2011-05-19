@@ -193,161 +193,162 @@ public class RObject {
 	}
 
 	//
-	// send(r,s) to send(r,a,a,a,a,a,a,a,a,a,a,s)
-	// Note: Selector (s) is last argument.
+	// send(r,s, c) to send(r,a,a,a,a,a,a,a,a,a,a,s,c)
+	// Note: Selector (s) is second last argument. Class method was found is last argument.
 	//
 
-	public static RObject send(RObject receiver, String selector) {
+	public static RObject send(RObject receiver, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.oop[CLASS_OFFSET]);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn[0]);
+			return method.applyTo(receiver, newClassMethodWasFoundIn[0]);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, selector);
+				return send(receiver, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, null);
 	}
 
-	public static RObject send(RObject receiver, RObject arg, String selector) {
+	public static RObject send(RObject receiver, RObject arg, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg, selector);
+				return send(receiver, arg, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, selector);
+				return send(receiver, arg1, arg2, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2, arg3);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2, arg3);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2, arg3);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, arg3, selector);
+				return send(receiver, arg1, arg2, arg3, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2, arg3, arg4);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2, arg3, arg4);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2, arg3, arg4);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, arg3, arg4, selector);
+				return send(receiver, arg1, arg2, arg3, arg4, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2, arg3, arg4, arg5);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, arg3, arg4, arg5, selector);
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, String selector, RObject currentClassMethodWasFoundIn) {
+		System.out.println("*** SEND *** " + currentClassMethodWasFoundIn);
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2, arg3, arg4, arg5, arg6);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, selector);
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, selector);
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, selector);
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7, arg8});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, selector);
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9});
 	}
 
-	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, RObject arg10, String selector) {
+	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, RObject arg7, RObject arg8, RObject arg9, RObject arg10, String selector, RObject currentClassMethodWasFoundIn) {
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.oop[CLASS_OFFSET], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
-		RObject[] classMethodWasFoundIn = {null};
-		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, classMethodWasFoundIn);
+		RObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.oop[CLASS_OFFSET].oop[SUPERCLASS_OFFSET], selector, newClassMethodWasFoundIn);
 		if (method != null)
-			return method.applyToWith(receiver, classMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+			return method.applyToWith(receiver, newClassMethodWasFoundIn[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
 		if (isBootstrapped(receiver))
 			if (resolveClassObject(receiver))
-				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, selector);
+				return send(receiver, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, selector, currentClassMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new RObject[] {arg1,  arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10});
 	}
 }

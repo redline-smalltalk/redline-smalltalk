@@ -44,14 +44,14 @@ public class GeneratorTest implements Opcodes {
 	private static final String CLASS_FULLY_QUALIFIED_NAME = PACKAGE_INTERNAL_NAME + File.separator + CLASS_NAME;
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RObject";
 	private static final String UNARY_SELECTOR = "unarySelector";
-	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
+	private static final String UNARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/RObject;Ljava/lang/String;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;";
 	private static final String BINARY_SELECTOR = "+";
-	private static final String BINARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
+	private static final String BINARY_METHOD_DESCRIPTOR = "(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String KEYWORD_SELECTOR = "at:put:";
 	private static final int KEYWORD_ARGUMENT_COUNT = 2;
 	private static final String KEYWORD_METHOD_DESCRIPTOR =
-			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;)Lst/redline/smalltalk/RObject;";
+			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Ljava/lang/String;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;";
 	private static final String PRIMITIVE_BY_NUMBER_METHOD_DESCRIPTOR =
 			"(Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;";
 	private static final int LINE_NUMBER= 42;

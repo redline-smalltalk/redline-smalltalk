@@ -133,7 +133,7 @@ public class Bootstrapper {
 	}
 
 	public RObject classBuilder() {
-		return RObject.send(smalltalk.cachedObject0("ClassBuilder"), "new");
+		return RObject.send(smalltalk.cachedObject0("ClassBuilder"), "new", null);
 	}
 
 	public RObject buildClassWith(RObject superclass, RObject subclass, RObject instanceVariableNames, RObject classVariableNames,
@@ -141,7 +141,7 @@ public class Bootstrapper {
 		// "This is the standard initialization message for creating a new class as a
 		// subclass of an existing class (subclass)."
 		return RObject.send(classBuilder(), superclass, subclass, instanceVariableNames, classVariableNames, classInstanceVariableNames, poolDictionaries, category,
-							CLASSBUILDER_SELECTOR);
+							CLASSBUILDER_SELECTOR, null);
 	}
 
 	public class PrimitiveFullSubclassMethod extends RMethod {
@@ -163,7 +163,7 @@ public class Bootstrapper {
 
 		public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject subclassName) {
 			RObject empty = Smalltalk.instance().stringFromPrimitive("");
-			return RObject.send(receiver, subclassName, empty, empty, empty, empty, empty, FULL_SUBCLASSING_SELECTOR);
+			return RObject.send(receiver, subclassName, empty, empty, empty, empty, empty, FULL_SUBCLASSING_SELECTOR, null);
 		}
 	}
 
@@ -174,17 +174,17 @@ public class Bootstrapper {
 			// This is where we build a class.
 			// we are doing the minimum to get us moving.
 			System.out.println("** BUILDING CLASS ** superclass: " + superclass + " subclass: " + subclass + " [Method was found in " + classMethodWasFoundIn + "]");
-			subclass = send(subclass, ADDINSTVAR_SELECTOR, instanceVariableNames);
-			subclass = send(subclass, ADDCLASSVAR_SELECTOR, classVariableNames);
-			subclass = send(subclass, ADDCLASSINSTVAR_SELECTOR, classInstanceVariableNames);
-			subclass = send(subclass, ADDSHAREDPOOL_SELECTOR, poolDictionaries);
-			subclass = send(subclass, CATEGORY_SELECTOR, category);
+			subclass = send0(subclass, ADDINSTVAR_SELECTOR, instanceVariableNames);
+			subclass = send0(subclass, ADDCLASSVAR_SELECTOR, classVariableNames);
+			subclass = send0(subclass, ADDCLASSINSTVAR_SELECTOR, classInstanceVariableNames);
+			subclass = send0(subclass, ADDSHAREDPOOL_SELECTOR, poolDictionaries);
+			subclass = send0(subclass, CATEGORY_SELECTOR, category);
 			return subclass;
 		}
 
 		// instanceVariableNames.data.primitiveValue().toString()
 
-		private RObject send(RObject subclass, String addVariableKeyword, RObject variables) {
+		private RObject send0(RObject subclass, String addVariableKeyword, RObject variables) {
 			String string = variables.data.primitiveValue().toString();
 			if (string.length() == 0)
 				return subclass;
@@ -192,7 +192,7 @@ public class Bootstrapper {
 			RObject receiver = subclass;
 			String[] vars = string.split(" ");
 			for (String variable : vars)
-				receiver = RObject.send(receiver, smalltalk.stringFromPrimitive(variable), addVariableKeyword);
+				receiver = RObject.send(receiver, smalltalk.stringFromPrimitive(variable), addVariableKeyword, null);
 			return receiver;
 		}
 	}
