@@ -9,5 +9,5 @@ Object subclass: #TestMethod
 	category: 'Test'
 
 def initialize
-	^ self
+	super initialize
 

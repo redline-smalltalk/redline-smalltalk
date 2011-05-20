@@ -235,7 +235,10 @@ public class Generator implements Opcodes {
 	public void unarySend(String unarySelector, int line, boolean isSendToSuper) {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(unarySelector);
-		current.methodVisitor.visitInsn(ACONST_NULL);
+		if (isSendToSuper)
+			current.methodVisitor.visitVarInsn(ALOAD, 2);  // 0 = this, 1 = receiver, 2 = class method found in.
+		else
+			current.methodVisitor.visitInsn(ACONST_NULL);
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[0]);
 	}
 
@@ -275,14 +278,20 @@ public class Generator implements Opcodes {
 			throw new IllegalArgumentException("More than " + MAXIMUM_KEYWORD_ARGUMENTS + " keyword arguments!");
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(keywordSelector);
-		current.methodVisitor.visitInsn(ACONST_NULL);
+		if (isSendToSuper)
+			current.methodVisitor.visitVarInsn(ALOAD, 2);  // 0 = this, 1 = receiver, 2 = class method found in.
+		else
+			current.methodVisitor.visitInsn(ACONST_NULL);
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[countOfArguments]);
 	}
 
 	public void binarySend(String binarySelector, int line, boolean isSendToSuper) {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(binarySelector);
-		current.methodVisitor.visitInsn(ACONST_NULL);
+		if (isSendToSuper)
+			current.methodVisitor.visitVarInsn(ALOAD, 2);  // 0 = this, 1 = receiver, 2 = class method found in.
+		else
+			current.methodVisitor.visitInsn(ACONST_NULL);
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[1]);
 	}
 

@@ -48,7 +48,15 @@ public class UnaryExpression implements MessageExpression {
 	}
 
 	public void accept(NodeVisitor visitor) {
+		if (binaryExpression != null && keywordExpression != null)
+			throw new IllegalStateException("Unary expression should not have both a binary and keyword expression.");
 		visitor.visit(this);
-		// visit binaryExpression or keywordExpression - one will be null.
+		for (UnarySelector unarySelector : unarySelectors)
+			unarySelector.accept(visitor);
+		if (binaryExpression != null)
+			binaryExpression.accept(visitor);
+		else if (keywordExpression != null)
+			keywordExpression.accept(visitor);
+		visitor.visitEnd(this);
 	}
 }

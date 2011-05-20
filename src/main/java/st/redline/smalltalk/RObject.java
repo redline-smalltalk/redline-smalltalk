@@ -198,6 +198,7 @@ public class RObject {
 	//
 
 	public static RObject send(RObject receiver, String selector, RObject currentClassMethodWasFoundIn) {
+		System.out.println("send " + selector + " " + currentClassMethodWasFoundIn);
 		RMethod method = receiver.oop[CLASS_OFFSET].data.methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.oop[CLASS_OFFSET]);

@@ -80,13 +80,13 @@ public class TracingClassWriter extends ClassWriter {
 
 	@Override
 	public MethodVisitor visitMethod(int i, String s, String s1, String s2, String[] strings) {
-		log.info("visitMethod(" + i + ", '" + s + "', '" + s1 + "', '" + s2 + "', " + strings + ")");
+		log.info("\nvisitMethod(" + i + ", '" + s + "', '" + s1 + "', '" + s2 + "', " + strings + ")");
 		return new TracingMethodVisitor(super.visitMethod(i, s, s1, s2, strings));
 	}
 
 	@Override
 	public void visitEnd() {
-		log.info("visitEnd()");
+		log.info("visitEnd()\n");
 		super.visitEnd();
 	}
 }

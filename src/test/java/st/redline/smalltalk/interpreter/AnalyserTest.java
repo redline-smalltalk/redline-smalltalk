@@ -59,6 +59,7 @@ public class AnalyserTest {
 	@Mock TrueReservedWord trueReservedWord;
 	@Mock FalseReservedWord falseReservedWord;
 	@Mock NilReservedWord nilReservedWord;
+	@Mock UnarySelector unarySelector;
 	private Temporary temporary;
 	private List<VariableName> variableNames = new ArrayList<VariableName>();
 	private Analyser analyser;
@@ -364,5 +365,11 @@ public class AnalyserTest {
 	@Test public void shouldLookupNilWhenVisitNilReservedWord() {
 		analyser.visit(nilReservedWord, 1);
 		verify(generator).nilLookup(1);
+	}
+
+	@Test public void shouldGenerateUnarySendWhenVisitUnarySelector() {
+		analyser.sendIsToSuper = false;
+		analyser.visit(unarySelector, "initialize", 1);
+		verify(generator).unarySend("initialize", 1, false);
 	}
 }

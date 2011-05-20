@@ -245,6 +245,8 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(UnarySelector unarySelector, String value, int line) {
 		System.out.println("visit(UnarySelector) " + value);
+		generator().unarySend(value, line, sendIsToSuper);
+		sendIsToSuper = false;
 	}
 
 	public void visit(BinarySelector binarySelector, String value, int line) {
@@ -296,6 +298,10 @@ public class Analyser implements NodeVisitor {
 		System.out.println("visit(UnaryExpression)");
 	}
 
+	public void visitEnd(UnaryExpression unaryExpression) {
+		System.out.println("visitEnd(UnaryExpression)");
+	}
+
 	public void visit(BinaryExpression binaryExpression) {
 		System.out.println("visit(BinaryExpression)");
 	}
@@ -307,6 +313,7 @@ public class Analyser implements NodeVisitor {
 	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visitEnd(KeywordExpression) " + keywords);
 		generator().keywordSend(keywords, argumentCount, line, sendIsToSuper);
+		sendIsToSuper = false;
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
