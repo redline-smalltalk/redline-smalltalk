@@ -39,6 +39,8 @@ public class Statements implements VisitableNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		if (statements == null)
+			expression.leaveResultOnStack();
 		expression.accept(visitor);
 		visitor.visitEnd(this);
 		if (statements != null) {
