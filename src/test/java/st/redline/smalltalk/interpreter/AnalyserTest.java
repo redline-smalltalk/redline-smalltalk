@@ -323,7 +323,7 @@ public class AnalyserTest {
 
 	@Test public void shouldInvokeKeywordSendAfterKeywordExpressionVisit() {
 		analyser.visitEnd(keywordExpression, "at:", 1, 10);
-		verify(generator).keywordSend("at:", 1, 10);
+		verify(generator).keywordSend("at:", 1, 10, false);
 	}
 
 	@Test public void shouldCallPrimitiveByNumberWhenVisitingPrimitive() {
@@ -339,9 +339,16 @@ public class AnalyserTest {
 	}
 
 	@Test public void shouldSetSendToSuperFlagWhenVisitSuperReservedWord() {
+		analyser.inMethod = true;
 		analyser.visit(superReservedWord, 1);
 		assertTrue(analyser.sendIsToSuper);
 		verify(generator).pushForSuperCall();
+	}
+
+	@Test (expected=IllegalStateException.class)
+	public void shouldNotAllowSendToSuperFlagWhenNotInMethod() {
+		analyser.inMethod = false;
+		analyser.visit(superReservedWord, 1);
 	}
 
 	@Test public void shouldLookupTrueWhenVisitTrueReservedWord() {

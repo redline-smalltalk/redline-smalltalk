@@ -232,7 +232,7 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, current.fullyQualifiedName, "smalltalk", "()Lst/redline/smalltalk/Smalltalk;");
 	}
 
-	public void unarySend(String unarySelector, int line) {
+	public void unarySend(String unarySelector, int line, boolean isSendToSuper) {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(unarySelector);
 		current.methodVisitor.visitInsn(ACONST_NULL);
@@ -270,7 +270,7 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "symbolFromPrimitive", "(Ljava/lang/String;)Lst/redline/smalltalk/RObject;");
 	}
 
-	public void keywordSend(String keywordSelector, int countOfArguments, int line) {
+	public void keywordSend(String keywordSelector, int countOfArguments, int line, boolean isSendToSuper) {
 		if (countOfArguments > MAXIMUM_KEYWORD_ARGUMENTS)
 			throw new IllegalArgumentException("More than " + MAXIMUM_KEYWORD_ARGUMENTS + " keyword arguments!");
 		visitLine(line);
@@ -279,10 +279,10 @@ public class Generator implements Opcodes {
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[countOfArguments]);
 	}
 
-	public void binarySend(String binarySelector, int line) {
+	public void binarySend(String binarySelector, int line, boolean isSendToSuper) {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(binarySelector);
-		current.methodVisitor.visitInsn(ACONST_NULL);	
+		current.methodVisitor.visitInsn(ACONST_NULL);
 		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[1]);
 	}
 
@@ -292,7 +292,6 @@ public class Generator implements Opcodes {
 
 	public void pushForSuperCall() {
 		pushReceiver();
-		current.methodVisitor.visitVarInsn(ALOAD, 2);  // class method was found in.
 	}
 
 	public void pushThis() {

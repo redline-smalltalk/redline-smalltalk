@@ -93,16 +93,18 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldGenerateUnarySend() {
-		generator.unarySend(UNARY_SELECTOR, LINE_NUMBER);
+		generator.unarySend(UNARY_SELECTOR, LINE_NUMBER, false);
 		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
+		verify(methodVisitor).visitInsn(ACONST_NULL);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", UNARY_METHOD_DESCRIPTOR);
 	}
 
 	@Test public void shouldGenerateBinarySend() {
-		generator.binarySend(BINARY_SELECTOR, LINE_NUMBER);
+		generator.binarySend(BINARY_SELECTOR, LINE_NUMBER, false);
 		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitLdcInsn(BINARY_SELECTOR);
+		verify(methodVisitor).visitInsn(ACONST_NULL);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", BINARY_METHOD_DESCRIPTOR);
 	}
 
@@ -156,9 +158,10 @@ public class GeneratorTest implements Opcodes {
 	}
 
 	@Test public void shouldGenerateKeywordSend() {
-		generator.keywordSend(KEYWORD_SELECTOR, KEYWORD_ARGUMENT_COUNT, LINE_NUMBER);
+		generator.keywordSend(KEYWORD_SELECTOR, KEYWORD_ARGUMENT_COUNT, LINE_NUMBER, false);
 		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitLdcInsn(KEYWORD_SELECTOR);
+		verify(methodVisitor).visitInsn(ACONST_NULL);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", KEYWORD_METHOD_DESCRIPTOR);
 	}
 
@@ -241,7 +244,7 @@ public class GeneratorTest implements Opcodes {
 
 	@Test (expected=IllegalArgumentException.class)
 	public void shouldGenerateExceptionWhenMoreThanTenKeywordArguments() {
-		generator.keywordSend(KEYWORD_SELECTOR, 12, LINE_NUMBER);
+		generator.keywordSend(KEYWORD_SELECTOR, 12, LINE_NUMBER, false);
 	}
 
 	@Test (expected=IllegalArgumentException.class)

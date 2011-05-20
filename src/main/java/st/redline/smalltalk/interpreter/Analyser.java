@@ -33,6 +33,7 @@ public class Analyser implements NodeVisitor {
 
 	private final List<byte[]> methodClasses;
 	private final AnalyserContexts analyserContexts;
+	protected boolean inMethod = false;
 	protected boolean inClassMethod = false;
 	protected boolean sendIsToSuper = false;
 
@@ -159,10 +160,12 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Methods methods) {
 		System.out.println("visit(Methods)");
+		inMethod = true;
 	}
 
 	public void visitEnd(Methods methods) {
 		System.out.println("visitEnd(Methods)");
+		inMethod = false;
 	}
 
 	public void visit(InstanceMethod instanceMethod) {
@@ -303,7 +306,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 		System.out.println("visitEnd(KeywordExpression) " + keywords);
-		generator().keywordSend(keywords, argumentCount, line);
+		generator().keywordSend(keywords, argumentCount, line, sendIsToSuper);
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
@@ -379,6 +382,8 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(SuperReservedWord superReservedWord, int line) {
 		System.out.println("visit(super)");
+		if (!inMethod)
+			throw new IllegalStateException("Can't reference super outside of method.");
 		sendIsToSuper = true;
 		generator().pushForSuperCall();
 	}
