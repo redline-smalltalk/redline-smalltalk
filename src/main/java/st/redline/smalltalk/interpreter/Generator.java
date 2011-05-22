@@ -39,6 +39,7 @@ public class Generator implements Opcodes {
 	private static final String METHOD_SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RMethod";
 	private static final String BLOCK_SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/smalltalk/RBlock";
 	private static final String SEND_METHOD_NAME = "send";
+	private static final String SUPER_SEND_METHOD_NAME = "superSend";
 	private static final String SMALLTALK_CLASS = "st/redline/smalltalk/Smalltalk";
 	private static final String[] SEND_METHOD_DESCRIPTORS = {
 			"(Lst/redline/smalltalk/RObject;Ljava/lang/String;Lst/redline/smalltalk/RObject;)Lst/redline/smalltalk/RObject;",
@@ -81,8 +82,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void initialize() {
-		initialize(traceOn ? tracingClassWriter() : nonTracingClassWriter());
-	}
+		initialize(traceOn ? tracingClassWriter() : nonTracingClassWriter());	}
 
 	private ClassWriter nonTracingClassWriter() {
 		return new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -235,11 +235,13 @@ public class Generator implements Opcodes {
 	public void unarySend(String unarySelector, int line, boolean isSendToSuper) {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(unarySelector);
-		if (isSendToSuper)
+		if (isSendToSuper) {
 			current.methodVisitor.visitVarInsn(ALOAD, 2);  // 0 = this, 1 = receiver, 2 = class method found in.
-		else
+			current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[0]);
+		} else {
 			current.methodVisitor.visitInsn(ACONST_NULL);
-		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[0]);
+			current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[0]);
+		}
 	}
 
 	public void stackPop() {
@@ -278,21 +280,25 @@ public class Generator implements Opcodes {
 			throw new IllegalArgumentException("More than " + MAXIMUM_KEYWORD_ARGUMENTS + " keyword arguments!");
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(keywordSelector);
-		if (isSendToSuper)
+		if (isSendToSuper) {
 			current.methodVisitor.visitVarInsn(ALOAD, 2);  // 0 = this, 1 = receiver, 2 = class method found in.
-		else
+			current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[countOfArguments]);
+		} else {
 			current.methodVisitor.visitInsn(ACONST_NULL);
-		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[countOfArguments]);
+			current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[countOfArguments]);
+		}
 	}
 
 	public void binarySend(String binarySelector, int line, boolean isSendToSuper) {
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(binarySelector);
-		if (isSendToSuper)
+		if (isSendToSuper) {
 			current.methodVisitor.visitVarInsn(ALOAD, 2);  // 0 = this, 1 = receiver, 2 = class method found in.
-		else
+			current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[1]);
+		} else {
 			current.methodVisitor.visitInsn(ACONST_NULL);
-		current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[1]);
+			current.methodVisitor.visitMethodInsn(INVOKESTATIC, current.fullyQualifiedName, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[1]);
+		}
 	}
 
 	public void pushReceiver() {

@@ -100,12 +100,28 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", UNARY_METHOD_DESCRIPTOR);
 	}
 
+	@Test public void shouldGenerateUnarySendToSuper() {
+		generator.unarySend(UNARY_SELECTOR, LINE_NUMBER, true);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitLdcInsn(UNARY_SELECTOR);
+		verify(methodVisitor).visitVarInsn(ALOAD, 2);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "superSend", UNARY_METHOD_DESCRIPTOR);
+	}
+
 	@Test public void shouldGenerateBinarySend() {
 		generator.binarySend(BINARY_SELECTOR, LINE_NUMBER, false);
 		verifyLineNumber(LINE_NUMBER);
 		verify(methodVisitor).visitLdcInsn(BINARY_SELECTOR);
 		verify(methodVisitor).visitInsn(ACONST_NULL);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", BINARY_METHOD_DESCRIPTOR);
+	}
+
+	@Test public void shouldGenerateBinarySendToSuper() {
+		generator.binarySend(BINARY_SELECTOR, LINE_NUMBER, true);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitLdcInsn(BINARY_SELECTOR);
+		verify(methodVisitor).visitVarInsn(ALOAD, 2);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "superSend", BINARY_METHOD_DESCRIPTOR);
 	}
 
 	@Test public void shouldGeneratePrimitiveNumberConversion() {
@@ -163,6 +179,14 @@ public class GeneratorTest implements Opcodes {
 		verify(methodVisitor).visitLdcInsn(KEYWORD_SELECTOR);
 		verify(methodVisitor).visitInsn(ACONST_NULL);
 		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "send", KEYWORD_METHOD_DESCRIPTOR);
+	}
+
+	@Test public void shouldGenerateKeywordSendToSuper() {
+		generator.keywordSend(KEYWORD_SELECTOR, KEYWORD_ARGUMENT_COUNT, LINE_NUMBER, true);
+		verifyLineNumber(LINE_NUMBER);
+		verify(methodVisitor).visitLdcInsn(KEYWORD_SELECTOR);
+		verify(methodVisitor).visitVarInsn(ALOAD, 2);
+		verify(methodVisitor).visitMethodInsn(INVOKESTATIC, CLASS_FULLY_QUALIFIED_NAME, "superSend", KEYWORD_METHOD_DESCRIPTOR);
 	}
 
 	@Test public void shouldGeneratePushOfReceiver() {
