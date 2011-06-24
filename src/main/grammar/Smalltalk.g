@@ -27,11 +27,11 @@ options {
 }
 
 @header {
-	package st.redline.smalltalk.interpreter;
+	package st.redline.interpreter;
 }
 
 @lexer::header {
-	package st.redline.smalltalk.interpreter;
+	package st.redline.interpreter;
 }
 
 program returns [Program n] 
@@ -128,6 +128,7 @@ literal returns [Literal n]
 	:	numberConstant {$n = new LiteralNumber($numberConstant.n);}
 	|	characterConstant {$n = new LiteralCharacter($characterConstant.n);}
 	|	stringConstant {$n = new LiteralString($stringConstant.n);}
+	|	stringChunk {$n = new LiteralString($stringChunk.n);}
 	|	'#' ( symbol {$n = new LiteralSymbol($symbol.n);} | array {$n = new LiteralArray($array.n);} )
 	|	('self' | 'super' | 'true' | 'false' | 'nil') => reservedWordLiteral {$n = $reservedWordLiteral.n;}
 	;
@@ -192,6 +193,10 @@ stringConstant returns [StringConstant n]
 	:	STRING_LITERAL {$n = new StringConstant($STRING_LITERAL.text, $STRING_LITERAL.line);}
 	;
 
+stringChunk returns [StringChunk n]
+	:	STRING_CHUNK {$n = new StringChunk($STRING_CHUNK.text, $STRING_CHUNK.line);}
+	;
+
 numberConstant returns [NumberConstant n]
 	:	DIGITS {$n = new NumberConstant($DIGITS.text, $DIGITS.line);}
 	;
@@ -200,6 +205,7 @@ DIGITS: ('0'..'9')+;
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 STRING_LITERAL: '\'' .* '\'';
+STRING_CHUNK: '`' .* '`';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
 COMMENT: '"' .* '"' {$channel = HIDDEN;};
