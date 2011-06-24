@@ -30,6 +30,7 @@ import static st.redline.RObject.createClassWith;
 public class Bootstrapper {
 
 	protected static final String FULL_SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:classInstanceVariableNames:poolDictionaries:category:";
+	protected static final String NO_CATEGORY_SUBCLASSING_SELECTOR = "subclass:instanceVariableNames:classVariableNames:classInstanceVariableNames:poolDictionaries:";
 	protected static final String SHORT_SUBCLASSING_SELECTOR = "subclass:";
 	protected static final String CLASSBUILDER_SELECTOR = "superclass:subclass:instanceVariableNames:classVariableNames:classInstanceVariableNames:poolDictionaries:category:";
 	protected static final String ADDINSTVAR_SELECTOR = "addInstVarNamed:";
@@ -75,6 +76,7 @@ public class Bootstrapper {
 		classBuilder().cls().methodAtPut(CLASSBUILDER_SELECTOR, new ClassBuilderBuildSubclassMethod());
 		undefinedObject().cls().methodAtPut(NEW_SELECTOR, new PrimitiveNewNotAllowedMethod());
 		classClass().methodAtPut(FULL_SUBCLASSING_SELECTOR, new PrimitiveFullSubclassMethod(this));
+		classClass().methodAtPut(NO_CATEGORY_SUBCLASSING_SELECTOR, new PrimitiveNoCategorySubclassMethod());
 		classClass().methodAtPut(SHORT_SUBCLASSING_SELECTOR, new PrimitiveShortSubclassMethod());
 		classClass().methodAtPut(ADDINSTVAR_SELECTOR, new AddInstVarNamedMethod());
 		classClass().methodAtPut(ADDCLASSVAR_SELECTOR, new AddClassVarNamedMethod());
