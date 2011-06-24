@@ -1,3 +1,13 @@
+25/06/2011 Changes
+
+Refactored grammer to remove backtracing - no backtracking at all making grammar very fast.
+Changed compilation model for methods to trigger a send to a class to compile the method
+from source - more smalltalk like - using message sends.
+Introduced a preprocessor to enable parsing of +/- decorators on method to define a class + or 
+instance - method. Preprocessor turns these into messages to compile methods with source. 
+This version of the Compiler is much neater, simpler, faster and dynamic.
+
+
 26/03/2011 Changes
 
 Refactoring grammar to not have backtrace. This is a work in progress and the grammar may not work
