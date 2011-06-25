@@ -41,7 +41,6 @@ public class Analyser implements NodeVisitor {
 	private final Map<String, VariableName> classVariableRegistry;
 	private final Map<String, VariableName> methodVariableRegistry;
 	private final Stack<String> blockContext;
-	private final RObject targetClass;
 
 	protected boolean inMethod = false;
 	protected boolean inClassMethod = false;
@@ -59,7 +58,6 @@ public class Analyser implements NodeVisitor {
 		this.classVariableRegistry = new HashMap<String, VariableName>();
 		this.methodVariableRegistry = new HashMap<String, VariableName>();
 		this.blockContext = new Stack<String>();
-		this.targetClass = resolveTargetClass();
 	}
 
 	private RObject resolveTargetClass() {
@@ -419,6 +417,8 @@ public class Analyser implements NodeVisitor {
 
 	private VariableName probeTargetClassVariables(String variableName) {
 		System.out.println("probeTargetClassVariables() " + variableName);
+		RObject target = resolveTargetClass();
+		// TODO.JCL inspect target for variables.
 		return null;
 	}
 

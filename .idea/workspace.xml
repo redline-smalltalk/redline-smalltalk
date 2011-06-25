@@ -87,10 +87,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SetCategoryMethod.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SetCategoryMethod.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/SetCategoryMethod.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="13" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.5743741">
+            <state line="27" column="13" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Analyser.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/interpreter/Analyser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="420" column="49" selection-start="15622" selection-end="15622" vertical-scroll-proportion="0.8108108">
               <folding />
             </state>
           </provider>
@@ -158,10 +167,10 @@
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/bootstrap/Bootstrapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Interpreter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/interpreter/Analyser.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ClassObjectData.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/bootstrap/PrimitiveNoCategorySubclassMethod.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/bootstrap/PrimitiveShortSubclassMethod.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/interpreter/Analyser.java" />
       </list>
     </option>
   </component>
@@ -524,7 +533,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="876" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -538,7 +547,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901368" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2138229" sideWeight="0.6721763" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2138229" sideWeight="0.6721763" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -618,13 +627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/interpreter/Analyser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="421" column="16" selection-start="15627" selection-end="15627" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ObjectData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="17" selection-start="61" selection-end="61" vertical-scroll-proportion="0.0">
@@ -690,7 +692,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/SetCategoryMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.5743741">
+        <state line="27" column="13" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/interpreter/Analyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="420" column="49" selection-start="15622" selection-end="15622" vertical-scroll-proportion="0.8108108">
           <folding />
         </state>
       </provider>
