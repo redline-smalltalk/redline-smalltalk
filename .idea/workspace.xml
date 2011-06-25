@@ -115,8 +115,8 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/smalltalk/RObject.java" />
         <option value="$PROJECT_DIR$/src/test/java/st/redline/smalltalk/interpreter/GeneratorTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/bootstrap/PrimitiveNoCategorySubclassMethod.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/Interpreter.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/bootstrap/Bootstrapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/Interpreter.java" />
       </list>
     </option>
   </component>
