@@ -22,6 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.interpreter;
 
+import st.redline.RObject;
 import st.redline.Smalltalk;
 
 import java.util.HashMap;
@@ -31,6 +32,8 @@ import java.util.Stack;
 
 public class Analyser implements NodeVisitor {
 
+	public static final int START_METHOD_ARGUMENT_OFFSET = 3;
+
 	private final Generator generator;
 	private final String className;
 	private final String packageName;
@@ -38,6 +41,7 @@ public class Analyser implements NodeVisitor {
 	private final Map<String, VariableName> classVariableRegistry;
 	private final Map<String, VariableName> methodVariableRegistry;
 	private final Stack<String> blockContext;
+	private final RObject targetClass;
 
 	protected boolean inMethod = false;
 	protected boolean inClassMethod = false;
@@ -55,6 +59,14 @@ public class Analyser implements NodeVisitor {
 		this.classVariableRegistry = new HashMap<String, VariableName>();
 		this.methodVariableRegistry = new HashMap<String, VariableName>();
 		this.blockContext = new Stack<String>();
+		this.targetClass = resolveTargetClass();
+	}
+
+	private RObject resolveTargetClass() {
+		RObject object = smalltalk().cachedObject0(className);
+		if (object != null)
+			return object;
+		return new NullTargetClass();
 	}
 
 	public byte[] classBytes() {
@@ -81,6 +93,11 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Temporaries temporaries) {
 		System.out.println("visit(Temporaries temporaries)");
+		methodTemporariesCount = temporaries.size();
+		temporaries.indexFrom(START_METHOD_ARGUMENT_OFFSET + methodArgumentCount);
+		// 0 = this.
+		// 1 = receiver.
+		// 2 = class method was found in.
 	}
 
 	public void visitEnd(Temporaries temporaries) {
@@ -88,7 +105,8 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Temporary temporary, int index, String value, int line) {
-		System.out.println("visit(Temporary temporary, int index, String value, int line)");
+		System.out.println("visit(Temporary) " + value + " @ " + temporary.index);
+		registerVariable(temporary, false);
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
@@ -393,7 +411,15 @@ public class Analyser implements NodeVisitor {
 		VariableName foundVariableName = methodVariableRegistry.get(variableName);
 		if (foundVariableName != null)
 			return foundVariableName;
-		return classVariableRegistry.get(variableName);
+		foundVariableName = classVariableRegistry.get(variableName);
+		if (foundVariableName != null)
+			return foundVariableName;
+		return probeTargetClassVariables(variableName);
+	}
+
+	private VariableName probeTargetClassVariables(String variableName) {
+		System.out.println("probeTargetClassVariables() " + variableName);
+		return null;
 	}
 
 	private void handleOperationOnClassField(boolean onLoadSideOfExpression, VariableName reference) {
@@ -436,5 +462,8 @@ public class Analyser implements NodeVisitor {
 			generator().loadFromLocal(reference.index);
 		else
 			generator().storeIntoLocal(reference.index);
+	}
+
+	private class NullTargetClass extends RObject {
 	}
 }

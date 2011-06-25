@@ -7,3 +7,4 @@ Object subclass: #TestClass
 	classInstanceVariableNames: 'ClassInstVars'
 	poolDictionaries: 'PoolVars'.
 
+

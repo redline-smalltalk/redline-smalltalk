@@ -29,6 +29,6 @@ public class PrimitiveNoCategorySubclassMethod extends RMethod {
 	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject subclassName, RObject instanceVariableNames, RObject classVariableNames,
 							   RObject classInstanceVariableNames, RObject poolDictionaries) {
 		RObject empty = smalltalk().stringFromPrimitive("");
-		return RObject.send(receiver, subclassName, subclassName, instanceVariableNames, classVariableNames, classInstanceVariableNames, poolDictionaries, Bootstrapper.FULL_SUBCLASSING_SELECTOR, empty);
+		return RObject.send(receiver, subclassName, instanceVariableNames, classVariableNames, classInstanceVariableNames, poolDictionaries, empty, Bootstrapper.FULL_SUBCLASSING_SELECTOR, null);
 	}
 }

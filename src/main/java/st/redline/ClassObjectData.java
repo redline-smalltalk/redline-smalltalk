@@ -31,6 +31,7 @@ public class ClassObjectData extends InstanceObjectData {
 	private boolean bootstrapped;
 	private String primitiveName;
 	private String primitiveSourceFile;
+	private RObject category;
 
 	public ClassObjectData(RObject cls, RObject superclass, Map<String, RObject> variables, Map<String, RMethod> methodDictionary) {
 		super(cls, variables);
@@ -93,22 +94,23 @@ public class ClassObjectData extends InstanceObjectData {
 	}
 
 	public void primitiveCategory(RObject category) {
-		System.out.println("primitiveCategory() " + category);
+		System.out.println("primitiveCategory() " + String.valueOf(category.primitiveValue()));
+		this.category = category;
 	}
 
 	public void primitiveAddPoolNamed(RObject variable) {
-		System.out.println("primitiveAddPoolNamed() " + variable);
+		System.out.println("primitiveAddPoolNamed() " + String.valueOf(variable.primitiveValue()));
 	}
 
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
-		System.out.println("primitiveAddClassInstanceVariableNamed() " + variable);
+		System.out.println("primitiveAddClassInstanceVariableNamed() " + String.valueOf(variable.primitiveValue()));
 	}
 
 	public void primitiveAddClassVariableNamed(RObject variable) {
-		System.out.println("primitiveAddClassVariableNamed() " + variable);
+		System.out.println("primitiveAddClassVariableNamed() " + String.valueOf(variable.primitiveValue()));
 	}
 
 	public void primitiveAddInstanceVariableNamed(RObject variable) {
-		System.out.println("primitiveAddInstanceVariableNamed() " + variable);
+		System.out.println("primitiveAddInstanceVariableNamed() " + String.valueOf(variable.primitiveValue()));
 	}
 }
