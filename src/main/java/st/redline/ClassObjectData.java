@@ -22,11 +22,13 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import java.util.Hashtable;
 import java.util.Map;
 
 public class ClassObjectData extends InstanceObjectData {
 
 	private final Map<String, RMethod> methodDictionary;
+	private final Map<String, RObject> poolDictionary;
 	private RObject superclass;
 	private boolean bootstrapped;
 	private String primitiveName;
@@ -38,6 +40,7 @@ public class ClassObjectData extends InstanceObjectData {
 		this.superclass = superclass;
 		this.methodDictionary = methodDictionary;
 		this.bootstrapped = false;
+		this.poolDictionary = new Hashtable<String, RObject>();
 	}
 
 	public RObject superclass() {
@@ -100,6 +103,14 @@ public class ClassObjectData extends InstanceObjectData {
 
 	public void primitiveAddPoolNamed(RObject variable) {
 		System.out.println("primitiveAddPoolNamed() " + String.valueOf(variable.primitiveValue()));
+		String name = String.valueOf(variable.primitiveValue());
+		if (primitiveHasPoolNamed(name))
+			throw new IllegalStateException("Pool named '" + name + "' already defined.");
+		poolDictionary.put(name, variable);
+	}
+
+	public boolean primitiveHasPoolNamed(String name) {
+		return poolDictionary.containsKey(name) || (superclass != null && superclass.primitiveHasPoolNamed(name));
 	}
 
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {

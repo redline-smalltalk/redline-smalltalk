@@ -107,6 +107,10 @@ public class InstanceObjectData implements ObjectData {
 		throw new IllegalStateException("Can't add a pool to an instance.");
 	}
 
+	public boolean primitiveHasPoolNamed(String name) {
+		throw new IllegalStateException("Can't query a pool on an instance.");
+	}
+
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
 		throw new IllegalStateException("Can't add a class instance variable to an instance.");
 	}

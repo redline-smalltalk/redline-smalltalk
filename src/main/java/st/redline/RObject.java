@@ -121,6 +121,10 @@ public class RObject implements ObjectData {
 		data.primitiveAddPoolNamed(variable);
 	}
 
+	public boolean primitiveHasPoolNamed(String name) {
+		return data.primitiveHasPoolNamed(name);
+	}
+
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
 		data.primitiveAddClassInstanceVariableNamed(variable);
 	}

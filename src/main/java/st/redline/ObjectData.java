@@ -21,6 +21,7 @@ public interface ObjectData {
 	void primitiveValue(Object primitiveValue);
 	void primitiveCategory(RObject category);
 	void primitiveAddPoolNamed(RObject variable);
+	boolean primitiveHasPoolNamed(String variable);
 	void primitiveAddClassInstanceVariableNamed(RObject variable);
 	void primitiveAddClassVariableNamed(RObject variable);
 	void primitiveAddInstanceVariableNamed(RObject variable);
