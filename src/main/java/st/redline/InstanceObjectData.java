@@ -119,7 +119,15 @@ public class InstanceObjectData implements ObjectData {
 		throw new IllegalStateException("Can't add a class variable to an instance.");
 	}
 
+	public boolean primitiveHasClassVariableNamed(String name) {
+		throw new IllegalStateException("Can't query a class variable on an instance.");
+	}
+
 	public void primitiveAddInstanceVariableNamed(RObject variable) {
 		throw new IllegalStateException("Can't add an instance variable to an instance.");
+	}
+
+	public boolean primitiveHasInstanceVariableNamed(String name) {
+		throw new IllegalStateException("Can't query an instance variable on an instance.");
 	}
 }

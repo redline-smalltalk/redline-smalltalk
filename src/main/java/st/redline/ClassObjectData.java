@@ -29,6 +29,8 @@ public class ClassObjectData extends InstanceObjectData {
 
 	private final Map<String, RMethod> methodDictionary;
 	private final Map<String, RObject> poolDictionary;
+	private final Map<String, RObject> instanceVariables;
+
 	private RObject superclass;
 	private boolean bootstrapped;
 	private String primitiveName;
@@ -41,6 +43,7 @@ public class ClassObjectData extends InstanceObjectData {
 		this.methodDictionary = methodDictionary;
 		this.bootstrapped = false;
 		this.poolDictionary = new Hashtable<String, RObject>();
+		this.instanceVariables = new Hashtable<String, RObject>();
 	}
 
 	public RObject superclass() {
@@ -106,7 +109,7 @@ public class ClassObjectData extends InstanceObjectData {
 		String name = String.valueOf(variable.primitiveValue());
 		if (primitiveHasPoolNamed(name))
 			throw new IllegalStateException("Pool named '" + name + "' already defined.");
-		poolDictionary.put(name, variable);
+		poolDictionary.put(name, nil());
 	}
 
 	public boolean primitiveHasPoolNamed(String name) {
@@ -119,9 +122,29 @@ public class ClassObjectData extends InstanceObjectData {
 
 	public void primitiveAddClassVariableNamed(RObject variable) {
 		System.out.println("primitiveAddClassVariableNamed() " + String.valueOf(variable.primitiveValue()));
+		String name = String.valueOf(variable.primitiveValue());
+		if (primitiveHasClassVariableNamed(name))
+			throw new IllegalStateException("Variable named '" + name + "' already defined in class.");
+		variables().put(name, nil());
+	}
+
+	public boolean primitiveHasClassVariableNamed(String name) {
+		return variables().containsKey(name) || (superclass != null && superclass.primitiveHasClassVariableNamed(name));
 	}
 
 	public void primitiveAddInstanceVariableNamed(RObject variable) {
 		System.out.println("primitiveAddInstanceVariableNamed() " + String.valueOf(variable.primitiveValue()));
+		String name = String.valueOf(variable.primitiveValue());
+		if (primitiveHasInstanceVariableNamed(name))
+			throw new IllegalStateException("Variable named '" + name + "' already defined.");
+		instanceVariables.put(name, nil());
+	}
+
+	public boolean primitiveHasInstanceVariableNamed(String name) {
+		return instanceVariables.containsKey(name) || (superclass != null && superclass.primitiveHasInstanceVariableNamed(name));
+	}
+
+	private RObject nil() {
+		return Smalltalk.instance().primitiveAt("nil");
 	}
 }

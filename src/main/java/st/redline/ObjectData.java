@@ -24,5 +24,7 @@ public interface ObjectData {
 	boolean primitiveHasPoolNamed(String variable);
 	void primitiveAddClassInstanceVariableNamed(RObject variable);
 	void primitiveAddClassVariableNamed(RObject variable);
+	boolean primitiveHasClassVariableNamed(String variable);
 	void primitiveAddInstanceVariableNamed(RObject variable);
+	boolean primitiveHasInstanceVariableNamed(String variable);
 }
