@@ -56,6 +56,7 @@ public class Bootstrapper {
 	protected static final String COMPILE_INSTANCE_METHOD_SELECTOR = "compileInstanceMethod:at:fromSource:";
 	protected static final String COMPILE_CLASS_METHOD_SELECTOR = "compileClassMethod:at:fromSource:";
 	protected static final String PRIMITIVE_SOURCE_PATH_SELECTOR = "primitiveSourceFile:";
+	protected static final String INITIALIZE_CLASSINSTVARS_SELECTOR = "primitiveInitializeClassInstanceVariables";
 
 	private final Smalltalk smalltalk;
 
@@ -86,6 +87,7 @@ public class Bootstrapper {
 		classClass().methodAtPut(COMPILE_INSTANCE_METHOD_SELECTOR, new CompileMethod(false));
 		classClass().methodAtPut(COMPILE_CLASS_METHOD_SELECTOR, new CompileMethod(true));
 		classClass().methodAtPut(PRIMITIVE_SOURCE_PATH_SELECTOR, new PrimitiveSourcePathMethod());
+		classClass().methodAtPut(INITIALIZE_CLASSINSTVARS_SELECTOR, new InitializeClassInstanceVariables());
 	}
 
 	private void registerNil(RObject nil) {

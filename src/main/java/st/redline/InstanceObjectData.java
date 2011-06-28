@@ -22,6 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import java.util.List;
 import java.util.Map;
 
 public class InstanceObjectData implements ObjectData {
@@ -113,6 +114,14 @@ public class InstanceObjectData implements ObjectData {
 
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
 		throw new IllegalStateException("Can't add a class instance variable to an instance.");
+	}
+
+	public void primitiveInitializeClassInstanceVariables() {
+		throw new IllegalStateException("Can't initialize class instance variables on an instance.");
+	}
+
+	public List<String> primitiveClassInstanceVariableNames() {
+		throw new IllegalStateException("Can't query class instance variables on an instance.");
 	}
 
 	public void primitiveAddClassVariableNamed(RObject variable) {

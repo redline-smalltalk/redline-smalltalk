@@ -22,7 +22,9 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 public class ClassObjectData extends InstanceObjectData {
@@ -30,6 +32,7 @@ public class ClassObjectData extends InstanceObjectData {
 	private final Map<String, RMethod> methodDictionary;
 	private final Map<String, RObject> poolDictionary;
 	private final Map<String, RObject> instanceVariables;
+	private final Map<String, RObject> classInstanceVariables;
 
 	private RObject superclass;
 	private boolean bootstrapped;
@@ -42,8 +45,10 @@ public class ClassObjectData extends InstanceObjectData {
 		this.superclass = superclass;
 		this.methodDictionary = methodDictionary;
 		this.bootstrapped = false;
+		// TODO.JCL - might be better for memory if we make these maps on request.
 		this.poolDictionary = new Hashtable<String, RObject>();
 		this.instanceVariables = new Hashtable<String, RObject>();
+		this.classInstanceVariables = new Hashtable<String, RObject>();
 	}
 
 	public RObject superclass() {
@@ -117,7 +122,27 @@ public class ClassObjectData extends InstanceObjectData {
 	}
 
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
-		System.out.println("primitiveAddClassInstanceVariableNamed() " + String.valueOf(variable.primitiveValue()));
+		primitiveAddClassInstanceVariableNamed(String.valueOf(variable.primitiveValue()));
+	}
+
+	private void primitiveAddClassInstanceVariableNamed(String name) {
+		System.out.println("primitiveAddClassInstanceVariableNamed() " + name);
+	}
+
+	public void primitiveInitializeClassInstanceVariables() {
+		System.out.println("primitiveInitializeClassInstanceVariables()");
+		for (String name : primitiveClassInstanceVariableNames())
+			primitiveAddClassInstanceVariableNamed(name);
+	}
+
+	public List<String> primitiveClassInstanceVariableNames() {
+		List<String> names = new ArrayList<String>();
+		if (superclass != null)
+			for (String name : ((ClassObjectData) superclass.data).classInstanceVariables.keySet())
+				names.add(name);
+		for (String name : classInstanceVariables.keySet())
+			names.add(name);
+		return names;
 	}
 
 	public void primitiveAddClassVariableNamed(RObject variable) {

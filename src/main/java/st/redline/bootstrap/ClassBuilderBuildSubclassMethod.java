@@ -33,6 +33,7 @@ public class ClassBuilderBuildSubclassMethod extends RMethod {
 		// This is where we build a class.
 		// we are doing the minimum to get us moving.
 		System.out.println("** BUILDING CLASS ** superclass: " + superclass + " subclass: " + subclass + " [Method was found in " + classMethodWasFoundIn + "]");
+		subclass = send0(subclass, Bootstrapper.INITIALIZE_CLASSINSTVARS_SELECTOR);
 		subclass = send0(subclass, Bootstrapper.ADDINSTVAR_SELECTOR, instanceVariableNames);
 		subclass = send0(subclass, Bootstrapper.ADDCLASSVAR_SELECTOR, classVariableNames);
 		subclass = send0(subclass, Bootstrapper.ADDCLASSINSTVAR_SELECTOR, classInstanceVariableNames);
@@ -40,8 +41,6 @@ public class ClassBuilderBuildSubclassMethod extends RMethod {
 		subclass = send0(subclass, Bootstrapper.CATEGORY_SELECTOR, category);
 		return subclass;
 	}
-
-	// instanceVariableNames.data.primitiveValue().toString()
 
 	private RObject send0(RObject subclass, String addVariableKeyword, RObject variables) {
 		String string = variables.primitiveValue().toString();
@@ -52,5 +51,9 @@ public class ClassBuilderBuildSubclassMethod extends RMethod {
 		for (String variable : vars)
 			receiver = RObject.send(receiver, smalltalk().stringFromPrimitive(variable), addVariableKeyword, null);
 		return receiver;
+	}
+
+	private RObject send0(RObject subclass, String selector) {
+		return RObject.send(subclass, selector, null);
 	}
 }

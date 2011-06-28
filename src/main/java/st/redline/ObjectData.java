@@ -1,5 +1,6 @@
 package st.redline;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ObjectData {
@@ -23,6 +24,8 @@ public interface ObjectData {
 	void primitiveAddPoolNamed(RObject variable);
 	boolean primitiveHasPoolNamed(String variable);
 	void primitiveAddClassInstanceVariableNamed(RObject variable);
+	void primitiveInitializeClassInstanceVariables();
+	List<String> primitiveClassInstanceVariableNames();
 	void primitiveAddClassVariableNamed(RObject variable);
 	boolean primitiveHasClassVariableNamed(String variable);
 	void primitiveAddInstanceVariableNamed(RObject variable);

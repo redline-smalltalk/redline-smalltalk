@@ -22,11 +22,12 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import java.util.List;
 import java.util.Map;
 
 public class RObject implements ObjectData {
 
-	private final ObjectData data;
+	protected final ObjectData data;
 
 	public RObject() {
 		this(null);
@@ -127,6 +128,14 @@ public class RObject implements ObjectData {
 
 	public void primitiveAddClassInstanceVariableNamed(RObject variable) {
 		data.primitiveAddClassInstanceVariableNamed(variable);
+	}
+
+	public List<String> primitiveClassInstanceVariableNames() {
+		return data.primitiveClassInstanceVariableNames();
+	}
+
+	public void primitiveInitializeClassInstanceVariables() {
+		data.primitiveInitializeClassInstanceVariables();
 	}
 
 	public void primitiveAddClassVariableNamed(RObject variable) {
