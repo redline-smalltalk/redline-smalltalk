@@ -25,7 +25,9 @@ package st.redline;
 import st.redline.bootstrap.Bootstrapper;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,12 +36,15 @@ import java.util.Map;
 public class Smalltalk extends ClassLoader {
 
 	protected static final String REDLINE_PACKAGE = "redline";
+	public static final String CURRENT_FILE = "CURRENT_FILE";
+
 	private static final String NIL = "nil";
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
 	private static final String ARRAY = "Array";
 	private static final String NEW_SELECTOR = "new";
 
+	private final Environment environment;
 	private final Interpreter interpreter;
 	private final Map<String, RObject> cachedObjects;
 	private final ClassFinder classFinder;
@@ -48,8 +53,17 @@ public class Smalltalk extends ClassLoader {
 	private RObject trueInstance;
 	private RObject falseInstance;
 	private RObject nilInstance;
+	private boolean verboseOn;
 
-	public Smalltalk() {
+	public static Smalltalk with(Environment environment) {
+		if (environment == null)
+			throw new MissingArgumentException();
+		return new Smalltalk(environment, currentClassLoader());
+	}
+
+	public Smalltalk(Environment environment, ClassLoader parentClassLoader) {
+		super(parentClassLoader);
+		this.environment = environment;
 		interpreter = new Interpreter(this);
 		cachedObjects = new HashMap<String, RObject>();
 		classFinder = new ClassFinder(this);
@@ -59,6 +73,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	private void initialize() {
+		verboseOn = verboseRequested();
 		Thread.currentThread().setContextClassLoader(this);
 	}
 
@@ -74,16 +89,57 @@ public class Smalltalk extends ClassLoader {
 		new Bootstrapper(this).bootstrap();
 	}
 
+	public boolean verboseOn() {
+		return verboseOn;
+	}
+
+	private boolean verboseRequested() {
+		return commandLine().verboseRequested();
+	}
+
 	public Object evaluate(SourceFile sourceFile) {
-		return interpreter().interpret(sourceFile);
+		trackFile(sourceFile);
+		try {
+			return interpreter().interpret(sourceFile);
+		} finally {
+			untrackFile();
+		}
 	}
 
 	protected void evaluate(File sourceFile) {
 		evaluate(new SourceFile(sourceFile.getAbsolutePath()));
 	}
 
+	private void untrackFile() {
+		environment.remove(CURRENT_FILE);
+	}
+
+	private void trackFile(SourceFile sourceFile) {
+		environment.put(CURRENT_FILE, sourceFile);
+	}
+
 	protected Interpreter interpreter() {
 		return interpreter;
+	}
+
+	public PrintWriter standardOutput() {
+		return environment.standardOutput();
+	}
+
+	public PrintWriter errorOutput() {
+		return environment.errorOutput();
+	}
+
+	public List<String> sourcePaths() {
+		return commandLine().sourcePaths();
+	}
+
+	public CommandLine commandLine() {
+		return environment.commandLine();
+	}
+
+	public Environment environment() {
+		return environment;
 	}
 
 	public Object defineClass(byte[] classBytes, boolean instantiate) {

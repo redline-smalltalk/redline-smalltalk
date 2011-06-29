@@ -22,36 +22,81 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.List;
+
+/**
+ * Invokes Smalltalk from the command line.
+ */
 public class Stic {
 
-	protected final Smalltalk smalltalk = new Smalltalk();
-
-	private Smalltalk smalltalk() {
-		return smalltalk;
-	}
+	private Smalltalk smalltalk;
 
 	public static void main(String[] args) {
-		Stic.execute(files(args));
+		new Stic(createSmalltalkWith(args)).run();
 	}
 
-	private static void execute(SourceFiles sourceFiles) {
-		new Stic().evaluate(sourceFiles);
+	public static Smalltalk createSmalltalkWith(String[] args) {
+		return createSmalltalkWith(createEnvironmentWith(args));
 	}
 
-	private void evaluate(SourceFiles sourceFiles) {
-		for (SourceFile sourceFile : sourceFiles)
-			evaluate(sourceFile);
+	private static Environment createEnvironmentWith(String[] args) {
+		CommandLine commandLine = createCommandLineWith(args);
+		return createEnvironmentWith(commandLine, new PrintWriter(System.out), new PrintWriter(System.err));
 	}
 
-	private void evaluate(SourceFile sourceFile) {
-		smalltalk().evaluate(sourceFile);
+	private static Environment createEnvironmentWith(CommandLine commandLine, PrintWriter output, PrintWriter error) {
+		return Environment.with(commandLine, output, error);
 	}
 
-	private static SourceFiles files(String[] args) {
-		return SourceFiles.with(sourceFile(args[0]));
+	private static Smalltalk createSmalltalkWith(Environment environment) {
+		return Smalltalk.with(environment);
 	}
 
-	private static SourceFile sourceFile(String filename) {
-		return SourceFile.on(filename);
+	private static CommandLine createCommandLineWith(String[] arguments) {
+		return new CommandLine(arguments);
+	}
+
+	public Stic(Smalltalk smalltalk) {
+		this.smalltalk = smalltalk;
+	}
+
+	public Stic run() {
+		if (helpRequested())
+			return printHelp();
+		if (haveFileNames())
+			runSmalltalkScripts();
+		return this;
+	}
+
+	private void runSmalltalkScripts() {
+		for (Object fileName : fileNames())
+			smalltalk.evaluate(new File(fileName.toString()));
+	}
+
+	private List fileNames() {
+		return commandLine().arguments();
+	}
+
+	private boolean haveFileNames() {
+		return !commandLine().haveNoArguments();
+	}
+
+	private Stic printHelp() {
+		commandLine().printHelp(standardOutput());
+		return this;
+	}
+
+	private PrintWriter standardOutput() {
+		return smalltalk.standardOutput();
+	}
+
+	private boolean helpRequested() {
+		return commandLine().helpRequested();
+	}
+
+	private CommandLine commandLine() {
+		return smalltalk.commandLine();
 	}
 }
