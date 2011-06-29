@@ -107,7 +107,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	protected void evaluate(File sourceFile) {
-		evaluate(new SourceFile(sourceFile.getAbsolutePath()));
+		evaluate(new SourceFile(sourceFile.toString()));
 	}
 
 	private void untrackFile() {
@@ -154,7 +154,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public RObject createBlock(String blockClassName) {
-		System.out.println("createBlock() " + blockClassName);
+		// System.out.println("createBlock() " + blockClassName);
 		try {
 			return (RBlock) loadClass(blockClassName).newInstance();
 		} catch (Exception e) {
@@ -196,7 +196,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public RObject primitiveAt(String objectName) {
-		System.out.println("primitiveAt() " + objectName);
+		// System.out.println("primitiveAt() " + objectName);
 		if (isCachedObject(objectName))
 			return cachedObject(objectName);
 		String packageAndClassName = REDLINE_PACKAGE + "." + objectName;
@@ -223,7 +223,7 @@ public class Smalltalk extends ClassLoader {
 
 	protected boolean resolveClassObject(String name) {
 		try {
-			System.out.println("resolveClassObject() " + name);
+			// System.out.println("resolveClassObject() " + name);
 			loadClass(name).newInstance();
 			return true;
 		} catch (Exception e) {
@@ -233,12 +233,12 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
-		System.out.println("loadClass() " + name);
+		// System.out.println("loadClass() " + name);
 		return super.loadClass(name);
 	}
 
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
-		System.out.println("findClass() " + name);
+		// System.out.println("findClass() " + name);
 		Class<?> cls = classFinder.find(name);
 		if (cls != null)
 			return cls;
@@ -246,7 +246,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	public void primitiveAtPut(String name, RObject object) {
-		System.out.println("primitiveAtPut() " + name + " " + object);
+		// System.out.println("primitiveAtPut() " + name + " " + object);
 		cachedObjects.put(name, object);
 	}
 

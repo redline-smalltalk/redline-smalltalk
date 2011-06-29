@@ -102,7 +102,7 @@ public class RObject implements ObjectData {
 	}
 
 	public void primitiveSourceFile(String primitiveSourceFile) {
-		System.out.println("primitiveSourceFile() " + primitiveSourceFile);
+		// System.out.println("primitiveSourceFile() " + primitiveSourceFile);
 		data.primitiveSourceFile(primitiveSourceFile);
 	}
 
@@ -182,7 +182,7 @@ public class RObject implements ObjectData {
 	}
 
 	private static boolean resolveClassObject(RObject object, RObject other) {
-		System.out.println("resolveClassObject() " + object + " " + other);
+		// System.out.println("resolveClassObject() " + object + " " + other);
 		if (!resolveObjectSuperclass(object, other))
 			return false;
 		if (isNotBootstrapped(object))
@@ -192,7 +192,7 @@ public class RObject implements ObjectData {
 	}
 
 	private static boolean resolveObjectSuperclass(RObject object, RObject other) {
-		System.out.println("resolveClassObjectSuperclass() " + object + " " + other);
+		// System.out.println("resolveClassObjectSuperclass() " + object + " " + other);
 		if (object == null)
 			return true;
 		if (!object.isClass())
@@ -228,7 +228,7 @@ public class RObject implements ObjectData {
 	//
 
 	public static RObject send(RObject receiver, String selector, RObject currentClassMethodWasFoundIn) {
-		System.out.println("send " + selector + " " + currentClassMethodWasFoundIn);
+		// System.out.println("send " + selector + " " + currentClassMethodWasFoundIn);
 		RMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls());
@@ -243,7 +243,7 @@ public class RObject implements ObjectData {
 	}
 
 	public static RObject superSend(RObject receiver, String selector, RObject currentClassMethodWasFoundIn) {
-		System.out.println("superSend " + selector + " " + currentClassMethodWasFoundIn);
+		// System.out.println("superSend " + selector + " " + currentClassMethodWasFoundIn);
 		RMethod method = currentClassMethodWasFoundIn.superclass().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, currentClassMethodWasFoundIn.superclass());
@@ -398,7 +398,7 @@ public class RObject implements ObjectData {
 	}
 
 	public static RObject send(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, String selector, RObject currentClassMethodWasFoundIn) {
-		System.out.println("*** SEND *** " + currentClassMethodWasFoundIn);
+		// System.out.println("*** SEND *** " + currentClassMethodWasFoundIn);
 		RMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6);
@@ -413,7 +413,7 @@ public class RObject implements ObjectData {
 	}
 
 	public static RObject superSend(RObject receiver, RObject arg1, RObject arg2, RObject arg3, RObject arg4, RObject arg5, RObject arg6, String selector, RObject currentClassMethodWasFoundIn) {
-		System.out.println("*** SUPERSEND *** " + currentClassMethodWasFoundIn);
+		// System.out.println("*** SUPERSEND *** " + currentClassMethodWasFoundIn);
 		RMethod method = currentClassMethodWasFoundIn.superclass().methodAt(selector);
 		if (method != null)
 			return method.applyToWith(receiver, currentClassMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5, arg6);

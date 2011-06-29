@@ -40,7 +40,7 @@ public class SimpleExpression implements Expression {
 	}
 
 	public boolean isResultLeftOnStack() {
-		System.out.println("isResultLeftOnStack() " + resultLeftOnStack);
+		// System.out.println("isResultLeftOnStack() " + resultLeftOnStack);
 		return resultLeftOnStack;
 	}
 

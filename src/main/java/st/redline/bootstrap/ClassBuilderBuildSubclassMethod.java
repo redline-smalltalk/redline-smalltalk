@@ -32,7 +32,7 @@ public class ClassBuilderBuildSubclassMethod extends RMethod {
 							   RObject classInstanceVariableNames, RObject poolDictionaries, RObject category) {
 		// This is where we build a class.
 		// we are doing the minimum to get us moving.
-		System.out.println("** BUILDING CLASS ** superclass: " + superclass + " subclass: " + subclass + " [Method was found in " + classMethodWasFoundIn + "]");
+		// System.out.println("** BUILDING CLASS ** superclass: " + superclass + " subclass: " + subclass + " [Method was found in " + classMethodWasFoundIn + "]");
 		subclass = send0(subclass, Bootstrapper.INITIALIZE_CLASSINSTVARS_SELECTOR);
 		subclass = send0(subclass, Bootstrapper.ADDINSTVAR_SELECTOR, instanceVariableNames);
 		subclass = send0(subclass, Bootstrapper.ADDCLASSVAR_SELECTOR, classVariableNames);

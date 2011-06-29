@@ -72,14 +72,12 @@ public class Generator implements Opcodes {
 
 	private Context current = new Context();
 	private Stack<Context> contexts = new Stack<Context>();
+	private boolean verboseOn;
 
-	public Generator(int startingLineNumber) {
+	public Generator(int startingLineNumber, boolean verboseOn) {
 		this.startingLineNumber = startingLineNumber;
-		current.classWriter = tracingClassWriter();
-	}
-
-	private ClassWriter tracingClassWriter() {
-		return new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
+		this.verboseOn = verboseOn;
+		initialize();
 	}
 
 	public byte[] build() {
@@ -104,7 +102,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void createBlock(String blockName, String packageName, String sourceFileExtension, int methodArgumentCount) {
-		System.out.println("createBlock() " + blockName);
+		// System.out.println("createBlock() " + blockName);
 		currentSmalltalkClass();
 		current.methodVisitor.visitLdcInsn(blockName);
 		current.methodVisitor.visitMethodInsn(INVOKEVIRTUAL, SMALLTALK_CLASS, "createBlock", "(Ljava/lang/String;)Lst/redline/RObject;");
@@ -317,7 +315,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void unarySend(String selector, int line, boolean sendIsToSuper) {
-		System.out.println("unarySend() " + selector);
+		// System.out.println("unarySend() " + selector);
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(selector);
 		if (sendIsToSuper) {
@@ -330,7 +328,7 @@ public class Generator implements Opcodes {
 	}
 
 	public void binarySend(String binarySelector, int line, boolean isSendToSuper) {
-		System.out.println("binarySend() " + binarySelector);
+		// System.out.println("binarySend() " + binarySelector);
 		visitLine(line);
 		current.methodVisitor.visitLdcInsn(binarySelector);
 		if (isSendToSuper) {
@@ -392,12 +390,15 @@ public class Generator implements Opcodes {
 	}
 
 	public void initialize() {
-//		initialize(traceOn ? tracingClassWriter() : nonTracingClassWriter());
-		initialize(tracingClassWriter());
+		initialize(verboseOn ? tracingClassWriter() : nonTracingClassWriter());
 	}
 
 	private ClassWriter nonTracingClassWriter() {
 		return new ClassWriter(ClassWriter.COMPUTE_MAXS);
+	}
+
+	private ClassWriter tracingClassWriter() {
+		return new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
 	}
 
 	void initialize(ClassWriter classWriter) {

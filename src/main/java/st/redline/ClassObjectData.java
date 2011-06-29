@@ -64,7 +64,7 @@ public class ClassObjectData extends InstanceObjectData {
 	}
 
 	public void methodAtPut(String selector, RMethod method) {
-		System.out.println("methodAtPut() " + selector + " " + method.getClass().getName());
+		// System.out.println("methodAtPut() " + selector + " " + method.getClass().getName());
 		methodDictionary.put(selector, method);
 	}
 
@@ -105,12 +105,12 @@ public class ClassObjectData extends InstanceObjectData {
 	}
 
 	public void primitiveCategory(RObject category) {
-		System.out.println("primitiveCategory() " + String.valueOf(category.primitiveValue()));
+		// System.out.println("primitiveCategory() " + String.valueOf(category.primitiveValue()));
 		this.category = category;
 	}
 
 	public void primitiveAddPoolNamed(RObject variable) {
-		System.out.println("primitiveAddPoolNamed() " + String.valueOf(variable.primitiveValue()));
+		// System.out.println("primitiveAddPoolNamed() " + String.valueOf(variable.primitiveValue()));
 		String name = String.valueOf(variable.primitiveValue());
 		if (primitiveHasPoolNamed(name))
 			throw new IllegalStateException("Pool named '" + name + "' already defined.");
@@ -126,11 +126,11 @@ public class ClassObjectData extends InstanceObjectData {
 	}
 
 	private void primitiveAddClassInstanceVariableNamed(String name) {
-		System.out.println("primitiveAddClassInstanceVariableNamed() " + name);
+		// System.out.println("primitiveAddClassInstanceVariableNamed() " + name);
 	}
 
 	public void primitiveInitializeClassInstanceVariables() {
-		System.out.println("primitiveInitializeClassInstanceVariables()");
+		// System.out.println("primitiveInitializeClassInstanceVariables()");
 		for (String name : primitiveClassInstanceVariableNames())
 			primitiveAddClassInstanceVariableNamed(name);
 	}
@@ -146,7 +146,7 @@ public class ClassObjectData extends InstanceObjectData {
 	}
 
 	public void primitiveAddClassVariableNamed(RObject variable) {
-		System.out.println("primitiveAddClassVariableNamed() " + String.valueOf(variable.primitiveValue()));
+		// System.out.println("primitiveAddClassVariableNamed() " + String.valueOf(variable.primitiveValue()));
 		String name = String.valueOf(variable.primitiveValue());
 		if (primitiveHasClassVariableNamed(name))
 			throw new IllegalStateException("Variable named '" + name + "' already defined in class.");
@@ -158,7 +158,7 @@ public class ClassObjectData extends InstanceObjectData {
 	}
 
 	public void primitiveAddInstanceVariableNamed(RObject variable) {
-		System.out.println("primitiveAddInstanceVariableNamed() " + String.valueOf(variable.primitiveValue()));
+		// System.out.println("primitiveAddInstanceVariableNamed() " + String.valueOf(variable.primitiveValue()));
 		String name = String.valueOf(variable.primitiveValue());
 		if (primitiveHasInstanceVariableNamed(name))
 			throw new IllegalStateException("Variable named '" + name + "' already defined.");

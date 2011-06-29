@@ -301,7 +301,7 @@ public class Bootstrapper {
 	}
 
 	public RObject createClass(String name, RObject superclass) {
-		System.out.println("createClass() " + name);
+		// System.out.println("createClass() " + name);
 		RObject cls = createClassWith(null, superclass);
 		cls.bootstrapped(true);
 		cls.primitiveName(name);

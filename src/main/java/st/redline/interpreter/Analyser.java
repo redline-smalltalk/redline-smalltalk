@@ -49,12 +49,12 @@ public class Analyser implements NodeVisitor {
 	protected int methodTemporariesCount = 0;
 	protected String blockName;
 
-	public Analyser(String className, String packageName, String sourceFileExtension, int startingLineNumber) {
-		System.out.println("Analyser() " + className + " " + packageName + " " + sourceFileExtension);
+	public Analyser(String className, String packageName, String sourceFileExtension, int startingLineNumber, boolean verboseOn) {
+		// System.out.println("Analyser() " + className + " " + packageName + " " + sourceFileExtension);
 		this.className = className;
 		this.packageName = packageName;
 		this.sourceFileExtension = sourceFileExtension;
-		this.generator = new Generator(startingLineNumber);
+		this.generator = new Generator(startingLineNumber, verboseOn);
 		this.classVariableRegistry = new HashMap<String, VariableName>();
 		this.methodVariableRegistry = new HashMap<String, VariableName>();
 		this.blockContext = new Stack<String>();
@@ -80,17 +80,17 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Program program) {
-		System.out.println("visit(Program) " + packageName);
+		// System.out.println("visit(Program) " + packageName);
 		generator().openClass(className, packageName, sourceFileExtension);
 	}
 
 	public void visitEnd(Program program) {
-		System.out.println("visitEnd(Program program)");
+		// System.out.println("visitEnd(Program program)");
 		generator().closeClass();
 	}
 
 	public void visit(Temporaries temporaries) {
-		System.out.println("visit(Temporaries temporaries)");
+		// System.out.println("visit(Temporaries temporaries)");
 		methodTemporariesCount = temporaries.size();
 		temporaries.indexFrom(START_METHOD_ARGUMENT_OFFSET + methodArgumentCount);
 		// 0 = this.
@@ -99,16 +99,16 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visitEnd(Temporaries temporaries) {
-		System.out.println("visitEnd(Temporaries temporaries)");
+		// System.out.println("visitEnd(Temporaries temporaries)");
 	}
 
 	public void visit(Temporary temporary, int index, String value, int line) {
-		System.out.println("visit(Temporary) " + value + " @ " + temporary.index);
+		// System.out.println("visit(Temporary) " + value + " @ " + temporary.index);
 		registerVariable(temporary, false);
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
-		System.out.println("visit(VariableName) " + value + " @ " + line);
+		// System.out.println("visit(VariableName) " + value + " @ " + line);
 		VariableName reference = variableLookup(value);
 		if (reference == null) {
 			if (variableName.isClassReference())
@@ -124,29 +124,29 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Statements statements) {
-		System.out.println("visit(Statements statements)");
+		// System.out.println("visit(Statements statements)");
 	}
 
 	public void visitEnd(Statements statements) {
-		System.out.println("visitEnd(Statements statements)");
+		// System.out.println("visitEnd(Statements statements)");
 	}
 
 	public void visit(AnswerExpression answerExpression) {
-		System.out.println("visit(AnswerExpression answerExpression)");
+		// System.out.println("visit(AnswerExpression answerExpression)");
 	}
 
 	public void visit(Methods methods) {
-		System.out.println("visit(Methods)");
+		// System.out.println("visit(Methods)");
 		inMethod = true;
 	}
 
 	public void visitEnd(Methods methods) {
-		System.out.println("visitEnd(Methods)");
+		// System.out.println("visitEnd(Methods)");
 		inMethod = false;
 	}
 
 	public void visit(InstanceMethod instanceMethod) {
-		System.out.println("visit(InstanceMethod instanceMethod)");
+		// System.out.println("visit(InstanceMethod instanceMethod)");
 		inClassMethod = false;
 		initializePerMethodItems();
 	}
@@ -158,7 +158,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visitEnd(InstanceMethod instanceMethod) {
-		System.out.println("visitEnd(InstanceMethod instanceMethod)");
+		// System.out.println("visitEnd(InstanceMethod instanceMethod)");
 		Generator generator = generator();
 		if (instanceMethod.isEmpty())
 			generator.pushReceiver();
@@ -167,13 +167,13 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(ClassMethod classMethod) {
-		System.out.println("visit(ClassMethod classMethod)");
+		// System.out.println("visit(ClassMethod classMethod)");
 		inClassMethod = true;
 		initializePerMethodItems();
 	}
 
 	public void visitEnd(ClassMethod classMethod) {
-		System.out.println("visitEnd(ClassMethod classMethod)");
+		// System.out.println("visitEnd(ClassMethod classMethod)");
 		Generator generator = generator();
 		if (classMethod.isEmpty())
 			generator.pushReceiver();
@@ -182,50 +182,50 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
-		System.out.println("visit(UnarySelectorMessagePattern) " + value);
+		// System.out.println("visit(UnarySelectorMessagePattern) " + value);
 		generator().openMethod(0);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
-		System.out.println("visit(BinarySelectorMessagePattern) " + binarySelector);
+		// System.out.println("visit(BinarySelectorMessagePattern) " + binarySelector);
 		registerVariable(variableName, false);
 		methodArgumentCount = 1;
 		generator().openMethod(1);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
-		System.out.println("visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames)");
+		// System.out.println("visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames)");
 		registerVariables(variableNames);
 		methodArgumentCount = variableNames.size();
 		generator().openMethod(methodArgumentCount);
 	}
 
 	public void visit(UnarySelector unarySelector, String value, int line) {
-		System.out.println("visit(UnarySelector) " + value);
+		// System.out.println("visit(UnarySelector) " + value);
 		generator().unarySend(value, line, sendIsToSuper);
 		sendIsToSuper = false;
 	}
 
 	public void visit(BinarySelector binarySelector, String value, int line) {
-		System.out.println("visit(BinarySelector binarySelector, String value, int line)");
+		// System.out.println("visit(BinarySelector binarySelector, String value, int line)");
 	}
 
 	public void visit(Keyword keyword, String value, int line) {
-		System.out.println("visit(Keyword keyword, String value, int line)");
+		// System.out.println("visit(Keyword keyword, String value, int line)");
 	}
 
 	public void visit(AssignmentExpression assignmentExpression) {
-		System.out.println("visit(AssignmentExpression assignmentExpression)");
+		// System.out.println("visit(AssignmentExpression assignmentExpression)");
 	}
 
 	public void visit(SimpleExpression simpleExpression) {
-		System.out.println("visit(SimpleExpression simpleExpression)");
+		// System.out.println("visit(SimpleExpression simpleExpression)");
 		sendIsToSuper = false;
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
-		System.out.println("visitEnd(SimpleExpression simpleExpression)");
-		System.out.println("visitEnd(SimpleExpression)");
+		// System.out.println("visitEnd(SimpleExpression simpleExpression)");
+		// System.out.println("visitEnd(SimpleExpression)");
 		if (simpleExpression.isResultDuplicatedOnStack())
 			generator().pushStackTop();
 		if (!simpleExpression.isResultLeftOnStack())
@@ -233,118 +233,118 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
-		System.out.println("visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line)");
+		// System.out.println("visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line)");
 	}
 
 	public void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription) {
-		System.out.println("visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription)");
+		// System.out.println("visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription)");
 	}
 
 	public void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions) {
-		System.out.println("visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions)");
+		// System.out.println("visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions)");
 	}
 
 	public void visit(UnaryObjectDescription unaryObjectDescription) {
-		System.out.println("visit(UnaryObjectDescription unaryObjectDescription)");
+		// System.out.println("visit(UnaryObjectDescription unaryObjectDescription)");
 	}
 
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
-		System.out.println("visit(BinaryObjectDescription binaryObjectDescription)");
+		// System.out.println("visit(BinaryObjectDescription binaryObjectDescription)");
 	}
 
 	public void visit(UnaryExpression unaryExpression) {
-		System.out.println("visit(UnaryExpression unaryExpression)");
+		// System.out.println("visit(UnaryExpression unaryExpression)");
 	}
 
 	public void visitEnd(UnaryExpression unaryExpression) {
-		System.out.println("visitEnd(UnaryExpression unaryExpression)");
+		// System.out.println("visitEnd(UnaryExpression unaryExpression)");
 	}
 
 	public void visit(BinaryExpression binaryExpression) {
-		System.out.println("visit(BinaryExpression binaryExpression)");
+		// System.out.println("visit(BinaryExpression binaryExpression)");
 	}
 
 	public void visit(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
-		System.out.println("visit(KeywordExpression) " + keywords);
+		// System.out.println("visit(KeywordExpression) " + keywords);
 	}
 
 	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
-		System.out.println("visitEnd(KeywordExpression) " + keywords);
+		// System.out.println("visitEnd(KeywordExpression) " + keywords);
 		generator().keywordSend(keywords, argumentCount, line, sendIsToSuper);
 		sendIsToSuper = false;
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
-		System.out.println("visit(PrimaryExpression primaryExpression)");
+		// System.out.println("visit(PrimaryExpression primaryExpression)");
 	}
 
 	public void visit(PrimaryStatements primaryStatements) {
-		System.out.println("visit(PrimaryStatements primaryStatements)");
+		// System.out.println("visit(PrimaryStatements primaryStatements)");
 	}
 
 	public void visit(Primitive primitive, String value, int line) {
-		System.out.println("visit(Primitive) " + value);
+		// System.out.println("visit(Primitive) " + value);
 		generator().callToPrimitiveByNumber(methodArgumentCount, methodTemporariesCount, value, line);
 	}
 
 	public void visit(Symbol symbol, String value, int line) {
-		System.out.println("visit(Symbol symbol, String value, int line)");
+		// System.out.println("visit(Symbol symbol, String value, int line)");
 	}
 
 	public void visit(Array array) {
-		System.out.println("visit(Array array)");
+		// System.out.println("visit(Array array)");
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
-		System.out.println("visit(Identifier identifier, String value, int line)");
+		// System.out.println("visit(Identifier identifier, String value, int line)");
 	}
 
 	public void visit(LiteralSymbol literalSymbol, String value, int line) {
-		System.out.println("visit(LiteralSymbol) " + literalSymbol.value);
+		// System.out.println("visit(LiteralSymbol) " + literalSymbol.value);
 		generator().primitiveSymbolConversion(value, line);
 	}
 
 	public void visit(LiteralArray literalArray) {
-		System.out.println("visit(LiteralArray literalArray)");
+		// System.out.println("visit(LiteralArray literalArray)");
 	}
 
 	public void visit(ArrayConstantElement arrayConstantElement) {
-		System.out.println("visit(ArrayConstantElement arrayConstantElement)");
+		// System.out.println("visit(ArrayConstantElement arrayConstantElement)");
 	}
 
 	public void visit(CharacterConstant characterConstant, String value, int line) {
-		System.out.println("visit(CharacterConstant characterConstant, String value, int line)");
+		// System.out.println("visit(CharacterConstant characterConstant, String value, int line)");
 	}
 
 	public void visit(StringConstant stringConstant, String value, int line) {
-		System.out.println("visit(StringConstant stringConstant, String value, int line)");
+		// System.out.println("visit(StringConstant stringConstant, String value, int line)");
 	}
 
 	public void visit(StringChunk stringChunk, String value, int line) {
-		System.out.println("visit(StringChunk) " + value);
+		// System.out.println("visit(StringChunk) " + value);
 		generator().primitiveStringChunkConversion(value, line);
 	}
 
 	public void visit(LiteralString literalString, String value, int line) {
-		System.out.println("visit(LiteralString) " + value);
+		// System.out.println("visit(LiteralString) " + value);
 		generator().primitiveStringConversion(value, line);
 	}
 
 	public void visit(LiteralCharacter literalCharacter, String value, int line) {
-		System.out.println("visit(LiteralCharacter literalCharacter, String value, int line)");
+		// System.out.println("visit(LiteralCharacter literalCharacter, String value, int line)");
 	}
 
 	public void visit(NumberConstant numberConstant, String value, int line) {
-		System.out.println("visit(NumberConstant)" + value + " @ " + line);
+		// System.out.println("visit(NumberConstant)" + value + " @ " + line);
 	}
 
 	public void visit(LiteralNumber literalNumber, String value, int line) {
-		System.out.println("visit(LiteralNumber) " + value + " @ " + line);
+		// System.out.println("visit(LiteralNumber) " + value + " @ " + line);
 		generator().primitiveNumberConversion(value, line);
 	}
 
 	public void visit(Block block) {
-		System.out.println("visit(Block block)");
+		// System.out.println("visit(Block block)");
 		blockName = className + "_Block" + String.valueOf(block.hashCode());
 		blockContext.push(blockName);
 		Generator generator = generator();
@@ -353,7 +353,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visitEnd(Block block) {
-		System.out.println("visitEnd(Block block)");
+		// System.out.println("visitEnd(Block block)");
 		Generator generator = generator();
 		generator.closeBlock();
 		byte[] blockClass = generator.closeBlockClass();
@@ -363,12 +363,12 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(SelfReservedWord selfReservedWord, int line) {
-		System.out.println("visit(self)");
+		// System.out.println("visit(self)");
 		generator().pushReceiver();
 	}
 
 	public void visit(SuperReservedWord superReservedWord, int line) {
-		System.out.println("visit(super)");
+		// System.out.println("visit(super)");
 		if (!inMethod)
 			throw new IllegalStateException("Can't reference super outside of method.");
 		sendIsToSuper = true;
@@ -376,17 +376,17 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(TrueReservedWord selfReservedWord, int line) {
-		System.out.println("visit(true)");
+		// System.out.println("visit(true)");
 		generator().trueLookup(line);
 	}
 
 	public void visit(FalseReservedWord selfReservedWord, int line) {
-		System.out.println("visit(false)");
+		// System.out.println("visit(false)");
 		generator().falseLookup(line);
 	}
 
 	public void visit(NilReservedWord selfReservedWord, int line) {
-		System.out.println("visit(nil)");
+		// System.out.println("visit(nil)");
 		generator().nilLookup(line);
 	}
 
@@ -396,7 +396,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void registerVariable(VariableName variableName, boolean isClassField) {
-		System.out.println("registerVariable " + variableName.value + " @ " + variableName.index + " " + isClassField);
+		// System.out.println("registerVariable " + variableName.value + " @ " + variableName.index + " " + isClassField);
 		if (methodVariableRegistry.containsKey(variableName.value) || classVariableRegistry.containsKey(variableName.value))
 			throw new IllegalStateException("Variable '" + variableName.value + "' already defined. Could be a Class field?");
 		if (isClassField)
@@ -416,7 +416,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	private VariableName probeTargetClassVariables(String variableName) {
-		System.out.println("probeTargetClassVariables() " + variableName);
+		// System.out.println("probeTargetClassVariables() " + variableName);
 		RObject target = resolveTargetClass();
 		// TODO.JCL inspect target for variables.
 		return null;

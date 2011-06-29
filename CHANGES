@@ -1,3 +1,9 @@
+30/06/2011 Changes
+
+Replaced the command line processing so you can turn verbose on to get more information about
+what Redline is doing. Removed console output - will replace with log output.
+
+
 25/06/2011 Changes
 
 Refactored grammer to remove backtracing - no backtracking at all making grammar very fast.
