@@ -107,7 +107,7 @@ public class Smalltalk extends ClassLoader {
 	}
 
 	protected void evaluate(File sourceFile) {
-		evaluate(new SourceFile(sourceFile.toString()));
+		evaluate(new SourceFile(sourceFile.toString(), this));
 	}
 
 	private void untrackFile() {
@@ -132,6 +132,10 @@ public class Smalltalk extends ClassLoader {
 
 	public List<String> sourcePaths() {
 		return commandLine().sourcePaths();
+	}
+
+	public String userPath() {
+		return commandLine().userPath();
 	}
 
 	public CommandLine commandLine() {

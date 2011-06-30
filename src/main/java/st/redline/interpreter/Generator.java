@@ -144,7 +144,7 @@ public class Generator implements Opcodes {
 		current.className = className;
 		current.packageName = packageName;
 		current.sourceFileExtension = sourceFileExtension;
-		current.fullyQualifiedName = packageName + File.separator + className;
+		current.fullyQualifiedName = packageName.length() > 0 ? packageName + File.separator + className : className;
 	}
 
 	private void openInitializeMethod() {

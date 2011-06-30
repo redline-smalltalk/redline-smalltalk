@@ -84,8 +84,8 @@ public class Bootstrapper {
 		classClass().methodAtPut(ADDCLASSINSTVAR_SELECTOR, new AddClassInstVarNamedMethod());
 		classClass().methodAtPut(ADDSHAREDPOOL_SELECTOR, new AddSharedPoolMethod());
 		classClass().methodAtPut(CATEGORY_SELECTOR, new SetCategoryMethod());
-		classClass().methodAtPut(COMPILE_INSTANCE_METHOD_SELECTOR, new CompileMethod(false));
-		classClass().methodAtPut(COMPILE_CLASS_METHOD_SELECTOR, new CompileMethod(true));
+		classClass().methodAtPut(COMPILE_INSTANCE_METHOD_SELECTOR, new CompileMethod(false, smalltalk));
+		classClass().methodAtPut(COMPILE_CLASS_METHOD_SELECTOR, new CompileMethod(true, smalltalk));
 		classClass().methodAtPut(PRIMITIVE_SOURCE_PATH_SELECTOR, new PrimitiveSourcePathMethod());
 		classClass().methodAtPut(INITIALIZE_CLASSINSTVARS_SELECTOR, new InitializeClassInstanceVariables());
 	}

@@ -23,15 +23,19 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline;
 
 import java.io.File;
+import java.util.List;
 
 public class SourceFile extends File {
 
-	protected SourceFile(String pathname) {
+	private final Smalltalk smalltalk;
+
+	protected SourceFile(String pathname, Smalltalk smalltalk) {
 		super(pathname);
+		this.smalltalk = smalltalk;
 	}
 
-	public static SourceFile on(String pathname) {
-		return new SourceFile(pathname);
+	public static SourceFile on(String pathname, Smalltalk smalltalk) {
+		return new SourceFile(pathname, smalltalk);
 	}
 
 	public int startingLineNumber() {
@@ -52,13 +56,46 @@ public class SourceFile extends File {
 	}
 
 	public String packageName() {
-		String path = this.toString();
-		path = path.substring(0, path.lastIndexOf(className()));
-		return path.endsWith(File.separator) ? path.substring(0, path.length() - 1) : path;
+//		String path = this.toString();
+//		path = path.substring(0, path.lastIndexOf(className()));
+//		return path.endsWith(File.separator) ? path.substring(0, path.length() - 1) : path;
+		return sourceFileParentPathWithoutSourcePaths();
 	}
 
 	public String className() {
 		String name = getName();
 		return name.substring(0, name.lastIndexOf("."));
+	}
+
+	public String parentPath() {
+		String parent = super.getParent();
+		return parent == null ? "" : parent;
+	}
+
+	public String sourceFileParentPathWithoutSourcePaths() {
+		String parentPath = parentPathWithoutUserPath();
+		for (String path : sourcePaths()) {
+			if (parentPath.length() == path.length())
+				return "";
+			if (parentPath.startsWith(path))
+				return parentPath.substring(path.length() + 1);
+		}
+		return parentPath;
+	}
+
+	public String parentPathWithoutUserPath() {
+		String userPath = userPath();
+		String parentPath = parentPath();
+		if (parentPath.startsWith(userPath))
+			return parentPath.substring(userPath.length() + 1);
+		return parentPath;
+	}
+
+	private String userPath() {
+		return smalltalk.userPath();
+	}
+
+	private List<String> sourcePaths() {
+		return smalltalk.sourcePaths();
 	}
 }

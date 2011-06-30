@@ -24,6 +24,7 @@ package st.redline.bootstrap;
 
 import st.redline.RMethod;
 import st.redline.RObject;
+import st.redline.Smalltalk;
 import st.redline.SourceFile;
 
 import java.io.File;
@@ -31,9 +32,11 @@ import java.io.File;
 public class CompileMethod extends RMethod {
 
 	private final boolean isClassMethod;
+	private final Smalltalk smalltalk;
 
-	public CompileMethod(boolean isClassMethod) {
+	public CompileMethod(boolean isClassMethod, Smalltalk smalltalk) {
 		this.isClassMethod = isClassMethod;
+		this.smalltalk = smalltalk;
 	}
 
 	public RObject applyToWith(RObject receiver, RObject classMethodWasFoundIn, RObject selector, RObject lineNumber, RObject methodSource) {
@@ -56,7 +59,7 @@ public class CompileMethod extends RMethod {
 	}
 
 	private SourceFile sourceFileFor(RObject receiver, String selector, String source, int lineNumber) {
-		return new MethodOnlySourceFile(receiver, selector, source, lineNumber);
+		return new MethodOnlySourceFile(receiver, selector, source, lineNumber, smalltalk);
 	}
 
 	private class MethodOnlySourceFile extends SourceFile {
@@ -65,8 +68,8 @@ public class CompileMethod extends RMethod {
 		private final String source;
 		private final int lineNumber;
 
-		public MethodOnlySourceFile(RObject receiver, String selector, String source, int lineNumber) {
-			super(receiver.primitiveSourceFile());
+		public MethodOnlySourceFile(RObject receiver, String selector, String source, int lineNumber, Smalltalk smalltalk) {
+			super(receiver.primitiveSourceFile(), smalltalk);
 			this.selector = selector;
 			this.source = source;
 			this.lineNumber = lineNumber;
