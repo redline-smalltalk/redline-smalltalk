@@ -26,6 +26,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import st.redline.Smalltalk;
 
 import java.io.File;
 import java.util.Stack;
@@ -69,14 +70,14 @@ public class Generator implements Opcodes {
 	};
 
 	private final int startingLineNumber;
+	private final Smalltalk smalltalk;
 
 	private Context current = new Context();
 	private Stack<Context> contexts = new Stack<Context>();
-	private boolean verboseOn;
 
-	public Generator(int startingLineNumber, boolean verboseOn) {
+	public Generator(Smalltalk smalltalk, int startingLineNumber) {
 		this.startingLineNumber = startingLineNumber;
-		this.verboseOn = verboseOn;
+		this.smalltalk = smalltalk;
 		initialize();
 	}
 
@@ -390,7 +391,11 @@ public class Generator implements Opcodes {
 	}
 
 	public void initialize() {
-		initialize(verboseOn ? tracingClassWriter() : nonTracingClassWriter());
+		initialize(verboseOn() ? tracingClassWriter() : nonTracingClassWriter());
+	}
+
+	private boolean verboseOn() {
+		return smalltalk.verboseOn();
 	}
 
 	private ClassWriter nonTracingClassWriter() {
@@ -398,7 +403,7 @@ public class Generator implements Opcodes {
 	}
 
 	private ClassWriter tracingClassWriter() {
-		return new TracingClassWriter(ClassWriter.COMPUTE_MAXS);
+		return new TracingClassWriter(ClassWriter.COMPUTE_MAXS, smalltalk.standardOutput());
 	}
 
 	void initialize(ClassWriter classWriter) {

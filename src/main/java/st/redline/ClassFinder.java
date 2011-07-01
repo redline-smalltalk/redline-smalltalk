@@ -23,7 +23,6 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -33,12 +32,14 @@ public class ClassFinder {
 
 	private final Smalltalk smalltalk;
 
+	private List<String> sourcePaths;
+
 	public ClassFinder(Smalltalk smalltalk) {
 		this.smalltalk = smalltalk;
 	}
 
 	public Class<?> find(String name) throws ClassNotFoundException {
-		System.out.println("find() " + name);
+		// System.out.println("find() " + name);
 		Class<?> cls = findClassInDefaultPackage(name);
 		if (cls != null)
 			return cls;
@@ -56,7 +57,7 @@ public class ClassFinder {
 	}
 
 	private Class<?> findClassIn(String name, String inPackage) {
-		System.out.println("findClassIn() " + name + " in " + inPackage);
+		// System.out.println("findClassIn() " + name + " in " + inPackage);
 		try {
 			return loadClass(inPackage + "." + name);
 		} catch (ClassNotFoundException e) {
@@ -69,7 +70,7 @@ public class ClassFinder {
 	}
 
 	private Class<?> loadClassFromSource(String name) throws ClassNotFoundException {
-		System.out.println("loadClassFromSource() " + name);
+		// System.out.println("loadClassFromSource() " + name);
 		File source = findClassSource(name);
 		if (source != null) {
 			smalltalk.evaluate(source);
@@ -88,7 +89,7 @@ public class ClassFinder {
 	}
 
 	private File findFileInSourcePath(String filename) {
-		System.out.println("findFileInSourcePath() " + filename);
+		// System.out.println("findFileInSourcePath() " + filename);
 		for (String path : sourcePaths()) {
 			File file = findFile(filename, path);
 			if (file != null)
@@ -98,13 +99,16 @@ public class ClassFinder {
 	}
 
 	public List<String> sourcePaths() {
-		List<String> paths = new ArrayList<String>();
-		paths.add("src/main/smalltalk");
-		return paths;
+		if (sourcePaths == null) {
+			sourcePaths = smalltalk.sourcePaths();
+			if (!sourcePaths.contains("src/main/smalltalk"))
+				sourcePaths.add("src/main/smalltalk");
+		}
+		return sourcePaths;
 	}
 
 	private File findFile(String filename, String path) {
-		System.out.println("findFile() " + filename + " in " + path);
+		// System.out.println("findFile() " + filename + " in " + path);
 		File file = new File(path + File.separator + filename);
 		if (file.exists())
 			return file;

@@ -60,7 +60,7 @@ public class Interpreter {
 	}
 
 	private Analyser analyser() {
-		return new Analyser(className(), packageName(), sourceFileExtension(), sourceFile.startingLineNumber(), smalltalk.verboseOn());
+		return new Analyser(smalltalk, className(), packageName(), sourceFileExtension(), sourceFile.startingLineNumber());
 	}
 
 	private String sourceFileExtension() {

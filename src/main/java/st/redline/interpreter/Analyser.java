@@ -49,12 +49,12 @@ public class Analyser implements NodeVisitor {
 	protected int methodTemporariesCount = 0;
 	protected String blockName;
 
-	public Analyser(String className, String packageName, String sourceFileExtension, int startingLineNumber, boolean verboseOn) {
+	public Analyser(Smalltalk smalltalk, String className, String packageName, String sourceFileExtension, int startingLineNumber) {
 		// System.out.println("Analyser() " + className + " " + packageName + " " + sourceFileExtension);
 		this.className = className;
 		this.packageName = packageName;
 		this.sourceFileExtension = sourceFileExtension;
-		this.generator = new Generator(startingLineNumber, verboseOn);
+		this.generator = new Generator(smalltalk, startingLineNumber);
 		this.classVariableRegistry = new HashMap<String, VariableName>();
 		this.methodVariableRegistry = new HashMap<String, VariableName>();
 		this.blockContext = new Stack<String>();

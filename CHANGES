@@ -1,3 +1,10 @@
+02/07/2011 Changes
+
+Clean up how output is done - using print writers defined in environment.
+Added default 'src/main/smalltalk' as path for sources.
+Thinking about adding 'src/test/smalltalk'
+
+
 30/06/2011 Changes
 
 Replaced the command line processing so you can turn verbose on to get more information about
