@@ -1,3 +1,8 @@
+03/07/2011 Changes
+
+Added runtime probe of instance, class, class instance and pool variables.
+
+
 02/07/2011 Changes
 
 Clean up how output is done - using print writers defined in environment.

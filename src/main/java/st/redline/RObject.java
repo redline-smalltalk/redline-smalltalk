@@ -138,6 +138,10 @@ public class RObject implements ObjectData {
 		data.primitiveInitializeClassInstanceVariables();
 	}
 
+	public boolean primitiveHasClassInstanceVariableNamed(String name) {
+		return data.primitiveHasClassInstanceVariableNamed(name);
+	}
+
 	public void primitiveAddClassVariableNamed(RObject variable) {
 		data.primitiveAddClassVariableNamed(variable);
 	}

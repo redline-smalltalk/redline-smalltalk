@@ -22,6 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.interpreter;
 
+import st.redline.RMethod;
 import st.redline.RObject;
 import st.redline.Smalltalk;
 
@@ -109,7 +110,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(VariableName variableName, String value, int line) {
 		// System.out.println("visit(VariableName) " + value + " @ " + line);
-		VariableName reference = variableLookup(value);
+		VariableName reference = variableLookup(value, variableName);
 		if (reference == null) {
 			if (variableName.isClassReference())
 				generator().classLookup(value, line);
@@ -405,20 +406,27 @@ public class Analyser implements NodeVisitor {
 			methodVariableRegistry.put(variableName.value, variableName);
 	}
 
-	private VariableName variableLookup(String variableName) {
-		VariableName foundVariableName = methodVariableRegistry.get(variableName);
+	private VariableName variableLookup(String name, VariableName variable) {
+		VariableName foundVariableName = methodVariableRegistry.get(name);
 		if (foundVariableName != null)
 			return foundVariableName;
-		foundVariableName = classVariableRegistry.get(variableName);
+		foundVariableName = classVariableRegistry.get(name);
 		if (foundVariableName != null)
 			return foundVariableName;
-		return probeTargetClassVariables(variableName);
+		return probeTargetClassVariables(name);
 	}
 
-	private VariableName probeTargetClassVariables(String variableName) {
-		// System.out.println("probeTargetClassVariables() " + variableName);
+	private VariableName probeTargetClassVariables(String name) {
+		// System.out.println("probeTargetClassVariables() " + name);
 		RObject target = resolveTargetClass();
-		// TODO.JCL inspect target for variables.
+		if (target.primitiveHasInstanceVariableNamed(name))
+			return new InstanceVariableName(name, 0);
+		if (target.primitiveHasClassVariableNamed(name))
+			return new ClassVariableName(name, 0);
+		if (target.primitiveHasClassInstanceVariableNamed(name))
+			return new ClassInstanceVariableName(name, 0);
+		if (target.primitiveHasPoolNamed(name))
+			return new PoolVariableName(name, 0);
 		return null;
 	}
 
@@ -465,5 +473,9 @@ public class Analyser implements NodeVisitor {
 	}
 
 	private class NullTargetClass extends RObject {
+		public boolean primitiveHasPoolNamed(String variable) { return false; }
+		public boolean primitiveHasClassInstanceVariableNamed(String name)  { return false; }
+		public boolean primitiveHasClassVariableNamed(String variable) { return false; }
+		public boolean primitiveHasInstanceVariableNamed(String variable) { return false; }
 	}
 }

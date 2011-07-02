@@ -135,6 +135,10 @@ public class ClassObjectData extends InstanceObjectData {
 			primitiveAddClassInstanceVariableNamed(name);
 	}
 
+	public boolean primitiveHasInstanceClassVariableNamed(String name) {
+		return classInstanceVariables.containsKey(name);
+	}
+
 	public List<String> primitiveClassInstanceVariableNames() {
 		List<String> names = new ArrayList<String>();
 		if (superclass != null)
