@@ -13,9 +13,9 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to Redline Smalltalk.
@@ -50,11 +50,14 @@ PREPROC
 
             v = ( '+'| '-')       // Only these are predicted.
             {
-                if (!firstMethod())
+                if (!firstMethod()) {
                     sb.append("] ");   // DONT append this if this is first +/- seen.
+                }
                 sb.append(methodName);
-                if (v == '+')
+
+                if (v == '+') {
                     sb.append(" class");
+                }
                 sb.append(" >> ");
                 haveMethods();
             }
@@ -83,9 +86,12 @@ PREPROC
                                       (WORD)=> w2=WORD     // This is a valid keywordSelector
 
                                       {
-                                        sb.append($w1.text);
-                                        sb.append(":");
-
+                                        // Write out the parts of the keyword Selector
+                                        //
+                                        sb.append($w1.text);        // First element of the selector
+                                        sb.append(": ");
+                                        sb.append($w2.text);        // Second element of the selector
+                                        sb.append(' ');
                                       }
 
                                     | // *** ERROR - Malformed keyword selector ***
@@ -109,6 +115,8 @@ PREPROC
                                   (WORD)=> w1=WORD        // Valid binary selector
 
                                   {
+                                        // Write out the parts of the binary selector
+                                        //
                                         sb.append($b.text);
                                         sb.append(" ");
                                         sb.append($w1.text);
