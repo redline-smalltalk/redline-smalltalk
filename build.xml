@@ -59,9 +59,15 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		<java jar="${grammar.lib}" fork="true">
 			<arg value="${trace.flag}"/>
 			<arg value="-o"/>
-			<arg value="${grammar.out}/st/redline/smalltalk/interpreter"/>
-			<arg value="${grammar.src}/Smalltalk.g"/>
+			<arg value="${grammar.out}/st/redline/compiler"/>
+			<arg value="${grammar.src}/PreProcLexer.g"/>
 		</java>
+                <java jar="${grammar.lib}" fork="true">
+                        <arg value="${trace.flag}"/>
+                        <arg value="-o"/>
+                        <arg value="${grammar.out}/st/redline/compiler"/>
+                        <arg value="${grammar.src}/Smalltalk.g"/>
+                </java>	
 	</target>
 
 	<target name="compile" description="Compile sources." depends="generate">
