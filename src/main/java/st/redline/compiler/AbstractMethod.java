@@ -24,13 +24,15 @@ package st.redline.compiler;
 
 public abstract class AbstractMethod implements Method {
 
+	protected final String objectName;
 	protected final MessagePattern messagePattern;
 	protected final Primitive primitive;
 	protected final Temporaries temporaries;
 	protected final Statements statements;
 	protected final boolean empty;
 
-	public AbstractMethod(MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
+	public AbstractMethod(String objectName, MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
+		this.objectName = objectName;
 		this.messagePattern = messagePattern;
 		this.primitive = primitive;
 		this.temporaries = temporaries;

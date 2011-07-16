@@ -27,11 +27,11 @@ options {
 }
 
 @header {
-	package st.redline.interpreter;
+	package st.redline.compiler;
 }
 
 @lexer::header {
-	package st.redline.interpreter;
+	package st.redline.compiler;
 }
 
 program returns [Program n] 
@@ -44,7 +44,7 @@ methods returns [Methods n]
 	;
 	
 method returns [Method n]
-	:	(i = 'def' | c = 'cdef') messagePattern primitive? temporaries? statements {$n = MethodFactory.create($i.text, $c.text, $messagePattern.n, $primitive.n, $temporaries.n, $statements.n);}
+	:	o = NAME c= 'class'? '>>'  messagePattern '[' primitive? temporaries? statements  ']' {$n = MethodFactory.create($o.text, $c.text, $messagePattern.n, $primitive.n, $temporaries.n, $statements.n);}
 	;
 
 messagePattern returns [MessagePattern n]

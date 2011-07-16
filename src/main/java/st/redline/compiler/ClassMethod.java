@@ -24,8 +24,8 @@ package st.redline.compiler;
 
 public class ClassMethod extends AbstractMethod {
 
-	public ClassMethod(MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
-		super(messagePattern, primitive, temporaries, statements);
+	public ClassMethod(String objectName, MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
+		super(objectName, messagePattern, primitive, temporaries, statements);
 	}
 
 	public void accept(NodeVisitor visitor) {

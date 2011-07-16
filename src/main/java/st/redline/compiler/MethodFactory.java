@@ -23,10 +23,10 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline.compiler;
 
 public class MethodFactory {
-	public static Method create(String instance, String cls, MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
-		if (instance != null)
-			return new InstanceMethod(messagePattern, primitive, temporaries, statements);
+	public static Method create(String objectName, String cls, MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
+		if (cls == null)
+			return new InstanceMethod(objectName, messagePattern, primitive, temporaries, statements);
 		else
-			return new ClassMethod(messagePattern, primitive, temporaries, statements);
+			return new ClassMethod(objectName, messagePattern, primitive, temporaries, statements);
 	}
 }
