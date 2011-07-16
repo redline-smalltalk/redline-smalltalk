@@ -62,6 +62,7 @@ public class SourceFileFinder {
 
 	private List<String> sourceFilePaths() {
 		List<String> sourceFilePaths = new ArrayList<String>();
+		sourceFilePaths.add(System.getProperty("user.dir"));
 		sourceFilePaths.add("src/main/smalltalk");
 		sourceFilePaths.add("src/test/smalltalk");
 		return sourceFilePaths;
