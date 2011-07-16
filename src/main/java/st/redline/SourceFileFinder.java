@@ -22,37 +22,48 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
-public class Stic {
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
 
-	public static void main(String[] args) throws Exception {
-		new Stic().invokeWith(args[0], args);
+public class SourceFileFinder {
+
+	private final String sourceFileName;
+	private final String className;
+
+	public SourceFileFinder(String className) {
+		this.className = className;
+		this.sourceFileName = makeSourceFileName(className);
 	}
 
-	public Stic() {
-		initializeClassLoader();
+	public SourceFile findSourceFile() {
+		return findSourceFile(sourceFileName);
 	}
 
-	private void initializeClassLoader() {
-		Thread.currentThread().setContextClassLoader(createClassLoader());
+	private String makeSourceFileName(String className) {
+		return className.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + ".st";
 	}
 
-	private ClassLoader createClassLoader() {
-		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader());
+	private SourceFile findSourceFile(String sourceFileName) {
+		SourceFile sourceFile;
+		for (String sourceFilePath : sourceFilePaths())
+			if ((sourceFile = findSourceFile(sourceFilePath, sourceFileName)) != null)
+				return sourceFile;
+		return null;
 	}
 
-	private ClassLoader classLoader() {
-		return Thread.currentThread().getContextClassLoader();
+	private SourceFile findSourceFile(String sourceFilePath, String sourceFileName) {
+		File file = new File(sourceFilePath + File.separator + sourceFileName);
+		if (file.exists())
+			return new SourceFile(file);
+		return null;
 	}
 
-	public void invokeWith(String className, String[] args) throws Exception {
-		createClassInstance(className).primitiveMain(args);
-	}
-
-	private Object createClassInstance(String className) throws Exception {
-		return (st.redline.Object) loadClass(className).newInstance();
-	}
-
-	private Class loadClass(String className) throws Exception {
-		return Class.forName(className, true, classLoader());
+	private List<String> sourceFilePaths() {
+		List<String> sourceFilePaths = new ArrayList<String>();
+		sourceFilePaths.add("src/main/smalltalk");
+		sourceFilePaths.add("src/test/smalltalk");
+		return sourceFilePaths;
 	}
 }

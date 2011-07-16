@@ -13,34 +13,26 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to Redline Smalltalk.
 */
-package st.redline;
+package st.redline.compiler;
 
-import java.io.File;
+public class ClassInstanceVariableName extends VariableName {
 
-public class SourceFile extends File {
-
-	public SourceFile(File file) {
-		super(file.getAbsolutePath());
+	public ClassInstanceVariableName(String value, int line) {
+		super(value, line);
 	}
 
-	public String contents() {
-		return sourceFileReader().read(this);
+	public boolean isField() {
+		return true;
 	}
 
-	private SourceFileReader sourceFileReader() {
-		return new SourceFileReader();
-	}
-
-	public String shortName() {
-		String name = toString();
-		// assumes we have an file extension.
-		return name.substring(name.lastIndexOf(File.separatorChar) + 1, name.lastIndexOf('.'));
+	public boolean isClassInstanceField() {
+		return true;
 	}
 }

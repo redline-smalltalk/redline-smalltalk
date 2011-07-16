@@ -13,34 +13,37 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to Redline Smalltalk.
 */
-package st.redline;
+package st.redline.compiler;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SourceFile extends File {
+public class KeywordMessageElement implements MessageElement {
 
-	public SourceFile(File file) {
-		super(file.getAbsolutePath());
+	private final StringBuffer keywords;
+	private final int line;
+	private final List<BinaryObjectDescription> binaryObjectDescriptions;
+
+	public KeywordMessageElement(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
+		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
+		keywords = new StringBuffer();
+		line = keyword.line;
+		add(keyword, binaryObjectDescription);
 	}
 
-	public String contents() {
-		return sourceFileReader().read(this);
+	public void add(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
+		keywords.append(keyword.value);
+		binaryObjectDescriptions.add(binaryObjectDescription);
 	}
 
-	private SourceFileReader sourceFileReader() {
-		return new SourceFileReader();
-	}
-
-	public String shortName() {
-		String name = toString();
-		// assumes we have an file extension.
-		return name.substring(name.lastIndexOf(File.separatorChar) + 1, name.lastIndexOf('.'));
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this, keywords.toString(), line, binaryObjectDescriptions);
 	}
 }

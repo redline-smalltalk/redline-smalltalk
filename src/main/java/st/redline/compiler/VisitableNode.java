@@ -20,39 +20,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to Redline Smalltalk.
 */
-package st.redline;
+package st.redline.compiler;
 
-public class Stic {
-
-	public static void main(String[] args) throws Exception {
-		new Stic().invokeWith(args[0], args);
-	}
-
-	public Stic() {
-		initializeClassLoader();
-	}
-
-	private void initializeClassLoader() {
-		Thread.currentThread().setContextClassLoader(createClassLoader());
-	}
-
-	private ClassLoader createClassLoader() {
-		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader());
-	}
-
-	private ClassLoader classLoader() {
-		return Thread.currentThread().getContextClassLoader();
-	}
-
-	public void invokeWith(String className, String[] args) throws Exception {
-		createClassInstance(className).primitiveMain(args);
-	}
-
-	private Object createClassInstance(String className) throws Exception {
-		return (st.redline.Object) loadClass(className).newInstance();
-	}
-
-	private Class loadClass(String className) throws Exception {
-		return Class.forName(className, true, classLoader());
-	}
+public interface VisitableNode {
+	void accept(NodeVisitor nodeVisitor);
 }

@@ -22,37 +22,39 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
-public class Stic {
+// TODO.JCL - make this classloader delegate to another so we can replace the delegate at runtime to reload all classes on fly.
 
-	public static void main(String[] args) throws Exception {
-		new Stic().invokeWith(args[0], args);
+public class SmalltalkClassLoader extends ClassLoader {
+
+	public SmalltalkClassLoader(java.lang.ClassLoader classLoader) {
+		super(classLoader);
 	}
 
-	public Stic() {
-		initializeClassLoader();
+	public Class findClass(String className) throws ClassNotFoundException {
+		SourceFile sourceFile = findSource(className);
+		if (sourceFile == null)
+			return super.findClass(className);
+		return classFrom(sourceFile);
 	}
 
-	private void initializeClassLoader() {
-		Thread.currentThread().setContextClassLoader(createClassLoader());
+	private Class classFrom(SourceFile sourceFile) {
+		byte[] classBytes = compile(sourceFile);
+		return defineClass(null, classBytes, 0, classBytes.length);
 	}
 
-	private ClassLoader createClassLoader() {
-		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader());
+	private byte[] compile(SourceFile sourceFile) {
+		return createCompiler(sourceFile).compile();
 	}
 
-	private ClassLoader classLoader() {
-		return Thread.currentThread().getContextClassLoader();
+	private Compiler createCompiler(SourceFile sourceFile) {
+		return new Compiler(sourceFile);
 	}
 
-	public void invokeWith(String className, String[] args) throws Exception {
-		createClassInstance(className).primitiveMain(args);
+	private SourceFile findSource(String className) {
+		return sourceFileFinder(className).findSourceFile();
 	}
 
-	private Object createClassInstance(String className) throws Exception {
-		return (st.redline.Object) loadClass(className).newInstance();
-	}
-
-	private Class loadClass(String className) throws Exception {
-		return Class.forName(className, true, classLoader());
+	private SourceFileFinder sourceFileFinder(String className) {
+		return new SourceFileFinder(className);
 	}
 }

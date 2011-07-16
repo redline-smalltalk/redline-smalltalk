@@ -1,3 +1,10 @@
+17/07/2011 Changes
+
+Added a preprocessor to process the method definitions starting with "+" and "-".
+It is expected this preprocessor will be extended over time to turn many things into
+message sends the backend compiler will handle.
+
+
 03/07/2011 Changes
 
 Added runtime probe of instance, class, class instance and pool variables.

@@ -22,37 +22,17 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
-public class Stic {
+public class Source {
 
-	public static void main(String[] args) throws Exception {
-		new Stic().invokeWith(args[0], args);
+	private final String source;
+	private final SourceFile sourceFile;
+
+	public Source(String source, SourceFile sourceFile) {
+		this.source = source;
+		this.sourceFile = sourceFile;
 	}
 
-	public Stic() {
-		initializeClassLoader();
-	}
-
-	private void initializeClassLoader() {
-		Thread.currentThread().setContextClassLoader(createClassLoader());
-	}
-
-	private ClassLoader createClassLoader() {
-		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader());
-	}
-
-	private ClassLoader classLoader() {
-		return Thread.currentThread().getContextClassLoader();
-	}
-
-	public void invokeWith(String className, String[] args) throws Exception {
-		createClassInstance(className).primitiveMain(args);
-	}
-
-	private Object createClassInstance(String className) throws Exception {
-		return (st.redline.Object) loadClass(className).newInstance();
-	}
-
-	private Class loadClass(String className) throws Exception {
-		return Class.forName(className, true, classLoader());
+	public String source() {
+		return source;
 	}
 }

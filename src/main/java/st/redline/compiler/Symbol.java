@@ -13,34 +13,42 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to Redline Smalltalk.
 */
-package st.redline;
+package st.redline.compiler;
 
-import java.io.File;
+public class Symbol implements VisitableNode {
 
-public class SourceFile extends File {
+	public final int line;
+	public final String value;
+	private Identifier identifier;
+	private BinarySelector binarySelector;
+	private Keyword keyword;
 
-	public SourceFile(File file) {
-		super(file.getAbsolutePath());
+	public Symbol(Identifier identifier) {
+		this.identifier = identifier;
+		value = identifier.value;
+		line = identifier.line;
 	}
 
-	public String contents() {
-		return sourceFileReader().read(this);
+	public Symbol(BinarySelector binarySelector) {
+		this.binarySelector = binarySelector;
+		value = binarySelector.value;
+		line = binarySelector.line;
 	}
 
-	private SourceFileReader sourceFileReader() {
-		return new SourceFileReader();
+	public Symbol(Keyword keyword) {
+		this.keyword = keyword;
+		value = keyword.value;
+		line = keyword.line;
 	}
 
-	public String shortName() {
-		String name = toString();
-		// assumes we have an file extension.
-		return name.substring(name.lastIndexOf(File.separatorChar) + 1, name.lastIndexOf('.'));
+	public void accept(NodeVisitor visitor) {
+		visitor.visit(this, value, line);
 	}
 }
