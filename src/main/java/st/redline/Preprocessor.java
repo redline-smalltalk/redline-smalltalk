@@ -28,9 +28,8 @@ import st.redline.compiler.*;
 public class Preprocessor {
 
 	public Source parse(SourceFile sourceFile) {
-		String name = sourceFile.shortName();
-		String preprocessedSource = parseFrom(sourceFile.contents(), name);
-		System.out.println(preprocessedSource);
+		String preprocessedSource = parseFrom(sourceFile.contents(), sourceFile.shortName());
+//		System.out.println(preprocessedSource);
 		return new Source(preprocessedSource, sourceFile);
 	}
 
