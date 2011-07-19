@@ -87,4 +87,8 @@ public class VariableName extends BasePrimary {
 	public String value() {
 		return value;
 	}
+
+	public boolean isOnStoreSideOfExpression() {
+		return !onLoadSideOfExpression;
+	}
 }

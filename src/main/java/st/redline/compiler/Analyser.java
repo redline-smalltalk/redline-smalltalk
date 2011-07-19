@@ -28,30 +28,24 @@ public class Analyser implements NodeVisitor {
 
 	private final String className;
 	private final String packageName;
-
-	private ClassBytecodeWriter classBytecodeWriter;
+	private final ClassBytecodeWriter classBytecodeWriter;
 
 	public Analyser(String className, String packageName) {
 		this.className = className;
 		this.packageName = packageName;
-	}
-
-	private ClassBytecodeWriter classBytecodeWriter() {
-		if (classBytecodeWriter == null)
-			classBytecodeWriter = new ClassBytecodeWriter(className, packageName);
-		return classBytecodeWriter;
+		classBytecodeWriter = new ClassBytecodeWriter(className, packageName);
 	}
 
 	public byte[] classBytes() {
-		return classBytecodeWriter().contents();
+		return classBytecodeWriter.contents();
 	}
 
 	public void visit(Program program) {
-		classBytecodeWriter().openClass();
+		classBytecodeWriter.openClass();
 	}
 
 	public void visitEnd(Program program) {
-		classBytecodeWriter().closeClass();
+		classBytecodeWriter.closeClass();
 	}
 
 	public void visit(Temporaries temporaries) {
@@ -64,6 +58,16 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
+		if (isTemporary(value)) {
+			throw new IllegalStateException("TODO - handle temporary variable.");
+		} else if (variableName.isOnStoreSideOfExpression()) {
+			throw new IllegalStateException("Non-temporary cannot be on store side of expression.");
+		}
+		classBytecodeWriter.resolveObject(value, line);
+	}
+
+	private boolean isTemporary(String name) {
+		return false;
 	}
 
 	public void visit(Statements statements) {

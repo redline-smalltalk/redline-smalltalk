@@ -19,10 +19,12 @@ public class ClassBytecodeWriter implements Opcodes {
 	private ClassWriter classWriter;
 	private MethodVisitor methodVisitor;
 	private String fullyQualifiedClassName;
+	private int startingLineNumber;
 
 	public ClassBytecodeWriter(String className, String packageName) {
 		this.className = className;
 		this.packageName = packageName;
+		startingLineNumber = 0;
 		initialize();
 	}
 
@@ -72,5 +74,15 @@ public class ClassBytecodeWriter implements Opcodes {
 		methodVisitor.visitInsn(RETURN);
 		methodVisitor.visitMaxs(1, 1);
 		methodVisitor.visitEnd();
+	}
+
+	public void resolveObject(String name, int line) {
+		visitLine(line);
+	}
+
+	private void visitLine(int line) {
+		Label label = new Label();
+		methodVisitor.visitLabel(label);
+		methodVisitor.visitLineNumber(line + startingLineNumber, label);
 	}
 }
