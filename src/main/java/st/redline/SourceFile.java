@@ -49,7 +49,11 @@ public class SourceFile extends File {
 		int index = name.lastIndexOf(File.separatorChar);
 		if (index == -1)
 			return "";
-		return name.substring(0, index);
+		name = name.substring(0, index);
+		for (String path : SourceFileFinder.sourceFilePaths())
+			if (name.startsWith(path))
+				return (path.length() == name.length()) ? "" : name.substring(path.length() + 1);
+		return name;
 	}
 
 	private String name() {

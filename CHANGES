@@ -2,6 +2,7 @@
 
 Added ClassBytecodeWriter - used to be a single generator but cleaner if I separate.
 Class being written and executed without problem.
+Removed source paths from sources found in source path. 
 
 
 17/07/2011 Changes
