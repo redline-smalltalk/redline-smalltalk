@@ -53,7 +53,7 @@ public class Compiler {
 	}
 
 	private Analyser analyser() {
-		return new Analyser();
+		return new Analyser(sourceFile.shortName(), sourceFile.packageName());
 	}
 
 	private Program parse(String sourceCode) {

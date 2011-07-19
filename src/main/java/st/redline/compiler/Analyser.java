@@ -26,14 +26,32 @@ import java.util.List;
 
 public class Analyser implements NodeVisitor {
 
+	private final String className;
+	private final String packageName;
+
+	private ClassBytecodeWriter classBytecodeWriter;
+
+	public Analyser(String className, String packageName) {
+		this.className = className;
+		this.packageName = packageName;
+	}
+
+	private ClassBytecodeWriter classBytecodeWriter() {
+		if (classBytecodeWriter == null)
+			classBytecodeWriter = new ClassBytecodeWriter(className, packageName);
+		return classBytecodeWriter;
+	}
+
 	public byte[] classBytes() {
-		return new byte[0];
+		return classBytecodeWriter().contents();
 	}
 
 	public void visit(Program program) {
+		classBytecodeWriter().openClass();
 	}
 
 	public void visitEnd(Program program) {
+		classBytecodeWriter().closeClass();
 	}
 
 	public void visit(Temporaries temporaries) {

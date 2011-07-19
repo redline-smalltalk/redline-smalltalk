@@ -39,8 +39,28 @@ public class SourceFile extends File {
 	}
 
 	public String shortName() {
-		String name = toString();
+		String name = name();
 		// assumes we have an file extension.
 		return name.substring(name.lastIndexOf(File.separatorChar) + 1, name.lastIndexOf('.'));
+	}
+
+	public String packageName() {
+		String name = name();
+		int index = name.lastIndexOf(File.separatorChar);
+		if (index == -1)
+			return "";
+		return name.substring(0, index);
+	}
+
+	private String name() {
+		String name = toString();
+		String userDir = userDir();
+		if (name.startsWith(userDir))
+			return name.substring(userDir.length() + 1);
+		return name;
+	}
+
+	private String userDir() {
+		return System.getProperty("user.dir");
 	}
 }
