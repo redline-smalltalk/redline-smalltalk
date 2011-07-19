@@ -76,13 +76,16 @@ public class ClassBytecodeWriter implements Opcodes {
 		methodVisitor.visitEnd();
 	}
 
-	public void resolveObject(String name, int line) {
-		visitLine(line);
-	}
-
 	private void visitLine(int line) {
 		Label label = new Label();
 		methodVisitor.visitLabel(label);
 		methodVisitor.visitLineNumber(line + startingLineNumber, label);
+	}
+
+	public void callPrimitiveVariableAt(String value, int line) {
+		visitLine(line);
+		methodVisitor.visitVarInsn(ALOAD, 0);
+		methodVisitor.visitLdcInsn(value);
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, "primitiveVariableAt", "(Ljava/lang/String;)Lst/redline/Object;");
 	}
 }

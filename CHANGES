@@ -1,3 +1,10 @@
+20/07/2011 Changes
+
+Added first of new primitives - primitiveVariableAt - which will look for the referenced 
+variable and then when not found will call primitiveResolveObject - which may load a new
+class from source.
+
+
 19/07/2011 Changes
 
 Added ClassBytecodeWriter - used to be a single generator but cleaner if I separate.

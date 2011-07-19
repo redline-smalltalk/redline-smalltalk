@@ -60,10 +60,13 @@ public class Analyser implements NodeVisitor {
 	public void visit(VariableName variableName, String value, int line) {
 		if (isTemporary(value)) {
 			throw new IllegalStateException("TODO - handle temporary variable.");
-		} else if (variableName.isOnStoreSideOfExpression()) {
-			throw new IllegalStateException("Non-temporary cannot be on store side of expression.");
+		} else  {
+			if (variableName.isOnLoadSideOfExpression()) {
+				classBytecodeWriter.callPrimitiveVariableAt(value, line);
+			} else {
+				throw new IllegalStateException("TODO - store of variable.");
+			}
 		}
-		classBytecodeWriter.resolveObject(value, line);
 	}
 
 	private boolean isTemporary(String name) {
