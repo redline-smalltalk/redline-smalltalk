@@ -1,3 +1,9 @@
+21/07/2011 Changes
+
+Moves primitives inline - might make Object class really big but stack traces are shorter.
+Intoduced Redline runtime exception to wrap non-runtime exceptions.
+
+
 20/07/2011 Changes
 
 Added first of new primitives - primitiveVariableAt - which will look for the referenced 

@@ -59,15 +59,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Analyser.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="73" selection-start="2446" selection-end="2446" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ClassBytecodeWriter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -77,19 +68,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Object.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Object.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Object.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="38" selection-start="1441" selection-end="1441" vertical-scroll-proportion="0.0">
+            <state line="24" column="0" selection-start="1255" selection-end="1255" vertical-scroll-proportion="0.052878965">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrimitiveVariableAt.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveVariableAt.java">
+      <file leaf-file-name="RedlineException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="0" selection-start="1329" selection-end="1329" vertical-scroll-proportion="0.12338425">
+            <state line="26" column="0" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Compiler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Compiler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="2" selection-start="0" selection-end="1233" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -127,11 +127,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/interpreter/Analyser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassMethod.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/InstanceMethod.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/AbstractMethod.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Stic.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Compiler.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/SourceFileFinder.java" />
@@ -141,8 +136,13 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/PrimitiveVariableAt.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/Object.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveVariableAt.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveIsInstanveVariable.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveIsInstanceVariable.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveIsClassVariable.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveResolveObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/Object.java" />
       </list>
     </option>
   </component>
@@ -179,6 +179,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
@@ -256,87 +258,26 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="redline" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="primitives" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="redline" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="OverrideImplement.combined" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="dynamic.classpath" value="false" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="st.redline.primitives" />
       <recent name="st.redline" />
       <recent name="st.redline.bootstrap" />
       <recent name="st.redline.smalltalk.interpreter" />
@@ -485,7 +426,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1696" height="1034" extended-state="6" />
+    <frame x="0" y="0" width="1680" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -558,31 +499,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="26" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.12875536" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="33" selection-start="1500" selection-end="1500" vertical-scroll-proportion="0.13119534" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/InstanceMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="40" selection-start="1306" selection-end="1306" vertical-scroll-proportion="0.52478135" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/AbstractMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="20" selection-start="2038" selection-end="2038" vertical-scroll-proportion="0.5685131" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Compiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="25" selection-start="1586" selection-end="1586" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="19" selection-start="1549" selection-end="1549" vertical-scroll-proportion="0.0" />
@@ -608,42 +524,43 @@
         <state line="62" column="21" selection-start="2331" selection-end="2331" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="73" selection-start="2446" selection-end="2446" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="0" selection-start="2565" selection-end="2565" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="13" selection-start="1327" selection-end="1327" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/VariableName.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="51" column="21" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Compiler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="73" selection-start="2446" selection-end="2446" vertical-scroll-proportion="0.0">
+        <state line="21" column="2" selection-start="0" selection-end="1233" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="0" selection-start="2565" selection-end="2565" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="1327" selection-end="1327" vertical-scroll-proportion="0.0">
+        <state line="26" column="0" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="38" selection-start="1441" selection-end="1441" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveVariableAt.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="1329" selection-end="1329" vertical-scroll-proportion="0.12338425">
+        <state line="24" column="0" selection-start="1255" selection-end="1255" vertical-scroll-proportion="0.052878965">
           <folding />
         </state>
       </provider>

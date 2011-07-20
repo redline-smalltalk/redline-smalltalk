@@ -22,14 +22,34 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
-import st.redline.primitives.*;
-
 public class Object {
 
 	public void primitiveMain(String[] args) {
 	}
 
 	public Object primitiveVariableAt(String name) {
-		return PrimitiveVariableAt.applyTo(this, name);
+		if (primitiveIsInstanceVariable(name))
+			throw new IllegalStateException("todo - implement");
+		if (primitiveIsClassVariable(name))
+			throw new IllegalStateException("todo - implement");
+		return primitiveResolveObject(name);
+	}
+
+	public boolean primitiveIsInstanceVariable(String name) {
+		return false;
+	}
+
+	public boolean primitiveIsClassVariable(String name) {
+		return false;
+	}
+
+	public Object primitiveResolveObject(String name) {
+		// TODO.JCL use receiver name spaces to find named object.
+		try {
+			return (st.redline.Object) Class.forName(name).newInstance();
+		} catch (Exception e) {
+			// TODO.JCL return Nil here ?
+			throw new RedlineException(e);
+		}
 	}
 }

@@ -20,14 +20,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to Redline Smalltalk.
 */
-package st.redline.primitives;
+package st.redline;
 
-import st.redline.Object;
-
-public class PrimitiveVariableAt {
-
-	public static Object applyTo(Object receiver, String name) {
-		System.out.println("PrimitiveVariableAt() " + name);
-		return null;
+public class RedlineException extends RuntimeException {
+	public RedlineException(Exception e) {
+		super(e);
 	}
 }
