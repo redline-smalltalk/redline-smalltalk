@@ -1,3 +1,3 @@
 
-Object < #Object
+ProtoObject < #Object
 

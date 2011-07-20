@@ -68,10 +68,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Object.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Object.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Object.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="12" selection-start="2035" selection-end="2035" vertical-scroll-proportion="0.54086536">
+            <state line="24" column="13" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -86,10 +86,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SmalltalkClassLoader.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SmalltalkClassLoader.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="53" selection-start="1654" selection-end="1654" vertical-scroll-proportion="0.0">
+            <state line="32" column="0" selection-start="1533" selection-end="1533" vertical-scroll-proportion="0.1983173">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Object.st" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Object.st">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="5" selection-start="6" selection-end="6" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -145,7 +154,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/Compiler.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/SourceFileFinder.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/SourceFile.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java" />
@@ -159,8 +167,9 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveIsClassVariable.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveResolveObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Object.java" />
+        <option value="$PROJECT_DIR$/src/main/smalltalk/Object.st" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
       </list>
     </option>
   </component>
@@ -197,9 +206,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -278,6 +284,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Favorites" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -444,7 +453,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1696" height="1034" extended-state="6" />
+    <frame x="0" y="29" width="1674" height="990" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -542,6 +551,16 @@
         <state line="86" column="0" selection-start="2565" selection-end="2565" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Stic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="61" selection-start="2115" selection-end="2161" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Object.st">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="5" selection-start="6" selection-end="6" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="0" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0" />
@@ -562,23 +581,16 @@
         <state line="51" column="21" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="53" selection-start="1654" selection-end="1654" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Stic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="61" selection-start="2115" selection-end="2161" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="12" selection-start="2035" selection-end="2035" vertical-scroll-proportion="0.54086536">
+        <state line="24" column="13" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="1533" selection-end="1533" vertical-scroll-proportion="0.1983173">
           <folding />
         </state>
       </provider>
