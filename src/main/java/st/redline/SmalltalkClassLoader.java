@@ -31,6 +31,7 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	public Class findClass(String className) throws ClassNotFoundException {
+		System.out.println("findClass() " + className);
 		SourceFile sourceFile = findSource(className);
 		if (sourceFile == null)
 			return super.findClass(className);

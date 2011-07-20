@@ -46,10 +46,14 @@ public class Object {
 	public Object primitiveResolveObject(String name) {
 		// TODO.JCL use receiver name spaces to find named object.
 		try {
-			return (st.redline.Object) Class.forName(name).newInstance();
+			return (st.redline.Object) Class.forName(name, true, classLoader()).newInstance();
 		} catch (Exception e) {
 			// TODO.JCL return Nil here ?
 			throw new RedlineException(e);
 		}
+	}
+
+	private ClassLoader classLoader() {
+		return Thread.currentThread().getContextClassLoader();
 	}
 }

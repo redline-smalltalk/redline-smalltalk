@@ -2,6 +2,7 @@
 
 Moves primitives inline - might make Object class really big but stack traces are shorter.
 Intoduced Redline runtime exception to wrap non-runtime exceptions.
+Started adding runtime support in Object
 
 
 20/07/2011 Changes
