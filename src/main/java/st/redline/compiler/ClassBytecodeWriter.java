@@ -13,6 +13,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/Object";
 	private static final String INIT_METHOD = "<init>";
 	private static final String INIT_METHOD_SIGNATURE = "()V";
+	private static final String APPLY_TO_METHOD = "applyTo";
+	private static final String APPLY_TO_METHOD_SIGNATURE = "(Lst/redline/Object;)Lst/redline/Object;";
 
 	private final String className;
 	private String packageName;
@@ -44,13 +46,31 @@ public class ClassBytecodeWriter implements Opcodes {
 	public void openClass() {
 		classWriter.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
 		classWriter.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
+		writeInitializeMethod();
+		openApplyToMethod();
+	}
+
+	private void openApplyToMethod() {
+		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, APPLY_TO_METHOD, APPLY_TO_METHOD_SIGNATURE, null, null);
+		methodVisitor.visitCode();
+	}
+
+	private void writeInitializeMethod() {
 		openInitializeMethod();
+		invokeSuperclassInitMethod();
+		invokeApplyToOnThis();
+		closeInitializeMethod();
 	}
 
 	private void openInitializeMethod() {
 		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, INIT_METHOD, INIT_METHOD_SIGNATURE, null, null);
 		methodVisitor.visitCode();
-		invokeSuperclassInitMethod();
+	}
+
+	private void invokeApplyToOnThis() {
+		methodVisitor.visitVarInsn(ALOAD, 0);
+		methodVisitor.visitVarInsn(ALOAD, 0);
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, APPLY_TO_METHOD, APPLY_TO_METHOD_SIGNATURE);
 	}
 
 	private void invokeSuperclassInitMethod() {
@@ -66,12 +86,18 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void closeClass() {
-		closeInitializeMethod();
+		closeApplyToMethod();
 		classWriter.visitEnd();
 	}
 
 	private void closeInitializeMethod() {
 		methodVisitor.visitInsn(RETURN);
+		methodVisitor.visitMaxs(1, 1);
+		methodVisitor.visitEnd();
+	}
+
+	private void closeApplyToMethod() {
+		methodVisitor.visitInsn(ARETURN);
 		methodVisitor.visitMaxs(1, 1);
 		methodVisitor.visitEnd();
 	}

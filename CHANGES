@@ -1,3 +1,9 @@
+22/07/2011 Changes
+
+Modified <init> method to call applyTo() on itself (instance of java dynamic class) so 
+calls 'self' have a proper receiver. In preparation for namespaces/packages.
+ie: so in a statement like "self import: 'package'", self refers to a proper object.
+
 21/07/2011 Changes
 
 Moves primitives inline - might make Object class really big but stack traces are shorter.
