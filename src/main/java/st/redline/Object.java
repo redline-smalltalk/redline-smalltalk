@@ -44,12 +44,26 @@ public class Object {
 	}
 
 	public Object primitiveResolveObject(String name) {
+		Object object = resolveObject(name);
+		if (object != null)
+			return object;
+		object = resolveObject("st.redline." + name);
+		if (object != null)
+			return object;
+		// TODO.JCL maybe return nil here?
+		throw redlineException(new ClassNotFoundException("Class or source for class '" + name + "' not found."));
+	}
+
+	private RedlineException redlineException(Exception e) {
+		return new RedlineException(e);
+	}
+
+	private Object resolveObject(String name) {
 		// TODO.JCL use receiver name spaces to find named object.
 		try {
 			return (st.redline.Object) Class.forName(name, true, classLoader()).newInstance();
 		} catch (Exception e) {
-			// TODO.JCL return Nil here ?
-			throw new RedlineException(e);
+			return null;
 		}
 	}
 

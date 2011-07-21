@@ -28,6 +28,15 @@ public class SmalltalkClassLoader extends ClassLoader {
 
 	public SmalltalkClassLoader(java.lang.ClassLoader classLoader) {
 		super(classLoader);
+		initialize();
+	}
+
+	private void initialize() {
+		try {
+			loadClass("st.redline.ProtoObject");
+		} catch (ClassNotFoundException e) {
+			throw new RedlineException(e);
+		}
 	}
 
 	public Class findClass(String className) throws ClassNotFoundException {
