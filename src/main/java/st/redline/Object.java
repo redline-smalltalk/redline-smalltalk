@@ -33,6 +33,11 @@ public class Object {
 		classes = new HashMap<String, Object>();
 	}
 
+	public Object primitiveRegisterAs(String name) {
+		classes.put(name, this);
+		return this;
+	}
+
 	public void primitiveMain(String[] args) {
 	}
 
@@ -56,7 +61,7 @@ public class Object {
 		Object object = resolveObject(name);
 		if (object != null)
 			return object;
-		// TODO.JCL search through namespaces ot find object.
+		// TODO.JCL search through namespaces to find object.
 		return resolveObject("st.redline." + name);
 	}
 
