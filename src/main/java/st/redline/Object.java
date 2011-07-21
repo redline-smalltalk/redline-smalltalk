@@ -22,7 +22,16 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Object {
+
+	private final Map<String, Object> classes;
+
+	public Object() {
+		classes = new HashMap<String, Object>();
+	}
 
 	public void primitiveMain(String[] args) {
 	}
@@ -47,23 +56,25 @@ public class Object {
 		Object object = resolveObject(name);
 		if (object != null)
 			return object;
-		object = resolveObject("st.redline." + name);
-		if (object != null)
-			return object;
-		// TODO.JCL maybe return nil here?
-		throw redlineException(new ClassNotFoundException("Class or source for class '" + name + "' not found."));
-	}
-
-	private RedlineException redlineException(Exception e) {
-		return new RedlineException(e);
+		// TODO.JCL search through namespaces ot find object.
+		return resolveObject("st.redline." + name);
 	}
 
 	private Object resolveObject(String name) {
-		// TODO.JCL use receiver name spaces to find named object.
+		// It is expected the loading of an object results in it registering a Smalltalk class in the classes map.
+		if (classes.containsKey(name))
+			return classes.get(name);
+		if (loadObject(name))
+			return classes.get(name);
+		// TODO.JCL should we return 'nil'?
+		return null;
+	}
+
+	private boolean loadObject(String name) {
 		try {
-			return (st.redline.Object) Class.forName(name, true, classLoader()).newInstance();
+			return Class.forName(name, true, classLoader()).newInstance() != null;
 		} catch (Exception e) {
-			return null;
+			return false;
 		}
 	}
 
