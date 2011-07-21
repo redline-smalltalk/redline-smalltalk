@@ -3,6 +3,8 @@
 Modified <init> method to call applyTo() on itself (instance of java dynamic class) so 
 calls 'self' have a proper receiver. In preparation for namespaces/packages.
 ie: so in a statement like "self import: 'package'", self refers to a proper object.
+Using Object cache in resolving class Objects. 
+
 
 21/07/2011 Changes
 

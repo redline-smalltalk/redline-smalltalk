@@ -100,7 +100,7 @@
       <file leaf-file-name="SmalltalkClassLoader.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="22" selection-start="1678" selection-end="1678" vertical-scroll-proportion="0.31257343">
+            <state line="34" column="8" selection-start="1580" selection-end="1580" vertical-scroll-proportion="0.33019978">
               <folding />
             </state>
           </provider>
@@ -132,10 +132,10 @@
         <option value="$PROJECT_DIR$/src/main/smalltalk/Object.st" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/ProtoObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Object.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
       </list>
     </option>
   </component>
@@ -572,7 +572,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="22" selection-start="1678" selection-end="1678" vertical-scroll-proportion="0.31257343">
+        <state line="34" column="8" selection-start="1580" selection-end="1580" vertical-scroll-proportion="0.33019978">
           <folding />
         </state>
       </provider>

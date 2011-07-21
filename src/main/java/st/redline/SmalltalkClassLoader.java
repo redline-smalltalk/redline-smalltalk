@@ -32,6 +32,10 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	private void initialize() {
+		loadProtoObject();
+	}
+
+	private void loadProtoObject() {
 		try {
 			loadClass("st.redline.ProtoObject");
 		} catch (ClassNotFoundException e) {
