@@ -125,6 +125,8 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
+		if (!simpleExpression.isResultLeftOnStack())
+			classBytecodeWriter.stackPop();
 	}
 
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {

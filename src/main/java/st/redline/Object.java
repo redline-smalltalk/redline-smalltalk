@@ -27,14 +27,13 @@ import java.util.Map;
 
 public class Object {
 
-	private final Map<String, Object> classes;
+	private static final Map<String, Object> registry = new HashMap<String, Object>();
 
 	public Object() {
-		classes = new HashMap<String, Object>();
 	}
 
 	public Object primitiveRegisterAs(String name) {
-		classes.put(name, this);
+		registry.put(name, this);
 		return this;
 	}
 
@@ -66,11 +65,11 @@ public class Object {
 	}
 
 	private Object resolveObject(String name) {
-		// It is expected the loading of an object results in it registering a Smalltalk class in the classes map.
-		if (classes.containsKey(name))
-			return classes.get(name);
+		// It is expected the loading of an object results in it registering a Smalltalk class in the registry map.
+		if (registry.containsKey(name))
+			return registry.get(name);
 		if (loadObject(name))
-			return classes.get(name);
+			return registry.get(name);
 		// TODO.JCL should we return 'nil'?
 		return null;
 	}

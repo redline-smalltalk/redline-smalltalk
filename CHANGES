@@ -1,3 +1,8 @@
+23/07/2011 Changes
+
+Adding base support in Object to be an object. Working towards class parts.
+
+
 22/07/2011 Changes
 
 Modified <init> method to call applyTo() on itself (instance of java dynamic class) so 

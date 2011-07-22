@@ -114,4 +114,8 @@ public class ClassBytecodeWriter implements Opcodes {
 		methodVisitor.visitLdcInsn(value);
 		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, "primitiveVariableAt", "(Ljava/lang/String;)Lst/redline/Object;");
 	}
+
+	public void stackPop() {
+		methodVisitor.visitInsn(POP);
+	}
 }
