@@ -60,10 +60,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Object.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Object.java">
+      <file leaf-file-name="ClassBytecodeWriter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.5450644">
+            <state line="102" column="0" selection-start="3167" selection-end="3167" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -72,25 +72,16 @@
       <file leaf-file-name="Analyser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="127" column="33" selection-start="3832" selection-end="3832" vertical-scroll-proportion="0.0">
+            <state line="157" column="0" selection-start="4736" selection-end="4736" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimpleExpression.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/SimpleExpression.java">
+      <file leaf-file-name="Object.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Object.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="19" selection-start="1741" selection-end="1741" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassBytecodeWriter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="118" column="35" selection-start="3699" selection-end="3699" vertical-scroll-proportion="0.0">
+            <state line="74" column="109" selection-start="2545" selection-end="2545" vertical-scroll-proportion="0.57796854">
               <folding />
             </state>
           </provider>
@@ -107,13 +98,12 @@
     <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
     <option name="UPDATE_CHANGES_POLICY" value="STASH" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.txt" root0="SKIP_INSPECTION" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/VariableName.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/PrimitiveVariableAt.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveVariableAt.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveIsInstanveVariable.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveIsInstanceVariable.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/primitives/PrimitiveIsClassVariable.java" />
@@ -123,9 +113,13 @@
         <option value="$PROJECT_DIR$/src/main/java/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/Object.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/BinaryExpression.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySelectorUnaryObjectDescription.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/UnaryObjectDescription.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/Object.java" />
       </list>
     </option>
   </component>
@@ -169,32 +163,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="st" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="&lt; 1.6 &gt;" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="&lt; 1.6 &gt;" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rt.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -303,16 +271,16 @@
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="OverrideImplement.combined" value="true" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -468,7 +436,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="876" extended-state="6" />
+    <frame x="-1" y="0" width="1442" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -531,85 +499,110 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="13" selection-start="1911" selection-end="1911" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFileReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="13" selection-start="1287" selection-end="1287" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFileFinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="21" selection-start="2331" selection-end="2331" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/smalltalk/Object.st">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="24" selection-end="24" vertical-scroll-proportion="0.06437768" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Compiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="2" selection-start="0" selection-end="1233" vertical-scroll-proportion="0.021459227" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="1327" selection-end="1327" vertical-scroll-proportion="0.35622317" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="17" selection-start="1272" selection-end="1272" vertical-scroll-proportion="0.51502144" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/VariableName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="21" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.021459227" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Stic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="8" selection-start="1580" selection-end="1580" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/SimpleExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="19" selection-start="1741" selection-end="1741" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinaryObjectDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="86" selection-start="2490" selection-end="2526" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnarySelector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnarySelectorMessagePattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnarySelectorMessageElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnaryExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="31" selection-start="2372" selection-end="2395" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="17" selection-start="3315" selection-end="3315" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnaryObjectDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="12" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/KeywordExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="13" selection-start="1331" selection-end="1331" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinaryExpression.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="38" selection-start="2278" selection-end="2278" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySelectorUnaryObjectDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="33" selection-start="1867" selection-end="1867" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="35" selection-start="3699" selection-end="3699" vertical-scroll-proportion="0.0">
+        <state line="102" column="0" selection-start="3167" selection-end="3167" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="33" selection-start="3832" selection-end="3832" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/SimpleExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="19" selection-start="1741" selection-end="1741" vertical-scroll-proportion="0.0">
+        <state line="157" column="0" selection-start="4736" selection-end="4736" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.5450644">
+        <state line="74" column="109" selection-start="2545" selection-end="2545" vertical-scroll-proportion="0.57796854">
           <folding />
         </state>
       </provider>

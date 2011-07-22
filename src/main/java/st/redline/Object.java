@@ -27,13 +27,20 @@ import java.util.Map;
 
 public class Object {
 
-	private static final Map<String, Object> registry = new HashMap<String, Object>();
+	private static final Map<String, Object> classRegistry = new HashMap<String, Object>();
+
+	private Data data;
 
 	public Object() {
+		this(true);
+	}
+
+	public Object(boolean isClass) {
+		data = isClass ? new ClassData() : new InstanceData();
 	}
 
 	public Object primitiveRegisterAs(String name) {
-		registry.put(name, this);
+		classRegistry.put(name, this);
 		return this;
 	}
 
@@ -65,11 +72,11 @@ public class Object {
 	}
 
 	private Object resolveObject(String name) {
-		// It is expected the loading of an object results in it registering a Smalltalk class in the registry map.
-		if (registry.containsKey(name))
-			return registry.get(name);
+		// It is expected the loading of an object results in it registering a Smalltalk class in the class registry.
+		if (classRegistry.containsKey(name))
+			return classRegistry.get(name);
 		if (loadObject(name))
-			return registry.get(name);
+			return classRegistry.get(name);
 		// TODO.JCL should we return 'nil'?
 		return null;
 	}
@@ -84,5 +91,18 @@ public class Object {
 
 	private ClassLoader classLoader() {
 		return Thread.currentThread().getContextClassLoader();
+	}
+
+	class Data {
+		private Object cls;
+		private Map<String, Object> variables;
+	}
+
+	class InstanceData extends Data {
+	}
+
+	class ClassData extends Data {
+		private Object superclass;
+		private Map<String, Object> methods;
 	}
 }
