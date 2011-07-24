@@ -57,6 +57,7 @@ public interface NodeVisitor {
 	void visit(UnaryExpression unaryExpression);
 	void visitEnd(UnaryExpression unaryExpression);
 	void visit(BinaryExpression binaryExpression);
+	void visitEnd(BinaryExpression binaryExpression);
 	void visit(KeywordExpression keywordExpression, String keywords, int argumentCount, int line);
 	void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line);
 	void visit(PrimaryExpression primaryExpression);

@@ -48,8 +48,8 @@ public class Stic {
 		createClassInstance(className).primitiveMain(args);
 	}
 
-	private Object createClassInstance(String className) throws Exception {
-		return (st.redline.Object) loadClass(className).newInstance();
+	private RObject createClassInstance(String className) throws Exception {
+		return (RObject) loadClass(className).newInstance();
 	}
 
 	private Class loadClass(String className) throws Exception {

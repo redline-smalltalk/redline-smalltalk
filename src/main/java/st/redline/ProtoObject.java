@@ -22,5 +22,5 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
-public class ProtoObject extends st.redline.Object {
+public class ProtoObject extends RObject {
 }

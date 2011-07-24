@@ -57,7 +57,7 @@ public class TracingMethodVisitor implements MethodVisitor, Opcodes {
 	}
 
 	public void visitCode() {
-		System.out.println("visitCode()");
+		System.out.println("\nvisitCode()");
 		methodVisitor.visitCode();
 	}
 

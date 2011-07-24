@@ -44,11 +44,26 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	public Class findClass(String className) throws ClassNotFoundException {
+		Class cls = findClass0(className);
+		if (cls == null)
+			cls = findClass0("st.redline." + className);
+		return cls;
+	}
+
+	public Class findClass0(String className) throws ClassNotFoundException {
 		System.out.println("findClass() " + className);
 		SourceFile sourceFile = findSource(className);
 		if (sourceFile == null)
-			return super.findClass(className);
+			return tryFindSystemClass(className);
 		return classFrom(sourceFile);
+	}
+
+	private Class tryFindSystemClass(String className) {
+		try {
+			return findSystemClass(className);
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
 	}
 
 	private Class classFrom(SourceFile sourceFile) {

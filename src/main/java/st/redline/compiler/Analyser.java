@@ -30,6 +30,8 @@ public class Analyser implements NodeVisitor {
 	private final String packageName;
 	private final ClassBytecodeWriter classBytecodeWriter;
 
+	private boolean sendToSuper = false;
+
 	public Analyser(String className, String packageName) {
 		this.className = className;
 		this.packageName = packageName;
@@ -110,9 +112,13 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(UnarySelector unarySelector, String value, int line) {
+		classBytecodeWriter.unarySend(value, line, sendToSuper);
+		sendToSuper = false;
 	}
 
 	public void visit(BinarySelector binarySelector, String value, int line) {
+		classBytecodeWriter.binarySend(value, line, sendToSuper);
+		sendToSuper = false;
 	}
 
 	public void visit(Keyword keyword, String value, int line) {
@@ -122,6 +128,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(SimpleExpression simpleExpression) {
+		sendToSuper = false;
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
@@ -153,10 +160,15 @@ public class Analyser implements NodeVisitor {
 	public void visit(BinaryExpression binaryExpression) {
 	}
 
+	public void visitEnd(BinaryExpression binaryExpression) {
+	}
+
 	public void visit(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
 	}
 
 	public void visitEnd(KeywordExpression keywordExpression, String keywords, int argumentCount, int line) {
+		classBytecodeWriter.keywordSend(keywords, argumentCount, line, sendToSuper);
+		sendToSuper = false;
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
@@ -178,6 +190,8 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralSymbol literalSymbol, String value, int line) {
+		System.out.println("LiteralSymbol " + value + " @ " + line);
+		classBytecodeWriter.stackPushNull();
 	}
 
 	public void visit(LiteralArray literalArray) {

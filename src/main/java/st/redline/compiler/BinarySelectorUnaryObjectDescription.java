@@ -33,7 +33,7 @@ public class BinarySelectorUnaryObjectDescription implements VisitableNode {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(binarySelector, binarySelector.value, binarySelector.line);
 		unaryObjectDescription.accept(nodeVisitor);
+		nodeVisitor.visit(binarySelector, binarySelector.value, binarySelector.line);
 	}
 }

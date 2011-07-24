@@ -41,5 +41,8 @@ public class UnaryObjectDescription implements VisitableNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		primary.accept(visitor);
+		for (UnarySelector unarySelector : unarySelectors)
+			unarySelector.accept(visitor);
 	}
 }

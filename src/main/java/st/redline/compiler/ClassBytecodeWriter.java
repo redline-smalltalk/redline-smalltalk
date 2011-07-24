@@ -10,11 +10,18 @@ import java.io.PrintWriter;
 
 public class ClassBytecodeWriter implements Opcodes {
 
-	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = "st/redline/Object";
+	private static final String REDLINE_OBJECT = "st/redline/RObject";
+	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = REDLINE_OBJECT;
 	private static final String INIT_METHOD = "<init>";
 	private static final String INIT_METHOD_SIGNATURE = "()V";
-	private static final String APPLY_TO_METHOD = "applyTo";
-	private static final String APPLY_TO_METHOD_SIGNATURE = "(Lst/redline/Object;)Lst/redline/Object;";
+	private static final String INIT_APPLY_TO_METHOD = "initApplyTo";
+	private static final String SEND_METHOD_NAME = "primitiveSend";
+	private static final String SUPER_SEND_METHOD_NAME = "primitiveSuperSend";
+
+	private static final String[] SEND_METHOD_DESCRIPTORS = {
+		"(Ljava/lang/String;Lst/redline/RObject;)Lst/redline/RObject;",
+		"(Lst/redline/RObject;Ljava/lang/String;Lst/redline/RObject;)Lst/redline/RObject;",
+	};
 
 	private final String className;
 	private String packageName;
@@ -51,7 +58,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void openApplyToMethod() {
-		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, APPLY_TO_METHOD, APPLY_TO_METHOD_SIGNATURE, null, null);
+		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, INIT_APPLY_TO_METHOD, INIT_APPLY_TO_METHOD_SIGNATURE, null, null);
 		methodVisitor.visitCode();
 	}
 
@@ -70,7 +77,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	private void invokeApplyToOnThis() {
 		methodVisitor.visitVarInsn(ALOAD, 0);
 		methodVisitor.visitVarInsn(ALOAD, 0);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, APPLY_TO_METHOD, APPLY_TO_METHOD_SIGNATURE);
+		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, INIT_APPLY_TO_METHOD, INIT_APPLY_TO_METHOD_SIGNATURE);
 	}
 
 	private void invokeSuperclassInitMethod() {
@@ -91,6 +98,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void closeInitializeMethod() {
+		stackPop();
 		methodVisitor.visitInsn(RETURN);
 		methodVisitor.visitMaxs(1, 1);
 		methodVisitor.visitEnd();
@@ -109,13 +117,48 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void callPrimitiveVariableAt(String value, int line) {
-		visitLine(line);
+//		visitLine(line);
 		methodVisitor.visitVarInsn(ALOAD, 0);
 		methodVisitor.visitLdcInsn(value);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, "primitiveVariableAt", "(Ljava/lang/String;)Lst/redline/Object;");
+		methodVisitor.visitMethodInsn(INVOKESTATIC, REDLINE_OBJECT, "primitiveVariableAt", "(Lst/redline/RObject;Ljava/lang/String;)Lst/redline/RObject;");
+		MethodVisitor mv = methodVisitor;
+		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V");
 	}
 
 	public void stackPop() {
 		methodVisitor.visitInsn(POP);
+	}
+
+	public void stackDuplicate() {
+		methodVisitor.visitInsn(DUP);
+	}
+
+	public void stackPushNull() {
+		methodVisitor.visitInsn(ACONST_NULL);
+	}
+
+	public void unarySend(String unarySelector, int line, boolean sendToSuper) {
+		callPrimitiveSend(unarySelector, 0, line, sendToSuper);
+	}
+
+	public void binarySend(String binarySelector, int line, boolean sendToSuper) {
+		callPrimitiveSend(binarySelector, 1, line, sendToSuper);
+	}
+
+	public void keywordSend(String keywords, int argumentCount, int line, boolean sendToSuper) {
+		callPrimitiveSend(keywords, argumentCount, line, sendToSuper);
+	}
+
+	private void callPrimitiveSend(String selector, int argumentCount, int line, boolean sendToSuper) {
+//		visitLine(line);
+//		methodVisitor.visitLdcInsn(selector);
+//		if (sendToSuper) {
+//			methodVisitor.visitVarInsn(ALOAD, 1);  // 0 = receiver, 1 = class method found in.
+//			methodVisitor.visitMethodInsn(INVOKEVIRTUAL, REDLINE_OBJECT, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
+//		} else {
+//			methodVisitor.visitInsn(ACONST_NULL);
+//			methodVisitor.visitMethodInsn(INVOKEVIRTUAL, REDLINE_OBJECT, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
+//		}
 	}
 }

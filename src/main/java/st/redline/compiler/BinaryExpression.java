@@ -44,8 +44,11 @@ public class BinaryExpression implements MessageExpression {
 
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visit(this);
+		for (BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription : binarySelectorUnaryObjectDescriptions)
+				binarySelectorUnaryObjectDescription.accept(nodeVisitor);
 		// keywordExpression may be null.
 		if (keywordExpression != null)
 			keywordExpression.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this);
 	}
 }

@@ -25,21 +25,21 @@ package st.redline;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Object {
+public class RObject {
 
-	private static final Map<String, Object> classRegistry = new HashMap<String, Object>();
+	private static final Map<String, RObject> classRegistry = new HashMap<String, RObject>();
 
 	private Data data;
 
-	public Object() {
+	public RObject() {
 		this(true);
 	}
 
-	public Object(boolean isClass) {
+	public RObject(boolean isClass) {
 		data = isClass ? new ClassData() : new InstanceData();
 	}
 
-	public Object primitiveRegisterAs(String name) {
+	public RObject primitiveRegisterAs(String name) {
 		classRegistry.put(name, this);
 		return this;
 	}
@@ -47,31 +47,46 @@ public class Object {
 	public void primitiveMain(String[] args) {
 	}
 
-	public Object primitiveVariableAt(String name) {
-		if (primitiveIsInstanceVariable(name))
+	public static RObject primitiveVariableAt(RObject receiver, String name) {
+		System.out.println("primitiveVariableAt() " + name + " in " + receiver);
+		if (primitiveIsInstanceVariable(receiver, name))
 			throw new IllegalStateException("todo - implement");
-		if (primitiveIsClassVariable(name))
+		if (primitiveIsClassVariable(receiver, name))
 			throw new IllegalStateException("todo - implement");
-		return primitiveResolveObject(name);
+		return primitiveResolveObject(receiver, name);
 	}
 
-	public boolean primitiveIsInstanceVariable(String name) {
+	public static boolean primitiveIsInstanceVariable(RObject receiver, String name) {
 		return false;
 	}
 
-	public boolean primitiveIsClassVariable(String name) {
+	public static boolean primitiveIsClassVariable(RObject receiver, String name) {
 		return false;
 	}
 
-	public Object primitiveResolveObject(String name) {
-		Object object = resolveObject(name);
+	public static RObject ping(RObject receiver) {
+		System.out.println("*** PING ***");
+		System.out.println(receiver);
+		return receiver;
+	}
+
+	public static RObject primitiveSend(RObject receiver, String selector, RObject classMethodWasFoundIn) {
+		throw new IllegalStateException("todo - implement");
+	}
+
+	public static RObject primitiveSend(RObject receiver, RObject arg1, String selector, RObject classMethodWasFoundIn) {
+		throw new IllegalStateException("todo - implement");
+	}
+
+	public static RObject primitiveResolveObject(RObject receiver, String name) {
+		RObject object = receiver.resolveObject(name);
 		if (object != null)
 			return object;
 		// TODO.JCL search through namespaces to find object.
-		return resolveObject("st.redline." + name);
+		return receiver.resolveObject("st.redline." + name);
 	}
 
-	private Object resolveObject(String name) {
+	private RObject resolveObject(String name) {
 		// It is expected the loading of an object results in it registering a Smalltalk class in the class registry.
 		if (classRegistry.containsKey(name))
 			return classRegistry.get(name);
@@ -94,15 +109,15 @@ public class Object {
 	}
 
 	class Data {
-		private Object cls;
-		private Map<String, Object> variables;
+		private RObject cls;
+		private Map<String, RObject> variables;
 	}
 
 	class InstanceData extends Data {
 	}
 
 	class ClassData extends Data {
-		private Object superclass;
-		private Map<String, Object> methods;
+		private RObject superclass;
+		private Map<String, RObject> methods;
 	}
 }
