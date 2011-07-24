@@ -45,11 +45,11 @@ public class Stic {
 	}
 
 	public void invokeWith(String className, String[] args) throws Exception {
-		createClassInstance(className).primitiveMain(args);
+		ProtoObject.primitiveMain(createClassInstance(className), args);
 	}
 
-	private RObject createClassInstance(String className) throws Exception {
-		return (RObject) loadClass(className).newInstance();
+	private ProtoObject createClassInstance(String className) throws Exception {
+		return (ProtoObject) loadClass(className).newInstance();
 	}
 
 	private Class loadClass(String className) throws Exception {

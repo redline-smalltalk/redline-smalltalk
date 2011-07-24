@@ -10,35 +10,32 @@ import java.io.PrintWriter;
 
 public class ClassBytecodeWriter implements Opcodes {
 
-	private static final String REDLINE_OBJECT = "st/redline/RObject";
-	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = REDLINE_OBJECT;
-	private static final String INIT_METHOD = "<init>";
-	private static final String INIT_METHOD_SIGNATURE = "()V";
-	private static final String INIT_APPLY_TO_METHOD = "initApplyTo";
+	private static final String PROTOOBJECT = "st/redline/ProtoObject";
+	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = PROTOOBJECT;
 	private static final String SEND_METHOD_NAME = "primitiveSend";
 	private static final String SUPER_SEND_METHOD_NAME = "primitiveSuperSend";
-
+	private static final String CONSTRUCTION_SIGNATURE = "(Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
+	private static final String INIT_SIGNATURE = "<init>";
 	private static final String[] SEND_METHOD_DESCRIPTORS = {
-		"(Ljava/lang/String;Lst/redline/RObject;)Lst/redline/RObject;",
-		"(Lst/redline/RObject;Ljava/lang/String;Lst/redline/RObject;)Lst/redline/RObject;",
+		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 	};
+	private static final String CONSTRUCT_METHOD_NAME = "construct";
 
 	private final String className;
 	private String packageName;
-	private ClassWriter classWriter;
-	private MethodVisitor methodVisitor;
+	private ClassWriter cw;
+	private MethodVisitor mv;
 	private String fullyQualifiedClassName;
-	private int startingLineNumber;
 
 	public ClassBytecodeWriter(String className, String packageName) {
 		this.className = className;
 		this.packageName = packageName;
-		startingLineNumber = 0;
 		initialize();
 	}
 
 	private void initialize() {
-		classWriter = tracingClassWriter();
+		cw = tracingClassWriter();
 		fullyQualifiedClassName = packageName.length() > 0 ? packageName + File.separator + className : className;
 	}
 
@@ -47,42 +44,34 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public byte[] contents() {
-		return classWriter.toByteArray();
+		return cw.toByteArray();
 	}
 
 	public void openClass() {
-		classWriter.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
-		classWriter.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
+		cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
+		cw.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
 		writeInitializeMethod();
 		openApplyToMethod();
 	}
 
 	private void openApplyToMethod() {
-		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, INIT_APPLY_TO_METHOD, INIT_APPLY_TO_METHOD_SIGNATURE, null, null);
-		methodVisitor.visitCode();
+		mv = cw.visitMethod(ACC_PUBLIC, CONSTRUCT_METHOD_NAME, CONSTRUCTION_SIGNATURE, null, null);
+		mv.visitCode();
+		mv.visitVarInsn(ALOAD, 0);
 	}
 
 	private void writeInitializeMethod() {
-		openInitializeMethod();
-		invokeSuperclassInitMethod();
-		invokeApplyToOnThis();
-		closeInitializeMethod();
-	}
-
-	private void openInitializeMethod() {
-		methodVisitor = classWriter.visitMethod(ACC_PUBLIC, INIT_METHOD, INIT_METHOD_SIGNATURE, null, null);
-		methodVisitor.visitCode();
-	}
-
-	private void invokeApplyToOnThis() {
-		methodVisitor.visitVarInsn(ALOAD, 0);
-		methodVisitor.visitVarInsn(ALOAD, 0);
-		methodVisitor.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, INIT_APPLY_TO_METHOD, INIT_APPLY_TO_METHOD_SIGNATURE);
-	}
-
-	private void invokeSuperclassInitMethod() {
-		methodVisitor.visitVarInsn(ALOAD, 0);
-		methodVisitor.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, INIT_METHOD, INIT_METHOD_SIGNATURE);
+		mv = cw.visitMethod(ACC_PUBLIC, INIT_SIGNATURE, "()V", null, null);
+		mv.visitCode();
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, INIT_SIGNATURE, "()V");
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT_METHOD_NAME, CONSTRUCTION_SIGNATURE);
+		mv.visitInsn(POP);
+		mv.visitInsn(RETURN);
+		mv.visitMaxs(2, 1);
+		mv.visitEnd();
 	}
 
 	private String homogenize(String className) {
@@ -94,48 +83,38 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	public void closeClass() {
 		closeApplyToMethod();
-		classWriter.visitEnd();
-	}
-
-	private void closeInitializeMethod() {
-		stackPop();
-		methodVisitor.visitInsn(RETURN);
-		methodVisitor.visitMaxs(1, 1);
-		methodVisitor.visitEnd();
+		cw.visitEnd();
 	}
 
 	private void closeApplyToMethod() {
-		methodVisitor.visitInsn(ARETURN);
-		methodVisitor.visitMaxs(1, 1);
-		methodVisitor.visitEnd();
+		mv.visitInsn(ARETURN);
+		mv.visitMaxs(1, 1);
+		mv.visitEnd();
 	}
 
 	private void visitLine(int line) {
 		Label label = new Label();
-		methodVisitor.visitLabel(label);
-		methodVisitor.visitLineNumber(line + startingLineNumber, label);
+		mv.visitLabel(label);
+		mv.visitLineNumber(line, label);
 	}
 
 	public void callPrimitiveVariableAt(String value, int line) {
-//		visitLine(line);
-		methodVisitor.visitVarInsn(ALOAD, 0);
-		methodVisitor.visitLdcInsn(value);
-		methodVisitor.visitMethodInsn(INVOKESTATIC, REDLINE_OBJECT, "primitiveVariableAt", "(Lst/redline/RObject;Ljava/lang/String;)Lst/redline/RObject;");
-		MethodVisitor mv = methodVisitor;
-		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V");
+		visitLine(line);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitLdcInsn(value);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveVariableAt", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
 	}
 
 	public void stackPop() {
-		methodVisitor.visitInsn(POP);
+		mv.visitInsn(POP);
 	}
 
 	public void stackDuplicate() {
-		methodVisitor.visitInsn(DUP);
+		mv.visitInsn(DUP);
 	}
 
 	public void stackPushNull() {
-		methodVisitor.visitInsn(ACONST_NULL);
+		mv.visitInsn(ACONST_NULL);
 	}
 
 	public void unarySend(String unarySelector, int line, boolean sendToSuper) {
@@ -151,14 +130,14 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void callPrimitiveSend(String selector, int argumentCount, int line, boolean sendToSuper) {
-//		visitLine(line);
-//		methodVisitor.visitLdcInsn(selector);
-//		if (sendToSuper) {
-//			methodVisitor.visitVarInsn(ALOAD, 1);  // 0 = receiver, 1 = class method found in.
-//			methodVisitor.visitMethodInsn(INVOKEVIRTUAL, REDLINE_OBJECT, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
-//		} else {
-//			methodVisitor.visitInsn(ACONST_NULL);
-//			methodVisitor.visitMethodInsn(INVOKEVIRTUAL, REDLINE_OBJECT, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
-//		}
+		visitLine(line);
+		mv.visitLdcInsn(selector);
+		if (sendToSuper) {
+			mv.visitVarInsn(ALOAD, 1);  // 0 = receiver, 1 = class method found in.
+			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
+		} else {
+			mv.visitInsn(ACONST_NULL);
+			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
+		}
 	}
 }

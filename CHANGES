@@ -1,3 +1,12 @@
+25/07/2011 Changes
+
+Restructured the implementation hierarchy, not Java object st.redline.ProtoObject
+is base of all things.
+ClassBytecodeWriter made simpler.
+Fixed bug with resolving a class - if the loading of a class doesn't register itself
+in the class hierarchy then all hell breaks loose (NullPointerException).
+
+
 23/07/2011 Changes
 
 Adding base support in Object to be an object. Working towards class parts.
