@@ -14,13 +14,13 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = PROTOOBJECT;
 	private static final String SEND_METHOD_NAME = "primitiveSend";
 	private static final String SUPER_SEND_METHOD_NAME = "primitiveSuperSend";
-	private static final String CONSTRUCTION_SIGNATURE = "(Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
+	private static final String CONSTRUCT_METHOD_NAME = "construct";
+	private static final String CONSTRUCTION_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
 	private static final String INIT_SIGNATURE = "<init>";
 	private static final String[] SEND_METHOD_DESCRIPTORS = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 	};
-	private static final String CONSTRUCT_METHOD_NAME = "construct";
 
 	private final String className;
 	private String packageName;
@@ -57,7 +57,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	private void openApplyToMethod() {
 		mv = cw.visitMethod(ACC_PUBLIC, CONSTRUCT_METHOD_NAME, CONSTRUCTION_SIGNATURE, null, null);
 		mv.visitCode();
-		mv.visitVarInsn(ALOAD, 0);
+		mv.visitVarInsn(ALOAD, 0);  // TODO.JCL **THIS NEEDS TO BE REMOVED**
 	}
 
 	private void writeInitializeMethod() {
@@ -65,6 +65,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitCode();
 		mv.visitVarInsn(ALOAD, 0);
 		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, INIT_SIGNATURE, "()V");
+		mv.visitVarInsn(ALOAD, 0);
 		mv.visitVarInsn(ALOAD, 0);
 		mv.visitVarInsn(ALOAD, 0);
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT_METHOD_NAME, CONSTRUCTION_SIGNATURE);
@@ -100,9 +101,13 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	public void callPrimitiveVariableAt(String value, int line) {
 		visitLine(line);
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitLdcInsn(value);
+		stackPushReceiver();
+		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveVariableAt", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
+	}
+
+	public void stackPushLiteral(String value) {
+		mv.visitLdcInsn(value);
 	}
 
 	public void stackPop() {
@@ -115,6 +120,18 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	public void stackPushNull() {
 		mv.visitInsn(ACONST_NULL);
+	}
+
+	public void stackPushThis() {
+		mv.visitVarInsn(ALOAD, 0); // 0 = this, 1 = receiver, 2 = class method found in.
+	}
+
+	public void stackPushReceiver() {
+		mv.visitVarInsn(ALOAD, 1);
+	}
+
+	public void stackPushClassMethodWasFoundIn() {
+		mv.visitVarInsn(ALOAD, 2);
 	}
 
 	public void unarySend(String unarySelector, int line, boolean sendToSuper) {
@@ -133,11 +150,15 @@ public class ClassBytecodeWriter implements Opcodes {
 		visitLine(line);
 		mv.visitLdcInsn(selector);
 		if (sendToSuper) {
-			mv.visitVarInsn(ALOAD, 1);  // 0 = receiver, 1 = class method found in.
+			mv.visitVarInsn(ALOAD, 2);  // 0 = this, 1 = receiver, 2 = class method found in.
 			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
 		} else {
-			mv.visitInsn(ACONST_NULL);
+			stackPushNull();
 			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
 		}
+	}
+
+	public void callPrimitiveSymbol(String value, int line) {
+		//To change body of created methods use File | Settings | File Templates.
 	}
 }

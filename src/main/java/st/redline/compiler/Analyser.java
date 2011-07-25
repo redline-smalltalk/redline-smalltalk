@@ -132,6 +132,8 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
+		if (simpleExpression.isResultDuplicatedOnStack())
+			classBytecodeWriter.stackDuplicate();
 		if (!simpleExpression.isResultLeftOnStack())
 			classBytecodeWriter.stackPop();
 	}
@@ -190,8 +192,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralSymbol literalSymbol, String value, int line) {
-		System.out.println("LiteralSymbol " + value + " @ " + line);
-		classBytecodeWriter.stackPushNull();
+		classBytecodeWriter.callPrimitiveSymbol(value, line);
 	}
 
 	public void visit(LiteralArray literalArray) {
