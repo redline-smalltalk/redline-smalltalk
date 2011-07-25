@@ -11,19 +11,22 @@ import java.io.PrintWriter;
 public class ClassBytecodeWriter implements Opcodes {
 
 	private static final String PROTOOBJECT = "st/redline/ProtoObject";
-	private static final String SUPERCLASS_FULLY_QUALIFIED_NAME = PROTOOBJECT;
-	private static final String SEND_METHOD_NAME = "primitiveSend";
-	private static final String SUPER_SEND_METHOD_NAME = "primitiveSuperSend";
-	private static final String CONSTRUCT_METHOD_NAME = "construct";
-	private static final String CONSTRUCTION_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_SYMBOL_METHOD_NAME = "primitiveSymbol";
+	private static final String SUPERCLASS = PROTOOBJECT;
+	private static final String SEND = "primitiveSend";
+	private static final String SUPER_SEND = "primitiveSuperSend";
+	private static final String CONSTRUCT = "construct";
+	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_SYMBOL = "primitiveSymbol";
 	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String INIT_SIGNATURE = "<init>";
-
-	private static final String[] SEND_METHOD_DESCRIPTORS = {
+	private static final String INIT = "<init>";
+	private static final String INIT_SIGNATURE = "()V";
+	private static final String PRIMITIVE_VARIABLE_AT = "primitiveVariableAt";
+	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
+	private static final String[] SEND_SIGNATURES = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 	};
+
 	private final String className;
 	private String packageName;
 	private ClassWriter cw;
@@ -50,27 +53,26 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void openClass() {
-		cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, SUPERCLASS_FULLY_QUALIFIED_NAME, null);
+		cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, SUPERCLASS, null);
 		cw.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
 		writeInitializeMethod();
 		openApplyToMethod();
 	}
 
 	private void openApplyToMethod() {
-		mv = cw.visitMethod(ACC_PUBLIC, CONSTRUCT_METHOD_NAME, CONSTRUCTION_SIGNATURE, null, null);
+		mv = cw.visitMethod(ACC_PUBLIC, CONSTRUCT, CONSTRUCT_SIGNATURE, null, null);
 		mv.visitCode();
-		mv.visitVarInsn(ALOAD, 0);  // TODO.JCL **THIS NEEDS TO BE REMOVED**
 	}
 
 	private void writeInitializeMethod() {
-		mv = cw.visitMethod(ACC_PUBLIC, INIT_SIGNATURE, "()V", null, null);
+		mv = cw.visitMethod(ACC_PUBLIC, INIT, INIT_SIGNATURE, null, null);
 		mv.visitCode();
 		stackPushThis();
-		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, INIT_SIGNATURE, "()V");
+		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS, INIT, INIT_SIGNATURE);
 		stackPushThis();
 		stackPushThis();
 		stackPushThis();
-		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT_METHOD_NAME, CONSTRUCTION_SIGNATURE);
+		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT, CONSTRUCT_SIGNATURE);
 		mv.visitInsn(POP);
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(2, 1);
@@ -96,6 +98,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void visitLine(int line) {
+		// TODO.JCL consider not outputting a new visit if same line number as a previous call.
 		Label label = new Label();
 		mv.visitLabel(label);
 		mv.visitLineNumber(line, label);
@@ -105,7 +108,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		visitLine(line);
 		stackPushReceiver();
 		stackPushLiteral(value);
-		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveVariableAt", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_VARIABLE_AT, PRIMITIVE_VARIABLE_AT_SIGNATURE);
 	}
 
 	public void stackPushLiteral(String value) {
@@ -153,10 +156,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushLiteral(selector);
 		if (sendToSuper) {
 			stackPushClassMethodWasFoundIn();
-			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
+			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SUPER_SEND, SEND_SIGNATURES[argumentCount]);
 		} else {
 			stackPushNull();
-			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
+			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SEND, SEND_SIGNATURES[argumentCount]);
 		}
 	}
 
@@ -164,6 +167,6 @@ public class ClassBytecodeWriter implements Opcodes {
 		visitLine(line);
 		stackPushReceiver();
 		stackPushLiteral(value);
-		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_SYMBOL_METHOD_NAME, PRIMITIVE_SYMBOL_SIGNATURE);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_SYMBOL, PRIMITIVE_SYMBOL_SIGNATURE);
 	}
 }

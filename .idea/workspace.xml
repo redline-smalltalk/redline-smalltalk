@@ -59,19 +59,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ClassBytecodeWriter.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ClassBytecodeWriter.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="169" column="0" selection-start="5367" selection-end="5367" vertical-scroll-proportion="0.0">
+            <state line="100" column="8" selection-start="3356" selection-end="3356" vertical-scroll-proportion="0.2773208">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="4" selection-start="1752" selection-end="1752" vertical-scroll-proportion="0.3149236">
+            <state line="91" column="27" selection-start="3425" selection-end="3425" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -114,8 +114,8 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/RObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Stic.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
       </list>
     </option>
   </component>
@@ -572,16 +572,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="0" selection-start="5367" selection-end="5367" vertical-scroll-proportion="0.0">
+        <state line="91" column="27" selection-start="3425" selection-end="3425" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="4" selection-start="1752" selection-end="1752" vertical-scroll-proportion="0.3149236">
+        <state line="100" column="8" selection-start="3356" selection-end="3356" vertical-scroll-proportion="0.2773208">
           <folding />
         </state>
       </provider>
