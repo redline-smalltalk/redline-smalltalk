@@ -40,9 +40,9 @@ public class ProtoObject {
 		data = isClass ? new ClassData() : new InstanceData();
 	}
 
-	public ProtoObject primitiveRegisterAs(String name) {
-		classRegistry.put(name, this);
-		return this;
+	public ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
+		classRegistry.put(name, receiver);
+		return receiver;
 	}
 
 	public static void primitiveMain(ProtoObject receiver, String[] args) {
@@ -62,6 +62,10 @@ public class ProtoObject {
 
 	public static boolean primitiveIsClassVariable(ProtoObject receiver, String name) {
 		return false;
+	}
+
+	public static ProtoObject primitiveSymbol(String value) {
+		throw new IllegalStateException("todo - implement - symbol " + value);
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {

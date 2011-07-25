@@ -1,3 +1,9 @@
+26/07/2011 Changes
+
+Added simpler handling of common bytecodes.
+Added primitive for creating Symbols.
+
+
 25/07/2011 Changes
 
 Restructured the implementation hierarchy, not Java object st.redline.ProtoObject

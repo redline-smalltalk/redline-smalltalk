@@ -16,12 +16,14 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SUPER_SEND_METHOD_NAME = "primitiveSuperSend";
 	private static final String CONSTRUCT_METHOD_NAME = "construct";
 	private static final String CONSTRUCTION_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_SYMBOL_METHOD_NAME = "primitiveSymbol";
+	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String INIT_SIGNATURE = "<init>";
+
 	private static final String[] SEND_METHOD_DESCRIPTORS = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 	};
-
 	private final String className;
 	private String packageName;
 	private ClassWriter cw;
@@ -63,11 +65,11 @@ public class ClassBytecodeWriter implements Opcodes {
 	private void writeInitializeMethod() {
 		mv = cw.visitMethod(ACC_PUBLIC, INIT_SIGNATURE, "()V", null, null);
 		mv.visitCode();
-		mv.visitVarInsn(ALOAD, 0);
+		stackPushThis();
 		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS_FULLY_QUALIFIED_NAME, INIT_SIGNATURE, "()V");
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitVarInsn(ALOAD, 0);
+		stackPushThis();
+		stackPushThis();
+		stackPushThis();
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT_METHOD_NAME, CONSTRUCTION_SIGNATURE);
 		mv.visitInsn(POP);
 		mv.visitInsn(RETURN);
@@ -148,9 +150,9 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	private void callPrimitiveSend(String selector, int argumentCount, int line, boolean sendToSuper) {
 		visitLine(line);
-		mv.visitLdcInsn(selector);
+		stackPushLiteral(selector);
 		if (sendToSuper) {
-			mv.visitVarInsn(ALOAD, 2);  // 0 = this, 1 = receiver, 2 = class method found in.
+			stackPushClassMethodWasFoundIn();
 			mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, SUPER_SEND_METHOD_NAME, SEND_METHOD_DESCRIPTORS[argumentCount]);
 		} else {
 			stackPushNull();
@@ -159,6 +161,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void callPrimitiveSymbol(String value, int line) {
-		//To change body of created methods use File | Settings | File Templates.
+		visitLine(line);
+		stackPushReceiver();
+		stackPushLiteral(value);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_SYMBOL_METHOD_NAME, PRIMITIVE_SYMBOL_SIGNATURE);
 	}
 }
