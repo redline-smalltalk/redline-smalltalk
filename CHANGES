@@ -1,3 +1,9 @@
+27/07/2011 Changes
+
+Added boostrapper and initial bootstrap class Symbol.
+Added creation of Symbol with primitive java value.
+
+
 26/07/2011 Changes
 
 Added simpler handling of common bytecodes.

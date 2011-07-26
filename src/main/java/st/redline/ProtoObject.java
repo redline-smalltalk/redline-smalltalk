@@ -33,19 +33,18 @@ public class ProtoObject {
 
 	public ProtoObject() {
 		this(true);
-		classRegistry.put("ProtoObject", this);
 	}
 
 	public ProtoObject(boolean isClass) {
 		data = isClass ? new ClassData() : new InstanceData();
 	}
 
-	public ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
-		classRegistry.put(name, receiver);
-		return receiver;
+	public static void primitiveMain(ProtoObject receiver, String[] args) {
 	}
 
-	public static void primitiveMain(ProtoObject receiver, String[] args) {
+	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
+		classRegistry.put(name, receiver);
+		return receiver;
 	}
 
 	public static ProtoObject primitiveVariableAt(ProtoObject receiver, String name) {
@@ -64,8 +63,12 @@ public class ProtoObject {
 		return false;
 	}
 
-	public static ProtoObject primitiveSymbol(String value) {
-		throw new IllegalStateException("todo - implement - symbol " + value);
+	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
+		ProtoObject symbolClass = receiver.resolveObject("Symbol");
+		ProtoObject symbol = new ProtoObject(false);
+		symbol.cls(symbolClass);
+		symbol.javaValue(value);
+		return symbol;
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
@@ -73,7 +76,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
-		throw new IllegalStateException("todo - implement");
+		throw new IllegalStateException("todo - implement " + selector + " " + arg1);
 	}
 
 	public static ProtoObject primitiveResolveObject(ProtoObject receiver, String name) {
@@ -89,7 +92,7 @@ public class ProtoObject {
 		if (classRegistry.containsKey(name)) {
 			return classRegistry.get(name);
 		}
-		// It is expected the loading of an object results in it registering a Smalltalk class in the class registry.
+		// It is expected the loading of an object results in the registering a Smalltalk class in the class registry.
 		// *NOTE* if class is not registered the will be a NullPointerException as we return 'null' here.
 		if (loadObject(name))
 			return classRegistry.get(name);
@@ -109,16 +112,84 @@ public class ProtoObject {
 		return Thread.currentThread().getContextClassLoader();
 	}
 
-	class Data {
+	public void bootstrap() {
+		new Bootstrapper(this).bootstrap();
+	}
+
+	public void bootstrapped() {
+		data.bootstrapped();
+	}
+
+	public boolean isBootstrapped() {
+		return data.isBootstrapped();
+	}
+
+	protected void cls(ProtoObject cls) {
+		data.cls(cls);
+	}
+
+	protected ProtoObject cls() {
+		return data.cls();
+	}
+
+	protected void javaValue(String value) {
+		data.javaValue(value);
+	}
+
+	protected String javaValue() {
+		return data.javaValue();
+	}
+
+	abstract class Data {
+
 		private ProtoObject cls;
 		private Map<String, ProtoObject> variables;
+		private boolean bootstrapped = false;
+
+		abstract void javaValue(String value);
+		abstract String javaValue();
+
+		protected void cls(ProtoObject cls) {
+			this.cls = cls;
+		}
+
+		protected ProtoObject cls() {
+			return cls;
+		}
+
+		protected void bootstrapped() {
+			bootstrapped = true;
+		}
+
+		protected boolean isBootstrapped() {
+			return bootstrapped;
+		}
 	}
 
 	class InstanceData extends Data {
+
+		private String javaValue;
+
+		protected void javaValue(String value) {
+			javaValue = value;
+		}
+
+		protected String javaValue() {
+			return javaValue;
+		}
 	}
 
 	class ClassData extends Data {
+
 		private ProtoObject superclass;
 		private Map<String, ProtoObject> methods;
+
+		protected void javaValue(String value) {
+			throw new IllegalStateException("A Class can't have a javaValue.");
+		}
+
+		protected String javaValue() {
+			throw new IllegalStateException("A Class doesn't have a javaValue.");
+		}
 	}
 }
