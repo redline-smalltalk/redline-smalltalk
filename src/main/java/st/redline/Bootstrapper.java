@@ -32,9 +32,9 @@ public class Bootstrapper {
 
 	protected Bootstrapper(ProtoObject protoObject) {
 		this.protoObject = protoObject;
-		this.protoObjectMetaclass = protoObject;
+		this.protoObjectMetaclass = new ProtoObject();
 		this.symbol = new ProtoObject();
-		this.symbolMetaclass = new ProtoObject(false);
+		this.symbolMetaclass = new ProtoObject();
 		this.metaclass = new ProtoObject();
 	}
 
