@@ -24,33 +24,43 @@ package st.redline;
 
 public class Bootstrapper {
 
+	private final ProtoObject metaclass;
 	private final ProtoObject protoObject;
 	private final ProtoObject protoObjectMetaclass;
+	private final ProtoObject cls;
+	private final ProtoObject clsMetaclass;
 	private final ProtoObject symbol;
 	private final ProtoObject symbolMetaclass;
-	private final ProtoObject metaclass;
 
 	protected Bootstrapper(ProtoObject protoObject) {
 		this.protoObject = protoObject;
 		this.protoObjectMetaclass = new ProtoObject();
+		this.cls = new ProtoObject();
+		this.clsMetaclass = new ProtoObject();
 		this.symbol = new ProtoObject();
 		this.symbolMetaclass = new ProtoObject();
 		this.metaclass = new ProtoObject();
 	}
 
 	public void bootstrap() {
+		markBootstrappedClasses();
 		associateClasses();
 		registerClasses();
 	}
 
 	private void markBootstrappedClasses() {
 		metaclass.bootstrapped();
+		cls.bootstrapped();
+		clsMetaclass.bootstrapped();
 		symbol.bootstrapped();
+		symbolMetaclass.bootstrapped();
 	}
 
 	private void associateClasses() {
 		protoObjectMetaclass.cls(metaclass);
+		protoObjectMetaclass.superclass(cls);
 		protoObject.cls(protoObjectMetaclass);
+		cls.cls(clsMetaclass);
 		symbolMetaclass.cls(metaclass);
 		symbol.cls(symbolMetaclass);
 	}

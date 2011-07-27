@@ -132,6 +132,14 @@ public class ProtoObject {
 		return data.cls();
 	}
 
+	protected void superclass(ProtoObject superclass) {
+		data.superclass(superclass);
+	}
+
+	protected ProtoObject superclass() {
+		return data.superclass();
+	}
+
 	protected void javaValue(String value) {
 		data.javaValue(value);
 	}
@@ -148,6 +156,8 @@ public class ProtoObject {
 
 		abstract void javaValue(String value);
 		abstract String javaValue();
+		abstract void superclass(ProtoObject superclass);
+		abstract ProtoObject superclass();
 
 		protected void cls(ProtoObject cls) {
 			this.cls = cls;
@@ -177,6 +187,14 @@ public class ProtoObject {
 		protected String javaValue() {
 			return javaValue;
 		}
+
+		protected void superclass(ProtoObject superclass) {
+			throw new IllegalStateException("An instance can't have a superclass.");
+		}
+
+		protected ProtoObject superclass() {
+			throw new IllegalStateException("An instance doesn't have a superclass.");
+		}
 	}
 
 	class ClassData extends Data {
@@ -190,6 +208,14 @@ public class ProtoObject {
 
 		protected String javaValue() {
 			throw new IllegalStateException("A Class doesn't have a javaValue.");
+		}
+
+		protected void superclass(ProtoObject superclass) {
+			this.superclass = superclass;
+		}
+
+		protected ProtoObject superclass() {
+			return superclass;
 		}
 	}
 }
