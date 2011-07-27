@@ -48,6 +48,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveVariableAt(ProtoObject receiver, String name) {
+		System.out.println("primitiveVariableAt " + receiver + " " + name);
 		if (primitiveIsInstanceVariable(receiver, name))
 			throw new IllegalStateException("todo - implement");
 		if (primitiveIsClassVariable(receiver, name))
@@ -64,6 +65,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
+		System.out.println("primitiveSymbol " + receiver + " " + value);
 		ProtoObject symbolClass = receiver.resolveObject("Symbol");
 		ProtoObject symbol = new ProtoObject(false);
 		symbol.cls(symbolClass);
@@ -72,11 +74,83 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
+		System.out.println("selector " + selector);
+		System.out.println("receiver " + receiver);
+		System.out.println("receiver cls " + receiver.cls());
+		System.out.println("classMtd " + classMethodWasFoundIn);
 		throw new IllegalStateException("todo - implement " + selector);
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
-		throw new IllegalStateException("todo - implement " + selector + " " + arg1);
+		System.out.println("selector " + selector);
+		System.out.println("receiver " + receiver);
+		System.out.println("receiver cls " + receiver.cls());
+		System.out.println("arg1 " + arg1);
+		System.out.println("classMtd " + classMethodWasFoundIn);
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1);
+		ProtoObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.cls().superclass(), selector, newClassMethodWasFoundIn);
+		if (method != null)
+			return method.applyTo(receiver, newClassMethodWasFoundIn[0], arg1);
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return primitiveSend(receiver, arg1, selector, classMethodWasFoundIn);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {arg1});
+	}
+
+	private static boolean isBootstrapped(ProtoObject object) {
+		return (object != null && (object.isBootstrapped() || object.cls().isBootstrapped()));
+	}
+
+	public ProtoObject ping() {
+		System.out.println("here1 " + this + " " + this.cls() + " Proto  " + classRegistry.get("ProtoObject") + " symbol " + classRegistry.get("Symbol"));
+		return this;
+	}
+
+	private static boolean isNotBootstrapped(ProtoObject object) {
+		return !isBootstrapped(object);
+	}
+
+	private static boolean resolveClassObject(ProtoObject object) {
+		return resolveClassObject(object, null);
+	}
+
+	private static boolean resolveClassObject(ProtoObject object, ProtoObject other) {
+		System.out.println("resolveClassObject() " + object + " " + other);
+		if (!resolveObjectSuperclass(object, other))
+			return false;
+		if (isNotBootstrapped(object))
+			return true;
+		return primitiveResolveObject(object, "Foo") != null;
+	}
+
+	private static boolean resolveObjectSuperclass(ProtoObject object, ProtoObject other) {
+		System.out.println("resolveClassObjectSuperclass() " + object + " " + other);
+		if (object == null)
+			return true;
+		if (!object.isClass())
+			return resolveObjectSuperclass(object.cls(), other);
+		ProtoObject superclass = object.superclass();
+		if (superclass != other)
+			return resolveClassObject(superclass, other);
+		ProtoObject metaclass = object.cls().superclass();
+		return resolveClassObject(metaclass, metaclass);
+	}
+
+	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector, ProtoObject[] arguments) {
+		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
+	}
+
+	private static ProtoMethod methodFor(ProtoObject rObject, String selector, ProtoObject[] classMethodFoundIn) {
+		ProtoMethod method;
+		ProtoObject superclass = rObject;
+		while ((method = superclass.methodAt(selector)) == null)
+			if ((superclass = superclass.superclass()) == null)
+				break;
+		classMethodFoundIn[0] = superclass;
+		return method;
 	}
 
 	public static ProtoObject primitiveResolveObject(ProtoObject receiver, String name) {
@@ -90,6 +164,7 @@ public class ProtoObject {
 	private ProtoObject resolveObject(String name) {
 		System.out.println("resolveObject() " + name);
 		if (classRegistry.containsKey(name)) {
+			System.out.println("from registry " + name);
 			return classRegistry.get(name);
 		}
 		// It is expected the loading of an object results in the registering a Smalltalk class in the class registry.
@@ -148,6 +223,18 @@ public class ProtoObject {
 		return data.javaValue();
 	}
 
+	protected ProtoMethod methodAt(String selector) {
+		return data.methodAt(selector);
+	}
+
+	protected void methodAtPut(String selector, ProtoMethod method) {
+		data.methodAtPut(selector, method);
+	}
+
+	protected boolean isClass() {
+		return data.isClass();
+	}
+
 	abstract class Data {
 
 		private ProtoObject cls;
@@ -158,6 +245,9 @@ public class ProtoObject {
 		abstract String javaValue();
 		abstract void superclass(ProtoObject superclass);
 		abstract ProtoObject superclass();
+		abstract ProtoMethod methodAt(String selector);
+		abstract void methodAtPut(String selector, ProtoMethod method);
+		abstract boolean isClass();
 
 		protected void cls(ProtoObject cls) {
 			this.cls = cls;
@@ -188,6 +278,10 @@ public class ProtoObject {
 			return javaValue;
 		}
 
+		protected boolean isClass() {
+			return false;
+		}
+
 		protected void superclass(ProtoObject superclass) {
 			throw new IllegalStateException("An instance can't have a superclass.");
 		}
@@ -195,12 +289,20 @@ public class ProtoObject {
 		protected ProtoObject superclass() {
 			throw new IllegalStateException("An instance doesn't have a superclass.");
 		}
+
+		protected ProtoMethod methodAt(String selector) {
+			throw new IllegalStateException("An instance doesn't have a method dictionary.");
+		}
+
+		protected void methodAtPut(String selector, ProtoMethod method) {
+			throw new IllegalStateException("An instance can't have a method dictionary.");
+		}
 	}
 
 	class ClassData extends Data {
 
 		private ProtoObject superclass;
-		private Map<String, ProtoObject> methods;
+		private Map<String, ProtoMethod> methods = new HashMap<String, ProtoMethod>();
 
 		protected void javaValue(String value) {
 			throw new IllegalStateException("A Class can't have a javaValue.");
@@ -210,12 +312,24 @@ public class ProtoObject {
 			throw new IllegalStateException("A Class doesn't have a javaValue.");
 		}
 
+		protected boolean isClass() {
+			return true;
+		}
+
 		protected void superclass(ProtoObject superclass) {
 			this.superclass = superclass;
 		}
 
 		protected ProtoObject superclass() {
 			return superclass;
+		}
+
+		protected ProtoMethod methodAt(String selector) {
+			return methods.get(selector);
+		}
+
+		protected void methodAtPut(String selector, ProtoMethod method) {
+			methods.put(selector, method);
 		}
 	}
 }

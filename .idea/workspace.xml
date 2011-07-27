@@ -60,10 +60,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="0" selection-start="2965" selection-end="2965" vertical-scroll-proportion="0.48497853">
+            <state line="46" column="0" selection-start="1793" selection-end="1793" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassBytecodeWriter.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="169" column="0" selection-start="5412" selection-end="5412" vertical-scroll-proportion="0.8497854">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BinarySelectorUnaryObjectDescription.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySelectorUnaryObjectDescription.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="32" selection-start="1417" selection-end="1417" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UnaryObjectDescription.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnaryObjectDescription.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="13" selection-start="1331" selection-end="1331" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -83,10 +112,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/smalltalk/Object.st" />
         <option value="$PROJECT_DIR$/src/main/java/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/RedlineException.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySelectorUnaryObjectDescription.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/BinaryExpression.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/UnaryObjectDescription.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java" />
@@ -94,11 +121,13 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Object.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/RObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Stic.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoMethod.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySelectorUnaryObjectDescription.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
       </list>
     </option>
   </component>
@@ -135,8 +164,9 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Favorites" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -213,23 +243,52 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="st" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="st" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="OverrideImplement.combined" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="dynamic.classpath" value="false" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -448,16 +507,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnarySelector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="17" selection-start="3315" selection-end="3315" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/VisitableNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="17" selection-start="1281" selection-end="1281" vertical-scroll-proportion="0.51502144" />
@@ -466,16 +515,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinaryExpression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="46" column="31" selection-start="2087" selection-end="2087" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySelectorUnaryObjectDescription.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="30" selection-start="1415" selection-end="1415" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnaryObjectDescription.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="22" selection-start="1773" selection-end="1773" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/TracingClassWriter.java">
@@ -493,11 +532,6 @@
         <state line="47" column="71" selection-start="1909" selection-end="1909" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="245" column="0" selection-start="6947" selection-end="6947" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Compiler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="13" selection-start="1435" selection-end="1435" vertical-scroll-proportion="0.0" />
@@ -513,21 +547,60 @@
         <state line="40" column="0" selection-start="1727" selection-end="1727" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Source.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="0" selection-start="5442" selection-end="5442" vertical-scroll-proportion="0.0" />
+        <state line="24" column="13" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.51502144">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="0" selection-start="1558" selection-end="1558" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="0" selection-start="2143" selection-end="2143" vertical-scroll-proportion="0.7639485">
+        <state line="24" column="13" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="77" selection-start="2415" selection-end="2415" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/BinarySelectorUnaryObjectDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="32" selection-start="1417" selection-end="1417" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/UnaryObjectDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="13" selection-start="1331" selection-end="1331" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="0" selection-start="2965" selection-end="2965" vertical-scroll-proportion="0.48497853">
+        <state line="46" column="0" selection-start="1793" selection-end="1793" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="169" column="0" selection-start="5412" selection-end="5412" vertical-scroll-proportion="0.8497854">
           <folding />
         </state>
       </provider>

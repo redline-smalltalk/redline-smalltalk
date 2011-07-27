@@ -71,7 +71,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS, INIT, INIT_SIGNATURE);
 		stackPushThis();
 		stackPushThis();
-		stackPushThis();
+		stackPushNull();
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT, CONSTRUCT_SIGNATURE);
 		mv.visitInsn(POP);
 		mv.visitInsn(RETURN);
@@ -99,16 +99,17 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	private void visitLine(int line) {
 		// TODO.JCL consider not outputting a new visit if same line number as a previous call.
-		Label label = new Label();
-		mv.visitLabel(label);
-		mv.visitLineNumber(line, label);
+//		Label label = new Label();
+//		mv.visitLabel(label);
+//		mv.visitLineNumber(line, label);
 	}
 
-	public void callPrimitiveVariableAt(String value, int line) {
-		visitLine(line);
+	public void callPrimitiveVariableAt(String value, int line, boolean loadSide) {
+//		visitLine(line);
 		stackPushReceiver();
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_VARIABLE_AT, PRIMITIVE_VARIABLE_AT_SIGNATURE);
+//		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "ping", "()Lst/redline/ProtoObject;");
 	}
 
 	public void stackPushLiteral(String value) {
@@ -152,7 +153,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void callPrimitiveSend(String selector, int argumentCount, int line, boolean sendToSuper) {
-		visitLine(line);
+//		visitLine(line);
 		stackPushLiteral(selector);
 		if (sendToSuper) {
 			stackPushClassMethodWasFoundIn();
@@ -164,8 +165,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void callPrimitiveSymbol(String value, int line) {
-		visitLine(line);
-		stackPushReceiver();
+//		visitLine(line);
 		stackPushReceiver();
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_SYMBOL, PRIMITIVE_SYMBOL_SIGNATURE);

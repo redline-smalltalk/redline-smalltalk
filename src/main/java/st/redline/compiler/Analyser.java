@@ -64,7 +64,7 @@ public class Analyser implements NodeVisitor {
 			throw new IllegalStateException("TODO - handle temporary variable.");
 		} else  {
 			if (variableName.isOnLoadSideOfExpression()) {
-				classBytecodeWriter.callPrimitiveVariableAt(value, line);
+				classBytecodeWriter.callPrimitiveVariableAt(value, line, true);
 			} else {
 				throw new IllegalStateException("TODO - store of variable.");
 			}
