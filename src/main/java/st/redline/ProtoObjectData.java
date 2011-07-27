@@ -42,7 +42,7 @@ public abstract class ProtoObjectData {
 	}
 
 
-	static class InstanceData extends ProtoObjectData {
+	private static class InstanceData extends ProtoObjectData {
 
 		private String javaValue;
 
@@ -75,7 +75,7 @@ public abstract class ProtoObjectData {
 		}
 	}
 
-	static class ClassData extends ProtoObjectData {
+	private static class ClassData extends ProtoObjectData {
 
 		private ProtoObject superclass;
 		private Map<String, ProtoMethod> methods = new HashMap<String, ProtoMethod>();

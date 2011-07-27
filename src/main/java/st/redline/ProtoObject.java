@@ -64,7 +64,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
-		ProtoObject symbolClass = receiver.resolveObject("Symbol");
+		ProtoObject symbolClass = receiver.resolveObject("Symbol");  // <- should we do primitiveVariableAt to namespaces are used?
 		ProtoObject symbol = new ProtoObject(false);
 		symbol.cls(symbolClass);
 		symbol.javaValue(value);
@@ -116,7 +116,6 @@ public class ProtoObject {
 	}
 
 	private static boolean resolveObjectSuperclass(ProtoObject object, ProtoObject other) {
-		System.out.println("resolveClassObjectSuperclass() " + object + " " + other);
 		if (object == null)
 			return true;
 		if (!object.isClass())
@@ -206,7 +205,7 @@ public class ProtoObject {
 		data.javaValue(value);
 	}
 
-	protected String javaValue() {
+	public String javaValue() {
 		return data.javaValue();
 	}
 

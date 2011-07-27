@@ -32,6 +32,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	private ClassWriter cw;
 	private MethodVisitor mv;
 	private String fullyQualifiedClassName;
+	private int currentLine = 0;
 
 	public ClassBytecodeWriter(String className, String packageName) {
 		this.className = className;
@@ -98,7 +99,10 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void visitLine(int line) {
-		// TODO.JCL consider not outputting a new visit if same line number as a previous call.
+		// Note: we don't visit the same line repeatedly. Is this and ok debug experience? Need to check with java debugger.
+		if (line == currentLine)
+			return;
+		currentLine = line;
 		Label label = new Label();
 		mv.visitLabel(label);
 		mv.visitLineNumber(line, label);

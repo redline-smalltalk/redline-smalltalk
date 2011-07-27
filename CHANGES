@@ -2,6 +2,7 @@
 
 Added method dispatch and with simplified bootstrapped hierarchy.
 Moved class and instance data object out of ProtoObject - reduce lines in file.
+Added bootstrap methods to get runtime working.
 
 
 27/07/2011 Changes

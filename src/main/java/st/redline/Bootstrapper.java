@@ -22,6 +22,8 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import st.redline.bootstrap.ClassSubclassMethod;
+
 public class Bootstrapper {
 
 	private final ProtoObject metaclass;
@@ -43,6 +45,15 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
+		bootstrapClasses();
+		bootstrapMethods();
+	}
+
+	private void bootstrapMethods() {
+		cls.methodAtPut("<", new ClassSubclassMethod());
+	}
+
+	private void bootstrapClasses() {
 		markBootstrappedClasses();
 		associateClasses();
 		registerClasses();
@@ -67,6 +78,7 @@ public class Bootstrapper {
 
 	private void registerClasses() {
 		ProtoObject.primitiveRegisterAs(protoObject, "ProtoObject");
+		ProtoObject.primitiveRegisterAs(cls, "Class");
 		ProtoObject.primitiveRegisterAs(symbol, "Symbol");
 	}
 }
