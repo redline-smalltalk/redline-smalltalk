@@ -70,6 +70,9 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitCode();
 		stackPushThis();
 		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS, INIT, INIT_SIGNATURE);
+		stackPushLiteral(className);
+		stackPushLiteral(packageName);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveSpecialRegisterAtPut", "(Ljava/lang/String;Ljava/lang/String;)V");
 		stackPushThis();
 		stackPushThis();
 		stackPushNull();

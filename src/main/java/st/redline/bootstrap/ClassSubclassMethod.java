@@ -7,8 +7,16 @@ public class ClassSubclassMethod extends ProtoMethod {
 
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
 		ProtoObject subclass = createSubclass(createClass(receiver), createMetaclass(receiver));
-		ProtoObject.primitiveRegisterAs(subclass, String.valueOf(argument.javaValue()));
+		ProtoObject.primitiveRegisterAs(subclass, fullyQualifiedClassName(argument));
 		return subclass;
+	}
+
+	private String fullyQualifiedClassName(ProtoObject argument) {
+		String name = String.valueOf(argument.javaValue());
+		String packageName = ProtoObject.primitiveSpecialRegisterAt(name);
+		if (packageName != null)
+			ProtoObject.primitiveSpecialRegisterRemove(name);
+		return packageName == null ? name : packageName + "." + name;
 	}
 
 	private ProtoObject createSubclass(ProtoObject aClass, ProtoObject metaclass) {

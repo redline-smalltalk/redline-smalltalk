@@ -23,11 +23,13 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 public class ProtoObject {
 
 	private static final Map<String, ProtoObject> classRegistry = new HashMap<String, ProtoObject>();
+	private static final ThreadLocal<Map<String, String>> specialRegistry = new ThreadLocal<Map<String, String>>();
 
 	private ProtoObjectData data;
 
@@ -40,6 +42,31 @@ public class ProtoObject {
 	}
 
 	public static void primitiveMain(ProtoObject receiver, String[] args) {
+	}
+
+	public static String primitiveSpecialRegisterAt(String name) {
+		Map<String,String> map = specialRegistry.get();
+		if (map != null)
+			return map.get(name);
+		return null;
+	}
+
+	public static void primitiveSpecialRegisterRemove(String name) {
+		Map<String,String> map = specialRegistry.get();
+		if (map != null)
+			map.remove(name);
+	}
+
+	public static void primitiveSpecialRegisterAtPut(String name, String packageName) {
+		System.out.println("primitiveSpecialRegisterAtPut() " + name + " " + packageName);
+		Map<String,String> map = specialRegistry.get();
+		if (map == null) {
+			map = new Hashtable<String, String>();
+			specialRegistry.set(map);
+		} else if (map.containsKey(name)) {
+			throw new IllegalStateException("Attempt to register package twice.");
+		}
+		map.put(name, packageName.replaceAll("/", "."));
 	}
 
 	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {

@@ -2,6 +2,8 @@
 
 Added creation and registration of subclasses using new/simpler approach.
 Working on namespace support.
+Adding special thread local registry to handle registering a package against the 
+objects created in a .st file.
 
 
 28/07/2011 Changes
