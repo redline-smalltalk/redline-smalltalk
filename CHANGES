@@ -1,3 +1,8 @@
+29/07/2011 Changes
+
+Added creation and registration of subclasses using new/simpler approach.
+
+
 28/07/2011 Changes
 
 Added method dispatch and with simplified bootstrapped hierarchy.

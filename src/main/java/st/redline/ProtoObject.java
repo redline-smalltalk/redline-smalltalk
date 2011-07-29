@@ -43,6 +43,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
+		System.out.println("primitiveRegisterAs() " + receiver + " " + name);
 		classRegistry.put(name, receiver);
 		return receiver;
 	}
@@ -185,23 +186,23 @@ public class ProtoObject {
 		return data.isBootstrapped();
 	}
 
-	protected void cls(ProtoObject cls) {
+	public void cls(ProtoObject cls) {
 		data.cls(cls);
 	}
 
-	protected ProtoObject cls() {
+	public ProtoObject cls() {
 		return data.cls();
 	}
 
-	protected void superclass(ProtoObject superclass) {
+	public void superclass(ProtoObject superclass) {
 		data.superclass(superclass);
 	}
 
-	protected ProtoObject superclass() {
+	public ProtoObject superclass() {
 		return data.superclass();
 	}
 
-	protected void javaValue(String value) {
+	public void javaValue(String value) {
 		data.javaValue(value);
 	}
 
@@ -209,15 +210,15 @@ public class ProtoObject {
 		return data.javaValue();
 	}
 
-	protected ProtoMethod methodAt(String selector) {
+	public ProtoMethod methodAt(String selector) {
 		return data.methodAt(selector);
 	}
 
-	protected void methodAtPut(String selector, ProtoMethod method) {
+	public void methodAtPut(String selector, ProtoMethod method) {
 		data.methodAtPut(selector, method);
 	}
 
-	protected boolean isClass() {
+	public boolean isClass() {
 		return data.isClass();
 	}
 }

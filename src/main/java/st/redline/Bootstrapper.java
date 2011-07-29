@@ -78,6 +78,7 @@ public class Bootstrapper {
 
 	private void registerClasses() {
 		ProtoObject.primitiveRegisterAs(protoObject, "ProtoObject");
+		ProtoObject.primitiveRegisterAs(metaclass, "Metaclass");
 		ProtoObject.primitiveRegisterAs(cls, "Class");
 		ProtoObject.primitiveRegisterAs(symbol, "Symbol");
 	}
