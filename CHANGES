@@ -1,3 +1,10 @@
+30/07/2011 Changes
+
+Modified package registry to use stack. You have a default package name for all
+classes defined in a file. You can override but don't - people wont be expecting
+it. 
+
+
 29/07/2011 Changes
 
 Added creation and registration of subclasses using new/simpler approach.

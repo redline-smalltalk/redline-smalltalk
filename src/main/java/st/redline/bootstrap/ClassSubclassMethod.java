@@ -13,9 +13,7 @@ public class ClassSubclassMethod extends ProtoMethod {
 
 	private String fullyQualifiedClassName(ProtoObject argument) {
 		String name = String.valueOf(argument.javaValue());
-		String packageName = ProtoObject.primitiveSpecialRegisterAt(name);
-		if (packageName != null)
-			ProtoObject.primitiveSpecialRegisterRemove(name);
+		String packageName = ProtoObject.primitivePackageRegistryCurrent();
 		return packageName == null ? name : packageName + "." + name;
 	}
 

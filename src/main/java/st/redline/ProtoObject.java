@@ -25,11 +25,12 @@ package st.redline;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Stack;
 
 public class ProtoObject {
 
 	private static final Map<String, ProtoObject> classRegistry = new HashMap<String, ProtoObject>();
-	private static final ThreadLocal<Map<String, String>> specialRegistry = new ThreadLocal<Map<String, String>>();
+	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 
 	private ProtoObjectData data;
 
@@ -44,29 +45,27 @@ public class ProtoObject {
 	public static void primitiveMain(ProtoObject receiver, String[] args) {
 	}
 
-	public static String primitiveSpecialRegisterAt(String name) {
-		Map<String,String> map = specialRegistry.get();
-		if (map != null)
-			return map.get(name);
-		return null;
+	public static String primitivePackageRegistryCurrent() {
+		Stack<String> stack = packageRegistry.get();
+		if (stack != null)
+			return stack.peek();
+		return "";
 	}
 
-	public static void primitiveSpecialRegisterRemove(String name) {
-		Map<String,String> map = specialRegistry.get();
-		if (map != null)
-			map.remove(name);
-	}
-
-	public static void primitiveSpecialRegisterAtPut(String name, String packageName) {
-		System.out.println("primitiveSpecialRegisterAtPut() " + name + " " + packageName);
-		Map<String,String> map = specialRegistry.get();
-		if (map == null) {
-			map = new Hashtable<String, String>();
-			specialRegistry.set(map);
-		} else if (map.containsKey(name)) {
-			throw new IllegalStateException("Attempt to register package twice.");
+	public static void primitivePackageRegistryCurrent(String packageName) {
+		System.out.println("primitivePackageRegistryCurrent() " + packageName);
+		Stack<String> stack = packageRegistry.get();
+		if (stack == null) {
+			stack = new Stack<String>();
+			packageRegistry.set(stack);
 		}
-		map.put(name, packageName.replaceAll("/", "."));
+		stack.push(packageName.replaceAll("/", "."));
+	}
+
+	public static void primitivePackageRegistryRemove() {
+		Stack<String> stack = packageRegistry.get();
+		if (stack != null)
+			stack.pop();
 	}
 
 	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
