@@ -49,10 +49,6 @@ public class Stic {
 	}
 
 	private ProtoObject createClassInstance(String className) throws Exception {
-		return (ProtoObject) loadClass(className).newInstance();
-	}
-
-	private Class loadClass(String className) throws Exception {
-		return Class.forName(className, true, classLoader());
+		return ProtoObject.primitiveResolveObject(new ProtoObject(false), className);
 	}
 }

@@ -146,8 +146,9 @@ public class ProtoObject {
 		ProtoObject object = receiver.resolveObject(name);
 		if (object != null)
 			return object;
-		// TODO.JCL search through namespaces to find object.
-		return receiver.resolveObject("st.redline." + name);
+		// TODO.JCL search through namespaces to find object?
+		// TODO.JCL should we return 'nil'?
+		return null;
 	}
 
 	private ProtoObject resolveObject(String name) {
@@ -158,8 +159,7 @@ public class ProtoObject {
 		// *NOTE* if class is not registered the will be a NullPointerException as we return 'null' here.
 		if (loadObject(name))
 			return classRegistry.get(name);
-		// TODO.JCL should we return 'nil'?
-		throw new IllegalStateException("Handle this - Class not found.");
+		throw new IllegalStateException("Handle this - Class not found!");
 	}
 
 	private boolean loadObject(String name) {

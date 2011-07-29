@@ -1,6 +1,7 @@
 29/07/2011 Changes
 
 Added creation and registration of subclasses using new/simpler approach.
+Working on namespace support.
 
 
 28/07/2011 Changes
