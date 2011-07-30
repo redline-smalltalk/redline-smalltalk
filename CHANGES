@@ -3,7 +3,8 @@
 Modified package registry to use stack. You have a default package name for all
 classes defined in a file. You can override but don't - people wont be expecting
 it. 
-
+Modified proprocessor grammer to support short hand import statements. These expand to longer hand
+messages.
 
 29/07/2011 Changes
 

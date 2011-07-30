@@ -47,15 +47,31 @@ options {
 //
 PREPROC
         : {getCharPositionInLine() == 0}?=>
+        (
+            ('import:')=>       // We must see all of this, or we ignore...
+            
+                'import:' 
+                {
+                    resetMethods();         // Reset as nothing needs closing on this one.
+                    sb.append("self import:"); 
+                }
+                        
+                (c=~('\n'|'\r') { sb.append((char)$c); })* 
+                
+                ('\r' { sb.append("\r"); } )? 
+                '\n'  // All is good - proper line ending
+                      {
+                        sb.append("\n");
+                      }
 
-            v = ( '+'| '-')       // Only these are predicted.
+          |  v = ( '+'| '-')       // Only these are predicted.
             {
                 if (!firstMethod()) {
                     sb.append("] ");   // DONT append this if this is first +/- seen.
                 }
                 sb.append(methodName);
 
-                if (v == '+') {
+                if ($v == '+') {
                     sb.append(" class");
                 }
                 sb.append(" >> ");
@@ -118,7 +134,7 @@ PREPROC
                                         // Write out the parts of the binary selector
                                         //
                                         sb.append($b.text);
-                                        sb.append(" ");
+                                        sb.append(": ");
                                         sb.append($w1.text);
                                   }
 
@@ -160,6 +176,7 @@ PREPROC
                     System.err.println("Malformed pre-processor directive at line " + $line);
                   }
             )
+        )
         ;
 
 fragment

@@ -83,6 +83,10 @@ public abstract class AbstractPreProcLexer
 
 	boolean haveMethods = false;
 
+	public void resetMethods() {
+		haveMethods = false;
+	}
+
 	public void haveMethods() {
 		haveMethods = true;
 	}
