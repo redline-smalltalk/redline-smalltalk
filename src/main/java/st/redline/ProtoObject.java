@@ -68,6 +68,28 @@ public class ProtoObject {
 			stack.pop();
 	}
 
+	public static ProtoObject primitiveCreateSubclass(ProtoObject receiver) {
+		return createSubclass(createClass(receiver), createMetaclass(receiver));
+	}
+
+	private static ProtoObject createSubclass(ProtoObject aClass, ProtoObject metaclass) {
+		aClass.cls(metaclass);
+		return aClass;
+	}
+
+	private static ProtoObject createClass(ProtoObject receiver) {
+		ProtoObject cls = new ProtoObject();
+		cls.superclass(receiver);
+		return cls;
+	}
+
+	private static ProtoObject createMetaclass(ProtoObject receiver) {
+		ProtoObject metaclass = new ProtoObject();
+		metaclass.cls(ProtoObject.primitiveResolveObject(receiver, "Metaclass"));  // TODO.JCL Should this be 'Metaclass new'?
+		metaclass.superclass(receiver.cls());
+		return metaclass;
+	}
+
 	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
 		System.out.println("primitiveRegisterAs() " + receiver + " " + name);
 		classRegistry.put(name, receiver);

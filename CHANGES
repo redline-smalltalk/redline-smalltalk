@@ -1,3 +1,10 @@
+31/07/2011 Changes
+
+Added primitive for creating a subclass and used this primitive from builder class
+which is generated and executed for each .st file. This special subclass extends
+ProtoObject but is never registered.
+
+
 30/07/2011 Changes
 
 Modified package registry to use stack. You have a default package name for all
