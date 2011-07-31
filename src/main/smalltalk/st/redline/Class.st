@@ -1,0 +1,3 @@
+
+ClassDescription < #Class.
+
