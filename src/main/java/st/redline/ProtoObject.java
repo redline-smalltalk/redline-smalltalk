@@ -84,7 +84,7 @@ public class ProtoObject {
 
 	private static ProtoObject createMetaclass(ProtoObject receiver) {
 		ProtoObject metaclass = new ProtoObject();
-		metaclass.cls(ProtoObject.primitiveResolveObject(receiver, "Metaclass"));  // TODO.JCL Should this be 'Metaclass new'?
+		metaclass.cls(ProtoObject.primitiveResolveObject(receiver, "MetaClass"));  // TODO.JCL Should this be 'Metaclass new'?
 		metaclass.superclass(receiver.cls());
 		return metaclass;
 	}

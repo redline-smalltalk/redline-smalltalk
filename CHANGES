@@ -2,6 +2,8 @@
 
 Added bootstrapped class for String. Need to add rest of hierarchy for bootstrapped
 classes.
+Used Pharo naming of MetaClass. Was Metaclass.
+Added start of Smalltak Runtime source.
 
 
 31/07/2011 Changes

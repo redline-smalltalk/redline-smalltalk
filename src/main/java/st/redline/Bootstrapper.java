@@ -26,26 +26,26 @@ import st.redline.bootstrap.ClassSubclassMethod;
 
 public class Bootstrapper {
 
-	private final ProtoObject metaclass;
+	private final ProtoObject metaClass;
 	private final ProtoObject protoObject;
-	private final ProtoObject protoObjectMetaclass;
+	private final ProtoObject protoObjectMetaClass;
 	private final ProtoObject cls;
-	private final ProtoObject clsMetaclass;
-	private final ProtoObject symbol;
-	private final ProtoObject symbolMetaclass;
+	private final ProtoObject clsMetaClass;
 	private final ProtoObject string;
-	private final ProtoObject stringMetaclass;
+	private final ProtoObject stringMetaClass;
+	private final ProtoObject symbol;
+	private final ProtoObject symbolMetaClass;
 
 	protected Bootstrapper(ProtoObject protoObject) {
 		this.protoObject = protoObject;
-		this.protoObjectMetaclass = new ProtoObject();
+		this.protoObjectMetaClass = new ProtoObject();
 		this.cls = new ProtoObject();
-		this.clsMetaclass = new ProtoObject();
+		this.clsMetaClass = new ProtoObject();
 		this.symbol = new ProtoObject();
-		this.symbolMetaclass = new ProtoObject();
+		this.symbolMetaClass = new ProtoObject();
 		this.string = new ProtoObject();
-		this.stringMetaclass = new ProtoObject();
-		this.metaclass = new ProtoObject();
+		this.stringMetaClass = new ProtoObject();
+		this.metaClass = new ProtoObject();
 	}
 
 	public void bootstrap() {
@@ -64,29 +64,34 @@ public class Bootstrapper {
 	}
 
 	private void markBootstrappedClasses() {
-		metaclass.bootstrapped();
+		metaClass.bootstrapped();
 		cls.bootstrapped();
-		clsMetaclass.bootstrapped();
+		clsMetaClass.bootstrapped();
 		symbol.bootstrapped();
-		symbolMetaclass.bootstrapped();
+		symbolMetaClass.bootstrapped();
 		string.bootstrapped();
-		stringMetaclass.bootstrapped();
+		stringMetaClass.bootstrapped();
 	}
 
 	private void associateClasses() {
-		protoObjectMetaclass.cls(metaclass);
-		protoObjectMetaclass.superclass(cls);
-		protoObject.cls(protoObjectMetaclass);
-		cls.cls(clsMetaclass);
-		symbolMetaclass.cls(metaclass);
-		symbol.cls(symbolMetaclass);
-		stringMetaclass.cls(metaclass);
-		string.cls(stringMetaclass);
+		protoObjectMetaClass.cls(metaClass);
+		protoObjectMetaClass.superclass(cls);
+		protoObject.cls(protoObjectMetaClass);
+
+		cls.cls(clsMetaClass);
+
+		stringMetaClass.cls(metaClass);
+		string.cls(stringMetaClass);
+
+		symbolMetaClass.cls(metaClass);
+		symbolMetaClass.superclass(stringMetaClass);
+		symbol.cls(symbolMetaClass);
+		symbol.superclass(string);
 	}
 
 	private void registerClasses() {
 		ProtoObject.primitiveRegisterAs(protoObject, "ProtoObject");
-		ProtoObject.primitiveRegisterAs(metaclass, "Metaclass");
+		ProtoObject.primitiveRegisterAs(metaClass, "MetaClass");
 		ProtoObject.primitiveRegisterAs(cls, "Class");
 		ProtoObject.primitiveRegisterAs(symbol, "Symbol");
 		ProtoObject.primitiveRegisterAs(string, "String");
