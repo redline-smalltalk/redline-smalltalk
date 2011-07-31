@@ -1,3 +1,9 @@
+01/08/2011 Changes
+
+Added bootstrapped class for String. Need to add rest of hierarchy for bootstrapped
+classes.
+
+
 31/07/2011 Changes
 
 Added primitive for creating a subclass and used this primitive from builder class

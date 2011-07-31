@@ -53,7 +53,6 @@ public class ProtoObject {
 	}
 
 	public static void primitivePackageRegistryCurrent(String packageName) {
-		System.out.println("primitivePackageRegistryCurrent() " + packageName);
 		Stack<String> stack = packageRegistry.get();
 		if (stack == null) {
 			stack = new Stack<String>();
@@ -91,7 +90,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
-		System.out.println("primitiveRegisterAs() " + receiver + " " + name);
+		System.out.println("primitiveRegisterAs() " + String.valueOf(name) + " " + receiver);
 		classRegistry.put(name, receiver);
 		return receiver;
 	}
@@ -113,11 +112,19 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
-		ProtoObject symbolClass = receiver.resolveObject("Symbol");  // <- should we do primitiveVariableAt to namespaces are used?
+		ProtoObject symbolClass = receiver.resolveObject("Symbol");  // <- should we do primitiveVariableAt so namespaces are used?
 		ProtoObject symbol = new ProtoObject(false);
 		symbol.cls(symbolClass);
 		symbol.javaValue(value);
 		return symbol;
+	}
+
+	public static ProtoObject primitiveString(ProtoObject receiver, String value) {
+		ProtoObject stringClass = receiver.resolveObject("String");  // <- should we do primitiveVariableAt so namespaces are used?
+		ProtoObject string = new ProtoObject(false);
+		string.cls(stringClass);
+		string.javaValue(value);
+		return string;
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
@@ -142,10 +149,10 @@ public class ProtoObject {
 		return (object != null && (object.isBootstrapped() || object.cls().isBootstrapped()));
 	}
 
-	public ProtoObject ping() {
-		System.out.println("here1 " + this + " " + this.cls() + " Proto  " + classRegistry.get("ProtoObject") + " symbol " + classRegistry.get("Symbol"));
-		return this;
-	}
+//	public ProtoObject ping() {
+//		System.out.println("here1 " + this + " " + this.cls() + " Proto  " + classRegistry.get("ProtoObject") + " symbol " + classRegistry.get("Symbol"));
+//		return this;
+//	}
 
 	private static boolean isNotBootstrapped(ProtoObject object) {
 		return !isBootstrapped(object);

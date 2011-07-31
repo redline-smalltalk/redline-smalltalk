@@ -33,6 +33,8 @@ public class Bootstrapper {
 	private final ProtoObject clsMetaclass;
 	private final ProtoObject symbol;
 	private final ProtoObject symbolMetaclass;
+	private final ProtoObject string;
+	private final ProtoObject stringMetaclass;
 
 	protected Bootstrapper(ProtoObject protoObject) {
 		this.protoObject = protoObject;
@@ -41,6 +43,8 @@ public class Bootstrapper {
 		this.clsMetaclass = new ProtoObject();
 		this.symbol = new ProtoObject();
 		this.symbolMetaclass = new ProtoObject();
+		this.string = new ProtoObject();
+		this.stringMetaclass = new ProtoObject();
 		this.metaclass = new ProtoObject();
 	}
 
@@ -65,6 +69,8 @@ public class Bootstrapper {
 		clsMetaclass.bootstrapped();
 		symbol.bootstrapped();
 		symbolMetaclass.bootstrapped();
+		string.bootstrapped();
+		stringMetaclass.bootstrapped();
 	}
 
 	private void associateClasses() {
@@ -74,6 +80,8 @@ public class Bootstrapper {
 		cls.cls(clsMetaclass);
 		symbolMetaclass.cls(metaclass);
 		symbol.cls(symbolMetaclass);
+		stringMetaclass.cls(metaclass);
+		string.cls(stringMetaclass);
 	}
 
 	private void registerClasses() {
@@ -81,5 +89,6 @@ public class Bootstrapper {
 		ProtoObject.primitiveRegisterAs(metaclass, "Metaclass");
 		ProtoObject.primitiveRegisterAs(cls, "Class");
 		ProtoObject.primitiveRegisterAs(symbol, "Symbol");
+		ProtoObject.primitiveRegisterAs(string, "String");
 	}
 }
