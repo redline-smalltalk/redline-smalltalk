@@ -203,6 +203,7 @@ public class ProtoObject {
 			return object;
 		// TODO.JCL search through namespaces to find object?
 		// TODO.JCL should we return 'nil'?
+		System.out.println("** not resolved ** " + name);
 		return null;
 	}
 
@@ -214,11 +215,12 @@ public class ProtoObject {
 		// *NOTE* if class is not registered the will be a NullPointerException as we return 'null' here.
 		if (loadObject(name))
 			return classRegistry.get(name);
-		throw new IllegalStateException("Handle this - Class not found!");
+		throw new IllegalStateException("Handle this - Class not found: " + name);
 	}
 
 	private boolean loadObject(String name) {
 		try {
+			System.out.println("loadObject() " + name);
 			return Class.forName(name, true, classLoader()).newInstance() != null;
 		} catch (Exception e) {
 			return false;
