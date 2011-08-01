@@ -59,19 +59,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Bootstrapper.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Bootstrapper.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="63" selection-start="3807" selection-end="3807" vertical-scroll-proportion="0.84136313">
+            <state line="106" column="63" selection-start="3807" selection-end="3807" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="202" column="0" selection-start="7693" selection-end="7693" vertical-scroll-proportion="0.0">
+            <state line="215" column="0" selection-start="8175" selection-end="8175" vertical-scroll-proportion="0.546416">
               <folding />
             </state>
           </provider>
@@ -555,16 +555,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="202" column="0" selection-start="7693" selection-end="7693" vertical-scroll-proportion="0.0">
+        <state line="106" column="63" selection-start="3807" selection-end="3807" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="63" selection-start="3807" selection-end="3807" vertical-scroll-proportion="0.84136313">
+        <state line="215" column="0" selection-start="8175" selection-end="8175" vertical-scroll-proportion="0.546416">
           <folding />
         </state>
       </provider>
