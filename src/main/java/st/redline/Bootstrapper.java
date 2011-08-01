@@ -61,6 +61,7 @@ public class Bootstrapper {
 		markBootstrappedClasses();
 		associateClasses();
 		registerClasses();
+		mapPackages();
 	}
 
 	private void markBootstrappedClasses() {
@@ -90,10 +91,19 @@ public class Bootstrapper {
 	}
 
 	private void registerClasses() {
-		ProtoObject.primitiveRegisterAs(protoObject, "ProtoObject");
-		ProtoObject.primitiveRegisterAs(metaClass, "MetaClass");
-		ProtoObject.primitiveRegisterAs(cls, "Class");
-		ProtoObject.primitiveRegisterAs(symbol, "Symbol");
-		ProtoObject.primitiveRegisterAs(string, "String");
+		ProtoObject.primitiveRegisterAs(protoObject, "st.redline.ProtoObject");
+		ProtoObject.primitiveRegisterAs(metaClass, "st.redline.MetaClass");
+		ProtoObject.primitiveRegisterAs(cls, "st.redline.Class");
+		ProtoObject.primitiveRegisterAs(symbol, "st.redline.Symbol");
+		ProtoObject.primitiveRegisterAs(string, "st.redline.String");
+	}
+
+	private void mapPackages() {
+		ProtoObject.packageMap.put("ProtoObject", "st.redline.ProtoObject");
+		ProtoObject.packageMap.put("MetaClass", "st.redline.MetaClass");
+		ProtoObject.packageMap.put("Class", "st.redline.Class");
+		ProtoObject.packageMap.put("Symbol", "st.redline.Symbol");
+		ProtoObject.packageMap.put("String", "st.redline.String");
+		ProtoObject.packageMap.put("Object", "st.redline.Object");
 	}
 }

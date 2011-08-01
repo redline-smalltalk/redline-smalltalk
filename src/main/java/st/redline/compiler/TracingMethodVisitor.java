@@ -152,7 +152,7 @@ public class TracingMethodVisitor implements MethodVisitor, Opcodes {
 	}
 
 	public void visitEnd() {
-		System.out.println("visitEnd()");
+		System.out.println("visitEnd()\n");
 		methodVisitor.visitEnd();
 	}
 

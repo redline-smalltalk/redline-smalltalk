@@ -31,6 +31,7 @@ public class ProtoObject {
 
 	private static final Map<String, ProtoObject> classRegistry = new HashMap<String, ProtoObject>();
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
+	protected static final Map<String, String> packageMap = new HashMap<String, String>();
 
 	private ProtoObjectData data;
 
@@ -68,6 +69,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveCreateSubclass(ProtoObject receiver) {
+		System.out.println("primitiveCreateSubclass() " + receiver);
 		return createSubclass(createClass(receiver), createMetaclass(receiver));
 	}
 
@@ -198,29 +200,29 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveResolveObject(ProtoObject receiver, String name) {
+		System.out.println("primitiveResolveObject() " + name);
 		ProtoObject object = receiver.resolveObject(name);
 		if (object != null)
 			return object;
-		// TODO.JCL search through namespaces to find object?
 		// TODO.JCL should we return 'nil'?
-		System.out.println("** not resolved ** " + name);
-		return null;
+		throw new IllegalStateException("Class '" + name + "' not found.");
 	}
 
 	private ProtoObject resolveObject(String name) {
-		System.out.println("resolveObject() " + name);
 		if (classRegistry.containsKey(name))
 			return classRegistry.get(name);
+		// TODO.JCL include looking in receivers own packageMap.
+		if (packageMap.containsKey(name))
+			return primitiveResolveObject(this, packageMap.get(name));
 		// It is expected the loading of an object results in the registering a Smalltalk class in the class registry.
 		// *NOTE* if class is not registered the will be a NullPointerException as we return 'null' here.
 		if (loadObject(name))
 			return classRegistry.get(name);
-		throw new IllegalStateException("Handle this - Class not found: " + name);
+		return null;
 	}
 
 	private boolean loadObject(String name) {
 		try {
-			System.out.println("loadObject() " + name);
 			return Class.forName(name, true, classLoader()).newInstance() != null;
 		} catch (Exception e) {
 			return false;
