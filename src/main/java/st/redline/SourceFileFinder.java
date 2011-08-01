@@ -60,6 +60,21 @@ public class SourceFileFinder {
 		return null;
 	}
 
+	protected static List<String> findIn(String path) {
+		// TODO.JCL - Maybe return a source file that knows it package and base etc so we don't have to play with strings.
+		List<String> sourceFiles = new ArrayList<String>();
+		for (String sourceFilePath : sourceFilePaths()) {
+			File folder = new File(sourceFilePath + File.separator + path);
+			if (folder.exists() && folder.isDirectory())
+				for (File file : folder.listFiles())
+					if (file.isFile() && file.getName().endsWith(".st")) {
+						int index = file.getAbsolutePath().indexOf(sourceFilePath);
+						sourceFiles.add(file.getAbsolutePath().substring(index + sourceFilePath.length() + 1));
+					}
+		}
+		return sourceFiles;
+	}
+
 	protected static List<String> sourceFilePaths() {
 		List<String> sourceFilePaths = new ArrayList<String>();
 		sourceFilePaths.add(System.getProperty("user.dir"));

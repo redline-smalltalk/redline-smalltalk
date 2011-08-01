@@ -24,6 +24,8 @@ package st.redline;
 
 import st.redline.bootstrap.ClassSubclassMethod;
 
+import java.io.File;
+
 public class Bootstrapper {
 
 	private final ProtoObject metaClass;
@@ -100,10 +102,11 @@ public class Bootstrapper {
 
 	private void mapPackages() {
 		ProtoObject.packageMap.put("ProtoObject", "st.redline.ProtoObject");
-		ProtoObject.packageMap.put("MetaClass", "st.redline.MetaClass");
-		ProtoObject.packageMap.put("Class", "st.redline.Class");
-		ProtoObject.packageMap.put("Symbol", "st.redline.Symbol");
-		ProtoObject.packageMap.put("String", "st.redline.String");
-		ProtoObject.packageMap.put("Object", "st.redline.Object");
+		for (String sourceFile : SourceFileFinder.findIn("st/redline")) {
+			String packageName = sourceFile.substring(0, sourceFile.lastIndexOf("/"));
+			String name = sourceFile.substring(packageName.length() + 1, sourceFile.lastIndexOf("."));
+//			System.out.println(packageName + " " + name + " " + packageName.replaceAll(File.separator, ".") + "." + name);
+			ProtoObject.packageMap.put(name, packageName.replaceAll(File.separator, ".") + "." + name);
+		}
 	}
 }

@@ -4,6 +4,9 @@ Added bootstrapped class for String. Need to add rest of hierarchy for bootstrap
 classes.
 Used Pharo naming of MetaClass. Was Metaclass.
 Added start of Smalltak Runtime source.
+Added scanning of st/redline package for objects.
+*NOTE* We should change from using '.' as a package separator and use '/' to cut down
+processing - since java wants '/' at bytecode level.
 
 
 31/07/2011 Changes
