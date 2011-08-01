@@ -7,9 +7,9 @@ public class ClassSubclassMethod extends ProtoMethod {
 
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
 		System.out.println("ClassSubclassMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
-		String name = String.valueOf(argument.javaValue());
-		ProtoObject subclass = ProtoObject.primitiveCreateSubclass(receiver);
-		ProtoObject.primitiveRegisterAs(subclass, fullyQualifiedClassName(name));
+		String name = fullyQualifiedClassName(String.valueOf(argument.javaValue()));
+		ProtoObject subclass = ProtoObject.primitiveCreateSubclass(receiver, name);
+		ProtoObject.primitiveRegisterAs(subclass, name);
 		return subclass;
 	}
 

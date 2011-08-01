@@ -1,6 +1,10 @@
 02/08/2011 Changes
 
 Added namespace (package) support. Can lookup classes from other packages - Yay.
+Bootstrapped more of the hierarchy needed to start a Smalltalk. Still have a few more
+classes as part of Symbol hierarchy.
+Changed primitive subclass methods to check if new subclass is one of the bootstrapped
+classes and to use that, rather than create a new class.
 
 
 01/08/2011 Changes

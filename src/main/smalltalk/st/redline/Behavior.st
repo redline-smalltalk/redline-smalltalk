@@ -1,3 +1,3 @@
 
-Object < #Bahavior.
+Object < #Behavior.
 

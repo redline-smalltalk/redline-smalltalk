@@ -23,7 +23,6 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.Stack;
 
@@ -68,8 +67,10 @@ public class ProtoObject {
 			stack.pop();
 	}
 
-	public static ProtoObject primitiveCreateSubclass(ProtoObject receiver) {
-		System.out.println("primitiveCreateSubclass() " + receiver);
+	public static ProtoObject primitiveCreateSubclass(ProtoObject receiver, String name) {
+		System.out.println("primitiveCreateSubclass() " + receiver + " " + name);
+		if (name != null && classRegistry.containsKey(name))
+			return classRegistry.get(name);
 		return createSubclass(createClass(receiver), createMetaclass(receiver));
 	}
 
