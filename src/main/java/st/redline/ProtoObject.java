@@ -212,13 +212,21 @@ public class ProtoObject {
 		if (classRegistry.containsKey(name))
 			return classRegistry.get(name);
 		// TODO.JCL include looking in receivers own packageMap.
-		if (packageMap.containsKey(name))
-			return primitiveResolveObject(this, packageMap.get(name));
+		String fullyQualifiedName = ProtoObject.primitivePackageFor(this, name);
+		if (fullyQualifiedName != null)
+			return primitiveResolveObject(this, fullyQualifiedName);
 		// It is expected the loading of an object results in the registering a Smalltalk class in the class registry.
 		// *NOTE* if class is not registered the will be a NullPointerException as we return 'null' here.
 		if (loadObject(name))
 			return classRegistry.get(name);
 		return null;
+	}
+
+	public static String primitivePackageFor(ProtoObject receiver, String name) {
+		String fullyQualifiedName = receiver.packageFor(name);
+		if (fullyQualifiedName != null)
+			return fullyQualifiedName;
+		return packageMap.get(name);
 	}
 
 	private boolean loadObject(String name) {
@@ -231,6 +239,15 @@ public class ProtoObject {
 
 	private ClassLoader classLoader() {
 		return Thread.currentThread().getContextClassLoader();
+	}
+
+	private String packageFor(String name) {
+		if (isClass())
+			return data.packageFor(name);
+		ProtoObject cls = cls();
+		if (cls != null)
+			return packageFor(name);
+		return null;
 	}
 
 	public void bootstrap() {

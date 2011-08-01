@@ -49,6 +49,7 @@ public class Stic {
 	}
 
 	private ProtoObject createClassInstance(String className) throws Exception {
+		// TODO.JCL use a lookup for a proper instance of ProtoObject and use that, not a new one.
 		return ProtoObject.primitiveResolveObject(new ProtoObject(false), className);
 	}
 }

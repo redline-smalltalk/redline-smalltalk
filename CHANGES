@@ -1,3 +1,8 @@
+02/08/2011 Changes
+
+Added namespace (package) support. Can lookup classes from other packages - Yay.
+
+
 01/08/2011 Changes
 
 Added bootstrapped class for String. Need to add rest of hierarchy for bootstrapped

@@ -16,6 +16,7 @@ public abstract class ProtoObjectData {
 	abstract ProtoMethod methodAt(String selector);
 	abstract void methodAtPut(String selector, ProtoMethod method);
 	abstract boolean isClass();
+	abstract String packageFor(String name);
 
 	public static ProtoObjectData classData() {
 		return new ClassData();
@@ -73,12 +74,17 @@ public abstract class ProtoObjectData {
 		protected void methodAtPut(String selector, ProtoMethod method) {
 			throw new IllegalStateException("An instance can't have a method dictionary.");
 		}
+
+		protected String packageFor(String name) {
+			throw new IllegalStateException("An instance can't have a packages.");
+		}
 	}
 
 	private static class ClassData extends ProtoObjectData {
 
 		private ProtoObject superclass;
 		private Map<String, ProtoMethod> methods = new HashMap<String, ProtoMethod>();
+		private Map<String, String> packages;
 
 		protected void javaValue(String value) {
 			throw new IllegalStateException("A Class can't have a javaValue.");
@@ -106,6 +112,10 @@ public abstract class ProtoObjectData {
 
 		protected void methodAtPut(String selector, ProtoMethod method) {
 			methods.put(selector, method);
+		}
+
+		protected String packageFor(String name) {
+			return packages != null ? packages.get(name) : null;
 		}
 	}
 }
