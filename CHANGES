@@ -1,3 +1,9 @@
+03/08/2011 Changes
+
+Added placeholder/start of Smalltalk Runtime.
+Added bootstrapp hieararchy for String and Symbol.
+
+
 02/08/2011 Changes
 
 Added namespace (package) support. Can lookup classes from other packages - Yay.

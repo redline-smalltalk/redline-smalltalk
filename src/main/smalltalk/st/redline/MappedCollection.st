@@ -1,0 +1,3 @@
+
+Collection < #MappedCollection.
+

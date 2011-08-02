@@ -1,0 +1,3 @@
+
+SequenceableCollection < #LinkedList.
+

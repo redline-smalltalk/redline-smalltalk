@@ -1,0 +1,3 @@
+
+OrderedCollection < #SortedCollection.
+

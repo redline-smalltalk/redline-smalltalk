@@ -62,7 +62,7 @@
       <file leaf-file-name="Bootstrapper.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="126" column="0" selection-start="4408" selection-end="4408" vertical-scroll-proportion="0.40070504">
+            <state line="28" column="13" selection-start="1340" selection-end="1340" vertical-scroll-proportion="0.33254993">
               <folding />
             </state>
           </provider>
@@ -154,7 +154,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
@@ -294,6 +293,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -420,7 +420,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1696" height="1034" extended-state="6" />
+    <frame x="-8" y="0" width="1674" height="1019" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -552,28 +552,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ClassSubclassMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="0" selection-start="3196" selection-end="3196" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="11" column="0" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="1281" selection-end="1281" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="25" column="0" selection-start="1281" selection-end="1281" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="0" selection-start="3196" selection-end="3196" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="126" column="0" selection-start="4408" selection-end="4408" vertical-scroll-proportion="0.40070504">
+        <state line="28" column="13" selection-start="1340" selection-end="1340" vertical-scroll-proportion="0.33254993">
           <folding />
         </state>
       </provider>
