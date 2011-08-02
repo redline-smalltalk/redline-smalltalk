@@ -40,6 +40,12 @@ public class Bootstrapper {
 	private final ProtoObject classDescriptionMetaClass;
 	private final ProtoObject cls;
 	private final ProtoObject clsMetaClass;
+	private final ProtoObject collection;
+	private final ProtoObject collectionMetaClass;
+	private final ProtoObject sequenceableCollection;
+	private final ProtoObject sequenceableCollectionMetaClass;
+	private final ProtoObject arrayedCollection;
+	private final ProtoObject arrayedCollectionMetaClass;
 	private final ProtoObject string;
 	private final ProtoObject stringMetaClass;
 	private final ProtoObject symbol;
@@ -56,10 +62,16 @@ public class Bootstrapper {
 		this.classDescriptionMetaClass = new ProtoObject();
 		this.cls = new ProtoObject();
 		this.clsMetaClass = new ProtoObject();
-		this.symbol = new ProtoObject();
-		this.symbolMetaClass = new ProtoObject();
+		this.collection = new ProtoObject();
+		this.collectionMetaClass = new ProtoObject();
+		this.sequenceableCollection = new ProtoObject();
+		this.sequenceableCollectionMetaClass = new ProtoObject();
+		this.arrayedCollection = new ProtoObject();
+		this.arrayedCollectionMetaClass = new ProtoObject();
 		this.string = new ProtoObject();
 		this.stringMetaClass = new ProtoObject();
+		this.symbol = new ProtoObject();
+		this.symbolMetaClass = new ProtoObject();
 		this.metaClass = new ProtoObject();
 		this.metaClassMetaClass = new ProtoObject();
 	}
@@ -91,10 +103,16 @@ public class Bootstrapper {
 		classDescriptionMetaClass.bootstrapped();
 		cls.bootstrapped();
 		clsMetaClass.bootstrapped();
-		symbol.bootstrapped();
-		symbolMetaClass.bootstrapped();
+		collection.bootstrapped();
+		collectionMetaClass.bootstrapped();
+		sequenceableCollection.bootstrapped();
+		sequenceableCollectionMetaClass.bootstrapped();
+		arrayedCollection.bootstrapped();
+		arrayedCollectionMetaClass.bootstrapped();
 		string.bootstrapped();
 		stringMetaClass.bootstrapped();
+		symbol.bootstrapped();
+		symbolMetaClass.bootstrapped();
 	}
 
 	private void associateClasses() {
@@ -126,8 +144,25 @@ public class Bootstrapper {
 		metaClass.cls(metaClassMetaClass);
 		metaClass.superclass(classDescription);
 
+		collectionMetaClass.cls(metaClass);
+		collectionMetaClass.superclass(objectMetaClass);
+		collection.cls(collectionMetaClass);
+		collection.superclass(object);
+
+		sequenceableCollectionMetaClass.cls(metaClass);
+		sequenceableCollectionMetaClass.superclass(collectionMetaClass);
+		sequenceableCollection.cls(sequenceableCollectionMetaClass);
+		sequenceableCollection.superclass(collection);
+
+		arrayedCollectionMetaClass.cls(metaClass);
+		arrayedCollectionMetaClass.superclass(sequenceableCollectionMetaClass);
+		arrayedCollection.cls(arrayedCollectionMetaClass);
+		arrayedCollection.superclass(sequenceableCollection);
+
 		stringMetaClass.cls(metaClass);
+		stringMetaClass.superclass(arrayedCollectionMetaClass);
 		string.cls(stringMetaClass);
+		string.superclass(arrayedCollection);
 
 		symbolMetaClass.cls(metaClass);
 		symbolMetaClass.superclass(stringMetaClass);
@@ -142,6 +177,9 @@ public class Bootstrapper {
 		ProtoObject.primitiveRegisterAs(behavior, "st.redline.Behavior");
 		ProtoObject.primitiveRegisterAs(classDescription, "st.redline.ClassDescription");
 		ProtoObject.primitiveRegisterAs(cls, "st.redline.Class");
+		ProtoObject.primitiveRegisterAs(collection, "st.redline.Collection");
+		ProtoObject.primitiveRegisterAs(sequenceableCollection, "st.redline.SequenceableCollection");
+		ProtoObject.primitiveRegisterAs(arrayedCollection, "st.redline.ArrayedCollection");
 		ProtoObject.primitiveRegisterAs(symbol, "st.redline.Symbol");
 		ProtoObject.primitiveRegisterAs(string, "st.redline.String");
 	}
