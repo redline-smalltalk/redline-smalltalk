@@ -32,6 +32,10 @@ public class ProtoObject {
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	protected static final Map<String, String> packageMap = new HashMap<String, String>();
 
+	protected static ProtoObject instanceOfUndefinedObject;
+	protected static ProtoObject instanceOfTrue;
+	protected static ProtoObject instanceOfFalse;
+
 	private ProtoObjectData data;
 
 	public ProtoObject() {

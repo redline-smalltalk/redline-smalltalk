@@ -50,6 +50,14 @@ public class Bootstrapper {
 	private final ProtoObject stringMetaClass;
 	private final ProtoObject symbol;
 	private final ProtoObject symbolMetaClass;
+	private final ProtoObject undefinedObject;
+	private final ProtoObject undefinedObjectMetaClass;
+	private final ProtoObject bool;
+	private final ProtoObject boolMetaClass;
+	private final ProtoObject boolTrue;
+	private final ProtoObject boolTrueMetaClass;
+	private final ProtoObject boolFalse;
+	private final ProtoObject boolFalseMetaClass;
 
 	protected Bootstrapper(ProtoObject protoObject) {
 		this.protoObject = protoObject;
@@ -74,6 +82,14 @@ public class Bootstrapper {
 		this.symbolMetaClass = new ProtoObject();
 		this.metaClass = new ProtoObject();
 		this.metaClassMetaClass = new ProtoObject();
+		this.undefinedObject = protoObject;
+		this.undefinedObjectMetaClass = new ProtoObject();
+		this.bool = protoObject;
+		this.boolMetaClass = new ProtoObject();
+		this.boolTrue = protoObject;
+		this.boolTrueMetaClass = new ProtoObject();
+		this.boolFalse = protoObject;
+		this.boolFalseMetaClass = new ProtoObject();
 	}
 
 	public void bootstrap() {
@@ -90,6 +106,7 @@ public class Bootstrapper {
 		associateClasses();
 		registerClasses();
 		mapPackages();
+		instantiateSingletons();
 	}
 
 	private void markBootstrappedClasses() {
@@ -113,6 +130,14 @@ public class Bootstrapper {
 		stringMetaClass.bootstrapped();
 		symbol.bootstrapped();
 		symbolMetaClass.bootstrapped();
+		undefinedObject.bootstrapped();
+		undefinedObjectMetaClass.bootstrapped();
+		bool.bootstrapped();
+		boolMetaClass.bootstrapped();
+		boolTrue.bootstrapped();
+		boolTrueMetaClass.bootstrapped();
+		boolFalse.bootstrapped();
+		boolFalseMetaClass.bootstrapped();
 	}
 
 	private void associateClasses() {
@@ -168,6 +193,26 @@ public class Bootstrapper {
 		symbolMetaClass.superclass(stringMetaClass);
 		symbol.cls(symbolMetaClass);
 		symbol.superclass(string);
+
+		undefinedObjectMetaClass.cls(metaClass);
+		undefinedObjectMetaClass.superclass(objectMetaClass);
+		undefinedObject.cls(undefinedObjectMetaClass);
+		undefinedObject.superclass(object);
+
+		boolMetaClass.cls(metaClass);
+		boolMetaClass.superclass(objectMetaClass);
+		bool.cls(boolMetaClass);
+		bool.superclass(object);
+
+		boolTrueMetaClass.cls(metaClass);
+		boolTrueMetaClass.superclass(boolMetaClass);
+		boolTrue.cls(boolTrueMetaClass);
+		boolTrue.superclass(bool);
+
+		boolFalseMetaClass.cls(metaClass);
+		boolFalseMetaClass.superclass(boolMetaClass);
+		boolFalse.cls(boolFalseMetaClass);
+		boolFalse.superclass(bool);
 	}
 
 	private void registerClasses() {
@@ -182,6 +227,24 @@ public class Bootstrapper {
 		ProtoObject.primitiveRegisterAs(arrayedCollection, "st.redline.ArrayedCollection");
 		ProtoObject.primitiveRegisterAs(symbol, "st.redline.Symbol");
 		ProtoObject.primitiveRegisterAs(string, "st.redline.String");
+		ProtoObject.primitiveRegisterAs(undefinedObject, "st.redline.UndefinedObject");
+		ProtoObject.primitiveRegisterAs(bool, "st.redline.Boolean");
+		ProtoObject.primitiveRegisterAs(boolTrue, "st.redline.True");
+		ProtoObject.primitiveRegisterAs(boolFalse, "st.redline.False");
+	}
+
+	private void instantiateSingletons() {
+		ProtoObject nil = new ProtoObject(false);
+		nil.cls(undefinedObject);
+		ProtoObject.instanceOfUndefinedObject = nil;
+
+		ProtoObject trueInstance = new ProtoObject(false);
+		trueInstance.cls(boolTrue);
+		ProtoObject.instanceOfTrue = trueInstance;
+
+		ProtoObject falseInstance = new ProtoObject(false);
+		falseInstance.cls(boolFalse);
+		ProtoObject.instanceOfFalse = falseInstance;
 	}
 
 	private void mapPackages() {

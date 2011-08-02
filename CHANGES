@@ -1,7 +1,9 @@
 03/08/2011 Changes
 
 Added placeholder/start of Smalltalk Runtime.
-Added bootstrapp hieararchy for String and Symbol.
+Added bootstrap hieararchy for String and Symbol.
+Added bootstrap hierarchy for Boolean, True, False and UndefinedObject including the 
+creation of singleton instances for True, False and Nil (UndefinedObject).
 
 
 02/08/2011 Changes
