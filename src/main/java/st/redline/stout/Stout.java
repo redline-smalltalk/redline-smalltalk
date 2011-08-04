@@ -36,9 +36,11 @@ import java.io.IOException;
 
 public class Stout {
 
+	private static Server server;
+
 	public static void main(String args[]) throws Exception {
-		Server server = new Server(8080);
-		server.setHandler(handler(object(args)));
+		server = new Server(8080);
+		server.setHandler(initialHandler(args));
 		server.start();
 	}
 
@@ -46,7 +48,23 @@ public class Stout {
 		return new Stic().invokeWith(args[0], args);
 	}
 
-	private static Handler handler(final ProtoObject receiver) {
+	private static Handler initialHandler(final String[] args) throws Exception {
+		return new AbstractHandler() {
+			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
+				throws IOException, ServletException {
+				Handler handler;
+				try {
+					handler = continuingHandler(object(args));
+				} catch (Exception e) {
+					throw new ServletException(e);
+				}
+				server.setHandler(handler);
+				handler.handle(target, request, response, dispatch);
+			}
+		};
+	}
+
+	private static Handler continuingHandler(final ProtoObject receiver) {
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
 				throws IOException, ServletException {

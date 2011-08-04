@@ -62,7 +62,7 @@
       <file leaf-file-name="Stout.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Stout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="0" selection-start="2355" selection-end="2355" vertical-scroll-proportion="0.79318446">
+            <state line="68" column="0" selection-start="2577" selection-end="2577" vertical-scroll-proportion="0.80611044">
               <folding />
             </state>
           </provider>
@@ -147,7 +147,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -256,7 +256,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -272,8 +272,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -390,7 +390,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1696" height="1034" extended-state="6" />
+    <frame x="0" y="0" width="1680" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -530,23 +530,19 @@
         <state line="21" column="2" selection-start="0" selection-end="1233" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="0" selection-start="2074" selection-end="2074" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Stic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="37" selection-start="1882" selection-end="1882" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="47" column="37" selection-start="1882" selection-end="1882" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="2074" selection-end="2074" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Stout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="0" selection-start="2355" selection-end="2355" vertical-scroll-proportion="0.79318446">
+        <state line="68" column="0" selection-start="2577" selection-end="2577" vertical-scroll-proportion="0.80611044">
           <folding />
         </state>
       </provider>
