@@ -37,9 +37,20 @@ public class ProtoObject {
 	protected static ProtoObject instanceOfFalse;
 
 	private ProtoObjectData data;
-
+	private String name;
+	
 	public ProtoObject() {
 		this(true);
+	}
+
+	public ProtoObject(String name) {
+		this(true);
+		this.name = name;
+	}
+
+	public String toString() {
+		if (name != null) return name;
+		return super.toString();
 	}
 
 	public ProtoObject(boolean isClass) {
@@ -47,7 +58,18 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveMain(ProtoObject receiver, String[] args) {
-		return receiver;
+		System.out.println("primitiveMain()");
+		ProtoObject array = createArray(receiver);
+		if (args.length > 1) {
+			// TODO.JCL add each arg to array.
+		}
+		return primitiveSend(receiver, array, "main", null);
+	}
+
+	private static ProtoObject createArray(ProtoObject receiver) {
+		ProtoObject array = primitiveResolveObject(receiver, "Array");
+		System.out.println(array);
+		return primitiveSend(array, "new", null);
 	}
 
 	public static String primitivePackageRegistryCurrent() {
@@ -136,7 +158,20 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
-		throw new IllegalStateException("todo - implement " + selector);
+		System.out.println("primitiveSend() " + selector);
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls());
+		System.out.println("method not found in receivers class.");
+		ProtoObject[] newClassMethodWasFoundIn = {null};
+		method = methodFor(receiver.cls().superclass(), selector, newClassMethodWasFoundIn);
+		if (method != null)
+			return method.applyTo(receiver, newClassMethodWasFoundIn[0]);
+		System.out.println("method not found in superclass chain.");
+		if (isBootstrapped(receiver))
+			if (resolveClassObject(receiver))
+				return primitiveSend(receiver, selector, classMethodWasFoundIn);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {});
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
@@ -196,11 +231,15 @@ public class ProtoObject {
 	}
 
 	private static ProtoMethod methodFor(ProtoObject object, String selector, ProtoObject[] classMethodFoundIn) {
+		System.out.println("methodFor() " + selector);
 		ProtoMethod method;
 		ProtoObject superclass = object;
 		while ((method = superclass.methodAt(selector)) == null)
-			if ((superclass = superclass.superclass()) == null)
+			if ((superclass = superclass.superclass()) == null) {
 				break;
+			} else {
+				System.out.println(superclass);
+			}
 		classMethodFoundIn[0] = superclass;
 		return method;
 	}

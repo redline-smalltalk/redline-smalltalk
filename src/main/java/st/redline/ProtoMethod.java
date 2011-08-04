@@ -32,6 +32,10 @@ public class ProtoMethod extends ProtoObject {
 		return new IllegalStateException("A subclass of ProtoMethod should implement 'applyTo' with " + argumentCount + " arguments.");
 	}
 
+	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls) {
+		throw subclassShouldHaveImplemented(0);
+	}
+
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls, ProtoObject arg1) {
 		throw subclassShouldHaveImplemented(1);
 	}

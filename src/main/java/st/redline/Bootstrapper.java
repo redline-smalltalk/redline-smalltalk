@@ -60,36 +60,37 @@ public class Bootstrapper {
 	private final ProtoObject boolFalseMetaClass;
 
 	protected Bootstrapper(ProtoObject protoObject) {
+		// TODO.JCL remove passing name of object - just for tracing reasons.
 		this.protoObject = protoObject;
-		this.protoObjectMetaClass = new ProtoObject();
-		this.object = protoObject;
-		this.objectMetaClass = new ProtoObject();
-		this.behavior = new ProtoObject();
-		this.behaviorMetaClass = new ProtoObject();
-		this.classDescription = new ProtoObject();
-		this.classDescriptionMetaClass = new ProtoObject();
-		this.cls = new ProtoObject();
-		this.clsMetaClass = new ProtoObject();
-		this.collection = new ProtoObject();
-		this.collectionMetaClass = new ProtoObject();
-		this.sequenceableCollection = new ProtoObject();
-		this.sequenceableCollectionMetaClass = new ProtoObject();
-		this.arrayedCollection = new ProtoObject();
-		this.arrayedCollectionMetaClass = new ProtoObject();
-		this.string = new ProtoObject();
-		this.stringMetaClass = new ProtoObject();
-		this.symbol = new ProtoObject();
-		this.symbolMetaClass = new ProtoObject();
-		this.metaClass = new ProtoObject();
-		this.metaClassMetaClass = new ProtoObject();
-		this.undefinedObject = protoObject;
-		this.undefinedObjectMetaClass = new ProtoObject();
-		this.bool = protoObject;
-		this.boolMetaClass = new ProtoObject();
-		this.boolTrue = protoObject;
-		this.boolTrueMetaClass = new ProtoObject();
-		this.boolFalse = protoObject;
-		this.boolFalseMetaClass = new ProtoObject();
+		this.protoObjectMetaClass = new ProtoObject("ProtoObjectMetaClass");
+		this.object = new ProtoObject("Object");
+		this.objectMetaClass = new ProtoObject("ObjectMetaClass");
+		this.behavior = new ProtoObject("Behavior");
+		this.behaviorMetaClass = new ProtoObject("BehaviorMetaClass");
+		this.classDescription = new ProtoObject("ClassDescription");
+		this.classDescriptionMetaClass = new ProtoObject("ClassDescriptionMetaClass");
+		this.cls = new ProtoObject("Class");
+		this.clsMetaClass = new ProtoObject("ClassMetaClass");
+		this.collection = new ProtoObject("Collection");
+		this.collectionMetaClass = new ProtoObject("CollectionMetaClass");
+		this.sequenceableCollection = new ProtoObject("SequenceableCollection");
+		this.sequenceableCollectionMetaClass = new ProtoObject("SequenceableCollectionMetaClass");
+		this.arrayedCollection = new ProtoObject("ArrayedCollection");
+		this.arrayedCollectionMetaClass = new ProtoObject("ArrayedCollectionMetaClass");
+		this.string = new ProtoObject("String");
+		this.stringMetaClass = new ProtoObject("StringMetaClass");
+		this.symbol = new ProtoObject("Symbol");
+		this.symbolMetaClass = new ProtoObject("SymbolMetaClass");
+		this.metaClass = new ProtoObject("MetaClass");
+		this.metaClassMetaClass = new ProtoObject("MetaClassMetaClass");
+		this.undefinedObject = new ProtoObject("UndefinedObject");
+		this.undefinedObjectMetaClass = new ProtoObject("UndefinedObjectMetaClass");
+		this.bool = new ProtoObject("Boolean");
+		this.boolMetaClass = new ProtoObject("BooleanMetaClass");
+		this.boolTrue = new ProtoObject("True");
+		this.boolTrueMetaClass = new ProtoObject("TrueMetaClass");
+		this.boolFalse = new ProtoObject("False");
+		this.boolFalseMetaClass = new ProtoObject("FalseMetaClass");
 	}
 
 	public void bootstrap() {
