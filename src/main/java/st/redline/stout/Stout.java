@@ -26,6 +26,8 @@ import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Request;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.handler.AbstractHandler;
+import st.redline.ProtoObject;
+import st.redline.Stic;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,17 +38,22 @@ public class Stout {
 
 	public static void main(String args[]) throws Exception {
 		Server server = new Server(8080);
-		server.setHandler(handler());
+		server.setHandler(handler(object(args)));
 		server.start();
 	}
 
-	private static Handler handler() {
+	private static ProtoObject object(String[] args) throws Exception {
+		return new Stic().invokeWith(args[0], args);
+	}
+
+	private static Handler handler(final ProtoObject receiver) {
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
 				throws IOException, ServletException {
 				response.setContentType("text/html");
 				response.setStatus(HttpServletResponse.SC_OK);
 				response.getWriter().println("<h1>stout: Hello from Redline Smalltalk.</h1>");
+				response.getWriter().println("<h2>" + receiver + "</h2>");
 				((Request)request).setHandled(true);
 			}
 		};

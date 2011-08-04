@@ -44,8 +44,8 @@ public class Stic {
 		return Thread.currentThread().getContextClassLoader();
 	}
 
-	public void invokeWith(String className, String[] args) throws Exception {
-		ProtoObject.primitiveMain(createClassInstance(className), args);
+	public ProtoObject invokeWith(String className, String[] args) throws Exception {
+		return ProtoObject.primitiveMain(createClassInstance(className), args);
 	}
 
 	private ProtoObject createClassInstance(String className) throws Exception {

@@ -46,7 +46,8 @@ public class ProtoObject {
 		data = isClass ? ProtoObjectData.classData() : ProtoObjectData.instanceData();
 	}
 
-	public static void primitiveMain(ProtoObject receiver, String[] args) {
+	public static ProtoObject primitiveMain(ProtoObject receiver, String[] args) {
+		return receiver;
 	}
 
 	public static String primitivePackageRegistryCurrent() {
