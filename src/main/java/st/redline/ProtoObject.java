@@ -67,9 +67,13 @@ public class ProtoObject {
 	}
 
 	private static ProtoObject createArray(ProtoObject receiver) {
-		ProtoObject array = primitiveResolveObject(receiver, "Array");
-		System.out.println(array);
-		return primitiveSend(array, "new", null);
+		return create(receiver, "Array");
+	}
+
+	private static ProtoObject create(ProtoObject receiver, String name) {
+		ProtoObject cls = primitiveResolveObject(receiver, name);
+		System.out.println(cls);
+		return primitiveSend(cls, "new", null);
 	}
 
 	public static String primitivePackageRegistryCurrent() {
@@ -162,13 +166,11 @@ public class ProtoObject {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls());
-		System.out.println("method not found in receivers class.");
-		ProtoObject[] newClassMethodWasFoundIn = {null};
-		method = methodFor(receiver.cls().superclass(), selector, newClassMethodWasFoundIn);
+		ProtoObject[] methodForResult = {null, null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, newClassMethodWasFoundIn[0]);
-		System.out.println("method not found in superclass chain.");
-		if (isBootstrapped(receiver))
+			return method.applyTo(receiver, methodForResult[0]);
+		if (isBootstrapped(methodForResult[1]))
 			if (resolveClassObject(receiver))
 				return primitiveSend(receiver, selector, classMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {});
@@ -178,18 +180,18 @@ public class ProtoObject {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls(), arg1);
-		ProtoObject[] newClassMethodWasFoundIn = {null};
-		method = methodFor(receiver.cls().superclass(), selector, newClassMethodWasFoundIn);
+		ProtoObject[] methodForResult = {null, null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, newClassMethodWasFoundIn[0], arg1);
-		if (isBootstrapped(receiver))
+			return method.applyTo(receiver, methodForResult[0], arg1);
+		if (isBootstrapped(methodForResult[1]))
 			if (resolveClassObject(receiver))
 				return primitiveSend(receiver, arg1, selector, classMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {arg1});
 	}
 
 	private static boolean isBootstrapped(ProtoObject object) {
-		return (object != null && (object.isBootstrapped() || object.cls().isBootstrapped()));
+		return object != null;
 	}
 
 //	public ProtoObject ping() {
@@ -215,6 +217,7 @@ public class ProtoObject {
 	}
 
 	private static boolean resolveObjectSuperclass(ProtoObject object, ProtoObject other) {
+		System.out.println("resolveObjectSuperclass() " + object + " " + other);
 		if (object == null)
 			return true;
 		if (!object.isClass())
@@ -230,17 +233,17 @@ public class ProtoObject {
 		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
 	}
 
-	private static ProtoMethod methodFor(ProtoObject object, String selector, ProtoObject[] classMethodFoundIn) {
-		System.out.println("methodFor() " + selector);
+	private static ProtoMethod methodFor(ProtoObject object, String selector, ProtoObject[] methodForResult) {
 		ProtoMethod method;
 		ProtoObject superclass = object;
 		while ((method = superclass.methodAt(selector)) == null)
 			if ((superclass = superclass.superclass()) == null) {
 				break;
-			} else {
-				System.out.println(superclass);
+			} else if (superclass.isBootstrapped()) {
+				methodForResult[1] = superclass;
+				return null;
 			}
-		classMethodFoundIn[0] = superclass;
+		methodForResult[0] = superclass;
 		return method;
 	}
 
