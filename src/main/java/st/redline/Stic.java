@@ -30,6 +30,11 @@ public class Stic {
 
 	public Stic() {
 		initializeClassLoader();
+		bootstrap();
+	}
+
+	private void bootstrap() {
+		((SmalltalkClassLoader) classLoader()).bootstrap();
 	}
 
 	private void initializeClassLoader() {
@@ -45,11 +50,15 @@ public class Stic {
 	}
 
 	public ProtoObject invokeWith(String className, String[] args) throws Exception {
-		return ProtoObject.primitiveMain(createClassInstance(className), args);
+		ProtoObject root = protoObjectInstance();
+		return ProtoObject.primitiveMain(createClassInstance(root, className), args);
 	}
 
-	private ProtoObject createClassInstance(String className) throws Exception {
-		// TODO.JCL use a lookup for a proper instance of ProtoObject and use that, not a new one.
-		return ProtoObject.primitiveResolveObject(new ProtoObject(false), className);
+	private ProtoObject createClassInstance(ProtoObject root, String className) throws Exception {
+		return ProtoObject.primitiveResolveObject(root, className);
+	}
+
+	private ProtoObject protoObjectInstance() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+		return (ProtoObject) classLoader().loadClass("st.redline.ProtoObject").newInstance();
 	}
 }

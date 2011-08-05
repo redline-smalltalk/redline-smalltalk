@@ -28,10 +28,9 @@ public class SmalltalkClassLoader extends ClassLoader {
 
 	public SmalltalkClassLoader(java.lang.ClassLoader classLoader) {
 		super(classLoader);
-		initialize();
 	}
 
-	private void initialize() {
+	protected void bootstrap() {
 		loadProtoObject();
 	}
 

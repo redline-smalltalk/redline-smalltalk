@@ -100,8 +100,10 @@ public class ProtoObject {
 
 	public static ProtoObject primitiveCreateSubclass(ProtoObject receiver, String name) {
 		System.out.println("primitiveCreateSubclass() " + receiver + " " + name);
-		if (name != null && classRegistry.containsKey(name))
+		if (name != null && classRegistry.containsKey(name)) {
+			System.out.println("***** HAVE SUBCLASS ***** " + name + " " + classRegistry.get(name));
 			return classRegistry.get(name);
+		}
 		return createSubclass(createClass(receiver), createMetaclass(receiver));
 	}
 
@@ -191,7 +193,8 @@ public class ProtoObject {
 	}
 
 	private static boolean isBootstrapped(ProtoObject object) {
-		return object != null;
+//		return object != null;
+		return false;
 	}
 
 //	public ProtoObject ping() {
@@ -237,12 +240,8 @@ public class ProtoObject {
 		ProtoMethod method;
 		ProtoObject superclass = object;
 		while ((method = superclass.methodAt(selector)) == null)
-			if ((superclass = superclass.superclass()) == null) {
+			if ((superclass = superclass.superclass()) == null)
 				break;
-			} else if (superclass.isBootstrapped()) {
-				methodForResult[1] = superclass;
-				return null;
-			}
 		methodForResult[0] = superclass;
 		return method;
 	}
@@ -277,7 +276,7 @@ public class ProtoObject {
 		return packageMap.get(name);
 	}
 
-	private boolean loadObject(String name) {
+	protected boolean loadObject(String name) {
 		try {
 			return Class.forName(name, true, classLoader()).newInstance() != null;
 		} catch (Exception e) {

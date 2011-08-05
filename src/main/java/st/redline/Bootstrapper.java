@@ -96,6 +96,26 @@ public class Bootstrapper {
 	public void bootstrap() {
 		bootstrapClasses();
 		bootstrapMethods();
+		loadBaseClasses();
+	}
+
+	private void loadBaseClasses() {
+		SmalltalkClassLoader smalltalk = currentClassLoader();
+		System.out.println("*********************");
+		loadUsing("st.redline.Object", smalltalk);
+		loadUsing("st.redline.Behavior", smalltalk);
+	}
+
+	private void loadUsing(String name, SmalltalkClassLoader smalltalk) {
+		try {
+			smalltalk.findClass(name).newInstance();
+		} catch (Exception e) {
+			throw new RedlineException(e);
+		}
+	}
+
+	private SmalltalkClassLoader currentClassLoader() {
+		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 
 	private void bootstrapMethods() {
