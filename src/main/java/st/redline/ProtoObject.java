@@ -168,13 +168,10 @@ public class ProtoObject {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls());
-		ProtoObject[] methodForResult = {null, null};
+		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
 			return method.applyTo(receiver, methodForResult[0]);
-		if (isBootstrapped(methodForResult[1]))
-			if (resolveClassObject(receiver))
-				return primitiveSend(receiver, selector, classMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {});
 	}
 
@@ -182,55 +179,17 @@ public class ProtoObject {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls(), arg1);
-		ProtoObject[] methodForResult = {null, null};
+		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
 			return method.applyTo(receiver, methodForResult[0], arg1);
-		if (isBootstrapped(methodForResult[1]))
-			if (resolveClassObject(receiver))
-				return primitiveSend(receiver, arg1, selector, classMethodWasFoundIn);
 		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {arg1});
-	}
-
-	private static boolean isBootstrapped(ProtoObject object) {
-//		return object != null;
-		return false;
 	}
 
 //	public ProtoObject ping() {
 //		System.out.println("here1 " + this + " " + this.cls() + " Proto  " + classRegistry.get("ProtoObject") + " symbol " + classRegistry.get("Symbol"));
 //		return this;
 //	}
-
-	private static boolean isNotBootstrapped(ProtoObject object) {
-		return !isBootstrapped(object);
-	}
-
-	private static boolean resolveClassObject(ProtoObject object) {
-		return resolveClassObject(object, null);
-	}
-
-	private static boolean resolveClassObject(ProtoObject object, ProtoObject other) {
-		System.out.println("resolveClassObject() " + object + " " + other);
-		if (!resolveObjectSuperclass(object, other))
-			return false;
-		if (isNotBootstrapped(object))
-			return true;
-		return primitiveResolveObject(object, "Foo") != null;
-	}
-
-	private static boolean resolveObjectSuperclass(ProtoObject object, ProtoObject other) {
-		System.out.println("resolveObjectSuperclass() " + object + " " + other);
-		if (object == null)
-			return true;
-		if (!object.isClass())
-			return resolveObjectSuperclass(object.cls(), other);
-		ProtoObject superclass = object.superclass();
-		if (superclass != other)
-			return resolveClassObject(superclass, other);
-		ProtoObject metaclass = object.cls().superclass();
-		return resolveClassObject(metaclass, metaclass);
-	}
 
 	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector, ProtoObject[] arguments) {
 		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");

@@ -46,6 +46,8 @@ public class Bootstrapper {
 	private final ProtoObject sequenceableCollectionMetaClass;
 	private final ProtoObject arrayedCollection;
 	private final ProtoObject arrayedCollectionMetaClass;
+	private final ProtoObject array;
+	private final ProtoObject arrayMetaClass;
 	private final ProtoObject string;
 	private final ProtoObject stringMetaClass;
 	private final ProtoObject symbol;
@@ -77,6 +79,8 @@ public class Bootstrapper {
 		this.sequenceableCollectionMetaClass = new ProtoObject("SequenceableCollectionMetaClass");
 		this.arrayedCollection = new ProtoObject("ArrayedCollection");
 		this.arrayedCollectionMetaClass = new ProtoObject("ArrayedCollectionMetaClass");
+		this.array = new ProtoObject("Array");
+		this.arrayMetaClass = new ProtoObject("ArrayMetaClass");
 		this.string = new ProtoObject("String");
 		this.stringMetaClass = new ProtoObject("StringMetaClass");
 		this.symbol = new ProtoObject("Symbol");
@@ -101,9 +105,21 @@ public class Bootstrapper {
 
 	private void loadBaseClasses() {
 		SmalltalkClassLoader smalltalk = currentClassLoader();
-		System.out.println("*********************");
 		loadUsing("st.redline.Object", smalltalk);
 		loadUsing("st.redline.Behavior", smalltalk);
+		loadUsing("st.redline.ClassDescription", smalltalk);
+		loadUsing("st.redline.Class", smalltalk);
+		loadUsing("st.redline.MetaClass", smalltalk);
+		loadUsing("st.redline.Boolean", smalltalk);
+		loadUsing("st.redline.True", smalltalk);
+		loadUsing("st.redline.False", smalltalk);
+		loadUsing("st.redline.Collection", smalltalk);
+		loadUsing("st.redline.SequenceableCollection", smalltalk);
+		loadUsing("st.redline.ArrayedCollection", smalltalk);
+		loadUsing("st.redline.String", smalltalk);
+		loadUsing("st.redline.Symbol", smalltalk);
+		loadUsing("st.redline.UndefinedObject", smalltalk);
+		loadUsing("st.redline.Array", smalltalk);
 	}
 
 	private void loadUsing(String name, SmalltalkClassLoader smalltalk) {
@@ -205,6 +221,11 @@ public class Bootstrapper {
 		arrayedCollection.cls(arrayedCollectionMetaClass);
 		arrayedCollection.superclass(sequenceableCollection);
 
+		arrayMetaClass.cls(metaClass);
+		arrayMetaClass.superclass(arrayedCollectionMetaClass);
+		array.cls(arrayMetaClass);
+		array.superclass(arrayedCollection);
+
 		stringMetaClass.cls(metaClass);
 		stringMetaClass.superclass(arrayedCollectionMetaClass);
 		string.cls(stringMetaClass);
@@ -246,6 +267,7 @@ public class Bootstrapper {
 		ProtoObject.primitiveRegisterAs(collection, "st.redline.Collection");
 		ProtoObject.primitiveRegisterAs(sequenceableCollection, "st.redline.SequenceableCollection");
 		ProtoObject.primitiveRegisterAs(arrayedCollection, "st.redline.ArrayedCollection");
+		ProtoObject.primitiveRegisterAs(array, "st.redline.Array");
 		ProtoObject.primitiveRegisterAs(symbol, "st.redline.Symbol");
 		ProtoObject.primitiveRegisterAs(string, "st.redline.String");
 		ProtoObject.primitiveRegisterAs(undefinedObject, "st.redline.UndefinedObject");

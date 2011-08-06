@@ -1,3 +1,9 @@
+07/08/2011 Changes
+
+Finished bootstrap resolution. Full Runtime required to run is now compiled and loaded
+before a 'user' class is compiled and run. 
+
+
 06/08/2011 Changes
 
 Turning bootstrapped classes into full classes at load, rather than on first message not found.
