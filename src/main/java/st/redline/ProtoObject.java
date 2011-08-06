@@ -100,10 +100,8 @@ public class ProtoObject {
 
 	public static ProtoObject primitiveCreateSubclass(ProtoObject receiver, String name) {
 		System.out.println("primitiveCreateSubclass() " + receiver + " " + name);
-		if (name != null && classRegistry.containsKey(name)) {
-			System.out.println("***** HAVE SUBCLASS ***** " + name + " " + classRegistry.get(name));
+		if (name != null && classRegistry.containsKey(name))
 			return classRegistry.get(name);
-		}
 		return createSubclass(createClass(receiver), createMetaclass(receiver));
 	}
 
@@ -258,14 +256,6 @@ public class ProtoObject {
 
 	public void bootstrap() {
 		new Bootstrapper(this).bootstrap();
-	}
-
-	public void bootstrapped() {
-		data.bootstrapped();
-	}
-
-	public boolean isBootstrapped() {
-		return data.isBootstrapped();
 	}
 
 	public void cls(ProtoObject cls) {

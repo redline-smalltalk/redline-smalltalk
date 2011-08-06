@@ -7,7 +7,6 @@ public abstract class ProtoObjectData {
 
 	private ProtoObject cls;
 	private Map<String, ProtoObject> variables;
-	private boolean bootstrapped = false;
 
 	abstract void javaValue(String value);
 	abstract String javaValue();
@@ -32,14 +31,6 @@ public abstract class ProtoObjectData {
 
 	protected ProtoObject cls() {
 		return cls;
-	}
-
-	protected void bootstrapped() {
-		bootstrapped = true;
-	}
-
-	protected boolean isBootstrapped() {
-		return bootstrapped;
 	}
 
 

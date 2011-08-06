@@ -139,42 +139,10 @@ public class Bootstrapper {
 	}
 
 	private void bootstrapClasses() {
-		markBootstrappedClasses();
 		associateClasses();
 		registerClasses();
 		mapPackages();
 		instantiateSingletons();
-	}
-
-	private void markBootstrappedClasses() {
-		metaClassMetaClass.bootstrapped();
-		metaClass.bootstrapped();
-		object.bootstrapped();
-		objectMetaClass.bootstrapped();
-		behavior.bootstrapped();
-		behaviorMetaClass.bootstrapped();
-		classDescription.bootstrapped();
-		classDescriptionMetaClass.bootstrapped();
-		cls.bootstrapped();
-		clsMetaClass.bootstrapped();
-		collection.bootstrapped();
-		collectionMetaClass.bootstrapped();
-		sequenceableCollection.bootstrapped();
-		sequenceableCollectionMetaClass.bootstrapped();
-		arrayedCollection.bootstrapped();
-		arrayedCollectionMetaClass.bootstrapped();
-		string.bootstrapped();
-		stringMetaClass.bootstrapped();
-		symbol.bootstrapped();
-		symbolMetaClass.bootstrapped();
-		undefinedObject.bootstrapped();
-		undefinedObjectMetaClass.bootstrapped();
-		bool.bootstrapped();
-		boolMetaClass.bootstrapped();
-		boolTrue.bootstrapped();
-		boolTrueMetaClass.bootstrapped();
-		boolFalse.bootstrapped();
-		boolFalseMetaClass.bootstrapped();
 	}
 
 	private void associateClasses() {
