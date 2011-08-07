@@ -116,8 +116,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void callPrimitiveVariableAt(String value, int line, boolean loadSide) {
-		visitLine(line);
-		stackPushReceiver();
+		stackPushReceiver(line);
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_VARIABLE_AT, PRIMITIVE_VARIABLE_AT_SIGNATURE);
 	}
@@ -142,12 +141,32 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitVarInsn(ALOAD, 0); // 0 = this, 1 = receiver, 2 = class method found in.
 	}
 
-	public void stackPushReceiver() {
+	public void stackPushReceiver(int line) {
+		visitLine(line);
 		mv.visitVarInsn(ALOAD, 1);
 	}
 
 	public void stackPushClassMethodWasFoundIn() {
 		mv.visitVarInsn(ALOAD, 2);
+	}
+
+	public void stackPushTrue(int line) {
+		visitLine(line);
+		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "instanceOfTrue", "Lst/redline/ProtoObject;");
+	}
+
+	public void stackPushFalse(int line) {
+		visitLine(line);
+		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "instanceOfFalse", "Lst/redline/ProtoObject;");
+	}
+
+	public void stackPushNil(int line) {
+		visitLine(line);
+		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "instanceOfUndefinedObject", "Lst/redline/ProtoObject;");
+	}
+
+	public void stackPushSuper(int line) {
+		stackPushReceiver(line);
 	}
 
 	public void unarySend(String unarySelector, int line, boolean sendToSuper) {
@@ -175,8 +194,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void callPrimitiveSymbol(String value, int line) {
-		visitLine(line);
-		stackPushReceiver();
+		stackPushReceiver(line);
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_SYMBOL, PRIMITIVE_SYMBOL_SIGNATURE);
 	}

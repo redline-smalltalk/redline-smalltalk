@@ -1,3 +1,7 @@
+08/08/2011 Changes
+
+Added generator support for reserved words nil, false, true, self and super.
+
 07/08/2011 Changes
 
 Finished bootstrap resolution. Full Runtime required to run is now compiled and loaded

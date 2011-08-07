@@ -229,17 +229,23 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(SelfReservedWord selfReservedWord, int line) {
+		classBytecodeWriter.stackPushReceiver(line);
 	}
 
 	public void visit(SuperReservedWord superReservedWord, int line) {
+		sendToSuper = true;
+		classBytecodeWriter.stackPushSuper(line);
 	}
 
 	public void visit(TrueReservedWord selfReservedWord, int line) {
+		classBytecodeWriter.stackPushTrue(line);
 	}
 
 	public void visit(FalseReservedWord selfReservedWord, int line) {
+		classBytecodeWriter.stackPushFalse(line);
 	}
 
 	public void visit(NilReservedWord selfReservedWord, int line) {
+		classBytecodeWriter.stackPushNil(line);
 	}
 }
