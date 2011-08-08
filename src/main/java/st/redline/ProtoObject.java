@@ -83,6 +83,10 @@ public class ProtoObject {
 		return "";
 	}
 
+	public static void primitiveCompileMethod(ProtoObject receiver, String fullMethodName) {
+		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName);
+	}
+
 	public static void primitivePackageRegistryCurrent(String packageName) {
 		Stack<String> stack = packageRegistry.get();
 		if (stack == null) {

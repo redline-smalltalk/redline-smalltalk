@@ -22,6 +22,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.compiler;
 
+import java.io.File;
 import java.util.List;
 
 public class Analyser implements NodeVisitor {
@@ -30,7 +31,6 @@ public class Analyser implements NodeVisitor {
 	private final String packageName;
 	private final ClassBytecodeWriter classBytecodeWriter;
 
-	private MethodBytecodeWriter methodBytecodeWriter;
 	private boolean sendToSuper = false;
 
 	public Analyser(String className, String packageName) {
@@ -92,28 +92,35 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(InstanceMethod instanceMethod) {
-		methodBytecodeWriter.openClass();
+		classBytecodeWriter.callPrimitiveVariableAt(instanceMethod.objectName, instanceMethod.line(), true);
 	}
 
 	public void visitEnd(InstanceMethod instanceMethod) {
-		methodBytecodeWriter.closeClass();
 	}
 
 	public void visit(ClassMethod classMethod) {
-		methodBytecodeWriter.openClass();
+		classBytecodeWriter.callPrimitiveVariableAt(classMethod.objectName, classMethod.line(), true);
+		classBytecodeWriter.callClass();
 	}
 
 	public void visitEnd(ClassMethod classMethod) {
-		methodBytecodeWriter.closeClass();
 	}
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
+		callPrimitiveCompileMethod(value, 0, line);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
+		callPrimitiveCompileMethod(binarySelector, 0, binarySelectorLine);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
+		callPrimitiveCompileMethod(keywords, variableNames.size(), keywordLine);
+	}
+
+	private void callPrimitiveCompileMethod(String name, int countOfArguments, int line) {
+		String fullMethodName = packageName + File.separator + className + "$" + name;
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName);
 	}
 
 	public void visit(UnarySelector unarySelector, String value, int line) {

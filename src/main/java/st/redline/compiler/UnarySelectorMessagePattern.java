@@ -30,6 +30,10 @@ public class UnarySelectorMessagePattern implements MessagePattern {
 		this.unarySelector = unarySelector;
 	}
 
+	public int line() {
+		return unarySelector.line;
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, unarySelector.value, unarySelector.line);
 	}

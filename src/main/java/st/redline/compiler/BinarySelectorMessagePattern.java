@@ -33,6 +33,10 @@ public class BinarySelectorMessagePattern implements MessagePattern {
 		variableName.index(2);
 	}
 
+	public int line() {
+		return binarySelector.line;
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, binarySelector.value, binarySelector.line, variableName);
 	}

@@ -23,4 +23,5 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline.compiler;
 
 public interface MessagePattern extends VisitableNode {
+	int line();
 }

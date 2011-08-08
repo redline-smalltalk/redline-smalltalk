@@ -44,6 +44,14 @@ public abstract class AbstractMethod implements Method {
 		return empty;
 	}
 
+	public String objectName() {
+		return objectName;
+	}
+
+	public int line() {
+		return messagePattern.line();
+	}
+
 	public void accept(NodeVisitor visitor) {
 		messagePattern.accept(visitor);
 		if (primitive != null)

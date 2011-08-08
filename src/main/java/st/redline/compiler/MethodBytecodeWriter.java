@@ -24,7 +24,36 @@ package st.redline.compiler;
 
 public class MethodBytecodeWriter extends ClassBytecodeWriter {
 
-	public MethodBytecodeWriter(String className, String packageName) {
+	private static final String SUPERCLASS = "st/redline/ProtoMethod";
+	private static final String[] APPLY_TO_SIGNATURES = {
+		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+	};
+
+	private final int countOfArguments;
+
+	public MethodBytecodeWriter(String className, String packageName, int countOfArguments) {
 		super(className, packageName);
+		System.out.println("MethodBytecodeWriter() " + className + " " + packageName + " " + countOfArguments);
+		this.countOfArguments = countOfArguments;
+	}
+
+	protected String superclass() {
+		return SUPERCLASS;
+	}
+
+	protected void openApplyToMethod() {
+		mv = cw.visitMethod(ACC_PUBLIC, "applyTo", APPLY_TO_SIGNATURES[countOfArguments], null, null);
+		mv.visitCode();
+	}
+
+	protected void writeInitializeMethod() {
+		mv = cw.visitMethod(ACC_PUBLIC, INIT, INIT_SIGNATURE, null, null);
+		mv.visitCode();
+		stackPushThis();
+		mv.visitMethodInsn(INVOKESPECIAL, superclass(), INIT, INIT_SIGNATURE);
+		mv.visitInsn(RETURN);
+		mv.visitMaxs(1, 1);
+		mv.visitEnd();
 	}
 }

@@ -1,6 +1,13 @@
+09/08/2011 Changes
+
+Added support for requesting the compiling of methods.
+Added MethodBytecodeWriter to handle writing method classes.
+
+
 08/08/2011 Changes
 
 Added generator support for reserved words nil, false, true, self and super.
+
 
 07/08/2011 Changes
 

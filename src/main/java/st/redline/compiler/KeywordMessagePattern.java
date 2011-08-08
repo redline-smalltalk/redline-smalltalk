@@ -39,6 +39,10 @@ public class KeywordMessagePattern implements MessagePattern {
 		add(keywordAndVariableName);
 	}
 
+	public int line() {
+		return line;
+	}
+
 	public void add(KeywordAndVariableName keywordAndVariableName) {
 		keywords.append(keywordAndVariableName.keyword.value);
 		keywordAndVariableName.variableName.index(index++);

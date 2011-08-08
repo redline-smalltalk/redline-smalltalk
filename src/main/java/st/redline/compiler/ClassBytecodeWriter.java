@@ -10,7 +10,10 @@ import java.io.PrintWriter;
 
 public class ClassBytecodeWriter implements Opcodes {
 
-	private static final String PROTOOBJECT = "st/redline/ProtoObject";
+	protected static final String INIT = "<init>";
+	protected static final String INIT_SIGNATURE = "()V";
+	protected static final String PROTOOBJECT = "st/redline/ProtoObject";
+
 	private static final String SUPERCLASS = PROTOOBJECT;
 	private static final String SEND = "primitiveSend";
 	private static final String SUPER_SEND = "primitiveSuperSend";
@@ -18,8 +21,6 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_SYMBOL = "primitiveSymbol";
 	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String INIT = "<init>";
-	private static final String INIT_SIGNATURE = "()V";
 	private static final String PRIMITIVE_VARIABLE_AT = "primitiveVariableAt";
 	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String[] SEND_SIGNATURES = {
@@ -28,11 +29,13 @@ public class ClassBytecodeWriter implements Opcodes {
 	};
 
 	private final String className;
+
 	private String packageName;
-	private ClassWriter cw;
-	private MethodVisitor mv;
 	private String fullyQualifiedClassName;
 	private int currentLine = 0;
+
+	protected ClassWriter cw;
+	protected MethodVisitor mv;
 
 	public ClassBytecodeWriter(String className, String packageName) {
 		this.className = className;
@@ -54,18 +57,22 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void openClass() {
-		cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, SUPERCLASS, null);
+		cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, superclass(), null);
 		cw.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
 		writeInitializeMethod();
 		openApplyToMethod();
 	}
 
-	private void openApplyToMethod() {
+	protected String superclass() {
+		return SUPERCLASS;
+	}
+
+	protected void openApplyToMethod() {
 		mv = cw.visitMethod(ACC_PUBLIC, CONSTRUCT, CONSTRUCT_SIGNATURE, null, null);
 		mv.visitCode();
 	}
 
-	private void writeInitializeMethod() {
+	protected void writeInitializeMethod() {
 		mv = cw.visitMethod(ACC_PUBLIC, INIT, INIT_SIGNATURE, null, null);
 		mv.visitCode();
 		stackPushThis();
@@ -83,7 +90,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitInsn(POP);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitivePackageRegistryRemove", "()V");
 		mv.visitInsn(RETURN);
-		mv.visitMaxs(2, 1);
+		mv.visitMaxs(1, 1);
 		mv.visitEnd();
 	}
 
@@ -197,5 +204,14 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushReceiver(line);
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_SYMBOL, PRIMITIVE_SYMBOL_SIGNATURE);
+	}
+
+	public void callClass() {
+		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "cls", "()Lst/redline/ProtoObject;");
+	}
+
+	public void callPrimitiveCompileMethod(String fullMethodName) {
+		stackPushLiteral(fullMethodName);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCompileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;)V");
 	}
 }
