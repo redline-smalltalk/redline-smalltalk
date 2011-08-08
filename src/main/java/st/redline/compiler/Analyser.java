@@ -30,6 +30,7 @@ public class Analyser implements NodeVisitor {
 	private final String packageName;
 	private final ClassBytecodeWriter classBytecodeWriter;
 
+	private MethodBytecodeWriter methodBytecodeWriter;
 	private boolean sendToSuper = false;
 
 	public Analyser(String className, String packageName) {
@@ -91,15 +92,19 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(InstanceMethod instanceMethod) {
+		methodBytecodeWriter.openClass();
 	}
 
 	public void visitEnd(InstanceMethod instanceMethod) {
+		methodBytecodeWriter.closeClass();
 	}
 
 	public void visit(ClassMethod classMethod) {
+		methodBytecodeWriter.openClass();
 	}
 
 	public void visitEnd(ClassMethod classMethod) {
+		methodBytecodeWriter.closeClass();
 	}
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
