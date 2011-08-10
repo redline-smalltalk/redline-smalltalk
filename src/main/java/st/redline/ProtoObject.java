@@ -28,6 +28,7 @@ import java.util.Stack;
 
 public class ProtoObject {
 
+	private static final Map<String, Object> methodsToBeCompiled = new HashMap<String, Object>();
 	private static final Map<String, ProtoObject> classRegistry = new HashMap<String, ProtoObject>();
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	protected static final Map<String, String> packageMap = new HashMap<String, String>();
@@ -66,6 +67,12 @@ public class ProtoObject {
 		return primitiveSend(receiver, array, "main", null);
 	}
 
+	public static void registerMethodToBeCompiledAs(Object method, String name) {
+		if (methodsToBeCompiled.containsKey(name))
+			throw new IllegalStateException("Method to be compiled registered twice: " + name);
+		methodsToBeCompiled.put(name, method);
+	}
+
 	private static ProtoObject createArray(ProtoObject receiver) {
 		return create(receiver, "Array");
 	}
@@ -83,8 +90,11 @@ public class ProtoObject {
 		return "";
 	}
 
-	public static void primitiveCompileMethod(ProtoObject receiver, String fullMethodName) {
-		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName);
+	public static void primitiveCompileMethod(ProtoObject receiver, String name) {
+		System.out.println("primitiveCompileMethod() " + receiver + " " + name);
+		Object methodToBeCompiled = methodsToBeCompiled.remove(name);
+		if (methodToBeCompiled == null)
+			throw new IllegalStateException("Method to be compiled '" + name + "' not found.");
 	}
 
 	public static void primitivePackageRegistryCurrent(String packageName) {

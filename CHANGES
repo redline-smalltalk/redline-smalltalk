@@ -1,3 +1,9 @@
+10/08/2011 Changes
+
+Added trampoline of registering a method to be compiled and a message send to have method
+compiled.
+
+
 09/08/2011 Changes
 
 Added support for requesting the compiling of methods.

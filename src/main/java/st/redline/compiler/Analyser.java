@@ -22,6 +22,9 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.compiler;
 
+import st.redline.ProtoObject;
+import st.redline.SmalltalkClassLoader;
+
 import java.io.File;
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class Analyser implements NodeVisitor {
 	private final ClassBytecodeWriter classBytecodeWriter;
 
 	private boolean sendToSuper = false;
+	private AbstractMethod currentMethod;
 
 	public Analyser(String className, String packageName) {
 		this.className = className;
@@ -93,34 +97,43 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(InstanceMethod instanceMethod) {
 		classBytecodeWriter.callPrimitiveVariableAt(instanceMethod.objectName, instanceMethod.line(), true);
+		currentMethod = instanceMethod;
 	}
 
 	public void visitEnd(InstanceMethod instanceMethod) {
+		currentMethod = null;
 	}
 
 	public void visit(ClassMethod classMethod) {
 		classBytecodeWriter.callPrimitiveVariableAt(classMethod.objectName, classMethod.line(), true);
 		classBytecodeWriter.callClass();
+		currentMethod = classMethod;
 	}
 
 	public void visitEnd(ClassMethod classMethod) {
+		currentMethod = null;
 	}
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
-		callPrimitiveCompileMethod(value, 0, line);
+		String fullMethodName = createFullMethodName(value);
+		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
-		callPrimitiveCompileMethod(binarySelector, 0, binarySelectorLine);
+		String fullMethodName = createFullMethodName(binarySelector);
+		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
-		callPrimitiveCompileMethod(keywords, variableNames.size(), keywordLine);
+		String fullMethodName = createFullMethodName(keywords);
+		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName);
 	}
 
-	private void callPrimitiveCompileMethod(String name, int countOfArguments, int line) {
-		String fullMethodName = packageName + File.separator + className + "$" + name;
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName);
+	private String createFullMethodName(String name) {
+		return packageName + File.separator + className + "$" + name;
 	}
 
 	public void visit(UnarySelector unarySelector, String value, int line) {
