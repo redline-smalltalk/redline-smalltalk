@@ -37,6 +37,10 @@ public class MethodAnalyser extends Analyser {
 		classBytecodeWriter = new MethodBytecodeWriter(className, packageName, countOfArguments);
 	}
 
+	public boolean continueMethodVisit() {
+		return true;
+	}
+
 	public void visit(InstanceMethod instanceMethod) {
 		classBytecodeWriter.openClass();
 	}

@@ -1,6 +1,7 @@
 11/08/2011 Changes
 
 Added start of method analyser to handle setup of method bytecode writing.
+Method compilation and dispatch to dynamically created methods working.
 
 
 10/08/2011 Changes

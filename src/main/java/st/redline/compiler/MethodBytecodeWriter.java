@@ -45,6 +45,17 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 	protected void openApplyToMethod() {
 		mv = cw.visitMethod(ACC_PUBLIC, "applyTo", APPLY_TO_SIGNATURES[countOfArguments], null, null);
 		mv.visitCode();
+
+		// TODO.JCL remove - just some debug / trace
+		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+		mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
+		mv.visitInsn(DUP);
+		mv.visitLdcInsn("==> applyTo ");
+		mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "(Ljava/lang/String;)V");
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 	}
 
 	protected void writeInitializeMethod() {

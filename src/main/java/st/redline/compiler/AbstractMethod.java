@@ -54,6 +54,9 @@ public abstract class AbstractMethod implements Method {
 
 	public void accept(NodeVisitor visitor) {
 		messagePattern.accept(visitor);
+		// we don't visit the rest during class analysis, but we do during method analysis.
+		if (!visitor.continueMethodVisit())
+			return;
 		if (primitive != null)
 			primitive.accept(visitor);
 		if (temporaries != null)

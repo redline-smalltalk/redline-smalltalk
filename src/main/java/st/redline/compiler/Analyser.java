@@ -51,6 +51,10 @@ public class Analyser implements NodeVisitor {
 		return classBytecodeWriter.contents();
 	}
 
+	public boolean continueMethodVisit() {
+		return false;
+	}
+
 	public void visit(Program program) {
 		classBytecodeWriter.openClass();
 	}
