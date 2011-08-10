@@ -176,6 +176,22 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushReceiver(line);
 	}
 
+	public void stackPushNumeric(int value) {
+		switch (value) {
+			case 0: mv.visitInsn(ICONST_0); break;
+			case 1: mv.visitInsn(ICONST_1); break;
+			case 2: mv.visitInsn(ICONST_2); break;
+			case 3: mv.visitInsn(ICONST_3); break;
+			case 4: mv.visitInsn(ICONST_4); break;
+			case 5: mv.visitInsn(ICONST_5); break;
+			default:
+				if (value > 5 && value < 128)
+					mv.visitIntInsn(BIPUSH, value);
+				else // SIPUSH not supported yet.
+					throw new IllegalStateException("push of integer value " + value + " not yet supported.");
+		}
+	}
+
 	public void unarySend(String unarySelector, int line, boolean sendToSuper) {
 		callPrimitiveSend(unarySelector, 0, line, sendToSuper);
 	}
@@ -210,11 +226,12 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "cls", "()Lst/redline/ProtoObject;");
 	}
 
-	public void callPrimitiveCompileMethod(String fullMethodName, String methodName, String className, String packageName) {
+	public void callPrimitiveCompileMethod(String fullMethodName, String methodName, String className, String packageName, int countOfArguments) {
 		stackPushLiteral(fullMethodName);
 		stackPushLiteral(methodName);
 		stackPushLiteral(className);
 		stackPushLiteral(packageName);
-		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCompileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+		stackPushNumeric(countOfArguments);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCompileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
 	}
 }

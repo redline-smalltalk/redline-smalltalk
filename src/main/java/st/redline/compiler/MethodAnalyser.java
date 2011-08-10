@@ -26,24 +26,31 @@ import java.util.List;
 
 public class MethodAnalyser extends Analyser {
 
-	public MethodAnalyser(String className, String packageName) {
+	private final int countOfArguments;
+
+	public MethodAnalyser(String className, String packageName, int countOfArguments) {
 		super(className, packageName);
+		this.countOfArguments = countOfArguments;
 	}
 
 	protected void initialize() {
-		classBytecodeWriter = new MethodBytecodeWriter(className, packageName);
+		classBytecodeWriter = new MethodBytecodeWriter(className, packageName, countOfArguments);
 	}
 
 	public void visit(InstanceMethod instanceMethod) {
+		classBytecodeWriter.openClass();
 	}
 
 	public void visitEnd(InstanceMethod instanceMethod) {
+		classBytecodeWriter.closeClass();
 	}
 
 	public void visit(ClassMethod classMethod) {
+		classBytecodeWriter.openClass();
 	}
 
 	public void visitEnd(ClassMethod classMethod) {
+		classBytecodeWriter.closeClass();
 	}
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {

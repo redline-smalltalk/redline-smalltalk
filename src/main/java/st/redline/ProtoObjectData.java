@@ -1,5 +1,6 @@
 package st.redline;
 
+import java.nio.channels.SelectableChannel;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,6 +103,7 @@ public abstract class ProtoObjectData {
 		}
 
 		protected void methodAtPut(String selector, ProtoMethod method) {
+			System.out.println("methodAtPut() " + selector + " " + method);
 			methods.put(selector, method);
 		}
 

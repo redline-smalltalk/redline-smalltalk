@@ -69,6 +69,10 @@ public class SmalltalkClassLoader extends ClassLoader {
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
 
+	public Class defineClass(byte[] classBytes) {
+		return defineClass(null, classBytes, 0, classBytes.length);
+	}
+
 	private byte[] compile(SourceFile sourceFile) {
 		return createCompiler(sourceFile).compile();
 	}

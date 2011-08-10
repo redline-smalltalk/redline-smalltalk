@@ -121,19 +121,19 @@ public class Analyser implements NodeVisitor {
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
 		String fullMethodName = createFullMethodName(value);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, value, className, packageName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, value, className, packageName, 0);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
 		String fullMethodName = createFullMethodName(binarySelector);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, binarySelector, className, packageName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, binarySelector, className, packageName, 1);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
 		String fullMethodName = createFullMethodName(keywords);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, keywords, className, packageName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, keywords, className, packageName, variableNames.size());
 	}
 
 	private String createFullMethodName(String name) {

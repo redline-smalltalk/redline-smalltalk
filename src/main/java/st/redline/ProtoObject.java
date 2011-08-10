@@ -22,13 +22,16 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import st.redline.compiler.AbstractMethod;
+import st.redline.compiler.MethodAnalyser;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
 public class ProtoObject {
 
-	private static final Map<String, Object> methodsToBeCompiled = new HashMap<String, Object>();
+	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 	private static final Map<String, ProtoObject> classRegistry = new HashMap<String, ProtoObject>();
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	protected static final Map<String, String> packageMap = new HashMap<String, String>();
@@ -67,7 +70,7 @@ public class ProtoObject {
 		return primitiveSend(receiver, array, "main", null);
 	}
 
-	public static void registerMethodToBeCompiledAs(Object method, String name) {
+	public static void registerMethodToBeCompiledAs(AbstractMethod method, String name) {
 		if (methodsToBeCompiled.containsKey(name))
 			throw new IllegalStateException("Method to be compiled registered twice: " + name);
 		methodsToBeCompiled.put(name, method);
@@ -90,11 +93,22 @@ public class ProtoObject {
 		return "";
 	}
 
-	public static void primitiveCompileMethod(ProtoObject receiver, String fullMethodName, String methodName, String className, String packageName) {
-		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName);
-		Object methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
+	public static void primitiveCompileMethod(ProtoObject receiver, String fullMethodName, String methodName, String className, String packageName, int countOfArguments) {
+		// TODO.JCL clean this up.
+		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName + " " + countOfArguments);
+		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
 		if (methodToBeCompiled == null)
 			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
+		MethodAnalyser methodAnalyser = new MethodAnalyser(className + '$' + methodName, packageName, countOfArguments);
+		methodToBeCompiled.accept(methodAnalyser);
+		Class methodClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(methodAnalyser.classBytes());
+		ProtoMethod method;
+		try {
+			method = (ProtoMethod) methodClass.newInstance();
+		} catch (Exception e) {
+			throw new RedlineException(e);
+		}
+		receiver.methodAtPut(methodName, method);
 	}
 
 	public static void primitivePackageRegistryCurrent(String packageName) {
