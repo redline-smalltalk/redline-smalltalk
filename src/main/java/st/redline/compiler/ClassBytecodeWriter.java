@@ -210,8 +210,11 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "cls", "()Lst/redline/ProtoObject;");
 	}
 
-	public void callPrimitiveCompileMethod(String fullMethodName) {
+	public void callPrimitiveCompileMethod(String fullMethodName, String methodName, String className, String packageName) {
 		stackPushLiteral(fullMethodName);
-		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCompileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;)V");
+		stackPushLiteral(methodName);
+		stackPushLiteral(className);
+		stackPushLiteral(packageName);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCompileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 	}
 }

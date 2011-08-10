@@ -22,41 +22,36 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.compiler;
 
-public class MethodBytecodeWriter extends ClassBytecodeWriter {
+import java.util.List;
 
-	private static final String SUPERCLASS = "st/redline/ProtoMethod";
-	private static final String[] APPLY_TO_SIGNATURES = {
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-	};
+public class MethodAnalyser extends Analyser {
 
-	private int countOfArguments;
-
-	public MethodBytecodeWriter(String className, String packageName) {
+	public MethodAnalyser(String className, String packageName) {
 		super(className, packageName);
-		System.out.println("MethodBytecodeWriter() " + className + " " + packageName);
 	}
 
-	public void countOfArguments(int countOfArguments) {
-		this.countOfArguments = countOfArguments;
+	protected void initialize() {
+		classBytecodeWriter = new MethodBytecodeWriter(className, packageName);
 	}
 
-	protected String superclass() {
-		return SUPERCLASS;
+	public void visit(InstanceMethod instanceMethod) {
 	}
 
-	protected void openApplyToMethod() {
-		mv = cw.visitMethod(ACC_PUBLIC, "applyTo", APPLY_TO_SIGNATURES[countOfArguments], null, null);
-		mv.visitCode();
+	public void visitEnd(InstanceMethod instanceMethod) {
 	}
 
-	protected void writeInitializeMethod() {
-		mv = cw.visitMethod(ACC_PUBLIC, INIT, INIT_SIGNATURE, null, null);
-		mv.visitCode();
-		stackPushThis();
-		mv.visitMethodInsn(INVOKESPECIAL, superclass(), INIT, INIT_SIGNATURE);
-		mv.visitInsn(RETURN);
-		mv.visitMaxs(1, 1);
-		mv.visitEnd();
+	public void visit(ClassMethod classMethod) {
+	}
+
+	public void visitEnd(ClassMethod classMethod) {
+	}
+
+	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
+	}
+
+	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
+	}
+
+	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
 	}
 }

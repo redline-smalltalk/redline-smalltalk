@@ -90,11 +90,11 @@ public class ProtoObject {
 		return "";
 	}
 
-	public static void primitiveCompileMethod(ProtoObject receiver, String name) {
-		System.out.println("primitiveCompileMethod() " + receiver + " " + name);
-		Object methodToBeCompiled = methodsToBeCompiled.remove(name);
+	public static void primitiveCompileMethod(ProtoObject receiver, String fullMethodName, String methodName, String className, String packageName) {
+		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName);
+		Object methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
 		if (methodToBeCompiled == null)
-			throw new IllegalStateException("Method to be compiled '" + name + "' not found.");
+			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
 	}
 
 	public static void primitivePackageRegistryCurrent(String packageName) {

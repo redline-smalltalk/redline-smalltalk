@@ -30,16 +30,20 @@ import java.util.List;
 
 public class Analyser implements NodeVisitor {
 
-	private final String className;
-	private final String packageName;
-	private final ClassBytecodeWriter classBytecodeWriter;
+	protected final String className;
+	protected final String packageName;
 
+	protected ClassBytecodeWriter classBytecodeWriter;
 	private boolean sendToSuper = false;
 	private AbstractMethod currentMethod;
 
 	public Analyser(String className, String packageName) {
 		this.className = className;
 		this.packageName = packageName;
+		initialize();
+	}
+
+	protected void initialize() {
 		classBytecodeWriter = new ClassBytecodeWriter(className, packageName);
 	}
 
@@ -117,19 +121,19 @@ public class Analyser implements NodeVisitor {
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
 		String fullMethodName = createFullMethodName(value);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, value, className, packageName);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
 		String fullMethodName = createFullMethodName(binarySelector);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, binarySelector, className, packageName);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
 		String fullMethodName = createFullMethodName(keywords);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, keywords, className, packageName);
 	}
 
 	private String createFullMethodName(String name) {

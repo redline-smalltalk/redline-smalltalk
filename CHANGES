@@ -1,3 +1,8 @@
+11/08/2011 Changes
+
+Added start of method analyser to handle setup of method bytecode writing.
+
+
 10/08/2011 Changes
 
 Added trampoline of registering a method to be compiled and a message send to have method
