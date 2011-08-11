@@ -9,3 +9,6 @@ Object < #Behavior.
 	"Primitive. Answer an instance of the receiver (which is a class)." 
 	<primitive: 70>
 
+- initialize
+	super initialize.
+
