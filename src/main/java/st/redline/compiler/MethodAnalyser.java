@@ -54,6 +54,8 @@ public class MethodAnalyser extends Analyser {
 	}
 
 	public void visitEnd(InstanceMethod instanceMethod) {
+		if (instanceMethod.isEmpty())
+			classBytecodeWriter.stackPushReceiver(instanceMethod.line());
 		classBytecodeWriter.closeClass();
 	}
 
@@ -62,6 +64,8 @@ public class MethodAnalyser extends Analyser {
 	}
 
 	public void visitEnd(ClassMethod classMethod) {
+		if (classMethod.isEmpty())
+			classBytecodeWriter.stackPushReceiver(classMethod.line());
 		classBytecodeWriter.closeClass();
 	}
 
