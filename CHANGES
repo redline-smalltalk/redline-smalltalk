@@ -3,6 +3,7 @@
 Added start of method analyser to handle setup of method bytecode writing.
 Method compilation and dispatch to dynamically created methods working.
 Primitives <primitive: xx> being called.
+Implemented basicNew.
 
 
 10/08/2011 Changes
