@@ -37,6 +37,14 @@ public class MethodAnalyser extends Analyser {
 		classBytecodeWriter = new MethodBytecodeWriter(className, packageName, countOfArguments);
 	}
 
+	public int methodArgumentCount() {
+		return countOfArguments;
+	}
+
+	public int methodTemporariesCount() {
+		return 0;
+	}
+
 	public boolean continueMethodVisit() {
 		return true;
 	}

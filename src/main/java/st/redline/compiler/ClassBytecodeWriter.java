@@ -112,7 +112,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitEnd();
 	}
 
-	private void visitLine(int line) {
+	protected void visitLine(int line) {
 		// Note: we don't visit the same line repeatedly. Is this and ok debug experience? Need to check with java debugger.
 		if (line == currentLine)
 			return;
@@ -233,5 +233,9 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushLiteral(packageName);
 		stackPushNumeric(countOfArguments);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCompileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
+	}
+
+	public void callToPrimitiveByNumber(int methodArgumentCount, int methodTemporariesCount, String primitive, int line) {
+		throw new IllegalStateException("Can't call primitives from outside of a method.");
 	}
 }

@@ -54,6 +54,14 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 		mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "(Ljava/lang/String;)V");
 		mv.visitVarInsn(ALOAD, 0);
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
+		mv.visitLdcInsn(" ");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
+		mv.visitLdcInsn(" ");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+		mv.visitVarInsn(ALOAD, 2);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;");
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 	}
@@ -66,5 +74,28 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();
+	}
+
+	public void callToPrimitiveByNumber(int methodArgumentCount, int methodTemporariesCount, String primitive, int line) {
+		if (methodArgumentCount > APPLY_TO_SIGNATURES.length)
+			throw new IllegalStateException("Can't handle " + methodArgumentCount + " arguments to primitive.");
+		visitLine(line);
+		mv.visitVarInsn(ALOAD, 1);  // receiver.
+		mv.visitVarInsn(ALOAD, 2);  // class method was found in.
+		pushMethodArguments(methodArgumentCount);
+		pushNulls(methodArgumentCount + 2);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitive_"+primitive, APPLY_TO_SIGNATURES[APPLY_TO_SIGNATURES.length - 1]);
+		// TODO.JCL - cater for case where primitive fails - for now return primitive result.
+		mv.visitInsn(ARETURN);
+	}
+
+	private void pushMethodArguments(int methodArgumentCount) {
+		for (int i = 0; i < methodArgumentCount; i++)
+			mv.visitVarInsn(ALOAD, (i + 3));
+	}
+
+	private void pushNulls(int countOfValuesPushed) {
+		for (int i = countOfValuesPushed; i < APPLY_TO_SIGNATURES.length + 1; i++)
+			mv.visitInsn(ACONST_NULL);
 	}
 }

@@ -321,4 +321,9 @@ public class ProtoObject {
 	public boolean isClass() {
 		return data.isClass();
 	}
+
+	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1) {
+		System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
+		return null;
+	}
 }

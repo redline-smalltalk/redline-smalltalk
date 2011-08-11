@@ -55,6 +55,14 @@ public class Analyser implements NodeVisitor {
 		return false;
 	}
 
+	public int methodArgumentCount() {
+		throw new IllegalStateException("TODO - handle");
+	}
+
+	public int methodTemporariesCount() {
+		throw new IllegalStateException("TODO - handle");
+	}
+
 	public void visit(Program program) {
 		classBytecodeWriter.openClass();
 	}
@@ -213,6 +221,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Primitive primitive, String value, int line) {
+		classBytecodeWriter.callToPrimitiveByNumber(methodArgumentCount(), methodTemporariesCount(), value, line);
 	}
 
 	public void visit(Symbol symbol, String value, int line) {
