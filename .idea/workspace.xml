@@ -107,7 +107,7 @@
       <file leaf-file-name="MethodBytecodeWriter.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="27" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.82608694">
+            <state line="57" column="26" selection-start="2733" selection-end="2748" vertical-scroll-proportion="0.66509986">
               <folding />
             </state>
           </provider>
@@ -176,7 +176,9 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -411,8 +413,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -429,9 +429,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -576,7 +576,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1026" extended-state="6" />
+    <frame x="-8" y="0" width="1696" height="1034" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -701,42 +701,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/InstanceMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="46" selection-start="1312" selection-end="1312" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="20" selection-start="1328" selection-end="1347" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="24" column="46" selection-start="1312" selection-end="1312" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/AbstractMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="2170" selection-end="2170" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="56" column="0" selection-start="2170" selection-end="2170" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="20" selection-start="1328" selection-end="1347" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="1956" selection-end="2015" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="56" column="0" selection-start="1956" selection-end="2015" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodAnalyser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="19" selection-start="1720" selection-end="1720" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="40" column="19" selection-start="1720" selection-end="1720" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="27" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.82608694">
+        <state line="57" column="26" selection-start="2733" selection-end="2748" vertical-scroll-proportion="0.66509986">
           <folding />
         </state>
       </provider>
