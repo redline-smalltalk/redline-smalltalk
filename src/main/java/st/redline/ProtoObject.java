@@ -52,13 +52,18 @@ public class ProtoObject {
 		this.name = name;
 	}
 
+	public ProtoObject(boolean isClass) {
+		data = isClass ? ProtoObjectData.classData() : ProtoObjectData.instanceData();
+	}
+
+	public ProtoObject(ProtoObject cls) {
+		this(false);
+		cls(cls);
+	}
+
 	public String toString() {
 		if (name != null) return name;
 		return super.toString();
-	}
-
-	public ProtoObject(boolean isClass) {
-		data = isClass ? ProtoObjectData.classData() : ProtoObjectData.instanceData();
 	}
 
 	public static ProtoObject primitiveMain(ProtoObject receiver, String[] args) {
@@ -324,6 +329,6 @@ public class ProtoObject {
 
 	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1) {
 		System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
-		return null;
+		return new ProtoObject(receiver);
 	}
 }
