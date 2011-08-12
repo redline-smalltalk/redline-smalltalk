@@ -66,16 +66,6 @@ public class ProtoObject {
 		return super.toString();
 	}
 
-	public static ProtoObject primitiveMain(ProtoObject receiver, String[] args) {
-		System.out.println("primitiveMain()");
-		ProtoObject array = createArray(receiver);
-		if (args.length > 1) {
-			// TODO.JCL add each arg to array.
-			throw new IllegalArgumentException("TODO - handle command line args.");
-		}
-		return primitiveSend(receiver, array, "main:", null);
-	}
-
 	public static void registerMethodToBeCompiledAs(AbstractMethod method, String name) {
 		if (methodsToBeCompiled.containsKey(name))
 			throw new IllegalStateException("Method to be compiled registered twice: " + name);
@@ -88,7 +78,7 @@ public class ProtoObject {
 
 	private static ProtoObject create(ProtoObject receiver, String name) {
 		ProtoObject cls = primitiveResolveObject(receiver, name);
-		System.out.println(cls);
+		// System.out.println(cls);
 		return primitiveSend(cls, "new", null);
 	}
 
@@ -101,7 +91,7 @@ public class ProtoObject {
 
 	public static void primitiveCompileMethod(ProtoObject receiver, String fullMethodName, String methodName, String className, String packageName, int countOfArguments) {
 		// TODO.JCL clean this up.
-		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName + " " + countOfArguments);
+		// System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName + " " + countOfArguments);
 		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
 		if (methodToBeCompiled == null)
 			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
@@ -133,7 +123,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveCreateSubclass(ProtoObject receiver, String name) {
-		System.out.println("primitiveCreateSubclass() " + receiver + " " + name);
+		// System.out.println("primitiveCreateSubclass() " + receiver + " " + name);
 		if (name != null && classRegistry.containsKey(name))
 			return classRegistry.get(name);
 		return createSubclass(createClass(receiver), createMetaclass(receiver));
@@ -158,7 +148,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
-		System.out.println("primitiveRegisterAs() " + String.valueOf(name) + " " + receiver);
+		// System.out.println("primitiveRegisterAs() " + String.valueOf(name) + " " + receiver);
 		classRegistry.put(name, receiver);
 		return receiver;
 	}
@@ -196,7 +186,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
-		System.out.println("primitiveSend() " + selector);
+		// System.out.println("primitiveSend() " + selector);
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls());
@@ -219,7 +209,7 @@ public class ProtoObject {
 	}
 
 //	public ProtoObject ping() {
-//		System.out.println("here1 " + this + " " + this.cls() + " Proto  " + classRegistry.get("ProtoObject") + " symbol " + classRegistry.get("Symbol"));
+//		// System.out.println("here1 " + this + " " + this.cls() + " Proto  " + classRegistry.get("ProtoObject") + " symbol " + classRegistry.get("Symbol"));
 //		return this;
 //	}
 
@@ -238,7 +228,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveResolveObject(ProtoObject receiver, String name) {
-		System.out.println("primitiveResolveObject() " + name);
+		// System.out.println("primitiveResolveObject() " + name);
 		ProtoObject object = receiver.resolveObject(name);
 		if (object != null)
 			return object;
@@ -329,7 +319,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1) {
-		System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
+		// System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
 		return new ProtoObject(receiver);
 	}
 }

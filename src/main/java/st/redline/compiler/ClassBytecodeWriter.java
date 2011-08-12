@@ -44,8 +44,13 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void initialize() {
-		cw = tracingClassWriter();
+//		cw = tracingClassWriter();
+		cw = nonTracingClassWriter();
 		fullyQualifiedClassName = packageName.length() > 0 ? packageName + File.separator + className : className;
+	}
+
+	private ClassWriter nonTracingClassWriter() {
+		return new ClassWriter(ClassWriter.COMPUTE_MAXS);
 	}
 
 	private ClassWriter tracingClassWriter() {

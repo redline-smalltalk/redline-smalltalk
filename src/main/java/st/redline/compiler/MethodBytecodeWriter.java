@@ -34,7 +34,7 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 
 	public MethodBytecodeWriter(String className, String packageName, int countOfArguments) {
 		super(className, packageName);
-		System.out.println("MethodBytecodeWriter() " + className + " " + packageName);
+		// System.out.println("MethodBytecodeWriter() " + className + " " + packageName);
 		this.countOfArguments = countOfArguments;
 	}
 

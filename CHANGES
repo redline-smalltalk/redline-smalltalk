@@ -1,3 +1,9 @@
+13/08/2011 Changes
+
+Removed a lot of trace - will put back later.
+Continuing with implementing Runtime.
+
+
 12/08/2011 Changes
 
 Empty methods now answer receiver.
