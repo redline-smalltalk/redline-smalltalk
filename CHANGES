@@ -1,6 +1,7 @@
 12/08/2011 Changes
 
 Empty methods now answer receiver.
+Changed message send when a class is invoked by stic to "main:"
 
 
 11/08/2011 Changes

@@ -71,8 +71,9 @@ public class ProtoObject {
 		ProtoObject array = createArray(receiver);
 		if (args.length > 1) {
 			// TODO.JCL add each arg to array.
+			throw new IllegalArgumentException("TODO - handle command line args.");
 		}
-		return primitiveSend(receiver, array, "main", null);
+		return primitiveSend(receiver, array, "main:", null);
 	}
 
 	public static void registerMethodToBeCompiledAs(AbstractMethod method, String name) {
