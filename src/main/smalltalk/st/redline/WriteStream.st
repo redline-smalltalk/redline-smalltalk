@@ -1,3 +1,3 @@
 
-PositionableStream < #WriteStream.
+PositionableStream < #WriteStream
 

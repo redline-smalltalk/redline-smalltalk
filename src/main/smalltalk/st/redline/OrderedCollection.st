@@ -1,3 +1,3 @@
 
-SequenceableCollection < #OrderedCollection.
+SequenceableCollection < #OrderedCollection
 

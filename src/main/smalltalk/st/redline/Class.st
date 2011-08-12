@@ -1,3 +1,3 @@
 
-ClassDescription < #Class.
+ClassDescription < #Class
 

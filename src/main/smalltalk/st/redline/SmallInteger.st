@@ -1,3 +1,3 @@
 
-Integer < #SmallInteger.
+Integer < #SmallInteger
 

@@ -1,5 +1,5 @@
 
-Object < #Behavior.
+Object < #Behavior
 
 - new
 	"Answer a new initialized instance of the receiver."

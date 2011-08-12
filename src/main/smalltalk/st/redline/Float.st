@@ -1,3 +1,3 @@
 
-Number < #Float.
+Number < #Float
 

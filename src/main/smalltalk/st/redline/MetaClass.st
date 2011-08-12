@@ -1,3 +1,3 @@
 
-ClassDescription < #MetaClass.
+ClassDescription < #MetaClass
 

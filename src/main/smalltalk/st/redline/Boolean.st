@@ -1,3 +1,3 @@
 
-Object < #Boolean.
+Object < #Boolean
 

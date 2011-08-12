@@ -1,3 +1,3 @@
 
-Magnitude < #Date.
+Magnitude < #Date
 

@@ -1,3 +1,3 @@
 
-Object < #UndefinedObject.
+Object < #UndefinedObject
 

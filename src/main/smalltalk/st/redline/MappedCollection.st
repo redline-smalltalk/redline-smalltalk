@@ -1,3 +1,3 @@
 
-Collection < #MappedCollection.
+Collection < #MappedCollection
 

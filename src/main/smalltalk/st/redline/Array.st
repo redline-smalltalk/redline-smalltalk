@@ -1,3 +1,3 @@
 
-ArrayedCollection < #Array.
+ArrayedCollection < #Array
 

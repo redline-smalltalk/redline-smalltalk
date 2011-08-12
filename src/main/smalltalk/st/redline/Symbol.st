@@ -1,3 +1,3 @@
 
-String < #Symbol.
+String < #Symbol
 

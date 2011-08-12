@@ -1,3 +1,3 @@
 
-Integer < #LargeNegativeInteger.
+Integer < #LargeNegativeInteger
 

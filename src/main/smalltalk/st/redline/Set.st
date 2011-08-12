@@ -1,2 +1,2 @@
 
-Collection < #Set.
+Collection < #Set

@@ -1,3 +1,3 @@
 
-Object < #Stream.
+Object < #Stream
 

@@ -1,3 +1,3 @@
 
-Boolean < #True.
+Boolean < #True
 

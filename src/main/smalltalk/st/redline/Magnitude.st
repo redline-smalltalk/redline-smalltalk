@@ -1,3 +1,3 @@
 
-Object < #Magnitude.
+Object < #Magnitude
 

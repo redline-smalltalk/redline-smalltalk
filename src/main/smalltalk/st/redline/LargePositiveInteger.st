@@ -1,3 +1,3 @@
 
-Integer < #LargePositiveInteger.
+Integer < #LargePositiveInteger
 

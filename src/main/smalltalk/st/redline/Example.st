@@ -1,3 +1,3 @@
 
-Object < #Example.
+Object < #Example
 

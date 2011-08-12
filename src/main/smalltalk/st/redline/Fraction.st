@@ -1,3 +1,3 @@
 
-Number < #Fraction.
+Number < #Fraction
 

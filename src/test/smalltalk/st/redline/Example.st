@@ -1,3 +1,4 @@
 
-Object < #Example.
+Object < #Example
+
 

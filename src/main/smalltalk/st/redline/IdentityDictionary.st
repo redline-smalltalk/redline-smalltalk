@@ -1,3 +1,3 @@
 
-Dictionary < #IdentityDictionary.
+Dictionary < #IdentityDictionary
 

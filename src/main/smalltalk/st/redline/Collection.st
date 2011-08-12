@@ -1,3 +1,3 @@
 
-Object < #Collection.
+Object < #Collection
 

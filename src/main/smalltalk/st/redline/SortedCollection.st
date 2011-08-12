@@ -1,3 +1,3 @@
 
-OrderedCollection < #SortedCollection.
+OrderedCollection < #SortedCollection
 

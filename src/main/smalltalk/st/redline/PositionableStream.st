@@ -1,3 +1,3 @@
 
-Stream < #PositionableStream.
+Stream < #PositionableStream
 

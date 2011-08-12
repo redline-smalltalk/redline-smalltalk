@@ -1,3 +1,3 @@
 
-SequenceableCollection < #LinkedList.
+SequenceableCollection < #LinkedList
 

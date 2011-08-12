@@ -1,4 +1,4 @@
 
-Collection < #Bag.
+Collection < #Bag
 
 

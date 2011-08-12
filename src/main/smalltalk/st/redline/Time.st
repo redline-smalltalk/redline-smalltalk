@@ -1,3 +1,3 @@
 
-Magnitude < #Time.
+Magnitude < #Time
 

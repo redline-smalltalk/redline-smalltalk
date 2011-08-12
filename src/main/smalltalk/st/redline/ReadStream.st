@@ -1,3 +1,3 @@
 
-PositionableStream < #ReadStream.
+PositionableStream < #ReadStream
 
