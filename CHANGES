@@ -1,3 +1,9 @@
+14/08/2011 Changes
+
+Added example script calling a call. Shows up a need to handle exceptions a little better.
+ie: when the script throws an exception, it looks like the class isnt found which isnt true.
+
+
 13/08/2011 Changes
 
 Removed a lot of trace - will put back later.

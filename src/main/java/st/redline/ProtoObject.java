@@ -245,8 +245,13 @@ public class ProtoObject {
 			return primitiveResolveObject(this, fullyQualifiedName);
 		// It is expected the loading of an object results in the registering a Smalltalk class in the class registry.
 		// *NOTE* if class is not registered the will be a NullPointerException as we return 'null' here.
-		if (loadObject(name))
-			return classRegistry.get(name);
+		ProtoObject object = loadObject(name);
+		if (object != null) {
+			if (classRegistry.containsKey(name))
+				return classRegistry.get(name);
+			// We loaded a class and created an instance, it may be a script so return it.
+			return object;
+		}
 		return null;
 	}
 
@@ -257,11 +262,11 @@ public class ProtoObject {
 		return packageMap.get(name);
 	}
 
-	protected boolean loadObject(String name) {
+	protected ProtoObject loadObject(String name) {
 		try {
-			return Class.forName(name, true, classLoader()).newInstance() != null;
+			return (ProtoObject) Class.forName(name, true, classLoader()).newInstance();
 		} catch (Exception e) {
-			return false;
+			return null;
 		}
 	}
 
