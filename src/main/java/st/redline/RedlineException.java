@@ -23,7 +23,22 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline;
 
 public class RedlineException extends RuntimeException {
-	public RedlineException(Exception e) {
-		super(e);
+
+	public static RedlineException withCause(Exception exception) {
+		if (exception instanceof RedlineException)
+			return (RedlineException) exception;
+		return new RedlineException(exception);
+	}
+
+	public static RedlineException withMessage(String message) {
+		return new RedlineException(message);
+	}
+
+	private RedlineException(Exception exception) {
+		super(exception);
+	}
+
+	private RedlineException(String message) {
+		super(message);
 	}
 }

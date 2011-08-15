@@ -126,7 +126,7 @@ public class Bootstrapper {
 		try {
 			smalltalk.findClass(name).newInstance();
 		} catch (Exception e) {
-			throw new RedlineException(e);
+			throw RedlineException.withCause(e);
 		}
 	}
 

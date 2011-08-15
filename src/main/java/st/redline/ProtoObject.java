@@ -102,7 +102,7 @@ public class ProtoObject {
 		try {
 			method = (ProtoMethod) methodClass.newInstance();
 		} catch (Exception e) {
-			throw new RedlineException(e);
+			throw RedlineException.withCause(e);
 		}
 		receiver.methodAtPut(methodName, method);
 	}
@@ -214,7 +214,7 @@ public class ProtoObject {
 //	}
 
 	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector, ProtoObject[] arguments) {
-		throw new RuntimeException("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
+		throw RedlineException.withMessage("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
 	}
 
 	private static ProtoMethod methodFor(ProtoObject object, String selector, ProtoObject[] methodForResult) {
@@ -266,7 +266,7 @@ public class ProtoObject {
 		try {
 			return (ProtoObject) Class.forName(name, true, classLoader()).newInstance();
 		} catch (Exception e) {
-			return null;
+			throw RedlineException.withCause(e);
 		}
 	}
 

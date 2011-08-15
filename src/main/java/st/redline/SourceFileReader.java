@@ -45,7 +45,7 @@ public class SourceFileReader {
 			while ((line = lineReader.readLine()) != null)
 				lineBuffer.append(line).append('\n');
 		} catch (IOException e) {
-			throw new IllegalStateException("Error reading file: " + e.getMessage(), e);
+			throw RedlineException.withCause(e);
 		}
 		return lineBuffer.toString();
 	}
@@ -54,7 +54,7 @@ public class SourceFileReader {
 		try {
 			return new java.io.FileReader(file);
 		} catch (FileNotFoundException e) {
-			throw new IllegalStateException(e);
+			throw RedlineException.withCause(e);
 		}
 	}
 

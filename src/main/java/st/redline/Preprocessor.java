@@ -42,10 +42,9 @@ public class Preprocessor {
 			while (lexer.nextToken().getType() != Token.EOF) {
 			}
 			return lexer.getOutput();
-		} catch (Exception ex) {
+		} catch (Exception e) {
 			System.err.println("Preprocessor threw an exception:\n\n");
-			ex.printStackTrace();
-			return "";
+			throw RedlineException.withCause(e);
 		}
  	}
 }

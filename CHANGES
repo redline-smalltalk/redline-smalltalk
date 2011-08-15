@@ -1,3 +1,9 @@
+15/08/2011 Changes
+
+Cleaned up Exception handling so we don't nest causal exceptions that don't need nesting.
+(smaller stack traces)
+
+
 14/08/2011 Changes
 
 Added example script calling a call. Shows up a need to handle exceptions a little better.

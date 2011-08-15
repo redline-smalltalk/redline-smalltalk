@@ -38,7 +38,7 @@ public class SmalltalkClassLoader extends ClassLoader {
 		try {
 			((ProtoObject) loadClass("st.redline.ProtoObject").newInstance()).bootstrap();
 		} catch (Exception e) {
-			throw new RedlineException(e);
+			throw RedlineException.withCause(e);
 		}
 	}
 
@@ -60,7 +60,7 @@ public class SmalltalkClassLoader extends ClassLoader {
 		try {
 			return findSystemClass(className);
 		} catch (ClassNotFoundException e) {
-			return null;
+			throw RedlineException.withCause(e);
 		}
 	}
 

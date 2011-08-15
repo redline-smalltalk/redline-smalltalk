@@ -62,7 +62,7 @@ public class Compiler {
 		try {
 			return smalltalkParser.program();
 		} catch (RecognitionException e) {
-			throw new IllegalStateException(e);
+			throw RedlineException.withCause(e);
 		}
 	}
 
