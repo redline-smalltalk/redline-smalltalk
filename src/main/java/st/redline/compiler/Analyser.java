@@ -310,4 +310,12 @@ public class Analyser implements NodeVisitor {
 		classBytecodeWriter.visitLine(line);
 		classBytecodeWriter.methodVisitor().visitMethodInsn(opcode, owner, name, description);
 	}
+
+	public void visit(JvmLoadJavaValue jvmLoadJavaValue, int line) {
+		classBytecodeWriter.loadJavaValue(line);
+	}
+
+	public void visit(JvmStoreJavaValue jvmStoreJavaValue, int line) {
+		classBytecodeWriter.storeJavaValue(line);
+	}
 }

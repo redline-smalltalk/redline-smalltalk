@@ -247,4 +247,14 @@ public class ClassBytecodeWriter implements Opcodes {
 	public void callToPrimitiveByNumber(int methodArgumentCount, int methodTemporariesCount, String primitive, int line) {
 		throw new IllegalStateException("Can't call primitives from outside of a method.");
 	}
+
+	public void loadJavaValue(int line) {
+		stackPushReceiver(line);
+		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "javaValue", "()Ljava/lang/Object;");
+	}
+
+	public void storeJavaValue(int line) {
+		stackPushReceiver(line);
+		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "javaValue", "(Ljava/lang/Object;)V");
+	}
 }

@@ -8,8 +8,8 @@ public abstract class ProtoObjectData {
 	private ProtoObject cls;
 	private Map<String, ProtoObject> variables;
 
-	abstract void javaValue(String value);
-	abstract String javaValue();
+	abstract void javaValue(Object value);
+	abstract Object javaValue();
 	abstract void superclass(ProtoObject superclass);
 	abstract ProtoObject superclass();
 	abstract ProtoMethod methodAt(String selector);
@@ -36,13 +36,13 @@ public abstract class ProtoObjectData {
 
 	private static class InstanceData extends ProtoObjectData {
 
-		private String javaValue;
+		private Object javaValue;
 
-		protected void javaValue(String value) {
+		protected void javaValue(Object value) {
 			javaValue = value;
 		}
 
-		protected String javaValue() {
+		protected Object javaValue() {
 			return javaValue;
 		}
 
@@ -77,11 +77,11 @@ public abstract class ProtoObjectData {
 		private Map<String, ProtoMethod> methods = new HashMap<String, ProtoMethod>();
 		private Map<String, String> packages;
 
-		protected void javaValue(String value) {
+		protected void javaValue(Object value) {
 			throw new IllegalStateException("A Class can't have a javaValue.");
 		}
 
-		protected String javaValue() {
+		protected Object javaValue() {
 			throw new IllegalStateException("A Class doesn't have a javaValue.");
 		}
 

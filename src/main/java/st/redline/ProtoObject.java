@@ -303,11 +303,11 @@ public class ProtoObject {
 		return data.superclass();
 	}
 
-	public void javaValue(String value) {
+	public void javaValue(Object value) {
 		data.javaValue(value);
 	}
 
-	public String javaValue() {
+	public Object javaValue() {
 		return data.javaValue();
 	}
 
