@@ -89,6 +89,7 @@ public interface NodeVisitor {
 	void visit(JvmVisitLdcInsn jvmVisitLdcInsn, String literal, int line);
 	void visit(JvmVisitVarInsn jvmVisitVarInsn, int opcode, int number, int line);
 	void visit(JvmVisitMethodInsn jvmVisitMethodInsn, int opcode, String owner, String name, String description, int line);
+	void visit(JvmVisitTypeInsn jvmVisitTypeInsn, int opcode, String type, int line);
 	void visit(JvmLoadJavaValue jvmLoadJavaValue, int line);
 	void visit(JvmStoreJavaValue jvmStoreJavaValue, int line);
 }
