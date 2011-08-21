@@ -82,7 +82,10 @@ jvmExpression returns [JvmExpression n]
 	;
 
 visitInsn returns [JvmExpression n]
-	:	'<visitInsn:' jvmOpcode '>' {$n = new JvmVisitInsn($jvmOpcode.n);}		
+	:	'<visitInsn:' jvmOpcode '>' {$n = new JvmVisitInsn($jvmOpcode.n);}
+	|	'<visitLdcInsn:' stringConstant '>' {$n = new JvmVisitLdcInsn($stringConstant.n);}
+	|	'<visitVarInsn:' jvmOpcode ',' DIGITS '>' {$n = new JvmVisitVarInsn($jvmOpcode.n, $DIGITS.text);}
+	|	'<visitMethodInsn:' jvmOpcode ','  o=stringConstant ',' a=stringConstant ',' d=stringConstant '>' {$n = new JvmVisitMethodInsn($jvmOpcode.n, $o.n, $a.n, $d.n);}
 	;
 
 jvmOpcode returns [JvmOpcode n]

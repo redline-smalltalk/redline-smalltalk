@@ -292,6 +292,22 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(JvmVisitInsn jvmVisitInsn, int opcode, int line) {
+		classBytecodeWriter.visitLine(line);
 		classBytecodeWriter.methodVisitor().visitInsn(opcode);
+	}
+
+	public void visit(JvmVisitLdcInsn jvmVisitLdcInsn, String value, int line) {
+		classBytecodeWriter.visitLine(line);
+		classBytecodeWriter.methodVisitor().visitLdcInsn(value);
+	}
+
+	public void visit(JvmVisitVarInsn jvmVisitVarInsn, int opcode, int number, int line) {
+		classBytecodeWriter.visitLine(line);
+		classBytecodeWriter.methodVisitor().visitVarInsn(opcode, number);
+	}
+
+	public void visit(JvmVisitMethodInsn jvmVisitMethodInsn, int opcode, String owner, String name, String description, int line) {
+		classBytecodeWriter.visitLine(line);
+		classBytecodeWriter.methodVisitor().visitMethodInsn(opcode, owner, name, description);
 	}
 }

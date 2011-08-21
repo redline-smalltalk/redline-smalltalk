@@ -22,23 +22,17 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.compiler;
 
-public class StringConstant implements VisitableNode {
+public class JvmVisitVarInsn extends JvmExpression {
 
-	protected final String value;
-	protected final int line;
+	private final JvmOpcode jvmOpcode;
+	private final int number;
 
-	public StringConstant(String value, int line) {
-		this.value = value;
-		this.line = line;
+	public JvmVisitVarInsn(JvmOpcode jvmOpcode, String number) {
+		this.jvmOpcode = jvmOpcode;
+		this.number = Integer.valueOf(number);
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, value, line);
-	}
-
-	public String valueWithoutQuotes() {
-		if (value.charAt(0) == '\'')
-			return value.substring(1, value.length() - 1);
-		return value;
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this, jvmOpcode.value(), number, jvmOpcode.line());
 	}
 }
