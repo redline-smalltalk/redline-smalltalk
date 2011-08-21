@@ -13,16 +13,25 @@ The above copyright notice and this permission notice shall be included in all c
 portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to Redline Smalltalk.
 */
 package st.redline.compiler;
 
-import org.objectweb.asm.Opcodes;
+public class JvmVisitInsn extends JvmExpression {
 
-public class Generator implements Opcodes {
+	private final JvmOpcode jvmOpcode;
+
+	public JvmVisitInsn(JvmOpcode jvmOpcode) {
+		this.jvmOpcode = jvmOpcode;
+	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+		if (jvmOpcode != null)
+			nodeVisitor.visit(this, jvmOpcode.value(), jvmOpcode.line());
+	}
 }

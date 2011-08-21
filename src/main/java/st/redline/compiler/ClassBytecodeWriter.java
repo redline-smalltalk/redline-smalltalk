@@ -57,6 +57,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		return new TracingClassWriter(ClassWriter.COMPUTE_MAXS, new PrintWriter(System.out));
 	}
 
+	public MethodVisitor methodVisitor() {
+		return mv;
+	}
+
 	public byte[] contents() {
 		return cw.toByteArray();
 	}

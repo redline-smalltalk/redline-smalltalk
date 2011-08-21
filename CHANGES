@@ -1,3 +1,8 @@
+21/08/2011 Changes
+
+Adding ability to emit JVM bytecode from within a Smalltalk method.
+
+
 15/08/2011 Changes
 
 Cleaned up Exception handling so we don't nest causal exceptions that don't need nesting.

@@ -290,4 +290,8 @@ public class Analyser implements NodeVisitor {
 	public void visit(NilReservedWord selfReservedWord, int line) {
 		classBytecodeWriter.stackPushNil(line);
 	}
+
+	public void visit(JvmVisitInsn jvmVisitInsn, int opcode, int line) {
+		classBytecodeWriter.methodVisitor().visitInsn(opcode);
+	}
 }
