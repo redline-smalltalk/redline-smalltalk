@@ -87,6 +87,8 @@ visitInsn returns [JvmExpression n]
 	|	'<varInsn:' jvmOpcode ',' DIGITS '>' {$n = new JvmVarInsn($jvmOpcode.n, $DIGITS.text);}
 	|	'<methodInsn:' jvmOpcode ','  o=stringConstant ',' a=stringConstant ',' d=stringConstant '>' {$n = new JvmMethodInsn($jvmOpcode.n, $o.n, $a.n, $d.n);}
 	|	'<typeInsn:' jvmOpcode ',' stringConstant '>' {$n = new JvmTypeInsn($jvmOpcode.n, $stringConstant.n);}
+	|	'<iincInsn:' v=DIGITS ',' i=DIGITS '>' {$n = new JvmIincInsn($v.text, $i.text, $v.line);}
+	|	'<intInsn:' jvmOpcode ',' DIGITS '>' {$n = new JvmIntInsn($jvmOpcode.n, $DIGITS.text);}	
 	|	l = '<loadJavaValue>' {$n = new JvmLoadJavaValue($l.line);}
 	|	l = '<storeJavaValue>' {$n = new JvmStoreJavaValue($l.line);}
 	;

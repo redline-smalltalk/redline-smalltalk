@@ -322,4 +322,14 @@ public class Analyser implements NodeVisitor {
 	public void visit(JvmStoreJavaValue jvmStoreJavaValue, int line) {
 		classBytecodeWriter.storeJavaValue(line);
 	}
+
+	public void visit(JvmIincInsn jvmIincInsn, int variable, int increment, int line){
+		classBytecodeWriter.visitLine(line);
+		classBytecodeWriter.methodVisitor().visitIincInsn(variable, increment);
+	}
+
+	public void visit(JvmIntInsn jvmIntInsn, int opcode, int operand, int line) {
+		classBytecodeWriter.visitLine(line);
+		classBytecodeWriter.methodVisitor().visitIntInsn(opcode, operand);
+	}
 }

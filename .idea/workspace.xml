@@ -60,7 +60,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Smalltalk.g" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Smalltalk.g" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g">
           <provider selected="true" editor-type-id="grammar">
             <state />
@@ -69,15 +69,6 @@
       </file>
       <file leaf-file-name="JvmInsn.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmInsn.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="18" selection-start="1279" selection-end="1286" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JvmLoadJavaValue.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmLoadJavaValue.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
               <folding />
@@ -88,7 +79,7 @@
       <file leaf-file-name="JvmLdcInsn.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmLdcInsn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="16" selection-start="1279" selection-end="1289" vertical-scroll-proportion="0.0">
+            <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -106,7 +97,7 @@
       <file leaf-file-name="JvmTypeInsn.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmTypeInsn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="19" selection-start="1279" selection-end="1290" vertical-scroll-proportion="0.0">
+            <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -115,7 +106,43 @@
       <file leaf-file-name="JvmVarInsn.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmVarInsn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JvmIntInsn.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmIntInsn.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="32" selection-start="1544" selection-end="1544" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JvmIincInsn.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmIincInsn.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="34" selection-start="1541" selection-end="1541" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NodeVisitor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="93" column="73" selection-start="5307" selection-end="5376" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Analyser.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="332" column="72" selection-start="10469" selection-end="10469" vertical-scroll-proportion="0.91004497">
               <folding />
             </state>
           </provider>
@@ -131,22 +158,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmVisitVarInsn.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmVisitMethodInsn.java" />
-        <option value="$PROJECT_DIR$/src/main/grammar/Smalltalk.g" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmLoadJavaValue.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmStoreJavaValue.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObjectData.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmVisitTypeInsn.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmInsn.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmLdcInsn.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmMethodInsn.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmTypeInsn.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmVarInsn.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmIincInsn.java" />
+        <option value="$PROJECT_DIR$/src/main/grammar/Smalltalk.g" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmIntInsn.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
       </list>
     </option>
   </component>
@@ -484,16 +511,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmStoreJavaValue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="268" column="4" selection-start="10557" selection-end="10557" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObjectData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="83" column="24" selection-start="2101" selection-end="2101" vertical-scroll-proportion="0.0" />
@@ -509,16 +526,6 @@
         <state line="9" column="70" selection-start="430" selection-end="430" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="315" column="52" selection-start="9920" selection-end="9920" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="62" selection-start="5255" selection-end="5255" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Temporaries.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="13" selection-start="1331" selection-end="1331" vertical-scroll-proportion="0.0" />
@@ -531,23 +538,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmInsn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="18" selection-start="1279" selection-end="1286" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmLoadJavaValue.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmLdcInsn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="16" selection-start="1279" selection-end="1289" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -559,16 +552,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmTypeInsn.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmLdcInsn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="19" selection-start="1279" selection-end="1290" vertical-scroll-proportion="0.0">
+        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmVarInsn.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmInsn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmTypeInsn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmIincInsn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="34" selection-start="1541" selection-end="1541" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -576,6 +583,34 @@
     <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g">
       <provider selected="true" editor-type-id="grammar">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmVarInsn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/JvmIntInsn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="32" selection-start="1544" selection-end="1544" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/NodeVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="93" column="73" selection-start="5307" selection-end="5376" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="332" column="72" selection-start="10469" selection-end="10469" vertical-scroll-proportion="0.91004497">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>
