@@ -85,11 +85,11 @@ public interface NodeVisitor {
 	void visit(FalseReservedWord selfReservedWord, int line);
 	void visit(NilReservedWord selfReservedWord, int line);
 
-	void visit(JvmVisitInsn jvmVisitInsn, int opcode, int line);
-	void visit(JvmVisitLdcInsn jvmVisitLdcInsn, String literal, int line);
-	void visit(JvmVisitVarInsn jvmVisitVarInsn, int opcode, int number, int line);
-	void visit(JvmVisitMethodInsn jvmVisitMethodInsn, int opcode, String owner, String name, String description, int line);
-	void visit(JvmVisitTypeInsn jvmVisitTypeInsn, int opcode, String type, int line);
+	void visit(JvmInsn jvmInsn, int opcode, int line);
+	void visit(JvmLdcInsn jvmLdcInsn, String literal, int line);
+	void visit(JvmVarInsn jvmVarInsn, int opcode, int number, int line);
+	void visit(JvmMethodInsn jvmMethodInsn, int opcode, String owner, String name, String description, int line);
+	void visit(JvmTypeInsn jvmTypeInsn, int opcode, String type, int line);
 	void visit(JvmLoadJavaValue jvmLoadJavaValue, int line);
 	void visit(JvmStoreJavaValue jvmStoreJavaValue, int line);
 }

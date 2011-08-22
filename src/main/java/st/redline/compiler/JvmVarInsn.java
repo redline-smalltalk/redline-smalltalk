@@ -22,16 +22,17 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.compiler;
 
-public class JvmVisitInsn extends JvmExpression {
+public class JvmVarInsn extends JvmExpression {
 
 	private final JvmOpcode jvmOpcode;
+	private final int number;
 
-	public JvmVisitInsn(JvmOpcode jvmOpcode) {
+	public JvmVarInsn(JvmOpcode jvmOpcode, String number) {
 		this.jvmOpcode = jvmOpcode;
+		this.number = Integer.valueOf(number);
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
-		if (jvmOpcode != null)
-			nodeVisitor.visit(this, jvmOpcode.value(), jvmOpcode.line());
+		nodeVisitor.visit(this, jvmOpcode.value(), number, jvmOpcode.line());
 	}
 }

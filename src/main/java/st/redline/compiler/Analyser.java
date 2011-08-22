@@ -23,7 +23,6 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline.compiler;
 
 import st.redline.ProtoObject;
-import st.redline.SmalltalkClassLoader;
 
 import java.io.File;
 import java.util.List;
@@ -291,27 +290,27 @@ public class Analyser implements NodeVisitor {
 		classBytecodeWriter.stackPushNil(line);
 	}
 
-	public void visit(JvmVisitInsn jvmVisitInsn, int opcode, int line) {
+	public void visit(JvmInsn jvmInsn, int opcode, int line) {
 		classBytecodeWriter.visitLine(line);
 		classBytecodeWriter.methodVisitor().visitInsn(opcode);
 	}
 
-	public void visit(JvmVisitLdcInsn jvmVisitLdcInsn, String value, int line) {
+	public void visit(JvmLdcInsn jvmLdcInsn, String value, int line) {
 		classBytecodeWriter.visitLine(line);
 		classBytecodeWriter.methodVisitor().visitLdcInsn(value);
 	}
 
-	public void visit(JvmVisitVarInsn jvmVisitVarInsn, int opcode, int number, int line) {
+	public void visit(JvmVarInsn jvmVarInsn, int opcode, int number, int line) {
 		classBytecodeWriter.visitLine(line);
 		classBytecodeWriter.methodVisitor().visitVarInsn(opcode, number);
 	}
 
-	public void visit(JvmVisitMethodInsn jvmVisitMethodInsn, int opcode, String owner, String name, String description, int line) {
+	public void visit(JvmMethodInsn jvmMethodInsn, int opcode, String owner, String name, String description, int line) {
 		classBytecodeWriter.visitLine(line);
 		classBytecodeWriter.methodVisitor().visitMethodInsn(opcode, owner, name, description);
 	}
 
-	public void visit(JvmVisitTypeInsn jvmVisitTypeInsn, int opcode, String type, int line) {
+	public void visit(JvmTypeInsn jvmTypeInsn, int opcode, String type, int line) {
 		classBytecodeWriter.visitLine(line);
 		classBytecodeWriter.methodVisitor().visitTypeInsn(opcode, type);
 	}
