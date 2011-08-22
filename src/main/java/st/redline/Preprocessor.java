@@ -29,7 +29,7 @@ public class Preprocessor {
 
 	public Source parse(SourceFile sourceFile) {
 		String preprocessedSource = parseFrom(sourceFile.contents(), sourceFile.shortName());
-		System.out.println(preprocessedSource);
+//		System.out.println(preprocessedSource);
 		return new Source(preprocessedSource, sourceFile);
 	}
 
