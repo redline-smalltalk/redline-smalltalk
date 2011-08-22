@@ -170,11 +170,18 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
+		// TODO.JCL intern symbols !
 		ProtoObject symbolClass = receiver.resolveObject("Symbol");  // <- should we do primitiveVariableAt so namespaces are used?
 		ProtoObject symbol = new ProtoObject(false);
 		symbol.cls(symbolClass);
 		symbol.javaValue(value);
 		return symbol;
+	}
+
+	public static ProtoObject primitiveNewWith(ProtoObject receiver, Object value) {
+		ProtoObject instance = primitiveSend(receiver, "new", null);
+		instance.javaValue(value);
+		return instance;
 	}
 
 	public static ProtoObject primitiveString(ProtoObject receiver, String value) {
@@ -206,6 +213,17 @@ public class ProtoObject {
 		if (method != null)
 			return method.applyTo(receiver, methodForResult[0], arg1);
 		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {arg1});
+	}
+
+	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {arg1, arg2, arg3, arg4, arg5});
 	}
 
 //	public ProtoObject ping() {

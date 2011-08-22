@@ -39,4 +39,8 @@ public class ProtoMethod extends ProtoObject {
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls, ProtoObject arg1) {
 		throw subclassShouldHaveImplemented(1);
 	}
+
+	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		throw subclassShouldHaveImplemented(1);
+	}
 }

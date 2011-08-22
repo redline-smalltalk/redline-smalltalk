@@ -1,6 +1,7 @@
 21/08/2011 Changes
 
 Adding ability to emit JVM bytecode from within a Smalltalk method.
+Adding wrap and dispatch to Stout web framework.
 
 
 15/08/2011 Changes

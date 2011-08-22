@@ -33,19 +33,51 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Map;
 
 public class Stout {
 
 	private static Server server;
+	private static Stic stic;
+	private static ProtoObject httpServletRequest;
+	private static ProtoObject httpServletResponse;
+	private static ProtoObject requestSymbol;
+	private static ProtoObject forwardSymbol;
+	private static ProtoObject includeSymbol;
+	private static ProtoObject errorSymbol;
+	private static Map<String, ProtoObject> httpVerbMap = new Hashtable<String, ProtoObject>();
 
 	public static void main(String args[]) throws Exception {
+		startSmalltalk(args);
+		startServer(args);
+	}
+
+	private static void startSmalltalk(String[] args) throws Exception {
+		stic = new Stic();
+		httpServletRequest = stic.invokeWith("st.redline.stout.HttpServletRequest", new String[] {});
+		httpServletResponse = stic.invokeWith("st.redline.stout.HttpServletResponse", new String[] {});
+		requestSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Request");
+		forwardSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Forward");
+		includeSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Include");
+		errorSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Error");
+		httpVerbMap.put("GET", ProtoObject.primitiveSymbol(httpServletRequest, "GET"));
+		httpVerbMap.put("PUT", ProtoObject.primitiveSymbol(httpServletRequest, "PUT"));
+		httpVerbMap.put("POST", ProtoObject.primitiveSymbol(httpServletRequest, "POST"));
+		httpVerbMap.put("OPTIONS", ProtoObject.primitiveSymbol(httpServletRequest, "OPTIONS"));
+		httpVerbMap.put("DELETE", ProtoObject.primitiveSymbol(httpServletRequest, "DELETE"));
+		httpVerbMap.put("TRACE", ProtoObject.primitiveSymbol(httpServletRequest, "TRACE"));
+		httpVerbMap.put("HEAD", ProtoObject.primitiveSymbol(httpServletRequest, "HEAD"));
+	}
+
+	private static void startServer(String[] args) throws Exception {
 		server = new Server(8080);
 		server.setHandler(initialHandler(args));
 		server.start();
 	}
 
 	private static ProtoObject object(String[] args) throws Exception {
-		return new Stic().invokeWith(args[0], args);
+		return stic.invokeWith(args[0], args);
 	}
 
 	private static Handler initialHandler(final String[] args) throws Exception {
@@ -68,11 +100,45 @@ public class Stout {
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
 				throws IOException, ServletException {
-				response.setContentType("text/html");
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.getWriter().println("<h1>stout: Hello from Redline Smalltalk.</h1>");
-				response.getWriter().println("<h2>" + receiver + "</h2>");
-				((Request)request).setHandled(true);
+				ProtoObject.primitiveSend(receiver,
+						method(request.getMethod()),
+						string(target),
+						request(request),
+						response(response),
+						dispatch(dispatch),
+						"handle:of:with:and:and:",
+						null);
+			}
+
+			private ProtoObject dispatch(int dispatch) {
+				switch (dispatch) {
+					case 1:
+						return requestSymbol;
+					case 2:
+						return forwardSymbol;
+					case 4:
+						return includeSymbol;
+					case 8:
+						return errorSymbol;
+					default:
+						throw new IllegalStateException("Dispatch value of " + dispatch + " not understood.");
+				}
+			}
+
+			private ProtoObject request(HttpServletRequest request) {
+				return ProtoObject.primitiveNewWith(httpServletRequest, request);
+			}
+
+			private ProtoObject response(HttpServletResponse response) {
+				return ProtoObject.primitiveNewWith(httpServletResponse, response);
+			}
+
+			private ProtoObject method(String value) {
+				return httpVerbMap.get(value);
+			}
+
+			private ProtoObject string(String value) {
+				return ProtoObject.primitiveString(receiver, value);
 			}
 		};
 	}
