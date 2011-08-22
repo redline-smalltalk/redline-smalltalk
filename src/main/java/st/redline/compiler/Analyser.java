@@ -252,6 +252,10 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralString literalString, String value, int line) {
+		if (value.charAt(0) == '\'')
+			classBytecodeWriter.callPrimitiveString(value.substring(1, value.length() - 1), line);
+		else
+			classBytecodeWriter.callPrimitiveString(value, line);
 	}
 
 	public void visit(LiteralCharacter literalCharacter, String value, int line) {

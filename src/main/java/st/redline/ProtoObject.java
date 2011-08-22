@@ -34,7 +34,7 @@ public class ProtoObject {
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 	private static final Map<String, ProtoObject> classRegistry = new HashMap<String, ProtoObject>();
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
-	protected static final Map<String, String> packageMap = new HashMap<String, String>();
+	protected static final Map<String, String> packageMap = new HashMap<String, String>();	private static final Map<String, ProtoObject> symbols = new HashMap<String, ProtoObject>();
 
 	protected static ProtoObject instanceOfUndefinedObject;
 	protected static ProtoObject instanceOfTrue;
@@ -170,11 +170,13 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
-		// TODO.JCL intern symbols !
+		if (symbols.containsKey(value))
+			return symbols.get(value);
 		ProtoObject symbolClass = receiver.resolveObject("Symbol");  // <- should we do primitiveVariableAt so namespaces are used?
 		ProtoObject symbol = new ProtoObject(false);
 		symbol.cls(symbolClass);
 		symbol.javaValue(value);
+		symbols.put(value, symbol);
 		return symbol;
 	}
 

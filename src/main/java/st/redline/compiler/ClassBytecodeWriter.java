@@ -21,6 +21,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_SYMBOL = "primitiveSymbol";
 	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_STRING = "primitiveString";
+	private static final String PRIMITIVE_STRING_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_VARIABLE_AT = "primitiveVariableAt";
 	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String[] SEND_SIGNATURES = {
@@ -44,8 +46,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void initialize() {
-//		cw = tracingClassWriter();
-		cw = nonTracingClassWriter();
+		cw = tracingClassWriter();
+//		cw = nonTracingClassWriter();
 		fullyQualifiedClassName = packageName.length() > 0 ? packageName + File.separator + className : className;
 	}
 
@@ -229,6 +231,12 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushReceiver(line);
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_SYMBOL, PRIMITIVE_SYMBOL_SIGNATURE);
+	}
+
+	public void callPrimitiveString(String value, int line) {
+		stackPushReceiver(line);
+		stackPushLiteral(value);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_STRING, PRIMITIVE_STRING_SIGNATURE);
 	}
 
 	public void callClass() {
