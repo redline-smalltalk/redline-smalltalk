@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
 
-public class Stout {
+public class Run {
 
 	private static Server server;
 	private static Stic stic;
@@ -106,7 +106,7 @@ public class Stout {
 						request(request),
 						response(response),
 						dispatch(dispatch),
-						"handle:of:with:and:and:",
+						"handle:on:with:and:and:",
 						null);
 			}
 
