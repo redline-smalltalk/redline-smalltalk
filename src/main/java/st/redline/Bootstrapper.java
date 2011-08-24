@@ -23,6 +23,7 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 package st.redline;
 
 import st.redline.bootstrap.ClassSubclassMethod;
+import st.redline.bootstrap.ImportMethod;
 
 import java.io.File;
 
@@ -136,6 +137,7 @@ public class Bootstrapper {
 
 	private void bootstrapMethods() {
 		cls.methodAtPut("<", new ClassSubclassMethod());
+		cls.methodAtPut("import:", new ImportMethod());
 	}
 
 	private void bootstrapClasses() {

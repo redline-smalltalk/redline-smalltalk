@@ -1,5 +1,5 @@
 
-import: 'st.redline.stout.Stout'
+import: 'st.redline.stout.Stout'.
 
 Stout < #Web
 
