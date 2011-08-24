@@ -51,8 +51,8 @@ public class SourceFilesFinder {
 
 	private void addClassesInPath(String path, List<SourceFile> sourceFiles) {
 		String classesPath = stripWildcard(path);
-//		for (String file : SourceFileFinder.findInPackage(classesPath))
-//			sourceFiles.add(new SourceFile(new File(file)));
+		for (String file : SourceFileFinder.findInPackage(classesPath))
+			sourceFiles.add(new SourceFile(new File(file)));
 	}
 
 	private String stripWildcard(String path) {

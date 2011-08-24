@@ -1,6 +1,7 @@
 package st.redline;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 public abstract class ProtoObjectData {
@@ -15,7 +16,8 @@ public abstract class ProtoObjectData {
 	abstract ProtoMethod methodAt(String selector);
 	abstract void methodAtPut(String selector, ProtoMethod method);
 	abstract boolean isClass();
-	abstract String packageFor(String name);
+	abstract String packageAt(String name);
+	abstract void packageAtPut(String name, String packageName);
 
 	public static ProtoObjectData classData() {
 		return new ClassData();
@@ -66,7 +68,11 @@ public abstract class ProtoObjectData {
 			throw new IllegalStateException("An instance can't have a method dictionary.");
 		}
 
-		protected String packageFor(String name) {
+		protected String packageAt(String name) {
+			throw new IllegalStateException("An instance can't have a packages.");
+		}
+
+		protected void packageAtPut(String name, String packageName) {
 			throw new IllegalStateException("An instance can't have a packages.");
 		}
 	}
@@ -106,8 +112,14 @@ public abstract class ProtoObjectData {
 			methods.put(selector, method);
 		}
 
-		protected String packageFor(String name) {
+		protected String packageAt(String name) {
 			return packages != null ? packages.get(name) : null;
+		}
+
+		protected void packageAtPut(String name, String packageName) {
+			if (packages == null)
+				packages = new Hashtable<String, String>();
+			packages.put(name, packageName);
 		}
 	}
 }

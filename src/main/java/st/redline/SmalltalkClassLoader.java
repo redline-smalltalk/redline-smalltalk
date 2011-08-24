@@ -24,6 +24,8 @@ package st.redline;
 
 // TODO.JCL - make this classloader delegate to another so we can replace the delegate at runtime to reload all classes on fly.
 
+import java.util.List;
+
 public class SmalltalkClassLoader extends ClassLoader {
 
 	public SmalltalkClassLoader(java.lang.ClassLoader classLoader) {
@@ -87,5 +89,13 @@ public class SmalltalkClassLoader extends ClassLoader {
 
 	private SourceFileFinder sourceFileFinder(String className) {
 		return new SourceFileFinder(className);
+	}
+
+	public List<SourceFile> findSources(String paths) {
+		return sourceFilesFinder(paths).findSourceFiles();
+	}
+
+	private SourceFilesFinder sourceFilesFinder(String paths) {
+		return new SourceFilesFinder(paths);
 	}
 }

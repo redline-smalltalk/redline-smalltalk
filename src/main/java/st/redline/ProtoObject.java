@@ -267,7 +267,7 @@ public class ProtoObject {
 			return classRegistry.get(name);
 
 		if (Character.isUpperCase(name.charAt(0))) {
-			String fullyQualifiedName = ProtoObject.primitivePackageFor(this, name);
+			String fullyQualifiedName = ProtoObject.primitivePackageAt(this, name);
 			if (fullyQualifiedName != null)
 				return primitiveResolveObject(this, fullyQualifiedName);
 		}
@@ -284,11 +284,15 @@ public class ProtoObject {
 		return null;
 	}
 
-	public static String primitivePackageFor(ProtoObject receiver, String name) {
-		String fullyQualifiedName = receiver.packageFor(name);
+	public static String primitivePackageAt(ProtoObject receiver, String name) {
+		String fullyQualifiedName = receiver.packageAt(name);
 		if (fullyQualifiedName != null)
 			return fullyQualifiedName;
 		return packageMap.get(name);
+	}
+
+	public static void primitivePackageAtPut(ProtoObject receiver, String name, String packageName) {
+		receiver.packageAtPut(name, packageName);
 	}
 
 	protected ProtoObject loadObject(String name) {
@@ -303,12 +307,16 @@ public class ProtoObject {
 		return Thread.currentThread().getContextClassLoader();
 	}
 
-	private String packageFor(String name) {
+	private void packageAtPut(String name, String packageName) {
+		data.packageAtPut(name, packageName);
+	}
+
+	private String packageAt(String name) {
 		if (isClass())
-			return data.packageFor(name);
+			return data.packageAt(name);
 		ProtoObject cls = cls();
 		if (cls != null)
-			return packageFor(name);
+			return cls.packageAt(name);
 		return null;
 	}
 

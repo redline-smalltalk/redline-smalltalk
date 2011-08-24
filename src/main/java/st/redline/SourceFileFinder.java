@@ -42,7 +42,15 @@ public class SourceFileFinder {
 	}
 
 	private String makeSourceFileName(String className) {
-		return className.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + ".st";
+		return makePackageIntoPath(className) + ".st";
+	}
+
+	public static String makePackageIntoPath(String packageName) {
+		return packageName.replaceAll("\\.", Matcher.quoteReplacement(File.separator));
+	}
+
+	public static List<String> findInPackage(String packageName) {
+		return findIn(makePackageIntoPath(packageName));
 	}
 
 	private SourceFile findSourceFile(String sourceFileName) {
