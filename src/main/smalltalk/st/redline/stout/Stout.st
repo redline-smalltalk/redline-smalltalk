@@ -1,4 +1,6 @@
 
+import: 'st.redline.stout'.
+
 Object < #Stout
 
 - handle: action on: target with: request and: response and: dispatch
