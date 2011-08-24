@@ -79,7 +79,7 @@ public class ProtoObject {
 	}
 
 	private static ProtoObject createArray(ProtoObject receiver) {
-		return create(receiver, "Array");
+		return create(receiver, "st.redline.Array");
 	}
 
 	private static ProtoObject create(ProtoObject receiver, String name) {
@@ -148,7 +148,7 @@ public class ProtoObject {
 
 	private static ProtoObject createMetaclass(ProtoObject receiver, String name) {
 		ProtoObject metaclass = new ProtoObject(name + " Metaclass");
-		metaclass.cls(ProtoObject.primitiveResolveObject(receiver, "MetaClass"));  // TODO.JCL Should this be 'Metaclass new'?
+		metaclass.cls(ProtoObject.primitiveResolveObject(receiver, "st.redline.MetaClass"));  // TODO.JCL Should this be 'Metaclass new'?
 		metaclass.superclass(receiver.cls());
 		return metaclass;
 	}
@@ -178,7 +178,7 @@ public class ProtoObject {
 	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
 		if (symbols.containsKey(value))
 			return symbols.get(value);
-		ProtoObject symbolClass = receiver.resolveObject("Symbol");  // <- should we do primitiveVariableAt so namespaces are used?
+		ProtoObject symbolClass = receiver.resolveObject("st.redline.Symbol");  // <- should we do primitiveVariableAt so namespaces are used?
 		ProtoObject symbol = new ProtoObject(false);
 		symbol.cls(symbolClass);
 		symbol.javaValue(value);
@@ -193,7 +193,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveString(ProtoObject receiver, String value) {
-		ProtoObject stringClass = receiver.resolveObject("String");  // <- should we do primitiveVariableAt so namespaces are used?
+		ProtoObject stringClass = receiver.resolveObject("st.redline.String");  // <- should we do primitiveVariableAt so namespaces are used?
 		ProtoObject string = new ProtoObject(false);
 		string.cls(stringClass);
 		string.javaValue(value);
@@ -266,10 +266,11 @@ public class ProtoObject {
 		if (classRegistry.containsKey(name))
 			return classRegistry.get(name);
 
-		// TODO.JCL include looking in receivers own packageMap.
-		String fullyQualifiedName = ProtoObject.primitivePackageFor(this, name);
-		if (fullyQualifiedName != null)
-			return primitiveResolveObject(this, fullyQualifiedName);
+		if (Character.isUpperCase(name.charAt(0))) {
+			String fullyQualifiedName = ProtoObject.primitivePackageFor(this, name);
+			if (fullyQualifiedName != null)
+				return primitiveResolveObject(this, fullyQualifiedName);
+		}
 
 		// It is expected the loading of an object results in the registering a Smalltalk class in the class registry.
 		// *NOTE* if class is not registered the will be a NullPointerException as we return 'null' here.
