@@ -61,8 +61,14 @@ public class ProtoObject {
 		cls(cls);
 	}
 
+	public void name(String name) {
+		this.name = name;
+	}
+
 	public String toString() {
 		if (name != null) return name;
+		if (cls() != null)
+			return super.toString() + "(" + String.valueOf(cls().name) + ")";
 		return super.toString();
 	}
 
@@ -126,7 +132,7 @@ public class ProtoObject {
 		// System.out.println("primitiveCreateSubclass() " + receiver + " " + name);
 		if (name != null && classRegistry.containsKey(name))
 			return classRegistry.get(name);
-		return createSubclass(createClass(receiver), createMetaclass(receiver));
+		return createSubclass(createClass(receiver, name), createMetaclass(receiver, name));
 	}
 
 	private static ProtoObject createSubclass(ProtoObject aClass, ProtoObject metaclass) {
@@ -134,21 +140,21 @@ public class ProtoObject {
 		return aClass;
 	}
 
-	private static ProtoObject createClass(ProtoObject receiver) {
-		ProtoObject cls = new ProtoObject();
+	private static ProtoObject createClass(ProtoObject receiver, String name) {
+		ProtoObject cls = new ProtoObject(name);
 		cls.superclass(receiver);
 		return cls;
 	}
 
-	private static ProtoObject createMetaclass(ProtoObject receiver) {
-		ProtoObject metaclass = new ProtoObject();
+	private static ProtoObject createMetaclass(ProtoObject receiver, String name) {
+		ProtoObject metaclass = new ProtoObject(name + " Metaclass");
 		metaclass.cls(ProtoObject.primitiveResolveObject(receiver, "MetaClass"));  // TODO.JCL Should this be 'Metaclass new'?
 		metaclass.superclass(receiver.cls());
 		return metaclass;
 	}
 
 	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
-		// System.out.println("primitiveRegisterAs() " + String.valueOf(name) + " " + receiver);
+		System.out.println("primitiveRegisterAs() " + String.valueOf(name) + " " + receiver);
 		classRegistry.put(name, receiver);
 		return receiver;
 	}
@@ -248,7 +254,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveResolveObject(ProtoObject receiver, String name) {
-		// System.out.println("primitiveResolveObject() " + name);
+		System.out.println("primitiveResolveObject() " + name + " " + receiver);
 		ProtoObject object = receiver.resolveObject(name);
 		if (object != null)
 			return object;
@@ -259,10 +265,12 @@ public class ProtoObject {
 	private ProtoObject resolveObject(String name) {
 		if (classRegistry.containsKey(name))
 			return classRegistry.get(name);
+
 		// TODO.JCL include looking in receivers own packageMap.
 		String fullyQualifiedName = ProtoObject.primitivePackageFor(this, name);
 		if (fullyQualifiedName != null)
 			return primitiveResolveObject(this, fullyQualifiedName);
+
 		// It is expected the loading of an object results in the registering a Smalltalk class in the class registry.
 		// *NOTE* if class is not registered the will be a NullPointerException as we return 'null' here.
 		ProtoObject object = loadObject(name);
@@ -304,6 +312,7 @@ public class ProtoObject {
 	}
 
 	public void bootstrap() {
+		name("<Bootstrap>");
 		new Bootstrapper(this).bootstrap();
 	}
 

@@ -51,6 +51,7 @@ public class Stic {
 
 	public ProtoObject invokeWith(String className, String[] args) throws Exception {
 		ProtoObject root = protoObjectInstance();
+		root.name("<root>");
 		return createClassInstance(root, className);
 	}
 

@@ -24,11 +24,36 @@ package st.redline.bootstrap;
 
 import st.redline.ProtoMethod;
 import st.redline.ProtoObject;
+import st.redline.SmalltalkClassLoader;
+import st.redline.SourceFile;
+
+import java.io.File;
+import java.util.List;
 
 public class ImportMethod extends ProtoMethod {
 
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
-		System.out.println("ImportMethood() " + receiver + " " + String.valueOf(argument.javaValue()));
-		return null;
+		System.out.println("import: " + argument.javaValue() + " in to " + receiver);
+//		SmalltalkClassLoader smalltalkClassLoader = smalltalkClassLoader();
+//		for (SourceFile sourceFile : findSources(smalltalkClassLoader, argument.javaValue()))
+//			addAssociationBetweenObjectAndPackage(receiver, sourceFile.shortName(), sourceFile.packageName());
+		return receiver;
 	}
+
+//	private void addAssociationBetweenObjectAndPackage(ProtoObject receiver, String className, String packageName) {
+//		System.out.println("assoc " + className + " " + makeFullyQualifiedPath(packageName, className));
+//		ProtoObject.primitivePackageAtPut(receiver, className, makeFullyQualifiedPath(packageName, className));
+//	}
+//
+//	private String makeFullyQualifiedPath(String packageName, String className) {
+//		return (packageName + File.separatorChar + className).replaceAll("\\" + File.separatorChar, ".");
+//	}
+//
+//	private List<SourceFile> findSources(SmalltalkClassLoader smalltalkClassLoader, Object importPaths) {
+//		return smalltalkClassLoader.findSources(String.valueOf(importPaths));
+//	}
+//
+//	private SmalltalkClassLoader smalltalkClassLoader() {
+//		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+//	}
 }

@@ -88,14 +88,15 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitCode();
 		stackPushThis();
 		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS, INIT, INIT_SIGNATURE);
+
+		stackPushThis();
+		mv.visitLdcInsn(className + "<Loader>");
+		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, "name", "(Ljava/lang/String;)V");
+
 		stackPushLiteral(packageName);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitivePackageRegistryCurrent", "(Ljava/lang/String;)V");
 		mv.visitVarInsn(ALOAD, 0);
 		mv.visitVarInsn(ALOAD, 0);
-		mv.visitLdcInsn("ProtoObject");
-		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveResolveObject", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
-		mv.visitInsn(ACONST_NULL);
-		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCreateSubclass", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
 		mv.visitInsn(ACONST_NULL);
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT, CONSTRUCT_SIGNATURE);
 		mv.visitInsn(POP);
