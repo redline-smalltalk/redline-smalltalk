@@ -101,6 +101,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveResolveObject", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
 		mv.visitLdcInsn(className + "<Ghost>");
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCreateSubclass", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
+		stackDuplicate();
+		mv.visitLdcInsn(className);
+		mv.visitLdcInsn(makeFullQualifiedPackageName());
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitivePackageAtPut", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;)V");
 		mv.visitInsn(ACONST_NULL);
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT, CONSTRUCT_SIGNATURE);
 		mv.visitInsn(POP);
@@ -108,6 +112,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();
+	}
+
+	private String makeFullQualifiedPackageName() {
+		return fullyQualifiedClassName.replaceAll("\\" + File.separatorChar, ".");
 	}
 
 	private String homogenize(String className) {

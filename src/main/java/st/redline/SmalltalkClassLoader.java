@@ -33,12 +33,12 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	protected void bootstrap() {
-		loadProtoObject();
+		loadProtoObject().bootstrap();
 	}
 
-	private void loadProtoObject() {
+	private ProtoObject loadProtoObject() {
 		try {
-			((ProtoObject) loadClass("st.redline.ProtoObject").newInstance()).bootstrap();
+			return ((ProtoObject) loadClass("st.redline.ProtoObject").newInstance());
 		} catch (Exception e) {
 			throw RedlineException.withCause(e);
 		}

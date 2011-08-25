@@ -77,7 +77,7 @@ public class Run {
 	}
 
 	private static ProtoObject object(String[] args) throws Exception {
-		return stic.invokeWith(args[0], args);
+		return ProtoObject.primitiveSend(stic.invokeWith(args[0], args), "new", null);
 	}
 
 	private static Handler initialHandler(final String[] args) throws Exception {

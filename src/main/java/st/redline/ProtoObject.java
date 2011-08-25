@@ -154,7 +154,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveRegisterAs(ProtoObject receiver, String name) {
-		System.out.println("primitiveRegisterAs() " + String.valueOf(name) + " " + receiver);
+//		System.out.println("primitiveRegisterAs() " + String.valueOf(name) + " " + receiver);
 		classRegistry.put(name, receiver);
 		return receiver;
 	}
@@ -240,7 +240,7 @@ public class ProtoObject {
 //	}
 
 	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector, ProtoObject[] arguments) {
-		throw RedlineException.withMessage("TODO -  need to implement send of doesNotUnderstand - '" + selector + "'");
+		throw RedlineException.withMessage("TODO -  need to implement send of doesNotUnderstand - '" + selector + "' " + receiver);
 	}
 
 	private static ProtoMethod methodFor(ProtoObject object, String selector, ProtoObject[] methodForResult) {
@@ -254,7 +254,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveResolveObject(ProtoObject receiver, String name) {
-		System.out.println("primitiveResolveObject() " + name + " " + receiver);
+//		System.out.println("primitiveResolveObject() " + name + " " + receiver);
 		ProtoObject object = receiver.resolveObject(name);
 		if (object != null)
 			return object;
