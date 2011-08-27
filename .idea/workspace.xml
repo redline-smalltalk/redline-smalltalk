@@ -60,10 +60,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MethodBytecodeWriter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="85" column="49" selection-start="4739" selection-end="4739" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="31" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.04379562">
+            <state line="376" column="0" selection-start="14050" selection-end="14050" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Run.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="110" column="0" selection-start="4726" selection-end="4726" vertical-scroll-proportion="0.64469916">
               <folding />
             </state>
           </provider>
@@ -79,11 +97,7 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/stout.bat" />
-        <option value="$PROJECT_DIR$/stout" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoMethod.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Stic.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObjectData.java" />
@@ -92,7 +106,11 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ClassSubclassMethod.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ImportMethod.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoMethod.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodAnalyser.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java" />
       </list>
@@ -132,6 +150,7 @@
     </navigator>
     <panes>
       <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -238,69 +257,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="redline" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="redline" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bootstrap" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -500,26 +458,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="65" selection-start="1681" selection-end="1694" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="21" selection-start="1342" selection-end="1342" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g">
-      <provider selected="true" editor-type-id="grammar">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Stic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="30" selection-start="1469" selection-end="1469" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Bootstrapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="66" column="0" selection-start="2904" selection-end="2904" vertical-scroll-proportion="0.0" />
@@ -532,9 +470,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFileFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="0" selection-start="1940" selection-end="1940" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="51" column="0" selection-start="1940" selection-end="1940" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObjectData.java">
@@ -544,56 +480,72 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="37" selection-start="1618" selection-end="1618" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="35" column="37" selection-start="1618" selection-end="1618" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ImportMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="98" selection-start="2260" selection-end="2285" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="46" column="98" selection-start="2260" selection-end="2285" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ClassSubclassMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="39" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0">
+        <state line="31" column="39" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFilesFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="25" selection-start="2150" selection-end="2150" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/grammar/Smalltalk.g">
+      <provider selected="true" editor-type-id="grammar">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="64" selection-start="2023" selection-end="2023" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/Analyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="13" selection-start="1601" selection-end="1601" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodAnalyser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="35" selection-start="3678" selection-end="3678" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0">
+        <state line="33" column="0" selection-start="1507" selection-end="1507" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="22" selection-start="2111" selection-end="2111" vertical-scroll-proportion="0.0">
+        <state line="50" column="21" selection-start="2144" selection-end="2144" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFilesFinder.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="25" selection-start="2150" selection-end="2150" vertical-scroll-proportion="0.0">
+        <state line="85" column="49" selection-start="4739" selection-end="4739" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="31" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.04379562">
+        <state line="376" column="0" selection-start="14050" selection-end="14050" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="0" selection-start="4726" selection-end="4726" vertical-scroll-proportion="0.64469916">
           <folding />
         </state>
       </provider>

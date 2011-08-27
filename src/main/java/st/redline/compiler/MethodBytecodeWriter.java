@@ -28,13 +28,17 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 	private static final String[] APPLY_TO_SIGNATURES = {
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 	};
 
 	private int countOfArguments;
 
 	public MethodBytecodeWriter(String className, String packageName, int countOfArguments) {
 		super(className, packageName);
-		// System.out.println("MethodBytecodeWriter() " + className + " " + packageName);
+//		System.out.println("MethodBytecodeWriter() " + className + " " + packageName + " " + countOfArguments);
 		this.countOfArguments = countOfArguments;
 	}
 
@@ -43,6 +47,8 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 	}
 
 	protected void openApplyToMethod() {
+		if (countOfArguments >= APPLY_TO_SIGNATURES.length)
+			throw new IllegalArgumentException(countOfArguments + " arguments to method " + className + " is over argument limit. ");
 		mv = cw.visitMethod(ACC_PUBLIC, "applyTo", APPLY_TO_SIGNATURES[countOfArguments], null, null);
 		mv.visitCode();
 

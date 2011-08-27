@@ -30,7 +30,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 	};
 
-	private final String className;
+	protected final String className;
 
 	private String packageName;
 	private String fullyQualifiedClassName;

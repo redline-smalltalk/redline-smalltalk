@@ -35,15 +35,25 @@ public class Analyser implements NodeVisitor {
 	protected ClassBytecodeWriter classBytecodeWriter;
 	private boolean sendToSuper = false;
 	private AbstractMethod currentMethod;
+	protected int countOfArguments;
 
 	public Analyser(String className, String packageName) {
+		this(className, packageName, 0);
+	}
+
+	public Analyser(String className, String packageName, int countOfArguments) {
 		this.className = className;
 		this.packageName = packageName;
+		this.countOfArguments = countOfArguments;
 		initialize();
 	}
 
 	protected void initialize() {
 		classBytecodeWriter = new ClassBytecodeWriter(className, packageName);
+	}
+
+	public int methodArgumentCount() {
+		return countOfArguments;
 	}
 
 	public byte[] classBytes() {
@@ -52,10 +62,6 @@ public class Analyser implements NodeVisitor {
 
 	public boolean continueMethodVisit() {
 		return false;
-	}
-
-	public int methodArgumentCount() {
-		throw new IllegalStateException("TODO - handle");
 	}
 
 	public int methodTemporariesCount() {

@@ -97,7 +97,7 @@ public class ProtoObject {
 
 	public static void primitiveCompileMethod(ProtoObject receiver, String fullMethodName, String methodName, String className, String packageName, int countOfArguments) {
 		// TODO.JCL clean this up.
-		// System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName + " " + countOfArguments);
+//		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName + " " + countOfArguments);
 		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
 		if (methodToBeCompiled == null)
 			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
@@ -213,6 +213,7 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("primitiveSend " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls(), arg1);
@@ -232,6 +233,18 @@ public class ProtoObject {
 		if (method != null)
 			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5);
 		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {arg1, arg2, arg3, arg4, arg5});
+	}
+
+	public static ProtoObject primitiveSuperSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("primitiveSuperSend " + receiver + " " + selector + " " + classMethodWasFoundIn);
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass());
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0]);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {});
 	}
 
 //	public ProtoObject ping() {
@@ -361,7 +374,7 @@ public class ProtoObject {
 		return data.isClass();
 	}
 
-	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1) {
+	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
 		return new ProtoObject(receiver);
 	}

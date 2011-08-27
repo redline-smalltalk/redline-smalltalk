@@ -26,19 +26,12 @@ import java.util.List;
 
 public class MethodAnalyser extends Analyser {
 
-	private final int countOfArguments;
-
 	public MethodAnalyser(String className, String packageName, int countOfArguments) {
-		super(className, packageName);
-		this.countOfArguments = countOfArguments;
+		super(className, packageName, countOfArguments);
 	}
 
 	protected void initialize() {
 		classBytecodeWriter = new MethodBytecodeWriter(className, packageName, countOfArguments);
-	}
-
-	public int methodArgumentCount() {
-		return countOfArguments;
 	}
 
 	public int methodTemporariesCount() {

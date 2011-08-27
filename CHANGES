@@ -1,3 +1,8 @@
+27/08/2011 Changes 
+
+Continuing implementation of Stout and associated methods needed in Redline Runtime.
+Adding handler for more arguments to methods. There is a limit.
+
 26/08/2011 Changes
 
 Implemented import. Moving onto further Stout functionality.
