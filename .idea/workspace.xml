@@ -60,55 +60,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SourceFilesFinder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFilesFinder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="25" selection-start="2150" selection-end="2150" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassSubclassMethod.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ClassSubclassMethod.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="39" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImportMethod.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ImportMethod.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="98" selection-start="2260" selection-end="2285" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassBytecodeWriter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="22" selection-start="2111" selection-end="2111" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProtoObject.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ProtoObject.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="242" column="129" selection-start="9972" selection-end="9972" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Run.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="35" selection-start="3678" selection-end="3678" vertical-scroll-proportion="0.11318052">
+            <state line="87" column="31" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.04379562">
               <folding />
             </state>
           </provider>
@@ -550,11 +505,6 @@
         <state line="43" column="65" selection-start="1681" selection-end="1694" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoMethod.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="21" selection-start="1342" selection-end="1342" vertical-scroll-proportion="0.0" />
@@ -606,9 +556,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFilesFinder.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ClassSubclassMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="25" selection-start="2150" selection-end="2150" vertical-scroll-proportion="0.0">
+        <state line="31" column="39" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="35" selection-start="3678" selection-end="3678" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -620,23 +584,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SourceFilesFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="25" selection-start="2150" selection-end="2150" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="242" column="129" selection-start="9972" selection-end="9972" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/bootstrap/ClassSubclassMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="39" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="35" selection-start="3678" selection-end="3678" vertical-scroll-proportion="0.11318052">
+        <state line="87" column="31" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.04379562">
           <folding />
         </state>
       </provider>
