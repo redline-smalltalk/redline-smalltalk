@@ -68,7 +68,7 @@
       <file leaf-file-name="ClassBytecodeWriter.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="49" selection-start="1607" selection-end="1607" vertical-scroll-proportion="0.49635038">
+            <state line="33" column="85" selection-start="2275" selection-end="2275" vertical-scroll-proportion="-4.183942">
               <folding />
             </state>
           </provider>
@@ -98,8 +98,8 @@
         <option value="$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java" />
         <option value="$PROJECT_DIR$/src/main/grammar/PreProcLexer.g" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
       </list>
     </option>
   </component>
@@ -136,7 +136,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="Favorites" />
       <pane id="ProjectPane">
@@ -241,73 +240,22 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="stout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="redline" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="grammar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="OverrideImplement.combined" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -554,16 +502,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="0" selection-start="4726" selection-end="4726" vertical-scroll-proportion="0.11891118">
-          <folding />
-        </state>
+        <state line="110" column="0" selection-start="4726" selection-end="4726" vertical-scroll-proportion="0.11891118" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/ProtoObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="383" column="187" selection-start="14682" selection-end="14682" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="383" column="187" selection-start="14682" selection-end="14682" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/MethodBytecodeWriter.java">
@@ -573,14 +517,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="41" selection-start="1556" selection-end="1556" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="32" column="41" selection-start="1556" selection-end="1556" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="49" selection-start="1607" selection-end="1607" vertical-scroll-proportion="0.49635038">
+        <state line="33" column="85" selection-start="2275" selection-end="2275" vertical-scroll-proportion="-4.183942">
           <folding />
         </state>
       </provider>
