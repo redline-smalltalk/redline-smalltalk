@@ -134,7 +134,7 @@ PREPROC
                                         // Write out the parts of the binary selector
                                         //
                                         sb.append($b.text);
-                                        sb.append(": ");
+                                        sb.append(" ");
                                         sb.append($w1.text);
                                   }
 

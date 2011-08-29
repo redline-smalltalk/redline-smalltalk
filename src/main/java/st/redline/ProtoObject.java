@@ -376,6 +376,13 @@ public class ProtoObject {
 
 	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
+		// TODO.JCL - there is still more to do here - this works for now.
+		// basicNew
 		return new ProtoObject(receiver);
+	}
+
+	public static ProtoObject primitive_110(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		// ==
+		return (receiver == arg1) ? instanceOfTrue : instanceOfFalse;
 	}
 }

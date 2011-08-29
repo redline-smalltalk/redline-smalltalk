@@ -1,3 +1,9 @@
+29/08/2011 Changes
+
+Implementing primitives.
+Fixed bug preprocessing binary message patterns.
+
+
 27/08/2011 Changes 
 
 Continuing implementation of Stout and associated methods needed in Redline Runtime.
