@@ -22,14 +22,29 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline;
 
+import java.io.PrintWriter;
+
 public class Stic {
 
 	public static void main(String[] args) throws Exception {
-		new Stic().invokeWith(args[0], args);
+		invokeWith(args);
 	}
 
-	public Stic() {
-		initializeClassLoader();
+	public static ProtoObject invokeWith(String[] args) throws Exception {
+		CommandLine commandLine = createCommandLineWith(args);
+		if (commandLine.haveNoArguments()) {
+			commandLine.printHelp(new PrintWriter(System.out));
+			return null;
+		}
+		return new Stic(commandLine).invoke((String) commandLine.arguments().get(0));
+	}
+
+	public static CommandLine createCommandLineWith(String[] args) {
+		return new CommandLine(args);
+	}
+
+	public Stic(CommandLine commandLine) {
+		initializeClassLoader(commandLine);
 		bootstrap();
 	}
 
@@ -37,19 +52,19 @@ public class Stic {
 		((SmalltalkClassLoader) classLoader()).bootstrap();
 	}
 
-	private void initializeClassLoader() {
-		Thread.currentThread().setContextClassLoader(createClassLoader());
+	private void initializeClassLoader(CommandLine commandLine) {
+		Thread.currentThread().setContextClassLoader(createClassLoader(commandLine));
 	}
 
-	private ClassLoader createClassLoader() {
-		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader());
+	private ClassLoader createClassLoader(CommandLine commandLine) {
+		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader(), commandLine);
 	}
 
 	private ClassLoader classLoader() {
 		return Thread.currentThread().getContextClassLoader();
 	}
 
-	public ProtoObject invokeWith(String className, String[] args) throws Exception {
+	public ProtoObject invoke(String className) throws Exception {
 		ProtoObject root = protoObjectInstance();
 		root.name("<root>");
 		return createClassInstance(root, className);

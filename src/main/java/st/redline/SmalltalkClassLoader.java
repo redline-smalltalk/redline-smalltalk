@@ -28,8 +28,15 @@ import java.util.List;
 
 public class SmalltalkClassLoader extends ClassLoader {
 
-	public SmalltalkClassLoader(java.lang.ClassLoader classLoader) {
+	private final CommandLine commandLine;
+
+	public SmalltalkClassLoader(java.lang.ClassLoader classLoader, CommandLine commandLine) {
 		super(classLoader);
+		this.commandLine = commandLine;
+	}
+
+	public static SmalltalkClassLoader instance() {
+		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 
 	protected void bootstrap() {
@@ -42,6 +49,10 @@ public class SmalltalkClassLoader extends ClassLoader {
 		} catch (Exception e) {
 			throw RedlineException.withCause(e);
 		}
+	}
+
+	public CommandLine commandLine() {
+		return commandLine;
 	}
 
 	public Class findClass(String className) throws ClassNotFoundException {

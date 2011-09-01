@@ -26,6 +26,7 @@ import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Request;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.handler.AbstractHandler;
+import st.redline.CommandLine;
 import st.redline.ProtoObject;
 import st.redline.Stic;
 
@@ -33,6 +34,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.channels.NonWritableChannelException;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -49,14 +52,19 @@ public class Run {
 	private static Map<String, ProtoObject> httpVerbMap = new Hashtable<String, ProtoObject>();
 
 	public static void main(String args[]) throws Exception {
-		startSmalltalk(args);
-		startServer(args);
+		CommandLine commandLine = Stic.createCommandLineWith(args);
+		if (commandLine.haveNoArguments()) {
+			commandLine.printHelp(new PrintWriter(System.out));
+			return;
+		}
+		startSmalltalk(commandLine);
+		startServer(commandLine);
 	}
 
-	private static void startSmalltalk(String[] args) throws Exception {
-		stic = new Stic();
-		httpServletRequest = stic.invokeWith("st.redline.stout.HttpServletRequest", new String[] {});
-		httpServletResponse = stic.invokeWith("st.redline.stout.HttpServletResponse", new String[] {});
+	private static void startSmalltalk(CommandLine commandLine) throws Exception {
+		stic = new Stic(commandLine);
+		httpServletRequest = stic.invoke("st.redline.stout.HttpServletRequest");
+		httpServletResponse = stic.invoke("st.redline.stout.HttpServletResponse");
 		requestSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Request");
 		forwardSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Forward");
 		includeSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Include");
@@ -70,23 +78,23 @@ public class Run {
 		httpVerbMap.put("HEAD", ProtoObject.primitiveSymbol(httpServletRequest, "HEAD"));
 	}
 
-	private static void startServer(String[] args) throws Exception {
+	private static void startServer(CommandLine commandLine) throws Exception {
 		server = new Server(8080);
-		server.setHandler(initialHandler(args));
+		server.setHandler(initialHandler(commandLine));
 		server.start();
 	}
 
-	private static ProtoObject object(String[] args) throws Exception {
-		return ProtoObject.primitiveSend(stic.invokeWith(args[0], args), "new", null);
+	private static ProtoObject object(CommandLine commandLine) throws Exception {
+		return ProtoObject.primitiveSend(stic.invoke((String) commandLine.arguments().get(0)), "new", null);
 	}
 
-	private static Handler initialHandler(final String[] args) throws Exception {
+	private static Handler initialHandler(final CommandLine commandLine) throws Exception {
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
 				throws IOException, ServletException {
 				Handler handler;
 				try {
-					handler = continuingHandler(object(args));
+					handler = continuingHandler(object(commandLine));
 				} catch (Exception e) {
 					throw new ServletException(e);
 				}
