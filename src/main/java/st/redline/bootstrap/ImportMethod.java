@@ -52,6 +52,6 @@ public class ImportMethod extends ProtoMethod {
 	}
 
 	private SmalltalkClassLoader smalltalkClassLoader() {
-		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+		return SmalltalkClassLoader.instance();
 	}
 }

@@ -29,6 +29,8 @@ import java.util.regex.Matcher;
 
 public class SourceFileFinder {
 
+	private static List<String> sourceFilePaths;
+
 	private final String sourceFileName;
 	private final String className;
 
@@ -84,10 +86,20 @@ public class SourceFileFinder {
 	}
 
 	protected static List<String> sourceFilePaths() {
-		List<String> sourceFilePaths = new ArrayList<String>();
-		sourceFilePaths.add(System.getProperty("user.dir"));
+		if (sourceFilePaths == null) {
+			sourceFilePaths = new ArrayList<String>();
+			addDefaultPathsTo(sourceFilePaths);
+			addUserDefinedPathsTo(sourceFilePaths);
+		}
+		return sourceFilePaths;
+	}
+
+	private static void addUserDefinedPathsTo(List<String> sourceFilePaths) {
+		sourceFilePaths.addAll(SmalltalkClassLoader.instance().commandLine().sourcePaths());
+	}
+
+	private static void addDefaultPathsTo(List<String> sourceFilePaths) {
 		sourceFilePaths.add("src/main/smalltalk");
 		sourceFilePaths.add("src/test/smalltalk");
-		return sourceFilePaths;
 	}
 }
