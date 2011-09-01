@@ -49,7 +49,7 @@ public class Stic {
 	}
 
 	private void bootstrap() {
-		((SmalltalkClassLoader) classLoader()).bootstrap();
+		classLoader().bootstrap();
 	}
 
 	private void initializeClassLoader(CommandLine commandLine) {
@@ -60,8 +60,8 @@ public class Stic {
 		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader(), commandLine);
 	}
 
-	private ClassLoader classLoader() {
-		return Thread.currentThread().getContextClassLoader();
+	private SmalltalkClassLoader classLoader() {
+		return SmalltalkClassLoader.instance();
 	}
 
 	public ProtoObject invoke(String className) throws Exception {

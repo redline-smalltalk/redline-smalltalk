@@ -64,10 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Stic.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Stic.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Stic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="28" selection-start="1539" selection-end="1539" vertical-scroll-proportion="0.0">
+            <state line="51" column="21" selection-start="1957" selection-end="1957" vertical-scroll-proportion="0.42303172">
               <folding />
             </state>
           </provider>
@@ -82,10 +82,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SmalltalkClassLoader.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SmalltalkClassLoader.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="0" selection-start="1706" selection-end="1706" vertical-scroll-proportion="0.29964748">
+            <state line="59" column="0" selection-start="2225" selection-end="2225" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -126,10 +126,10 @@
         <option value="$PROJECT_DIR$/src/main/grammar/PreProcLexer.g" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/Preprocessor.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/compiler/ClassBytecodeWriter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/st/redline/Stic.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/CommandLine.java" />
         <option value="$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java" />
+        <option value="$PROJECT_DIR$/src/main/java/st/redline/Stic.java" />
       </list>
     </option>
   </component>
@@ -576,13 +576,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Stic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="28" selection-start="1539" selection-end="1539" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/stout/Run.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="87" column="27" selection-start="3974" selection-end="3974" vertical-scroll-proportion="0.0">
@@ -592,7 +585,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/SmalltalkClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="1706" selection-end="1706" vertical-scroll-proportion="0.29964748">
+        <state line="59" column="0" selection-start="2225" selection-end="2225" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/st/redline/Stic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="21" selection-start="1957" selection-end="1957" vertical-scroll-proportion="0.42303172">
           <folding />
         </state>
       </provider>
