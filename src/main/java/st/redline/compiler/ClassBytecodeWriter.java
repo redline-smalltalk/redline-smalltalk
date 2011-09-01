@@ -1,9 +1,11 @@
 package st.redline.compiler;
 
+import antlr.CharQueue;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import st.redline.SmalltalkClassLoader;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -50,9 +52,12 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void initialize() {
-//		cw = tracingClassWriter();
-		cw = nonTracingClassWriter();
+		cw = verbose() ? tracingClassWriter() : nonTracingClassWriter();
 		fullyQualifiedClassName = packageName.length() > 0 ? packageName + File.separator + className : className;
+	}
+
+	private boolean verbose() {
+		return SmalltalkClassLoader.instance().commandLine().verboseRequested();
 	}
 
 	private ClassWriter nonTracingClassWriter() {

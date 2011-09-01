@@ -60,7 +60,7 @@ public class CommandLine {
 		return commandLine.getArgList();
 	}
 
-	boolean verboseRequested() {
+	public boolean verboseRequested() {
 		return haveVerboseOption();
 	}
 
