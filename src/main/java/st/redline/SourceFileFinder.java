@@ -95,7 +95,13 @@ public class SourceFileFinder {
 	}
 
 	private static void addUserDefinedPathsTo(List<String> sourceFilePaths) {
-		sourceFilePaths.addAll(SmalltalkClassLoader.instance().commandLine().sourcePaths());
+		CommandLine commandLine = SmalltalkClassLoader.instance().commandLine();
+		sourceFilePaths.addAll(commandLine.sourcePaths());
+		List<String> runtimePaths = commandLine.runtimePaths();
+		if (runtimePaths.isEmpty())
+			System.out.println("Warning: no path to Redline Rumtime specified.");
+		else
+			sourceFilePaths.addAll(commandLine.runtimePaths());
 	}
 
 	private static void addDefaultPathsTo(List<String> sourceFilePaths) {

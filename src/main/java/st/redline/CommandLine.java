@@ -37,7 +37,9 @@ import java.util.List;
  */
 public class CommandLine {
 
-	private static final String SOURCEPATH_OPTION = "sourcepath";
+	private static final String SOURCEPATH_OPTION = "s";
+	private static final String RUNTIMEPATH_OPTION = "r";
+	private static final String REDLINE_HOME_ENVVAR = "REDLINE_HOME";
 
 	private final String[] rawArguments;
 	private org.apache.commons.cli.CommandLine commandLine;
@@ -93,12 +95,24 @@ public class CommandLine {
 	}
 
 	List<String> sourcePaths() {
-		List<String> sourcePaths = new ArrayList<String>();
-		if (commandLine.hasOption(SOURCEPATH_OPTION))
-			for (String path : commandLine.getOptionValue(SOURCEPATH_OPTION).split(File.pathSeparator))
-				sourcePaths.add(path);
-		sourcePaths.add(userPath());
-		return sourcePaths;
+		List<String> paths = pathsSpecifiedFor(SOURCEPATH_OPTION);
+		paths.add(userPath());
+		return paths;
+	}
+
+	List<String> runtimePaths() {
+		List<String> paths = pathsSpecifiedFor(RUNTIMEPATH_OPTION);
+		if (paths.isEmpty() && System.getenv(REDLINE_HOME_ENVVAR) != null)
+			paths.add(System.getenv(REDLINE_HOME_ENVVAR));
+		return paths;
+	}
+
+	private List<String> pathsSpecifiedFor(String commandLineOption) {
+		List<String> paths = new ArrayList<String>();
+		if (commandLine.hasOption(commandLineOption))
+			for (String path : commandLine.getOptionValue(commandLineOption).split(File.pathSeparator))
+				paths.add(path);
+		return paths;
 	}
 
 	CommandLineParser commandLineParser() {
@@ -114,6 +128,7 @@ public class CommandLine {
 		public CommandLineOptions() {
 			addOption(help());
 			addOption(sourcePath());
+			addOption(runtimePath());
 			addOption(verbose());
 		}
 
@@ -130,6 +145,13 @@ public class CommandLine {
 								.hasArg()
 								.withDescription("where to find input source files.")
 								.create(SOURCEPATH_OPTION);
+		}
+
+		private Option runtimePath() {
+			return OptionBuilder.withArgName("path")
+								.hasArg()
+								.withDescription("where to find Redline. Defaults to environment " + REDLINE_HOME_ENVVAR + ".")
+								.create(RUNTIMEPATH_OPTION);
 		}
 	}
 }

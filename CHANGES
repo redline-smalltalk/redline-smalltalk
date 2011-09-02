@@ -1,3 +1,8 @@
+03/09/2011 Changes
+
+Added paths spec for Redline runtime so you can choose which runtime you want.
+
+
 02/09/2011 Changes
 
 Added command line argument parsing back into Redline.
