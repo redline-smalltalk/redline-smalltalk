@@ -141,9 +141,9 @@ public class CommandLine {
 		}
 
 		private Option sourcePath() {
-			return OptionBuilder.withArgName("path")
+			return OptionBuilder.withArgName("paths")
 								.hasArg()
-								.withDescription("where to find input source files.")
+								.withDescription("where to find input source files. Separate each path with " + File.pathSeparator)
 								.create(SOURCEPATH_OPTION);
 		}
 
