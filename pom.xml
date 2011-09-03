@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>st.redline</groupId>
   <artifactId>redline</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Redline Smalltalk</name>
   <url>http://redline.st</url>
@@ -22,7 +22,7 @@
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr</artifactId>
-      <version>3.3</version>
+      <version>3.4</version>
     </dependency>
     <dependency>
       <groupId>asm</groupId>
@@ -38,6 +38,12 @@
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>jetty</artifactId>
       <version>6.1.25</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>servlet-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
@@ -57,7 +63,7 @@
       <plugin>
         <groupId>org.antlr</groupId>
         <artifactId>antlr3-maven-plugin</artifactId>
-        <version>3.1.3-1</version>
+        <version>3.4</version>
         <executions>
           <execution>
             <goals>
@@ -78,6 +84,9 @@
             </goals>
             <configuration>
               <outputDirectory>${project.build.directory}/${project.artifactId}-deploy/lib</outputDirectory>
+<!--              <excludeTransitive>true</excludeTransitive> -->
+              <excludeScope>test</excludeScope>
+              <includeScope>compile</includeScope>
             </configuration>
           </execution>
         </executions>
@@ -95,6 +104,12 @@
                 <copy overwrite="true" verbose="true" file="${project.build.directory}/${project.artifactId}-${project.version}.jar" tofile="${project.build.directory}/${project.artifactId}-deploy/lib/${project.artifactId}-${project.version}.jar"/>
                 <copy todir="${project.build.directory}/${project.artifactId}-deploy">
                   <fileset dir="${basedir}/src/main/scripts"/>
+                </copy>
+                <copy todir="${project.build.directory}/${project.artifactId}-deploy/rt">
+                  <fileset dir="${basedir}/src/main/smalltalk"/>
+                </copy>
+                <copy todir="${project.build.directory}/${project.artifactId}-deploy/examples">
+                  <fileset dir="${basedir}/src/test/smalltalk"/>
                 </copy>
                 <chmod perm="u+x" type="file">
                   <fileset dir="${project.build.directory}/${project.artifactId}-deploy">
