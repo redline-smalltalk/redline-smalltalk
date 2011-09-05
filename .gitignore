@@ -10,5 +10,6 @@ target/
 .project
 .classpath
 redline-smalltalk.iml
+redline.iml
 .idea/
 
