@@ -102,8 +102,12 @@ public class CommandLine {
 
 	List<String> runtimePaths() {
 		List<String> paths = pathsSpecifiedFor(RUNTIMEPATH_OPTION);
-		if (paths.isEmpty() && System.getenv(REDLINE_HOME_ENVVAR) != null)
-			paths.add(System.getenv(REDLINE_HOME_ENVVAR));
+		if (paths.isEmpty() && System.getenv(REDLINE_HOME_ENVVAR) != null) {
+			String redlineHome = System.getenv(REDLINE_HOME_ENVVAR);
+			if (!redlineHome.endsWith("rt"))
+				redlineHome = redlineHome + File.separator + "rt";
+			paths.add(redlineHome);
+		}
 		return paths;
 	}
 
@@ -143,7 +147,7 @@ public class CommandLine {
 		private Option sourcePath() {
 			return OptionBuilder.withArgName("paths")
 								.hasArg()
-								.withDescription("where to find input source files. Separate each path with " + File.pathSeparator)
+								.withDescription("where to find input source files. Separate each path with " + File.pathSeparator + ". The paths src/main/smalltalk and src/test/smalltalk are included by default.")
 								.create(SOURCEPATH_OPTION);
 		}
 
