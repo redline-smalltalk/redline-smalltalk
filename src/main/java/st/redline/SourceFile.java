@@ -60,7 +60,9 @@ public class SourceFile extends File {
 		String name = toString();
 		String userDir = userDir();
 		if (name.startsWith(userDir))
-			return name.substring(userDir.length() + 1);
+			name = name.substring(userDir.length() + 1);
+		if (name.startsWith("rt"))
+			return name.substring(3);
 		return name;
 	}
 

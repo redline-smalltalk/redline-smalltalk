@@ -201,7 +201,6 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
-		// System.out.println("primitiveSend() " + selector);
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls());
