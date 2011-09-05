@@ -1,0 +1,12 @@
+
+----------
+Maven support
+
+Added Maven support
+
+You can even remove your .iml file now, as IntelliJ can natively load any Maven project.
+
+Builds the grammars, and builds a ready-to-package binary distribution in target/redline-deploy
+
+Signed-off-by: Robert A Roland rob.roland@gmail.com
+

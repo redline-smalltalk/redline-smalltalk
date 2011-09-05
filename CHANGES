@@ -1,3 +1,8 @@
+06/09/2011 Changes
+
+Pulled contribution. Now supporting Maven.
+
+
 03/09/2011 Changes
 
 Added paths spec for Redline runtime so you can choose which runtime you want.
