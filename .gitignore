@@ -11,5 +11,7 @@ target/
 .classpath
 redline-smalltalk.iml
 redline.iml
+redline.ipr
+redline.iws
 .idea/
 

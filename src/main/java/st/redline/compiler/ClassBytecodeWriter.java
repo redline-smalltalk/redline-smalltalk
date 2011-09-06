@@ -205,6 +205,11 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "instanceOfUndefinedObject", "Lst/redline/ProtoObject;");
 	}
 
+	public void stackPushSmalltalk(int line) {
+		visitLine(line);
+		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "instanceOfSmalltalk", "Lst/redline/ProtoObject;");
+	}
+
 	public void stackPushSuper(int line) {
 		stackPushReceiver(line);
 	}

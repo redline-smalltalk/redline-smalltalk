@@ -55,6 +55,8 @@ public class Bootstrapper {
 	private final ProtoObject symbolMetaClass;
 	private final ProtoObject undefinedObject;
 	private final ProtoObject undefinedObjectMetaClass;
+	private final ProtoObject smalltalkImage;
+	private final ProtoObject smalltalkImageMetaClass;
 	private final ProtoObject bool;
 	private final ProtoObject boolMetaClass;
 	private final ProtoObject boolTrue;
@@ -90,6 +92,8 @@ public class Bootstrapper {
 		this.metaClassMetaClass = new ProtoObject("MetaClassMetaClass");
 		this.undefinedObject = new ProtoObject("UndefinedObject");
 		this.undefinedObjectMetaClass = new ProtoObject("UndefinedObjectMetaClass");
+		this.smalltalkImage = new ProtoObject("SmalltalkImage");
+		this.smalltalkImageMetaClass = new ProtoObject("SmalltalkImageMetaClass");
 		this.bool = new ProtoObject("Boolean");
 		this.boolMetaClass = new ProtoObject("BooleanMetaClass");
 		this.boolTrue = new ProtoObject("True");
@@ -120,6 +124,7 @@ public class Bootstrapper {
 		loadUsing("st.redline.String", smalltalk);
 		loadUsing("st.redline.Symbol", smalltalk);
 		loadUsing("st.redline.UndefinedObject", smalltalk);
+		loadUsing("st.redline.SmalltalkImage", smalltalk);
 		loadUsing("st.redline.Array", smalltalk);
 	}
 
@@ -211,6 +216,11 @@ public class Bootstrapper {
 		undefinedObject.cls(undefinedObjectMetaClass);
 		undefinedObject.superclass(object);
 
+		smalltalkImageMetaClass.cls(metaClass);
+		smalltalkImageMetaClass.superclass(objectMetaClass);
+		smalltalkImage.cls(smalltalkImageMetaClass);
+		smalltalkImage.superclass(object);
+
 		boolMetaClass.cls(metaClass);
 		boolMetaClass.superclass(objectMetaClass);
 		bool.cls(boolMetaClass);
@@ -241,6 +251,7 @@ public class Bootstrapper {
 		ProtoObject.primitiveRegisterAs(symbol, "st.redline.Symbol");
 		ProtoObject.primitiveRegisterAs(string, "st.redline.String");
 		ProtoObject.primitiveRegisterAs(undefinedObject, "st.redline.UndefinedObject");
+		ProtoObject.primitiveRegisterAs(smalltalkImage, "st.redline.SmalltalkImage");
 		ProtoObject.primitiveRegisterAs(bool, "st.redline.Boolean");
 		ProtoObject.primitiveRegisterAs(boolTrue, "st.redline.True");
 		ProtoObject.primitiveRegisterAs(boolFalse, "st.redline.False");
@@ -258,6 +269,10 @@ public class Bootstrapper {
 		ProtoObject falseInstance = new ProtoObject(false);
 		falseInstance.cls(boolFalse);
 		ProtoObject.instanceOfFalse = falseInstance;
+
+		ProtoObject smalltalkInstance = new ProtoObject(false);
+		smalltalkInstance.cls(smalltalkImage);
+		ProtoObject.instanceOfSmalltalk = smalltalkInstance;
 	}
 
 	private void mapPackages() {

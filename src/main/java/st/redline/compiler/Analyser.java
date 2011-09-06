@@ -300,6 +300,10 @@ public class Analyser implements NodeVisitor {
 		classBytecodeWriter.stackPushNil(line);
 	}
 
+	public void visit(SmalltalkReservedWord smalltalkReservedWord, int line) {
+		classBytecodeWriter.stackPushSmalltalk(line);
+	}
+
 	public void visit(JvmInsn jvmInsn, int opcode, int line) {
 		classBytecodeWriter.visitLine(line);
 		classBytecodeWriter.methodVisitor().visitInsn(opcode);

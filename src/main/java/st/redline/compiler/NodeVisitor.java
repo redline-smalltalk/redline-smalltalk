@@ -84,6 +84,7 @@ public interface NodeVisitor {
 	void visit(TrueReservedWord selfReservedWord, int line);
 	void visit(FalseReservedWord selfReservedWord, int line);
 	void visit(NilReservedWord selfReservedWord, int line);
+	void visit(SmalltalkReservedWord smalltalkReservedWord, int line);
 
 	void visit(JvmInsn jvmInsn, int opcode, int line);
 	void visit(JvmLdcInsn jvmLdcInsn, String literal, int line);

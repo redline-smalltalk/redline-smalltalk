@@ -341,7 +341,7 @@ literal returns [Literal n]
 	|	stringConstant {$n = new LiteralString($stringConstant.n);}
 	|	stringChunk {$n = new LiteralString($stringChunk.n);}
 	|	'#' ( symbol {$n = new LiteralSymbol($symbol.n);} | array {$n = new LiteralArray($array.n);} )
-	|	('self' | 'super' | 'true' | 'false' | 'nil') => reservedWordLiteral {$n = $reservedWordLiteral.n;}
+	|	('self' | 'super' | 'true' | 'false' | 'nil' | 'Smalltalk' ) => reservedWordLiteral {$n = $reservedWordLiteral.n;}
 	;
 
 reservedWordLiteral returns [Literal n]
@@ -350,6 +350,7 @@ reservedWordLiteral returns [Literal n]
 	|	l = 'true' {$n = new TrueReservedWord($l.line);}
 	|	l = 'false' {$n = new FalseReservedWord($l.line);}
 	| 	l = 'nil' {$n = new NilReservedWord($l.line);}
+	| 	l = 'Smalltalk' {$n = new SmalltalkReservedWord($l.line);}	
 	;
 	
 block returns [Block n]

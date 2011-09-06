@@ -36,6 +36,7 @@ public class ProtoObject {
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	protected static final Map<String, String> packageMap = new HashMap<String, String>();	private static final Map<String, ProtoObject> symbols = new HashMap<String, ProtoObject>();
 
+	protected static ProtoObject instanceOfSmalltalk;
 	protected static ProtoObject instanceOfUndefinedObject;
 	protected static ProtoObject instanceOfTrue;
 	protected static ProtoObject instanceOfFalse;

@@ -4,6 +4,7 @@
 Pulled contribution. Now supporting Maven.
 Modified maven pom to copy across 'extras' into target/redline-deploy/extras.
 Changed runtime path to match where maven puts the runtime soruces.
+Added reserved word Smalltalk and associated SmalltalkImage class.
 
 
 03/09/2011 Changes
