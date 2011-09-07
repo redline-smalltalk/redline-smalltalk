@@ -277,8 +277,8 @@ public class Bootstrapper {
 
 	private void mapPackages() {
 		ProtoObject.packageMap.put("ProtoObject", "st.redline.ProtoObject");
-		for (String sourceFile : SourceFileFinder.findIn("st/redline")) {
-			String packageName = sourceFile.substring(0, sourceFile.lastIndexOf("/"));
+		for (String sourceFile : SourceFileFinder.findIn("st" + File.separator + "redline")) {
+			String packageName = sourceFile.substring(0, sourceFile.lastIndexOf(File.separator));
 			String name = sourceFile.substring(packageName.length() + 1, sourceFile.lastIndexOf("."));
 //			System.out.println(packageName + " " + name + " " + packageName.replaceAll(File.separator, ".") + "." + name);
 			ProtoObject.packageMap.put(name, packageName.replaceAll(File.separator, ".") + "." + name);

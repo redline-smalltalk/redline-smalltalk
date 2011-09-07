@@ -25,6 +25,7 @@ package st.redline;
 import st.redline.compiler.AbstractMethod;
 import st.redline.compiler.MethodAnalyser;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -120,7 +121,7 @@ public class ProtoObject {
 			stack = new Stack<String>();
 			packageRegistry.set(stack);
 		}
-		stack.push(packageName.replaceAll("/", "."));
+		stack.push(packageName.replaceAll(File.separator, "."));
 	}
 
 	public static void primitivePackageRegistryRemove() {

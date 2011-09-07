@@ -105,7 +105,7 @@ public class SourceFileFinder {
 	}
 
 	private static void addDefaultPathsTo(List<String> sourceFilePaths) {
-		sourceFilePaths.add("src/main/smalltalk");
-		sourceFilePaths.add("src/test/smalltalk");
+		sourceFilePaths.add("src" + File.separator + "main" + File.separator + "smalltalk");
+		sourceFilePaths.add("src" + File.separator + "test" + File.separator + "smalltalk");
 	}
 }
