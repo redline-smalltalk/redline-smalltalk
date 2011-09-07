@@ -27,6 +27,7 @@ import org.apache.commons.cli.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -147,7 +148,9 @@ public class CommandLine {
 		private Option sourcePath() {
 			return OptionBuilder.withArgName("paths")
 								.hasArg()
-								.withDescription("where to find input source files. Separate each path with " + File.pathSeparator + ". The paths src/main/smalltalk and src/test/smalltalk are included by default.")
+								.withDescription("where to find input source files. Separate each path with " + File.pathSeparator
+										+ ". The paths src" + File.separator + "main" + File.separator + "smalltalk and src"
+										+ File.separator + "test" + File.separator + "smalltalk are included by default.")
 								.create(SOURCEPATH_OPTION);
 		}
 
