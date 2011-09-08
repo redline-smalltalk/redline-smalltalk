@@ -3,6 +3,7 @@
 Changed use of "/" in some places to use File.separator, so things work on windows.
 (Suggestion from Stefan Krecher)
 Modified stic usage message to use File.separator.
+More modifications around replacing File paths correctly under windows and linux.
 
 
 07/09/2011 Changes

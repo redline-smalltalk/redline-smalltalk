@@ -281,7 +281,7 @@ public class Bootstrapper {
 			String packageName = sourceFile.substring(0, sourceFile.lastIndexOf(File.separator));
 			String name = sourceFile.substring(packageName.length() + 1, sourceFile.lastIndexOf("."));
 //			System.out.println(packageName + " " + name + " " + packageName.replaceAll(File.separator, ".") + "." + name);
-			ProtoObject.packageMap.put(name, packageName.replaceAll(File.separator, ".") + "." + name);
+			ProtoObject.packageMap.put(name, packageName.replaceAll("\\" + File.separator, ".") + "." + name);
 		}
 	}
 }
