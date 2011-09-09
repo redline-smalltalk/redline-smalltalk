@@ -116,8 +116,14 @@ public class CommandLine {
 		List<String> paths = new ArrayList<String>();
 		if (commandLine.hasOption(commandLineOption))
 			for (String path : commandLine.getOptionValue(commandLineOption).split(File.pathSeparator))
-				paths.add(path);
+				paths.add(stripTrailingSlash(path));
 		return paths;
+	}
+
+	private String stripTrailingSlash(String path) {
+		if (path.endsWith(File.separator))
+			return path.substring(0, path.length() - 1);
+		return path;
 	}
 
 	CommandLineParser commandLineParser() {
