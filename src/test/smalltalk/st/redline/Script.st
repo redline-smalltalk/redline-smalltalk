@@ -1,4 +1,3 @@
 
-Example new
-
+Example new.
 

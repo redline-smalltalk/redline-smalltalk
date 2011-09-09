@@ -1,6 +1,7 @@
 10/09/2011 Changes
 
 Removed trailing separator from source paths.
+Added Transcript class with ability to output to Console.
 
 
 08/09/2011 Changes
