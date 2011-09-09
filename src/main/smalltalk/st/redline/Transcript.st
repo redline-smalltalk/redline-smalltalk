@@ -4,6 +4,11 @@ Object < #Transcript
 + show: anObject
   self stdout: anObject
 
++ cr
+  <fieldInsn: GETSTATIC, 'java/lang/System', 'out', 'Ljava/io/PrintStream;'>.
+  <methodInsn: INVOKEVIRTUAL, 'java/io/PrintStream', 'print', '(Ljava/lang/Object;)V'>.
+  <varInsn: ALOAD, 1>.
+
 + stdout: anObject
   "load System.out"
   <fieldInsn: GETSTATIC, 'java/lang/System', 'out', 'Ljava/io/PrintStream;'>.
