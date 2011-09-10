@@ -22,10 +22,10 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.compiler;
 
-import st.redline.ProtoObject;
-
 import java.io.File;
 import java.util.List;
+
+import st.redline.ProtoObject;
 
 public class Analyser implements NodeVisitor {
 
@@ -271,6 +271,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralNumber literalNumber, String value, int line) {
+		classBytecodeWriter.callPrimitiveInteger(literalNumber.value(), line);
 	}
 
 	public void visit(Block block) {

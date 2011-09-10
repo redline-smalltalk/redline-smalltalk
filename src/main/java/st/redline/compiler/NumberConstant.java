@@ -35,4 +35,14 @@ public class NumberConstant extends BaseLiteral {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, value, line);
 	}
+
+	@Override
+	public int line() {
+		return line;
+	}
+
+	@Override
+	public String value() {
+		return value;
+	}
 }

@@ -194,6 +194,14 @@ public class ProtoObject {
 		return instance;
 	}
 
+	public static ProtoObject primitiveInteger(ProtoObject receiver, String value) {
+		ProtoObject numberClass = receiver.resolveObject("st.redline.Integer");
+		ProtoObject integer = new ProtoObject(false);
+		integer.cls(numberClass);
+		integer.javaValue(Integer.valueOf(value));
+		return integer;
+	}
+	
 	public static ProtoObject primitiveString(ProtoObject receiver, String value) {
 		ProtoObject stringClass = receiver.resolveObject("st.redline.String");  // <- should we do primitiveVariableAt so namespaces are used?
 		ProtoObject string = new ProtoObject(false);
