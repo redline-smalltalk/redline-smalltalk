@@ -33,4 +33,14 @@ public class LiteralNumber extends BaseLiteral {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, numberConstant.value, numberConstant.line);
 	}
+		
+	@Override
+	public int line() {
+		return numberConstant.line;
+	}
+
+	@Override
+	public String value() {
+		return numberConstant.value;
+	}	
 }

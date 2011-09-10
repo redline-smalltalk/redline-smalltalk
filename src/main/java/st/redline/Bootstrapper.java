@@ -51,6 +51,12 @@ public class Bootstrapper {
 	private final ProtoObject arrayMetaClass;
 	private final ProtoObject string;
 	private final ProtoObject stringMetaClass;
+	private final ProtoObject magnitude;
+	private final ProtoObject magnitudeMetaClass;
+	private final ProtoObject number;
+	private final ProtoObject numberMetaClass;
+	private final ProtoObject integer;
+	private final ProtoObject integerMetaClass;
 	private final ProtoObject symbol;
 	private final ProtoObject symbolMetaClass;
 	private final ProtoObject undefinedObject;
@@ -86,6 +92,12 @@ public class Bootstrapper {
 		this.arrayMetaClass = new ProtoObject("ArrayMetaClass");
 		this.string = new ProtoObject("String");
 		this.stringMetaClass = new ProtoObject("StringMetaClass");
+		this.magnitude = new ProtoObject("Magnitude");
+		this.magnitudeMetaClass = new ProtoObject("MagnitudeMetaClass");
+		this.number = new ProtoObject("Number");
+		this.numberMetaClass = new ProtoObject("NumberMetaClass");
+		this.integer = new ProtoObject("Integer");
+		this.integerMetaClass = new ProtoObject("IntegerMetaClass");
 		this.symbol = new ProtoObject("Symbol");
 		this.symbolMetaClass = new ProtoObject("SymbolMetaClass");
 		this.metaClass = new ProtoObject("MetaClass");
@@ -122,6 +134,9 @@ public class Bootstrapper {
 		loadUsing("st.redline.SequenceableCollection", smalltalk);
 		loadUsing("st.redline.ArrayedCollection", smalltalk);
 		loadUsing("st.redline.String", smalltalk);
+		loadUsing("st.redline.Magnitude", smalltalk);
+		loadUsing("st.redline.Number", smalltalk);
+		loadUsing("st.redline.Integer", smalltalk);
 		loadUsing("st.redline.Symbol", smalltalk);
 		loadUsing("st.redline.UndefinedObject", smalltalk);
 		loadUsing("st.redline.SmalltalkImage", smalltalk);
@@ -206,6 +221,21 @@ public class Bootstrapper {
 		string.cls(stringMetaClass);
 		string.superclass(arrayedCollection);
 
+		magnitudeMetaClass.cls(metaClass);
+		magnitudeMetaClass.superclass(objectMetaClass);
+		magnitude.cls(magnitudeMetaClass);
+		magnitude.superclass(object);
+
+		numberMetaClass.cls(metaClass);
+		numberMetaClass.superclass(magnitudeMetaClass);
+		number.cls(numberMetaClass);
+		number.superclass(magnitude);
+
+		integerMetaClass.cls(metaClass);
+		integerMetaClass.superclass(numberMetaClass);
+		integer.cls(integerMetaClass);
+		integer.superclass(number);
+
 		symbolMetaClass.cls(metaClass);
 		symbolMetaClass.superclass(stringMetaClass);
 		symbol.cls(symbolMetaClass);
@@ -249,6 +279,9 @@ public class Bootstrapper {
 		ProtoObject.primitiveRegisterAs(arrayedCollection, "st.redline.ArrayedCollection");
 		ProtoObject.primitiveRegisterAs(array, "st.redline.Array");
 		ProtoObject.primitiveRegisterAs(symbol, "st.redline.Symbol");
+		ProtoObject.primitiveRegisterAs(magnitude, "st.redline.Magnitude");
+		ProtoObject.primitiveRegisterAs(number, "st.redline.Number");
+		ProtoObject.primitiveRegisterAs(integer, "st.redline.Integer");
 		ProtoObject.primitiveRegisterAs(string, "st.redline.String");
 		ProtoObject.primitiveRegisterAs(undefinedObject, "st.redline.UndefinedObject");
 		ProtoObject.primitiveRegisterAs(smalltalkImage, "st.redline.SmalltalkImage");

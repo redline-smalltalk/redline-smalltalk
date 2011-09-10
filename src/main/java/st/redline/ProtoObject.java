@@ -35,7 +35,8 @@ public class ProtoObject {
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 	private static final Map<String, ProtoObject> classRegistry = new HashMap<String, ProtoObject>();
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
-	protected static final Map<String, String> packageMap = new HashMap<String, String>();	private static final Map<String, ProtoObject> symbols = new HashMap<String, ProtoObject>();
+	protected static final Map<String, String> packageMap = new HashMap<String, String>();
+	private static final Map<String, ProtoObject> symbols = new HashMap<String, ProtoObject>();
 
 	protected static ProtoObject instanceOfSmalltalk;
 	protected static ProtoObject instanceOfUndefinedObject;
@@ -44,7 +45,7 @@ public class ProtoObject {
 
 	private ProtoObjectData data;
 	private String name;
-	
+
 	public ProtoObject() {
 		this(true);
 	}
@@ -194,6 +195,22 @@ public class ProtoObject {
 		return instance;
 	}
 
+	public static ProtoObject primitiveInteger(ProtoObject receiver, String value) {
+		ProtoObject numberClass = receiver.resolveObject("st.redline.Integer");
+		ProtoObject integer = new ProtoObject(false);
+		integer.cls(numberClass);
+		integer.javaValue(Integer.valueOf(value));
+		return integer;
+	}
+
+	public static ProtoObject primitiveInteger(ProtoObject receiver, Integer value) {
+		ProtoObject numberClass = receiver.resolveObject("st.redline.Integer");
+		ProtoObject integer = new ProtoObject(false);
+		integer.cls(numberClass);
+		integer.javaValue(value);
+		return integer;
+	}
+
 	public static ProtoObject primitiveString(ProtoObject receiver, String value) {
 		ProtoObject stringClass = receiver.resolveObject("st.redline.String");  // <- should we do primitiveVariableAt so namespaces are used?
 		ProtoObject string = new ProtoObject(false);
@@ -210,7 +227,7 @@ public class ProtoObject {
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
 			return method.applyTo(receiver, methodForResult[0]);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {});
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{});
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
@@ -222,7 +239,7 @@ public class ProtoObject {
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
 			return method.applyTo(receiver, methodForResult[0], arg1);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {arg1});
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1});
 	}
 
 	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ProtoObject classMethodWasFoundIn) {
@@ -233,7 +250,7 @@ public class ProtoObject {
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
 			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {arg1, arg2, arg3, arg4, arg5});
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
 	}
 
 	public static ProtoObject primitiveSuperSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
@@ -245,7 +262,7 @@ public class ProtoObject {
 		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
 			return method.applyTo(receiver, methodForResult[0]);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[] {});
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{});
 	}
 
 //	public ProtoObject ping() {
@@ -385,5 +402,40 @@ public class ProtoObject {
 	public static ProtoObject primitive_110(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// ==
 		return (receiver == arg1) ? instanceOfTrue : instanceOfFalse;
+	}
+
+	public static ProtoObject primitive_21(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		// +
+		return primitiveInteger(receiver, (Integer) receiver.javaValue() + (Integer) arg1.javaValue());
+	}
+
+	public static ProtoObject primitive_22(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		// -
+		return primitiveInteger(receiver, (Integer) receiver.javaValue() - (Integer) arg1.javaValue());
+	}
+
+	public static ProtoObject primitive_23(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		// <
+		return ((Integer) receiver.javaValue() < (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+	}
+
+	public static ProtoObject primitive_24(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		// >
+		return ((Integer) receiver.javaValue() > (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+	}
+
+	public static ProtoObject primitive_25(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		// <
+		return ((Integer) receiver.javaValue() <= (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+	}
+
+	public static ProtoObject primitive_26(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		// >
+		return ((Integer) receiver.javaValue() >= (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+	}
+
+	public static ProtoObject primitive_27(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+		// >
+		return ((Integer) receiver.javaValue() == (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
 	}
 }
