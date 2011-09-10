@@ -1,5 +1,10 @@
 10/09/2011 Changes
 
+Adding PowerMock and EasyMock for unit testing
+Adding first unit test of an Integer primitive
+
+10/09/2011 Changes
+
 Start of Number support.  Adding object creation for basic Numbers.
 All LiteralNumbers parse as Integers now.
 
