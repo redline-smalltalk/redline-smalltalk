@@ -28,7 +28,7 @@ public abstract class JvmExpression implements Expression {
 	protected boolean duplicateResultOnStack;
 
 	public JvmExpression() {
-		resultLeftOnStack = false;
+		resultLeftOnStack = true;
 		duplicateResultOnStack = false;
 	}
 

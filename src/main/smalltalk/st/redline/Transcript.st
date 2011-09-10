@@ -6,13 +6,13 @@ Object < #Transcript
 
 + cr
   <fieldInsn: GETSTATIC, 'java/lang/System', 'out', 'Ljava/io/PrintStream;'>.
-  <methodInsn: INVOKEVIRTUAL, 'java/io/PrintStream', 'print', '(Ljava/lang/Object;)V'>.
+  <methodInsn: INVOKEVIRTUAL, 'java/io/PrintStream', 'println', '()V'>.
   <varInsn: ALOAD, 1>.
 
 + stdout: anObject
   "load System.out"
   <fieldInsn: GETSTATIC, 'java/lang/System', 'out', 'Ljava/io/PrintStream;'>.
-  "Load anObject onto stack. 1 = receiver, 2 = class method found in, 3 = first argument."
+  "Load anObject onto stack. 0 = this method, 1 = receiver, 2 = class method was found in, 3 = first argument."
   <varInsn: ALOAD, 3>.
   "Invoke print on System.out"
   <methodInsn: INVOKEVIRTUAL, 'java/io/PrintStream', 'print', '(Ljava/lang/Object;)V'>.
