@@ -1,3 +1,11 @@
+11/09/2011 Changes
+
+Changed creation of Integer instances to use single method. Need to make rest of instance
+creation use this approach. 
+Add back some output when methods are applied - helps with debugging while we wait for 
+Transcript support. (Coming later today).
+
+
 10/09/2011 Changes
 
 Start of Number support.  Adding object creation for basic Numbers.

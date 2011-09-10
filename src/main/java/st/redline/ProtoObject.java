@@ -85,9 +85,13 @@ public class ProtoObject {
 		return create(receiver, "st.redline.Array");
 	}
 
+	private static ProtoObject createInteger(ProtoObject receiver) {
+		return create(receiver, "st.redline.Integer");
+	}
+
 	private static ProtoObject create(ProtoObject receiver, String name) {
 		ProtoObject cls = primitiveResolveObject(receiver, name);
-		// System.out.println(cls);
+//		System.out.println(cls);
 		return primitiveSend(cls, "new", null);
 	}
 
@@ -196,17 +200,11 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveInteger(ProtoObject receiver, String value) {
-		ProtoObject numberClass = receiver.resolveObject("st.redline.Integer");
-		ProtoObject integer = new ProtoObject(false);
-		integer.cls(numberClass);
-		integer.javaValue(Integer.valueOf(value));
-		return integer;
+		return primitiveInteger(receiver, Integer.valueOf(value));
 	}
 
 	public static ProtoObject primitiveInteger(ProtoObject receiver, Integer value) {
-		ProtoObject numberClass = receiver.resolveObject("st.redline.Integer");
-		ProtoObject integer = new ProtoObject(false);
-		integer.cls(numberClass);
+		ProtoObject integer = createInteger(receiver);
 		integer.javaValue(value);
 		return integer;
 	}
