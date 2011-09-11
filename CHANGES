@@ -14,6 +14,8 @@ Adding PowerMock and EasyMock for unit testing
 Adding first unit test of an Integer primitive
 Removed unnecessary Bootstrapping of Number classes
 Fixing equality checks on Integers
+Adding Cobertura plugin to generate code coverage reports on demand
+Adding 100% unit test coverage of Integer primitives
 
 10/09/2011 Changes
 
