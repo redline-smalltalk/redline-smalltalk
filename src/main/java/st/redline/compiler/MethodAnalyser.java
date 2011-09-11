@@ -22,12 +22,17 @@ Please see DEVELOPER-CERTIFICATE-OF-ORIGIN if you wish to contribute a patch to 
 */
 package st.redline.compiler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MethodAnalyser extends Analyser {
 
+	private final Map<String, VariableName> argumentRegistry;
+
 	public MethodAnalyser(String className, String packageName, int countOfArguments) {
 		super(className, packageName, countOfArguments);
+		argumentRegistry = new HashMap<String, VariableName>();
 	}
 
 	protected void initialize() {
@@ -40,6 +45,15 @@ public class MethodAnalyser extends Analyser {
 
 	public boolean continueMethodVisit() {
 		return true;
+	}
+
+	protected boolean isMethodArgument(String value) {
+		return argumentRegistry.containsKey(value);
+	}
+
+	protected void loadMethodArgument(String value) {
+		VariableName variableName = argumentRegistry.get(value);
+		classBytecodeWriter.stackPushLocal(variableName.index + 3);  // 0 = method, 1 = receiver, 2 = class method found in, then local fields.
 	}
 
 	public void visit(InstanceMethod instanceMethod) {
@@ -66,8 +80,22 @@ public class MethodAnalyser extends Analyser {
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
+		registerMethodArgument(variableName);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
+		registerMethodArguments(variableNames);
+	}
+
+	private void registerMethodArguments(List<VariableName> variableNames) {
+		for (VariableName variableName : variableNames)
+			registerMethodArgument(variableName);
+	}
+
+	private void registerMethodArgument(VariableName variableName) {
+		String name = variableName.value();
+		if (isMethodArgument(name))
+			throw new IllegalStateException("Duplicate method argument name '" + name + "'.");
+		argumentRegistry.put(name, variableName);
 	}
 }

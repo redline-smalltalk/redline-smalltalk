@@ -6,6 +6,8 @@ Changed creation of Integer instances to use single method. Need to make rest of
 creation use this approach. 
 Add back some output when methods are applied - helps with debugging while we wait for 
 Transcript support. (Coming later today).
+Added method argument load support, so you can reference method arguments. Working on 
+store side, which is an error. ie: Can't methodArgument := value.
 
 
 10/09/2011 Changes

@@ -30,7 +30,7 @@ public class KeywordMessagePattern implements MessagePattern {
 	private final List<VariableName> variableNames;
 	private final StringBuffer keywords;
 	private final int line;
-	private int index = 3;
+	private int index = 0;
 
 	public KeywordMessagePattern(KeywordAndVariableName keywordAndVariableName) {
 		variableNames = new ArrayList<VariableName>();

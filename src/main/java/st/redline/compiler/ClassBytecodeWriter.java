@@ -187,6 +187,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitVarInsn(ALOAD, 1);
 	}
 
+	public void stackPushLocal(int index) {
+		mv.visitVarInsn(ALOAD, index);
+	}
+
 	public void stackPushClassMethodWasFoundIn() {
 		mv.visitVarInsn(ALOAD, 2);
 	}

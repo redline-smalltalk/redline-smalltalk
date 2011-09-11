@@ -88,13 +88,23 @@ public class Analyser implements NodeVisitor {
 	public void visit(VariableName variableName, String value, int line) {
 		if (isTemporary(value)) {
 			throw new IllegalStateException("TODO - handle temporary variable.");
-		} else  {
-			if (variableName.isOnLoadSideOfExpression()) {
-				classBytecodeWriter.callPrimitiveVariableAt(value, line, true);
+		} else if (variableName.isOnLoadSideOfExpression()) {
+			if (isMethodArgument(value)) {
+				loadMethodArgument(value);
 			} else {
-				throw new IllegalStateException("TODO - store of variable.");
+				classBytecodeWriter.callPrimitiveVariableAt(value, line, true);
 			}
+		} else {
+			throw new IllegalStateException("TODO - store of variable.");
 		}
+	}
+
+	protected void loadMethodArgument(String value) {
+		throw new IllegalStateException("Subclass should implement.");
+	}
+
+	protected boolean isMethodArgument(String value) {
+		return false;
 	}
 
 	private boolean isTemporary(String name) {
