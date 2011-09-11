@@ -8,7 +8,9 @@ Transcript support. (Coming later today).
 Added method argument load support, so you can reference method arguments. Working on 
 store side, which is an error. ie: Can't methodArgument := value.
 Replaced long license comment with simpler one liner.
-
+Multiple argument method calls.
+Basic Magnitude protocol.
+Parts of the Boolean protocols.
 
 10/09/2011 Changes
 
