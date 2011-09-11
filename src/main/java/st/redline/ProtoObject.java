@@ -219,6 +219,42 @@ public class ProtoObject {
 		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1});
 	}
 
+	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("primitiveSend " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2});
+	}
+
+	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("primitiveSend " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3});
+	}
+
+	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("primitiveSend " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4});
+	}
+
 	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ProtoObject classMethodWasFoundIn) {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)

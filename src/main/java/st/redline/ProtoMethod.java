@@ -19,6 +19,18 @@ public class ProtoMethod extends ProtoObject {
 		throw subclassShouldHaveImplemented(1);
 	}
 
+	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls, ProtoObject arg1, ProtoObject arg2) {
+		throw subclassShouldHaveImplemented(2);
+	}
+
+	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3) {
+		throw subclassShouldHaveImplemented(3);
+	}
+
+	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4) {
+		throw subclassShouldHaveImplemented(4);
+	}
+
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		System.out.println("applyTo(5) " + receiver + " " + arg1);
 		throw subclassShouldHaveImplemented(5);
