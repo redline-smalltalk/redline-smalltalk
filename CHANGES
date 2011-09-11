@@ -1,5 +1,4 @@
 
-
 11/09/2011 Changes
 
 Changed creation of Integer instances to use single method. Need to make rest of instance
@@ -8,6 +7,7 @@ Add back some output when methods are applied - helps with debugging while we wa
 Transcript support. (Coming later today).
 Added method argument load support, so you can reference method arguments. Working on 
 store side, which is an error. ie: Can't methodArgument := value.
+Replaced long license comment with simpler one liner.
 
 
 10/09/2011 Changes

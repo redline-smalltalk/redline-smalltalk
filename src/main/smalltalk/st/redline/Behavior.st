@@ -1,3 +1,4 @@
+" Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution "
 
 Object < #Behavior
 
@@ -8,4 +9,3 @@ Object < #Behavior
 - basicNew
 	"Primitive. Answer an instance of the receiver (which is a class)." 
 	<primitive: 70>
-
