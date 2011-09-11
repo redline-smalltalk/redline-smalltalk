@@ -423,17 +423,17 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitive_25(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
-		// <
+		// <=
 		return ((Integer) receiver.javaValue() <= (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
 	}
 
 	public static ProtoObject primitive_26(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
-		// >
+		// >=
 		return ((Integer) receiver.javaValue() >= (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
 	}
 
 	public static ProtoObject primitive_27(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
-		// >
-		return ((Integer) receiver.javaValue() == (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+		// ==
+		return (receiver.javaValue().equals(arg1.javaValue())) ? instanceOfTrue : instanceOfFalse;
 	}
 }
