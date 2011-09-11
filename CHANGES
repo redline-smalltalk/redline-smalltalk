@@ -1,3 +1,7 @@
+12:09/2011 Changes
+
+Added support for cascading message expressions. Tested with unary messages.
+
 
 11/09/2011 Changes
 
@@ -12,6 +16,7 @@ Multiple argument method calls.
 Basic Magnitude protocol.
 Parts of the Boolean protocols.
 
+
 10/09/2011 Changes
 
 Adding PowerMock and EasyMock for unit testing
@@ -21,10 +26,12 @@ Fixing equality checks on Integers
 Adding Cobertura plugin to generate code coverage reports on demand
 Adding 100% unit test coverage of Integer primitives
 
+
 10/09/2011 Changes
 
 Start of Number support.  Adding object creation for basic Numbers.
 All LiteralNumbers parse as Integers now.
+
 
 10/09/2011 Changes
 

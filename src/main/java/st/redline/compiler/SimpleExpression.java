@@ -6,6 +6,8 @@ import java.util.List;
 
 public class SimpleExpression implements Expression {
 
+	private static final Cascade cascade = new Cascade();
+
 	private Primary primary;
 	private MessageExpression messageExpression;
 	private final List<MessageElement> messageElements;
@@ -52,8 +54,13 @@ public class SimpleExpression implements Expression {
 		primary.accept(visitor);
 		if (messageExpression != null)
 			messageExpression.accept(visitor);
-		for (MessageElement messageElement : messageElements)
-			messageElement.accept(visitor);
+		int countOfMessageElements = messageElements.size();
+		for (int index = 0; index < countOfMessageElements; index++) {
+			cascade.begin(visitor);
+			messageElements.get(index).accept(visitor);
+			if (index + 1 < countOfMessageElements)
+				cascade.end(visitor);
+		}
 		visitor.visitEnd(this);
 	}
 }

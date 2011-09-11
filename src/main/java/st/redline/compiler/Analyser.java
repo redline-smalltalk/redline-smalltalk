@@ -179,7 +179,16 @@ public class Analyser implements NodeVisitor {
 			classBytecodeWriter.stackPop();
 	}
 
+	public void visit(Cascade cascade) {
+		classBytecodeWriter.stackDuplicate();
+	}
+
+	public void visitEnd(Cascade cascade) {
+		classBytecodeWriter.stackPop();
+	}
+
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
+		classBytecodeWriter.unarySend(value, line, sendToSuper);
 	}
 
 	public void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription) {
