@@ -271,6 +271,28 @@ public class ProtoObject {
 		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
 	}
 
+	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
+	}
+
+	public static ProtoObject primitiveSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
+	}
+
 	public static ProtoObject primitiveSuperSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
 //		System.out.println("primitiveSuperSend " + receiver + " " + selector + " " + classMethodWasFoundIn);
 		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
@@ -410,49 +432,49 @@ public class ProtoObject {
 		return data.isClass();
 	}
 
-	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
 		// TODO.JCL - there is still more to do here - this works for now.
 		// basicNew
 		return new ProtoObject(receiver);
 	}
 
-	public static ProtoObject primitive_110(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_110(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// ==
 		return (receiver == arg1) ? instanceOfTrue : instanceOfFalse;
 	}
 
-	public static ProtoObject primitive_21(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_21(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// +
 		return primitiveInteger(receiver, ((BigDecimal) receiver.javaValue()).add((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject primitive_22(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_22(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// -
 		return primitiveInteger(receiver, ((BigDecimal) receiver.javaValue()).subtract((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject primitive_23(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_23(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// <
 		return (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) < 0) ? instanceOfTrue : instanceOfFalse;
 	}
 
-	public static ProtoObject primitive_24(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_24(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// >
 		return (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) > 0) ? instanceOfTrue : instanceOfFalse;
 	}
 
-	public static ProtoObject primitive_25(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_25(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// <=
 		return (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) <= 0) ? instanceOfTrue : instanceOfFalse;
 	}
 
-	public static ProtoObject primitive_26(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_26(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// >=
 		return (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) >= 0) ? instanceOfTrue : instanceOfFalse;
 	}
 
-	public static ProtoObject primitive_27(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
+	public static ProtoObject primitive_27(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// ==
 		return (receiver.javaValue().equals(arg1.javaValue())) ? instanceOfTrue : instanceOfFalse;
 	}

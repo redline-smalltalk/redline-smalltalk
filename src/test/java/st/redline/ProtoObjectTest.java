@@ -34,7 +34,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2, result, ProtoObject.class);
 
-		ProtoObject.primitive_21(integer1, null, integer2, null, null, null, null);
+		ProtoObject.primitive_21(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -58,7 +58,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2, result, ProtoObject.class);
 
-		ProtoObject.primitive_22(integer1, null, integer2, null, null, null, null);
+		ProtoObject.primitive_22(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -77,7 +77,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_23(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_23(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -98,7 +98,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_23(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_23(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -119,7 +119,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_24(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_24(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -140,7 +140,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_24(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_24(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -161,7 +161,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_25(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_25(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -182,7 +182,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_25(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_25(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -203,7 +203,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_26(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_26(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -224,7 +224,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_26(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_26(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -245,7 +245,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_27(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_27(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
@@ -266,7 +266,7 @@ public class ProtoObjectTest {
 
 		replay(integer1, integer2);
 
-		ProtoObject result = ProtoObject.primitive_27(integer1, null, integer2, null, null, null, null);
+		ProtoObject result = ProtoObject.primitive_27(integer1, null, integer2, null, null, null, null, null, null);
 
 		// verify that the expected, mocked partial (primitiveInteger) is called
 		verify(ProtoObject.class);
