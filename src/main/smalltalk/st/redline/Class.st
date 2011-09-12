@@ -14,6 +14,10 @@ ClassDescription < #Class
     "Answer a new subclass. Category is dropped as it is implied in namespace."
 	self subclass: aSymbol instanceVariableNames: instVars classVariableNames: classVars classInstanceVariableNames: classInstVars poolDictionaries: poolDicts.
 
+- subclass: aSymbol
+    "Answer a new subclass aSymbol."
+    self < aSymbol.
+
 - instanceVariableNames: instVars
     "Add each instance variable to the receiver. TODO."
 
