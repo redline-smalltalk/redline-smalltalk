@@ -11,7 +11,7 @@ Number < #Integer
 - < aNumber
 	<primitive: 23>
 
-- \\> aNumber
+- \> aNumber
 	<primitive: 24>
 
 - <= aNumber
