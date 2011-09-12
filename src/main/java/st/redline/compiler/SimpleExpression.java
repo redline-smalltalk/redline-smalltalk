@@ -54,6 +54,8 @@ public class SimpleExpression implements Expression {
 		primary.accept(visitor);
 		if (messageExpression != null)
 			messageExpression.accept(visitor);
+		// TODO.jcl WARNING: because we issue a DUP on cascade.begin() and we don't always do a POP on cascade.end()
+		// it is possible for the stack to be unbalanced. Checking with ASM people if this is going to be a problem.
 		int countOfMessageElements = messageElements.size();
 		for (int index = 0; index < countOfMessageElements; index++) {
 			cascade.begin(visitor);
