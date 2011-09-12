@@ -1,6 +1,7 @@
 13/09/2011 Changes
 
 Added support for traditional subclass keywords, plus new shorthand.
+Added outstanding super sends.
 
 
 12/09/2011 Changes
