@@ -5,6 +5,7 @@ import st.redline.compiler.AbstractMethod;
 import st.redline.compiler.MethodAnalyser;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -48,10 +49,14 @@ public class ProtoObject {
 	}
 
 	public String toString() {
-		if (name != null) return name;
-		if (cls() != null)
-			return super.toString() + "(" + String.valueOf(cls().name) + ")";
-		return super.toString();
+		if(!this.isClass() && javaValue() instanceof String) {
+			return (String)javaValue();
+		} else {
+			if (name != null) return name;
+			if (cls() != null)
+				return super.toString() + "(" + String.valueOf(cls().name) + ")";
+			return super.toString();
+		}
 	}
 
 	public static void registerMethodToBeCompiledAs(AbstractMethod method, String name) {
@@ -179,10 +184,10 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveInteger(ProtoObject receiver, String value) {
-		return primitiveInteger(receiver, Integer.valueOf(value));
+		return primitiveInteger(receiver, new BigDecimal(value));
 	}
 
-	public static ProtoObject primitiveInteger(ProtoObject receiver, Integer value) {
+	public static ProtoObject primitiveInteger(ProtoObject receiver, BigDecimal value) {
 		ProtoObject integer = createInteger(receiver);
 		integer.javaValue(value);
 		return integer;
@@ -419,32 +424,32 @@ public class ProtoObject {
 
 	public static ProtoObject primitive_21(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// +
-		return primitiveInteger(receiver, (Integer) receiver.javaValue() + (Integer) arg1.javaValue());
+		return primitiveInteger(receiver, ((BigDecimal) receiver.javaValue()).add((BigDecimal) arg1.javaValue()));
 	}
 
 	public static ProtoObject primitive_22(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// -
-		return primitiveInteger(receiver, (Integer) receiver.javaValue() - (Integer) arg1.javaValue());
+		return primitiveInteger(receiver, ((BigDecimal) receiver.javaValue()).subtract((BigDecimal) arg1.javaValue()));
 	}
 
 	public static ProtoObject primitive_23(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// <
-		return ((Integer) receiver.javaValue() < (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+		return (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) < 0) ? instanceOfTrue : instanceOfFalse;
 	}
 
 	public static ProtoObject primitive_24(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// >
-		return ((Integer) receiver.javaValue() > (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+		return (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) > 0) ? instanceOfTrue : instanceOfFalse;
 	}
 
 	public static ProtoObject primitive_25(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// <=
-		return ((Integer) receiver.javaValue() <= (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+		return (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) <= 0) ? instanceOfTrue : instanceOfFalse;
 	}
 
 	public static ProtoObject primitive_26(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {
 		// >=
-		return ((Integer) receiver.javaValue() >= (Integer) arg1.javaValue()) ? instanceOfTrue : instanceOfFalse;
+		return (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) >= 0) ? instanceOfTrue : instanceOfFalse;
 	}
 
 	public static ProtoObject primitive_27(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5) {

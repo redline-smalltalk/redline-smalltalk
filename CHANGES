@@ -1,4 +1,4 @@
-12:09/2011 Changes
+12/09/2011 Changes
 
 Added support for cascading message expressions. Tested with unary messages.
 
@@ -15,7 +15,8 @@ Replaced long license comment with simpler one liner.
 Multiple argument method calls.
 Basic Magnitude protocol.
 Parts of the Boolean protocols.
-
+Switching Integer to be backed by a BigDecimal.
+True and False classes.
 
 10/09/2011 Changes
 
