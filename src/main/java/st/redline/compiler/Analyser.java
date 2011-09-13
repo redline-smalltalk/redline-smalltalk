@@ -288,7 +288,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralCharacter literalCharacter, String value, int line) {
-		System.out.println("TODO LiteralCharacter() " + value);
+		classBytecodeWriter.callPrimitiveCharacter(value.substring(1), line);
 	}
 
 	public void visit(NumberConstant numberConstant, String value, int line) {

@@ -73,6 +73,10 @@ public class ProtoObject {
 		return create(receiver, "st.redline.Integer");
 	}
 
+	private static ProtoObject createCharacter(ProtoObject receiver) {
+		return create(receiver, "st.redline.Character");
+	}
+
 	private static ProtoObject create(ProtoObject receiver, String name) {
 		ProtoObject cls = primitiveResolveObject(receiver, name);
 //		System.out.println(cls);
@@ -191,6 +195,12 @@ public class ProtoObject {
 		ProtoObject integer = createInteger(receiver);
 		integer.javaValue(value);
 		return integer;
+	}
+
+	public static ProtoObject primitiveCharacter(ProtoObject receiver, String value) {
+		ProtoObject character = createCharacter(receiver);
+		character.javaValue(value);
+		return character;
 	}
 
 	public static ProtoObject primitiveString(ProtoObject receiver, String value) {
