@@ -1,0 +1,1 @@
+Array new: 100; size; at: 1 put: 100.

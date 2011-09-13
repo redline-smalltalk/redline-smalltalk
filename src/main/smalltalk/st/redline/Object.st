@@ -12,3 +12,11 @@ ProtoObject < #Object
 	See Object documentation whatIsAPrimitive."
 
 	<primitive: 110>
+
+- at: index
+    "Primitive.  Assuming the object is indexable, return the value at index."
+    <primitive: 60>
+
+- at: index put: value
+    "Primitive.  Assuming the object is indexable, set the value at index."
+    <primitive: 61>

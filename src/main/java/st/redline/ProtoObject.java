@@ -551,4 +551,45 @@ public class ProtoObject {
 		// ==
 		return (receiver.javaValue().equals(arg1.javaValue())) ? instanceOfTrue : instanceOfFalse;
 	}
+
+	public static ProtoObject primitive_60(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// Return the object at a position in an indexable object/collection
+
+		int position = ((BigDecimal)arg1.javaValue()).intValue();
+		ProtoObject[] array = ((ProtoObject[])receiver.javaValue());
+
+		return array[position];
+	}
+
+	public static ProtoObject primitive_61(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// Put an object into an indexable object/collection at a specified position
+
+		int position = ((BigDecimal)arg1.javaValue()).intValue();
+		ProtoObject[] array = ((ProtoObject[])receiver.javaValue());
+
+		array[position] = arg2;
+
+		return receiver;
+	}
+
+	public static ProtoObject primitive_62(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// Return the size of the array in the receiver arg
+
+		int size = ((ProtoObject[])receiver.javaValue()).length;
+
+		return primitiveInteger(receiver, new BigDecimal(size));
+	}
+
+	public static ProtoObject primitive_71(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// Create a new array
+		ProtoObject array = createArray(receiver);
+
+		BigDecimal size = (BigDecimal)arg1.javaValue();
+
+		ProtoObject[] javaArray = new ProtoObject[size.intValue()];
+
+		array.javaValue(javaArray);
+		
+		return array;
+	}
 }
