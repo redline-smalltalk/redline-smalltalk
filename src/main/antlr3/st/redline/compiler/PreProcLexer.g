@@ -52,7 +52,7 @@ PREPROC
                 sb.append(methodName);
 
                 if ($v == '+') {
-                    sb.append(" class");
+                    sb.append(" _class_");
                 }
                 sb.append(" >> ");
                 haveMethods();

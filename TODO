@@ -1,3 +1,5 @@
+Modify preprocessor and grammar to remove '_class_' and make it just 'class'.
+
 Remove instanceof checks by making a subclass of each node (this may not work out
 well since a higher level will then be used to access the subnode with type erasure).
 

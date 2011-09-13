@@ -23,7 +23,7 @@ methods returns [Methods n]
 	;
 	
 method returns [Method n]
-	:	o = NAME c= 'class'? '>>'  messagePattern '[' primitive? temporaries? statements  ']' {$n = MethodFactory.create($o.text, $c.text, $messagePattern.n, $primitive.n, $temporaries.n, $statements.n);}
+	:	o = NAME c= '_class_'? '>>'  messagePattern '[' primitive? temporaries? statements  ']' {$n = MethodFactory.create($o.text, $c.text, $messagePattern.n, $primitive.n, $temporaries.n, $statements.n);}
 	;
 
 messagePattern returns [MessagePattern n]
