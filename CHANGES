@@ -3,7 +3,12 @@
 **FIXED** bug where an instance method called class is not parsed correctly.
 This was fixed with a 'hack' where the preprocessor outputs a class method as
 'Object _class_ >>' which works, but needs to be changed later.
-
+Removing instanceVariableNames etc from Class.st and adding to the Bootstrapper
+so that they're accessible from within other class definitions.
+Adding other parts of the "testing" protocol to Object
+Adding superClass and inheritsFrom to Behavior.  inheritsFrom is commented out
+until we add variable support.
+Fixing a pathname issue causing runtime issues in Windows.
 
 13/09/2011 Changes
 

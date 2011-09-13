@@ -3,6 +3,12 @@ package st.redline;
 
 public class RedlineException extends RuntimeException {
 
+	public static RedlineException withCauseAndMessage(String message, Exception exception) {
+		if (exception instanceof RedlineException)
+			return (RedlineException) exception;
+		return new RedlineException(message, exception);
+	}
+	
 	public static RedlineException withCause(Exception exception) {
 		if (exception instanceof RedlineException)
 			return (RedlineException) exception;
@@ -19,5 +25,9 @@ public class RedlineException extends RuntimeException {
 
 	private RedlineException(String message) {
 		super(message);
+	}
+
+	private RedlineException(String message, Throwable cause) {
+		super(message, cause);
 	}
 }

@@ -1,8 +1,13 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
+import st.redline.bootstrap.CategoryMethod;
+import st.redline.bootstrap.ClassInstanceVariableNamesMethod;
 import st.redline.bootstrap.ClassSubclassMethod;
+import st.redline.bootstrap.ClassVariableNamesMethod;
 import st.redline.bootstrap.ImportMethod;
+import st.redline.bootstrap.InstanceVariableNamesMethod;
+import st.redline.bootstrap.PoolDictionariesMethod;
 
 import java.io.File;
 
@@ -111,7 +116,8 @@ public class Bootstrapper {
 		try {
 			smalltalk.findClass(name).newInstance();
 		} catch (Exception e) {
-			throw RedlineException.withCause(e);
+			throw RedlineException.withCauseAndMessage(
+					String.format("Unable to load class %s", name), e);
 		}
 	}
 
@@ -122,6 +128,11 @@ public class Bootstrapper {
 	private void bootstrapMethods() {
 		cls.methodAtPut("<", new ClassSubclassMethod());
 		cls.methodAtPut("import:", new ImportMethod());
+		cls.methodAtPut("instanceVariableNames", new InstanceVariableNamesMethod());
+		cls.methodAtPut("classVariableNames", new ClassVariableNamesMethod());
+		cls.methodAtPut("classInstanceVariableNames", new ClassInstanceVariableNamesMethod());
+		cls.methodAtPut("poolDictionaries", new PoolDictionariesMethod());
+		cls.methodAtPut("category", new CategoryMethod());
 	}
 
 	private void bootstrapClasses() {

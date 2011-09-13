@@ -1,14 +1,15 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import java.io.File;
+import java.io.PrintWriter;
+
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-import st.redline.SmalltalkClassLoader;
 
-import java.io.File;
-import java.io.PrintWriter;
+import st.redline.SmalltalkClassLoader;
 
 public class ClassBytecodeWriter implements Opcodes {
 
