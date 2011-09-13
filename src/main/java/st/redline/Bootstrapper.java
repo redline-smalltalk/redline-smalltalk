@@ -1,13 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-import st.redline.bootstrap.CategoryMethod;
-import st.redline.bootstrap.ClassInstanceVariableNamesMethod;
-import st.redline.bootstrap.ClassSubclassMethod;
-import st.redline.bootstrap.ClassVariableNamesMethod;
-import st.redline.bootstrap.ImportMethod;
-import st.redline.bootstrap.InstanceVariableNamesMethod;
-import st.redline.bootstrap.PoolDictionariesMethod;
+import st.redline.bootstrap.*;
 
 import java.io.File;
 
@@ -128,11 +122,12 @@ public class Bootstrapper {
 	private void bootstrapMethods() {
 		cls.methodAtPut("<", new ClassSubclassMethod());
 		cls.methodAtPut("import:", new ImportMethod());
-		cls.methodAtPut("instanceVariableNames", new InstanceVariableNamesMethod());
-		cls.methodAtPut("classVariableNames", new ClassVariableNamesMethod());
-		cls.methodAtPut("classInstanceVariableNames", new ClassInstanceVariableNamesMethod());
-		cls.methodAtPut("poolDictionaries", new PoolDictionariesMethod());
-		cls.methodAtPut("category", new CategoryMethod());
+		cls.methodAtPut("subclass:instanceVariableNames:classVariableNames:classInstanceVariableNames:poolDictionaries:category:", new ClassSubclassWithVariablesMethod());
+		cls.methodAtPut("instanceVariableNames:", new InstanceVariableNamesMethod());
+		cls.methodAtPut("classVariableNames:", new ClassVariableNamesMethod());
+		cls.methodAtPut("classInstanceVariableNames:", new ClassInstanceVariableNamesMethod());
+		cls.methodAtPut("poolDictionaries:", new PoolDictionariesMethod());
+		cls.methodAtPut("category:", new CategoryMethod());
 	}
 
 	private void bootstrapClasses() {
