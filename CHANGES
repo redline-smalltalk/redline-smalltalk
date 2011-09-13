@@ -2,6 +2,7 @@
 
 Added support for traditional subclass keywords, plus new shorthand.
 Added outstanding super sends.
+Added trace output as a guide for TODO items.
 
 
 12/09/2011 Changes

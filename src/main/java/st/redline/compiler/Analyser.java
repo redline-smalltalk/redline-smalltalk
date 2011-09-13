@@ -163,9 +163,11 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Keyword keyword, String value, int line) {
+		System.out.println("TODO Keyword() " + value);
 	}
 
 	public void visit(AssignmentExpression assignmentExpression) {
+		System.out.println("TODO AssignmentExpression() " + assignmentExpression);
 	}
 
 	public void visit(SimpleExpression simpleExpression) {
@@ -192,24 +194,31 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription) {
+		System.out.println("TODO BinarySelectorMessageElement() " + value + " " + unaryObjectDescription);
 	}
 
 	public void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions) {
+		System.out.println("TODO KeywordMessageElement() " + keyword + " " + binaryObjectDescriptions);
 	}
 
 	public void visit(UnaryObjectDescription unaryObjectDescription) {
+		System.out.println("TODO UnaryObjectDescription() " + unaryObjectDescription);
 	}
 
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
+		System.out.println("TODO BinaryObjectDescription() " + binaryObjectDescription);
 	}
 
 	public void visit(UnaryExpression unaryExpression) {
+		System.out.println("TODO UnaryExpression() " + unaryExpression);
 	}
 
 	public void visitEnd(UnaryExpression unaryExpression) {
+		System.out.println("TODO UnaryExpression() " + unaryExpression);
 	}
 
 	public void visit(BinaryExpression binaryExpression) {
+		System.out.println("TODO BinaryExpression() " + binaryExpression);
 	}
 
 	public void visitEnd(BinaryExpression binaryExpression) {
@@ -224,9 +233,11 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
+		System.out.println("TODO PrimaryExpression() " + primaryExpression);
 	}
 
 	public void visit(PrimaryStatements primaryStatements) {
+		System.out.println("TODO PrimaryStatements() " + primaryStatements);
 	}
 
 	public void visit(Primitive primitive, String value, int line) {
@@ -234,12 +245,15 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Symbol symbol, String value, int line) {
+		System.out.println("TODO Symbol() " + value);
 	}
 
 	public void visit(Array array) {
+		System.out.println("TODO Array() " + array);
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
+		System.out.println("TODO Identifier() " + value);
 	}
 
 	public void visit(LiteralSymbol literalSymbol, String value, int line) {
@@ -247,18 +261,23 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralArray literalArray) {
+		System.out.println("TODO LiteralArray() " + literalArray);
 	}
 
 	public void visit(ArrayConstantElement arrayConstantElement) {
+		System.out.println("TODO ArrayConstantElement() " + arrayConstantElement);
 	}
 
 	public void visit(CharacterConstant characterConstant, String value, int line) {
+		System.out.println("TODO CharacterConstant() " + characterConstant);
 	}
 
 	public void visit(StringConstant stringConstant, String value, int line) {
+		System.out.println("TODO StringConstant() " + value);
 	}
 
 	public void visit(StringChunk stringChunk, String value, int line) {
+		System.out.println("TODO StringChunk() " + value);
 	}
 
 	public void visit(LiteralString literalString, String value, int line) {
@@ -269,9 +288,11 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralCharacter literalCharacter, String value, int line) {
+		System.out.println("TODO LiteralCharacter() " + value);
 	}
 
 	public void visit(NumberConstant numberConstant, String value, int line) {
+		System.out.println("TODO NumberConstant() " + value);
 	}
 
 	public void visit(LiteralNumber literalNumber, String value, int line) {
@@ -279,6 +300,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
+		System.out.println("TODO Block() " + block);
 	}
 
 	public void visitEnd(Block block) {
