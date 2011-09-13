@@ -4,6 +4,8 @@ Added support for cascading message expressions. Tested with unary messages.
 Added warning about a possible stack balance problem with cascaded messages. Posted to 
 ASM news group to find out if I need to add more code to balance stack.
 Added long subclass: keyword support - see examples/st.redline.Subclass.
+Adding creation of an Array via Smalltalk - creates a ProtoObject array.
+Implementing a few indexable primitives - size, at:, at:with:
 
 
 11/09/2011 Changes
