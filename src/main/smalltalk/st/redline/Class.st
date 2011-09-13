@@ -4,7 +4,7 @@ ClassDescription < #Class
 
 - subclass: aSymbol instanceVariableNames: instVars classVariableNames: classVars classInstanceVariableNames: classInstVars poolDictionaries: poolDicts
 	"This is the standard initialization message for creating a new class as a subclass of an existing class (the receiver)."
-	self < aSymbol;
+	self < aSymbol
 		instanceVariableNames: instVars;
 		classVariableNames: classVars;
 		classInstanceVariableNames: classInstVars;
