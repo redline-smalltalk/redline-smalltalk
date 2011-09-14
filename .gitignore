@@ -15,4 +15,9 @@ redline.ipr
 redline.iws
 .idea/
 nbactions.xml
-
+*~
+*.swp
+*.bak
++*#
++.#*
+.DS_Store
