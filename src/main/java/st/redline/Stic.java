@@ -1,7 +1,6 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-import java.io.File;
 import java.io.PrintWriter;
 
 public class Stic {
@@ -47,7 +46,7 @@ public class Stic {
 	public ProtoObject invoke(String className) throws Exception {
 		ProtoObject root = protoObjectInstance();
 		root.name("<root>");
-		return createClassInstance(root, className.replace(".", File.separator));
+		return createClassInstance(root, className);
 	}
 
 	private ProtoObject createClassInstance(ProtoObject root, String className) throws Exception {
