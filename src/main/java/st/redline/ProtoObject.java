@@ -114,7 +114,7 @@ public class ProtoObject {
 			stack = new Stack<String>();
 			packageRegistry.set(stack);
 		}
-		stack.push(packageName.replaceAll(File.separator, "."));
+		stack.push(packageName.replaceAll("\\" + File.separatorChar, "."));
 	}
 
 	public static void primitivePackageRegistryRemove() {
@@ -601,5 +601,10 @@ public class ProtoObject {
 		array.javaValue(javaArray);
 		
 		return array;
+	}
+
+	public static ProtoObject primitive_111(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// Object>>class
+		return receiver.cls();
 	}
 }
