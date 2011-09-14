@@ -9,6 +9,7 @@ Adding other parts of the "testing" protocol to Object
 Adding superClass and inheritsFrom to Behavior.  inheritsFrom is commented out
 until we add variable support.
 Fixing a pathname issue causing runtime issues in Windows.
+Added generation of Character instances.
 
 13/09/2011 Changes
 

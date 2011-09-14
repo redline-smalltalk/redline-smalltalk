@@ -1,0 +1,3 @@
+
+Transcript show: $X; cr.
+

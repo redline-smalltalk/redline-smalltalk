@@ -13,12 +13,10 @@ public class LiteralNumber extends BaseLiteral {
 		visitor.visit(this, numberConstant.value, numberConstant.line);
 	}
 		
-	@Override
 	public int line() {
 		return numberConstant.line;
 	}
 
-	@Override
 	public String value() {
 		return numberConstant.value;
 	}	

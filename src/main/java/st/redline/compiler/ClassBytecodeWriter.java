@@ -28,6 +28,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_INTEGER_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_STRING = "primitiveString";
 	private static final String PRIMITIVE_STRING_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_CHARACTER = "primitiveCharacter";
+	private static final String PRIMITIVE_CHARACTER_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_VARIABLE_AT = "primitiveVariableAt";
 	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String[] SEND_SIGNATURES = {
@@ -279,6 +281,12 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushReceiver(line);
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_STRING, PRIMITIVE_STRING_SIGNATURE);
+	}
+
+	public void callPrimitiveCharacter(String value, int line) {
+		stackPushReceiver(line);
+		stackPushLiteral(value);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_CHARACTER, PRIMITIVE_CHARACTER_SIGNATURE);
 	}
 
 	public void callClass() {

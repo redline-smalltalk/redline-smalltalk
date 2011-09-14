@@ -15,12 +15,10 @@ public class NumberConstant extends BaseLiteral {
 		visitor.visit(this, value, line);
 	}
 
-	@Override
 	public int line() {
 		return line;
 	}
 
-	@Override
 	public String value() {
 		return value;
 	}
