@@ -20,19 +20,12 @@ public class SourceFile extends File {
 	public String shortName() {
 		String name = name();
 		// assumes we have an file extension.
-		return name.substring(name.lastIndexOf(File.separatorChar) + 1, name.lastIndexOf('.'));
+		return ClassPathUtilities.filenameToClassName(name);
 	}
 
 	public String packageName() {
 		String name = name();
-		int index = name.lastIndexOf(File.separatorChar);
-		if (index == -1)
-			return "";
-		name = name.substring(0, index);
-		for (String path : SourceFileFinder.sourceFilePaths())
-			if (name.startsWith(path))
-				return (path.length() == name.length()) ? "" : name.substring(path.length() + 1);
-		return name;
+        return ClassPathUtilities.filenameToPackageName(name);
 	}
 
 	private String name() {

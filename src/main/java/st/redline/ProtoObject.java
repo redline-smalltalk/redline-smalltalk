@@ -114,7 +114,7 @@ public class ProtoObject {
 			stack = new Stack<String>();
 			packageRegistry.set(stack);
 		}
-		stack.push(packageName.replaceAll("\\" + File.separatorChar, "."));
+		stack.push(packageName.replace("/", "."));
 	}
 
 	public static void primitivePackageRegistryRemove() {
@@ -446,7 +446,8 @@ public class ProtoObject {
 	}
 
 	public static void primitivePackageAtPut(ProtoObject receiver, String name, String packageName) {
-		receiver.packageAtPut(name, packageName);
+        // at this state, we need to convert from a Java class name back to a Redline class name
+		receiver.packageAtPut(name, packageName.replace("/", "."));
 	}
 
 	protected ProtoObject loadObject(String name) {

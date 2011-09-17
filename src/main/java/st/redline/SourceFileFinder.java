@@ -19,7 +19,7 @@ public class SourceFileFinder {
 	}
 
 	public SourceFile findSourceFile() {
-		return findSourceFile(sourceFileName);
+		return findSourceFile(className);
 	}
 
 	private String makeSourceFileName(String className) {
@@ -42,8 +42,8 @@ public class SourceFileFinder {
 		return null;
 	}
 
-	private SourceFile findSourceFile(String sourceFilePath, String sourceFileName) {
-		File file = new File(sourceFilePath + File.separator + sourceFileName);
+	private SourceFile findSourceFile(String sourceFilePath, String className) {
+		File file = new File(ClassPathUtilities.classNameToFileName(sourceFilePath, className));
 		if (file.exists())
 			return new SourceFile(file);
 		return null;
