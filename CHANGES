@@ -1,3 +1,7 @@
+17/09/2011 Changes
+
+**FIXED** Pathname issues on Windows, Mac and Linux.
+
 14/09/2011 Changes
 
 **FIXED** bug where an instance method called class is not parsed correctly.
