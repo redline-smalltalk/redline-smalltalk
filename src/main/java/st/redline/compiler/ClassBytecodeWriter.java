@@ -9,6 +9,7 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import st.redline.ClassPathUtilities;
 import st.redline.SmalltalkClassLoader;
 
 public class ClassBytecodeWriter implements Opcodes {
@@ -60,7 +61,7 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	private void initialize() {
 		cw = verbose() ? tracingClassWriter() : nonTracingClassWriter();
-		fullyQualifiedClassName = packageName.length() > 0 ? packageName + File.separator + className : className;
+		fullyQualifiedClassName = ClassPathUtilities.classNameToFullyQualifiedClassName(packageName, className);
 	}
 
 	private boolean verbose() {
@@ -131,7 +132,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private String makeFullQualifiedPackageName() {
-		return fullyQualifiedClassName.replaceAll("\\" + File.separatorChar, ".");
+		return fullyQualifiedClassName;
 	}
 
 	private String homogenize(String className) {

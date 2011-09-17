@@ -23,7 +23,7 @@ public class ImportMethod extends ProtoMethod {
 	}
 
 	public static String makeFullyQualifiedPath(String packageName, String className) {
-		return (packageName + File.separatorChar + className).replaceAll("\\" + File.separatorChar, ".");
+		return packageName + "." + className;
 	}
 
 	private List<SourceFile> findSources(SmalltalkClassLoader smalltalkClassLoader, Object importPaths) {
