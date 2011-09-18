@@ -13,19 +13,14 @@ public class ClassPathUtilities {
     }
 
     public static String filenameToPackageName(String filename) {
-        String result = filename;
-
-        int index = filename.lastIndexOf(File.separatorChar);
-        if (index == -1)
-            return "";
-        filename = filename.substring(0, index);
-        for (String path : SourceFileFinder.sourceFilePaths())
-            if (filename.startsWith(path))
-                result = (path.length() == filename.length()) ? "" : filename.substring(path.length() + 1);
-
-        result = result.replace(File.separator, ".");
-
-        return result;
+		int index = filename.lastIndexOf(File.separatorChar);
+		if (index == -1)
+			return "";
+		filename = filename.substring(0, index);
+		for (String path : SourceFileFinder.sourceFilePaths())
+			if (filename.startsWith(path))
+				return (path.length() == filename.length()) ? "" : filename.substring(path.length() + 1).replace(File.separator, ".");
+		return filename.replace(File.separator, ".");
     }
 
     public static String classNameToFullyQualifiedClassName(String packageName, String className) {
