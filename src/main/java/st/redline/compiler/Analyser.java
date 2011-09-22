@@ -15,15 +15,17 @@ public class Analyser implements NodeVisitor {
 	private boolean sendToSuper = false;
 	private AbstractMethod currentMethod;
 	protected int countOfArguments;
+	protected boolean isClassMethod = false;
 
 	public Analyser(String className, String packageName) {
-		this(className, packageName, 0);
+		this(className, packageName, 0, false);
 	}
 
-	public Analyser(String className, String packageName, int countOfArguments) {
+	public Analyser(String className, String packageName, int countOfArguments, boolean isClassMethod) {
 		this.className = className;
 		this.packageName = packageName;
 		this.countOfArguments = countOfArguments;
+		this.isClassMethod = isClassMethod;
 		initialize();
 	}
 
@@ -114,6 +116,7 @@ public class Analyser implements NodeVisitor {
 	public void visit(InstanceMethod instanceMethod) {
 		classBytecodeWriter.callPrimitiveVariableAt(instanceMethod.objectName, instanceMethod.line(), true);
 		currentMethod = instanceMethod;
+		isClassMethod = false;
 	}
 
 	public void visitEnd(InstanceMethod instanceMethod) {
@@ -124,6 +127,7 @@ public class Analyser implements NodeVisitor {
 		classBytecodeWriter.callPrimitiveVariableAt(classMethod.objectName, classMethod.line(), true);
 		classBytecodeWriter.callClass();
 		currentMethod = classMethod;
+		isClassMethod = true;
 	}
 
 	public void visitEnd(ClassMethod classMethod) {
@@ -133,19 +137,19 @@ public class Analyser implements NodeVisitor {
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
 		String fullMethodName = createFullMethodName(value);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, value, className, packageName, 0);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, value, className, packageName, 0, isClassMethod);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
 		String fullMethodName = createFullMethodName(binarySelector);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, binarySelector, className, packageName, 1);
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, binarySelector, className, packageName, 1, isClassMethod);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
 		String fullMethodName = createFullMethodName(keywords);
 		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
-		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, keywords, className, packageName, variableNames.size());
+		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, keywords, className, packageName, variableNames.size(), isClassMethod);
 	}
 
 	private String createFullMethodName(String name) {
@@ -163,11 +167,11 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Keyword keyword, String value, int line) {
-		System.out.println("TODO Keyword() " + value);
+		// System.out.println("TODO Keyword() " + value);
 	}
 
 	public void visit(AssignmentExpression assignmentExpression) {
-		System.out.println("TODO AssignmentExpression() " + assignmentExpression);
+		// System.out.println("TODO AssignmentExpression() " + assignmentExpression);
 	}
 
 	public void visit(SimpleExpression simpleExpression) {
@@ -194,31 +198,31 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription) {
-		System.out.println("TODO BinarySelectorMessageElement() " + value + " " + unaryObjectDescription);
+		// System.out.println("TODO BinarySelectorMessageElement() " + value + " " + unaryObjectDescription);
 	}
 
 	public void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions) {
-		System.out.println("TODO KeywordMessageElement() " + keyword + " " + binaryObjectDescriptions);
+		// System.out.println("TODO KeywordMessageElement() " + keyword + " " + binaryObjectDescriptions);
 	}
 
 	public void visit(UnaryObjectDescription unaryObjectDescription) {
-		System.out.println("TODO UnaryObjectDescription() " + unaryObjectDescription);
+		// System.out.println("TODO UnaryObjectDescription() " + unaryObjectDescription);
 	}
 
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
-		System.out.println("TODO BinaryObjectDescription() " + binaryObjectDescription);
+		// System.out.println("TODO BinaryObjectDescription() " + binaryObjectDescription);
 	}
 
 	public void visit(UnaryExpression unaryExpression) {
-		System.out.println("TODO UnaryExpression() " + unaryExpression);
+		// System.out.println("TODO UnaryExpression() " + unaryExpression);
 	}
 
 	public void visitEnd(UnaryExpression unaryExpression) {
-		System.out.println("TODO UnaryExpression() " + unaryExpression);
+		// System.out.println("TODO UnaryExpression() " + unaryExpression);
 	}
 
 	public void visit(BinaryExpression binaryExpression) {
-		System.out.println("TODO BinaryExpression() " + binaryExpression);
+		// System.out.println("TODO BinaryExpression() " + binaryExpression);
 	}
 
 	public void visitEnd(BinaryExpression binaryExpression) {
@@ -233,11 +237,11 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(PrimaryExpression primaryExpression) {
-		System.out.println("TODO PrimaryExpression() " + primaryExpression);
+		// System.out.println("TODO PrimaryExpression() " + primaryExpression);
 	}
 
 	public void visit(PrimaryStatements primaryStatements) {
-		System.out.println("TODO PrimaryStatements() " + primaryStatements);
+		// System.out.println("TODO PrimaryStatements() " + primaryStatements);
 	}
 
 	public void visit(Primitive primitive, String value, int line) {
@@ -245,15 +249,15 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Symbol symbol, String value, int line) {
-		System.out.println("TODO Symbol() " + value);
+		// System.out.println("TODO Symbol() " + value);
 	}
 
 	public void visit(Array array) {
-		System.out.println("TODO Array() " + array);
+		// System.out.println("TODO Array() " + array);
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
-		System.out.println("TODO Identifier() " + value);
+		// System.out.println("TODO Identifier() " + value);
 	}
 
 	public void visit(LiteralSymbol literalSymbol, String value, int line) {
@@ -261,23 +265,23 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralArray literalArray) {
-		System.out.println("TODO LiteralArray() " + literalArray);
+		// System.out.println("TODO LiteralArray() " + literalArray);
 	}
 
 	public void visit(ArrayConstantElement arrayConstantElement) {
-		System.out.println("TODO ArrayConstantElement() " + arrayConstantElement);
+		// System.out.println("TODO ArrayConstantElement() " + arrayConstantElement);
 	}
 
 	public void visit(CharacterConstant characterConstant, String value, int line) {
-		System.out.println("TODO CharacterConstant() " + characterConstant);
+		// System.out.println("TODO CharacterConstant() " + characterConstant);
 	}
 
 	public void visit(StringConstant stringConstant, String value, int line) {
-		System.out.println("TODO StringConstant() " + value);
+		// System.out.println("TODO StringConstant() " + value);
 	}
 
 	public void visit(StringChunk stringChunk, String value, int line) {
-		System.out.println("TODO StringChunk() " + value);
+		// System.out.println("TODO StringChunk() " + value);
 	}
 
 	public void visit(LiteralString literalString, String value, int line) {
@@ -292,7 +296,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(NumberConstant numberConstant, String value, int line) {
-		System.out.println("TODO NumberConstant() " + value);
+		// System.out.println("TODO NumberConstant() " + value);
 	}
 
 	public void visit(LiteralNumber literalNumber, String value, int line) {
@@ -300,7 +304,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-		System.out.println("TODO Block() " + block);
+		// System.out.println("TODO Block() " + block);
 	}
 
 	public void visitEnd(Block block) {

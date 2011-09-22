@@ -1,3 +1,9 @@
+23/09/2011 Changes
+
+Added indication of instance or class to method compilation. This is useful for handling
+instance variable resolution.
+
+
 17/09/2011 Changes
 
 **FIXED** Pathname issues on Windows, Mac and Linux.

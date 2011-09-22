@@ -9,8 +9,8 @@ public class MethodAnalyser extends Analyser {
 
 	private final Map<String, VariableName> argumentRegistry;
 
-	public MethodAnalyser(String className, String packageName, int countOfArguments) {
-		super(className, packageName, countOfArguments);
+	public MethodAnalyser(String className, String packageName, int countOfArguments, boolean isClassMethod) {
+		super(className, packageName, countOfArguments, isClassMethod);
 		argumentRegistry = new HashMap<String, VariableName>();
 	}
 

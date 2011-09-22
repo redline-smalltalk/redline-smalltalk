@@ -6,7 +6,7 @@ import st.redline.ProtoObject;
 
 public class InstanceVariableNamesMethod extends ProtoMethod {
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
-		System.out.println("InstanceVariableNamesMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
+//		System.out.println("InstanceVariableNamesMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
 		return receiver;
 	}
 }

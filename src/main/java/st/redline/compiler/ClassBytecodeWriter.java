@@ -226,6 +226,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushReceiver(line);
 	}
 
+	public void stackPushBoolean(boolean bool) {
+		mv.visitInsn(bool ? ICONST_1 : ICONST_0);
+	}
+
 	public void stackPushNumeric(int value) {
 		switch (value) {
 			case 0: mv.visitInsn(ICONST_0); break;
@@ -294,13 +298,14 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "cls", "()Lst/redline/ProtoObject;");
 	}
 
-	public void callPrimitiveCompileMethod(String fullMethodName, String methodName, String className, String packageName, int countOfArguments) {
+	public void callPrimitiveCompileMethod(String fullMethodName, String methodName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
 		stackPushLiteral(fullMethodName);
 		stackPushLiteral(methodName);
 		stackPushLiteral(className);
 		stackPushLiteral(packageName);
 		stackPushNumeric(countOfArguments);
-		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCompileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
+		stackPushBoolean(isClassMethod);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveCompileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZ)V");
 	}
 
 	public void callToPrimitiveByNumber(int methodArgumentCount, int methodTemporariesCount, String primitive, int line) {
