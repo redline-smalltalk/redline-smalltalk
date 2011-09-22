@@ -32,7 +32,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_CHARACTER = "primitiveCharacter";
 	private static final String PRIMITIVE_CHARACTER_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_VARIABLE_AT = "primitiveVariableAt";
-	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Z)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_VARIABLE_PUT_AT = "primitiveVariablePutAt";
+	private static final String PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;Z)Lst/redline/ProtoObject;";
 	private static final String[] SEND_SIGNATURES = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
@@ -163,10 +165,19 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitLineNumber(line, label);
 	}
 
-	public void callPrimitiveVariableAt(String value, int line, boolean loadSide) {
+	public void callPrimitiveVariableAt(String value, int line, boolean isClassMethod) {
 		stackPushReceiver(line);
 		stackPushLiteral(value);
+		stackPushBoolean(isClassMethod);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_VARIABLE_AT, PRIMITIVE_VARIABLE_AT_SIGNATURE);
+	}
+
+	public void callPrimitiveVariablePutAt(String value, int line, boolean isClassMethod) {
+		visitLine(line);
+		stackPushLiteral(value);
+		stackPushReceiver(line);
+		stackPushBoolean(isClassMethod);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, PRIMITIVE_VARIABLE_PUT_AT, PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE);
 	}
 
 	public void stackPushLiteral(String value) {

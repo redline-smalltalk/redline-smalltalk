@@ -74,13 +74,13 @@ public class Analyser implements NodeVisitor {
 				if (isMethodArgument(value)) {
 					loadMethodArgument(value);
 				} else {
-					classBytecodeWriter.callPrimitiveVariableAt(value, line, true);
+					classBytecodeWriter.callPrimitiveVariableAt(value, line, isClassMethod);
 				}
 			} else {
 				if (isMethodArgument(value)) {
 					throw new IllegalStateException("You can't store into method argument '" + value + "'.");
 				} else {
-					throw new IllegalStateException("TODO - handle store of variable.");
+					classBytecodeWriter.callPrimitiveVariablePutAt(value, line, isClassMethod);
 				}
 			}
 		}

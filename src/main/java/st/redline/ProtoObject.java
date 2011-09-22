@@ -154,12 +154,16 @@ public class ProtoObject {
 		return receiver;
 	}
 
-	public static ProtoObject primitiveVariableAt(ProtoObject receiver, String name) {
+	public static ProtoObject primitiveVariableAt(ProtoObject receiver, String name, boolean isClassMethod) {
 		if (primitiveIsInstanceVariable(receiver, name))
 			throw new IllegalStateException("todo - implement");
 		if (primitiveIsClassVariable(receiver, name))
 			throw new IllegalStateException("todo - implement");
 		return primitiveResolveObject(receiver, name);
+	}
+
+	public static ProtoObject primitiveVariablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod) {
+		throw new IllegalStateException("todo - implement");
 	}
 
 	public static boolean primitiveIsInstanceVariable(ProtoObject receiver, String name) {
