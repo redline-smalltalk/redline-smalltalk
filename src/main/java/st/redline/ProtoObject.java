@@ -524,6 +524,14 @@ public class ProtoObject {
 		data.addVariableNamed(name);
 	}
 
+	public void category(String name) {
+		data.category(name);
+	}
+
+	public String category() {
+		return data.category();
+	}
+
 	public boolean isClass() {
 		return data.isClass();
 	}

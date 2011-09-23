@@ -10,9 +10,4 @@ public class InstanceVariableNamesMethod extends ProtoMethod {
 		addVariableNames(receiver, String.valueOf(argument.javaValue()));
 		return receiver;
 	}
-
-	private void addVariableNames(ProtoObject receiver, String variableNames) {
-		for (String variableName : variableNames.split(" "))
-			receiver.addVariableNamed(variableName);
-	}
 }

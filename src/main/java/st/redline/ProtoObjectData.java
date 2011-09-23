@@ -21,6 +21,8 @@ public abstract class ProtoObjectData {
 	abstract void packageAtPut(String name, String packageName);
 	abstract void addVariableNamed(String name);
 	abstract boolean hasVariableNamed(String name);
+	abstract void category(String name);
+	abstract String category();
 
 	public static ProtoObjectData classData() {
 		return new ClassData();
@@ -86,6 +88,14 @@ public abstract class ProtoObjectData {
 		protected boolean hasVariableNamed(String name) {
 			throw new IllegalStateException("An instance doesn't have a variable name dictionary.");
 		}
+
+		protected void category(String name) {
+			throw new IllegalStateException("An instance doesn't have a Category.");
+		}
+
+		protected String category() {
+			throw new IllegalStateException("An instance doesn't have a Category.");
+		}
 	}
 
 	private static class ClassData extends ProtoObjectData {
@@ -94,6 +104,7 @@ public abstract class ProtoObjectData {
 		private Map<String, ProtoMethod> methods = new HashMap<String, ProtoMethod>();
 		private Map<String, String> packages;
 		private Map<String, String> variableNames;
+		private String category;
 
 		protected void javaValue(Object value) {
 			throw new IllegalStateException("A Class can't have a javaValue.");
@@ -152,6 +163,14 @@ public abstract class ProtoObjectData {
 				supercls = supercls.superclass();
 			}
 			return false;
+		}
+
+		protected void category(String category) {
+			this.category  = category;
+		}
+
+		protected String category() {
+			return category();
 		}
 	}
 }

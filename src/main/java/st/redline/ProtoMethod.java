@@ -42,4 +42,9 @@ public class ProtoMethod extends ProtoObject {
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject cls, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		throw subclassShouldHaveImplemented(7);
 	}
+
+	protected void addVariableNames(ProtoObject receiver, String variableNames) {
+		for (String variableName : variableNames.split(" "))
+			receiver.addVariableNamed(variableName);
+	}
 }
