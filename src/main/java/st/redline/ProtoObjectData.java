@@ -135,15 +135,23 @@ public abstract class ProtoObjectData {
 		}
 
 		protected void addVariableNamed(String name) {
-			if (variableNames == null)
-				variableNames = new HashMap<String, String>();
 			if (hasVariableNamed(name))
 				throw new IllegalStateException("Variable name '" + name + " already defined.");
+			if (variableNames == null)
+				variableNames = new HashMap<String, String>();
 			variableNames.put(name, name);
 		}
 
 		protected boolean hasVariableNamed(String name) {
-			return (variableNames != null && variableNames.containsKey(name));
+			if (variableNames != null && variableNames.containsKey(name))
+				return true;
+			ProtoObject supercls = superclass;
+			while (supercls != null) {
+				if (supercls.hasVariableNamed(name))
+					return true;
+				supercls = supercls.superclass();
+			}
+			return false;
 		}
 	}
 }
