@@ -19,6 +19,8 @@ public abstract class ProtoObjectData {
 	abstract boolean isClass();
 	abstract String packageAt(String name);
 	abstract void packageAtPut(String name, String packageName);
+	abstract void addVariableNamed(String name);
+	abstract boolean hasVariableNamed(String name);
 
 	public static ProtoObjectData classData() {
 		return new ClassData();
@@ -76,6 +78,14 @@ public abstract class ProtoObjectData {
 		protected void packageAtPut(String name, String packageName) {
 			throw new IllegalStateException("An instance can't have a packages.");
 		}
+
+		protected void addVariableNamed(String name) {
+			throw new IllegalStateException("An instance can't have a variable name dictionary.");
+		}
+
+		protected boolean hasVariableNamed(String name) {
+			throw new IllegalStateException("An instance doesn't have a variable name dictionary.");
+		}
 	}
 
 	private static class ClassData extends ProtoObjectData {
@@ -83,6 +93,7 @@ public abstract class ProtoObjectData {
 		private ProtoObject superclass;
 		private Map<String, ProtoMethod> methods = new HashMap<String, ProtoMethod>();
 		private Map<String, String> packages;
+		private Map<String, String> variableNames;
 
 		protected void javaValue(Object value) {
 			throw new IllegalStateException("A Class can't have a javaValue.");
@@ -121,6 +132,18 @@ public abstract class ProtoObjectData {
 			if (packages == null)
 				packages = new Hashtable<String, String>();
 			packages.put(name, packageName);
+		}
+
+		protected void addVariableNamed(String name) {
+			if (variableNames == null)
+				variableNames = new HashMap<String, String>();
+			if (hasVariableNamed(name))
+				throw new IllegalStateException("Variable name '" + name + " already defined.");
+			variableNames.put(name, name);
+		}
+
+		protected boolean hasVariableNamed(String name) {
+			return (variableNames != null && variableNames.containsKey(name));
 		}
 	}
 }

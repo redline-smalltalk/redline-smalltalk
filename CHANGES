@@ -2,6 +2,7 @@
 
 Added indication of instance or class to method compilation. This is useful for handling
 instance variable resolution.
+Adding storage and methods for recording what variables a class has, instance and class instance.
 
 
 17/09/2011 Changes

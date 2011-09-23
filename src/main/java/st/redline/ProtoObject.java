@@ -516,6 +516,14 @@ public class ProtoObject {
 		data.methodAtPut(selector, method);
 	}
 
+	public boolean hasVariableNamed(String name) {
+		return data.hasVariableNamed(name);
+	}
+
+	public void addVariableNamed(String name) {
+		data.addVariableNamed(name);
+	}
+
 	public boolean isClass() {
 		return data.isClass();
 	}
