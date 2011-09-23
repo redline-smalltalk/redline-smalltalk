@@ -155,23 +155,39 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveVariableAt(ProtoObject receiver, String name, boolean isClassMethod) {
-		if (primitiveIsInstanceVariable(receiver, name))
-			throw new IllegalStateException("todo - implement");
-		if (primitiveIsClassVariable(receiver, name))
-			throw new IllegalStateException("todo - implement");
+		ProtoObject cls = receiver.cls();
+		if (isClassMethod) {
+			if (cls.hasVariableNamed(name))
+				throw new IllegalStateException("todo - get class variable '" + name + "'");
+			cls = cls.cls();
+			if (cls.hasVariableNamed(name))
+				throw new IllegalStateException("todo - get class instance variable '" + name + "'");
+		} else {
+			if (cls.hasVariableNamed(name))
+				throw new IllegalStateException("todo - get instance variable '" + name + "'");
+			cls = cls.cls();
+			if (cls.hasVariableNamed(name))
+				throw new IllegalStateException("todo - get class variable '" + name + "'");
+		}
 		return primitiveResolveObject(receiver, name);
 	}
 
 	public static ProtoObject primitiveVariablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod) {
-		throw new IllegalStateException("todo - implement");
-	}
-
-	public static boolean primitiveIsInstanceVariable(ProtoObject receiver, String name) {
-		return false;
-	}
-
-	public static boolean primitiveIsClassVariable(ProtoObject receiver, String name) {
-		return false;
+		ProtoObject cls = receiver.cls();
+		if (isClassMethod) {
+			if (cls.hasVariableNamed(name))
+				throw new IllegalStateException("todo - set class variable '" + name + "'");
+			cls = cls.cls();
+			if (cls.hasVariableNamed(name))
+				throw new IllegalStateException("todo - set class instance variable '" + name + "'");
+		} else {
+			if (cls.hasVariableNamed(name))
+				throw new IllegalStateException("todo - set instance variable '" + name + "'");
+			cls = cls.cls();
+			if (cls.hasVariableNamed(name))
+				throw new IllegalStateException("todo - set class variable '" + name + "'");
+		}
+		throw new IllegalStateException("Variable '" + name + "' not found.");
 	}
 
 	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
