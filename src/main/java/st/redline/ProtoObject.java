@@ -155,39 +155,20 @@ public class ProtoObject {
 	}
 
 	public static ProtoObject primitiveVariableAt(ProtoObject receiver, String name, boolean isClassMethod) {
-		ProtoObject cls = receiver.cls();
-		if (isClassMethod) {
-			if (cls.hasVariableNamed(name))
-				throw new IllegalStateException("todo - get class variable '" + name + "'");
-			cls = cls.cls();
-			if (cls.hasVariableNamed(name))
-				throw new IllegalStateException("todo - get class instance variable '" + name + "'");
-		} else {
-			if (cls.hasVariableNamed(name))
-				throw new IllegalStateException("todo - get instance variable '" + name + "'");
-			cls = cls.cls();
-			if (cls.hasVariableNamed(name))
-				throw new IllegalStateException("todo - get class variable '" + name + "'");
-		}
+		ProtoObject value;
+		if ((value = receiver.variableAt(name)) != null)
+			return value;
+		if ((value = receiver.cls().variableAt(name)) != null)
+			return value;
 		return primitiveResolveObject(receiver, name);
 	}
 
 	public static ProtoObject primitiveVariablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod) {
-		ProtoObject cls = receiver.cls();
-		if (isClassMethod) {
-			if (cls.hasVariableNamed(name))
-				throw new IllegalStateException("todo - set class variable '" + name + "'");
-			cls = cls.cls();
-			if (cls.hasVariableNamed(name))
-				throw new IllegalStateException("todo - set class instance variable '" + name + "'");
-		} else {
-			if (cls.hasVariableNamed(name))
-				throw new IllegalStateException("todo - set instance variable '" + name + "'");
-			cls = cls.cls();
-			if (cls.hasVariableNamed(name))
-				throw new IllegalStateException("todo - set class variable '" + name + "'");
-		}
-		throw new IllegalStateException("Variable '" + name + "' not found.");
+		if (receiver.variableAtPut(name, value) != null)
+			return receiver;
+		if (receiver.cls().variableAtPut(name, value) != null)
+			return receiver;
+		throw new IllegalStateException("'Variable '" + name + "' not found.");
 	}
 
 	public static ProtoObject primitiveSymbol(ProtoObject receiver, String value) {
@@ -540,6 +521,14 @@ public class ProtoObject {
 		data.addVariableNamed(name);
 	}
 
+	public ProtoObject variableAt(String name) {
+		return data.variableAt(name);
+	}
+
+	public ProtoObject variableAtPut(String name, ProtoObject value) {
+		return data.variableAtPut(name, value);
+	}
+
 	public void category(String name) {
 		data.category(name);
 	}
@@ -552,11 +541,16 @@ public class ProtoObject {
 		return data.isClass();
 	}
 
+	public void initializeVariables(ProtoObject instance) {
+		data.initializeVariables(instance, instance.data);
+	}
+
 	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
-		// TODO.JCL - there is still more to do here - this works for now.
 		// basicNew
-		return new ProtoObject(receiver);
+		ProtoObject instance = new ProtoObject(receiver);
+		receiver.initializeVariables(instance);
+		return instance;
 	}
 
 	public static ProtoObject primitive_110(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {

@@ -8,7 +8,7 @@ import java.util.Map;
 public abstract class ProtoObjectData {
 
 	private ProtoObject cls;
-	private Map<String, ProtoObject> variables;
+	protected Map<String, ProtoObject> variables;
 
 	abstract void javaValue(Object value);
 	abstract Object javaValue();
@@ -23,6 +23,7 @@ public abstract class ProtoObjectData {
 	abstract boolean hasVariableNamed(String name);
 	abstract void category(String name);
 	abstract String category();
+	abstract void initializeVariables(ProtoObject instance, ProtoObjectData instanceData);
 
 	public static ProtoObjectData classData() {
 		return new ClassData();
@@ -40,6 +41,13 @@ public abstract class ProtoObjectData {
 		return cls;
 	}
 
+	protected ProtoObject variableAt(String name) {
+		return variables != null ? variables.get(name) : null;
+	}
+
+	protected ProtoObject variableAtPut(String name, ProtoObject value) {
+		return variables.put(name, value);
+	}
 
 	private static class InstanceData extends ProtoObjectData {
 
@@ -95,6 +103,10 @@ public abstract class ProtoObjectData {
 
 		protected String category() {
 			throw new IllegalStateException("An instance doesn't have a Category.");
+		}
+
+		protected void initializeVariables(ProtoObject instance, ProtoObjectData instanceData) {
+			throw new IllegalStateException("An instance doesn't initialize instance variables.");
 		}
 	}
 
@@ -156,13 +168,20 @@ public abstract class ProtoObjectData {
 		protected boolean hasVariableNamed(String name) {
 			if (variableNames != null && variableNames.containsKey(name))
 				return true;
-			ProtoObject supercls = superclass;
-			while (supercls != null) {
-				if (supercls.hasVariableNamed(name))
-					return true;
-				supercls = supercls.superclass();
-			}
+			if (superclass != null)
+				return superclass.hasVariableNamed(name);
 			return false;
+		}
+
+		protected void initializeVariables(ProtoObject instance, ProtoObjectData instanceData) {
+			if (variableNames != null && !variableNames.isEmpty()) {
+				if (instanceData.variables == null)
+					instanceData.variables = new HashMap<String, ProtoObject>();
+				for (Map.Entry<String, String> entry : variableNames.entrySet())
+					instanceData.variables.put(entry.getKey(), ProtoObject.instanceOfUndefinedObject);
+			}
+			if (superclass != null)
+				superclass.initializeVariables(instance);
 		}
 
 		protected void category(String category) {
@@ -170,7 +189,7 @@ public abstract class ProtoObjectData {
 		}
 
 		protected String category() {
-			return category();
+			return category;
 		}
 	}
 }
