@@ -1,3 +1,8 @@
+25/09/2011 Changes
+
+Output some trace to let you know instance variables are being initialized.
+
+
 23/09/2011 Changes
 
 Added indication of instance or class to method compilation. This is useful for handling

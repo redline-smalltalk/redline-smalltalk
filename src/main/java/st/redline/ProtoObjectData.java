@@ -174,11 +174,14 @@ public abstract class ProtoObjectData {
 		}
 
 		protected void initializeVariables(ProtoObject instance, ProtoObjectData instanceData) {
+			System.out.println("initializeVariables() in " + instance);
 			if (variableNames != null && !variableNames.isEmpty()) {
 				if (instanceData.variables == null)
 					instanceData.variables = new HashMap<String, ProtoObject>();
-				for (Map.Entry<String, String> entry : variableNames.entrySet())
+				for (Map.Entry<String, String> entry : variableNames.entrySet()) {
+					System.out.println("initialize '" + entry.getKey() + "'");
 					instanceData.variables.put(entry.getKey(), ProtoObject.instanceOfUndefinedObject);
+				}
 			}
 			if (superclass != null)
 				superclass.initializeVariables(instance);
