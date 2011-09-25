@@ -4,6 +4,7 @@ ProtoObject < #Object
 - initialize
 	"Subclasses should redefine this method to perform initializations on instance creation"
 
+"comparing"
 - == anObject 
 	"Primitive. Answer whether the receiver and the argument are the same 
 	object (have the same object pointer). Do not redefine the message == in 
@@ -11,6 +12,10 @@ ProtoObject < #Object
 	See Object documentation whatIsAPrimitive."
 
 	<primitive: 110>
+
+- = anObject
+    "Answer whether the receiver and the argument represent the same component."
+    ^ self == anObject.
 
 - at: index
     "Primitive.  Assuming the object is indexable, return the value at index."
