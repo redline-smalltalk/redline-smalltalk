@@ -8,6 +8,7 @@ A few example file changes to exercise variables.
 
 Output some trace to let you know instance variables are being initialized.
 Fixing off-by-one error in MethodAnalyser that was breaking method arguments
+Implementing more of the Object protocol (comparing, testing, accessing)
 
 
 23/09/2011 Changes

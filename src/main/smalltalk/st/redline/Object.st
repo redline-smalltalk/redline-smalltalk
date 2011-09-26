@@ -17,25 +17,70 @@ ProtoObject < #Object
     "Answer whether the receiver and the argument represent the same component."
     ^ self == anObject.
 
-- at: index
-    "Primitive.  Assuming the object is indexable, return the value at index."
-    <primitive: 60>
+- ~= anObject
+    "Answer whether the receiver and the argument do not represent the same component."
+    ^ self = anObject == false.
 
-- at: index put: value
-    "Primitive.  Assuming the object is indexable, set the value at index."
-    <primitive: 61>
+- ~~ anObject
+    "Answer whether the receiver and the argument are not the same object."
+    ^ self ~= anObject.
+
+- hash
+    "Answer an Integer computed with respect to the representation of the receiver."
+    <primitive: 75>
 
 "testing"
+- isNil
+    "Answer whether the receiver is nil."
+    ^ false.
+
+- notNil
+    "Answer whether the receiver is not nil."
+    ^ true.
+
 - class
 	<primitive: 111>
-	
+
 - isKindOf: aClass
 	self class == aClass
 		ifTrue: [ ^ true ]
 		ifFalse: [ ^ self class inheritsFrom: aClass ].
-		
+
 - isMemberOf: aClass
 	^ self class == aClass.
 
 - respondsTo: aSymbol
 	^ self class canUnderstand: aSymbol.
+
+"accessing"
+- at: index
+    "Answer the value of the indexed instance variable of the receiver whose
+    index is the argument, index. If the receiver does not have indexed variables,
+    or if the argument is greater than the number of indexed variables, then
+    report an error."
+    ^ self basicAt: index.
+
+- at: index put: value
+    "Store the argument, anObject, as the value of the indexed instance variable of
+    the receiver whose index is the argument, index. If the receiver does not have
+    indexed variables, or if the argument is greater than the number of indexed
+    variables, then report an error. Answer anObject."
+    ^ self basicAt: index put: value.
+
+- basicAt: index
+    "Primitive.  Assuming the object is indexable, return the value at index."
+    <primitive: 60>
+
+- basicAt: index put: value
+    "Primitive.  Assuming the object is indexable, set the value at index."
+    <primitive: 61>
+
+- size
+    "Answer the receiver's number of indexed variables. This value is the same
+    as the largest legal index."
+    ^ self basicSize.
+
+- basicSize
+    "Same as size. The method associated with this message, however, cannot be
+    modified in any subclass."
+    <primitive: 62>
