@@ -188,6 +188,10 @@ public class ProtoObject {
 		return instance;
 	}
 
+	public static ProtoObject primitiveInteger(ProtoObject receiver, int value) {
+		return primitiveInteger(receiver, new BigDecimal(value));
+	}
+	
 	public static ProtoObject primitiveInteger(ProtoObject receiver, String value) {
 		return primitiveInteger(receiver, new BigDecimal(value));
 	}
@@ -632,6 +636,17 @@ public class ProtoObject {
 		array.javaValue(javaArray);
 		
 		return array;
+	}
+
+	public static ProtoObject primitive_75(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// hash
+		Object javaValue = receiver.javaValue();
+
+		int hash = (javaValue != null) ? javaValue.hashCode() : receiver.hashCode();
+
+		ProtoObject result = primitiveInteger(receiver, hash);
+
+		return result;
 	}
 
 	public static ProtoObject primitive_111(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
