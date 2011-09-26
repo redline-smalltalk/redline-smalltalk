@@ -2,6 +2,8 @@
 26/09/2011 Changes
 
 A few example file changes to exercise variables.
+Added Router class to map http routes to handlers within Stout. Contributed by 
+Jacky Cheung.
 
 
 25/09/2011 Changes
