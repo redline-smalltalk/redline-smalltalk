@@ -12,6 +12,10 @@ public class ClassPathUtilities {
         return filenameToPackageName(fileName).substring(0, fileName.lastIndexOf(File.separator));
     }
 
+    public static String simpleFilenameToPackageName(String filename) {
+		return filename.replace(File.separator, ".");
+	}
+
     public static String filenameToPackageName(String filename) {
 		int index = filename.lastIndexOf(File.separatorChar);
 		if (index == -1)
@@ -20,7 +24,7 @@ public class ClassPathUtilities {
 		for (String path : SourceFileFinder.sourceFilePaths())
 			if (filename.startsWith(path))
 				return (path.length() == filename.length()) ? "" : filename.substring(path.length() + 1).replace(File.separator, ".");
-		return filename.replace(File.separator, ".");
+		return simpleFilenameToPackageName(filename);
     }
 
     public static String classNameToFullyQualifiedClassName(String packageName, String className) {

@@ -128,6 +128,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT, CONSTRUCT_SIGNATURE);
 		mv.visitInsn(POP);
 		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitivePackageRegistryRemove", "()V");
+
+		mv.visitLdcInsn(fullyQualifiedClassName);
+		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitiveInitializeClass", "(Ljava/lang/String;)V");
+
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();

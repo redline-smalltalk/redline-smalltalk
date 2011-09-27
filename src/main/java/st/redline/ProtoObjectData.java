@@ -116,6 +116,7 @@ public abstract class ProtoObjectData {
 		private Map<String, ProtoMethod> methods = new HashMap<String, ProtoMethod>();
 		private Map<String, String> packages;
 		private Map<String, String> variableNames;
+		private boolean initialized = false;
 		private String category;
 
 		protected void javaValue(Object value) {
@@ -174,15 +175,14 @@ public abstract class ProtoObjectData {
 		}
 
 		protected void initializeVariables(ProtoObject instance, ProtoObjectData instanceData) {
-			System.out.println("initializeVariables() in " + instance);
-			if (variableNames != null && !variableNames.isEmpty()) {
+			if (!initialized && variableNames != null && !variableNames.isEmpty()) {
 				if (instanceData.variables == null)
 					instanceData.variables = new HashMap<String, ProtoObject>();
 				for (Map.Entry<String, String> entry : variableNames.entrySet()) {
-					System.out.println("initialize '" + entry.getKey() + "'");
 					instanceData.variables.put(entry.getKey(), ProtoObject.instanceOfUndefinedObject);
 				}
 			}
+			initialized = true;
 			if (superclass != null)
 				superclass.initializeVariables(instance);
 		}

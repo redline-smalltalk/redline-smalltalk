@@ -154,6 +154,12 @@ public class ProtoObject {
 		return receiver;
 	}
 
+	public static void primitiveInitializeClass(String name) {
+		ProtoObject cls = classRegistry.get(ClassPathUtilities.simpleFilenameToPackageName(name));
+		if (cls != null)
+			cls.initializeVariables(cls);
+	}
+
 	public static ProtoObject primitiveVariableAt(ProtoObject receiver, String name, boolean isClassMethod) {
 		ProtoObject value;
 		if ((value = receiver.variableAt(name)) != null)
@@ -522,6 +528,7 @@ public class ProtoObject {
 	}
 
 	public void addVariableNamed(String name) {
+//		System.out.println("addVariableNamed() " + name + " to " + this);
 		data.addVariableNamed(name);
 	}
 
