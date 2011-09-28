@@ -157,7 +157,7 @@ public class ProtoObject {
 	public static void primitiveInitializeClass(String name) {
 		ProtoObject cls = classRegistry.get(ClassPathUtilities.simpleFilenameToPackageName(name));
 		if (cls != null)
-			cls.initializeVariables(cls);
+			cls.initializeClassVariables();
 	}
 
 	public static ProtoObject primitiveVariableAt(ProtoObject receiver, String name, boolean isClassMethod) {
@@ -552,15 +552,19 @@ public class ProtoObject {
 		return data.isClass();
 	}
 
-	public void initializeVariables(ProtoObject instance) {
-		data.initializeVariables(instance, instance.data);
+	public void initializeInstanceVariables() {
+		data.initializeInstanceVariables(cls().data);
+	}
+
+	public void initializeClassVariables() {
+		data.initializeClassVariables(cls().data);
 	}
 
 	public static ProtoObject primitive_70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// System.out.println("primitive_70() " + String.valueOf(receiver) + " " + String.valueOf(clsMethodFoundIn) + " " + String.valueOf(arg1));
 		// basicNew
 		ProtoObject instance = new ProtoObject(receiver);
-		receiver.initializeVariables(instance);
+		instance.initializeInstanceVariables();
 		return instance;
 	}
 

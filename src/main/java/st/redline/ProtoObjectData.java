@@ -23,7 +23,8 @@ public abstract class ProtoObjectData {
 	abstract boolean hasVariableNamed(String name);
 	abstract void category(String name);
 	abstract String category();
-	abstract void initializeVariables(ProtoObject instance, ProtoObjectData instanceData);
+	abstract void initializeInstanceVariables(ProtoObjectData classData);
+	abstract void initializeClassVariables(ProtoObjectData classData);
 
 	public static ProtoObjectData classData() {
 		return new ClassData();
@@ -105,8 +106,25 @@ public abstract class ProtoObjectData {
 			throw new IllegalStateException("An instance doesn't have a Category.");
 		}
 
-		protected void initializeVariables(ProtoObject instance, ProtoObjectData instanceData) {
-			throw new IllegalStateException("An instance doesn't initialize instance variables.");
+		protected void initializeInstanceVariables(ProtoObjectData classData) {
+			initializeInstanceVariables((ClassData) classData);
+		}
+
+		protected void initializeInstanceVariables(ClassData classData) {
+			if (classData.variableNames != null && !classData.variableNames.isEmpty()) {
+				if (variables == null)
+					variables = new HashMap<String, ProtoObject>();
+				for (Map.Entry<String, String> entry : classData.variableNames.entrySet()) {
+					System.out.println("initializeInstanceVariable '" + entry.getKey() + "'");
+					variables.put(entry.getKey(), ProtoObject.instanceOfUndefinedObject);
+				}
+			}
+			if (classData.superclass != null)
+				classData.superclass.initializeInstanceVariables();
+		}
+
+		protected void initializeClassVariables(ProtoObjectData classData) {
+			cls().initializeClassVariables();
 		}
 	}
 
@@ -174,17 +192,25 @@ public abstract class ProtoObjectData {
 			return false;
 		}
 
-		protected void initializeVariables(ProtoObject instance, ProtoObjectData instanceData) {
-			if (variableNames != null && !variableNames.isEmpty()) {
-				if (instanceData.variables == null)
-					instanceData.variables = new HashMap<String, ProtoObject>();
-				for (Map.Entry<String, String> entry : variableNames.entrySet()) {
-					instanceData.variables.put(entry.getKey(), ProtoObject.instanceOfUndefinedObject);
+		protected void initializeInstanceVariables(ProtoObjectData classData) {
+		}
+
+		protected void initializeClassVariables(ProtoObjectData classData) {
+			initializeClassVariables((ClassData) classData);
+		}
+
+		protected void initializeClassVariables(ClassData classData) {
+			if (!initialized && classData.variableNames != null && !classData.variableNames.isEmpty()) {
+				if (variables == null)
+					variables = new HashMap<String, ProtoObject>();
+				for (Map.Entry<String, String> entry : classData.variableNames.entrySet()) {
+					System.out.println("initializeClassVariable '" + entry.getKey() + "'");
+					variables.put(entry.getKey(), ProtoObject.instanceOfUndefinedObject);
 				}
+				initialized = true;
 			}
-			
 			if (superclass != null)
-				superclass.initializeVariables(instance);
+				superclass.initializeClassVariables();
 		}
 
 		protected void category(String category) {

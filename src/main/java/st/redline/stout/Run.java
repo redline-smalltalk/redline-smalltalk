@@ -61,6 +61,7 @@ public class Run {
 		server = new Server(8080);
 		server.setHandler(initialHandler(commandLine));
 		server.start();
+		server.join();
 	}
 
 	private static ProtoObject object(CommandLine commandLine) throws Exception {
