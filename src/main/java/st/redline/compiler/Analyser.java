@@ -4,9 +4,12 @@ package st.redline.compiler;
 import java.io.File;
 import java.util.List;
 
+import st.redline.Primitives;
 import st.redline.ProtoObject;
 
 public class Analyser implements NodeVisitor {
+
+	public static final Primitives primitives = new Primitives();
 
 	protected final String className;
 	protected final String packageName;
@@ -136,19 +139,19 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(UnarySelectorMessagePattern unarySelectorMessagePattern, String value, int line) {
 		String fullMethodName = createFullMethodName(value);
-		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
+		primitives.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
 		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, value, className, packageName, 0, isClassMethod);
 	}
 
 	public void visit(BinarySelectorMessagePattern binarySelectorMessagePattern, String binarySelector, int binarySelectorLine, VariableName variableName) {
 		String fullMethodName = createFullMethodName(binarySelector);
-		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
+		primitives.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
 		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, binarySelector, className, packageName, 1, isClassMethod);
 	}
 
 	public void visit(KeywordMessagePattern keywordMessagePattern, String keywords, int keywordLine, List<VariableName> variableNames) {
 		String fullMethodName = createFullMethodName(keywords);
-		ProtoObject.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
+		primitives.registerMethodToBeCompiledAs(currentMethod, fullMethodName);
 		classBytecodeWriter.callPrimitiveCompileMethod(fullMethodName, keywords, className, packageName, variableNames.size(), isClassMethod);
 	}
 

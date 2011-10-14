@@ -71,7 +71,7 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 		mv.visitVarInsn(ALOAD, 2);  // class method was found in.
 		pushMethodArguments(methodArgumentCount);
 		pushNulls(methodArgumentCount + 2);
-		mv.visitMethodInsn(INVOKESTATIC, PROTOOBJECT, "primitive_"+primitive, APPLY_TO_SIGNATURES[APPLY_TO_SIGNATURES.length - 1]);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "p" + primitive, APPLY_TO_SIGNATURES[APPLY_TO_SIGNATURES.length - 1]);
 		// TODO.JCL - cater for case where primitive fails - for now return primitive result.
 		// Note: Doing ARETURN here means there can be more than one ARETURN emitted, this is OK.
 		mv.visitInsn(ARETURN);

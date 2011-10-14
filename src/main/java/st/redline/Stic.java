@@ -44,13 +44,11 @@ public class Stic {
 	}
 
 	public ProtoObject invoke(String className) throws Exception {
-		ProtoObject root = protoObjectInstance();
-		root.name("<root>");
-		return createClassInstance(root, className);
+		return createClassInstance(protoObjectInstance(), className);
 	}
 
 	private ProtoObject createClassInstance(ProtoObject root, String className) throws Exception {
-		return ProtoObject.primitiveResolveObject(root, className);
+		return ProtoObject.resolveObject(root, className);
 	}
 
 	private ProtoObject protoObjectInstance() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
