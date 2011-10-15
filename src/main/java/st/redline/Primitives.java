@@ -193,8 +193,12 @@ public class Primitives {
 		return null;
 	}
 
-	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
-		return null;
+	public static ProtoObject createInstance(ProtoObject superclass, String name) {
+		System.out.println("createInstance() " + superclass + " " + name);
+		ProtoObject instance = new ProtoObject(ProtoObject.METACLASS_INSTANCE);
+		instance.name(name);
+		instance.superclass(superclass);
+		return instance;
 	}
 
 	public static ProtoObject registerAs(ProtoObject receiver, String name) {
@@ -207,10 +211,12 @@ public class Primitives {
 	}
 
 	public static ProtoObject resolveObject(ProtoObject receiver, String className) throws ClassNotFoundException {
+		System.out.println("resolveObject() " + receiver + " " + className);
 		return receiver.resolveObject(className);
 	}
 
 	public static void packageAtPut(ProtoObject receiver, String name, String javaPackageName) {
+		System.out.println("packageAtPut() " + receiver + " " + name + " " + javaPackageName);
 		receiver.packageAtPut(name, javaPackageName);
 	}
 
@@ -320,9 +326,11 @@ public class Primitives {
 	}
 
 	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
+		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
 		ProtoObject value;
 		if ((value = receiver.variableAt(name)) != null)
 			return value;
+		System.out.println("variableAt() class " + receiver.cls());
 		if ((value = receiver.cls().variableAt(name)) != null)
 			return value;
 		return receiver.resolveObject(name);

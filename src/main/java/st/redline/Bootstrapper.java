@@ -12,7 +12,21 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
+		createClasses();
+		instantiateSingletons();
+		registerClasses();
 		mapPackages();
+	}
+
+	private void instantiateSingletons() {
+//		ProtoObject.METACLASS_INSTANCE = special case.
+	}
+
+	private void createClasses() {
+	}
+
+	private void registerClasses() {
+//		Primitives.registerAs(ProtoObject.METACLASS_INSTANCE, "st.redline.MetaClass");
 	}
 
 	private void mapPackages() {
