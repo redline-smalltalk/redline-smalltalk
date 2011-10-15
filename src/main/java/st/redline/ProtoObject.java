@@ -9,8 +9,7 @@ import java.util.*;
 
 public class ProtoObject {
 
-	public static final Primitives primitives = new Primitives();
-
+	protected static final Map<String, String> packageMap = new HashMap<String, String>();
 	protected static final Map<String, ProtoObject> classRegistry = classRegistryMapInstance();
 
 	public static ProtoObject METACLASS_INSTANCE;  // <- sole instance of class Metaclass.
@@ -128,10 +127,14 @@ public class ProtoObject {
 		return this;
 	}
 
+	public ProtoObject category(String category) {
+		return this;
+	}
+
 	public String packageAt(String name) {
 		if (packages != null)
 			return packages.get(name);
-		return null;
+		return packageMap.get(name);
 	}
 
 	public ProtoObject packageAtPut(String name, String javaPackageName) {
@@ -161,8 +164,8 @@ public class ProtoObject {
 
 	protected ProtoObject superclass(ProtoObject superclass) {
 		this.superclass = superclass;
-		if (cls() != null)
-			cls().superclass(superclass.cls());
+		if (cls != null)
+			cls.superclass = superclass.cls();
 		return this;
 	}
 

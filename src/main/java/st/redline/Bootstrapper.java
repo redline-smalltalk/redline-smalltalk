@@ -16,11 +16,11 @@ public class Bootstrapper {
 	}
 
 	private void mapPackages() {
-		Primitives.packageMap.put("ProtoObject", "st.redline.ProtoObject");
+		ProtoObject.packageMap.put("ProtoObject", "st.redline.ProtoObject");
 		for (String sourceFile : SourceFileFinder.findIn("st" + File.separator + "redline")) {
 			String packageName = ClassPathUtilities.filenameWithExtensionToPackageName(sourceFile);
 			String name = ClassPathUtilities.filenameToClassName(sourceFile);
-			Primitives.packageMap.put(name, packageName + "." + name);
+			ProtoObject.packageMap.put(name, packageName + "." + name);
 		}
 	}
 }

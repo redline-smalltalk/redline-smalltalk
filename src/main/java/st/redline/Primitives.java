@@ -9,7 +9,6 @@ import java.util.*;
 
 public class Primitives {
 
-	protected static final Map<String, String> packageMap = new HashMap<String, String>();
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 
@@ -182,7 +181,23 @@ public class Primitives {
 	//  Redline specific primitives
 	//
 
-	protected static ProtoObject registerAs(ProtoObject receiver, String name) {
+	public static ProtoObject newWith(ProtoObject receiver, Object value) {
+		return null;
+	}
+
+	public static ProtoObject symbol(ProtoObject receiver, String symbol) {
+		return null;
+	}
+
+	public static ProtoObject string(ProtoObject receiver, String symbol) {
+		return null;
+	}
+
+	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
+		return null;
+	}
+
+	public static ProtoObject registerAs(ProtoObject receiver, String name) {
 		System.out.println("registerAs() " + String.valueOf(name) + " " + receiver);
 		return receiver.registerAs(name);
 	}
@@ -191,30 +206,27 @@ public class Primitives {
 		return new ProtoObject(receiver.cls());
 	}
 
-	public ProtoObject resolveObject(ProtoObject receiver, String className) throws ClassNotFoundException {
+	public static ProtoObject resolveObject(ProtoObject receiver, String className) throws ClassNotFoundException {
 		return receiver.resolveObject(className);
 	}
 
-	public void packageAtPut(ProtoObject receiver, String name, String javaPackageName) {
+	public static void packageAtPut(ProtoObject receiver, String name, String javaPackageName) {
 		receiver.packageAtPut(name, javaPackageName);
 	}
 
-	public String packageAt(ProtoObject receiver, String name) {
-		String fullyQualifiedName = receiver.packageAt(name);
-		if (fullyQualifiedName != null)
-			return fullyQualifiedName;
-		return packageMap.get(name);
+	public static String packageAt(ProtoObject receiver, String name) {
+		return receiver.packageAt(name);
 	}
 
-	public void methodAtPut(ProtoObject receiver, String name, ProtoMethod method) {
+	public static void methodAtPut(ProtoObject receiver, String name, ProtoMethod method) {
 		receiver.methodAtPut(name, method);
 	}
 
-	public ProtoMethod methodAt(ProtoObject receiver, String name) {
+	public static ProtoMethod methodAt(ProtoObject receiver, String name) {
 		return receiver.methodAt(name);
 	}
 
-	public void addVariables(ProtoObject receiver, String inputVariables) {
+	public static void addVariables(ProtoObject receiver, String inputVariables) {
 		Map<String, ProtoObject> variables = receiver.variables();
 		if (variables == null)
 			receiver.variables(ProtoObject.variablesMapInstance());
@@ -222,13 +234,13 @@ public class Primitives {
 			addVariable(receiver, variable);
 	}
 
-	private void addVariable(ProtoObject receiver, String variable) {
+	private static void addVariable(ProtoObject receiver, String variable) {
 		if (receiver.hasVariableNamed(variable))
 			throw new IllegalStateException("Variable '" + variable + "' already defined.");
 		receiver.variables().put(variable, ProtoObject.NIL);
 	}
 
-	public void addInstanceVariables(ProtoObject receiver, String inputVariables) {
+	public static void addInstanceVariables(ProtoObject receiver, String inputVariables) {
 		Map<String, ProtoObject> variables = receiver.instanceVariables();
 		if (variables == null)
 			receiver.instanceVariables(ProtoObject.variablesMapInstance());
@@ -236,13 +248,13 @@ public class Primitives {
 			addInstanceVariable(receiver, variable);
 	}
 
-	private void addInstanceVariable(ProtoObject receiver, String variable) {
+	private static void addInstanceVariable(ProtoObject receiver, String variable) {
 		if (receiver.hasInstanceVariableNamed(variable))
 			throw new IllegalStateException("Instance variable '" + variable + "' already defined.");
 		receiver.instanceVariables().put(variable, ProtoObject.NIL);
 	}
 
-	public void addClassInstanceVariables(ProtoObject receiver, String inputVariables) {
+	public static void addClassInstanceVariables(ProtoObject receiver, String inputVariables) {
 		if (receiver.cls() == null)
 			throw new IllegalStateException("Receiver has no class.");
 		Map<String, ProtoObject> variables = receiver.cls().variables();
@@ -255,7 +267,7 @@ public class Primitives {
 				addClassInstanceVariable(receiver, entry.getKey(), false);
 	}
 
-	private void addClassInstanceVariable(ProtoObject receiver, String variable, boolean noDuplicates) {
+	private static void addClassInstanceVariable(ProtoObject receiver, String variable, boolean noDuplicates) {
 		if (noDuplicates && receiver.cls().hasVariableNamed(variable))
 			throw new IllegalStateException("Class instance variable '" + variable + "' already defined.");
 		receiver.cls().variables().put(variable, ProtoObject.NIL);

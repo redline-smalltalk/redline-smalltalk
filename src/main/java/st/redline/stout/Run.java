@@ -6,6 +6,7 @@ import org.mortbay.jetty.Request;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.handler.AbstractHandler;
 import st.redline.CommandLine;
+import st.redline.Primitives;
 import st.redline.ProtoObject;
 import st.redline.Stic;
 
@@ -44,17 +45,17 @@ public class Run {
 		stic = new Stic(commandLine);
 		httpServletRequest = stic.invoke("st.redline.stout.HttpServletRequest");
 		httpServletResponse = stic.invoke("st.redline.stout.HttpServletResponse");
-		requestSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Request");
-		forwardSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Forward");
-		includeSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Include");
-		errorSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Error");
-		httpVerbMap.put("GET", ProtoObject.primitiveSymbol(httpServletRequest, "GET"));
-		httpVerbMap.put("PUT", ProtoObject.primitiveSymbol(httpServletRequest, "PUT"));
-		httpVerbMap.put("POST", ProtoObject.primitiveSymbol(httpServletRequest, "POST"));
-		httpVerbMap.put("OPTIONS", ProtoObject.primitiveSymbol(httpServletRequest, "OPTIONS"));
-		httpVerbMap.put("DELETE", ProtoObject.primitiveSymbol(httpServletRequest, "DELETE"));
-		httpVerbMap.put("TRACE", ProtoObject.primitiveSymbol(httpServletRequest, "TRACE"));
-		httpVerbMap.put("HEAD", ProtoObject.primitiveSymbol(httpServletRequest, "HEAD"));
+		requestSymbol = Primitives.symbol(httpServletRequest, "Request");
+		forwardSymbol = Primitives.symbol(httpServletRequest, "Forward");
+		includeSymbol = Primitives.symbol(httpServletRequest, "Include");
+		errorSymbol = Primitives.symbol(httpServletRequest, "Error");
+		httpVerbMap.put("GET", Primitives.symbol(httpServletRequest, "GET"));
+		httpVerbMap.put("PUT", Primitives.symbol(httpServletRequest, "PUT"));
+		httpVerbMap.put("POST", Primitives.symbol(httpServletRequest, "POST"));
+		httpVerbMap.put("OPTIONS", Primitives.symbol(httpServletRequest, "OPTIONS"));
+		httpVerbMap.put("DELETE", Primitives.symbol(httpServletRequest, "DELETE"));
+		httpVerbMap.put("TRACE", Primitives.symbol(httpServletRequest, "TRACE"));
+		httpVerbMap.put("HEAD", Primitives.symbol(httpServletRequest, "HEAD"));
 	}
 
 	private static void startServer(CommandLine commandLine) throws Exception {
@@ -65,7 +66,7 @@ public class Run {
 	}
 
 	private static ProtoObject object(CommandLine commandLine) throws Exception {
-		return ProtoObject.primitiveSend(stic.invoke((String) commandLine.arguments().get(0)), "new", null);
+		return null; // Primitives.send(stic.invoke((String) commandLine.arguments().get(0)), "new", null);
 	}
 
 	private static Handler initialHandler(final CommandLine commandLine) throws Exception {
@@ -88,14 +89,14 @@ public class Run {
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
 				throws IOException, ServletException {
-				ProtoObject.primitiveSend(receiver,
-						method(request.getMethod()),
-						string(target),
-						request(request),
-						response(response),
-						dispatch(dispatch),
-						"handle:on:with:and:and:",
-						null);
+//				Primitives.send(receiver,
+//						method(request.getMethod()),
+//						string(target),
+//						request(request),
+//						response(response),
+//						dispatch(dispatch),
+//						"handle:on:with:and:and:",
+//						null);
 			}
 
 			private ProtoObject dispatch(int dispatch) {
@@ -114,11 +115,11 @@ public class Run {
 			}
 
 			private ProtoObject request(HttpServletRequest request) {
-				return ProtoObject.primitiveNewWith(httpServletRequest, request);
+				return Primitives.newWith(httpServletRequest, request);
 			}
 
 			private ProtoObject response(HttpServletResponse response) {
-				return ProtoObject.primitiveNewWith(httpServletResponse, response);
+				return Primitives.newWith(httpServletResponse, response);
 			}
 
 			private ProtoObject method(String value) {
@@ -126,7 +127,7 @@ public class Run {
 			}
 
 			private ProtoObject string(String value) {
-				return ProtoObject.primitiveString(receiver, value);
+				return Primitives.string(receiver, value);
 			}
 		};
 	}

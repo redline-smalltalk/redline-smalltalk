@@ -4,7 +4,6 @@ package st.redline;
 public class ProtoMethod extends ProtoObject {
 
 	public ProtoMethod() {
-		super(false);
 	}
 
 	private RuntimeException subclassShouldHaveImplemented(int argumentCount) {
@@ -44,7 +43,6 @@ public class ProtoMethod extends ProtoObject {
 	}
 
 	protected void addVariableNames(ProtoObject receiver, String variableNames) {
-		for (String variableName : variableNames.split(" "))
-			receiver.addVariableNamed(variableName);
+		Primitives.addVariables(receiver, variableNames);
 	}
 }

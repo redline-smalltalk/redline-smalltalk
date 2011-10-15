@@ -10,8 +10,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class ResolvingTest {
 
-	private final Primitives primitives = ProtoObject.primitives;
-
 	private ProtoObject classClass;
 	private ProtoObject receiver;
 	private ProtoObject result;
@@ -20,11 +18,11 @@ public class ResolvingTest {
 	@Before public void setup() {
 		ProtoObject.METACLASS_INSTANCE = new ProtoObject();
 		ProtoObject.NIL = new ProtoObject();
-		classClass = primitives.p70(ProtoObject.METACLASS_INSTANCE, null, null, null, null, null, null, null, null);
-		receiver = primitives.p70(classClass, null, null, null, null, null, null, null, null);
+		classClass = Primitives.p70(ProtoObject.METACLASS_INSTANCE, null, null, null, null, null, null, null, null);
+		receiver = Primitives.p70(classClass, null, null, null, null, null, null, null, null);
 	}
 
-	@Test(expected = ClassNotFoundException.class) public void shouldResolveObject() throws ClassNotFoundException {
-		primitives.resolveObject(receiver, "ClassName");
+	@Test(expected = RedlineException.class) public void shouldResolveObject() throws ClassNotFoundException {
+		Primitives.resolveObject(receiver, "ClassName");
 	}
 }
