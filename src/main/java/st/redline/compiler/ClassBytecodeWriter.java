@@ -107,7 +107,6 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitCode();
 		stackPushThis();
 		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS, INIT, INIT_SIGNATURE);
-
 		stackPushThis();
 		mv.visitLdcInsn(className + "<Loader>");
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, "name", "(Ljava/lang/String;)V");
