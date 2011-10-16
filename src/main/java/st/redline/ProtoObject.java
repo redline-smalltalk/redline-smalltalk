@@ -81,6 +81,7 @@ public class ProtoObject {
 	}
 
 	protected ProtoObject resolveObject(String name) throws ClassNotFoundException {
+		System.out.println("resolveObject() " + name);
 		ProtoObject object = resolveObject0(name);
 		if (object != null)
 			return object;
@@ -145,8 +146,11 @@ public class ProtoObject {
 	}
 
 	public String packageAt(String name) {
-		if (packages != null)
-			return packages.get(name);
+		if (packages != null) {
+			String fullyQualifiedName = packages.get(name);
+			if (fullyQualifiedName != null)
+				return fullyQualifiedName;
+		}
 		return packageMap.get(name);
 	}
 

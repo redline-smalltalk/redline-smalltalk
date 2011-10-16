@@ -193,12 +193,14 @@ public class Primitives {
 		return null;
 	}
 
-	public static ProtoObject createInstance(ProtoObject superclass, String name) {
-		System.out.println("createInstance() " + superclass + " " + name);
-		ProtoObject instance = new ProtoObject(ProtoObject.METACLASS_INSTANCE);
-		instance.name(name);
-		instance.superclass(superclass);
-		return instance;
+	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
+		System.out.println("createSubclass() " + superclass + " " + name);
+		ProtoObject classClass = new ProtoObject(ProtoObject.METACLASS_INSTANCE);
+		classClass.superclass(superclass.cls());
+		ProtoObject cls = new ProtoObject(classClass);
+		cls.name(name);
+		cls.superclass(superclass);
+		return cls;
 	}
 
 	public static ProtoObject registerAs(ProtoObject receiver, String name) {
@@ -330,7 +332,6 @@ public class Primitives {
 		ProtoObject value;
 		if ((value = receiver.variableAt(name)) != null)
 			return value;
-		System.out.println("variableAt() class " + receiver.cls());
 		if ((value = receiver.cls().variableAt(name)) != null)
 			return value;
 		return receiver.resolveObject(name);
