@@ -6,6 +6,12 @@ import java.io.File;
 public class Bootstrapper {
 
 	private ProtoObject protoObject;
+	private ProtoObject object;
+	private ProtoObject collection;
+	private ProtoObject sequenceableCollection;
+	private ProtoObject arrayedCollection;
+	private ProtoObject string;
+	private ProtoObject symbol;
 
 	protected Bootstrapper(ProtoObject protoObject) {
 		this.protoObject = protoObject;
@@ -23,10 +29,22 @@ public class Bootstrapper {
 	}
 
 	private void createClasses() {
+		object = Primitives.createSubclass(protoObject, "Object");
+		collection = Primitives.createSubclass(object, "Collection");
+		sequenceableCollection = Primitives.createSubclass(collection, "SequenceableCollection");
+		arrayedCollection = Primitives.createSubclass(sequenceableCollection, "ArrayedCollection");
+		string = Primitives.createSubclass(arrayedCollection, "String");
+		symbol = Primitives.createSubclass(string, "Symbol");
 	}
 
 	private void registerClasses() {
 		Primitives.registerAs(protoObject, "st.redline.ProtoObject");
+		Primitives.registerAs(object, "st.redline.Object");
+		Primitives.registerAs(collection, "st.redline.Collection");
+		Primitives.registerAs(sequenceableCollection, "st.redline.SequenceableCollection");
+		Primitives.registerAs(arrayedCollection, "st.redline.ArrayedCollection");
+		Primitives.registerAs(string, "st.redline.String");
+		Primitives.registerAs(symbol, "st.redline.Symbol");
 //		Primitives.registerAs(ProtoObject.METACLASS_INSTANCE, "st.redline.MetaClass");
 	}
 
@@ -35,7 +53,6 @@ public class Bootstrapper {
 		for (String sourceFile : SourceFileFinder.findIn("st" + File.separator + "redline")) {
 			String packageName = ClassPathUtilities.filenameWithExtensionToPackageName(sourceFile);
 			String name = ClassPathUtilities.filenameToClassName(sourceFile);
-			System.out.println("packageMap.put() '" + name + "' " + packageName + "." + name);
 			ProtoObject.packageMap.put(name, packageName + "." + name);
 		}
 	}
