@@ -23,13 +23,13 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SUPER_SEND = "superSend";
 	private static final String CONSTRUCT = "construct";
 	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_SYMBOL = "primitiveSymbol";
+	private static final String PRIMITIVE_SYMBOL = "createSymbol";
 	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_INTEGER = "primitiveInteger";
+	private static final String PRIMITIVE_INTEGER = "createInteger";
 	private static final String PRIMITIVE_INTEGER_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_STRING = "primitiveString";
+	private static final String PRIMITIVE_STRING = "createString";
 	private static final String PRIMITIVE_STRING_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_CHARACTER = "primitiveCharacter";
+	private static final String PRIMITIVE_CHARACTER = "createCharacter";
 	private static final String PRIMITIVE_CHARACTER_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_VARIABLE_AT = "variableAt";
 	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Z)Lst/redline/ProtoObject;";

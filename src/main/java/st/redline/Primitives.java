@@ -181,16 +181,27 @@ public class Primitives {
 	//  Redline specific primitives
 	//
 
-	public static ProtoObject newWith(ProtoObject receiver, Object value) {
-		return null;
+	private static ProtoObject newWith(ProtoObject receiver, String className, Object value) throws ClassNotFoundException {
+		ProtoObject cls = resolveObject(receiver, className);
+		ProtoObject instance = p70(cls, null, null, null, null, null, null, null, null);
+		instance.javaValue(value);
+		return instance;
 	}
 
-	public static ProtoObject symbol(ProtoObject receiver, String symbol) {
-		return null;
+	public static ProtoObject newWith(ProtoObject receiver, Object value) throws ClassNotFoundException {
+		return newWith(receiver, "ProtoObject", value);
 	}
 
-	public static ProtoObject string(ProtoObject receiver, String symbol) {
-		return null;
+	public static ProtoObject createSymbol(ProtoObject receiver, String value) throws ClassNotFoundException {
+		return newWith(receiver, "Symbol", value);
+	}
+
+	public static ProtoObject createString(ProtoObject receiver, String string) throws ClassNotFoundException {
+		throw new IllegalStateException("TODO - complete");
+//		ProtoObject cls = resolveObject(receiver, "String");
+//		ProtoObject instance = cls.send(cls, null, "new");
+//		instance.javaValue(string);
+//		return instance;
 	}
 
 	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
