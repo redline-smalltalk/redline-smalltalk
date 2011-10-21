@@ -181,7 +181,7 @@ public class ProtoObject {
 
 	protected ProtoObject superclass(ProtoObject superclass) {
 		this.superclass = superclass;
-		if (cls != null)
+		if (cls != null && superclass != null)
 			cls.superclass = superclass.cls();
 		return this;
 	}

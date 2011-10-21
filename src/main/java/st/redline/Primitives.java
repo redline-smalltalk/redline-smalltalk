@@ -9,6 +9,8 @@ import java.util.*;
 
 public class Primitives {
 
+	protected static boolean bootstrapping = false;
+
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 
@@ -181,6 +183,12 @@ public class Primitives {
 	//  Redline specific primitives
 	//
 
+	private static ProtoObject newWithValue(String value) {
+		ProtoObject instance = new ProtoObject();
+		instance.javaValue(value);
+		return instance;
+	}
+
 	private static ProtoObject newWith(ProtoObject receiver, String className, Object value) throws ClassNotFoundException {
 		ProtoObject cls = resolveObject(receiver, className);
 		ProtoObject instance = p70(cls, null, null, null, null, null, null, null, null);
@@ -193,10 +201,14 @@ public class Primitives {
 	}
 
 	public static ProtoObject createSymbol(ProtoObject receiver, String value) throws ClassNotFoundException {
+		if (bootstrapping)
+			return newWithValue(value);
 		return newWith(receiver, "Symbol", value);
 	}
 
 	public static ProtoObject createString(ProtoObject receiver, String string) throws ClassNotFoundException {
+		if (bootstrapping)
+			return newWithValue(string);
 		throw new IllegalStateException("TODO - complete");
 //		ProtoObject cls = resolveObject(receiver, "String");
 //		ProtoObject instance = cls.send(cls, null, "new");
@@ -354,5 +366,201 @@ public class Primitives {
 		if (receiver.cls().variableAtPut(name, value) != null)
 			return receiver;
 		throw new IllegalStateException("'Variable '" + name + "' not found.");
+	}
+
+	private static ProtoMethod methodFor(ProtoObject object, String selector, ProtoObject[] methodForResult) {
+		ProtoMethod method;
+		ProtoObject superclass = object;
+		while ((method = superclass.methodAt(selector)) == null)
+			if ((superclass = superclass.superclass()) == null)
+				break;
+		methodForResult[0] = superclass;
+		return method;
+	}
+
+	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector, ProtoObject[] arguments) {
+		throw RedlineException.withMessage("TODO -  need to implement send of doesNotUnderstand - '" + selector + "' " + receiver);
+	}
+
+	public static ProtoObject send(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls());
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0]);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{});
+	}
+
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
+		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1});
+	}
+
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2});
+	}
+
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3});
+	}
+
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4});
+	}
+
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
+	}
+
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
+	}
+
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = receiver.cls().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
+	}
+
+	public static ProtoObject superSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("superSend " + receiver + " " + selector + " " + classMethodWasFoundIn);
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass());
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0]);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{});
+	}
+
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
+//		System.out.println("superSend " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1});
+	}
+
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2});
+	}
+
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3});
+	}
+
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4});
+	}
+
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
+	}
+
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5, arg6);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
+	}
+
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ProtoObject classMethodWasFoundIn) {
+		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		if (method != null)
+			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		ProtoObject[] methodForResult = {null};
+		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		if (method != null)
+			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
 	}
 }

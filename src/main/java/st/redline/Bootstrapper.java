@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
+import st.redline.bootstrap.ClassSubclassMethod;
+
 import java.io.File;
 
 public class Bootstrapper {
@@ -18,34 +20,61 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
-		createClasses();
-		instantiateSingletons();
-		registerClasses();
+		markBootstrapping(true);
 		mapPackages();
+		setupProtoObject();
+		registerRootClasses();
+		instantiateSingletons();
+		createClasses();
+		tearDownProtoObject();
+		markBootstrapping(false);
+	}
+
+	private void tearDownProtoObject() {
+		protoObject.cls(null);
+	}
+
+	private void setupProtoObject() {
+		protoObject.cls(protoObject);
+		protoObject.methodAtPut("<", new ClassSubclassMethod());
+	}
+
+	private void markBootstrapping(boolean bootstrapping) {
+		Primitives.bootstrapping = bootstrapping;
+	}
+
+	private void loadUsing(String name, SmalltalkClassLoader smalltalk) {
+		try {
+			smalltalk.findClass(name).newInstance();
+		} catch (Exception e) {
+			markBootstrapping(false);
+			throw RedlineException.withCauseAndMessage(String.format("Unable to load class %s", name), e);
+		}
 	}
 
 	private void instantiateSingletons() {
-//		ProtoObject.METACLASS_INSTANCE = special case.
+		ProtoObject.METACLASS_INSTANCE = createTemporaryMetaclassInstance();
+	}
+
+	private ProtoObject createTemporaryMetaclassInstance() {
+		ProtoObject classClass = new ProtoObject(protoObject);
+		ProtoObject cls = new ProtoObject(classClass);
+		cls.name("Metaclass(Bootstrapped)");
+		cls.superclass(protoObject);
+		return Primitives.p70(cls, null, null, null, null, null, null, null, null);
 	}
 
 	private void createClasses() {
-		object = Primitives.createSubclass(protoObject, "Object");
-		collection = Primitives.createSubclass(object, "Collection");
-		sequenceableCollection = Primitives.createSubclass(collection, "SequenceableCollection");
-		arrayedCollection = Primitives.createSubclass(sequenceableCollection, "ArrayedCollection");
-		string = Primitives.createSubclass(arrayedCollection, "String");
-		symbol = Primitives.createSubclass(string, "Symbol");
+		SmalltalkClassLoader smalltalk = currentClassLoader();
+		loadUsing("st.redline.Object", smalltalk);
 	}
 
-	private void registerClasses() {
+	private SmalltalkClassLoader currentClassLoader() {
+		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+	}
+
+	private void registerRootClasses() {
 		Primitives.registerAs(protoObject, "st.redline.ProtoObject");
-		Primitives.registerAs(object, "st.redline.Object");
-		Primitives.registerAs(collection, "st.redline.Collection");
-		Primitives.registerAs(sequenceableCollection, "st.redline.SequenceableCollection");
-		Primitives.registerAs(arrayedCollection, "st.redline.ArrayedCollection");
-		Primitives.registerAs(string, "st.redline.String");
-		Primitives.registerAs(symbol, "st.redline.Symbol");
-//		Primitives.registerAs(ProtoObject.METACLASS_INSTANCE, "st.redline.MetaClass");
 	}
 
 	private void mapPackages() {

@@ -45,17 +45,17 @@ public class Run {
 		stic = new Stic(commandLine);
 		httpServletRequest = stic.invoke("st.redline.stout.HttpServletRequest");
 		httpServletResponse = stic.invoke("st.redline.stout.HttpServletResponse");
-		requestSymbol = Primitives.symbol(httpServletRequest, "Request");
-		forwardSymbol = Primitives.symbol(httpServletRequest, "Forward");
-		includeSymbol = Primitives.symbol(httpServletRequest, "Include");
-		errorSymbol = Primitives.symbol(httpServletRequest, "Error");
-		httpVerbMap.put("GET", Primitives.symbol(httpServletRequest, "GET"));
-		httpVerbMap.put("PUT", Primitives.symbol(httpServletRequest, "PUT"));
-		httpVerbMap.put("POST", Primitives.symbol(httpServletRequest, "POST"));
-		httpVerbMap.put("OPTIONS", Primitives.symbol(httpServletRequest, "OPTIONS"));
-		httpVerbMap.put("DELETE", Primitives.symbol(httpServletRequest, "DELETE"));
-		httpVerbMap.put("TRACE", Primitives.symbol(httpServletRequest, "TRACE"));
-		httpVerbMap.put("HEAD", Primitives.symbol(httpServletRequest, "HEAD"));
+		requestSymbol = Primitives.createSymbol(httpServletRequest, "Request");
+		forwardSymbol = Primitives.createSymbol(httpServletRequest, "Forward");
+		includeSymbol = Primitives.createSymbol(httpServletRequest, "Include");
+		errorSymbol = Primitives.createSymbol(httpServletRequest, "Error");
+		httpVerbMap.put("GET", Primitives.createSymbol(httpServletRequest, "GET"));
+		httpVerbMap.put("PUT", Primitives.createSymbol(httpServletRequest, "PUT"));
+		httpVerbMap.put("POST", Primitives.createSymbol(httpServletRequest, "POST"));
+		httpVerbMap.put("OPTIONS", Primitives.createSymbol(httpServletRequest, "OPTIONS"));
+		httpVerbMap.put("DELETE", Primitives.createSymbol(httpServletRequest, "DELETE"));
+		httpVerbMap.put("TRACE", Primitives.createSymbol(httpServletRequest, "TRACE"));
+		httpVerbMap.put("HEAD", Primitives.createSymbol(httpServletRequest, "HEAD"));
 	}
 
 	private static void startServer(CommandLine commandLine) throws Exception {
@@ -114,11 +114,11 @@ public class Run {
 				}
 			}
 
-			private ProtoObject request(HttpServletRequest request) {
+			private ProtoObject request(HttpServletRequest request) throws ClassNotFoundException {
 				return Primitives.newWith(httpServletRequest, request);
 			}
 
-			private ProtoObject response(HttpServletResponse response) {
+			private ProtoObject response(HttpServletResponse response) throws ClassNotFoundException {
 				return Primitives.newWith(httpServletResponse, response);
 			}
 
@@ -126,8 +126,8 @@ public class Run {
 				return httpVerbMap.get(value);
 			}
 
-			private ProtoObject string(String value) {
-				return Primitives.string(receiver, value);
+			private ProtoObject string(String value) throws ClassNotFoundException {
+				return Primitives.createString(receiver, value);
 			}
 		};
 	}
