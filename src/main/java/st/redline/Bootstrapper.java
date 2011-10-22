@@ -25,7 +25,12 @@ public class Bootstrapper {
 		registerRootClasses();
 		instantiateSingletons();
 		createClasses();
+		makeClassSuperclassOfObjectsClass();
 		markBootstrapping(false);
+	}
+
+	private void makeClassSuperclassOfObjectsClass() {
+		// TODO.JCL - 
 	}
 
 	private void tearDownProtoObject() {
@@ -66,7 +71,8 @@ public class Bootstrapper {
 		setupProtoObject();
 		loadUsing("st.redline.Object", smalltalk);
 		tearDownProtoObject();
-		loadUsing("st.redline.Collection", smalltalk);
+		loadUsing("st.redline.Symbol", smalltalk);
+		loadUsing("st.redline.Class", smalltalk);
 	}
 
 	private SmalltalkClassLoader currentClassLoader() {
