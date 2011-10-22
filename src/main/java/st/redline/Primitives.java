@@ -201,25 +201,27 @@ public class Primitives {
 	}
 
 	public static ProtoObject createSymbol(ProtoObject receiver, String value) throws ClassNotFoundException {
-		if (bootstrapping)
-			return newWithValue(value);
-		return newWith(receiver, "Symbol", value);
+		return createWith("Symbol", receiver, value);
 	}
 
-	public static ProtoObject createString(ProtoObject receiver, String string) throws ClassNotFoundException {
+	private static ProtoObject createWith(String classname, ProtoObject receiver, String value) throws ClassNotFoundException {
 		if (bootstrapping)
-			return newWithValue(string);
-		throw new IllegalStateException("TODO - complete");
-//		ProtoObject cls = resolveObject(receiver, "String");
-//		ProtoObject instance = cls.send(cls, null, "new");
-//		instance.javaValue(string);
-//		return instance;
+			return newWithValue(value);
+		ProtoObject cls = resolveObject(receiver, classname);
+		ProtoObject instance = send(cls, "new", null);
+		instance.javaValue(value);
+		return instance;
+	}
+
+	public static ProtoObject createString(ProtoObject receiver, String value) throws ClassNotFoundException {
+		return createWith("String", receiver, value);
 	}
 
 	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
-		System.out.println("createSubclass() " + superclass + " " + name);
+		System.out.println("createSubclass() " + superclass + " " + name + "  **  " + superclass.cls());
 		ProtoObject classClass = new ProtoObject(ProtoObject.METACLASS_INSTANCE);
-		classClass.superclass(superclass.cls());
+		classClass.superclass0(superclass.cls());
+		System.out.println("*** setting " + classClass + " superclass to " + superclass.cls());
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name(name);
 		cls.superclass(superclass);

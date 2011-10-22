@@ -22,11 +22,9 @@ public class Bootstrapper {
 	public void bootstrap() {
 		markBootstrapping(true);
 		mapPackages();
-		setupProtoObject();
 		registerRootClasses();
 		instantiateSingletons();
 		createClasses();
-		tearDownProtoObject();
 		markBootstrapping(false);
 	}
 
@@ -57,16 +55,18 @@ public class Bootstrapper {
 	}
 
 	private ProtoObject createTemporaryMetaclassInstance() {
-		ProtoObject classClass = new ProtoObject(protoObject);
+		ProtoObject classClass = new ProtoObject();
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name("Metaclass(Bootstrapped)");
-		cls.superclass(protoObject);
-		return Primitives.p70(cls, null, null, null, null, null, null, null, null);
+		return cls;
 	}
 
 	private void createClasses() {
 		SmalltalkClassLoader smalltalk = currentClassLoader();
+		setupProtoObject();
 		loadUsing("st.redline.Object", smalltalk);
+		tearDownProtoObject();
+		loadUsing("st.redline.Collection", smalltalk);
 	}
 
 	private SmalltalkClassLoader currentClassLoader() {

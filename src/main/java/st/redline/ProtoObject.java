@@ -57,13 +57,17 @@ public class ProtoObject {
 
 	protected void initializeInstanceVariables(ProtoObject cls, Map<String, ProtoObject> variables) {
 		if (cls != null) {
+			System.out.println("initializeInstanceVariables() " + cls + " " + cls.superclass());
 			if (cls.instanceVariables() != null) {
 				for (Map.Entry<String, ProtoObject> entry : cls.instanceVariables().entrySet())
 					variables.put(entry.getKey(), NIL);
 				variables(variables);
 			}
-			if (cls.superclass() != null)
+			if (cls.superclass() != null) {
+				if (cls.superclass() == cls)
+					throw new IllegalStateException("Class and superclass are same object.");
 				initializeInstanceVariables(cls.superclass(), variables);
+			}
 		}
 	}
 
@@ -177,6 +181,10 @@ public class ProtoObject {
 
 	public ProtoObject cls() {
 		return cls;
+	}
+
+	protected void superclass0(ProtoObject superclass) {
+		this.superclass = superclass;
 	}
 
 	protected ProtoObject superclass(ProtoObject superclass) {
