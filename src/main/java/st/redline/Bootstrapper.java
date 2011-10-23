@@ -2,6 +2,7 @@
 package st.redline;
 
 import st.redline.bootstrap.ClassSubclassMethod;
+import st.redline.bootstrap.InstanceVariableNamesMethod;
 
 import java.io.File;
 
@@ -19,18 +20,25 @@ public class Bootstrapper {
 		this.protoObject = protoObject;
 	}
 
-	public void bootstrap() {
+	public void bootstrap() throws ClassNotFoundException {
 		markBootstrapping(true);
 		mapPackages();
 		registerRootClasses();
 		instantiateSingletons();
 		createClasses();
 		makeClassSuperclassOfObjectsClass();
+		reclassNil();
 		markBootstrapping(false);
 	}
 
-	private void makeClassSuperclassOfObjectsClass() {
-		// TODO.JCL - 
+	private void reclassNil() throws ClassNotFoundException {
+		ProtoObject.NIL.cls(Primitives.resolveObject(protoObject, "UndefinedObject"));
+	}
+
+	private void makeClassSuperclassOfObjectsClass() throws ClassNotFoundException {
+		ProtoObject cls = Primitives.resolveObject(protoObject, "Class");
+		ProtoObject object = Primitives.resolveObject(protoObject, "Object");
+		object.cls().superclass(cls);
 	}
 
 	private void tearDownProtoObject() {
@@ -40,6 +48,7 @@ public class Bootstrapper {
 	private void setupProtoObject() {
 		protoObject.cls(protoObject);
 		protoObject.methodAtPut("<", new ClassSubclassMethod());
+		protoObject.methodAtPut("instanceVariableNames:", new InstanceVariableNamesMethod());
 	}
 
 	private void markBootstrapping(boolean bootstrapping) {
@@ -57,6 +66,7 @@ public class Bootstrapper {
 
 	private void instantiateSingletons() {
 		ProtoObject.METACLASS_INSTANCE = createTemporaryMetaclassInstance();
+		ProtoObject.NIL = createTemporaryUndefinedObjectInstance();
 	}
 
 	private ProtoObject createTemporaryMetaclassInstance() {
@@ -66,11 +76,19 @@ public class Bootstrapper {
 		return cls;
 	}
 
+	private ProtoObject createTemporaryUndefinedObjectInstance() {
+		ProtoObject classClass = new ProtoObject();
+		ProtoObject cls = new ProtoObject(classClass);
+		cls.name("UndefinedObject(Bootstrapped)");
+		return new ProtoObject(cls);
+	}
+
 	private void createClasses() {
 		SmalltalkClassLoader smalltalk = currentClassLoader();
 		setupProtoObject();
 		loadUsing("st.redline.Object", smalltalk);
 		tearDownProtoObject();
+		loadUsing("st.redline.UndefinedObject", smalltalk);
 		loadUsing("st.redline.Symbol", smalltalk);
 		loadUsing("st.redline.Class", smalltalk);
 	}

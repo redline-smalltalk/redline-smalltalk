@@ -218,10 +218,10 @@ public class Primitives {
 	}
 
 	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
-		System.out.println("createSubclass() " + superclass + " " + name + "  **  " + superclass.cls());
+//		System.out.println("createSubclass() " + superclass + " " + name + "  **  " + superclass.cls());
 		ProtoObject classClass = new ProtoObject(ProtoObject.METACLASS_INSTANCE);
 		classClass.superclass0(superclass.cls());
-		System.out.println("*** setting " + classClass + " superclass to " + superclass.cls());
+//		System.out.println("*** setting " + classClass + " superclass to " + superclass.cls());
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name(name);
 		cls.superclass(superclass);
@@ -229,7 +229,7 @@ public class Primitives {
 	}
 
 	public static ProtoObject registerAs(ProtoObject receiver, String name) {
-		System.out.println("registerAs() " + String.valueOf(name) + " " + receiver);
+//		System.out.println("registerAs() " + String.valueOf(name) + " " + receiver);
 		return receiver.registerAs(name);
 	}
 
@@ -238,12 +238,12 @@ public class Primitives {
 	}
 
 	public static ProtoObject resolveObject(ProtoObject receiver, String className) throws ClassNotFoundException {
-		System.out.println("resolveObject() " + receiver + " " + className);
+//		System.out.println("resolveObject() " + receiver + " " + className);
 		return receiver.resolveObject(className);
 	}
 
 	public static void packageAtPut(ProtoObject receiver, String name, String javaPackageName) {
-		System.out.println("packageAtPut() " + receiver + " " + name + " " + javaPackageName);
+//		System.out.println("packageAtPut() " + receiver + " " + name + " " + javaPackageName);
 		receiver.packageAtPut(name, javaPackageName);
 	}
 
@@ -314,7 +314,7 @@ public class Primitives {
 
 	public static void compileMethod(ProtoObject receiver, String fullMethodName, String methodName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
 		// TODO.JCL clean this up.
-		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
+//		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
 		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
 		if (methodToBeCompiled == null)
 			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
@@ -353,7 +353,7 @@ public class Primitives {
 	}
 
 	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
-		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
+//		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
 		ProtoObject value;
 		if ((value = receiver.variableAt(name)) != null)
 			return value;
@@ -396,7 +396,7 @@ public class Primitives {
 	}
 
 	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
-		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+//		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, receiver.cls(), arg1);

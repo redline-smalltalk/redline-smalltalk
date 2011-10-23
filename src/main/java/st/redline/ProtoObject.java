@@ -57,7 +57,7 @@ public class ProtoObject {
 
 	protected void initializeInstanceVariables(ProtoObject cls, Map<String, ProtoObject> variables) {
 		if (cls != null) {
-			System.out.println("initializeInstanceVariables() " + cls + " " + cls.superclass());
+//			System.out.println("initializeInstanceVariables() " + cls + " " + cls.superclass());
 			if (cls.instanceVariables() != null) {
 				for (Map.Entry<String, ProtoObject> entry : cls.instanceVariables().entrySet())
 					variables.put(entry.getKey(), NIL);
@@ -71,7 +71,7 @@ public class ProtoObject {
 		}
 	}
 
-	public void bootstrap() {
+	public void bootstrap() throws ClassNotFoundException {
 		new Bootstrapper(this).bootstrap();
 	}
 
@@ -85,7 +85,7 @@ public class ProtoObject {
 	}
 
 	protected ProtoObject resolveObject(String name) throws ClassNotFoundException {
-		System.out.println("resolveObject() " + name);
+//		System.out.println("resolveObject() " + name);
 		ProtoObject object = resolveObject0(name);
 		if (object != null)
 			return object;
@@ -115,6 +115,7 @@ public class ProtoObject {
 	}
 
 	protected ProtoObject loadObject(String name) {
+//		System.out.println("loadObject() " + name);
 		try {
 			return (ProtoObject) Class.forName(name, true, classLoader()).newInstance();
 		} catch (Exception e) {

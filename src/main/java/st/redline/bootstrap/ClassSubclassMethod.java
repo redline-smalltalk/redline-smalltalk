@@ -8,7 +8,7 @@ import st.redline.ProtoObject;
 public class ClassSubclassMethod extends ProtoMethod {
 
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
-		System.out.println("ClassSubclassMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
+//		System.out.println("ClassSubclassMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
 		String name = fullyQualifiedClassName(String.valueOf(argument.javaValue()));
 		ProtoObject subclass = Primitives.createSubclass(receiver, name);
 		Primitives.registerAs(subclass, name);

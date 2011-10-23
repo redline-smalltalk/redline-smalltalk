@@ -22,12 +22,12 @@ public class Stic {
 		return new CommandLine(args);
 	}
 
-	public Stic(CommandLine commandLine) {
+	public Stic(CommandLine commandLine) throws ClassNotFoundException {
 		initializeClassLoader(commandLine);
 		bootstrap();
 	}
 
-	private void bootstrap() {
+	private void bootstrap() throws ClassNotFoundException {
 		classLoader().bootstrap();
 	}
 
