@@ -7,7 +7,7 @@ import st.redline.ProtoObject;
 public class CategoryMethod extends ProtoMethod {
 	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
 //		System.out.println("CategoryMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
-		receiver.category(String.valueOf(argument.javaValue()));
+//		receiver.category(String.valueOf(argument.javaValue()));
 		return receiver;
 	}
 }

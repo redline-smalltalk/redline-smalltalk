@@ -6,6 +6,7 @@ import org.mortbay.jetty.Request;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.handler.AbstractHandler;
 import st.redline.CommandLine;
+import st.redline.Primitives;
 import st.redline.ProtoObject;
 import st.redline.Stic;
 
@@ -44,17 +45,17 @@ public class Run {
 		stic = new Stic(commandLine);
 		httpServletRequest = stic.invoke("st.redline.stout.HttpServletRequest");
 		httpServletResponse = stic.invoke("st.redline.stout.HttpServletResponse");
-		requestSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Request");
-		forwardSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Forward");
-		includeSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Include");
-		errorSymbol = ProtoObject.primitiveSymbol(httpServletRequest, "Error");
-		httpVerbMap.put("GET", ProtoObject.primitiveSymbol(httpServletRequest, "GET"));
-		httpVerbMap.put("PUT", ProtoObject.primitiveSymbol(httpServletRequest, "PUT"));
-		httpVerbMap.put("POST", ProtoObject.primitiveSymbol(httpServletRequest, "POST"));
-		httpVerbMap.put("OPTIONS", ProtoObject.primitiveSymbol(httpServletRequest, "OPTIONS"));
-		httpVerbMap.put("DELETE", ProtoObject.primitiveSymbol(httpServletRequest, "DELETE"));
-		httpVerbMap.put("TRACE", ProtoObject.primitiveSymbol(httpServletRequest, "TRACE"));
-		httpVerbMap.put("HEAD", ProtoObject.primitiveSymbol(httpServletRequest, "HEAD"));
+		requestSymbol = Primitives.createSymbol(httpServletRequest, "Request");
+		forwardSymbol = Primitives.createSymbol(httpServletRequest, "Forward");
+		includeSymbol = Primitives.createSymbol(httpServletRequest, "Include");
+		errorSymbol = Primitives.createSymbol(httpServletRequest, "Error");
+		httpVerbMap.put("GET", Primitives.createSymbol(httpServletRequest, "GET"));
+		httpVerbMap.put("PUT", Primitives.createSymbol(httpServletRequest, "PUT"));
+		httpVerbMap.put("POST", Primitives.createSymbol(httpServletRequest, "POST"));
+		httpVerbMap.put("OPTIONS", Primitives.createSymbol(httpServletRequest, "OPTIONS"));
+		httpVerbMap.put("DELETE", Primitives.createSymbol(httpServletRequest, "DELETE"));
+		httpVerbMap.put("TRACE", Primitives.createSymbol(httpServletRequest, "TRACE"));
+		httpVerbMap.put("HEAD", Primitives.createSymbol(httpServletRequest, "HEAD"));
 	}
 
 	private static void startServer(CommandLine commandLine) throws Exception {
@@ -65,7 +66,7 @@ public class Run {
 	}
 
 	private static ProtoObject object(CommandLine commandLine) throws Exception {
-		return ProtoObject.primitiveSend(stic.invoke((String) commandLine.arguments().get(0)), "new", null);
+		return null; // Primitives.send(stic.invoke((String) commandLine.arguments().get(0)), "new", null);
 	}
 
 	private static Handler initialHandler(final CommandLine commandLine) throws Exception {
@@ -88,14 +89,14 @@ public class Run {
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
 				throws IOException, ServletException {
-				ProtoObject.primitiveSend(receiver,
-						method(request.getMethod()),
-						string(target),
-						request(request),
-						response(response),
-						dispatch(dispatch),
-						"handle:on:with:and:and:",
-						null);
+//				Primitives.send(receiver,
+//						method(request.getMethod()),
+//						string(target),
+//						request(request),
+//						response(response),
+//						dispatch(dispatch),
+//						"handle:on:with:and:and:",
+//						null);
 			}
 
 			private ProtoObject dispatch(int dispatch) {
@@ -113,20 +114,20 @@ public class Run {
 				}
 			}
 
-			private ProtoObject request(HttpServletRequest request) {
-				return ProtoObject.primitiveNewWith(httpServletRequest, request);
+			private ProtoObject request(HttpServletRequest request) throws ClassNotFoundException {
+				return Primitives.newWith(httpServletRequest, request);
 			}
 
-			private ProtoObject response(HttpServletResponse response) {
-				return ProtoObject.primitiveNewWith(httpServletResponse, response);
+			private ProtoObject response(HttpServletResponse response) throws ClassNotFoundException {
+				return Primitives.newWith(httpServletResponse, response);
 			}
 
 			private ProtoObject method(String value) {
 				return httpVerbMap.get(value);
 			}
 
-			private ProtoObject string(String value) {
-				return ProtoObject.primitiveString(receiver, value);
+			private ProtoObject string(String value) throws ClassNotFoundException {
+				return Primitives.createString(receiver, value);
 			}
 		};
 	}

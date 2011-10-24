@@ -1,10 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.bootstrap;
 
-import st.redline.ProtoMethod;
-import st.redline.ProtoObject;
-import st.redline.SmalltalkClassLoader;
-import st.redline.SourceFile;
+import st.redline.*;
 
 import java.io.File;
 import java.util.List;
@@ -19,7 +16,7 @@ public class ImportMethod extends ProtoMethod {
 	}
 
 	private void addAssociationBetweenObjectAndPackage(ProtoObject receiver, String className, String packageName) {
-		ProtoObject.primitivePackageAtPut(receiver, className, makeFullyQualifiedPath(packageName, className));
+		Primitives.packageAtPut(receiver, className, makeFullyQualifiedPath(packageName, className));
 	}
 
 	public static String makeFullyQualifiedPath(String packageName, String className) {

@@ -22,12 +22,12 @@ public class Stic {
 		return new CommandLine(args);
 	}
 
-	public Stic(CommandLine commandLine) {
+	public Stic(CommandLine commandLine) throws ClassNotFoundException {
 		initializeClassLoader(commandLine);
 		bootstrap();
 	}
 
-	private void bootstrap() {
+	private void bootstrap() throws ClassNotFoundException {
 		classLoader().bootstrap();
 	}
 
@@ -44,13 +44,11 @@ public class Stic {
 	}
 
 	public ProtoObject invoke(String className) throws Exception {
-		ProtoObject root = protoObjectInstance();
-		root.name("<root>");
-		return createClassInstance(root, className);
+		return createClassInstance(protoObjectInstance(), className);
 	}
 
 	private ProtoObject createClassInstance(ProtoObject root, String className) throws Exception {
-		return ProtoObject.primitiveResolveObject(root, className);
+		return ProtoObject.resolveObject(root, className);
 	}
 
 	private ProtoObject protoObjectInstance() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
