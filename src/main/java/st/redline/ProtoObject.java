@@ -190,9 +190,16 @@ public class ProtoObject {
 
 	protected ProtoObject superclass(ProtoObject superclass) {
 		this.superclass = superclass;
+		copySuperclassClassInstanceVariabes();
 		if (cls != null && superclass != null)
-			cls.superclass = superclass.cls();
+			cls.superclass(superclass.cls());
 		return this;
+	}
+
+	private void copySuperclassClassInstanceVariabes() {
+		if (superclass != null && superclass.cls() != null && superclass.cls().variables() != null)
+			for (Map.Entry<String, ProtoObject> entry : superclass.cls().variables().entrySet())
+				Primitives.addClassInstanceVariable(this, entry.getKey(), false);
 	}
 
 	protected ProtoObject superclass() {

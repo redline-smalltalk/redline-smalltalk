@@ -295,14 +295,17 @@ public class Primitives {
 			receiver.cls().variables(ProtoObject.variablesMapInstance());
 		for (String variable : inputVariables.split(" "))
 			addClassInstanceVariable(receiver, variable, true);
-		if (receiver.cls().superclass() != null)
-			for (Map.Entry<String, ProtoObject> entry : receiver.cls().superclass().variables().entrySet())
-				addClassInstanceVariable(receiver, entry.getKey(), false);
+// this should be done when we set superclass()
+//		if (receiver.cls().superclass() != null)
+//			for (Map.Entry<String, ProtoObject> entry : receiver.cls().superclass().variables().entrySet())
+//				addClassInstanceVariable(receiver, entry.getKey(), false);
 	}
 
-	private static void addClassInstanceVariable(ProtoObject receiver, String variable, boolean noDuplicates) {
+	public static void addClassInstanceVariable(ProtoObject receiver, String variable, boolean noDuplicates) {
 		if (noDuplicates && receiver.cls().hasVariableNamed(variable))
 			throw new IllegalStateException("Class instance variable '" + variable + "' already defined.");
+		if (receiver.cls().variables() == null)
+			receiver.cls().variables(ProtoObject.variablesMapInstance());
 		receiver.cls().variables().put(variable, ProtoObject.NIL);
 	}
 
