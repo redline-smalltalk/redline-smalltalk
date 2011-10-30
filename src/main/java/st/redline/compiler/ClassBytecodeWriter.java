@@ -22,7 +22,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SEND = "send";
 	private static final String SUPER_SEND = "superSend";
 	private static final String CONSTRUCT = "construct";
-	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
+	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_SYMBOL = "createSymbol";
 	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_INTEGER = "createInteger";
@@ -122,6 +122,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitLdcInsn(className);
 		mv.visitLdcInsn(makeFullQualifiedPackageName());
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "packageAtPut", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;)V");
+		mv.visitInsn(ACONST_NULL);
 		mv.visitInsn(ACONST_NULL);
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT, CONSTRUCT_SIGNATURE);
 		mv.visitInsn(POP);
