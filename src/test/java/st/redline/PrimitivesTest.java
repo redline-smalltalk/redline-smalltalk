@@ -298,9 +298,9 @@ public class PrimitivesTest {
 		ProtoObject cls = Primitives.p70(classClass, null, null, null, null, null, null, null, null);
 		assertNotNull(superclass);
 		assertNotNull(cls);
+		Primitives.addClassInstanceVariables(superclass, "instvar1 instvar2");
 		cls.superclass(superclass);
 		classClass.superclass(superClassClass);
-		Primitives.addClassInstanceVariables(superclass, "instvar1 instvar2");
 		Primitives.addClassInstanceVariables(cls, "instvar3");
 		assertEquals(3, cls.cls().variables().entrySet().size());
 		for (Map.Entry<String, ProtoObject> entry : cls.cls().variables().entrySet())

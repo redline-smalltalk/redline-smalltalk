@@ -65,21 +65,37 @@ public class Bootstrapper {
 	}
 
 	private void instantiateSingletons() {
-		ProtoObject.METACLASS_INSTANCE = createTemporaryMetaclassInstance();
-		ProtoObject.NIL = createTemporaryUndefinedObjectInstance();
+		ProtoObject.METACLASS_INSTANCE = createMetaclassInstance();
+		ProtoObject.NIL = createUndefinedObjectInstance();
+		ProtoObject.TRUE = createTrueInstance();
+		ProtoObject.FALSE = createFalseInstance();
 	}
 
-	private ProtoObject createTemporaryMetaclassInstance() {
+	private ProtoObject createMetaclassInstance() {
 		ProtoObject classClass = new ProtoObject();
 		ProtoObject cls = new ProtoObject(classClass);
-		cls.name("Metaclass(Bootstrapped)");
+		cls.name("Metaclass");
 		return cls;
 	}
 
-	private ProtoObject createTemporaryUndefinedObjectInstance() {
+	private ProtoObject createUndefinedObjectInstance() {
 		ProtoObject classClass = new ProtoObject();
 		ProtoObject cls = new ProtoObject(classClass);
-		cls.name("UndefinedObject(Bootstrapped)");
+		cls.name("UndefinedObject");
+		return new ProtoObject(cls);
+	}
+
+	private ProtoObject createTrueInstance() {
+		ProtoObject classClass = new ProtoObject();
+		ProtoObject cls = new ProtoObject(classClass);
+		cls.name("True");
+		return new ProtoObject(cls);
+	}
+
+	private ProtoObject createFalseInstance() {
+		ProtoObject classClass = new ProtoObject();
+		ProtoObject cls = new ProtoObject(classClass);
+		cls.name("False");
 		return new ProtoObject(cls);
 	}
 
@@ -91,6 +107,8 @@ public class Bootstrapper {
 		loadUsing("st.redline.UndefinedObject", smalltalk);
 		loadUsing("st.redline.Symbol", smalltalk);
 		loadUsing("st.redline.Class", smalltalk);
+		loadUsing("st.redline.True", smalltalk);
+		loadUsing("st.redline.False", smalltalk);
 	}
 
 	private SmalltalkClassLoader currentClassLoader() {
