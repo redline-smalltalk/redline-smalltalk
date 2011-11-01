@@ -3,9 +3,10 @@ package st.redline.bootstrap;
 
 import st.redline.ProtoMethod;
 import st.redline.ProtoObject;
+import st.redline.ThisContext;
 
 public class CategoryMethod extends ProtoMethod {
-	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
+	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject argument) {
 //		System.out.println("CategoryMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
 //		receiver.category(String.valueOf(argument.javaValue()));
 		return receiver;

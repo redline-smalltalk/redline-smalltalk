@@ -14,167 +14,167 @@ public class Primitives {
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 
-	public static ProtoObject p1(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p1(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).add((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject p2(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p2(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).subtract((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject p3(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p3(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) < 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p4(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p4(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) > 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p5(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p5(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue());
 		if (result <= 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p6(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p6(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue());
 		if (result >= 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p7(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p7(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) == 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p8(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p8(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) != 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p9(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p9(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).multiply((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject p10(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p10(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).divide((BigDecimal) arg1.javaValue()));
 	}
 
 
-	public static ProtoObject p21(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p21(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).add((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject p22(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p22(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).subtract((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject p23(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p23(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) < 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p24(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p24(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) > 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p25(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p25(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue());
 		if (result <= 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p26(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p26(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue());
 		if (result >= 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p27(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p27(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) == 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p28(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p28(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) != 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p29(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p29(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).multiply((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject p30(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p30(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).divide((BigDecimal) arg1.javaValue()));
 	}
 
-	public static ProtoObject p60(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p60(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// does this primitive make sense for Redline?
 		return ProtoObject.NIL;
 	}
 
-	public static ProtoObject p61(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p61(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// does this primitive make sense for Redline?
 		return receiver;
 	}
 
-	public static ProtoObject p62(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p62(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// does this primitive make sense for Redline?
 		return ProtoObject.NIL;
 	}
 
-	public static ProtoObject p68(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p68(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// does this primitive make sense for Redline?
 		return ProtoObject.NIL;
 	}
 
-	public static ProtoObject p69(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p69(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// does this primitive make sense for Redline?
 		return receiver;
 	}
 
-	public static ProtoObject p70(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p70(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// create a new instance of the receiver (a class).
 		return new ProtoObject(receiver);
 	}
 
-	public static ProtoObject p71(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p71(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// create a new instance of the receiver (a class) with the number of indexable fields specified by the size argument.
 		// does this primitive make sense for Redline?
-		return p70(receiver, clsMethodFoundIn, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		return p70(receiver, thisContext, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 	}
 
-	public static ProtoObject p73(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p73(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// does this primitive make sense for Redline?
 		return ProtoObject.NIL;
 	}
 
-	public static ProtoObject p74(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p74(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// does this primitive make sense for Redline?
 		return receiver;
 	}
 
-	public static ProtoObject p110(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p110(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// ==
 		return receiver == arg1 ? ProtoObject.TRUE : ProtoObject.FALSE;
 	}
 
-	public static ProtoObject p111(ProtoObject receiver, ProtoObject clsMethodFoundIn, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+	public static ProtoObject p111(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// Object >> class
 		return receiver.cls();
 	}
@@ -295,10 +295,6 @@ public class Primitives {
 			receiver.cls().variables(ProtoObject.variablesMapInstance());
 		for (String variable : inputVariables.split(" "))
 			addClassInstanceVariable(receiver, variable, true);
-// this should be done when we set superclass()
-//		if (receiver.cls().superclass() != null)
-//			for (Map.Entry<String, ProtoObject> entry : receiver.cls().superclass().variables().entrySet())
-//				addClassInstanceVariable(receiver, entry.getKey(), false);
 	}
 
 	public static void addClassInstanceVariable(ProtoObject receiver, String variable, boolean noDuplicates) {
@@ -383,189 +379,189 @@ public class Primitives {
 		return method;
 	}
 
-	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector, ProtoObject[] arguments) {
+	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector, ThisContext thisContext, ProtoObject[] arguments) {
 		throw RedlineException.withMessage("TODO -  need to implement send of doesNotUnderstand - '" + selector + "' " + receiver);
 	}
 
-	public static ProtoObject send(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject send(ProtoObject receiver, String selector, ThisContext thisContext) {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, receiver.cls());
+			return method.applyTo(receiver, new ThisContext(receiver.cls()));
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0]);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]));
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{});
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, String selector, ThisContext thisContext) {
 //		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, receiver.cls(), arg1);
+			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1});
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, String selector, ThisContext thisContext) {
 //		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, receiver.cls(), arg1, arg2);
+			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2});
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, String selector, ThisContext thisContext) {
 //		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3);
+			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3});
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, String selector, ThisContext thisContext) {
 //		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4);
+			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3, arg4);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4});
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ThisContext thisContext) {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5);
+			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3, arg4, arg5);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ThisContext thisContext) {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6);
+			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3, arg4, arg5, arg6);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5, arg6);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
 	}
 
-	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ThisContext thisContext) {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
 	}
 
-	public static ProtoObject superSend(ProtoObject receiver, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject superSend(ProtoObject receiver, String selector, ThisContext thisContext) {
 //		System.out.println("superSend " + receiver + " " + selector + " " + classMethodWasFoundIn);
-		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn.superclass());
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()));
 		ProtoObject[] methodForResult = {null};
-		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0]);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]));
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{});
 	}
 
-	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, String selector, ProtoObject classMethodWasFoundIn) {
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, String selector, ThisContext thisContext) {
 //		System.out.println("superSend " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
-		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1);
 		ProtoObject[] methodForResult = {null};
-		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1});
 	}
 
-	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, String selector, ProtoObject classMethodWasFoundIn) {
-		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, String selector, ThisContext thisContext) {
+		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2);
 		ProtoObject[] methodForResult = {null};
-		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2});
 	}
 
-	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, String selector, ProtoObject classMethodWasFoundIn) {
-		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, String selector, ThisContext thisContext) {
+		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3);
 		ProtoObject[] methodForResult = {null};
-		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3});
 	}
 
-	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, String selector, ProtoObject classMethodWasFoundIn) {
-		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, String selector, ThisContext thisContext) {
+		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3, arg4);
 		ProtoObject[] methodForResult = {null};
-		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4});
 	}
 
-	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ProtoObject classMethodWasFoundIn) {
-		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ThisContext thisContext) {
+		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3, arg4, arg5);
 		ProtoObject[] methodForResult = {null};
-		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
 	}
 
-	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ProtoObject classMethodWasFoundIn) {
-		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ThisContext thisContext) {
+		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5, arg6);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3, arg4, arg5, arg6);
 		ProtoObject[] methodForResult = {null};
-		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5, arg6);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
 	}
 
-	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ProtoObject classMethodWasFoundIn) {
-		ProtoMethod method = classMethodWasFoundIn.superclass().methodAt(selector);
+	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ThisContext thisContext) {
+		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, classMethodWasFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		ProtoObject[] methodForResult = {null};
-		method = methodFor(classMethodWasFoundIn.superclass().superclass(), selector, methodForResult);
+		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-		return sendDoesNotUnderstand(receiver, selector, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
+			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
 	}
 }

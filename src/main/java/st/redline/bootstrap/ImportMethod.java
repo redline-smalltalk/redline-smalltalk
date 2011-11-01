@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ImportMethod extends ProtoMethod {
 
-	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
+	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject argument) {
 		SmalltalkClassLoader smalltalkClassLoader = smalltalkClassLoader();
 		for (SourceFile sourceFile : findSources(smalltalkClassLoader, argument.javaValue()))
 			addAssociationBetweenObjectAndPackage(receiver, sourceFile.shortName(), sourceFile.packageName());

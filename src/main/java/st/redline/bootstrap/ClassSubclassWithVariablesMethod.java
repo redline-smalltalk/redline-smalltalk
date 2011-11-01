@@ -4,10 +4,11 @@ package st.redline.bootstrap;
 import st.redline.Primitives;
 import st.redline.ProtoMethod;
 import st.redline.ProtoObject;
+import st.redline.ThisContext;
 
 public class ClassSubclassWithVariablesMethod extends ProtoMethod {
 
-	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject className, ProtoObject instVars, ProtoObject classVars, ProtoObject classInstVars, ProtoObject poolDicts, ProtoObject category) {
+	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject className, ProtoObject instVars, ProtoObject classVars, ProtoObject classInstVars, ProtoObject poolDicts, ProtoObject category) {
 //		System.out.println("ClassSubclassMethod() " + receiver + " " + String.valueOf(className.javaValue()) + " Inst: " + String.valueOf(instVars.javaValue()) + " " + String.valueOf(classVars.javaValue()) + " clsInstVars: " + String.valueOf(classInstVars.javaValue()));
 		String name = fullyQualifiedClassName(String.valueOf(className.javaValue()));
 		ProtoObject subclass = Primitives.createSubclass(receiver, name);
