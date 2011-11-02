@@ -392,7 +392,7 @@ numberConstant returns [NumberConstant n]
 	:	DIGITS {$n = new NumberConstant($DIGITS.text, $DIGITS.line);}
 	;
 
-DIGITS: ('0'..'9')+;
+DIGITS: ('+'|'-') ? ('0'..'9')+;
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
 STRING_LITERAL: '\'' .* '\'';
