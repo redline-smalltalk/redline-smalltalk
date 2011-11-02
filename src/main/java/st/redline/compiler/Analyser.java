@@ -2,7 +2,9 @@
 package st.redline.compiler;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import st.redline.Primitives;
 import st.redline.ProtoObject;
@@ -19,6 +21,7 @@ public class Analyser implements NodeVisitor {
 	private AbstractMethod currentMethod;
 	protected int countOfArguments;
 	protected boolean isClassMethod = false;
+	private Map<String, Temporary> temporariesRegistry;
 
 	public Analyser(String className, String packageName) {
 		this(className, packageName, 0, false);
@@ -61,17 +64,24 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Temporaries temporaries) {
+		temporariesRegistry = new HashMap<String, Temporary>();
+		classBytecodeWriter.callPrimitiveInitializeTemporaries(temporaries.line(), temporaries.size());
 	}
 
 	public void visitEnd(Temporaries temporaries) {
 	}
 
 	public void visit(Temporary temporary, int index, String value, int line) {
+		temporariesRegistry.put(value, temporary);
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
 		if (isTemporary(value)) {
-			throw new IllegalStateException("TODO - handle temporary variable.");
+			Temporary temporary = temporariesRegistry.get(value);
+			if (variableName.isOnLoadSideOfExpression())
+				classBytecodeWriter.callPrimitiveTemporaryAt(value, line, temporary.index);
+			else
+				classBytecodeWriter.callPrimitiveTemporaryPutAt(value, line, temporary.index);
 		} else {
 			if (variableName.isOnLoadSideOfExpression()) {
 				if (isMethodArgument(value)) {
@@ -98,7 +108,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	private boolean isTemporary(String name) {
-		return false;
+		return temporariesRegistry != null && temporariesRegistry.containsKey(name);
 	}
 
 	public void visit(Statements statements) {
@@ -174,7 +184,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(AssignmentExpression assignmentExpression) {
-		// System.out.println("TODO AssignmentExpression() " + assignmentExpression);
+//		System.out.println("TODO AssignmentExpression() " + assignmentExpression);
 	}
 
 	public void visit(SimpleExpression simpleExpression) {

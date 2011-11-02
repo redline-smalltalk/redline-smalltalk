@@ -355,6 +355,18 @@ public class Primitives {
 			stack.pop();
 	}
 
+	public static void temporariesInit(ThisContext thisContext, int size) {
+		thisContext.temporariesInit(size);
+	}
+
+	public static ProtoObject temporaryAt(ThisContext thisContext, int index) {
+		return thisContext.temporaryAt(index);
+	}
+
+	public static void temporaryPutAt(ProtoObject value, ThisContext thisContext, int index) {
+		thisContext.temporaryAtPut(index, value);
+	}
+
 	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
 //		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
 		ProtoObject value;

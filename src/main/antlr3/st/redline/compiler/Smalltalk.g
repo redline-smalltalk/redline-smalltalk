@@ -38,7 +38,7 @@ primitive returns [Primitive n]
 
 temporaries	 returns [Temporaries n]
 	:	{$n = new Temporaries();}
-		'|' ( variableName {$n.add(new Temporary($variableName.n));} )* '|'
+		l = '|' {$n.line($l.line);} ( variableName {$n.add(new Temporary($variableName.n));} )* '|'
 	;
 
 statements returns [Statements n]
