@@ -228,6 +228,10 @@ public class Primitives {
 		return cls;
 	}
 
+    public static ProtoObject createCharacter(ProtoObject receiver, String value) throws ClassNotFoundException {
+        return createWith("Character", receiver, value);
+    }
+
 	public static ProtoObject registerAs(ProtoObject receiver, String name) {
 //		System.out.println("registerAs() " + String.valueOf(name) + " " + receiver);
 		return receiver.registerAs(name);
