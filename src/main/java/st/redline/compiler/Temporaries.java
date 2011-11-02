@@ -7,6 +7,7 @@ import java.util.List;
 public class Temporaries implements VisitableNode {
 
 	private final List<Temporary> temporaries;
+	private int offset = 0;
 
 	public Temporaries() {
 		temporaries = new ArrayList<Temporary>();
@@ -17,12 +18,8 @@ public class Temporaries implements VisitableNode {
 	}
 
 	public void add(Temporary temporary) {
+		temporary.index(offset++);
 		temporaries.add(temporary);
-	}
-
-	public void indexFrom(int offset) {
-		for (Temporary temporary : temporaries)
-			temporary.index(offset++);
 	}
 
 	public void accept(NodeVisitor visitor) {

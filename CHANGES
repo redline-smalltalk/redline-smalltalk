@@ -4,12 +4,12 @@ Added a 'context' parameter to each method call to contain the call context item
 found in, temporary variables and other items.
 Passing a 'context' to Eigenclass applyTo method; used for scripts that have temporaries.
 
-
 Modified grammar to support negative and positive numeric constants.
-
 Started implementing the Character class.
-
 Implemented createCharacter in Primitives.
+
+Started temporaries support.
+
 
 31/10/2011 Changes
 

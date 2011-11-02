@@ -12,4 +12,13 @@ public class ThisContext {
 	public ThisContext() {
 		this(null);
 	}
+
+	public ProtoObject temporaryAt(int index) {
+		System.out.println("ThisContext.temporaryAt() " + index);
+		return null;
+	}
+
+	public void temporaryAtPut(int index, ProtoObject value) {
+		System.out.println("ThisContext.temporaryAtPut() " + index + " " + value);
+	}
 }
