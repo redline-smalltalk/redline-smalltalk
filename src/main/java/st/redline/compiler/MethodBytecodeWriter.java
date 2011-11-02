@@ -5,14 +5,14 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 
 	private static final String SUPERCLASS = "st/redline/ProtoMethod";
 	private static final String[] APPLY_TO_SIGNATURES = {
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ThisContext;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ThisContext;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ThisContext;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ThisContext;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ThisContext;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ThisContext;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
+		"(Lst/redline/ProtoObject;Lst/redline/ThisContext;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;",
 	};
 
 	private int countOfArguments;
@@ -45,7 +45,7 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 //		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
 //		mv.visitVarInsn(ALOAD, 1);
 //		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
-//		mv.visitLdcInsn(" ");
+//		mv.visitLdcInsn(" context ");
 //		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
 //		mv.visitVarInsn(ALOAD, 2);
 //		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/Object;)Ljava/lang/StringBuilder;");
@@ -68,7 +68,7 @@ public class MethodBytecodeWriter extends ClassBytecodeWriter {
 			throw new IllegalStateException("Can't handle " + methodArgumentCount + " arguments to primitive.");
 		visitLine(line);
 		mv.visitVarInsn(ALOAD, 1);  // receiver.
-		mv.visitVarInsn(ALOAD, 2);  // class method was found in.
+		mv.visitVarInsn(ALOAD, 2);  // context
 		pushMethodArguments(methodArgumentCount);
 		pushNulls(methodArgumentCount + 2);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "p" + primitive, APPLY_TO_SIGNATURES[APPLY_TO_SIGNATURES.length - 1]);

@@ -9,7 +9,7 @@ public class BinarySelectorMessagePattern implements MessagePattern {
 	public BinarySelectorMessagePattern(BinarySelector binarySelector, VariableName variableName) {
 		this.binarySelector = binarySelector;
 		this.variableName = variableName;
-		variableName.index(1);
+		variableName.index(0);
 	}
 
 	public int line() {

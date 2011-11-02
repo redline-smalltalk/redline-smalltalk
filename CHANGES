@@ -1,3 +1,17 @@
+02/11/2011 Changes
+
+Added a 'context' parameter to each method call to contain the call context items, like class method 
+found in, temporary variables and other items.
+
+31/10/2011 Changes
+
+There have been various changes between 28/09/2011 and now, however we have have neglected to update
+the changes file. Oops.
+
+Removing extra parameter to Eigenclass applyTo method.
+Changing classMesthodWasFoundIn parameter to thisContext array.
+
+
 28/09/2011 Changes
 
 Adding more support for initializing Class variables.

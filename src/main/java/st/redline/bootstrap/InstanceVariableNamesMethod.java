@@ -3,9 +3,10 @@ package st.redline.bootstrap;
 
 import st.redline.ProtoMethod;
 import st.redline.ProtoObject;
+import st.redline.ThisContext;
 
 public class InstanceVariableNamesMethod extends ProtoMethod {
-	public ProtoObject applyTo(ProtoObject receiver, ProtoObject classMethodWasFoundIn, ProtoObject argument) {
+	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject argument) {
 //		System.out.println("*** InstanceVariableNamesMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
 		addVariableNames(receiver, String.valueOf(argument.javaValue()));
 		return receiver;

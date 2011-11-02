@@ -32,7 +32,7 @@ public class MethodAnalyser extends Analyser {
 
 	protected void loadMethodArgument(String value) {
 		VariableName variableName = argumentRegistry.get(value);
-		classBytecodeWriter.stackPushLocal(variableName.index + 2);  // 0 = method, 1 = receiver, 2 = class method found in, then local fields.
+		classBytecodeWriter.stackPushLocal(variableName.index + 3);  // 0 = method, 1 = receiver, 2 = this context,, then local fields.
 	}
 
 	public void visit(InstanceMethod instanceMethod) {
