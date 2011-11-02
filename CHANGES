@@ -2,6 +2,8 @@
 
 Added a 'context' parameter to each method call to contain the call context items, like class method 
 found in, temporary variables and other items.
+Passing a 'context' to Eigenclass applyTo method; used for scripts that have temporaries.
+
 
 31/10/2011 Changes
 

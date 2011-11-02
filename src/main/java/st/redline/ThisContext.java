@@ -2,8 +2,14 @@
 package st.redline;
 
 public class ThisContext {
+
 	public ProtoObject classMethodFoundIn;
+
 	public ThisContext(ProtoObject classMethodFoundIn) {
 		this.classMethodFoundIn = classMethodFoundIn;
+	}
+
+	public ThisContext() {
+		this(null);
 	}
 }
