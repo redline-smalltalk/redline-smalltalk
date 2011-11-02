@@ -7,6 +7,7 @@ import java.util.List;
 public class Temporaries implements VisitableNode {
 
 	private final List<Temporary> temporaries;
+	private int line = 0;
 	private int offset = 0;
 
 	public Temporaries() {
@@ -15,6 +16,14 @@ public class Temporaries implements VisitableNode {
 
 	public boolean isEmpty() {
 		return temporaries.isEmpty();
+	}
+
+	public void line(int line) {
+		this.line = line;
+	}
+
+	public int line() {
+		return line;
 	}
 
 	public void add(Temporary temporary) {

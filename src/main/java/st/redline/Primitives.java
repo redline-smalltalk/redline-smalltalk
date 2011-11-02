@@ -355,13 +355,15 @@ public class Primitives {
 			stack.pop();
 	}
 
+	public static void temporariesInit(ThisContext thisContext, int size) {
+		thisContext.temporariesInit(size);
+	}
+
 	public static ProtoObject temporaryAt(ThisContext thisContext, int index) {
-		System.out.println("temporaryAt() " + index);
 		return thisContext.temporaryAt(index);
 	}
 
 	public static void temporaryPutAt(ProtoObject value, ThisContext thisContext, int index) {
-		System.out.println("temporaryPutAt() " + value + " " + index);
 		thisContext.temporaryAtPut(index, value);
 	}
 

@@ -5,6 +5,8 @@ public class ThisContext {
 
 	public ProtoObject classMethodFoundIn;
 
+	private ProtoObject[] temporaries;
+
 	public ThisContext(ProtoObject classMethodFoundIn) {
 		this.classMethodFoundIn = classMethodFoundIn;
 	}
@@ -14,11 +16,14 @@ public class ThisContext {
 	}
 
 	public ProtoObject temporaryAt(int index) {
-		System.out.println("ThisContext.temporaryAt() " + index);
-		return null;
+		return temporaries[index];
 	}
 
 	public void temporaryAtPut(int index, ProtoObject value) {
-		System.out.println("ThisContext.temporaryAtPut() " + index + " " + value);
+		temporaries[index] = value;
+	}
+
+	public void temporariesInit(int size) {
+		temporaries = new ProtoObject[size];
 	}
 }

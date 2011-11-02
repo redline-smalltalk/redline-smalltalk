@@ -65,6 +65,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Temporaries temporaries) {
 		temporariesRegistry = new HashMap<String, Temporary>();
+		classBytecodeWriter.callPrimitiveInitializeTemporaries(temporaries.line(), temporaries.size());
 	}
 
 	public void visitEnd(Temporaries temporaries) {
@@ -77,7 +78,7 @@ public class Analyser implements NodeVisitor {
 	public void visit(VariableName variableName, String value, int line) {
 		if (isTemporary(value)) {
 			Temporary temporary = temporariesRegistry.get(value);
-			if (temporary.isOnLoadSideOfExpression())
+			if (variableName.isOnLoadSideOfExpression())
 				classBytecodeWriter.callPrimitiveTemporaryAt(value, line, temporary.index);
 			else
 				classBytecodeWriter.callPrimitiveTemporaryPutAt(value, line, temporary.index);
@@ -183,7 +184,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(AssignmentExpression assignmentExpression) {
-		System.out.println("TODO AssignmentExpression() " + assignmentExpression);
+//		System.out.println("TODO AssignmentExpression() " + assignmentExpression);
 	}
 
 	public void visit(SimpleExpression simpleExpression) {

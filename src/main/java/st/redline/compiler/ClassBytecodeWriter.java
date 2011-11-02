@@ -38,7 +38,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_TEMPORARY_AT = "temporaryAt";
 	private static final String PRIMITIVE_TEMPORARY_AT_SIGNATURE = "(Lst/redline/ThisContext;I)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_TEMPORARY_PUT_AT = "temporaryPutAt";
-	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;I)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;I)V";
+	private static final String PRIMITIVE_TEMPORARIES_INIT = "temporariesInit";
+	private static final String PRIMITIVE_TEMPORARIES_INIT_SIGNATURE = "(Lst/redline/ThisContext;I)V";
 	private static final String[] SEND_SIGNATURES = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
@@ -168,6 +170,13 @@ public class ClassBytecodeWriter implements Opcodes {
 		Label label = new Label();
 		mv.visitLabel(label);
 		mv.visitLineNumber(line, label);
+	}
+
+	public void callPrimitiveInitializeTemporaries(int line, int size) {
+		visitLine(line);
+		stackPushThisContext();
+		stackPushNumeric(size);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_TEMPORARIES_INIT, PRIMITIVE_TEMPORARIES_INIT_SIGNATURE);
 	}
 
 	public void callPrimitiveTemporaryAt(String value, int line, int index) {
