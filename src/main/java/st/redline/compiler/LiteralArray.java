@@ -11,5 +11,7 @@ public class LiteralArray extends BaseLiteral {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		array.accept(visitor);
+		visitor.visitEnd(this);
 	}
 }

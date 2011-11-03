@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import st.redline.Primitives;
 import st.redline.ProtoObject;
@@ -22,6 +23,7 @@ public class Analyser implements NodeVisitor {
 	protected int countOfArguments;
 	protected boolean isClassMethod = false;
 	private Map<String, Temporary> temporariesRegistry;
+	private Stack<Integer> arrayDepth;
 
 	public Analyser(String className, String packageName) {
 		this(className, packageName, 0, false);
@@ -189,6 +191,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(SimpleExpression simpleExpression) {
 		sendToSuper = false;
+		arrayDepth = new Stack<Integer>();
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
@@ -262,15 +265,26 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Symbol symbol, String value, int line) {
-		// System.out.println("TODO Symbol() " + value);
+		System.out.println("TODO Symbol() " + value);
 	}
 
 	public void visit(Array array) {
-		// System.out.println("TODO Array() " + array);
+		System.out.println("Array() " + array);
+		arrayDepth.push(arrayDepth.pop() + 1);
+	}
+
+	public void visitEnd(Array array) {
+		System.out.println("end Array() " + array);
+		arrayDepth.push(arrayDepth.pop() - 1);
+		if (arrayDepth.peek() == 0) {
+			System.out.println("** LAST ELEMENT OF ARRAY **");
+		}
+		if (arrayDepth.size() > 1)
+			System.out.println("** NESTED **");
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
-		// System.out.println("TODO Identifier() " + value);
+		System.out.println("TODO Identifier() " + value);
 	}
 
 	public void visit(LiteralSymbol literalSymbol, String value, int line) {
@@ -278,11 +292,17 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralArray literalArray) {
-		// System.out.println("TODO LiteralArray() " + literalArray);
+		System.out.println("LiteralArray() begin");
+		arrayDepth.push(0);
+	}
+
+	public void visitEnd(LiteralArray literalArray) {
+		System.out.println("LiteralArray() end");
+		arrayDepth.pop();
 	}
 
 	public void visit(ArrayConstantElement arrayConstantElement) {
-		// System.out.println("TODO ArrayConstantElement() " + arrayConstantElement);
+		System.out.println("TODO ArrayConstantElement() " + arrayConstantElement);
 	}
 
 	public void visit(CharacterConstant characterConstant, String value, int line) {
@@ -290,7 +310,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(StringConstant stringConstant, String value, int line) {
-		// System.out.println("TODO StringConstant() " + value);
+//		System.out.println("TODO StringConstant() " + value);
 	}
 
 	public void visit(StringChunk stringChunk, String value, int line) {
@@ -309,7 +329,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(NumberConstant numberConstant, String value, int line) {
-		// System.out.println("TODO NumberConstant() " + value);
+		System.out.println("TODO NumberConstant() " + value);
 	}
 
 	public void visit(LiteralNumber literalNumber, String value, int line) {

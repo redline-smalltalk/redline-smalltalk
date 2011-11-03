@@ -18,5 +18,8 @@ public class Array implements VisitableNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		for (VisitableNode visitableNode : visitableNodes)
+			visitableNode.accept(visitor);
+		visitor.visitEnd(this);
 	}
 }
