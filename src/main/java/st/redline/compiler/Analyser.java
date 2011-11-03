@@ -23,7 +23,7 @@ public class Analyser implements NodeVisitor {
 	protected int countOfArguments;
 	protected boolean isClassMethod = false;
 	private Map<String, Temporary> temporariesRegistry;
-	private Stack<Integer> arrayDepth;
+	private int arrayDepth;
 
 	public Analyser(String className, String packageName) {
 		this(className, packageName, 0, false);
@@ -191,7 +191,6 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(SimpleExpression simpleExpression) {
 		sendToSuper = false;
-		arrayDepth = new Stack<Integer>();
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
@@ -269,18 +268,16 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Array array) {
-		System.out.println("Array() " + array);
-		arrayDepth.push(arrayDepth.pop() + 1);
+		System.out.println("Array() begin");
+		arrayDepth++;
+		classBytecodeWriter.callPrimitiveArray(array.line());
 	}
 
 	public void visitEnd(Array array) {
-		System.out.println("end Array() " + array);
-		arrayDepth.push(arrayDepth.pop() - 1);
-		if (arrayDepth.peek() == 0) {
-			System.out.println("** LAST ELEMENT OF ARRAY **");
-		}
-		if (arrayDepth.size() > 1)
-			System.out.println("** NESTED **");
+		System.out.println("Array() end");
+		arrayDepth--;
+		if (arrayDepth != 0)
+			classBytecodeWriter.keywordSend("add:", 1, array.line(), false);
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
@@ -292,13 +289,12 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(LiteralArray literalArray) {
-		System.out.println("LiteralArray() begin");
-		arrayDepth.push(0);
+//		System.out.println("LiteralArray() begin");
+		arrayDepth = 0;
 	}
 
 	public void visitEnd(LiteralArray literalArray) {
-		System.out.println("LiteralArray() end");
-		arrayDepth.pop();
+//		System.out.println("LiteralArray() end");
 	}
 
 	public void visit(ArrayConstantElement arrayConstantElement) {

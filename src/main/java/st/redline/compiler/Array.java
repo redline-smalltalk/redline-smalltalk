@@ -8,12 +8,22 @@ public class Array implements VisitableNode {
 
 	private final List<VisitableNode> visitableNodes;
 
+	private int line;
+
 	public Array() {
 		visitableNodes = new ArrayList<VisitableNode>();
 	}
 
 	public void add(VisitableNode visitableNode) {
 		visitableNodes.add(visitableNode);
+	}
+
+	public int line() {
+		return line;
+	}
+
+	public void line(int line) {
+		this.line = line;
 	}
 
 	public void accept(NodeVisitor visitor) {

@@ -217,6 +217,10 @@ public class Primitives {
 		return createWith("String", receiver, value);
 	}
 
+	public static ProtoObject createArray(ProtoObject receiver) throws ClassNotFoundException {
+		return null;
+	}
+
 	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
 //		System.out.println("createSubclass() " + superclass + " " + name + "  **  " + superclass.cls());
 		ProtoObject classClass = new ProtoObject(ProtoObject.METACLASS_INSTANCE);

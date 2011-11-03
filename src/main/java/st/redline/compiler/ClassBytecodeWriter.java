@@ -23,6 +23,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SUPER_SEND = "superSend";
 	private static final String CONSTRUCT = "construct";
 	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_ARRAY = "createArray";
+	private static final String PRIMITIVE_ARRAY_SIGNATURE = "(Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_SYMBOL = "createSymbol";
 	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_INTEGER = "createInteger";
@@ -330,6 +332,11 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushReceiver(line);
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_STRING, PRIMITIVE_STRING_SIGNATURE);
+	}
+
+	public void callPrimitiveArray(int line) {
+		stackPushReceiver(line);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_ARRAY, PRIMITIVE_ARRAY_SIGNATURE);
 	}
 
 	public void callPrimitiveCharacter(String value, int line) {

@@ -339,7 +339,7 @@ block returns [Block n]
 
 array returns [Array n]
 	:	{$n = new Array();}
-		'(' ( arrayConstantElement {$n.add($arrayConstantElement.n);})* ')'
+		o = '(' {$n.line($o.line);} ( arrayConstantElement {$n.add($arrayConstantElement.n);})* ')'
 	;
 
 arrayConstantElement returns [VisitableNode n]
