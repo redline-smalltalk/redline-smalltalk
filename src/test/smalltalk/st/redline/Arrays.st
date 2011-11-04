@@ -1,1 +1,6 @@
-Array new: 100; size; at: 1 put: 100.
+
+| temp |
+temp := #(1 ('one' 1) 2 3).
+Transcript show: temp; cr; cr.
+
+

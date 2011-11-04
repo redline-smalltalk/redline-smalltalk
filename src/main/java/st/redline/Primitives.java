@@ -213,12 +213,19 @@ public class Primitives {
 		return instance;
 	}
 
+	private static ProtoObject createWith(String classname, ProtoObject receiver) throws ClassNotFoundException {
+		if (bootstrapping)
+			return newWithValue(null);
+		ProtoObject cls = resolveObject(receiver, classname);
+		return send(cls, "new", null);
+	}
+
 	public static ProtoObject createString(ProtoObject receiver, String value) throws ClassNotFoundException {
 		return createWith("String", receiver, value);
 	}
 
 	public static ProtoObject createArray(ProtoObject receiver) throws ClassNotFoundException {
-		return null;
+		return createWith("Array", receiver);
 	}
 
 	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
