@@ -342,7 +342,7 @@ array returns [Array n]
 		o = '(' {$n.line($o.line);} ( arrayConstantElement {$n.add($arrayConstantElement.n);})* ')'
 	;
 
-arrayConstantElement returns [VisitableNode n]
+arrayConstantElement returns [IndexedVisitableNode n]
  	:	numberConstant {$n = $numberConstant.n;}
 	|	characterConstant {$n = $characterConstant.n;}
 	|	stringConstant {$n = $stringConstant.n;}

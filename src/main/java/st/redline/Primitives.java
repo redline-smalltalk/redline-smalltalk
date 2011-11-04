@@ -124,13 +124,22 @@ public class Primitives {
 	}
 
 	public static ProtoObject p60(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		// does this primitive make sense for Redline?
-		return ProtoObject.NIL;
+		// basicAt: / at:
+		ProtoObject[] slots = (ProtoObject[]) receiver.javaValue();
+		int index = ((BigDecimal) arg1.javaValue()).intValue();
+		if (index == 0)
+			throw new IllegalStateException("Index to slot cannot be zero!");
+		return slots[index];
 	}
 
 	public static ProtoObject p61(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		// does this primitive make sense for Redline?
-		return receiver;
+		// basicAt:put: / at:put:
+		ProtoObject[] slots = (ProtoObject[]) receiver.javaValue();
+		int index = ((BigDecimal) arg1.javaValue()).intValue();
+		if (index == 0)
+			throw new IllegalStateException("Index to slot cannot be zero!");
+		slots[index] = arg2;
+		return arg2; // <- returns stored value according to BlueBook.
 	}
 
 	public static ProtoObject p62(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
@@ -155,8 +164,10 @@ public class Primitives {
 
 	public static ProtoObject p71(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// create a new instance of the receiver (a class) with the number of indexable fields specified by the size argument.
-		// does this primitive make sense for Redline?
-		return p70(receiver, thisContext, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		ProtoObject instance = p70(receiver, thisContext, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		int size = ((BigDecimal) arg1.javaValue()).intValue();
+		instance.javaValue(new ProtoObject[size + 1]);   // <- +1 because Smalltalk indexes from 1.
+		return instance;
 	}
 
 	public static ProtoObject p73(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
@@ -183,7 +194,7 @@ public class Primitives {
 	//  Redline specific primitives
 	//
 
-	private static ProtoObject newWithValue(String value) {
+	private static ProtoObject newWithValue(Object value) {
 		ProtoObject instance = new ProtoObject();
 		instance.javaValue(value);
 		return instance;
@@ -204,7 +215,7 @@ public class Primitives {
 		return createWith("Symbol", receiver, value);
 	}
 
-	private static ProtoObject createWith(String classname, ProtoObject receiver, String value) throws ClassNotFoundException {
+	private static ProtoObject createWith(String classname, ProtoObject receiver, Object value) throws ClassNotFoundException {
 		if (bootstrapping)
 			return newWithValue(value);
 		ProtoObject cls = resolveObject(receiver, classname);
@@ -224,8 +235,18 @@ public class Primitives {
 		return createWith("String", receiver, value);
 	}
 
-	public static ProtoObject createArray(ProtoObject receiver) throws ClassNotFoundException {
-		return createWith("Array", receiver);
+	public static ProtoObject createInteger(ProtoObject receiver, int value) throws ClassNotFoundException {
+		return createWith("Integer", receiver, new BigDecimal(value));
+	}
+
+	public static ProtoObject createInteger(ProtoObject receiver, String value) throws ClassNotFoundException {
+		return createWith("Integer", receiver, new BigDecimal(value));
+	}
+
+	public static ProtoObject createArray(ProtoObject receiver, int size) throws ClassNotFoundException {
+		ProtoObject slots = createInteger(receiver, size);
+		ProtoObject cls = resolveObject(receiver, "Array");
+		return send(cls, slots, "new:", null);
 	}
 
 	public static ProtoObject createSubclass(ProtoObject superclass, String name) {

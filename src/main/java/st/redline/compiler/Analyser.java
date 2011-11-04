@@ -268,16 +268,26 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Array array) {
-		System.out.println("Array() begin");
+		System.out.println("Array() begin " + array.index());
 		arrayDepth++;
-		classBytecodeWriter.callPrimitiveArray(array.line());
+		classBytecodeWriter.callPrimitiveArray(array.size(), array.line());
 	}
 
 	public void visitEnd(Array array) {
 		System.out.println("Array() end");
 		arrayDepth--;
-		if (arrayDepth != 0)
+		if (insideArray())
 			classBytecodeWriter.keywordSend("add:", 1, array.line(), false);
+	}
+
+// 	:	numberConstant {$n = $numberConstant.n;}
+//	|	characterConstant {$n = $characterConstant.n;}
+//	|	stringConstant {$n = $stringConstant.n;}
+//	|	symbol {$n = $symbol.n;}
+//	|	array {$n = $array.n;}
+
+	private boolean insideArray() {
+		return arrayDepth != 0;
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
@@ -325,10 +335,22 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(NumberConstant numberConstant, String value, int line) {
-		System.out.println("TODO NumberConstant() " + value);
+		System.out.println("NumberConstant() " + value + " at: " + numberConstant.index());
+		// NumberConstants happen within an array context.
+		if (insideArray()) {
+			classBytecodeWriter.stackDuplicate();
+			classBytecodeWriter.callPrimitiveInteger(numberConstant.index(), line); // at:
+			classBytecodeWriter.callPrimitiveInteger(numberConstant.value(), line); // put:
+			classBytecodeWriter.keywordSend("at:put", 2, line, false);
+			classBytecodeWriter.stackPop(); // at:put: returns value we put, so remove it.
+		} else {
+			classBytecodeWriter.callPrimitiveInteger(numberConstant.value(), line);
+		}
 	}
 
 	public void visit(LiteralNumber literalNumber, String value, int line) {
+//		System.out.println("LiteralNumber() " + value + " " + line);
+		// LiteralNumbers happen outside an array context.
 		classBytecodeWriter.callPrimitiveInteger(literalNumber.value(), line);
 	}
 

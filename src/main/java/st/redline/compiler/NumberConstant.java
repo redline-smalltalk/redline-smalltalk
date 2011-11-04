@@ -5,6 +5,7 @@ public class NumberConstant extends BaseLiteral {
 
 	protected final String value;
 	protected final int line;
+	private int index = 0;
 
 	public NumberConstant(String value, int line) {
 		this.value = value;
@@ -21,5 +22,13 @@ public class NumberConstant extends BaseLiteral {
 
 	public String value() {
 		return value;
+	}
+
+	public void index(int index) {
+		this.index = index;
+	}
+
+	public int index() {
+		return index;
 	}
 }

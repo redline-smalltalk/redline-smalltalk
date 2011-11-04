@@ -24,7 +24,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String CONSTRUCT = "construct";
 	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_ARRAY = "createArray";
-	private static final String PRIMITIVE_ARRAY_SIGNATURE = "(Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_ARRAY_SIGNATURE = "(Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_SYMBOL = "createSymbol";
 	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_INTEGER = "createInteger";
@@ -327,15 +327,22 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_INTEGER, PRIMITIVE_INTEGER_SIGNATURE);
 	}
-	
+
+	public void callPrimitiveInteger(int value, int line) {
+		stackPushReceiver(line);
+		stackPushLiteral(String.valueOf(value));
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_INTEGER, PRIMITIVE_INTEGER_SIGNATURE);
+	}
+
 	public void callPrimitiveString(String value, int line) {
 		stackPushReceiver(line);
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_STRING, PRIMITIVE_STRING_SIGNATURE);
 	}
 
-	public void callPrimitiveArray(int line) {
+	public void callPrimitiveArray(int size, int line) {
 		stackPushReceiver(line);
+		stackPushNumeric(size);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_ARRAY, PRIMITIVE_ARRAY_SIGNATURE);
 	}
 
