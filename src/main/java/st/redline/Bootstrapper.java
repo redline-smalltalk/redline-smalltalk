@@ -72,7 +72,7 @@ public class Bootstrapper {
 		}
 	}
 
-	private void instantiateSingletons() throws ClassNotFoundException {
+	private void instantiateSingletons() {
 		ProtoObject.METACLASS_INSTANCE = createMetaclassInstance();
 		ProtoObject.NIL = createUndefinedObjectInstance();
 		ProtoObject.TRUE = createTrueInstance();
@@ -93,14 +93,14 @@ public class Bootstrapper {
 		return new ProtoObject(cls);
 	}
 
-	private ProtoObject createTrueInstance() throws ClassNotFoundException {
+	private ProtoObject createTrueInstance() {
 		ProtoObject classClass = new ProtoObject();
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name("True");
 		return new ProtoObject(cls);
 	}
 
-	private ProtoObject createFalseInstance() throws ClassNotFoundException {
+	private ProtoObject createFalseInstance() {
 		ProtoObject classClass = new ProtoObject();
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name("False");
