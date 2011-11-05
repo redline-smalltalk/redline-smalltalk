@@ -125,6 +125,7 @@ public class Primitives {
 
 	public static ProtoObject p60(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// basicAt: / at:
+//		System.out.println("** p60 at: " + arg1.javaValue());
 		ProtoObject[] slots = (ProtoObject[]) receiver.javaValue();
 		int index = ((BigDecimal) arg1.javaValue()).intValue();
 		if (index == 0)
@@ -133,6 +134,7 @@ public class Primitives {
 	}
 
 	public static ProtoObject p61(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+//		System.out.println("** p61 at: " + arg1.javaValue() + " put: " + arg2);
 		// basicAt:put: / at:put:
 		ProtoObject[] slots = (ProtoObject[]) receiver.javaValue();
 		int index = ((BigDecimal) arg1.javaValue()).intValue();
@@ -193,6 +195,14 @@ public class Primitives {
 	//
 	//  Redline specific primitives
 	//
+
+	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
+		// answers receiver.
+//		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);
+		ProtoObject slot = createInteger(receiver, index);
+		send(receiver, slot, value, "at:put:", null);
+		return receiver;
+	}
 
 	private static ProtoObject newWithValue(Object value) {
 		ProtoObject instance = new ProtoObject();

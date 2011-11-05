@@ -43,6 +43,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;I)V";
 	private static final String PRIMITIVE_TEMPORARIES_INIT = "temporariesInit";
 	private static final String PRIMITIVE_TEMPORARIES_INIT_SIGNATURE = "(Lst/redline/ThisContext;I)V";
+	private static final String PRIMITIVE_PUT_AT = "putAt";
+	private static final String PRIMITIVE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
 	private static final String[] SEND_SIGNATURES = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
@@ -378,5 +380,11 @@ public class ClassBytecodeWriter implements Opcodes {
 	public void storeJavaValue(int line) {
 		stackPushReceiver(line);
 		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "javaValue", "(Ljava/lang/Object;)V");
+	}
+
+	public void callPrimitivePutAt(int index, int line) {
+		visitLine(line);
+		stackPushNumeric(index);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_PUT_AT, PRIMITIVE_PUT_AT_SIGNATURE);
 	}
 }
