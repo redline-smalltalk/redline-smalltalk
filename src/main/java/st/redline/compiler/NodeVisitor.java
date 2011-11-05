@@ -47,9 +47,11 @@ public interface NodeVisitor {
 	void visit(Primitive primitive, String value, int line);
 	void visit(Symbol symbol, String value, int line);
 	void visit(Array array);
+	void visitEnd(Array array);
 	void visit(Identifier identifier, String value, int line);
 	void visit(LiteralSymbol literalSymbol, String value, int line);
 	void visit(LiteralArray literalArray);
+	void visitEnd(LiteralArray literalArray);
 	void visit(ArrayConstantElement arrayConstantElement);
 	void visit(CharacterConstant characterConstant, String value, int line);
 	void visit(StringConstant stringConstant, String value, int line);

@@ -1,7 +1,11 @@
+05/11/2011 Changes
+
+Added support for arrays, including nested arrays.
+
+
 03/11/2011 Changes
 
 Added support for temporaries - getting and setting.
-
 
 02/11/2011 Changes
 

@@ -23,6 +23,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SUPER_SEND = "superSend";
 	private static final String CONSTRUCT = "construct";
 	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_ARRAY = "createArray";
+	private static final String PRIMITIVE_ARRAY_SIGNATURE = "(Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_SYMBOL = "createSymbol";
 	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_INTEGER = "createInteger";
@@ -41,6 +43,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;I)V";
 	private static final String PRIMITIVE_TEMPORARIES_INIT = "temporariesInit";
 	private static final String PRIMITIVE_TEMPORARIES_INIT_SIGNATURE = "(Lst/redline/ThisContext;I)V";
+	private static final String PRIMITIVE_PUT_AT = "putAt";
+	private static final String PRIMITIVE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
 	private static final String[] SEND_SIGNATURES = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
@@ -325,11 +329,23 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_INTEGER, PRIMITIVE_INTEGER_SIGNATURE);
 	}
-	
+
+	public void callPrimitiveInteger(int value, int line) {
+		stackPushReceiver(line);
+		stackPushLiteral(String.valueOf(value));
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_INTEGER, PRIMITIVE_INTEGER_SIGNATURE);
+	}
+
 	public void callPrimitiveString(String value, int line) {
 		stackPushReceiver(line);
 		stackPushLiteral(value);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_STRING, PRIMITIVE_STRING_SIGNATURE);
+	}
+
+	public void callPrimitiveArray(int size, int line) {
+		stackPushReceiver(line);
+		stackPushNumeric(size);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_ARRAY, PRIMITIVE_ARRAY_SIGNATURE);
 	}
 
 	public void callPrimitiveCharacter(String value, int line) {
@@ -364,5 +380,11 @@ public class ClassBytecodeWriter implements Opcodes {
 	public void storeJavaValue(int line) {
 		stackPushReceiver(line);
 		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "javaValue", "(Ljava/lang/Object;)V");
+	}
+
+	public void callPrimitivePutAt(int index, int line) {
+		visitLine(line);
+		stackPushNumeric(index);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_PUT_AT, PRIMITIVE_PUT_AT_SIGNATURE);
 	}
 }

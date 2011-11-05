@@ -1,13 +1,14 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class Symbol implements VisitableNode {
+public class Symbol implements IndexedVisitableNode {
 
 	public final int line;
 	public final String value;
 	private Identifier identifier;
 	private BinarySelector binarySelector;
 	private Keyword keyword;
+	private int index = 0;
 
 	public Symbol(Identifier identifier) {
 		this.identifier = identifier;
@@ -29,5 +30,13 @@ public class Symbol implements VisitableNode {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, value, line);
+	}
+
+	public void index(int index) {
+		this.index = index;
+	}
+
+	public int index() {
+		return index;
 	}
 }
