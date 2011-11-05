@@ -24,6 +24,7 @@ public class Analyser implements NodeVisitor {
 	protected boolean isClassMethod = false;
 	private Map<String, Temporary> temporariesRegistry;
 	private int arrayDepth;
+	private int blockDepth;
 
 	public Analyser(String className, String packageName) {
 		this(className, packageName, 0, false);
@@ -358,10 +359,13 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-		// System.out.println("TODO Block() " + block);
+		System.out.println("Block() begin " + block + " " + blockDepth);
+		blockDepth++;
 	}
 
 	public void visitEnd(Block block) {
+		System.out.println("Block() end " + block);
+		blockDepth--;
 	}
 
 	public void visit(SelfReservedWord selfReservedWord, int line) {
