@@ -28,8 +28,16 @@ public class Bootstrapper {
 		createClasses();
 		makeClassSuperclassOfObjectsClass();
 		reclassNil();
+        reclassBooleans();
 		markBootstrapping(false);
 	}
+
+    private void reclassBooleans() throws ClassNotFoundException {
+        ProtoObject.TRUE.cls(Primitives.resolveObject(protoObject, "True"));
+        ProtoObject.TRUE.superclass(Primitives.resolveObject(protoObject, "Boolean"));
+        ProtoObject.FALSE.cls(Primitives.resolveObject(protoObject, "False"));
+        ProtoObject.FALSE.superclass(Primitives.resolveObject(protoObject, "Boolean"));
+    }
 
 	private void reclassNil() throws ClassNotFoundException {
 		ProtoObject.NIL.cls(Primitives.resolveObject(protoObject, "UndefinedObject"));
@@ -64,7 +72,7 @@ public class Bootstrapper {
 		}
 	}
 
-	private void instantiateSingletons() {
+	private void instantiateSingletons() throws ClassNotFoundException {
 		ProtoObject.METACLASS_INSTANCE = createMetaclassInstance();
 		ProtoObject.NIL = createUndefinedObjectInstance();
 		ProtoObject.TRUE = createTrueInstance();
@@ -85,14 +93,14 @@ public class Bootstrapper {
 		return new ProtoObject(cls);
 	}
 
-	private ProtoObject createTrueInstance() {
+	private ProtoObject createTrueInstance() throws ClassNotFoundException {
 		ProtoObject classClass = new ProtoObject();
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name("True");
 		return new ProtoObject(cls);
 	}
 
-	private ProtoObject createFalseInstance() {
+	private ProtoObject createFalseInstance() throws ClassNotFoundException {
 		ProtoObject classClass = new ProtoObject();
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name("False");

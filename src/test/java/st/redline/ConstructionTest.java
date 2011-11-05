@@ -3,7 +3,7 @@ package st.redline;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
