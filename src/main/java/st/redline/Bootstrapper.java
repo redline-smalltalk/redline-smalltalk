@@ -9,12 +9,6 @@ import java.io.File;
 public class Bootstrapper {
 
 	private ProtoObject protoObject;
-	private ProtoObject object;
-	private ProtoObject collection;
-	private ProtoObject sequenceableCollection;
-	private ProtoObject arrayedCollection;
-	private ProtoObject string;
-	private ProtoObject symbol;
 
 	protected Bootstrapper(ProtoObject protoObject) {
 		this.protoObject = protoObject;
@@ -24,14 +18,15 @@ public class Bootstrapper {
 		markBootstrapping(true);
 		mapPackages();
 		registerRootClasses();
-		instantiateSingletons();
+		instantiateBootstrappedSingletons();
 		createClasses();
 		makeClassSuperclassOfObjectsClass();
-		reclassNil();
+		reclassBootstrappedSingletons();
 		markBootstrapping(false);
+		instantiateNonBootstrappedSingletons();
 	}
 
-	private void reclassNil() throws ClassNotFoundException {
+	private void reclassBootstrappedSingletons() throws ClassNotFoundException {
 		ProtoObject.NIL.cls(Primitives.resolveObject(protoObject, "UndefinedObject"));
 	}
 
@@ -64,11 +59,16 @@ public class Bootstrapper {
 		}
 	}
 
-	private void instantiateSingletons() {
+	private void instantiateBootstrappedSingletons() {
 		ProtoObject.METACLASS_INSTANCE = createMetaclassInstance();
 		ProtoObject.NIL = createUndefinedObjectInstance();
-		ProtoObject.TRUE = createTrueInstance();
-		ProtoObject.FALSE = createFalseInstance();
+	}
+
+	private void instantiateNonBootstrappedSingletons() throws ClassNotFoundException {
+		ProtoObject trueClass = Primitives.resolveObject(protoObject, "st.redline.True");
+		ProtoObject.TRUE = Primitives.send(trueClass, "new", null);
+		ProtoObject falseClass = Primitives.resolveObject(protoObject, "st.redline.False");
+		ProtoObject.FALSE = Primitives.send(falseClass, "new", null);
 	}
 
 	private ProtoObject createMetaclassInstance() {
@@ -82,20 +82,6 @@ public class Bootstrapper {
 		ProtoObject classClass = new ProtoObject();
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name("UndefinedObject");
-		return new ProtoObject(cls);
-	}
-
-	private ProtoObject createTrueInstance() {
-		ProtoObject classClass = new ProtoObject();
-		ProtoObject cls = new ProtoObject(classClass);
-		cls.name("True");
-		return new ProtoObject(cls);
-	}
-
-	private ProtoObject createFalseInstance() {
-		ProtoObject classClass = new ProtoObject();
-		ProtoObject cls = new ProtoObject(classClass);
-		cls.name("False");
 		return new ProtoObject(cls);
 	}
 
