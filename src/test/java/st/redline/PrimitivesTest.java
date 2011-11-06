@@ -3,7 +3,7 @@ package st.redline;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -28,56 +28,56 @@ public class PrimitivesTest {
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerPlus() {
-		receiver = protoObjectWith(new BigDecimal(1));
-		argument = protoObjectWith(new BigDecimal(2));
-		expected = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(1));
+		argument = protoObjectWith(BigInteger.valueOf(2));
+		expected = protoObjectWith(BigInteger.valueOf(3));
 		result = Primitives.p1(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected.javaValue(), result.javaValue());
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerMinus() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(2));
-		expected = protoObjectWith(new BigDecimal(1));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(2));
+		expected = protoObjectWith(BigInteger.valueOf(1));
 		result = Primitives.p2(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected.javaValue(), result.javaValue());
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerLessThan() {
-		receiver = protoObjectWith(new BigDecimal(2));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(2));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p3(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerGreaterThan() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(2));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(2));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p4(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerLessThanOrEqualTo() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p5(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerGreaterThanOrEqualTo() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p6(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerEqualTo() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p7(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
@@ -85,27 +85,27 @@ public class PrimitivesTest {
 
 	@Test public void shouldSupportPrimitiveSmallIntegerNotEqualTo() {
 		// ~= not equal?
-		receiver = protoObjectWith(new BigDecimal(2));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(2));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p8(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerMultiply() {
-		receiver = protoObjectWith(new BigDecimal(2));
-		argument = protoObjectWith(new BigDecimal(3));
-		expected = protoObjectWith(new BigDecimal(6));
+		receiver = protoObjectWith(BigInteger.valueOf(2));
+		argument = protoObjectWith(BigInteger.valueOf(3));
+		expected = protoObjectWith(BigInteger.valueOf(6));
 		result = Primitives.p9(receiver, null, argument, null, null, null, null, null, null);
-		assertEquals(((BigDecimal) expected.javaValue()).compareTo((BigDecimal) result.javaValue()), 0);
+		assertEquals(((BigInteger) expected.javaValue()).compareTo((BigInteger) result.javaValue()), 0);
 	}
 
 	@Test public void shouldSupportPrimitiveSmallIntegerDivide() {
-		receiver = protoObjectWith(new BigDecimal(6));
-		argument = protoObjectWith(new BigDecimal(3));
-		expected = protoObjectWith(new BigDecimal(2));
+		receiver = protoObjectWith(BigInteger.valueOf(6));
+		argument = protoObjectWith(BigInteger.valueOf(3));
+		expected = protoObjectWith(BigInteger.valueOf(2));
 		result = Primitives.p10(receiver, null, argument, null, null, null, null, null, null);
-		assertEquals(((BigDecimal) expected.javaValue()).compareTo((BigDecimal) result.javaValue()), 0);
+		assertEquals(((BigInteger) expected.javaValue()).compareTo((BigInteger) result.javaValue()), 0);
 	}
 
 //
@@ -113,56 +113,56 @@ public class PrimitivesTest {
 //
 
 	@Test public void shouldSupportPrimitiveIntegerPlus() {
-		receiver = protoObjectWith(new BigDecimal(1));
-		argument = protoObjectWith(new BigDecimal(2));
-		expected = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(1));
+		argument = protoObjectWith(BigInteger.valueOf(2));
+		expected = protoObjectWith(BigInteger.valueOf(3));
 		result = Primitives.p21(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected.javaValue(), result.javaValue());
 	}
 
 	@Test public void shouldSupportPrimitiveIntegerMinus() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(2));
-		expected = protoObjectWith(new BigDecimal(1));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(2));
+		expected = protoObjectWith(BigInteger.valueOf(1));
 		result = Primitives.p22(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected.javaValue(), result.javaValue());
 	}
 
 	@Test public void shouldSupportPrimitiveIntegerLessThan() {
-		receiver = protoObjectWith(new BigDecimal(2));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(2));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p23(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveIntegerGreaterThan() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(2));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(2));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p24(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveIntegerLessThanOrEqualTo() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p25(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveIntegerGreaterThanOrEqualTo() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p26(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveIntegerEqualTo() {
-		receiver = protoObjectWith(new BigDecimal(3));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(3));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p27(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
@@ -170,27 +170,27 @@ public class PrimitivesTest {
 
 	@Test public void shouldSupportPrimitiveIntegerNotEqualTo() {
 		// ~= not equal?
-		receiver = protoObjectWith(new BigDecimal(2));
-		argument = protoObjectWith(new BigDecimal(3));
+		receiver = protoObjectWith(BigInteger.valueOf(2));
+		argument = protoObjectWith(BigInteger.valueOf(3));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p28(receiver, null, argument, null, null, null, null, null, null);
 		assertEquals(expected, result);
 	}
 
 	@Test public void shouldSupportPrimitiveIntegerMultiply() {
-		receiver = protoObjectWith(new BigDecimal(2));
-		argument = protoObjectWith(new BigDecimal(3));
-		expected = protoObjectWith(new BigDecimal(6));
+		receiver = protoObjectWith(BigInteger.valueOf(2));
+		argument = protoObjectWith(BigInteger.valueOf(3));
+		expected = protoObjectWith(BigInteger.valueOf(6));
 		result = Primitives.p29(receiver, null, argument, null, null, null, null, null, null);
-		assertEquals(((BigDecimal) expected.javaValue()).compareTo((BigDecimal) result.javaValue()), 0);
+		assertEquals(((BigInteger) expected.javaValue()).compareTo((BigInteger) result.javaValue()), 0);
 	}
 
 	@Test public void shouldSupportPrimitiveIntegerDivide() {
-		receiver = protoObjectWith(new BigDecimal(6));
-		argument = protoObjectWith(new BigDecimal(3));
-		expected = protoObjectWith(new BigDecimal(2));
+		receiver = protoObjectWith(BigInteger.valueOf(6));
+		argument = protoObjectWith(BigInteger.valueOf(3));
+		expected = protoObjectWith(BigInteger.valueOf(2));
 		result = Primitives.p30(receiver, null, argument, null, null, null, null, null, null);
-		assertEquals(((BigDecimal) expected.javaValue()).compareTo((BigDecimal) result.javaValue()), 0);
+		assertEquals(((BigInteger) expected.javaValue()).compareTo((BigInteger) result.javaValue()), 0);
 	}
 
 //
@@ -210,7 +210,7 @@ public class PrimitivesTest {
 
 	@Test public void shouldSupportPrimitiveSame() {
 		// ==
-		receiver = protoObjectWith(new BigDecimal(42));
+		receiver = protoObjectWith(BigInteger.valueOf(42));
 		expected = ProtoObject.TRUE;
 		result = Primitives.p110(receiver, null, receiver, null, null, null, null, null, null);
 		assertEquals(expected, result);
@@ -359,7 +359,7 @@ public class PrimitivesTest {
 		Primitives.addInstanceVariables(cls, "instvar1");
 	}
 
-	private ProtoObject protoObjectWith(BigDecimal bigDecimal) {
-		return new ProtoObject(bigDecimal);
+	private ProtoObject protoObjectWith(BigInteger BigInteger) {
+		return new ProtoObject(BigInteger);
 	}
 }

@@ -1,7 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 // To create a new class, you need an instance of Metaclass, which you build up and then 'new'.
@@ -75,8 +75,8 @@ public class ProtoObject {
 		new Bootstrapper(this).bootstrap();
 	}
 
-	public ProtoObject(BigDecimal bigDecimal) {
-		javaValue(bigDecimal);
+	public ProtoObject(BigInteger BigInteger) {
+		javaValue(BigInteger);
 	}
 
 	protected ProtoObject registerAs(String name) {

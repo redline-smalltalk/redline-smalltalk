@@ -8,7 +8,7 @@
 //
 //import javax.accessibility.AccessibleStateSet;
 //
-//import java.math.BigDecimal;
+//import java.math.BigInteger;
 //
 //import static org.easymock.EasyMock.expect;
 //import static org.powermock.api.easymock.PowerMock.*;
@@ -23,14 +23,14 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(1));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(1));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(2));
 //
 //		mockStaticPartial(ProtoObject.class, "primitiveInteger");
 //		ProtoObject result = createMock(ProtoObject.class);
 //		// this call to primitiveInteger generates our result, which is 1 + 2
-//		expect(ProtoObject.primitiveInteger(integer1, new BigDecimal(1).add(new BigDecimal(2)))).andReturn(result);
+//		expect(ProtoObject.primitiveInteger(integer1, BigInteger.valueOf(1).add(BigInteger.valueOf(2)))).andReturn(result);
 //
 //		replay(integer1, integer2, result, ProtoObject.class);
 //
@@ -47,14 +47,14 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(3));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(2));
 //
 //		mockStaticPartial(ProtoObject.class, "primitiveInteger");
 //		ProtoObject result = createMock(ProtoObject.class);
 //		// this call to primitiveInteger generates our result, which is 1 + 2
-//		expect(ProtoObject.primitiveInteger(integer1, new BigDecimal(3).subtract(new BigDecimal(2)))).andReturn(result);
+//		expect(ProtoObject.primitiveInteger(integer1, BigInteger.valueOf(3).subtract(BigInteger.valueOf(2)))).andReturn(result);
 //
 //		replay(integer1, integer2, result, ProtoObject.class);
 //
@@ -71,9 +71,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(2));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(3));
 //
 //		replay(integer1, integer2);
 //
@@ -92,9 +92,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(3));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(2));
 //
 //		replay(integer1, integer2);
 //
@@ -113,9 +113,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(3));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(2));
 //
 //		replay(integer1, integer2);
 //
@@ -134,9 +134,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(2));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(3));
 //
 //		replay(integer1, integer2);
 //
@@ -155,9 +155,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(3));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(3));
 //
 //		replay(integer1, integer2);
 //
@@ -176,9 +176,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(3));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(2));
 //
 //		replay(integer1, integer2);
 //
@@ -197,9 +197,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(3));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(2));
 //
 //		replay(integer1, integer2);
 //
@@ -218,9 +218,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(2));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(3));
 //
 //		replay(integer1, integer2);
 //
@@ -239,9 +239,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(3));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(3));
 //
 //		replay(integer1, integer2);
 //
@@ -260,9 +260,9 @@
 //		ProtoObject integer2 = createMock(ProtoObject.class);
 //
 //		// integer1 is our receiver;
-//		expect(integer1.javaValue()).andReturn(new BigDecimal(3));
+//		expect(integer1.javaValue()).andReturn(BigInteger.valueOf(3));
 //		// integer2 is our argument;
-//		expect(integer2.javaValue()).andReturn(new BigDecimal(2));
+//		expect(integer2.javaValue()).andReturn(BigInteger.valueOf(2));
 //
 //		replay(integer1, integer2);
 //
