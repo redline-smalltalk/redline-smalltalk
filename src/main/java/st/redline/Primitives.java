@@ -4,7 +4,7 @@ package st.redline;
 import st.redline.compiler.AbstractMethod;
 import st.redline.compiler.MethodAnalyser;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Primitives {
@@ -15,119 +15,119 @@ public class Primitives {
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 
 	public static ProtoObject p1(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).add((BigDecimal) arg1.javaValue()));
+		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).add((BigInteger) arg1.javaValue()));
 	}
 
 	public static ProtoObject p2(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).subtract((BigDecimal) arg1.javaValue()));
+		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).subtract((BigInteger) arg1.javaValue()));
 	}
 
 	public static ProtoObject p3(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) < 0)
+		if (((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue()) < 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p4(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) > 0)
+		if (((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue()) > 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p5(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue());
+		int result = ((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue());
 		if (result <= 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p6(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue());
+		int result = ((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue());
 		if (result >= 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p7(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) == 0)
+		if (((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue()) == 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p8(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) != 0)
+		if (((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue()) != 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p9(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).multiply((BigDecimal) arg1.javaValue()));
+		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).multiply((BigInteger) arg1.javaValue()));
 	}
 
 	public static ProtoObject p10(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).divide((BigDecimal) arg1.javaValue()));
+		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).divide((BigInteger) arg1.javaValue()));
 	}
 
 
 	public static ProtoObject p21(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).add((BigDecimal) arg1.javaValue()));
+		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).add((BigInteger) arg1.javaValue()));
 	}
 
 	public static ProtoObject p22(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).subtract((BigDecimal) arg1.javaValue()));
+		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).subtract((BigInteger) arg1.javaValue()));
 	}
 
 	public static ProtoObject p23(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) < 0)
+		if (((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue()) < 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p24(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) > 0)
+		if (((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue()) > 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p25(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue());
+		int result = ((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue());
 		if (result <= 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p26(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue());
+		int result = ((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue());
 		if (result >= 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p27(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) == 0)
+		if (((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue()) == 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p28(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		if (((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) arg1.javaValue()) != 0)
+		if (((BigInteger) receiver.javaValue()).compareTo((BigInteger) arg1.javaValue()) != 0)
 			return ProtoObject.TRUE;
 		return ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p29(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).multiply((BigDecimal) arg1.javaValue()));
+		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).multiply((BigInteger) arg1.javaValue()));
 	}
 
 	public static ProtoObject p30(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-		return instanceLike(receiver).javaValue(((BigDecimal) receiver.javaValue()).divide((BigDecimal) arg1.javaValue()));
+		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).divide((BigInteger) arg1.javaValue()));
 	}
 
 	public static ProtoObject p60(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// basicAt: / at:
 //		System.out.println("** p60 at: " + arg1.javaValue());
 		ProtoObject[] slots = (ProtoObject[]) receiver.javaValue();
-		int index = ((BigDecimal) arg1.javaValue()).intValue();
+		int index = ((BigInteger) arg1.javaValue()).intValue();
 		if (index == 0)
 			throw new IllegalStateException("Index to slot cannot be zero!");
 		return slots[index];
@@ -137,7 +137,7 @@ public class Primitives {
 //		System.out.println("** p61 at: " + arg1.javaValue() + " put: " + arg2);
 		// basicAt:put: / at:put:
 		ProtoObject[] slots = (ProtoObject[]) receiver.javaValue();
-		int index = ((BigDecimal) arg1.javaValue()).intValue();
+		int index = ((BigInteger) arg1.javaValue()).intValue();
 		if (index == 0)
 			throw new IllegalStateException("Index to slot cannot be zero!");
 		slots[index] = arg2;
@@ -167,7 +167,7 @@ public class Primitives {
 	public static ProtoObject p71(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// create a new instance of the receiver (a class) with the number of indexable fields specified by the size argument.
 		ProtoObject instance = p70(receiver, thisContext, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-		int size = ((BigDecimal) arg1.javaValue()).intValue();
+		int size = ((BigInteger) arg1.javaValue()).intValue();
 		instance.javaValue(new ProtoObject[size + 1]);   // <- +1 because Smalltalk indexes from 1.
 		return instance;
 	}
@@ -245,12 +245,12 @@ public class Primitives {
 		return createWith("String", receiver, value);
 	}
 
-	public static ProtoObject createInteger(ProtoObject receiver, int value) throws ClassNotFoundException {
-		return createWith("Integer", receiver, new BigDecimal(value));
+	public static ProtoObject createInteger(ProtoObject receiver, long value) throws ClassNotFoundException {
+		return createWith("Integer", receiver, BigInteger.valueOf(value));
 	}
 
 	public static ProtoObject createInteger(ProtoObject receiver, String value) throws ClassNotFoundException {
-		return createWith("Integer", receiver, new BigDecimal(value));
+		return createWith("Integer", receiver, new BigInteger(value));
 	}
 
 	public static ProtoObject createArray(ProtoObject receiver, int size) throws ClassNotFoundException {

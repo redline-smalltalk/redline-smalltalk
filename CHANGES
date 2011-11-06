@@ -7,6 +7,8 @@ Creating proper instances of True and False during bootstrapping.
 
 Added support for arrays, including nested arrays.
 
+Switching Integer classes to use BigInteger instead of BigDecimal.
+Adding in superclass and cls for singletons True and False.
 
 03/11/2011 Changes
 
