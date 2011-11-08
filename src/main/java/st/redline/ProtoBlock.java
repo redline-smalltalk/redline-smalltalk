@@ -3,8 +3,9 @@ package st.redline;
 
 public class ProtoBlock extends ProtoMethod {
 
-	public ProtoBlock() {
-		System.out.println("Block() instantiated " + this);
+	public ProtoBlock() throws ClassNotFoundException {
+		superclass(Primitives.resolveObject(this, "st.redline.Object"));
+		cls(Primitives.resolveObject(this, "st.redline.BlockClosure"));
 	}
 
 	private RuntimeException subclassShouldHaveImplemented(int argumentCount) {

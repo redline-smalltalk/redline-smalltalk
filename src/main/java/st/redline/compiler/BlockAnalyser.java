@@ -18,7 +18,7 @@ public class BlockAnalyser extends MethodAnalyser {
 
 	public void visitEnd(Block block) {
 		if (!block.hasStatements())
-			classBytecodeWriter.stackPushReceiver(block.line());
+			classBytecodeWriter.stackPushNil(block.line());
 		classBytecodeWriter.closeClass();
 	}
 }

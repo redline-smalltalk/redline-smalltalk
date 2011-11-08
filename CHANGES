@@ -1,3 +1,8 @@
+08/11/2011 Changes
+
+Adding Block support. Will handle ^ blocks soon.
+
+
 07/11/2011 Changes
 
 Creating proper instances of True and False during bootstrapping.
