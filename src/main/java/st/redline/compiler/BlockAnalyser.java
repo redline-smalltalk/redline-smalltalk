@@ -12,7 +12,7 @@ public class BlockAnalyser extends MethodAnalyser {
 	}
 
 	public void visit(Block block) {
-		System.out.println("Block() Analysis begin " + block);
+//		System.out.println("Block() Analysis begin " + block);
 		classBytecodeWriter.openClass();
 	}
 

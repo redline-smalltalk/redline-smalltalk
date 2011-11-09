@@ -7,7 +7,7 @@ public class BlockBytecodeWriter extends MethodBytecodeWriter {
 
 	public BlockBytecodeWriter(String className, String packageName, int countOfArguments) {
 		super(className, packageName, countOfArguments);
-		System.out.println("BlockBytecodeWriter() " + className + " " + packageName + " " + countOfArguments);
+//		System.out.println("BlockBytecodeWriter() " + className + " " + packageName + " " + countOfArguments);
 	}
 
 	protected String superclass() {

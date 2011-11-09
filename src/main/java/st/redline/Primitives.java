@@ -201,27 +201,27 @@ public class Primitives {
 
 	public static ProtoObject p201(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// [] value
-		return ProtoObject.NIL;
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext);
 	}
 
 	public static ProtoObject p202(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// [] value: arg
-		return ProtoObject.NIL;
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1);
 	}
 
 	public static ProtoObject p203(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// [] value: arg1 value: arg2
-		return ProtoObject.NIL;
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1, arg2);
 	}
 
 	public static ProtoObject p204(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// [] value: arg1 value: arg2 value: arg3
-		return ProtoObject.NIL;
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1, arg2, arg3);
 	}
 
 	public static ProtoObject p205(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// [] value: arg1 value: arg2 value: arg3  value: arg4
-		return ProtoObject.NIL;
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1, arg2, arg3, arg4);
 	}
 
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
@@ -393,7 +393,7 @@ public class Primitives {
 
 	public static ProtoBlock compileBlock(ProtoObject receiver, String fullBlockName, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
 		// TODO.JCL clean this up.
-		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
+//		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
 		Block blockToBeCompiled = blocksToBeCompiled.remove(fullBlockName);
 		if (blockToBeCompiled == null)
 			throw new IllegalStateException("Block to be compiled '" + fullBlockName + "' not found.");
