@@ -199,6 +199,31 @@ public class Primitives {
 	//  Redline specific primitives
 	//
 
+	public static ProtoObject p201(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value
+		return ProtoObject.NIL;
+	}
+
+	public static ProtoObject p202(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value: arg
+		return ProtoObject.NIL;
+	}
+
+	public static ProtoObject p203(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value: arg1 value: arg2
+		return ProtoObject.NIL;
+	}
+
+	public static ProtoObject p204(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value: arg1 value: arg2 value: arg3
+		return ProtoObject.NIL;
+	}
+
+	public static ProtoObject p205(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value: arg1 value: arg2 value: arg3  value: arg4
+		return ProtoObject.NIL;
+	}
+
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
 		// answers receiver.
 //		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);
