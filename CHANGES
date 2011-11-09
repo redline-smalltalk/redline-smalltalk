@@ -1,3 +1,18 @@
+09/11/2011 Changes
+
+Initial Block support complete.
+
+
+08/11/2011 Changes
+
+Adding Block support. Will handle ^ blocks soon.
+
+
+07/11/2011 Changes
+
+Creating proper instances of True and False during bootstrapping.
+
+
 05/11/2011 Changes
 
 Added support for arrays, including nested arrays.

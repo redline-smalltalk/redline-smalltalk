@@ -24,6 +24,8 @@ public class Analyser implements NodeVisitor {
 	protected boolean isClassMethod = false;
 	private Map<String, Temporary> temporariesRegistry;
 	private int arrayDepth;
+	private int blockDepth;
+	private int blockSequence;
 
 	public Analyser(String className, String packageName) {
 		this(className, packageName, 0, false);
@@ -358,10 +360,22 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-		// System.out.println("TODO Block() " + block);
+//		System.out.println("Block() begin " + block + " " + blockDepth);
+		blockDepth++;
+		blockSequence++;
+		String blockName = "B" + blockSequence;
+		String fullBlockName = createFullBlockName(blockName);
+		primitives.registerBlockToBeCompiledAs(block, fullBlockName);
+		classBytecodeWriter.callPrimitiveCompileBlock(fullBlockName, block.line(), blockName, className, packageName, 0, isClassMethod);
+	}
+
+	private String createFullBlockName(String blockName) {
+		return createFullMethodName(blockName);
 	}
 
 	public void visitEnd(Block block) {
+//		System.out.println("Block() end " + block);
+		blockDepth--;
 	}
 
 	public void visit(SelfReservedWord selfReservedWord, int line) {

@@ -1,6 +1,7 @@
 " Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution "
 
 ProtoObject < #Object
+
 - initialize
 	"Subclasses should redefine this method to perform initializations on instance creation"
 
@@ -84,3 +85,7 @@ ProtoObject < #Object
     "Same as size. The method associated with this message, however, cannot be
     modified in any subclass."
     <primitive: 62>
+
+- value
+    ^ self.
+  

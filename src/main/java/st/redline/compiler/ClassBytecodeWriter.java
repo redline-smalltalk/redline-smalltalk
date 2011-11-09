@@ -368,6 +368,17 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "compileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZ)V");
 	}
 
+	public void callPrimitiveCompileBlock(String fullBlockName, int line, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
+		stackPushReceiver(line);
+		stackPushLiteral(fullBlockName);
+		stackPushLiteral(blockName);
+		stackPushLiteral(className);
+		stackPushLiteral(packageName);
+		stackPushNumeric(countOfArguments);
+		stackPushBoolean(isClassMethod);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "compileBlock", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZ)Lst/redline/ProtoBlock;");
+	}
+
 	public void callToPrimitiveByNumber(int methodArgumentCount, int methodTemporariesCount, String primitive, int line) {
 		throw new IllegalStateException("Can't call primitives from outside of a method.");
 	}

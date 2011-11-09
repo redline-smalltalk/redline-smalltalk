@@ -2,6 +2,8 @@
 package st.redline;
 
 import st.redline.compiler.AbstractMethod;
+import st.redline.compiler.Block;
+import st.redline.compiler.BlockAnalyser;
 import st.redline.compiler.MethodAnalyser;
 
 import java.math.BigInteger;
@@ -13,6 +15,7 @@ public class Primitives {
 
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
+	private static final Map<String, Block> blocksToBeCompiled = new HashMap<String, Block>();
 
 	public static ProtoObject p1(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).add((BigInteger) arg1.javaValue()));
@@ -196,6 +199,31 @@ public class Primitives {
 	//  Redline specific primitives
 	//
 
+	public static ProtoObject p201(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext);
+	}
+
+	public static ProtoObject p202(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value: arg
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1);
+	}
+
+	public static ProtoObject p203(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value: arg1 value: arg2
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1, arg2);
+	}
+
+	public static ProtoObject p204(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value: arg1 value: arg2 value: arg3
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1, arg2, arg3);
+	}
+
+	public static ProtoObject p205(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// [] value: arg1 value: arg2 value: arg3  value: arg4
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1, arg2, arg3, arg4);
+	}
+
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
 		// answers receiver.
 //		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);
@@ -355,6 +383,28 @@ public class Primitives {
 		if (methodsToBeCompiled.containsKey(name))
 			throw new IllegalStateException("Method to be compiled registered twice: " + name);
 		methodsToBeCompiled.put(name, method);
+	}
+
+	public static void registerBlockToBeCompiledAs(Block block, String name) {
+		if (blocksToBeCompiled.containsKey(name))
+			throw new IllegalStateException("Block to be compiled registered twice: " + name);
+		blocksToBeCompiled.put(name, block);
+	}
+
+	public static ProtoBlock compileBlock(ProtoObject receiver, String fullBlockName, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
+		// TODO.JCL clean this up.
+//		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
+		Block blockToBeCompiled = blocksToBeCompiled.remove(fullBlockName);
+		if (blockToBeCompiled == null)
+			throw new IllegalStateException("Block to be compiled '" + fullBlockName + "' not found.");
+		BlockAnalyser blockAnalyser = new BlockAnalyser(className + '$' + blockName, packageName, countOfArguments, isClassMethod);
+		blockToBeCompiled.accept(blockAnalyser);
+		Class blockClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(blockAnalyser.classBytes());
+		try {
+			return (ProtoBlock) blockClass.newInstance();
+		} catch (Exception e) {
+			throw RedlineException.withCause(e);
+		}
 	}
 
 	public static void compileMethod(ProtoObject receiver, String fullMethodName, String methodName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
