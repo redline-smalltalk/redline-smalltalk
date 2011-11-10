@@ -503,7 +503,7 @@ public class Primitives {
 	}
 
 	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, String selector, ThisContext thisContext) {
-//		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
+//		System.out.println("send " + receiver + " " + selector + " " + thisContext + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
 			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1);
