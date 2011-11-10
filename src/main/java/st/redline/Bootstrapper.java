@@ -2,6 +2,7 @@
 package st.redline;
 
 import st.redline.bootstrap.ClassSubclassMethod;
+import st.redline.bootstrap.ImportMethod;
 import st.redline.bootstrap.InstanceVariableNamesMethod;
 
 import java.io.File;
@@ -44,6 +45,7 @@ public class Bootstrapper {
 		protoObject.cls(protoObject);
 		protoObject.methodAtPut("<", new ClassSubclassMethod());
 		protoObject.methodAtPut("instanceVariableNames:", new InstanceVariableNamesMethod());
+		protoObject.methodAtPut("import:", new ImportMethod());
 	}
 
 	private void markBootstrapping(boolean bootstrapping) {

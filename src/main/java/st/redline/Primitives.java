@@ -288,13 +288,20 @@ public class Primitives {
 	}
 
 	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
-//		System.out.println("createSubclass() " + superclass + " " + name + "  **  " + superclass.cls());
+//		System.out.println("createSubclass() of " + superclass + " called " + name + "  **  " + superclass.cls());
 		ProtoObject classClass = new ProtoObject(ProtoObject.METACLASS_INSTANCE);
 		classClass.superclass0(superclass.cls());
-//		System.out.println("*** setting " + classClass + " superclass to " + superclass.cls());
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name(name);
 		cls.superclass(superclass);
+		return cls;
+	}
+
+	public static ProtoObject createEigenSubclass(ProtoObject superclass, String name, ProtoObject loader) throws ClassNotFoundException {
+//		System.out.println("createEigenSubclass() of " + superclass + " called " + name + "  **  " + superclass.cls() + " " + loader);
+		ProtoObject cls = createSubclass(superclass, name);
+		if (cls.cls().superclass() == null)
+			cls.cls().superclass(resolveObject(superclass, "ProtoObject"));
 		return cls;
 	}
 
@@ -478,6 +485,9 @@ public class Primitives {
 	}
 
 	private static ProtoMethod methodFor(ProtoObject object, String selector, ProtoObject[] methodForResult) {
+//		System.out.println("methodFor() " + selector + " from " + object);
+		if (object == null)
+			return null;
 		ProtoMethod method;
 		ProtoObject superclass = object;
 		while ((method = superclass.methodAt(selector)) == null)
