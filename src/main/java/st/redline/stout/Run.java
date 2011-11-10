@@ -66,7 +66,7 @@ public class Run {
 	}
 
 	private static ProtoObject object(CommandLine commandLine) throws Exception {
-		return null; // Primitives.send(stic.invoke((String) commandLine.arguments().get(0)), "new", null);
+		return Primitives.send(stic.invoke((String) commandLine.arguments().get(0)), "new", null);
 	}
 
 	private static Handler initialHandler(final CommandLine commandLine) throws Exception {
@@ -75,6 +75,7 @@ public class Run {
 				throws IOException, ServletException {
 				Handler handler;
 				try {
+					System.out.println("continuingHandler() " + request.getMethod() + " " + target);
 					handler = continuingHandler(object(commandLine));
 				} catch (Exception e) {
 					throw new ServletException(e);
@@ -89,14 +90,19 @@ public class Run {
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
 				throws IOException, ServletException {
-//				Primitives.send(receiver,
-//						method(request.getMethod()),
-//						string(target),
-//						request(request),
-//						response(response),
-//						dispatch(dispatch),
-//						"handle:on:with:and:and:",
-//						null);
+				try {
+					System.out.println("continuingHandler() " + receiver + " " + request.getMethod() + " " + target);
+					Primitives.send(receiver,
+							method(request.getMethod()),
+							string(target),
+							request(request),
+							response(response),
+							dispatch(dispatch),
+							"handle:on:with:and:and:",
+							null);
+				} catch (ClassNotFoundException e) {
+					throw new ServletException(e);
+				}
 			}
 
 			private ProtoObject dispatch(int dispatch) {
