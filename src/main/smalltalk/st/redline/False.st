@@ -1,23 +1,41 @@
 " Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution "
 
 Boolean < #False
-- and: aBlock
+
+- & anObject
+    "answer anObject since receiver is false."
     ^ self.
 
+- and: aBlock
+   "answer with false since the receiver is false."
+   ^ self.
+
+- xor: aBoolean
+   ^ aBoolean.
+
 - or: aBlock
-    ^ aBlock.
+   "answer aBlock since the receiver is false."
+   ^ aBlock value.
 
 - ifFalse: aBlock
-    ^ aBlock.
+   "Answer the value of aBlock since the receiver is false."
+   ^ aBlock value.
 
 - ifTrue: aBlock
-    ^ nil.
+   "Since the condition is false, answer the value of the false alternative, which is nil."
+   ^ nil.
 
 - ifFalse: falseBlock ifTrue: trueBlock
-    ^ falseBlock.
+  "Answer the value of falseBlock"
+   ^ falseBlock value.
 
 - ifTrue: trueBlock ifFalse: falseBlock
-    ^ falseBlock.
+   "Answer the value of falseBlock"
+   ^ falseBlock value.
 
 - not
-    ^ true.
+   "answer true since the receiver is false."
+   ^ true.
+
+- printOn: aStream
+   aStream nextPutAll: 'false'.

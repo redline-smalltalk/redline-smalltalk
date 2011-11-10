@@ -11,6 +11,10 @@ public class BlockAnalyser extends MethodAnalyser {
 		classBytecodeWriter = new BlockBytecodeWriter(className, packageName, countOfArguments);
 	}
 
+	public boolean continueBlockVisit() {
+		return true;
+	}
+
 	public void visit(Block block) {
 //		System.out.println("Block() Analysis begin " + block);
 		classBytecodeWriter.openClass();

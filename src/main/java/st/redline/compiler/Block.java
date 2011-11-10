@@ -32,6 +32,9 @@ public class Block extends BasePrimary {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		// we don't visit the rest during class / method analysis, but we do during block analysis.
+		if (!visitor.continueBlockVisit())
+			return;
 		if (temporaries != null)
 			temporaries.accept(visitor);
 		if (statements != null)
