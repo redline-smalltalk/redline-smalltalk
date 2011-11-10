@@ -127,7 +127,8 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitLdcInsn("ProtoObject");
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "resolveObject", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
 		mv.visitLdcInsn(className + "<Eigenclass>");
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "createSubclass", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "createEigenSubclass", "(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;");
 		stackDuplicate();
 		mv.visitLdcInsn(className);
 		mv.visitLdcInsn(makeFullQualifiedPackageName());
@@ -309,13 +310,11 @@ public class ClassBytecodeWriter implements Opcodes {
 	private void callPrimitiveSend(String selector, int argumentCount, int line, boolean sendToSuper) {
 		visitLine(line);
 		stackPushLiteral(selector);
-		if (sendToSuper) {
-			stackPushClassMethodWasFoundIn();
+		stackPushThisContext();
+		if (sendToSuper)
 			mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, SUPER_SEND, SEND_SIGNATURES[argumentCount]);
-		} else {
-			stackPushNull();
+		else
 			mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, SEND, SEND_SIGNATURES[argumentCount]);
-		}
 	}
 
 	public void callPrimitiveSymbol(String value, int line) {
