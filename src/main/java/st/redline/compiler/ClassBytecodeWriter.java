@@ -309,13 +309,11 @@ public class ClassBytecodeWriter implements Opcodes {
 	private void callPrimitiveSend(String selector, int argumentCount, int line, boolean sendToSuper) {
 		visitLine(line);
 		stackPushLiteral(selector);
-		if (sendToSuper) {
-			stackPushClassMethodWasFoundIn();
+		stackPushThisContext();
+		if (sendToSuper)
 			mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, SUPER_SEND, SEND_SIGNATURES[argumentCount]);
-		} else {
-			stackPushNull();
+		else
 			mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, SEND, SEND_SIGNATURES[argumentCount]);
-		}
 	}
 
 	public void callPrimitiveSymbol(String value, int line) {
