@@ -55,6 +55,10 @@ public class Analyser implements NodeVisitor {
 		return false;
 	}
 
+	public boolean continueBlockVisit() {
+		return false;
+	}
+
 	public int methodTemporariesCount() {
 		throw new IllegalStateException("TODO - handle");
 	}

@@ -1,3 +1,9 @@
+11/11/2011 Changes
+
+Fixed block compilation bug where block was compiled inline and as a Block.
+Fixed boolean examples to use true not True the class.
+
+
 09/11/2011 Changes
 
 Initial Block support complete.

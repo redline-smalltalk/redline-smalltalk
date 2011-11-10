@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface NodeVisitor {
 	boolean continueMethodVisit();
+	boolean continueBlockVisit();
 	void visit(Program program);
 	void visitEnd(Program program);
 	void visit(Temporaries temporaries);
