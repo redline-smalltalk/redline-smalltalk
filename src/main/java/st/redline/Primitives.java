@@ -404,7 +404,7 @@ public class Primitives {
 		Block blockToBeCompiled = blocksToBeCompiled.remove(fullBlockName);
 		if (blockToBeCompiled == null)
 			throw new IllegalStateException("Block to be compiled '" + fullBlockName + "' not found.");
-		BlockAnalyser blockAnalyser = new BlockAnalyser(className + '$' + blockName, packageName, countOfArguments, isClassMethod);
+		BlockAnalyser blockAnalyser = new BlockAnalyser(className + '$' + blockName, packageName, countOfArguments, isClassMethod, blockToBeCompiled.analyser());
 		blockToBeCompiled.accept(blockAnalyser);
 		Class blockClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(blockAnalyser.classBytes());
 		try {

@@ -9,6 +9,7 @@ public class Block extends BasePrimary {
 	private final List<VariableName> variableNames;
 	private Temporaries temporaries;
 	private Statements statements;
+	private Analyser analyser;
 
 	public Block() {
 		this.variableNames = new ArrayList<VariableName>();
@@ -40,5 +41,15 @@ public class Block extends BasePrimary {
 		if (statements != null)
 			statements.accept(visitor);
 		visitor.visitEnd(this);
+	}
+
+	// analyser is passed through to Block compilation.
+
+	public Analyser analyser() {
+		return analyser;
+	}
+
+	public void analyser(Analyser analyser) {
+		this.analyser = analyser;
 	}
 }

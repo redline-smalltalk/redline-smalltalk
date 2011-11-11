@@ -3,8 +3,11 @@ package st.redline.compiler;
 
 public class BlockAnalyser extends MethodAnalyser {
 
-	public BlockAnalyser(String className, String packageName, int countOfArguments, boolean isClassMethod) {
+	private Analyser containingAnalyser;
+
+	public BlockAnalyser(String className, String packageName, int countOfArguments, boolean isClassMethod, Analyser containingAnalyser) {
 		super(className, packageName, countOfArguments, isClassMethod);
+		this.containingAnalyser = containingAnalyser;
 	}
 
 	protected void initialize() {
