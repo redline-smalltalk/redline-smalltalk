@@ -80,6 +80,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Temporary temporary, int index, String value, int line) {
+		System.out.println("visitTemporary() " + value);
 		temporariesRegistry.put(value, temporary);
 	}
 

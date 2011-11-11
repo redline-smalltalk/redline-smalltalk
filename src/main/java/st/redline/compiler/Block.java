@@ -36,6 +36,8 @@ public class Block extends BasePrimary {
 		// we don't visit the rest during class / method analysis, but we do during block analysis.
 		if (!visitor.continueBlockVisit())
 			return;
+		for (VariableName variableName : variableNames)
+			variableName.accept(visitor);
 		if (temporaries != null)
 			temporaries.accept(visitor);
 		if (statements != null)
