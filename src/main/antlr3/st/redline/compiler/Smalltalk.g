@@ -334,7 +334,7 @@ reservedWordLiteral returns [Literal n]
 	
 block returns [Block n]
 	:	{$n = new Block();}
-		'[' ((':' variableName {$n.add($variableName.n);})+ '|')? ( temporaries {$n.add($temporaries.n);} )? statements {$n.add($statements.n);} ']'
+		'[' ((':' variableName {$n.add(new BlockVariableName($variableName.n));})+ '|')? ( temporaries {$n.add($temporaries.n);} )? statements {$n.add($statements.n);} ']'
 	;
 
 array returns [Array n]

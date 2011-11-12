@@ -35,6 +35,10 @@ public class MethodAnalyser extends Analyser {
 		classBytecodeWriter.stackPushLocal(variableName.index + 3);  // 0 = method, 1 = receiver, 2 = this context,, then local fields.
 	}
 
+	public void visit(BlockVariableName blockVariableName, String value, int line) {
+		throw new IllegalStateException("BlockAnalyser should be handling this.");
+	}
+
 	public void visit(InstanceMethod instanceMethod) {
 		classBytecodeWriter.openClass();
 	}
@@ -71,7 +75,7 @@ public class MethodAnalyser extends Analyser {
 			registerMethodArgument(variableName);
 	}
 
-	private void registerMethodArgument(VariableName variableName) {
+	protected void registerMethodArgument(VariableName variableName) {
 		String name = variableName.value();
 		if (isMethodArgument(name))
 			throw new IllegalStateException("Duplicate method argument name '" + name + "'.");

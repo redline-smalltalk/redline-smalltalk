@@ -84,6 +84,10 @@ public class Analyser implements NodeVisitor {
 		temporariesRegistry.put(value, temporary);
 	}
 
+	public void visit(BlockVariableName blockVariableName, String value, int line) {
+		throw new IllegalStateException("BlockAnalyser should be handling this.");
+	}
+
 	public void visit(VariableName variableName, String value, int line) {
 		if (isTemporary(value)) {
 			Temporary temporary = temporariesRegistry.get(value);

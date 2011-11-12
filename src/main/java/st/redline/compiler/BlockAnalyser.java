@@ -28,4 +28,9 @@ public class BlockAnalyser extends MethodAnalyser {
 			classBytecodeWriter.stackPushNil(block.line());
 		classBytecodeWriter.closeClass();
 	}
+
+	public void visit(BlockVariableName blockVariableName, String value, int line) {
+//		System.out.println("visit(BlockVariable) " + value);
+		registerMethodArgument(blockVariableName);
+	}
 }

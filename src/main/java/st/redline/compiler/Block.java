@@ -6,17 +6,17 @@ import java.util.List;
 
 public class Block extends BasePrimary {
 
-	private final List<VariableName> variableNames;
+	private final List<BlockVariableName> blockVariableNames;
 	private Temporaries temporaries;
 	private Statements statements;
 	private Analyser analyser;
 
 	public Block() {
-		this.variableNames = new ArrayList<VariableName>();
+		this.blockVariableNames = new ArrayList<BlockVariableName>();
 	}
 
-	public void add(VariableName variableName) {
-		variableNames.add(variableName);
+	public void add(BlockVariableName blockVariableName) {
+		blockVariableNames.add(blockVariableName);
 	}
 
 	public void add(Temporaries temporaries) {
@@ -36,8 +36,8 @@ public class Block extends BasePrimary {
 		// we don't visit the rest during class / method analysis, but we do during block analysis.
 		if (!visitor.continueBlockVisit())
 			return;
-		for (VariableName variableName : variableNames)
-			variableName.accept(visitor);
+		for (BlockVariableName blockVariableName : blockVariableNames)
+			blockVariableName.accept(visitor);
 		if (temporaries != null)
 			temporaries.accept(visitor);
 		if (statements != null)

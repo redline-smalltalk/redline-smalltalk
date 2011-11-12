@@ -1,3 +1,9 @@
+12/11/2011 Changes
+
+Added Block argument (variable) support.
+Added Block temporary support.
+
+
 11/11/2011 Changes
 
 Fixed block compilation bug where block was compiled inline and as a Block.
