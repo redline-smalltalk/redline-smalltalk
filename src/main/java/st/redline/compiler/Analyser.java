@@ -80,7 +80,12 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Temporary temporary, int index, String value, int line) {
+		System.out.println("visitTemporary() " + value);
 		temporariesRegistry.put(value, temporary);
+	}
+
+	public void visit(BlockVariableName blockVariableName, String value, int line) {
+		throw new IllegalStateException("BlockAnalyser should be handling this.");
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
@@ -369,8 +374,9 @@ public class Analyser implements NodeVisitor {
 		blockSequence++;
 		String blockName = "B" + blockSequence;
 		String fullBlockName = createFullBlockName(blockName);
+		block.analyser(this);
 		primitives.registerBlockToBeCompiledAs(block, fullBlockName);
-		classBytecodeWriter.callPrimitiveCompileBlock(fullBlockName, block.line(), blockName, className, packageName, 0, isClassMethod);
+		classBytecodeWriter.callPrimitiveCompileBlock(fullBlockName, block.line(), blockName, className, packageName, block.argumentCount(), isClassMethod);
 	}
 
 	private String createFullBlockName(String blockName) {

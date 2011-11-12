@@ -8,7 +8,7 @@ public class ProtoBlock extends ProtoMethod {
 		cls(Primitives.resolveObject(this, "st.redline.BlockClosure"));
 	}
 
-	private RuntimeException subclassShouldHaveImplemented(int argumentCount) {
+	protected RuntimeException subclassShouldHaveImplemented(int argumentCount) {
 		return new IllegalStateException("A subclass of ProtoBlock should implement 'applyTo' with " + argumentCount + " arguments.");
 	}
 }
