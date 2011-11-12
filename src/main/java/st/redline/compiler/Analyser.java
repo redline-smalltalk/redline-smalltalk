@@ -376,7 +376,7 @@ public class Analyser implements NodeVisitor {
 		String fullBlockName = createFullBlockName(blockName);
 		block.analyser(this);
 		primitives.registerBlockToBeCompiledAs(block, fullBlockName);
-		classBytecodeWriter.callPrimitiveCompileBlock(fullBlockName, block.line(), blockName, className, packageName, 0, isClassMethod);
+		classBytecodeWriter.callPrimitiveCompileBlock(fullBlockName, block.line(), blockName, className, packageName, block.argumentCount(), isClassMethod);
 	}
 
 	private String createFullBlockName(String blockName) {

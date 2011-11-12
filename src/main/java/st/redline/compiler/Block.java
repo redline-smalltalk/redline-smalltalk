@@ -31,6 +31,10 @@ public class Block extends BasePrimary {
 		return statements != null;
 	}
 
+	public int argumentCount() {
+		return blockVariableNames.size();
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 		// we don't visit the rest during class / method analysis, but we do during block analysis.

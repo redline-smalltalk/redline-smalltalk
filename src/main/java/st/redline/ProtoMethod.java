@@ -6,7 +6,7 @@ public class ProtoMethod extends ProtoObject {
 	public ProtoMethod() {
 	}
 
-	private RuntimeException subclassShouldHaveImplemented(int argumentCount) {
+	protected RuntimeException subclassShouldHaveImplemented(int argumentCount) {
 		return new IllegalStateException("A subclass of ProtoMethod should implement 'applyTo' with " + argumentCount + " arguments.");
 	}
 

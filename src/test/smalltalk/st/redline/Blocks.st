@@ -1,3 +1,3 @@
 
-[:var | Transcript show: 'Hello World.'; cr; cr.] value.
+[:var | Transcript show: var; cr; cr.] value: 'hello'.
 
