@@ -80,7 +80,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Temporary temporary, int index, String value, int line) {
-		System.out.println("visitTemporary() " + value);
+//		System.out.println("visitTemporary() " + value);
 		temporariesRegistry.put(value, temporary);
 	}
 
@@ -377,6 +377,14 @@ public class Analyser implements NodeVisitor {
 		block.analyser(this);
 		primitives.registerBlockToBeCompiledAs(block, fullBlockName);
 		classBytecodeWriter.callPrimitiveCompileBlock(fullBlockName, block.line(), blockName, className, packageName, block.argumentCount(), isClassMethod);
+	}
+
+	protected void blockSequence(int blockSequence) {
+		this.blockSequence = blockSequence;
+	}
+
+	protected int blockSequence() {
+		return blockSequence;
 	}
 
 	private String createFullBlockName(String blockName) {
