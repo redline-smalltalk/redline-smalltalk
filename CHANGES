@@ -1,3 +1,8 @@
+14/11/2011 Changes
+
+Added convieniance methods to ProtoObject for sending messages.
+
+
 13/11/2011 Changes
 
 Added Block applyTo method argument support.

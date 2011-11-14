@@ -184,6 +184,38 @@ public class ProtoObject {
 		return cls;
 	}
 
+	public ProtoObject send(String selector) {
+		return Primitives.send(this, selector, null);
+	}
+
+	public ProtoObject send(String selector, ProtoObject argument) {
+		return Primitives.send(this, argument, selector, null);
+	}
+
+	public ProtoObject send(String selector, ProtoObject firstArgument, ProtoObject secondArgument) {
+		return Primitives.send(this, firstArgument, secondArgument, selector, null);
+	}
+
+	public ProtoObject send(String selector, ProtoObject firstArgument, ProtoObject secondArgument, ProtoObject thirdArgument) {
+		return Primitives.send(this, firstArgument, secondArgument, thirdArgument, selector, null);
+	}
+
+	public ProtoObject send(String selector, ProtoObject firstArgument, ProtoObject secondArgument, ProtoObject thirdArgument, ProtoObject fourthArgument) {
+		return Primitives.send(this, firstArgument, secondArgument, thirdArgument, fourthArgument, selector, null);
+	}
+
+	public ProtoObject send(String selector, ProtoObject firstArgument, ProtoObject secondArgument, ProtoObject thirdArgument, ProtoObject fourthArgument, ProtoObject fifthArgument) {
+		return Primitives.send(this, firstArgument, secondArgument, thirdArgument, fourthArgument, fifthArgument, selector, null);
+	}
+
+	public ProtoObject send(String selector, ProtoObject firstArgument, ProtoObject secondArgument, ProtoObject thirdArgument, ProtoObject fourthArgument, ProtoObject fifthArgument, ProtoObject sixthArgument) {
+		return Primitives.send(this, firstArgument, secondArgument, thirdArgument, fourthArgument, fifthArgument, sixthArgument, selector, null);
+	}
+
+	public ProtoObject send(String selector, ProtoObject firstArgument, ProtoObject secondArgument, ProtoObject thirdArgument, ProtoObject fourthArgument, ProtoObject fifthArgument, ProtoObject sixthArgument, ProtoObject seventhArgument) {
+		return Primitives.send(this, firstArgument, secondArgument, thirdArgument, fourthArgument, fifthArgument, sixthArgument, seventhArgument, selector, null);
+	}
+
 	protected void superclass0(ProtoObject superclass) {
 		this.superclass = superclass;
 	}
