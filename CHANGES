@@ -1,6 +1,7 @@
 14/11/2011 Changes
 
 Added convieniance methods to ProtoObject for sending messages.
+Fixed bug with multi-blocks.
 
 
 13/11/2011 Changes
