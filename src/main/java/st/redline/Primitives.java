@@ -393,6 +393,7 @@ public class Primitives {
 	}
 
 	public static void registerBlockToBeCompiledAs(Block block, String name) {
+//		System.out.println("registerBlockToBeCompiledAs() " + name);
 		if (blocksToBeCompiled.containsKey(name))
 			throw new IllegalStateException("Block to be compiled registered twice: " + name);
 		blocksToBeCompiled.put(name, block);

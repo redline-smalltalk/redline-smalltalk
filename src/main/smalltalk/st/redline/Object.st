@@ -31,6 +31,7 @@ ProtoObject < #Object
     <primitive: 75>
 
 "testing"
+
 - isNil
     "Answer whether the receiver is nil."
     ^ false.

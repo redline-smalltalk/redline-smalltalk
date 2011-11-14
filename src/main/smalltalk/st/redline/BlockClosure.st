@@ -22,3 +22,25 @@ Object < #BlockClosure
     "Activate the receiver, a closure activation."
     <primitive: 205>
 
+- whileFalse
+    "Evaluate the receiver, as long as its value is false."
+    ^ [self value] whileFalse: [].
+
+- whileFalse: aBlock
+    "Evaluate the argument, aBlock, as long as the value of the receiver is false."
+    ^ [self value] whileFalse: [aBlock value].
+
+- whileNil: aBlock
+    ^ [self value isNil] whileTrue: [aBlock value].
+
+- whileNotNil: aBlock
+    ^ [self value notNil] whileTrue: [aBlock value].
+
+- whileTrue
+    "Evaluate the receiver, as long as its value is true."
+    ^ [self value] whileTrue: [].
+
+- whileTrue: aBlock
+    "Evaluate the argument, aBlock, as long as the value of the receiver is true."
+    ^ [self value] whileTrue: [aBlock value].
+
