@@ -16,6 +16,7 @@ public class Primitives {
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 	private static final Map<String, Block> blocksToBeCompiled = new HashMap<String, Block>();
+	private static final Map<String, ProtoBlock> blocksRegistry = new HashMap<String, ProtoBlock>();
 
 	public static ProtoObject p1(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).add((BigInteger) arg1.javaValue()));
@@ -201,7 +202,9 @@ public class Primitives {
 
 	public static ProtoObject p201(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// [] value
-		return ((ProtoBlock) receiver).applyTo(receiver, thisContext);
+		ProtoObject result = ((ProtoBlock) receiver).applyTo(receiver, thisContext);
+//		System.out.println("p201 " + result);
+		return result;
 	}
 
 	public static ProtoObject p202(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
@@ -402,6 +405,10 @@ public class Primitives {
 	public static ProtoBlock compileBlock(ProtoObject receiver, String fullBlockName, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
 		// TODO.JCL clean this up.
 //		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
+		if (blocksRegistry.containsKey(fullBlockName)) {
+//			System.out.println("** existing block ** " + fullBlockName);
+			return blocksRegistry.get(fullBlockName);
+		}
 		Block blockToBeCompiled = blocksToBeCompiled.remove(fullBlockName);
 		if (blockToBeCompiled == null)
 			throw new IllegalStateException("Block to be compiled '" + fullBlockName + "' not found.");
@@ -409,7 +416,10 @@ public class Primitives {
 		blockToBeCompiled.accept(blockAnalyser);
 		Class blockClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(blockAnalyser.classBytes());
 		try {
-			return (ProtoBlock) blockClass.newInstance();
+//			System.out.println("** Instantiating block ** " + fullBlockName);
+			ProtoBlock block = (ProtoBlock) blockClass.newInstance();
+			blocksRegistry.put(fullBlockName, block);
+			return block;
 		} catch (Exception e) {
 			throw RedlineException.withCause(e);
 		}

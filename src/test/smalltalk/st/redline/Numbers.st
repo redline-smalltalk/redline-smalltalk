@@ -20,4 +20,8 @@
 
 1 between: 0 and: 3.
 
-1 max: 2.
+"1 max: 2."
+
+1 to: 5 do: [:each |
+    Transcript show: each; cr. ].
+
