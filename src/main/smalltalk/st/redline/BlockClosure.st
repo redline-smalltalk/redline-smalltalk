@@ -28,7 +28,7 @@ Object < #BlockClosure
 
 - whileFalse: aBlock
     "Evaluate the argument, aBlock, as long as the value of the receiver is false."
-    ^ [self value] whileFalse: [aBlock value].
+    <primitive: 211>
 
 - whileNil: aBlock
     ^ [self value isNil] whileTrue: [aBlock value].
@@ -42,5 +42,5 @@ Object < #BlockClosure
 
 - whileTrue: aBlock
     "Evaluate the argument, aBlock, as long as the value of the receiver is true."
-    ^ [self value] whileTrue: [aBlock value].
+    <primitive: 210>
 
