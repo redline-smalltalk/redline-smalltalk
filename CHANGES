@@ -1,3 +1,9 @@
+15/11/2011 Changes
+
+Working on blocks within blocks. A few compiler issues.
+Made whileTrue: / whileFalse: on BlockClosures primitive.
+
+
 14/11/2011 Changes
 
 Added convieniance methods to ProtoObject for sending messages.

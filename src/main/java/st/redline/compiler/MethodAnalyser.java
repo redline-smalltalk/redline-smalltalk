@@ -8,9 +8,12 @@ import java.util.Map;
 public class MethodAnalyser extends Analyser {
 
 	private final Map<String, VariableName> argumentRegistry;
+	private final Analyser containingAnalyser;
 
-	public MethodAnalyser(String className, String packageName, int countOfArguments, boolean isClassMethod) {
+	public MethodAnalyser(String className, String packageName, int countOfArguments, boolean isClassMethod, Analyser containingAnalyser) {
 		super(className, packageName, countOfArguments, isClassMethod);
+		this.containingAnalyser = containingAnalyser;
+		blockSequence(containingAnalyser.blockSequence() + 1);
 		argumentRegistry = new HashMap<String, VariableName>();
 	}
 

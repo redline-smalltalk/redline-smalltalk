@@ -16,6 +16,7 @@ public class Primitives {
 	private static final ThreadLocal<Stack<String>> packageRegistry = new ThreadLocal<Stack<String>>();
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 	private static final Map<String, Block> blocksToBeCompiled = new HashMap<String, Block>();
+	private static final Map<String, ProtoBlock> blocksRegistry = new HashMap<String, ProtoBlock>();
 
 	public static ProtoObject p1(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).add((BigInteger) arg1.javaValue()));
@@ -224,6 +225,40 @@ public class Primitives {
 		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1, arg2, arg3, arg4);
 	}
 
+	public static ProtoObject p210(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		ProtoBlock aBlock = callback210(receiver, thisContext, arg1);
+		send(send(receiver, "value", thisContext), aBlock, "ifTrue:", thisContext);
+		return ProtoObject.NIL;
+	}
+
+	private static ProtoBlock callback210(final ProtoObject receiver, final ThisContext thisContext, final ProtoObject trueBlock) {
+		return new ProtoBlock() {
+			public ProtoObject applyTo(ProtoObject r, ThisContext t) {
+				System.out.println("callback210() evaluating true block.");
+				Primitives.send(trueBlock, "value", thisContext);
+				Primitives.send(Primitives.send(receiver, "value", thisContext), this, "ifTrue:", thisContext);
+				return ProtoObject.NIL;
+			}
+		};
+	}
+
+	public static ProtoObject p211(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		ProtoBlock aBlock = callback211(receiver, thisContext, arg1);
+		send(send(receiver, "value", thisContext), aBlock, "ifFalse:", thisContext);
+		return ProtoObject.NIL;
+	}
+
+	private static ProtoBlock callback211(final ProtoObject receiver, final ThisContext thisContext, final ProtoObject falseBlock) {
+		return new ProtoBlock() {
+			public ProtoObject applyTo(ProtoObject r, ThisContext t) {
+				System.out.println("callback210() evaluating false block.");
+				Primitives.send(falseBlock, "value", thisContext);
+				Primitives.send(Primitives.send(receiver, "value", thisContext), this, "ifFalse:", thisContext);
+				return ProtoObject.NIL;
+			}
+		};
+	}
+
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
 		// answers receiver.
 //		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);
@@ -402,6 +437,10 @@ public class Primitives {
 	public static ProtoBlock compileBlock(ProtoObject receiver, String fullBlockName, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
 		// TODO.JCL clean this up.
 //		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
+		if (blocksRegistry.containsKey(fullBlockName)) {
+//			System.out.println("** existing block ** " + fullBlockName);
+			return blocksRegistry.get(fullBlockName);
+		}
 		Block blockToBeCompiled = blocksToBeCompiled.remove(fullBlockName);
 		if (blockToBeCompiled == null)
 			throw new IllegalStateException("Block to be compiled '" + fullBlockName + "' not found.");
@@ -409,7 +448,10 @@ public class Primitives {
 		blockToBeCompiled.accept(blockAnalyser);
 		Class blockClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(blockAnalyser.classBytes());
 		try {
-			return (ProtoBlock) blockClass.newInstance();
+//			System.out.println("** Instantiating block ** " + fullBlockName);
+			ProtoBlock block = (ProtoBlock) blockClass.newInstance();
+			blocksRegistry.put(fullBlockName, block);
+			return block;
 		} catch (Exception e) {
 			throw RedlineException.withCause(e);
 		}
@@ -421,7 +463,7 @@ public class Primitives {
 		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
 		if (methodToBeCompiled == null)
 			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
-		MethodAnalyser methodAnalyser = new MethodAnalyser(className + '$' + methodName, packageName, countOfArguments, isClassMethod);
+		MethodAnalyser methodAnalyser = new MethodAnalyser(className + '$' + methodName, packageName, countOfArguments, isClassMethod, methodToBeCompiled.analyser());
 		methodToBeCompiled.accept(methodAnalyser);
 		Class methodClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(methodAnalyser.classBytes());
 		ProtoMethod method;
