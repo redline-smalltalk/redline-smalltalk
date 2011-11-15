@@ -439,7 +439,11 @@ public class Primitives {
 //		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
 		if (blocksRegistry.containsKey(fullBlockName)) {
 //			System.out.println("** existing block ** " + fullBlockName);
-			return blocksRegistry.get(fullBlockName);
+			try {
+				return blocksRegistry.get(fullBlockName).getClass().newInstance();
+			} catch (Exception e) {
+				throw new RedlineException(e);
+			}
 		}
 		Block blockToBeCompiled = blocksToBeCompiled.remove(fullBlockName);
 		if (blockToBeCompiled == null)
