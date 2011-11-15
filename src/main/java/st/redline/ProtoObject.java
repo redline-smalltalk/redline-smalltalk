@@ -166,7 +166,7 @@ public class ProtoObject {
 		return this;
 	}
 
-	protected ProtoObject javaValue(Object javaValue) {
+	public ProtoObject javaValue(Object javaValue) {
 		this.javaValue = javaValue;
 		return this;
 	}

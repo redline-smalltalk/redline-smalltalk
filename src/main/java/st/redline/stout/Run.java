@@ -41,6 +41,10 @@ public class Run {
 		startServer(commandLine);
 	}
 
+	public static RouterRegistry createRouterRegistry() {
+	    return new RouterRegistryImpl(new RouterFactoryImpl(new RequestPathSpecificationFactoryImpl()));
+	}
+
 	private static void startSmalltalk(CommandLine commandLine) throws Exception {
 		stic = new Stic(commandLine);
 		httpServletRequest = stic.invoke("st.redline.stout.HttpServletRequest");
@@ -75,7 +79,6 @@ public class Run {
 				throws IOException, ServletException {
 				Handler handler;
 				try {
-					System.out.println("continuingHandler() " + request.getMethod() + " " + target);
 					handler = continuingHandler(object(commandLine));
 				} catch (Exception e) {
 					throw new ServletException(e);
