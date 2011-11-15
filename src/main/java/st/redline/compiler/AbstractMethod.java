@@ -9,6 +9,7 @@ public abstract class AbstractMethod implements Method {
 	protected final Temporaries temporaries;
 	protected final Statements statements;
 	protected final boolean empty;
+	private Analyser analyser;
 
 	public AbstractMethod(String objectName, MessagePattern messagePattern, Primitive primitive, Temporaries temporaries, Statements statements) {
 		this.objectName = objectName;
@@ -29,6 +30,16 @@ public abstract class AbstractMethod implements Method {
 
 	public int line() {
 		return messagePattern.line();
+	}
+
+	// analyser is passed through to Method compilation.
+
+	public Analyser analyser() {
+		return analyser;
+	}
+
+	public void analyser(Analyser analyser) {
+		this.analyser = analyser;
 	}
 
 	public void accept(NodeVisitor visitor) {

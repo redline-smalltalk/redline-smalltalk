@@ -142,6 +142,7 @@ public class Analyser implements NodeVisitor {
 	public void visit(InstanceMethod instanceMethod) {
 		classBytecodeWriter.callPrimitiveVariableAt(instanceMethod.objectName, instanceMethod.line(), true);
 		currentMethod = instanceMethod;
+		currentMethod.analyser(this);
 		isClassMethod = false;
 	}
 
@@ -153,6 +154,7 @@ public class Analyser implements NodeVisitor {
 		classBytecodeWriter.callPrimitiveVariableAt(classMethod.objectName, classMethod.line(), true);
 		classBytecodeWriter.callClass();
 		currentMethod = classMethod;
+		currentMethod.analyser(this);
 		isClassMethod = true;
 	}
 

@@ -421,7 +421,7 @@ public class Primitives {
 		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
 		if (methodToBeCompiled == null)
 			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
-		MethodAnalyser methodAnalyser = new MethodAnalyser(className + '$' + methodName, packageName, countOfArguments, isClassMethod);
+		MethodAnalyser methodAnalyser = new MethodAnalyser(className + '$' + methodName, packageName, countOfArguments, isClassMethod, methodToBeCompiled.analyser());
 		methodToBeCompiled.accept(methodAnalyser);
 		Class methodClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(methodAnalyser.classBytes());
 		ProtoMethod method;
