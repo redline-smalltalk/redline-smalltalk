@@ -19,7 +19,7 @@ public class RedlineException extends RuntimeException {
 		return new RedlineException(message);
 	}
 
-	private RedlineException(Exception exception) {
+	public RedlineException(Exception exception) {
 		super(exception);
 	}
 

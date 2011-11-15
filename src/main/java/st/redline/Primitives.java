@@ -202,9 +202,7 @@ public class Primitives {
 
 	public static ProtoObject p201(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// [] value
-		ProtoObject result = ((ProtoBlock) receiver).applyTo(receiver, thisContext);
-//		System.out.println("p201 " + result);
-		return result;
+		return ((ProtoBlock) receiver).applyTo(receiver, thisContext);
 	}
 
 	public static ProtoObject p202(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
@@ -225,6 +223,40 @@ public class Primitives {
 	public static ProtoObject p205(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// [] value: arg1 value: arg2 value: arg3  value: arg4
 		return ((ProtoBlock) receiver).applyTo(receiver, thisContext, arg1, arg2, arg3, arg4);
+	}
+
+	public static ProtoObject p210(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		ProtoBlock aBlock = callback210(receiver, thisContext, arg1);
+		send(send(receiver, "value", thisContext), aBlock, "ifTrue:", thisContext);
+		return ProtoObject.NIL;
+	}
+
+	private static ProtoBlock callback210(final ProtoObject receiver, final ThisContext thisContext, final ProtoObject trueBlock) {
+		return new ProtoBlock() {
+			public ProtoObject applyTo(ProtoObject r, ThisContext t) {
+				System.out.println("callback210() evaluating true block.");
+				Primitives.send(trueBlock, "value", thisContext);
+				Primitives.send(Primitives.send(receiver, "value", thisContext), this, "ifTrue:", thisContext);
+				return ProtoObject.NIL;
+			}
+		};
+	}
+
+	public static ProtoObject p211(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		ProtoBlock aBlock = callback211(receiver, thisContext, arg1);
+		send(send(receiver, "value", thisContext), aBlock, "ifFalse:", thisContext);
+		return ProtoObject.NIL;
+	}
+
+	private static ProtoBlock callback211(final ProtoObject receiver, final ThisContext thisContext, final ProtoObject falseBlock) {
+		return new ProtoBlock() {
+			public ProtoObject applyTo(ProtoObject r, ThisContext t) {
+				System.out.println("callback210() evaluating false block.");
+				Primitives.send(falseBlock, "value", thisContext);
+				Primitives.send(Primitives.send(receiver, "value", thisContext), this, "ifFalse:", thisContext);
+				return ProtoObject.NIL;
+			}
+		};
 	}
 
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
