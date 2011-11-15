@@ -120,7 +120,8 @@ public class Analyser implements NodeVisitor {
 		return false;
 	}
 
-	private boolean isTemporary(String name) {
+	protected boolean isTemporary(String name) {
+		System.out.println("isTemporary() " + name + " " + (temporariesRegistry != null && temporariesRegistry.containsKey(name)));
 		return temporariesRegistry != null && temporariesRegistry.containsKey(name);
 	}
 
