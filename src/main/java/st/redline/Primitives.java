@@ -505,12 +505,16 @@ public class Primitives {
 		thisContext.temporariesInit(size);
 	}
 
-	public static ProtoObject temporaryAt(ThisContext thisContext, int index) {
-		return thisContext.temporaryAt(index);
+	public static ProtoObject temporaryAt(ThisContext thisContext, int index, boolean isLocal) {
+		if (isLocal)
+			return thisContext.temporaryAt(index);
+		throw new IllegalStateException("Temporary being fetched is not local, need to handle.");
 	}
 
-	public static void temporaryPutAt(ProtoObject value, ThisContext thisContext, int index) {
-		thisContext.temporaryAtPut(index, value);
+	public static void temporaryPutAt(ProtoObject value, ThisContext thisContext, int index, boolean isLocal) {
+		if (isLocal)
+			thisContext.temporaryAtPut(index, value);
+		throw new IllegalStateException("Temporary being put not local, need to handle.");
 	}
 
 	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {

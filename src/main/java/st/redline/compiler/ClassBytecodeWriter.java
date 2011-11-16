@@ -38,9 +38,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_VARIABLE_PUT_AT = "variablePutAt";
 	private static final String PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;Z)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_TEMPORARY_AT = "temporaryAt";
-	private static final String PRIMITIVE_TEMPORARY_AT_SIGNATURE = "(Lst/redline/ThisContext;I)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_TEMPORARY_AT_SIGNATURE = "(Lst/redline/ThisContext;IZ)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_TEMPORARY_PUT_AT = "temporaryPutAt";
-	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;I)V";
+	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;IZ)V";
 	private static final String PRIMITIVE_TEMPORARIES_INIT = "temporariesInit";
 	private static final String PRIMITIVE_TEMPORARIES_INIT_SIGNATURE = "(Lst/redline/ThisContext;I)V";
 	private static final String PRIMITIVE_PUT_AT = "putAt";
@@ -184,17 +184,19 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_TEMPORARIES_INIT, PRIMITIVE_TEMPORARIES_INIT_SIGNATURE);
 	}
 
-	public void callPrimitiveTemporaryAt(String value, int line, int index) {
+	public void callPrimitiveTemporaryAt(String value, int line, int index, boolean isLocal) {
 		visitLine(line);
 		stackPushThisContext();
 		stackPushNumeric(index);
+		stackPushBoolean(isLocal);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_TEMPORARY_AT, PRIMITIVE_TEMPORARY_AT_SIGNATURE);
 	}
 
-	public void callPrimitiveTemporaryPutAt(String value, int line, int index) {
+	public void callPrimitiveTemporaryPutAt(String value, int line, int index, boolean isLocal) {
 		visitLine(line);
 		stackPushThisContext();
 		stackPushNumeric(index);
+		stackPushBoolean(isLocal);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_TEMPORARY_PUT_AT, PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE);
 	}
 

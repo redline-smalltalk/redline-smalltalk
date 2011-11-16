@@ -1,3 +1,8 @@
+17/11/2011 Changes
+
+Working on blocks accessing temporary variables defined outside of the Block.
+
+
 15/11/2011 Changes
 
 Working on blocks within blocks. A few compiler issues.
