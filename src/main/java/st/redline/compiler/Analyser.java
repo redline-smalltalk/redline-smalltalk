@@ -5,10 +5,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import st.redline.Primitives;
-import st.redline.ProtoObject;
 
 public class Analyser implements NodeVisitor {
 
@@ -16,7 +14,8 @@ public class Analyser implements NodeVisitor {
 
 	protected final String className;
 	protected final String packageName;
-
+	private final Analyser containingAnalyser;
+	
 	protected ClassBytecodeWriter classBytecodeWriter;
 	private boolean sendToSuper = false;
 	private AbstractMethod currentMethod;
@@ -28,14 +27,15 @@ public class Analyser implements NodeVisitor {
 	private int blockSequence;
 
 	public Analyser(String className, String packageName) {
-		this(className, packageName, 0, false);
+		this(className, packageName, 0, false, null);
 	}
 
-	public Analyser(String className, String packageName, int countOfArguments, boolean isClassMethod) {
+	public Analyser(String className, String packageName, int countOfArguments, boolean isClassMethod, Analyser containingAnalyser) {
 		this.className = className;
 		this.packageName = packageName;
 		this.countOfArguments = countOfArguments;
 		this.isClassMethod = isClassMethod;
+		this.containingAnalyser = containingAnalyser;
 		initialize();
 	}
 
@@ -89,12 +89,13 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(VariableName variableName, String value, int line) {
+//		System.out.println("visitVariableName() " + value);
 		if (isTemporary(value)) {
-			Temporary temporary = temporariesRegistry.get(value);
+			Temporary temporary = temporaryAt(value);
 			if (variableName.isOnLoadSideOfExpression())
-				classBytecodeWriter.callPrimitiveTemporaryAt(value, line, temporary.index);
+				classBytecodeWriter.callPrimitiveTemporaryAt(value, line, temporary.index, isLocalTemporary(value));
 			else
-				classBytecodeWriter.callPrimitiveTemporaryPutAt(value, line, temporary.index);
+				classBytecodeWriter.callPrimitiveTemporaryPutAt(value, line, temporary.index, isLocalTemporary(value));
 		} else {
 			if (variableName.isOnLoadSideOfExpression()) {
 				if (isMethodArgument(value)) {
@@ -120,8 +121,24 @@ public class Analyser implements NodeVisitor {
 		return false;
 	}
 
-	private boolean isTemporary(String name) {
+	protected Temporary temporaryAt(String name) {
+		Temporary temporary = temporariesRegistry != null ? temporariesRegistry.get(name) : null;
+		if (temporary != null)
+			return temporary;
+		return containingAnalyser != null ? containingAnalyser.temporaryAt(name) : null;
+	}
+
+	protected boolean isTemporary(String name) {
+//		System.out.println("isTemporary() " + name + " " + (isLocalTemporary(name) || isOuterContextTemporary(name)));
+		return isLocalTemporary(name) || isOuterContextTemporary(name);
+	}
+
+	protected boolean isLocalTemporary(String name) {
 		return temporariesRegistry != null && temporariesRegistry.containsKey(name);
+	}
+
+	protected boolean isOuterContextTemporary(String name) {
+		return containingAnalyser != null && containingAnalyser.isTemporary(name);
 	}
 
 	public void visit(Statements statements) {

@@ -434,12 +434,18 @@ public class Primitives {
 		blocksToBeCompiled.put(name, block);
 	}
 
-	public static ProtoBlock compileBlock(ProtoObject receiver, String fullBlockName, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
+	public static ProtoBlock compileBlock(ProtoObject receiver, String fullBlockName, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod, ThisContext thisContext) {
 		// TODO.JCL clean this up.
-//		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
+//		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod + " " + thisContext);
 		if (blocksRegistry.containsKey(fullBlockName)) {
 //			System.out.println("** existing block ** " + fullBlockName);
-			return blocksRegistry.get(fullBlockName);
+			try {
+				ProtoBlock block = blocksRegistry.get(fullBlockName).getClass().newInstance();
+				block.outerContext(thisContext);
+				return block;
+			} catch (Exception e) {
+				throw new RedlineException(e);
+			}
 		}
 		Block blockToBeCompiled = blocksToBeCompiled.remove(fullBlockName);
 		if (blockToBeCompiled == null)
@@ -450,6 +456,7 @@ public class Primitives {
 		try {
 //			System.out.println("** Instantiating block ** " + fullBlockName);
 			ProtoBlock block = (ProtoBlock) blockClass.newInstance();
+			block.outerContext(thisContext);
 			blocksRegistry.put(fullBlockName, block);
 			return block;
 		} catch (Exception e) {
@@ -501,12 +508,24 @@ public class Primitives {
 		thisContext.temporariesInit(size);
 	}
 
-	public static ProtoObject temporaryAt(ThisContext thisContext, int index) {
-		return thisContext.temporaryAt(index);
+	public static ProtoObject temporaryAt(ProtoObject receiver, ThisContext thisContext, int index, boolean isLocal) {
+		if (isLocal)
+			return thisContext.temporaryAt(index);
+		ThisContext outerContext = receiver.outerContext();
+		if (outerContext != null)
+			return outerContext.temporaryAt(index);
+		throw new IllegalStateException("Temporary being fetched from invalid outerContext.");
 	}
 
-	public static void temporaryPutAt(ProtoObject value, ThisContext thisContext, int index) {
-		thisContext.temporaryAtPut(index, value);
+	public static void temporaryPutAt(ProtoObject value, ProtoObject receiver, ThisContext thisContext, int index, boolean isLocal) {
+		if (!isLocal) {
+			ThisContext outerContext = receiver.outerContext();
+			if (outerContext == null)
+				throw new IllegalStateException("Temporary being updated in invalid outerContext.");
+			outerContext.temporaryAtPut(index, value);
+		} else {
+			thisContext.temporaryAtPut(index, value);
+		}
 	}
 
 	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {

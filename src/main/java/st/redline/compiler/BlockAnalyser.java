@@ -27,7 +27,12 @@ public class BlockAnalyser extends MethodAnalyser {
 	}
 
 	public void visit(BlockVariableName blockVariableName, String value, int line) {
-//		System.out.println("visit(BlockVariable) " + value);
+//		System.out.println("Blockvisit(BlockVariableName) " + value);
 		registerMethodArgument(blockVariableName);
+	}
+
+	protected boolean isMethodArgument(String value) {
+//		System.out.println("BlockAnalyser.isMethodArgument() " + value + " " + super.isMethodArgument(value));
+		return super.isMethodArgument(value);
 	}
 }

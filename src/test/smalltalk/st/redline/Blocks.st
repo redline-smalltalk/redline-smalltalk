@@ -1,3 +1,4 @@
-
-[:var | Transcript show: var; cr; cr.] value: 'hello'.
+| tmp |
+tmp := 'Hello World'.
+[Transcript show: tmp; cr; cr.] value.
 
