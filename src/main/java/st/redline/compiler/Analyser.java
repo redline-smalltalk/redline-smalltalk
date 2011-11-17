@@ -129,7 +129,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	protected boolean isTemporary(String name) {
-		System.out.println("isTemporary() " + name + " " + (isLocalTemporary(name) || isOuterContextTemporary(name)));
+//		System.out.println("isTemporary() " + name + " " + (isLocalTemporary(name) || isOuterContextTemporary(name)));
 		return isLocalTemporary(name) || isOuterContextTemporary(name);
 	}
 

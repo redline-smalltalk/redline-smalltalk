@@ -38,9 +38,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_VARIABLE_PUT_AT = "variablePutAt";
 	private static final String PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;Z)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_TEMPORARY_AT = "temporaryAt";
-	private static final String PRIMITIVE_TEMPORARY_AT_SIGNATURE = "(Lst/redline/ThisContext;IZ)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_TEMPORARY_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;IZ)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_TEMPORARY_PUT_AT = "temporaryPutAt";
-	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;IZ)V";
+	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ThisContext;IZ)V";
 	private static final String PRIMITIVE_TEMPORARIES_INIT = "temporariesInit";
 	private static final String PRIMITIVE_TEMPORARIES_INIT_SIGNATURE = "(Lst/redline/ThisContext;I)V";
 	private static final String PRIMITIVE_PUT_AT = "putAt";
@@ -185,7 +185,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void callPrimitiveTemporaryAt(String value, int line, int index, boolean isLocal) {
-		visitLine(line);
+		stackPushReceiver(line);
 		stackPushThisContext();
 		stackPushNumeric(index);
 		stackPushBoolean(isLocal);
@@ -193,7 +193,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void callPrimitiveTemporaryPutAt(String value, int line, int index, boolean isLocal) {
-		visitLine(line);
+		stackPushReceiver(line);
 		stackPushThisContext();
 		stackPushNumeric(index);
 		stackPushBoolean(isLocal);
@@ -377,7 +377,8 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushLiteral(packageName);
 		stackPushNumeric(countOfArguments);
 		stackPushBoolean(isClassMethod);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "compileBlock", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZ)Lst/redline/ProtoBlock;");
+		stackPushThisContext();
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "compileBlock", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLst/redline/ThisContext;)Lst/redline/ProtoBlock;");
 	}
 
 	public void callToPrimitiveByNumber(int methodArgumentCount, int methodTemporariesCount, String primitive, int line) {

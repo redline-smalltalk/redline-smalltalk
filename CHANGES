@@ -1,24 +1,25 @@
+18/11/2011 Changes
+
+Block access to outercontext temporaries now working.
+Working on supporting same with outercontext fields.
+
 17/11/2011 Changes
 
 Working on blocks accessing temporary variables defined outside of the Block.
-
 
 15/11/2011 Changes
 
 Working on blocks within blocks. A few compiler issues.
 Made whileTrue: / whileFalse: on BlockClosures primitive.
 
-
 14/11/2011 Changes
 
 Added convieniance methods to ProtoObject for sending messages.
 Fixed bug with multi-blocks.
 
-
 13/11/2011 Changes
 
 Added Block applyTo method argument support.
-
 
 12/11/2011 Changes
 

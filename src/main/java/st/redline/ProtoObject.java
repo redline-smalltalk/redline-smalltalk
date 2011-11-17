@@ -123,6 +123,10 @@ public class ProtoObject {
 		}
 	}
 
+	public ThisContext outerContext() {
+		throw new IllegalStateException("Subclass should implement.");
+	}
+
 	private ClassLoader classLoader() {
 		return Thread.currentThread().getContextClassLoader();
 	}
