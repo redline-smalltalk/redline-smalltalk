@@ -1,3 +1,8 @@
+19/11/2011 Changes
+
+Block access to outcontext Method Arguments now working.
+Need to clean up method arguments to use an array everywhere.
+
 18/11/2011 Changes
 
 Block access to outercontext temporaries now working.

@@ -15,7 +15,7 @@ public class Analyser implements NodeVisitor {
 	protected final String className;
 	protected final String packageName;
 	private final Analyser containingAnalyser;
-	
+
 	protected ClassBytecodeWriter classBytecodeWriter;
 	private boolean sendToSuper = false;
 	private AbstractMethod currentMethod;
@@ -99,7 +99,7 @@ public class Analyser implements NodeVisitor {
 		} else {
 			if (variableName.isOnLoadSideOfExpression()) {
 				if (isMethodArgument(value)) {
-					loadMethodArgument(value);
+					loadMethodArgument(line, value, isLocalMethodArgument(value));
 				} else {
 					classBytecodeWriter.callPrimitiveVariableAt(value, line, isClassMethod);
 				}
@@ -113,12 +113,16 @@ public class Analyser implements NodeVisitor {
 		}
 	}
 
-	protected void loadMethodArgument(String value) {
+	protected void loadMethodArgument(int line, String value, boolean isLocal) {
 		throw new IllegalStateException("Subclass should implement.");
 	}
 
 	protected boolean isMethodArgument(String value) {
 		return false;
+	}
+
+	protected boolean isLocalMethodArgument(String value) {
+		return true;
 	}
 
 	protected Temporary temporaryAt(String name) {
@@ -139,6 +143,18 @@ public class Analyser implements NodeVisitor {
 
 	protected boolean isOuterContextTemporary(String name) {
 		return containingAnalyser != null && containingAnalyser.isTemporary(name);
+	}
+
+	protected boolean isOuterContextMethodArgument(String name) {
+		return containingAnalyser != null && containingAnalyser.isMethodArgument(name);
+	}
+
+	protected VariableName outerContextMethodArgument(String name) {
+		return containingAnalyser.methodArgument(name);
+	}
+
+	protected VariableName methodArgument(String name) {
+		throw new IllegalStateException("Subclass should implement.");
 	}
 
 	public void visit(Statements statements) {

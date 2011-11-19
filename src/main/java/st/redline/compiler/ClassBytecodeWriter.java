@@ -45,6 +45,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_TEMPORARIES_INIT_SIGNATURE = "(Lst/redline/ThisContext;I)V";
 	private static final String PRIMITIVE_PUT_AT = "putAt";
 	private static final String PRIMITIVE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT = "outerContextMethodArgumentAt";
+	private static final String PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT_SIGNATURE = "(Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
 	private static final String[] SEND_SIGNATURES = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
@@ -213,6 +215,12 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushReceiver(line);
 		stackPushBoolean(isClassMethod);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_VARIABLE_PUT_AT, PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE);
+	}
+
+	public void callOuterContextMethodArgumentAt(int methodArgumentIndex, int line) {
+		stackPushReceiver(line);
+		stackPushNumeric(methodArgumentIndex);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT, PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT_SIGNATURE);
 	}
 
 	public void stackPushLiteral(String value) {
