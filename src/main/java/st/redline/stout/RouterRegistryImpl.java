@@ -1,12 +1,15 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
+import st.redline.ProtoObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RouterRegistryImpl implements RouterRegistry {
+
     private RouterFactory routerFactory;
     private Map<String, List<Router>> routers = new HashMap<String, List<Router>>();
 
@@ -25,6 +28,10 @@ public class RouterRegistryImpl implements RouterRegistry {
             routers.put(method, new ArrayList<Router>());
         }
         return routers.get(method);
+    }
+
+    public Router lookup(ProtoObject path, ProtoObject method) {
+        return lookup((String) path.javaValue(), (String) method.javaValue());
     }
 
     public Router lookup(String path, String method) {
