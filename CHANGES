@@ -1,3 +1,7 @@
+20/11/2011 Changes
+
+Added bootstrap methods to accept each of the class creation cascade messages. 
+
 19/11/2011 Changes
 
 Block access to outcontext Method Arguments now working.
