@@ -7,7 +7,7 @@ import st.redline.ThisContext;
 
 public class PoolDictionariesMethod extends ProtoMethod {
 	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject poolDicts) {
-		System.out.println("PoolDictionariesMethod() " + receiver + " " + String.valueOf(poolDicts.javaValue()));
+		System.out.println("PoolDictionariesMethod() TODO " + receiver + " " + String.valueOf(poolDicts.javaValue()));
 		return receiver;
 	}
 }

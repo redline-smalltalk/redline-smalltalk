@@ -1,9 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-import st.redline.bootstrap.ClassSubclassMethod;
-import st.redline.bootstrap.ImportMethod;
-import st.redline.bootstrap.InstanceVariableNamesMethod;
+import st.redline.bootstrap.*;
 
 import java.io.File;
 
@@ -45,6 +43,10 @@ public class Bootstrapper {
 		protoObject.cls(protoObject);
 		protoObject.methodAtPut("<", new ClassSubclassMethod());
 		protoObject.methodAtPut("instanceVariableNames:", new InstanceVariableNamesMethod());
+		protoObject.methodAtPut("classVariableNames:", new ClassVariableNamesMethod());
+		protoObject.methodAtPut("classInstanceVariableNames:", new ClassInstanceVariableNamesMethod());
+		protoObject.methodAtPut("poolDictionaries:", new PoolDictionariesMethod());
+		protoObject.methodAtPut("category:", new CategoryMethod());
 		protoObject.methodAtPut("import:", new ImportMethod());
 	}
 

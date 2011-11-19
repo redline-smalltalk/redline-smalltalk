@@ -1,7 +1,12 @@
+20/11/2011 Changes
+
+Added bootstrap methods to accept each of the class creation cascade messages. 
+
 19/11/2011 Changes
 
 Block access to outcontext Method Arguments now working.
 Need to clean up method arguments to use an array everywhere.
+Added call to router in Stout. Next dispatch to block.
 
 18/11/2011 Changes
 

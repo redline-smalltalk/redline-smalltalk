@@ -19,4 +19,10 @@ Object < #Stout
 
 - handle: action on: target with: request and: response and: dispatch
     "handle http request type 'action' on 'target' uri."
-    Transcript show: target; cr; cr.
+    <varInsn: ALOAD, 1>.
+    <methodInsn: INVOKEVIRTUAL, 'st/redline/ProtoObject', 'javaValue', '()Ljava/lang/Object;'>.
+    <typeInsn: CHECKCAST, 'st/redline/stout/RouterRegistryImpl'>.
+    <varInsn: ALOAD, 4>.
+    <varInsn: ALOAD, 3>.
+    <methodInsn: INVOKEVIRTUAL, 'st/redline/stout/RouterRegistryImpl', 'lookup', '(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/stout/Router;'>.
+    <varInsn: ALOAD, 1>.
