@@ -434,12 +434,18 @@ public class Primitives {
 		blocksToBeCompiled.put(name, block);
 	}
 
-	public static ProtoBlock compileBlock(ProtoObject receiver, String fullBlockName, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
+	public static ProtoBlock compileBlock(ProtoObject receiver, String fullBlockName, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod, ThisContext thisContext) {
 		// TODO.JCL clean this up.
-//		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
+//		System.out.println("primitiveCompileBlock() " + receiver + " " + fullBlockName + " " + blockName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod + " " + thisContext);
 		if (blocksRegistry.containsKey(fullBlockName)) {
 //			System.out.println("** existing block ** " + fullBlockName);
-			return blocksRegistry.get(fullBlockName);
+			try {
+				ProtoBlock block = blocksRegistry.get(fullBlockName).getClass().newInstance();
+				block.outerContext(thisContext);
+				return block;
+			} catch (Exception e) {
+				throw new RedlineException(e);
+			}
 		}
 		Block blockToBeCompiled = blocksToBeCompiled.remove(fullBlockName);
 		if (blockToBeCompiled == null)
@@ -450,6 +456,7 @@ public class Primitives {
 		try {
 //			System.out.println("** Instantiating block ** " + fullBlockName);
 			ProtoBlock block = (ProtoBlock) blockClass.newInstance();
+			block.outerContext(thisContext);
 			blocksRegistry.put(fullBlockName, block);
 			return block;
 		} catch (Exception e) {
@@ -501,12 +508,28 @@ public class Primitives {
 		thisContext.temporariesInit(size);
 	}
 
-	public static ProtoObject temporaryAt(ThisContext thisContext, int index) {
-		return thisContext.temporaryAt(index);
+	public static ProtoObject outerContextMethodArgumentAt(ProtoObject receiver, int index) {
+		return receiver.outerContext().argumentAt(index);
 	}
 
-	public static void temporaryPutAt(ProtoObject value, ThisContext thisContext, int index) {
-		thisContext.temporaryAtPut(index, value);
+	public static ProtoObject temporaryAt(ProtoObject receiver, ThisContext thisContext, int index, boolean isLocal) {
+		if (isLocal)
+			return thisContext.temporaryAt(index);
+		ThisContext outerContext = receiver.outerContext();
+		if (outerContext != null)
+			return outerContext.temporaryAt(index);
+		throw new IllegalStateException("Temporary being fetched from invalid outerContext.");
+	}
+
+	public static void temporaryPutAt(ProtoObject value, ProtoObject receiver, ThisContext thisContext, int index, boolean isLocal) {
+		if (!isLocal) {
+			ThisContext outerContext = receiver.outerContext();
+			if (outerContext == null)
+				throw new IllegalStateException("Temporary being updated in invalid outerContext.");
+			outerContext.temporaryAtPut(index, value);
+		} else {
+			thisContext.temporaryAtPut(index, value);
+		}
 	}
 
 	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
@@ -559,11 +582,11 @@ public class Primitives {
 //		System.out.println("send " + receiver + " " + selector + " " + thisContext + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1);
+			return method.applyTo(receiver, new ThisContext(receiver.cls(), arg1), arg1);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1), arg1);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1});
 	}
 
@@ -571,11 +594,11 @@ public class Primitives {
 //		System.out.println("send " + receiver + " " + selector + " " + " " + thisContext + " arg1: " + arg1 + " arg2: " + arg2);
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2);
+			return method.applyTo(receiver, new ThisContext(receiver.cls(), arg1, arg2), arg1, arg2);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2), arg1, arg2);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2});
 	}
 
@@ -583,11 +606,11 @@ public class Primitives {
 //		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3);
+			return method.applyTo(receiver, new ThisContext(receiver.cls(), arg1, arg2, arg3), arg1, arg2, arg3);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3), arg1, arg2, arg3);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3});
 	}
 
@@ -595,44 +618,44 @@ public class Primitives {
 //		System.out.println("send " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3, arg4);
+			return method.applyTo(receiver, new ThisContext(receiver.cls(), arg1, arg2, arg3, arg4), arg1, arg2, arg3, arg4);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4), arg1, arg2, arg3, arg4);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4});
 	}
 
 	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ThisContext thisContext) {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3, arg4, arg5);
+			return method.applyTo(receiver, new ThisContext(receiver.cls(), arg1, arg2, arg3, arg4, arg5), arg1, arg2, arg3, arg4, arg5);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4, arg5), arg1, arg2, arg3, arg4, arg5);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
 	}
 
 	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ThisContext thisContext) {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3, arg4, arg5, arg6);
+			return method.applyTo(receiver, new ThisContext(receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6), arg1, arg2, arg3, arg4, arg5, arg6);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5, arg6);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6), arg1, arg2, arg3, arg4, arg5, arg6);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
 	}
 
 	public static ProtoObject send(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ThisContext thisContext) {
 		ProtoMethod method = receiver.cls().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(receiver.cls()), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+			return method.applyTo(receiver, new ThisContext(receiver.cls(), arg1, arg2, arg3, arg4, arg5, arg6, arg7), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(receiver.cls().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
 	}
 
@@ -652,77 +675,77 @@ public class Primitives {
 //		System.out.println("superSend " + receiver + " " + selector + " " + " " + classMethodWasFoundIn + " arg: " + arg1 );
 		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass(), arg1), arg1);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1), arg1);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1});
 	}
 
 	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, String selector, ThisContext thisContext) {
 		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass(), arg1, arg2), arg1, arg2);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2), arg1, arg2);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2});
 	}
 
 	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, String selector, ThisContext thisContext) {
 		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass(), arg1, arg2, arg3), arg1, arg2, arg3);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3), arg1, arg2, arg3);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3});
 	}
 
 	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, String selector, ThisContext thisContext) {
 		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3, arg4);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass(), arg1, arg2, arg3, arg4), arg1, arg2, arg3, arg4);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4), arg1, arg2, arg3, arg4);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4});
 	}
 
 	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, String selector, ThisContext thisContext) {
 		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3, arg4, arg5);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5), arg1, arg2, arg3, arg4, arg5);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4, arg5), arg1, arg2, arg3, arg4, arg5);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5});
 	}
 
 	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, String selector, ThisContext thisContext) {
 		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3, arg4, arg5, arg6);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5, arg6), arg1, arg2, arg3, arg4, arg5, arg6);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5, arg6);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6), arg1, arg2, arg3, arg4, arg5, arg6);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6});
 	}
 
 	public static ProtoObject superSend(ProtoObject receiver, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7, String selector, ThisContext thisContext) {
 		ProtoMethod method = thisContext.classMethodFoundIn.superclass().methodAt(selector);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass()), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+			return method.applyTo(receiver, new ThisContext(thisContext.classMethodFoundIn.superclass(), arg1, arg2, arg3, arg4, arg5, arg6, arg7), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		ProtoObject[] methodForResult = {null};
 		method = methodFor(thisContext.classMethodFoundIn.superclass().superclass(), selector, methodForResult);
 		if (method != null)
-			return method.applyTo(receiver, new ThisContext(methodForResult[0]), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
 	}
 }
