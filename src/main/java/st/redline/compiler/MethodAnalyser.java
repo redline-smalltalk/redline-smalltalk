@@ -28,12 +28,27 @@ public class MethodAnalyser extends Analyser {
 	}
 
 	protected boolean isMethodArgument(String value) {
+//		System.out.println("isMethodArgument() " + value + " " + isLocalMethodArgument(value) + " " + isOuterContextMethodArgument(value));
+		return isLocalMethodArgument(value) || isOuterContextMethodArgument(value);
+	}
+
+	protected boolean isLocalMethodArgument(String value) {
 		return argumentRegistry.containsKey(value);
 	}
 
-	protected void loadMethodArgument(String value) {
-		VariableName variableName = argumentRegistry.get(value);
-		classBytecodeWriter.stackPushLocal(variableName.index + 3);  // 0 = method, 1 = receiver, 2 = this context,, then local fields.
+	protected void loadMethodArgument(int line, String value, boolean isLocal) {
+//		System.out.println("loadMethodArgument() " + value + " " + isLocal);
+		if (isLocal) {
+			VariableName variableName = methodArgument(value);
+			classBytecodeWriter.stackPushLocal(variableName.index + 3);  // 0 = method, 1 = receiver, 2 = this context,, then local fields.
+		} else {
+			VariableName variableName = outerContextMethodArgument(value);
+			classBytecodeWriter.callOuterContextMethodArgumentAt(variableName.index, line);
+		}
+	}
+
+	protected VariableName methodArgument(String name) {
+		return argumentRegistry.get(name);
 	}
 
 	public void visit(BlockVariableName blockVariableName, String value, int line) {
