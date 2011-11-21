@@ -35,6 +35,7 @@ public interface NodeVisitor {
 	void visitEnd(Cascade cascade);
 	void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line);
 	void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription);
+	void visitEnd(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription);
 	void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, int argumentCount);
 	void visitEnd(KeywordMessageElement keywordMessageElement, String keyword, int line, int argumentCount);
 	void visit(UnaryObjectDescription unaryObjectDescription);
