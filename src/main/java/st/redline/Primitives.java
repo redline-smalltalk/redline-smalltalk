@@ -532,7 +532,7 @@ public class Primitives {
 		}
 	}
 
-	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
+	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod, ThisContext thisContext) throws ClassNotFoundException {
 //		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
 		ProtoObject value;
 		if ((value = receiver.variableAt(name)) != null)
@@ -542,7 +542,7 @@ public class Primitives {
 		return receiver.resolveObject(name);
 	}
 
-	public static ProtoObject variablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod) {
+	public static ProtoObject variablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod, ThisContext thisContext) {
 		if (receiver.variableAtPut(name, value) != null)
 			return receiver;
 		if (receiver.cls().variableAtPut(name, value) != null)
