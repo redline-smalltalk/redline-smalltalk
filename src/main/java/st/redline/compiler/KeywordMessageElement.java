@@ -23,6 +23,10 @@ public class KeywordMessageElement implements MessageElement {
 	}
 
 	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, keywords.toString(), line, binaryObjectDescriptions);
+		int argumentCount = binaryObjectDescriptions.size();
+		visitor.visit(this, keywords.toString(), line, argumentCount);
+		for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
+			binaryObjectDescription.accept(visitor);
+		visitor.visitEnd(this, keywords.toString(), line, argumentCount);
 	}
 }
