@@ -66,6 +66,7 @@
   </dependencies>
   
   <build>
+    <defaultGoal>test</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.antlr</groupId>
