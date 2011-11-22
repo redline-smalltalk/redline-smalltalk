@@ -90,3 +90,5 @@ ProtoObject < #Object
 - value
     ^ self.
   
++ testClassMethod
+    Transcript show: 'test'; cr.

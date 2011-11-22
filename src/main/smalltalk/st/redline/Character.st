@@ -8,6 +8,7 @@ Magnitude < #Character
 	category: ''.
 
 + initialize
+    Transcript show: 'initialize'; cr.
     CharacterTable ifNil: [
         CharacterTable := Array new: 256.
         1 to: 256 do: [:i | CharacterTable at: i put: (self basicNew setValue: i - 1)]].
@@ -21,3 +22,6 @@ Magnitude < #Character
     10 to: 35 do: [:i | DigitValues at: 55 + i + 1 put: i].
 
     10 to: 35 do: [:i | DigitValues at: 87 + i + 1 put: i].
+
++ value: anInteger
+    ^ CharacterTable at: anInteger.
