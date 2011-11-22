@@ -13,5 +13,7 @@ public class BinarySelectorMessageElement implements MessageElement {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this, binarySelector.value, binarySelector.line, unaryObjectDescription);
+		unaryObjectDescription.accept(visitor);
+		visitor.visitEnd(this, binarySelector.value, binarySelector.line, unaryObjectDescription);
 	}
 }

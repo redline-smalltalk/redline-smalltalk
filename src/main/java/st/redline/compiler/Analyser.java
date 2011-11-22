@@ -259,11 +259,17 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription) {
-		// System.out.println("TODO BinarySelectorMessageElement() " + value + " " + unaryObjectDescription);
 	}
 
-	public void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, List<BinaryObjectDescription> binaryObjectDescriptions) {
-		// System.out.println("TODO KeywordMessageElement() " + keyword + " " + binaryObjectDescriptions);
+	public void visitEnd(BinarySelectorMessageElement binarySelectorMessageElement, String value, int line, UnaryObjectDescription unaryObjectDescription) {
+		classBytecodeWriter.binarySend(value, line, sendToSuper);
+	}
+
+	public void visit(KeywordMessageElement keywordMessageElement, String keyword, int line, int argumentCount) {
+	}
+
+	public void visitEnd(KeywordMessageElement keywordMessageElement, String keyword, int line, int argumentCount) {
+		classBytecodeWriter.keywordSend(keyword, argumentCount, line, sendToSuper);
 	}
 
 	public void visit(UnaryObjectDescription unaryObjectDescription) {
