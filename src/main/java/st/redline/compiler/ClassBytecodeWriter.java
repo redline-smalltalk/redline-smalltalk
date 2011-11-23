@@ -34,9 +34,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_CHARACTER = "createCharacter";
 	private static final String PRIMITIVE_CHARACTER_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_VARIABLE_AT = "variableAt";
-	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Z)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;ZLst/redline/ThisContext;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_VARIABLE_PUT_AT = "variablePutAt";
-	private static final String PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;Z)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;ZLst/redline/ThisContext;)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_TEMPORARY_AT = "temporaryAt";
 	private static final String PRIMITIVE_TEMPORARY_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;IZ)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_TEMPORARY_PUT_AT = "temporaryPutAt";
@@ -206,6 +206,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushReceiver(line);
 		stackPushLiteral(value);
 		stackPushBoolean(isClassMethod);
+		stackPushThisContext();
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_VARIABLE_AT, PRIMITIVE_VARIABLE_AT_SIGNATURE);
 	}
 
@@ -214,6 +215,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		stackPushLiteral(value);
 		stackPushReceiver(line);
 		stackPushBoolean(isClassMethod);
+		stackPushThisContext();
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_VARIABLE_PUT_AT, PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE);
 	}
 

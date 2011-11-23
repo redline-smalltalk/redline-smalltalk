@@ -327,21 +327,16 @@ public class Primitives {
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name(name);
 		cls.superclass(superclass);
-
 		addToClassInitialisationRegistry(cls);
-
 		return cls;
 	}
 
 	protected static void addToClassInitialisationRegistry(ProtoObject cls) {
 		Stack<ProtoObject> classRegistry = classInitialisationRegistry.get();
-
 		if(classRegistry == null) {
 			classRegistry = new Stack<ProtoObject>();
-
 			classInitialisationRegistry.set(classRegistry);
 		}
-
 		classRegistry.push(cls);
 	}
 
@@ -553,7 +548,7 @@ public class Primitives {
 		}
 	}
 
-	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
+	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod, ThisContext thisContext) throws ClassNotFoundException {
 //		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
 		ProtoObject value;
 		if ((value = receiver.variableAt(name)) != null)
@@ -563,7 +558,7 @@ public class Primitives {
 		return receiver.resolveObject(name);
 	}
 
-	public static ProtoObject variablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod) {
+	public static ProtoObject variablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod, ThisContext thisContext) {
 		if (receiver.variableAtPut(name, value) != null)
 			return receiver;
 		if (receiver.cls().variableAtPut(name, value) != null)
@@ -772,13 +767,7 @@ public class Primitives {
 
 	public static void initialiseNewClasses() {
 		Stack<ProtoObject> classRegistry = classInitialisationRegistry.get();
-
-		if(classRegistry != null) {
-			while(!classRegistry.empty()) {
-				ProtoObject cls = classRegistry.pop();
-
-                send(cls, "initialize", null);
-			}
-		}
+		while(classRegistry != null && !classRegistry.empty())
+            send(classRegistry.pop(), "initialize", null);
 	}
 }

@@ -2,7 +2,7 @@
 package st.redline;
 
 import st.redline.bootstrap.*;
-import st.redline.compiler.InitializeMethod;
+import st.redline.bootstrap.InitializeMethod;
 
 import java.io.File;
 
