@@ -484,7 +484,14 @@ public class Primitives {
 		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove((isClassMethod ? "+" : "-") + fullMethodName);
 		if (methodToBeCompiled == null)
 			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
-		MethodAnalyser methodAnalyser = new MethodAnalyser(className + '$' + methodName, packageName, countOfArguments, isClassMethod, methodToBeCompiled.analyser());
+
+        final String fullyQualifiedMethodName;
+        if(isClassMethod)
+            fullyQualifiedMethodName = String.format("%s$$%s", className, methodName);
+        else
+            fullyQualifiedMethodName = String.format("%s$%s", className, methodName);
+
+		MethodAnalyser methodAnalyser = new MethodAnalyser(fullyQualifiedMethodName, packageName, countOfArguments, isClassMethod, methodToBeCompiled.analyser());
 		methodToBeCompiled.accept(methodAnalyser);
 		Class methodClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(methodAnalyser.classBytes());
 		ProtoMethod method;
@@ -770,10 +777,7 @@ public class Primitives {
 			while(!classRegistry.empty()) {
 				ProtoObject cls = classRegistry.pop();
 
-				ProtoMethod method = cls.methodAt("initialize");
-				if(method != null) {
-					send(cls, "initialize", new ThisContext(cls));
-				}
+                send(cls, "initialize", null);
 			}
 		}
 	}

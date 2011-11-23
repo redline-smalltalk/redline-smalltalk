@@ -8,11 +8,12 @@ Magnitude < #Character
 	category: ''.
 
 + initialize
-    Transcript show: 'initialize'; cr.
+    Transcript show: 'Character class >> initialize'; cr.
+"
     CharacterTable ifNil: [
         CharacterTable := Array new: 256.
         1 to: 256 do: [:i | CharacterTable at: i put: (self basicNew setValue: i - 1)]].
-    self initializeDigitValues.
+    self initializeDigitValues."
 
 + initializeDigitValues
     DigitValues := Array new: 256 withAll: -1.
@@ -25,3 +26,7 @@ Magnitude < #Character
 
 + value: anInteger
     ^ CharacterTable at: anInteger.
+
+- setValue: anInteger
+    value ifNotNil: [ ^ self error: 'Character objects are immutable' ].
+    value := anInteger.

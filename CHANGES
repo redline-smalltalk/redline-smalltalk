@@ -1,3 +1,7 @@
+22/11/2011 Changes
+
+Ensuring that the class initialize method gets invoked for each created class.
+
 21/11/2011 Changes
 
 Added cascaded KeywordMessageElement processing.
