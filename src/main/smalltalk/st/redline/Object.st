@@ -2,6 +2,9 @@
 
 ProtoObject < #Object
 
++ initialize
+	"Subclasses should redefine this method to perform initializations on Class creation"
+
 - initialize
 	"Subclasses should redefine this method to perform initializations on instance creation"
 
@@ -90,3 +93,5 @@ ProtoObject < #Object
 - value
     ^ self.
   
++ testClassMethod
+    Transcript show: 'test'; cr.

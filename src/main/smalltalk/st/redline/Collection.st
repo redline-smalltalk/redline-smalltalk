@@ -82,3 +82,7 @@ Object < #Collection
 - includes: anObject
     self do: [ :each | anObject == each ifTrue: [ ^ true ]].
     ^ false.
+
+"enumerating"
+- do: aBlock
+    self subclassResponsibility.

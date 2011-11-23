@@ -2,6 +2,7 @@
 package st.redline;
 
 import st.redline.bootstrap.*;
+import st.redline.compiler.InitializeMethod;
 
 import java.io.File;
 
@@ -48,6 +49,7 @@ public class Bootstrapper {
 		protoObject.methodAtPut("poolDictionaries:", new PoolDictionariesMethod());
 		protoObject.methodAtPut("category:", new CategoryMethod());
 		protoObject.methodAtPut("import:", new ImportMethod());
+        protoObject.methodAtPut("initialize", new InitializeMethod());
 	}
 
 	private void markBootstrapping(boolean bootstrapping) {
