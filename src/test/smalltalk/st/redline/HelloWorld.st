@@ -1,3 +1,6 @@
 
-Transcript show: 'Hello World.'; cr; cr.
+"Transcript show: 'Hello World.'; cr; cr."
+
+Object testClassMethod.
+
 

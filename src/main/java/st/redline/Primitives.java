@@ -1,10 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-import st.redline.compiler.AbstractMethod;
-import st.redline.compiler.Block;
-import st.redline.compiler.BlockAnalyser;
-import st.redline.compiler.MethodAnalyser;
+import st.redline.compiler.*;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -17,6 +14,7 @@ public class Primitives {
 	private static final Map<String, AbstractMethod> methodsToBeCompiled = new HashMap<String, AbstractMethod>();
 	private static final Map<String, Block> blocksToBeCompiled = new HashMap<String, Block>();
 	private static final Map<String, ProtoBlock> blocksRegistry = new HashMap<String, ProtoBlock>();
+	private static final ThreadLocal<Stack<ProtoObject>> classInitialisationRegistry = new ThreadLocal<Stack<ProtoObject>>();
 
 	public static ProtoObject p1(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		return instanceLike(receiver).javaValue(((BigInteger) receiver.javaValue()).add((BigInteger) arg1.javaValue()));
@@ -329,7 +327,17 @@ public class Primitives {
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name(name);
 		cls.superclass(superclass);
+		addToClassInitialisationRegistry(cls);
 		return cls;
+	}
+
+	protected static void addToClassInitialisationRegistry(ProtoObject cls) {
+		Stack<ProtoObject> classRegistry = classInitialisationRegistry.get();
+		if(classRegistry == null) {
+			classRegistry = new Stack<ProtoObject>();
+			classInitialisationRegistry.set(classRegistry);
+		}
+		classRegistry.push(cls);
 	}
 
 	public static ProtoObject createEigenSubclass(ProtoObject superclass, String name, ProtoObject loader) throws ClassNotFoundException {
@@ -422,9 +430,10 @@ public class Primitives {
 	}
 
 	public static void registerMethodToBeCompiledAs(AbstractMethod method, String name) {
-		if (methodsToBeCompiled.containsKey(name))
-			throw new IllegalStateException("Method to be compiled registered twice: " + name);
-		methodsToBeCompiled.put(name, method);
+		String methodName = (method instanceof ClassMethod ? "+" : "-") + name;
+		if (methodsToBeCompiled.containsKey(methodName))
+			throw new IllegalStateException("Method to be compiled registered twice: " + methodName);
+		methodsToBeCompiled.put(methodName, method);
 	}
 
 	public static void registerBlockToBeCompiledAs(Block block, String name) {
@@ -467,10 +476,17 @@ public class Primitives {
 	public static void compileMethod(ProtoObject receiver, String fullMethodName, String methodName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
 		// TODO.JCL clean this up.
 //		System.out.println("primitiveCompileMethod() " + receiver + " " + fullMethodName + " " + methodName + " " + className + " " + packageName + " " + countOfArguments + " " + isClassMethod);
-		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove(fullMethodName);
+		AbstractMethod methodToBeCompiled = methodsToBeCompiled.remove((isClassMethod ? "+" : "-") + fullMethodName);
 		if (methodToBeCompiled == null)
 			throw new IllegalStateException("Method to be compiled '" + fullMethodName + "' not found.");
-		MethodAnalyser methodAnalyser = new MethodAnalyser(className + '$' + methodName, packageName, countOfArguments, isClassMethod, methodToBeCompiled.analyser());
+
+        final String fullyQualifiedMethodName;
+        if(isClassMethod)
+            fullyQualifiedMethodName = String.format("%s$$%s", className, methodName);
+        else
+            fullyQualifiedMethodName = String.format("%s$%s", className, methodName);
+
+		MethodAnalyser methodAnalyser = new MethodAnalyser(fullyQualifiedMethodName, packageName, countOfArguments, isClassMethod, methodToBeCompiled.analyser());
 		methodToBeCompiled.accept(methodAnalyser);
 		Class methodClass = ((SmalltalkClassLoader) Thread.currentThread().getContextClassLoader()).defineClass(methodAnalyser.classBytes());
 		ProtoMethod method;
@@ -747,5 +763,11 @@ public class Primitives {
 		if (method != null)
 			return method.applyTo(receiver, new ThisContext(methodForResult[0], arg1, arg2, arg3, arg4, arg5, arg6, arg7), arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		return sendDoesNotUnderstand(receiver, selector, thisContext, new ProtoObject[]{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
+	}
+
+	public static void initialiseNewClasses() {
+		Stack<ProtoObject> classRegistry = classInitialisationRegistry.get();
+		while(classRegistry != null && !classRegistry.empty())
+            send(classRegistry.pop(), "initialize", null);
 	}
 }

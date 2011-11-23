@@ -1,6 +1,11 @@
+23/11/2011 Changes
+
+Merges upstream changes, fixed conflicts and added meven plugin compiler version.
+
 22/11/2011 Changes
 
 Added argument to variable lookup to cater for outercontext lookups when in blocks.
+Ensuring that the class initialize method gets invoked for each created class.
 
 21/11/2011 Changes
 
