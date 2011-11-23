@@ -551,13 +551,13 @@ public class Primitives {
 	}
 
 	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
-//		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
+		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
 		ProtoObject theReceiver = receiver.isBlock() ? ((ProtoBlock) receiver).outerReceiver() : receiver;
 		ProtoObject value;
 		if ((value = theReceiver.variableAt(name)) != null)
 			return value;
-		if ((value = theReceiver.cls().variableAt(name)) != null)
-			return value;
+//		if ((value = theReceiver.cls().variableAt(name)) != null)
+//			return value;
 		return theReceiver.resolveObject(name);
 	}
 
@@ -565,8 +565,8 @@ public class Primitives {
 		ProtoObject theReceiver = receiver.isBlock() ? ((ProtoBlock) receiver).outerReceiver() : receiver;
 		if (theReceiver.variableAtPut(name, value) != null)
 			return receiver;
-		if (theReceiver.cls().variableAtPut(name, value) != null)
-			return receiver;
+//		if (theReceiver.cls().variableAtPut(name, value) != null)
+//			return receiver;
 		throw new IllegalStateException("'Variable '" + name + "' not found.");
 	}
 
