@@ -4,6 +4,7 @@ package st.redline;
 public class ProtoBlock extends ProtoMethod {
 
 	private ThisContext thisContext;
+	private ProtoObject outerReceiver;
 
 	public ProtoBlock() {
 		try {
@@ -12,6 +13,10 @@ public class ProtoBlock extends ProtoMethod {
 		} catch (ClassNotFoundException e) {
 			throw new RedlineException(e);
 		}
+	}
+
+	public boolean isBlock() {
+		return true;
 	}
 
 	protected RuntimeException subclassShouldHaveImplemented(int argumentCount) {
@@ -24,5 +29,13 @@ public class ProtoBlock extends ProtoMethod {
 
 	public ThisContext outerContext() {
 		return thisContext;
+	}
+
+	public void outerReceiver(ProtoObject outerReceiver) {
+		this.outerReceiver = outerReceiver;
+	}
+
+	public ProtoObject outerReceiver() {
+		return outerReceiver;
 	}
 }

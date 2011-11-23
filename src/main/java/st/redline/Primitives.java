@@ -451,6 +451,7 @@ public class Primitives {
 			try {
 				ProtoBlock block = blocksRegistry.get(fullBlockName).getClass().newInstance();
 				block.outerContext(thisContext);
+				block.outerReceiver(receiver);
 				return block;
 			} catch (Exception e) {
 				throw new RedlineException(e);
@@ -466,6 +467,7 @@ public class Primitives {
 //			System.out.println("** Instantiating block ** " + fullBlockName);
 			ProtoBlock block = (ProtoBlock) blockClass.newInstance();
 			block.outerContext(thisContext);
+			block.outerReceiver(receiver);
 			blocksRegistry.put(fullBlockName, block);
 			return block;
 		} catch (Exception e) {
@@ -548,20 +550,22 @@ public class Primitives {
 		}
 	}
 
-	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod, ThisContext thisContext) throws ClassNotFoundException {
+	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
 //		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
+		ProtoObject theReceiver = receiver.isBlock() ? ((ProtoBlock) receiver).outerReceiver() : receiver;
 		ProtoObject value;
-		if ((value = receiver.variableAt(name)) != null)
+		if ((value = theReceiver.variableAt(name)) != null)
 			return value;
-		if ((value = receiver.cls().variableAt(name)) != null)
+		if ((value = theReceiver.cls().variableAt(name)) != null)
 			return value;
-		return receiver.resolveObject(name);
+		return theReceiver.resolveObject(name);
 	}
 
-	public static ProtoObject variablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod, ThisContext thisContext) {
-		if (receiver.variableAtPut(name, value) != null)
+	public static ProtoObject variablePutAt(ProtoObject value, String name, ProtoObject receiver, boolean isClassMethod) {
+		ProtoObject theReceiver = receiver.isBlock() ? ((ProtoBlock) receiver).outerReceiver() : receiver;
+		if (theReceiver.variableAtPut(name, value) != null)
 			return receiver;
-		if (receiver.cls().variableAtPut(name, value) != null)
+		if (theReceiver.cls().variableAtPut(name, value) != null)
 			return receiver;
 		throw new IllegalStateException("'Variable '" + name + "' not found.");
 	}
