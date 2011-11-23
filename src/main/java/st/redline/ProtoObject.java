@@ -47,6 +47,10 @@ public class ProtoObject {
 		initialize();
 	}
 
+	public boolean isBlock() {
+		return false;
+	}
+
 	protected static ProtoObject resolveObject(ProtoObject receiver, String name) throws ClassNotFoundException {
 		return receiver.resolveObject(name);
 	}
@@ -245,6 +249,7 @@ public class ProtoObject {
 	}
 
 	protected ProtoObject variableAt(String name) {
+//		System.out.println("variableAt() " + name + " " + (variables != null ? variables.get(name) : null));
 		return variables != null ? variables.get(name) : null;
 	}
 
