@@ -1,3 +1,8 @@
+25/11/2011 Changes
+
+Full block access to outside variables.
+Fixed bug with creation of variables.
+
 24/11/2011 Changes
 
 Finished Block access to variables outside of the block.

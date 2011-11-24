@@ -551,7 +551,7 @@ public class Primitives {
 	}
 
 	public static ProtoObject variableAt(ProtoObject receiver, String name, boolean isClassMethod) throws ClassNotFoundException {
-		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
+//		System.out.println("variableAt() " + receiver + " " + name + " " + isClassMethod);
 		ProtoObject theReceiver = receiver.isBlock() ? ((ProtoBlock) receiver).outerReceiver() : receiver;
 		ProtoObject value;
 		if ((value = theReceiver.variableAt(name)) != null)

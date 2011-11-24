@@ -7,7 +7,8 @@ import st.redline.ThisContext;
 
 public class ClassInstanceVariableNamesMethod extends ProtoMethod {
 	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject argument) {
-		System.out.println("ClassInstanceVariableNamesMethod() TODO " + receiver + " " + String.valueOf(argument.javaValue()));
+		System.out.println("ClassInstanceVariableNamesMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
+		addClassInstanceVariableNames(receiver, String.valueOf(argument.javaValue()));
 		return receiver;
 	}
 }
