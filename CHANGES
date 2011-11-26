@@ -1,3 +1,7 @@
+26/11/2011
+
+Added support for nexted expressions, ie: (expression).
+
 25/11/2011 Changes
 
 Full block access to outside variables.
