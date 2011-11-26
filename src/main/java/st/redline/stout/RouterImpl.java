@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
+import st.redline.Primitives;
+import st.redline.ProtoBlock;
 import st.redline.ProtoObject;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,11 +11,12 @@ import java.io.Writer;
 import java.util.Map;
 
 public class RouterImpl implements Router {
+
     private ResponseSerializer responseSerializer;
-    private Block block;
+    private ProtoBlock block;
     private RequestPathSpecification requestPathSpecification;
 
-    public RouterImpl(ResponseSerializer responseSerializer, Block block,
+    public RouterImpl(ResponseSerializer responseSerializer, ProtoBlock block,
                       RequestPathSpecification requestPathSpecification) {
         this.responseSerializer = responseSerializer;
         this.block = block;
@@ -21,10 +24,11 @@ public class RouterImpl implements Router {
     }
 
     public void dispatchToBlock(ProtoObject servletResponse, ProtoObject requestPath) throws IOException {
-        System.out.println("dispatchToBlock()" + servletResponse + " " + requestPath);
+        dispatchToBlock((HttpServletResponse) servletResponse.javaValue(), (String) requestPath.javaValue());
     }
 
     public void dispatchToBlock(HttpServletResponse servletResponse, String requestPath) throws IOException {
+//        System.out.println("dispatchToBlock()" + servletResponse + " " + requestPath);
         Map<String, String> parameters = retrieveParametersAccordingToSpecification(requestPath);
         Object responseValue = invokeTargetBlock(parameters);
         String response = serializeResponse(responseValue);
@@ -46,7 +50,8 @@ public class RouterImpl implements Router {
     }
 
     private Object invokeTargetBlock(Map<String, String> parameters) {
-        return block.applyTo(parameters);
+	    System.out.println("**** TODO: ADD parameters to block value call ****");
+        return Primitives.send(block, "value", null);
     }
 
     private Map<String, String> retrieveParametersAccordingToSpecification(String requestPath) {

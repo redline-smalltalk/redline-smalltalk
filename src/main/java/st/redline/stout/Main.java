@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
+import st.redline.ProtoBlock;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +21,7 @@ public class Main {
 
     private static void registerRouter(RouterRegistry routerRegistry) {
         String spec = "/user/:id";
-        routerRegistry.register(spec, "JSON", "get", new Block() {
+        routerRegistry.register(spec, "JSON", "get", new ProtoBlock() {
             public Object applyTo(Object... parameters) {
                 return "hello world";
             }

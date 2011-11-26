@@ -5,6 +5,7 @@ import org.easymock.EasyMockSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import st.redline.ProtoBlock;
 import st.redline.stout.*;
 
 import java.util.UUID;
@@ -26,8 +27,8 @@ public class RouterRegistryImplTest extends EasyMockSupport {
         String expectedPathMatchesWithSpec2 = createRandomString();
         String type = createRandomString();
         String method = createRandomString();
-        Block block1 = createMock(Block.class);
-        Block block2 = createMock(Block.class);
+        ProtoBlock block1 = createMock(ProtoBlock.class);
+        ProtoBlock block2 = createMock(ProtoBlock.class);
 
         Router expectedRouterForSpec1 = expectCreateRouter(spec1, type, block1, expectedPathMatchesWithSpec1);
         Router expectedRouterForSpec2 = expectCreateRouter(spec2, type, block2, expectedPathMatchesWithSpec2);
@@ -51,8 +52,8 @@ public class RouterRegistryImplTest extends EasyMockSupport {
         String type = createRandomString();
         String method1 = createRandomString();
         String method2 = createRandomString();
-        Block block1 = createMock(Block.class);
-        Block block2 = createMock(Block.class);
+        ProtoBlock block1 = createMock(ProtoBlock.class);
+        ProtoBlock block2 = createMock(ProtoBlock.class);
 
         Router expectedRouterForMethod1 = expectCreateRouter(spec1, type, block1, expectedPathMatchesWithSpec);
         Router expectedRouterForMethod2 = expectCreateRouter(spec2, type, block2, expectedPathMatchesWithSpec);
@@ -73,7 +74,7 @@ public class RouterRegistryImplTest extends EasyMockSupport {
         assertSame(NoOpRouter.INSTANCE, routerRegistry.lookup(createRandomString(), createRandomString()));
     }
 
-    private Router expectCreateRouter(String spec, String type, Block block, String expectedPathMatchesWithSpec) {
+    private Router expectCreateRouter(String spec, String type, ProtoBlock block, String expectedPathMatchesWithSpec) {
         Router router = createMock(Router.class);
 
         expect(routerFactory.create(spec, type, block)).andReturn(router);
