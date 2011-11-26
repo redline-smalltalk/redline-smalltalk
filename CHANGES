@@ -2,6 +2,8 @@
 
 Added support for nexted expressions, ie: (expression).
 Added primitive support for [] whileNil: and whileNotNil:.
+Added support for dispath in Stout.
+Changed call from INVOKEVIRTUAL to INVOKEINTERFACE. NoOp router being called.
 
 25/11/2011 Changes
 

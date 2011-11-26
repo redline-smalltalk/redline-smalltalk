@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
+import st.redline.ProtoObject;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
@@ -16,6 +18,10 @@ public class RouterImpl implements Router {
         this.responseSerializer = responseSerializer;
         this.block = block;
         this.requestPathSpecification = requestPathSpecification;
+    }
+
+    public void dispatchToBlock(ProtoObject servletResponse, ProtoObject requestPath) throws IOException {
+        System.out.println("dispatchToBlock()" + servletResponse + " " + requestPath);
     }
 
     public void dispatchToBlock(HttpServletResponse servletResponse, String requestPath) throws IOException {

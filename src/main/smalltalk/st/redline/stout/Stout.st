@@ -21,8 +21,11 @@ Object < #Stout
     "handle http request type 'action' on 'target' uri."
     <varInsn: ALOAD, 1>.
     <methodInsn: INVOKEVIRTUAL, 'st/redline/ProtoObject', 'javaValue', '()Ljava/lang/Object;'>.
-    <typeInsn: CHECKCAST, 'st/redline/stout/RouterRegistryImpl'>.
+    <typeInsn: CHECKCAST, 'st/redline/stout/RouterRegistry'>.
     <varInsn: ALOAD, 4>.
     <varInsn: ALOAD, 3>.
-    <methodInsn: INVOKEVIRTUAL, 'st/redline/stout/RouterRegistryImpl', 'lookup', '(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/stout/Router;'>.
+    <methodInsn: INVOKEINTERFACE, 'st/redline/stout/RouterRegistry', 'lookup', '(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)Lst/redline/stout/Router;'>.
+    <varInsn: ALOAD, 5>.
+    <varInsn: ALOAD, 3>.
+    <methodInsn: INVOKEINTERFACE, 'st/redline/stout/Router', 'dispatchToBlock', '(Lst/redline/ProtoObject;Lst/redline/ProtoObject;)V'>.
     <varInsn: ALOAD, 1>.
