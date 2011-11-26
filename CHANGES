@@ -1,6 +1,7 @@
 26/11/2011
 
 Added support for nexted expressions, ie: (expression).
+Added primitive support for [] whileNil: and whileNotNil:.
 
 25/11/2011 Changes
 
