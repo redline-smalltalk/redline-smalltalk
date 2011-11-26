@@ -45,4 +45,12 @@ public class ProtoMethod extends ProtoObject {
 	protected void addVariableNames(ProtoObject receiver, String variableNames) {
 		Primitives.addVariables(receiver, variableNames);
 	}
+
+	protected void addInstanceVariableNames(ProtoObject receiver, String variableNames) {
+		Primitives.addInstanceVariables(receiver, variableNames);
+	}
+
+	protected void addClassInstanceVariableNames(ProtoObject receiver, String variableNames) {
+		Primitives.addClassInstanceVariables(receiver, variableNames);
+	}
 }

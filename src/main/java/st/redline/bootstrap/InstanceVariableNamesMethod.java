@@ -8,7 +8,7 @@ import st.redline.ThisContext;
 public class InstanceVariableNamesMethod extends ProtoMethod {
 	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject argument) {
 //		System.out.println("InstanceVariableNamesMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
-		addVariableNames(receiver, String.valueOf(argument.javaValue()));
+		addInstanceVariableNames(receiver, String.valueOf(argument.javaValue()));
 		return receiver;
 	}
 }

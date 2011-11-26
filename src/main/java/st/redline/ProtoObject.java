@@ -249,7 +249,7 @@ public class ProtoObject {
 	}
 
 	protected ProtoObject variableAt(String name) {
-//		System.out.println("variableAt() " + name + " " + (variables != null ? variables.get(name) : null));
+//		System.out.println("variableAt() " + this + " " + name + " " + (variables != null ? variables.get(name) : null));
 		return variables != null ? variables.get(name) : null;
 	}
 

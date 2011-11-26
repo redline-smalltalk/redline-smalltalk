@@ -11,5 +11,7 @@ public class PrimaryExpression extends BasePrimary {
 
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
+		expression.leaveResultOnStack();
+		expression.accept(visitor);
 	}
 }
