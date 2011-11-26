@@ -31,10 +31,10 @@ Object < #BlockClosure
     <primitive: 211>
 
 - whileNil: aBlock
-    ^ [self value isNil] whileTrue: [aBlock value].
+    <primitive: 213>
 
 - whileNotNil: aBlock
-    ^ [self value notNil] whileTrue: [aBlock value].
+    <primitive: 212>
 
 - whileTrue
     "Evaluate the receiver, as long as its value is true."

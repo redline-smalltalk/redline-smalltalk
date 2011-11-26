@@ -257,6 +257,40 @@ public class Primitives {
 		};
 	}
 
+	public static ProtoObject p212(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		ProtoBlock aBlock = callback212(receiver, thisContext, arg1);
+		send(send(send(receiver, "value", thisContext), "notNil", thisContext), aBlock, "ifTrue:", thisContext);
+		return ProtoObject.NIL;
+	}
+
+	private static ProtoBlock callback212(final ProtoObject receiver, final ThisContext thisContext, final ProtoObject trueBlock) {
+		return new ProtoBlock() {
+			public ProtoObject applyTo(ProtoObject r, ThisContext t) {
+				System.out.println("callback212() evaluating true block.");
+				Primitives.send(trueBlock, "value", thisContext);
+				Primitives.send(Primitives.send(Primitives.send(receiver, "value", thisContext), "notNil", thisContext), this, "ifTrue:", thisContext);
+				return ProtoObject.NIL;
+			}
+		};
+	}
+
+	public static ProtoObject p213(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		ProtoBlock aBlock = callback213(receiver, thisContext, arg1);
+		send(send(send(receiver, "value", thisContext), "isNil", thisContext), aBlock, "ifTrue:", thisContext);
+		return ProtoObject.NIL;
+	}
+
+	private static ProtoBlock callback213(final ProtoObject receiver, final ThisContext thisContext, final ProtoObject trueBlock) {
+		return new ProtoBlock() {
+			public ProtoObject applyTo(ProtoObject r, ThisContext t) {
+				System.out.println("callback213() evaluating true block.");
+				Primitives.send(trueBlock, "value", thisContext);
+				Primitives.send(Primitives.send(Primitives.send(receiver, "value", thisContext), "isNil", thisContext), this, "ifTrue:", thisContext);
+				return ProtoObject.NIL;
+			}
+		};
+	}
+
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
 		// answers receiver.
 //		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);
