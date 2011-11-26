@@ -6,6 +6,7 @@ Added support for dispath in Stout.
 Changed call from INVOKEVIRTUAL to INVOKEINTERFACE. NoOp router being called.
 Added routing support for Stout. Can now invoke blocks based on route.
 Add [] whileTrue/whileFalse support
+Fixed variable registration to not try and register "" as a variable
 
 25/11/2011 Changes
 

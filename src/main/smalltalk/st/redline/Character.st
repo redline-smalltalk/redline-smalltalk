@@ -2,15 +2,14 @@
 
 Magnitude < #Character
 	instanceVariableNames: 'value';
-	classVariableNames: 'CharacterTable DigitValues';
 	classInstanceVariableNames: '';
+	classVariableNames: 'CharacterTable DigitValues';
 	poolDictionaries: '';
 	category: ''.
 
 + initialize
     Transcript show: 'Character class >> initialize'; cr.
-"
-    CharacterTable ifNil: [
+"    CharacterTable ifNil: [
         CharacterTable := Array new: 256.
         1 to: 256 do: [:i | CharacterTable at: i put: (self basicNew setValue: i - 1)]].
     self initializeDigitValues."

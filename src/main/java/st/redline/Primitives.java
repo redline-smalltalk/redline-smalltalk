@@ -438,7 +438,8 @@ public class Primitives {
 		if (variables == null)
 			receiver.variables(ProtoObject.variablesMapInstance());
 		for (String variable : inputVariables.split(" "))
-			addVariable(receiver, variable);
+            if(!variable.isEmpty())
+			    addVariable(receiver, variable);
 	}
 
 	private static void addVariable(ProtoObject receiver, String variable) {
@@ -452,7 +453,8 @@ public class Primitives {
 		if (variables == null)
 			receiver.instanceVariables(ProtoObject.variablesMapInstance());
 		for (String variable : inputVariables.split(" "))
-			addInstanceVariable(receiver, variable);
+            if(!variable.isEmpty())
+			    addInstanceVariable(receiver, variable);
 	}
 
 	private static void addInstanceVariable(ProtoObject receiver, String variable) {
@@ -468,7 +470,8 @@ public class Primitives {
 		if (variables == null)
 			receiver.cls().variables(ProtoObject.variablesMapInstance());
 		for (String variable : inputVariables.split(" "))
-			addClassInstanceVariable(receiver, variable, true);
+            if(!variable.isEmpty())
+			    addClassInstanceVariable(receiver, variable, true);
 	}
 
 	public static void addClassInstanceVariable(ProtoObject receiver, String variable, boolean noDuplicates) {
