@@ -1,3 +1,7 @@
+27/11/2011
+
+Modified whileTrue/whileFalse support to ensure block yield responds to ifTrue:/ifFalse:
+
 26/11/2011
 
 Added support for nexted expressions, ie: (expression).
