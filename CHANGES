@@ -5,6 +5,7 @@ Added primitive support for [] whileNil: and whileNotNil:.
 Added support for dispath in Stout.
 Changed call from INVOKEVIRTUAL to INVOKEINTERFACE. NoOp router being called.
 Added routing support for Stout. Can now invoke blocks based on route.
+Add [] whileTrue/whileFalse support
 
 25/11/2011 Changes
 
