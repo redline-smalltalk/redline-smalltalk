@@ -8,6 +8,7 @@ Added routing support for Stout. Can now invoke blocks based on route.
 Add [] whileTrue/whileFalse support
 Fixed variable registration to not try and register "" as a variable
 Added a simple test runner to the integration-test phase of Maven
+Added a simple assertion facility in Assert.st
 
 25/11/2011 Changes
 

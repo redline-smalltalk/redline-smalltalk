@@ -307,6 +307,10 @@ public class Primitives {
         return ProtoObject.NIL;
     }
 
+    public static ProtoObject p216(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+        throw RedlineException.withMessage(arg1.javaValue().toString());
+    }
+
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
 		// answers receiver.
 //		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);
