@@ -309,6 +309,10 @@ public class Primitives {
 		};
 	}
 
+    public static ProtoObject p216(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+        throw RedlineException.withMessage(arg1.javaValue().toString());
+    }
+
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
 		// answers receiver.
 //		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);
@@ -440,7 +444,8 @@ public class Primitives {
 		if (variables == null)
 			receiver.variables(ProtoObject.variablesMapInstance());
 		for (String variable : inputVariables.split(" "))
-			addVariable(receiver, variable);
+            if(!variable.isEmpty())
+			    addVariable(receiver, variable);
 	}
 
 	private static void addVariable(ProtoObject receiver, String variable) {
@@ -454,7 +459,8 @@ public class Primitives {
 		if (variables == null)
 			receiver.instanceVariables(ProtoObject.variablesMapInstance());
 		for (String variable : inputVariables.split(" "))
-			addInstanceVariable(receiver, variable);
+            if(!variable.isEmpty())
+			    addInstanceVariable(receiver, variable);
 	}
 
 	private static void addInstanceVariable(ProtoObject receiver, String variable) {
@@ -470,7 +476,8 @@ public class Primitives {
 		if (variables == null)
 			receiver.cls().variables(ProtoObject.variablesMapInstance());
 		for (String variable : inputVariables.split(" "))
-			addClassInstanceVariable(receiver, variable, true);
+            if(!variable.isEmpty())
+			    addClassInstanceVariable(receiver, variable, true);
 	}
 
 	public static void addClassInstanceVariable(ProtoObject receiver, String variable, boolean noDuplicates) {

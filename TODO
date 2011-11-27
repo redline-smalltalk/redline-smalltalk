@@ -30,3 +30,4 @@ the class name. eg: src/test/smalltalk/Test.st with a source file path of
 
 Refactor class loading / resolving functionality out of Smalltalk class.
 
+Add INSTALL file to root w/ basic build & install instructions.
