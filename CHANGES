@@ -1,6 +1,7 @@
 27/11/2011
 
 Modified whileTrue/whileFalse support to ensure block yield responds to ifTrue:/ifFalse:
+Added catch for exceptions in stic so exit code can be 0=ok or 1=fail.
 
 26/11/2011
 

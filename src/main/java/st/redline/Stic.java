@@ -6,7 +6,13 @@ import java.io.PrintWriter;
 public class Stic {
 
 	public static void main(String[] args) throws Exception {
-		invokeWith(args);
+		try {
+			invokeWith(args);
+			System.exit(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 
 	public static ProtoObject invokeWith(String[] args) throws Exception {
