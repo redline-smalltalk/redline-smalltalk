@@ -92,6 +92,9 @@ ProtoObject < #Object
 
 - value
     ^ self.
-  
+
++ error: aMessage
+    <primitive: 216>
+
 + testClassMethod
     Transcript show: 'test'; cr.
