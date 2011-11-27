@@ -78,7 +78,7 @@ public class SourceFileFinder {
 		sourceFilePaths.addAll(commandLine.sourcePaths());
 		List<String> runtimePaths = commandLine.runtimePaths();
 		if (runtimePaths.isEmpty())
-			System.out.println("Warning: no path to Redline Rumtime specified.");
+			System.out.println("Warning: no path to Redline Runtime specified.");
 		else
 			sourceFilePaths.addAll(commandLine.runtimePaths());
 	}
