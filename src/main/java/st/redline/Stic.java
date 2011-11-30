@@ -1,6 +1,9 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 
 public class Stic {
@@ -15,7 +18,26 @@ public class Stic {
 			commandLine.printHelp(new PrintWriter(System.out));
 			return null;
 		}
-		return new Stic(commandLine).invoke((String) commandLine.arguments().get(0));
+		String inputFilename = (String) commandLine.arguments().get(0);
+		if (commandLine.executeNowRequested()) {
+			inputFilename = writeInputCodeToTemporaryFile(commandLine).getName();
+			inputFilename = inputFilename.substring(0, inputFilename.lastIndexOf("."));
+		}
+		return new Stic(commandLine).invoke(inputFilename);
+	}
+
+	private static File writeInputCodeToTemporaryFile(CommandLine commandLine) throws Exception {
+		File input = File.createTempFile("Tmp" + commandLine.hashCode(), ".st", new File(commandLine.userPath()));
+		input.deleteOnExit();
+		BufferedWriter out = new BufferedWriter(new FileWriter(input));
+		try {
+			out.write(commandLine.input());
+			out.write("\n\n");
+			out.flush();
+		} finally {
+			out.close();
+		}
+		return input;
 	}
 
 	public static CommandLine createCommandLineWith(String[] args) {

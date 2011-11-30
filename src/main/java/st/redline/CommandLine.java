@@ -18,6 +18,7 @@ import java.util.List;
 public class CommandLine {
 
 	private static final String SOURCEPATH_OPTION = "s";
+	private static final String EXECUTE_NOW_OPTION = "e";
 	private static final String RUNTIMEPATH_OPTION = "r";
 	private static final String REDLINE_HOME_ENVVAR = "REDLINE_HOME";
 
@@ -50,6 +51,10 @@ public class CommandLine {
 		return haveHelpOption() || haveNoArguments();
 	}
 
+	public boolean executeNowRequested() {
+		return commandLine.hasOption('e');
+	}
+
 	public boolean haveNoArguments() {
 		return commandLine.getArgList().isEmpty();
 	}
@@ -72,6 +77,11 @@ public class CommandLine {
 
 	Options commandLineOptions() {
 		return new CommandLineOptions();
+	}
+
+	String input() {
+		System.out.println(commandLine.getOptionValue(EXECUTE_NOW_OPTION));
+		return commandLine.getOptionValue(EXECUTE_NOW_OPTION);
 	}
 
 	List<String> sourcePaths() {
@@ -119,6 +129,7 @@ public class CommandLine {
 			addOption(help());
 			addOption(sourcePath());
 			addOption(runtimePath());
+			addOption(executeNow());
 			addOption(verbose());
 		}
 
@@ -135,7 +146,7 @@ public class CommandLine {
 								.hasArg()
 								.withDescription("where to find input source files. Separate each path with " + File.pathSeparator
 										+ ". The paths src" + File.separator + "main" + File.separator + "smalltalk and src"
-										+ File.separator + "test" + File.separator + "smalltalk are included by default.")
+										+ File.separator + "test" + File.separator + "smalltalk are included by default. Ignored if -e specified.")
 								.create(SOURCEPATH_OPTION);
 		}
 
@@ -144,6 +155,13 @@ public class CommandLine {
 								.hasArg()
 								.withDescription("where to find Redline. Defaults to environment " + REDLINE_HOME_ENVVAR + ".")
 								.create(RUNTIMEPATH_OPTION);
+		}
+
+		private Option executeNow() {
+			return OptionBuilder.withArgName("input")
+								.hasArg()
+								.withDescription("execute the Smalltalk code (enclosed in \"\" double quotes).")
+								.create(EXECUTE_NOW_OPTION);
 		}
 	}
 }
