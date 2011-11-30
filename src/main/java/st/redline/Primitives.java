@@ -292,20 +292,22 @@ public class Primitives {
 	}
 
     public static ProtoObject p214(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-        ProtoObject result = ProtoObject.FALSE;
-        while(result == ProtoObject.FALSE) {
-            result = send(receiver, "value", thisContext);
-        }
-        return ProtoObject.NIL;
+		// whileFalse
+		return p211(receiver, thisContext, arg1, noOpBlock(), arg3, arg4, arg5, arg6, arg7);
     }
 
     public static ProtoObject p215(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
-        ProtoObject result = ProtoObject.TRUE;
-        while(result == ProtoObject.TRUE) {
-            result = send(receiver, "value", thisContext);
-        }
-        return ProtoObject.NIL;
+		// whileTrue
+		return p210(receiver, thisContext, arg1, noOpBlock(), arg3, arg4, arg5, arg6, arg7);
     }
+
+	public static ProtoBlock noOpBlock() {
+		return new ProtoBlock() {
+			public ProtoObject applyTo(ProtoObject r, ThisContext t) {
+				return ProtoObject.NIL;
+			}
+		};
+	}
 
     public static ProtoObject p216(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
         throw RedlineException.withMessage(arg1.javaValue().toString());
