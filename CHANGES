@@ -1,3 +1,7 @@
+03/12/2011
+
+Fixed bug with tightly nested blocks.
+
 01/12/2011
 
 Added -e options to command line. There is a bug in getting options with quotes in them.

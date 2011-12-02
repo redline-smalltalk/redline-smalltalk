@@ -3,8 +3,12 @@ package st.redline.compiler;
 
 public class BlockAnalyser extends MethodAnalyser {
 
-	public BlockAnalyser(String className, String packageName, int countOfArguments, boolean isClassMethod, Analyser containingAnalyser) {
+	private Block thisBlock;
+
+	public BlockAnalyser(String className, String packageName, int countOfArguments, boolean isClassMethod, Analyser containingAnalyser, Block thisBlock) {
 		super(className, packageName, countOfArguments, isClassMethod, containingAnalyser);
+		this.thisBlock = thisBlock;
+		System.out.println("BlockAnalyser " + className);
 	}
 
 	protected void initialize() {
@@ -16,8 +20,11 @@ public class BlockAnalyser extends MethodAnalyser {
 	}
 
 	public void visit(Block block) {
-//		System.out.println("Block() Analysis begin " + block);
-		classBytecodeWriter.openClass();
+//		System.out.println("BlockAnalyser.Block() Analysis begin " + block + " " + thisBlock);
+		if (block == thisBlock)
+			classBytecodeWriter.openClass();
+		else
+			super.visit(block);
 	}
 
 	public void visitEnd(Block block) {
