@@ -8,7 +8,7 @@ public class BlockAnalyser extends MethodAnalyser {
 	public BlockAnalyser(String className, String packageName, int countOfArguments, boolean isClassMethod, Analyser containingAnalyser, Block thisBlock) {
 		super(className, packageName, countOfArguments, isClassMethod, containingAnalyser);
 		this.thisBlock = thisBlock;
-		System.out.println("BlockAnalyser " + className);
+//		System.out.println("BlockAnalyser " + className);
 	}
 
 	protected void initialize() {
