@@ -1,3 +1,7 @@
+04/12/2011
+
+Added some required methods to Object and UndefinedObject.
+
 03/12/2011
 
 Fixed bug with tightly nested blocks.
