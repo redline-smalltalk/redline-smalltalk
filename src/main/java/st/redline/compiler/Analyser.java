@@ -36,6 +36,7 @@ public class Analyser implements NodeVisitor {
 		this.countOfArguments = countOfArguments;
 		this.isClassMethod = isClassMethod;
 		this.containingAnalyser = containingAnalyser;
+		this.blockSequence = (containingAnalyser != null) ? containingAnalyser.blockSequence() + 1 : 0;
 		initialize();
 	}
 
