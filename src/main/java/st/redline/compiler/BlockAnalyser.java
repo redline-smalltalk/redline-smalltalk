@@ -28,9 +28,13 @@ public class BlockAnalyser extends MethodAnalyser {
 	}
 
 	public void visitEnd(Block block) {
-		if (!block.hasStatements())
-			classBytecodeWriter.stackPushNil(block.line());
-		classBytecodeWriter.closeClass();
+		if (block == thisBlock) {
+			if (!block.hasStatements())
+				classBytecodeWriter.stackPushNil(block.line());
+			classBytecodeWriter.closeClass();
+		} else {
+			super.visitEnd(block);
+		}
 	}
 
 	public void visit(BlockVariableName blockVariableName, String value, int line) {
