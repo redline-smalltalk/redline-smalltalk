@@ -67,5 +67,7 @@ public class ThisContext {
 
 	public void temporariesInit(int size) {
 		temporaries = new ProtoObject[size];
+		for (int i = 0; i < size; i++)
+			temporaries[i] = ProtoObject.NIL;
 	}
 }
