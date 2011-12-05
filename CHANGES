@@ -1,6 +1,7 @@
 05/12/2011
 
 Fixed a bug with nested blocks.
+Initialize temporaries to nil (UndefinedObject).
 
 04/12/2011
 
