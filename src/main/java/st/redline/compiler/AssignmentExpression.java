@@ -19,6 +19,10 @@ public class AssignmentExpression implements Expression {
 		throw new IllegalStateException("Assignment asked to duplicate stack top!");
 	}
 
+	public boolean isAnswerExpression() {
+		return false;
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 		expression.leaveResultOnStack();

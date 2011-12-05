@@ -411,7 +411,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-//		System.out.println("Block() begin " + block + " " + blockDepth);
+//		System.out.println("Block() begin " + block + " " + blockSequence + " " + block.hasAnsweredValue());
 		blockDepth++;
 		blockSequence++;
 		String blockName = "B" + blockSequence;

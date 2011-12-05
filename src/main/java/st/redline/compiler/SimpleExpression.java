@@ -37,6 +37,10 @@ public class SimpleExpression implements Expression {
 		duplicateResultOnStack = true;
 	}
 
+	public boolean isAnswerExpression() {
+		return false;
+	}
+
 	public void add(Primary primary) {
 		this.primary = primary;
 	}

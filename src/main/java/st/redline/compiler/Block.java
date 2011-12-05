@@ -58,4 +58,8 @@ public class Block extends BasePrimary {
 	public void analyser(Analyser analyser) {
 		this.analyser = analyser;
 	}
+
+	public boolean hasAnsweredValue() {
+		return (statements != null && statements.hasAnswerExpression());
+	}
 }
