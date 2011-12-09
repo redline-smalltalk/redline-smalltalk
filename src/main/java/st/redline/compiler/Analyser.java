@@ -14,7 +14,7 @@ public class Analyser implements NodeVisitor {
 
 	protected final String className;
 	protected final String packageName;
-	private final Analyser containingAnalyser;
+	protected final Analyser containingAnalyser;
 
 	protected ClassBytecodeWriter classBytecodeWriter;
 	private boolean sendToSuper = false;

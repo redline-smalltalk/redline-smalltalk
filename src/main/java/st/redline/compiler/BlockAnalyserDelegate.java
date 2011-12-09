@@ -3,14 +3,14 @@ package st.redline.compiler;
 
 public class BlockAnalyserDelegate extends MethodAnalyser {
 
-	private final Block thisBlock;
-	private final BlockAnalyser blockAnalyser;
+	protected final Block thisBlock;
+	protected final BlockAnalyser blockAnalyser;
 
 	public BlockAnalyserDelegate(BlockAnalyser blockAnalyser, String className, String packageName, int countOfArguments, boolean isClassMethod, Analyser containingAnalyser, Block thisBlock) {
 		super(className, packageName, countOfArguments, isClassMethod, containingAnalyser);
 		this.thisBlock = thisBlock;
 		this.blockAnalyser = blockAnalyser;
-//		System.out.println("BlockAnalyser " + className);
+//		System.out.println("BlockAnalyserDelegate " + className + " " + thisBlock);
 	}
 
 	protected void initialize() {
@@ -22,14 +22,19 @@ public class BlockAnalyserDelegate extends MethodAnalyser {
 	}
 
 	public void visit(Block block) {
-//		System.out.println("BlockAnalyser.Block() Analysis begin " + block + " " + thisBlock);
+//		System.out.println("BlockAnalyserDelegate.Block() Analysis begin " + block + " " + thisBlock);
 		if (block == thisBlock)
 			classBytecodeWriter.openClass();
-		else
+		else {
+			// visiting block within a block, so we want to tell it to compile and then
+			// ignore its internals - until the block ends.
 			super.visit(block);
+			blockAnalyser.useNoOpDelegate();
+		}
 	}
 
 	public void visitEnd(Block block) {
+//		System.out.println("BlockAnalyserDelegate.Block() Analysis end " + block + " " + thisBlock);
 		if (block == thisBlock) {
 			if (!block.hasStatements())
 				classBytecodeWriter.stackPushNil(block.line());

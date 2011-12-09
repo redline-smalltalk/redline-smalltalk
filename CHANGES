@@ -1,3 +1,7 @@
+10/12/2011 
+
+Added support for nested nested blocks.
+
 09/12/2011
 
 Added BlockAnalyser delegate to cater for nest block parsing correctly.
