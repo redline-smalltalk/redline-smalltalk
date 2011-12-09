@@ -14,7 +14,7 @@ public class Analyser implements NodeVisitor {
 
 	protected final String className;
 	protected final String packageName;
-	private final Analyser containingAnalyser;
+	protected final Analyser containingAnalyser;
 
 	protected ClassBytecodeWriter classBytecodeWriter;
 	private boolean sendToSuper = false;
@@ -411,7 +411,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-//		System.out.println("Block() begin " + block + " " + blockDepth);
+//		System.out.println("Block() begin " + block + " " + blockSequence + " " + block.hasAnsweredValue());
 		blockDepth++;
 		blockSequence++;
 		String blockName = "B" + blockSequence;

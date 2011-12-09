@@ -17,6 +17,10 @@ public class AnswerExpression implements Expression {
 		throw new IllegalStateException("Answer expression asked to duplicate stack top!");
 	}
 
+	public boolean isAnswerExpression() {
+		return true;
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 		leaveResultOnStack();

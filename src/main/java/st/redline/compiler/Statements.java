@@ -16,6 +16,10 @@ public class Statements implements VisitableNode {
 		this.statements = statements;
 	}
 
+	public boolean hasAnswerExpression() {
+		return expression.isAnswerExpression() || (statements != null && statements.hasAnswerExpression());
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 		if (statements == null)

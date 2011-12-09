@@ -1,10 +1,21 @@
+10/12/2011 
+
+Added support for nested nested blocks.
+
+09/12/2011
+
+Added BlockAnalyser delegate to cater for nest block parsing correctly.
+Added stack of block analysers to handle nested, nested blocks.
+
 05/12/2011
 
-Fixed a bug with nested blocks.
-Initialize temporaries to nil (UndefinedObject).
+Added method to block node to know if it contains an answer expression. Start
+of work to support ^ from blocks.
 
 04/12/2011
 
+Fixed a bug with nested blocks.
+Initialize temporaries to nil (UndefinedObject).
 Added some required methods to Object and UndefinedObject.
 
 03/12/2011

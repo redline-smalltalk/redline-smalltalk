@@ -4,4 +4,5 @@ package st.redline.compiler;
 public interface Expression extends VisitableNode {
 	void leaveResultOnStack();
 	void duplicateResultOnStack();
+	boolean isAnswerExpression();
 }
