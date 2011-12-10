@@ -14,4 +14,8 @@ public class PrimaryExpression extends BasePrimary {
 		expression.leaveResultOnStack();
 		expression.accept(visitor);
 	}
+
+	public boolean isBlockWithAnswerExpression() {
+		return false;
+	}
 }

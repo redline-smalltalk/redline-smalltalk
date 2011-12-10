@@ -1,3 +1,7 @@
+11/12/2011
+
+Adding detection of blocks with ^ returns in them.
+
 10/12/2011 
 
 Added support for nested nested blocks.
