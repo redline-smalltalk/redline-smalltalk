@@ -238,7 +238,7 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(SimpleExpression simpleExpression) {
 		sendToSuper = false;
-//		System.out.println("visit(SimpleExpression) " + simpleExpression.hasBlockWithAnswerExpression());
+		System.out.println("visit(SimpleExpression) " + simpleExpression.hasBlockWithAnswerExpression());
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
@@ -412,7 +412,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-//		System.out.println("Block() begin " + block + " " + blockSequence + " " + block.hasAnsweredValue());
+		System.out.println("Block() begin " + block + " " + blockSequence + " " + block.hasAnsweredValue());
 		blockDepth++;
 		blockSequence++;
 		String blockName = "B" + blockSequence;
