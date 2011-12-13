@@ -559,6 +559,10 @@ public class Primitives {
 		receiver.methodAtPut(methodName, method);
 	}
 
+	public static void blockAnswer(ProtoObject answer) {
+		throw new BlockReturn(answer);
+	}
+
 	public static String packageRegistryCurrent() {
 		Stack<String> stack = packageRegistry.get();
 		if (stack != null)

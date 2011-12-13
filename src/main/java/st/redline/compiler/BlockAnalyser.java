@@ -89,6 +89,10 @@ public class BlockAnalyser implements NodeVisitor {
 		blockAnalyser().visit(answerExpression);
 	}
 
+	public void visitEnd(AnswerExpression answerExpression) {
+		blockAnalyser().visitEnd(answerExpression);
+	}
+
 	public void visit(Methods methods) {
 		blockAnalyser().visit(methods);
 	}

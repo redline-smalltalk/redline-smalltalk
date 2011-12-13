@@ -10,4 +10,8 @@ public abstract class BasePrimary implements Primary {
 	public String value() {
 		return "";
 	}
+
+	public boolean isBlockWithAnswerExpression() {
+		return false;
+	}
 }

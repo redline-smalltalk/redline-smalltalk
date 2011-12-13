@@ -12,4 +12,8 @@ public class PrimaryStatements extends BasePrimary {
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 	}
+
+	public boolean isBlockWithAnswerExpression() {
+		return false;
+	}
 }

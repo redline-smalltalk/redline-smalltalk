@@ -20,4 +20,8 @@ public abstract class BaseLiteral implements Literal, IndexedVisitableNode {
 	public int index() {
 		return index;
 	}
+
+	public boolean isBlockWithAnswerExpression() {
+		return false;
+	}
 }

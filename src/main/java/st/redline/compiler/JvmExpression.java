@@ -26,4 +26,8 @@ public abstract class JvmExpression implements Expression {
 	public void duplicateResultOnStack() {
 		duplicateResultOnStack = true;
 	}
+
+	public boolean isAnswerExpression() {
+		return false;
+	}
 }

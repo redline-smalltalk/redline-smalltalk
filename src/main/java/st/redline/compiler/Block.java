@@ -35,6 +35,10 @@ public class Block extends BasePrimary {
 		return blockVariableNames.size();
 	}
 
+	public boolean isBlockWithAnswerExpression() {
+		return (statements != null && statements.hasAnswerExpression());
+	}
+
 	public void accept(NodeVisitor visitor) {
 		visitor.visit(this);
 		// we don't visit the rest during class / method analysis, but we do during block analysis.

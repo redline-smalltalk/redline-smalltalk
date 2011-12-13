@@ -4,4 +4,5 @@ package st.redline.compiler;
 public interface Primary extends VisitableNode {
 	int line();
 	String value();
+	boolean isBlockWithAnswerExpression();
 }
