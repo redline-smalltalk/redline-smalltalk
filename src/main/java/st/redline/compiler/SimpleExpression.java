@@ -13,6 +13,9 @@ public class SimpleExpression implements Expression {
 	private final List<MessageElement> messageElements;
 	private boolean resultLeftOnStack;
 	private boolean duplicateResultOnStack;
+	private Object l0;
+	private Object l1;
+	private Object l2;
 
 	public SimpleExpression() {
 		messageElements = new ArrayList<MessageElement>();
@@ -55,6 +58,30 @@ public class SimpleExpression implements Expression {
 
 	public boolean hasBlockWithAnswerExpression() {
 		return primary.isBlockWithAnswerExpression();
+	}
+
+	public Object label0() {
+		return l0;
+	}
+
+	public void label0(Object l0) {
+		this.l0 = l0;
+	}
+
+	public Object label1() {
+		return l1;
+	}
+
+	public void label1(Object l1) {
+		this.l1 = l1;
+	}
+
+	public Object label2() {
+		return l2;
+	}
+
+	public void label2(Object l2) {
+		this.l2 = l2;
 	}
 
 	public void accept(NodeVisitor visitor) {

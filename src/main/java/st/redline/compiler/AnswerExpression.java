@@ -25,5 +25,6 @@ public class AnswerExpression implements Expression {
 		visitor.visit(this);
 		leaveResultOnStack();
 		expression.accept(visitor);
+		visitor.visitEnd(this);
 	}
 }

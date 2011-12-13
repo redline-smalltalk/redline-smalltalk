@@ -1,3 +1,7 @@
+14/12/2011
+
+Added support of non-local returns for blocks with ^ in them.
+
 11/12/2011
 
 Adding detection of blocks with ^ returns in them.

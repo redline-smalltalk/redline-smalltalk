@@ -10,7 +10,7 @@ public class BlockAnalyserDelegate extends MethodAnalyser {
 		super(className, packageName, countOfArguments, isClassMethod, containingAnalyser);
 		this.thisBlock = thisBlock;
 		this.blockAnalyser = blockAnalyser;
-		System.out.println("BlockAnalyserDelegate " + className + " " + thisBlock);
+//		System.out.println("BlockAnalyserDelegate " + className + " " + thisBlock);
 	}
 
 	protected void initialize() {
@@ -21,8 +21,18 @@ public class BlockAnalyserDelegate extends MethodAnalyser {
 		return true;
 	}
 
+	public void visit(AnswerExpression answerExpression) {
+//		System.out.println("BlockAnalyserDelegate.visit(AnswerExpression)");
+		super.visit(answerExpression);
+	}
+
+	public void visitEnd(AnswerExpression answerExpression) {
+//		System.out.println("BlockAnalyserDelegate.visitEnd(AnswerExpression)");
+		classBytecodeWriter.callPrimitiveBlockAnswer();
+	}
+
 	public void visit(Block block) {
-		System.out.println("BlockAnalyserDelegate.Block() Analysis begin " + block + " " + thisBlock);
+//		System.out.println("BlockAnalyserDelegate.Block() Analysis begin " + block + " " + thisBlock);
 		if (block == thisBlock)
 			classBytecodeWriter.openClass();
 		else {
@@ -34,7 +44,7 @@ public class BlockAnalyserDelegate extends MethodAnalyser {
 	}
 
 	public void visitEnd(Block block) {
-		System.out.println("BlockAnalyserDelegate.Block() Analysis end " + block + " " + thisBlock);
+//		System.out.println("BlockAnalyserDelegate.Block() Analysis end " + block + " " + thisBlock);
 		if (block == thisBlock) {
 			if (!block.hasStatements())
 				classBytecodeWriter.stackPushNil(block.line());

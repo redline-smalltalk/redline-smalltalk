@@ -23,8 +23,8 @@ public class Analyser implements NodeVisitor {
 	protected boolean isClassMethod = false;
 	private Map<String, Temporary> temporariesRegistry;
 	private int arrayDepth;
-	private int blockDepth;
 	private int blockSequence;
+	private boolean hasBlockWithAnswerExpression = false;
 
 	public Analyser(String className, String packageName) {
 		this(className, packageName, 0, false, null);
@@ -167,6 +167,9 @@ public class Analyser implements NodeVisitor {
 	public void visit(AnswerExpression answerExpression) {
 	}
 
+	public void visitEnd(AnswerExpression answerExpression) {
+	}
+
 	public void visit(Methods methods) {
 	}
 
@@ -238,10 +241,16 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(SimpleExpression simpleExpression) {
 		sendToSuper = false;
-		System.out.println("visit(SimpleExpression) " + simpleExpression.hasBlockWithAnswerExpression());
+		hasBlockWithAnswerExpression = simpleExpression.hasBlockWithAnswerExpression();
+//		System.out.println("visit(SimpleExpression) " + hasBlockWithAnswerExpression);
+		if (hasBlockWithAnswerExpression)
+			classBytecodeWriter.setupTryForBlockReturn(simpleExpression);
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
+//		System.out.println("visitEnd(SimpleExpression) " + hasBlockWithAnswerExpression);
+		if (hasBlockWithAnswerExpression)
+			classBytecodeWriter.setupCatchForBlockReturn(simpleExpression);
 		if (simpleExpression.isResultDuplicatedOnStack())
 			classBytecodeWriter.stackDuplicate();
 		if (!simpleExpression.isResultLeftOnStack())
@@ -412,8 +421,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Block block) {
-		System.out.println("Block() begin " + block + " " + blockSequence + " " + block.hasAnsweredValue());
-		blockDepth++;
+//		System.out.println("Block() begin " + block + " " + blockSequence + " " + block.hasAnsweredValue());
 		blockSequence++;
 		String blockName = "B" + blockSequence;
 		String fullBlockName = createFullBlockName(blockName);
@@ -436,7 +444,6 @@ public class Analyser implements NodeVisitor {
 
 	public void visitEnd(Block block) {
 //		System.out.println("Block() end " + block);
-		blockDepth--;
 	}
 
 	public void visit(SelfReservedWord selfReservedWord, int line) {

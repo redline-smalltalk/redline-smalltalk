@@ -16,6 +16,7 @@ public interface NodeVisitor {
 	void visit(Statements statements);
 	void visitEnd(Statements statements);
 	void visit(AnswerExpression answerExpression);
+	void visitEnd(AnswerExpression answerExpression);
 	void visit(Methods methods);
 	void visitEnd(Methods methods);
 	void visit(InstanceMethod instanceMethod);
