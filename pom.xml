@@ -165,9 +165,9 @@
               <mainClass>st.redline.Stic</mainClass>
               <arguments>
                 <argument>-r</argument>
-                <argument>${project.basedir}/src/main/smalltalk</argument>
+                <argument>${project.basedir}${path.separator}src${path.separator}main${path.separator}smalltalk</argument>
                 <argument>-s</argument>
-                <argument>${project.basedir}/src/test/smalltalk</argument>
+                <argument>${project.basedir}${path.separator}src${path.separator}test${path.separator}smalltalk</argument>
                 <argument>st.redline.Tests</argument>
               </arguments>
             </configuration>
