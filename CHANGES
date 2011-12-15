@@ -1,6 +1,7 @@
 14/12/2011
 
 Added support of non-local returns for blocks with ^ in them.
+Fixing path separator bug in Maven pom that affects Windows hosts.
 
 11/12/2011
 
