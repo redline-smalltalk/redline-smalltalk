@@ -1,3 +1,8 @@
+16/12/2011
+
+Modified HelloWorld example to be just hello world, and moved assert example into 
+AssertExample.st
+
 15/12/2011
 
 Revamped the *nix version of stic. Enables use of Redline from anywhere on your machine.
