@@ -1,3 +1,8 @@
+15/12/2011
+
+Revamped the *nix version of stic. Enables use of Redline from anywhere on your machine.
+Just 'install', export REDLINE_HOME and add REDLINE_HOME/bin to your path.
+
 14/12/2011
 
 Added support of non-local returns for blocks with ^ in them.
