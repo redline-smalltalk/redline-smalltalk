@@ -1,0 +1,111 @@
+-- The Classes Up For Adoption --
+Those marked with a ? require discussion and are not
+automatically in.
+
+Object
+ Magnitude
+  Character
+  Date
+  Time
+ Number
+  Float
+  Fraction
+  Integer
+   LargeNegativeInteger
+   LargePositiveInteger
+   SmallInteger
+ LookupKey
+  Association
+
+?Link
+ ?Process
+
+Collection
+ SequenceableCollection
+  LinkedList
+   ?Semaphore
+  ArrayedCollection
+   Array
+   ?RunArray
+   String
+    Symbol
+   Text
+   ByteArray
+ Bag
+ MappedCollection
+ Set
+  Dictionary
+  IdentityDictionary
+
+ Stream
+  PositionableStream
+   ReadStream
+   WriteStream
+    ReadWriteStream
+     ExternalStream
+      FileStream
+ Random
+ 
+ File
+  FileDirectory
+  ?FilePage
+ 
+ UndefinedObject
+ Boolean
+  True
+  False
+
+ ?ProcessScheduler
+ Delay
+ SharedQueue 
+
+ Behavior
+  ClassDescription
+  Class
+  MetaClass
+ 
+-- Object instance protocol --
+
+class
+isKindOf: aClass
+isMemberOf: aClass
+respondsTo: aSymbol
+
+== anObject
+= anObject
+~= anObject
+~ anObject
+hash
+
+isNil
+notNil
+
+copy
+shallowCopy
+deepCopy
+
+at: index
+at: index put: anObject
+basicAt: index 
+
+basicAt: index put: anObject
+size
+basicSize
+
+printString
+printOn: aStream
+
+storeString
+storeOn: aStream
+
+doesNotUnderstand: aMessage
+error: aString
+primitiveFailed 
+
+shouldNotImplement
+subclassResponsibility
+
+
+
+
+
