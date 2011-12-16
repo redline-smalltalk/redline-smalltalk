@@ -1,0 +1,270 @@
+-- The Classes Up For Adoption --
+
+Those marked with a ? require discussion and are not
+automatically in.
+
+Consider each method during implementation, as a verbatum implementation
+may not work for Redline. For example Java has unicode, so this should be
+supported directly - see Class Character. It is also worth while looking
+at the Bistro sources to see how Java effected that implementation.
+
+Each method should contain a method comment that described what it does,
+in the format given in the Blue Book / Pharo.
+
+QUESTION: IS IT BETTER TO HAVE CLASSES WITH NO METHODS UNTIL THOS METHODS
+ARE REQUIRED? - to save implementing methods no on calls?
+
+PLEASE double check the class you adopt and the Blue Book to make sure
+all the methods have been covered.
+
+-- Hierarchy --
+
+Object
+ Magnitude
+  Character
+  Date
+  Time
+ Number
+  Float
+  Fraction
+  Integer
+   LargeNegativeInteger
+   LargePositiveInteger
+   SmallInteger
+ LookupKey
+  Association
+
+?Link
+ ?Process
+
+Collection
+ SequenceableCollection
+  LinkedList
+   ?Semaphore
+  ArrayedCollection
+   Array
+   ?RunArray
+   String
+    Symbol
+   Text
+   ByteArray
+ Bag
+ MappedCollection
+ Set
+  Dictionary
+  IdentityDictionary
+
+ Stream
+  PositionableStream
+   ReadStream
+   WriteStream
+    ReadWriteStream
+     ExternalStream
+      FileStream
+ Random
+ 
+ File
+  FileDirectory
+  ?FilePage
+ 
+ UndefinedObject
+ Boolean
+  True
+  False
+
+ ?ProcessScheduler
+ Delay
+ SharedQueue 
+
+ Behavior
+  ClassDescription
+  Class
+  MetaClass
+
+
+-- Protocols --
+ 
+** NOTE: I have not split Instance and Class Protocol.
+** You need to check class/instance when implementing the method.
+
+-- Object protocol --
+
+class
+isKindOf: aClass
+isMemberOf: aClass
+respondsTo: aSymbol
+== anObject
+= anObject
+~= anObject
+~ anObject
+hash
+isNil
+notNil
+copy
+shallowCopy
+deepCopy
+at: index
+at: index put: anObject
+basicAt: index 
+basicAt: index put: anObject
+size
+basicSize
+printString
+printOn: aStream
+storeString
+storeOn: aStream
+doesNotUnderstand: aMessage
+error: aString
+primitiveFailed 
+shouldNotImplement
+subclassResponsibility
+
+-- Magnitude protocol --
+
+< aMagnitude
+< aMagnitude
+< = aMagnitude
+> aMagnitude
+> = aMagnitude
+between: min and: max
+min: aMagnitude
+max: aMagnitude
+
+-- Date protocol --
+
+dayOfWeek: dayName
+nameOfDay: daylndex
+indexOfMonth: monthName
+nameOfMonth: monthlndex
+dayslnMonth: monthName forYear: yearlnteger
+dayslnYear: yearlnteger
+leapYear: yearlnteger
+dateAndTimeNow
+today
+fromDays: dayCount
+newDay: day month: monthName year: yearlnteger
+newDay: dayCount year: yearlnteger
+addDays: dayCount
+subtractDays: dayCount
+subtractDate: aDate
+asSeconds
+
+-- Time protocol --
+millisecondClockValue
+millisecondsToRun: timedBlock
+timeWords
+totalSeconds
+dateAndTimeNow 
+now
+fromSeconds: secondCount
+addTime: timeAmount
+subtractTime: timeAmount
+asSeconds
+
+-- Character Protocol -- 
+
+value: anlnteger
+digitValue: anlnteger
+asciiValue
+digitValue
+isAIphaNumeric
+isDigit
+isLetter
+isLowercase
+isUppercase
+isSeparator
+isVowel
+
+-- Number Protocol -- 
++ aNumber
+- aNumber
+. aNumber
+/ aNumber
+// aNumber
+\\ aNumber
+abs
+negated
+quo: aNumber
+rem: aNumber
+reciprocal
+exp
+In
+log: aNumber
+floorLog: radix
+raisedTo: aNumber
+raisedTolnteger: anlnteger
+sqrt
+squared 
+even
+odd
+negative
+positive
+strictlyPositive
+sign
+ceiling
+floor
+truncated
+truncateTo: aNumber
+rounded
+roundTo: aNumber
+degreesToRadians
+radiansToDegrees
+coerce: aNumber
+generality
+retry: aSymbol coercing: aNumber
+to: stop
+to: stop by: step
+to: stop do: aBIock
+to: stop by: step do: aBIock
+
+-- Integer Protocol --
+factorial
+gcd: anlnteger
+lcm: anlnteger
+allMask: anlnteger
+anyMask: anlnteger
+noMask: anlnteger
+bitAnd: anlnteger
+bitOr: anlnteger
+bitXor: anlnteger
+bitAt: index
+bitlnvert
+highBit
+bitShift: anlnteger
+
+-- Random Protocol --
+next
+
+-- Collection Protocol -- 
+add: newObject
+addAll: aCollection
+remove: oldObject
+remove: oldObject ifAbsent: anExceptionBIock
+removeAll: aCollection
+includes: anObject 
+isEmpty 
+occurrencesOf: anObject 
+do: aBlock
+select: aBlock
+reject: aBlock
+collect: aBlock
+detect: aBlock
+detect: aBIock ifNone: exceptionBIock
+inject: thisValue into: binaryBlock
+with: anObject
+with: firstObject with: secondObject
+with: firstObject with: secondObject with: thirdObject
+with: firstObject with: secondObject with: thirdObject with: fourthObject
+asBag
+asSet 
+asOrderedCollection 
+asSortedCol lection
+asSortedCollection: aBIock
+
+-- Bag Protocol --
+add: newObject withOccurrences: anlnteger
+
+**I'm upto Dictionary** Pg 170
+
+
+*END*
