@@ -638,9 +638,10 @@ public class Primitives {
                 if ((value = outerReceiver.variableAt(name)) != null)
                     return value;
 
-                if(outerReceiver instanceof ProtoBlock) {
+                if(outerReceiver.isBlock()) {
                     outerReceiver = ((ProtoBlock) outerReceiver).outerReceiver();
                 } else {
+                    // stop as soon as we're outside of a block
                     break;
                 }
             }
