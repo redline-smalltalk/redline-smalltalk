@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<filetype binary="false" default_extension="" description="Redline Smalltalk" name="Smalltalk">
+  <highlighting>
+    <options>
+      <option name="LINE_COMMENT" value="" />
+      <option name="COMMENT_START" value="&quot;" />
+      <option name="COMMENT_END" value="&quot;" />
+      <option name="HEX_PREFIX" value="0x" />
+      <option name="NUM_POSTFIXES" value="" />
+      <option name="HAS_BRACKETS" value="true" />
+      <option name="HAS_BRACES" value="true" />
+      <option name="HAS_PARENS" value="true" />
+      <option name="HAS_STRING_ESCAPES" value="true" />
+    </options>
+    <keywords ignore_case="false">
+      <keyword name="category" />
+      <keyword name="classinstancevariablenames" />
+      <keyword name="classvariablenames" />
+      <keyword name="instancevariablenames" />
+      <keyword name="pooldictionaries" />
+      <keyword name="primitive" />
+      <keyword name="self" />
+    </keywords>
+    <keywords2>
+      <keyword name="+" />
+      <keyword name="-" />
+    </keywords2>
+    <keywords3 />
+    <keywords4 />
+  </highlighting>
+  <extensionMap>
+    <mapping ext="st" />
+  </extensionMap>
+</filetype>
+
