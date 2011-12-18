@@ -8,18 +8,19 @@ may not work for Redline. For example Java has unicode, so this should be
 supported directly - see Class Character. It is also worth while looking
 at the Bistro sources to see how Java effected that implementation.
 
-Each method should contain a method comment that described what it does,
+Each method should contain a method comment that describes what it does,
 in the format given in the Blue Book / Pharo.
 
-QUESTION: IS IT BETTER TO HAVE CLASSES WITH NO METHODS UNTIL THOS METHODS
-ARE REQUIRED? - to save implementing methods no on calls?
+QUESTION: IS IT BETTER TO HAVE CLASSES WITH NO METHODS UNTIL THOSE METHODS
+ARE REQUIRED? - to save implementing methods no on calls? [Comment from Lee: I don't understand
+what this is supposed to be asking. There appears to be a typo, but I can't figure it out.]
 
 PLEASE double check the class you adopt and the Blue Book to make sure
 all the methods have been covered.
 
 -- Hierarchy --
 
-Object
+Object -- Lee Breisacher
  Magnitude
   Character
   Date
