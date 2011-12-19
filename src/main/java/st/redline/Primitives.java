@@ -232,7 +232,7 @@ public class Primitives {
 	private static ProtoBlock callback210(final ProtoObject receiver, final ThisContext thisContext, final ProtoObject trueBlock) {
 		return new ProtoBlock() {
 			public ProtoObject applyTo(ProtoObject r, ThisContext t) {
-				System.out.println("callback210() evaluating true block.");
+//				System.out.println("callback210() evaluating true block.");
 				Primitives.send(trueBlock, "value", thisContext);
 				Primitives.send(Primitives.send(receiver, "value", thisContext), this, "ifTrue:", thisContext);
 				return ProtoObject.NIL;
@@ -311,6 +311,15 @@ public class Primitives {
 
     public static ProtoObject p216(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
         throw RedlineException.withMessage(arg1.javaValue().toString());
+    }
+
+    public static ProtoObject p217(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+        // create a new character
+        ProtoObject result = new ProtoObject(receiver);
+
+        result.javaValue((char)(((BigInteger)arg1.javaValue()).intValue()));
+
+        return result;
     }
 
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
@@ -619,8 +628,28 @@ public class Primitives {
 		ProtoObject value;
 		if ((value = theReceiver.variableAt(name)) != null)
 			return value;
+        
+        // handle nested blocks
+        if(receiver.isBlock()) {
+            ProtoObject outerReceiver = ((ProtoBlock) receiver).outerReceiver();
+
+            // work our way back to the first receiver looking for the variable
+            while(outerReceiver != null) {
+                if ((value = outerReceiver.variableAt(name)) != null)
+                    return value;
+
+                if(outerReceiver.isBlock()) {
+                    outerReceiver = ((ProtoBlock) outerReceiver).outerReceiver();
+                } else {
+                    // stop as soon as we're outside of a block
+                    break;
+                }
+            }
+        }
+        
 //		if ((value = theReceiver.cls().variableAt(name)) != null)
 //			return value;
+
 		return theReceiver.resolveObject(name);
 	}
 
