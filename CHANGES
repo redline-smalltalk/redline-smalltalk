@@ -1,3 +1,7 @@
+20/12/2011
+
+Added notNil to UndefinedObject as resolution of raised issue.
+
 19/12/2011
 
 Changes to array handling as part of issue logged against isKindOf: 
