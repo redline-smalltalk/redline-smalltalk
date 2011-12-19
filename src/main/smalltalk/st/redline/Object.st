@@ -8,8 +8,6 @@ ProtoObject < #Object
 - initialize
   "Subclasses should redefine this method to perform initializations on instance creation"
 
-"THIS IS A TEST"
-
 "comparing"
 - == anObject 
   "Primitive. Answer whether the receiver and the argument are the same
