@@ -16,7 +16,8 @@ ARE REQUIRED? - to save implementing methods no on calls? [Comment from Lee: I d
 what this is supposed to be asking. There appears to be a typo, but I can't figure it out.]
 
 PLEASE double check the class you adopt and the Blue Book to make sure
-all the methods have been covered.
+all the methods have been covered. Note: during cut-n-paste some L's 
+became I's and I tried to find and fix them all.
 
 -- Hierarchy --
 
@@ -265,7 +266,105 @@ asSortedCollection: aBIock
 -- Bag Protocol --
 add: newObject withOccurrences: anlnteger
 
-**I'm upto Dictionary** Pg 170
+-- Set Protocol --
+
+-- Dictionary Protocol --
+at: key ifAbsent: aBlock
+associationAt: key
+associationAt: key ifAbsent: aBIock
+keyAtValue: value
+keyAtValue: value ifAbsent: exceptionBIock
+keys
+values
+includesAssociation: anAssociation
+includesKey: key
+removeAssociation: anAssociation
+removeKey: key
+removeKey: key ifAbsent: aBlock
+associationsDo: aBlock
+keysDo: aBlock
+
+-- SequencableCollection Protocol --
+
+atAll: aCollection put: anObject
+atAllPut: anObject
+first
+last
+indexOf: anElement
+indexOf: anElement ifAbsent: exceptionBlock
+indexOfSubCollection: aSubCollection startingAt: anlndex
+indexOfSubCollection: aSubCollection startingAt: anlndex ifAbsent: exceptionBlock
+replaceFrom: start to: stop with: replacementCollection
+replaceFrom: start to: stop with: replacementCollection startingAt: repStart
+, aSequenceableCollection
+copyFrom: start to: stop
+copyReplaceAll: oldSubCollection with: newSubCollection
+copyReplaceFrom: start to: stop with: replacementCollection
+copyWith: newElement
+copyWithout: oldElement
+findFirst: aBlock
+findLast: aBlock
+reverseDo: aBlock
+with: aSequenceableCollection do: aBlock
+
+-- OrderedCollection Protocol --
+
+after: oldObject
+before: oldObject
+add: newObject after: oldObject
+add: newObject before: oldObject
+addAddFirst: anOrderedCollection
+addAllLast: anOrderedCollection
+addFirst: newObject
+addLast: newObject
+removeFirst
+removeLast
+
+-- SortedCollection Protocol --
+
+sortBlock: aBlock
+sortBlock
+sortBlock: aBlock
+
+-- LinkedList Protocol --
+
+nextLink: aLink
+nextLink
+nextLink: aLink
+addFirst: aLink
+addLast: aLink
+removeFirst
+removeLast
+
+-- Interval Protocol --
+
+from: startInteger to: stopInteger
+from: startInteger to: stopInteger by: stepInteger
+
+-- ArrayedCollection Protocol --
+
+-- String Protocol --
+
+< aString
+<= aString
+> aString
+>= aString 
+match: aString
+sameAs: aString
+asLowercase 
+asUppercase 
+asSymbol
+
+-- Symbol Protocol --
+
+intern: aString
+internCharacter: aCharacter
+
+-- MappedCollection Protocol --
+
+
+
+**I'm upto MappedCollection** Pg 190
 
 
 *END*
