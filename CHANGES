@@ -1,3 +1,11 @@
+20/12/2011
+
+Added notNil to UndefinedObject as resolution of raised issue.
+
+19/12/2011
+
+Changes to array handling as part of issue logged against isKindOf: 
+
 18/12/2011
 
 Added to list of classes and protocols.
@@ -8,6 +16,10 @@ Modified stout launcher to follow same process as stic launcher.
 Added List of Classes to be adopted and implemented.
 Started List of protocol for each of these classes that needs to
 be implemented.
+Fixing variable resolution within nested blocks to walk up the chain
+of outer receivers looking for the variable.
+Implementing the base initialization of the Character class.
+Added new primitive to construct Character instances with the proper Java Character.
 
 16/12/2011
 

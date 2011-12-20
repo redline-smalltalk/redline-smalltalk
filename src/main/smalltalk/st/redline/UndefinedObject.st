@@ -9,3 +9,7 @@ Object < #UndefinedObject
 - isNil
   "Refer to the comment in Object|isNil."
   ^ true.
+
+- notNil
+  "Refer to the comment in Object|notNil."
+  ^ false.
