@@ -2,6 +2,7 @@
 
 Added notNil to UndefinedObject as resolution of raised issue.
 Fixed typo in Object.st at:put: - value should have been anObject
+Fixed Object hash. Issue 52.
 
 19/12/2011
 
