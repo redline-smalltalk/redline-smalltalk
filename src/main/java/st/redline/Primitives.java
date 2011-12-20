@@ -184,6 +184,15 @@ public class Primitives {
 		return receiver;
 	}
 
+	public static ProtoObject p75(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// does this primitive make sense for Redline?
+		try {
+			return createInteger(receiver, receiver.hashCode());
+		} catch (ClassNotFoundException e) {
+			throw new RedlineException(e);
+		}
+	}
+
 	public static ProtoObject p110(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// ==
 		return receiver == arg1 ? ProtoObject.TRUE : ProtoObject.FALSE;
@@ -369,6 +378,10 @@ public class Primitives {
 
 	public static ProtoObject createString(ProtoObject receiver, String value) throws ClassNotFoundException {
 		return createWith("String", receiver, value);
+	}
+
+	public static ProtoObject createInteger(ProtoObject receiver, int value) throws ClassNotFoundException {
+		return createWith("Integer", receiver, BigInteger.valueOf(value));
 	}
 
 	public static ProtoObject createInteger(ProtoObject receiver, long value) throws ClassNotFoundException {
