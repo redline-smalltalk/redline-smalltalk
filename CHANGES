@@ -1,6 +1,7 @@
 20/12/2011
 
 Added notNil to UndefinedObject as resolution of raised issue.
+Fixed typo in Object.st at:put: - value should have been anObject
 
 19/12/2011
 

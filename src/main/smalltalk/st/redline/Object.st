@@ -84,7 +84,7 @@ ProtoObject < #Object
   the receiver whose index is the argument, index. If the receiver does not have
   indexed variables, or if the argument is greater than the number of indexed
   variables, then report an error. Answer anObject."
-  ^ self basicAt: index put: value.
+  ^ self basicAt: index put: anObject.
 
 - basicAt: index
   "Primitive.  Assuming the object is indexable, return the value at index."
