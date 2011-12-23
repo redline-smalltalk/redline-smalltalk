@@ -14,9 +14,13 @@ TestCase < #IntegerTest
   self testLessThanOrEqualTo.
   self testGreaterThanOrEqualTo.
   self testPrecedence.
+  self testFloor.
+  self testTruncated.
+  self testIsInteger.
 
 - testSimpleEquality
   Assertion assert: [ 1 = 1 ] withMessage: '1 is not 1.'
+
 - testSimpleAddition
   Assertion assert: [ 1 + 1 = 2 ] withMessage: '1 and 1 do not make 2.'
 
@@ -56,4 +60,12 @@ TestCase < #IntegerTest
 
 - testPrecedence
   Assertion assert: [ (25 + 3 * 4) = 112 ] withMessage: 'Mathmatical precedence is wrong.'.
-      
+
+- testFloor
+  Assertion assert: [ 1 floor = 1 ] withMessage: '1 floored is not 1.'.
+
+- testTruncated
+  Assertion assert: [ 1 truncated = 1 ] withMessage: '1 truncated is not 1.'.
+
+- testIsInteger
+  Assertion assert: [ 1 isInteger ] withMessage: '1 is not an Integer'.
