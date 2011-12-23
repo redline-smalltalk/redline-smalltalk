@@ -70,6 +70,11 @@ ProtoObject < #Object
   "Answer whether the method dictionary of the receiver's class or one of its superclasses contains the argument, aSymbol, as a message selector."
   ^ self class canUnderstand: aSymbol.
 
+- isInteger
+  "Overridden to return true in Integer."
+
+  ^ false.
+
 "accessing"
 
 - at: index

@@ -2,6 +2,7 @@
 
 Number < #Integer
 
+"arthimetic"
 - + aNumber
 	<primitive: 21>
 
@@ -28,3 +29,14 @@ Number < #Integer
 
 - / aNumber
   <primitive: 30>
+
+"testing"
+- isInteger
+  ^ true.
+
+"truncation"
+- floor
+  "do nothing"
+
+- truncated
+  "do nothing"
