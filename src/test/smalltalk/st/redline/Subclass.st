@@ -1,7 +1,6 @@
 
-Object subclass: #MyClass
-       instanceVariableNames: ''
-       classVariableNames: ''
-       classInstanceVariableNames: ''
-       poolDictionaries: ''
-       category: ''.
+Object subclass: #MyClass;
+       instanceVariableNames: '';
+       classVariableNames: '';
+       classInstanceVariableNames: '';
+       poolDictionaries: ''.

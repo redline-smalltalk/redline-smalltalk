@@ -8,6 +8,9 @@ TestCase < #IntegerTest
   self testGreaterThan.
   self testSimpleSubtraction.
   self testComplexSubtraction.
+  self testSimpleMultiplication.
+  self testComplexMultiplication.
+  self testSimpleDivision.
   self testLessThanOrEqualTo.
   self testGreaterThanOrEqualTo.
   self testPrecedence.
@@ -42,8 +45,15 @@ TestCase < #IntegerTest
   Assertion assert: [ 2 >= 1 ] withMessage: '2 is not greater than (or equal to) 1.'.
   Assertion assert: [ 2 >= 2 ] withMessage: '2 is not (greater than or) equal to 2.'.
 
-- testPrecedence
-  "Commented out til we have * support on Integers"
+- testSimpleMultiplication
+  Assertion assert: [ 1 * 2 = 2 ] withMessage: '1 times 2 is not 2.'.
 
-  "Assertion assert: [ (25 + 3 * 4) = 112 ] withMessage: 'Mathmatical precedence is wrong.'."
+- testComplexMultiplication
+  Assertion assert: [ 1 * 2 * 3 = 6 ] withMessage: '1 times 2 times 3 is not 6.'.
+
+- testSimpleDivision
+  Assertion assert: [ 10 / 5 = 2 ] withMessage: '10 divided by 5 is not 2.'.
+
+- testPrecedence
+  Assertion assert: [ (25 + 3 * 4) = 112 ] withMessage: 'Mathmatical precedence is wrong.'.
       
