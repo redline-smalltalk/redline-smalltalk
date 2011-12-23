@@ -10,6 +10,7 @@ TestCase < #IntegerTest
   self testComplexSubtraction.
   self testSimpleMultiplication.
   self testComplexMultiplication.
+  self testSimpleDivision.
   self testLessThanOrEqualTo.
   self testGreaterThanOrEqualTo.
   self testPrecedence.
@@ -49,9 +50,10 @@ TestCase < #IntegerTest
 
 - testComplexMultiplication
   Assertion assert: [ 1 * 2 * 3 = 6 ] withMessage: '1 times 2 times 3 is not 6.'.
-  
-- testPrecedence
-  "Commented out til we have * support on Integers"
 
+- testSimpleDivision
+  Assertion assert: [ 10 / 5 = 2 ] withMessage: '10 divided by 5 is not 2.'.
+
+- testPrecedence
   Assertion assert: [ (25 + 3 * 4) = 112 ] withMessage: 'Mathmatical precedence is wrong.'.
       
