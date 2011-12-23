@@ -7,7 +7,7 @@ TestCase < #ArrayTest
 - testAt
   | array element |
 
-  array := #(1 ('one' 1) 17 symbol $f 3).
+  array := #(1 'one' 17 symbol $f 3).
   element := array at: 3.
  
   Assertion assert: [ element = 17 ] withMessage: 'Array test failed'.
