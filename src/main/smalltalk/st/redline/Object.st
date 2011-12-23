@@ -103,8 +103,36 @@ ProtoObject < #Object
   "Same as size. The method associated with this message, however, cannot be
   modified in any subclass."
   <primitive: 62>
+  
+- printString
+  "Answer a String whose characters are a description of the receiver."
+  
+  | stream |
+  stream := WriteStream on: String new.
+  self printOn: stream.
+  ^ stream contents.
 
+- printOn: aStream 
+  "Append to the argument, aStream, a sequence of characters that 
+  identifies the receiver."
+
+  | title |
+  title := self class name.
+  " This is not compiling: "
+  "
+  aStream nextPutAll: ((title at: 1) isVowel
+              ifTrue: ['an ']
+              ifFalse: ['a '])
+            , title
+  "
+  aStream nextPutAll: title.
+  						
+- yourself
+  "Answer self."
+  ^ self.
+  
 - value
+  "NOTE: This is not actually in the Blue Book."
   ^ self.
 
 + error: aMessage
