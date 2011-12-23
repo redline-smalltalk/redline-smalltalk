@@ -1,85 +1,145 @@
-| object1 object2 object3 array1 anInt |
-object1 := Object new.
-object2 := Object new.
+TestCase < #ObjectTest
+  instanceVariableNames: 'object1 object2'.
 
-Assert assert: [ object1 isKindOf: Object ] withMessage: 'test #isKindOf:'.  
+- test
+  object1 := Object new.
+  object2 := Object new.
+  self testIsKindOfObject.
+  " self testIsKindOfArrayLiteral. FAILS, see issue #46 "
+  self testIsMemberOfObject.
+  self testIsMemberOfArrayLiteral.
+  " self testRespondsTo. FAILS, see issue #48 "
+  self testClass.
+  self testEquivalence.
+  " self testSimpleLiteralsEquivalence. FAILS, see issue #50. "
+  self testSimpleEquals.
+  " self testStringEquals. FAILS (not implemented yet in String). "
+  self testNotEquals.
+  self testNotEquivalent.
+  self testHash.
+  " self testIntegerHash. FAILS, see issue #60 "
+  self testIsNil.
+  self testNotNil.
+  self testAt.
+  self testAtPut.
+  " self testSize. FAILS, see issue #61. "
+  self testYourself.
 
-" produces a TODO doesNotUnderstand (issue #46) 
-Assert assert: [ #(this is an array) isKindOf: Collection ] withMessage: 'test #isKindOf:'. " 
+- testIsKindOfObject
+  Assertion assert: [ object1 isKindOf: Object ] withMessage: 'Object new should be isKindOf Object'.  
 
-Assert assert: [ object1 isMemberOf: Object ] withMessage: 'test #isMemberOf:'.
-Assert assert: [ (object1 isMemberOf: Number) not ] withMessage: 'test #isMemberOf:'.
-" Fails: (issue #47) 
-Assert assert: [ #(this is an array) isMemberOf: Collection ] withMessage: 'test #isMemberOf:'. "
-Assert assert: [ #(1 2 3) isMemberOf: Array ] withMessage: 'test #isMemberOf:'.
+- testIsKindOfArrayLiteral
+  Assertion assert: [ #(this is an array) isKindOf: Collection ] withMessage: 'array literal should be a Collection'.
 
-" produces TODO exception (issue #48)
-Assert assert: [ object1 respondsTo: #isKindOf: ] withMessage: 'test #respondsTo:'.
-Assert assert: [ 3 respondsTo: #isKindOf: ] withMessage: 'test #respondsTo:'.
-Assert assert: [ (object1 respondsTo: #xyz:) not ] withMessage: 'test #respondsTo:'.  "
+- testIsMemberOfObject
+  Assertion assert: [ Object new isMemberOf: Object ] withMessage: 'object should be member of Object'.
+  Assertion assert: [ (Object new isMemberOf: Number) not ] withMessage: 'object should not be a member of Number'.
 
-Assert assert: [ object1 class == Object ] withMessage: 'test #class'.
-" Fails: (issue #49)
-Assert assert: [ Object class == Object class ] withMessage: 'test #class'. "
-Assert assert: [ #(this is an array) class == Array ] withMessage: 'test #class'.
-Assert assert: [ 3 class == Integer ] withMessage: 'test class'.
+- testIsMemberOfArrayLiteral
+  Assertion assert: [ #(1 2 3) isMemberOf: Array ] withMessage: 'array literal should be an Array'.
+  Assertion assert: [ (#(this is an array) isMemberOf: Collection) not ] withMessage: 'array literal should not be a member of Collection'.
+  Assertion assert: [ (#(1 2 3) isMemberOf: Integer) not ] withMessage: 'array literal should not be an Integer'.
 
-Assert assert: [ object1 == object1 ] withMessage: 'test equality'.
-Assert assert: [ (object1 == object2) not ] withMessage: 'test equality'.
-object3 := object1.
-Assert assert: [ object1 == object3 ] withMessage: 'test equality'.
-Assert assert: [ object3 == object1 ] withMessage: 'test equality'.
-" Fails: issue #50
-object1 := 1. object2 := 1.
-Assert assert: [ object1 == object2 ] withMessage: 'test equality'.
-Assert assert: [ 1 == 1 ] withMessage: 'test equality'. 
-Assert assert: [ $a == $a ] withMessage: 'test equality'.
-Assert assert: [ #a == #a ] withMessage: 'test equality'. "
-Assert assert: [ ('a' == 'a') not ] withMessage: 'test equality'.
+- testRespondsTo
+  Assertion assert: [ Object new respondsTo: #isKindOf: ] withMessage: 'object should #respondsTo: #isKindOf:'.
+  Assertion assert: [ 3 respondsTo: #isKindOf: ] withMessage: 'integer literal should respond to #isKindOf:'.
+  Assertion assert: [ (object1 respondsTo: #xyz:) not ] withMessage: 'test #respondsTo:'.
 
-Assert assert: [ object1 = object1 ] withMessage: 'test equal'.
-Assert assert: [ (object1 = object2) not ] withMessage: 'test equal'.
+- testClass
+  Assertion assert: [ Object new class == Object ] withMessage: 'object class should be Object'.
+  Assertion assert: [ #(this is an array) class == Array ] withMessage: 'class of array literal should be Array'.
+  Assertion assert: [ 3 class == Integer ] withMessage: 'class of integer literal should be Integer'.
+  Assertion assert: [ #test class == Symbol ] withMessage: 'class of symbol literal should be Symbol'.
+  
+- testEquivalence
+  | object3 |
+  "FAILS, issue #49: Assertion assert: [ Object class == Object class ] withMessage: 'equivalence of class objects'."
+  Assertion assert: [ object1 == object1 ] withMessage: 'object should == itself'.
+  Assertion assert: [ (object1 == object2) not ] withMessage: 'different objects are not =='.
+  object3 := object1.
+  Assertion assert: [ object1 == object3 ] withMessage: 'two variables, same object'.
+  Assertion assert: [ object3 == object1 ] withMessage: 'two variables, same object'.
+  Assertion assert: [ ('a' == 'a') not ] withMessage: 'string literals are not =='.
 
-Assert assert: [ object1 ~= object2 ] withMessage: 'test not equal'.
-Assert assert: [ (object1 ~= object1) not ] withMessage: 'test not equal'.
+- testSimpleLiteralsEquivalence
+  Assertion assert: [ 1 == 1 ] withMessage: 'integer literal equivalence'.
+  Assertion assert: [ $a == $a ] withMessage: 'character literal equivalence'.
+  Assertion assert: [ #a == #a ] withMessage: 'Symbol literal equivalence'. 
 
-Assert assert: [ object1 ~~ object2 ] withMessage: 'test not equality'.
-Assert assert: [ (object1 ~~ object1) not ] withMessage: 'test not equality'.
+- testSimpleEquals
+  Assertion assert: [ object1 = object1 ] withMessage: 'same object equals'.
+  Assertion assert: [ (object1 = object2) not ] withMessage: 'different objects not equal'.
 
-Assert assert: [ object1 hash = object1 hash ] withMessage: 'test #hash'.
-Assert assert: [ object1 hash = object3 hash ] withMessage: 'test #hash'.
-Assert assert: [ object1 hash ~= object2 hash ] withMessage: 'test #hash'. 
-"Fails, is it a bug?
-Assert assert: [ 123 hash = 123 hash ] withMessage: 'test #hash'. "
+- testStringEquals
+  "This should probably be in StringTest.st."
+  Assertion assert: [ 'a' = 'a' ] withMessage: 'string literals should be equal'.
 
-Assert assert: [ nil isNil ] withMessage: 'test #isNil'.
-Assert assert: [ object1 isNil not ] withMessage: 'test #isNil'.
+- testNotEquals
+  Assertion assert: [ object1 ~= object2 ] withMessage: 'different objects should be not equal'.
+  Assertion assert: [ (object1 ~= object1) not ] withMessage: 'same object should be not not equal'.
+  
+- testNotEquivalent
+  Assertion assert: [ object1 ~~ object2 ] withMessage: 'different objects should be not equivalent'.
+  Assertion assert: [ (object1 ~~ object1) not ] withMessage: 'same object should be not not equivalent'.
 
-Assert assert: [ object1 notNil ] withMessage: 'test #notNil'.
-Assert assert: [ nil notNil not ] withMessage: 'test #notNil'. 
+- testHash
+  | object3 |
+  object3 := object1.
+  Assertion assert: [ object1 hash = object1 hash ] withMessage: 'same object, hashes should be equal'.
+  Assertion assert: [ object1 hash = object3 hash ] withMessage: 'same object, hashes should be equal'.
+  Assertion assert: [ object1 hash ~= object2 hash ] withMessage: 'different objects, different hashes'. 
 
-array1 := #(1 2 3).
-Assert assert: [ (array1 at: 1) = 1 ] withMessage: 'test #at:'.
-Assert assert: [ (array1 at: 2) = 2 ] withMessage: 'test #at:'.
-Assert assert: [ (array1 basicAt: 1) = 1 ] withMessage: 'test #basicAt:'.
-Assert assert: [ (array1 basicAt: 2) = 2 ] withMessage: 'test #basicAt:'.
-"This fails as it should, but can't Assert test it yet: array1 at: 0. "
-"This fails as it should, but can't Assert test it yet: array1 at: 4. "
-"This gets a NPE, is that right? Object new at: 1. "
-anInt := 1.
-Assert assert: [ (array1 at: anInt) = 1 ] withMessage: 'test #at:'.
-Assert assert: [ (array1 basicAt: anInt) = 1 ] withMessage: 'test #basicAt:'.
+- testIntegerHash
+  Assertion assert: [ 123 hash = 123 hash ] withMessage: 'integer literals should have same hash'. 
+  Assertion assert: [ 123 hash = 123 ] withMessage: 'integer literal should equals its hash?'. 
 
-array1 at: 1 put: 3.
-Assert assert: [ (array1 at: 1) = 3 ] withMessage: 'test #at:put:'.
-array1 basicAt: 2 put: object1.
-Assert assert: [ (array1 at: 2) = object1 ] withMessage: 'test #basicAt:put:'.
+- testIsNil
+  Assertion assert: [ nil isNil ] withMessage: 'nil should be isNil'.
+  Assertion assert: [ object1 isNil not ] withMessage: 'object should be not isNil'.
 
-"Fail - issue #61
-Transcript show: array1 basicSize;cr.
-Transcript show: object1 basicSize;cr.
-Assert assert: [ array1 size = 3 ] withMessage: 'test #size'.
-Assert assert: [ object1 size = 1 ] withMessage: 'test #size'. "
+- testNotNil
+  Assertion assert: [ object1 notNil ] withMessage: 'object should be notNil'.
+  Assertion assert: [ nil notNil not ] withMessage: 'nil should not be notNil'. 
+
+- testAt
+  | anArray anInt |
+  anArray := #(1 2 3).
+  Assertion assert: [ (anArray at: 1) = 1 ] withMessage: 'test #at:'.
+  Assertion assert: [ (anArray at: 2) = 2 ] withMessage: 'test #at:'.
+  Assertion assert: [ (anArray basicAt: 1) = 1 ] withMessage: 'test #basicAt:'.
+  Assertion assert: [ (anArray basicAt: 2) = 2 ] withMessage: 'test #basicAt:'.
+  "This fails as it should, but can't Assert test it yet: anArray at: 0. "
+  "This fails as it should, but can't Assert test it yet: anArray at: 4. "
+  "This gets a NPE, is that right? Object new at: 1. "
+  anInt := 1.
+  Assertion assert: [ (anArray at: anInt) = 1 ] withMessage: 'test #at:'.
+  Assertion assert: [ (anArray basicAt: anInt) = 1 ] withMessage: 'test #basicAt:'.
+
+- testAtPut
+  | anArray |
+  anArray := #(1 2 3).
+  anArray at: 1 put: 3.
+  Assertion assert: [ (anArray at: 1) = 3 ] withMessage: 'test #at:put:'.
+  anArray basicAt: 2 put: object1.
+  Assertion assert: [ (anArray at: 2) = object1 ] withMessage: 'test #basicAt:put:'.
+
+- testSize
+  | anArray |
+  anArray := #(1 2 3).
+  Assertion assert: [ anArray size = 3 ] withMessage: 'size should be 3'.
+  Assertion assert: [ object1 size = 0 ] withMessage: 'non indexed size should be zero'.
+
+- testYourself
+  Assertion assert: [ object1 yourself == object1 ] withMessage: 'yourself should answer self'.
+
+
+- testWIP
+  "Not ready yet..."  
+  object1 := WriteStream on: String new.
+  object1 nextPutAll: 'test'.
+  Assertion assert: [ object1 printString = 'anObject' ] withMessage: 'testing #printString'.
+
+
 
 
 

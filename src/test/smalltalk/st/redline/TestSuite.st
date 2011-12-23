@@ -5,3 +5,4 @@ Object < #TestSuite
   BooleanTest new; test.
   IntegerTest new; test.
   NumberTest new; test.
+  ObjectTest new; test.
