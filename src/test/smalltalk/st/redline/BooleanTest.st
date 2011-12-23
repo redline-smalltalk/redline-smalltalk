@@ -1,4 +1,4 @@
-Object < #BooleanTest
+TestCase < #BooleanTest
 
 -test
   self testTrue.
