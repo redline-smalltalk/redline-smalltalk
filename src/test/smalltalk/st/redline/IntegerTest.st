@@ -9,6 +9,7 @@ TestCase < #IntegerTest
   self testSimpleSubtraction.
   self testComplexSubtraction.
   self testSimpleMultiplication.
+  self testComplexMultiplication.
   self testLessThanOrEqualTo.
   self testGreaterThanOrEqualTo.
   self testPrecedence.
