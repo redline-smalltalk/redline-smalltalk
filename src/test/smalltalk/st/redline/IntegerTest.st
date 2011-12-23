@@ -49,9 +49,8 @@ TestCase < #IntegerTest
 - testComplexMultiplication
   Assertion assert: [ 1 * 2 * 3 = 6 ] withMessage: '1 times 2 times 3 is not 6.'.
   
-
 - testPrecedence
   "Commented out til we have * support on Integers"
 
-  "Assertion assert: [ (25 + 3 * 4) = 112 ] withMessage: 'Mathmatical precedence is wrong.'."
+  Assertion assert: [ (25 + 3 * 4) = 112 ] withMessage: 'Mathmatical precedence is wrong.'.
       
