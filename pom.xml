@@ -168,7 +168,7 @@
                 <argument>${project.basedir}${path.separator}src${path.separator}main${path.separator}smalltalk</argument>
                 <argument>-s</argument>
                 <argument>${project.basedir}${path.separator}src${path.separator}test${path.separator}smalltalk</argument>
-                <argument>st.redline.Tests</argument>
+                <argument>st.redline.TestRunner</argument>
               </arguments>
             </configuration>
           </execution>
