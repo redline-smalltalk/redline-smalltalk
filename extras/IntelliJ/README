@@ -7,6 +7,6 @@ Contents:
   This is a syntax highlighting file for IntelliJ (fileType in IntelliJ-speak.)
   Place this file in your IntelliJ user config directory, within config/filetypes.
   
-  For Mac users, that's ~/Library/<IntelliJ folder>/config/filetypes
+  For Mac users, that's ~/Library/Preferences/<IntelliJ folder>/filetypes
   For Linux users, ~/.<IntelliJ folder>/config/filetypes
   For Windows users, C:\Users\<user folder>\<IntelliJ folder>\config\filetypes
