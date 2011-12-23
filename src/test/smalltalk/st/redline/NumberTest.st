@@ -4,6 +4,6 @@ TestCase < #NumberTest
   self testNegative.
 
 - testNegative
-  Assertion assert: [ -1 negative = true ] withMessage: '-1 is not negative'.
-  Assertion assert: [ 0 negative = false ] withMessage: '0 is negative'.
-  Assertion assert: [ 1 negative = false ] withMessage: '1 is negative'.
+  self assertTrue: -1 negative withMessage: '-1 is not negative'.
+  self assertFalse: 0 negative withMessage: '0 is negative'.
+  self assertFalse: 1 negative withMessage: '1 is negative'.

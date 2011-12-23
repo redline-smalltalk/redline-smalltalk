@@ -19,53 +19,53 @@ TestCase < #IntegerTest
   self testIsInteger.
 
 - testSimpleEquality
-  Assertion assert: [ 1 = 1 ] withMessage: '1 is not 1.'
+  self assert: 1 equals: 1withMessage: '1 is not 1.'
 
 - testSimpleAddition
-  Assertion assert: [ 1 + 1 = 2 ] withMessage: '1 and 1 do not make 2.'
+  self assert: 1 + 1 equals: 2 withMessage: '1 and 1 do not make 2.'
 
 - testComplexAddition
-  Assertion assert: [ 1 + 2 + 3 + 4 = 10 ] withMessage: '1 + 2 + 3 + 4 is not as it should be.'.
+  self assert: 1 + 2 + 3 + 4 equals: 10 withMessage: '1 + 2 + 3 + 4 is not as it should be.'.
 
 - testLessThan
-  Assertion assert: [ 1 < 2 ] withMessage: '1 is greater than 2.'
+  self assertTrue: 1 < 2 withMessage: '1 is greater than 2.'
 
 - testGreaterThan
   "Commented out due to parser error."
 
-  "Assertion assert: [ 2 > 1 ] withMessage: '2 is less than 1.'"
+  "self assertTrue: 2 > 1 withMessage: '2 is less than 1.'"
 
 - testSimpleSubtraction
-  Assertion assert: [ 1 - 1 = 0 ] withMessage: '1 - 1 is not 0.'
+  self assert: 1 - 1 equals: 0 withMessage: '1 - 1 is not 0.'
 
 - testComplexSubtraction  
-  Assertion assert: [ 10 - 1 - 2 - 3 - 4 = 0] withMessage: '10 - 1 - 2 - 3 - 4 is not as it should be'
+  self assert: 10 - 1 - 2 - 3 - 4 equals: 0 withMessage: '10 - 1 - 2 - 3 - 4 is not as it should be'
 
 - testLessThanOrEqualTo
-  Assertion assert: [ 1 <= 2 ] withMessage: '1 is not less than or equal to 2.'.
-  Assertion assert: [ 2 <= 2 ] withMessage: '2 is not (less than or) equal to 2.'.  
+  self assertTrue: 1 <= 2 withMessage: '1 is not less than or equal to 2.'.
+  self assertTrue: 2 <= 2 withMessage: '2 is not (less than or) equal to 2.'.  
 
 - testGreaterThanOrEqualTo
-  Assertion assert: [ 2 >= 1 ] withMessage: '2 is not greater than (or equal to) 1.'.
-  Assertion assert: [ 2 >= 2 ] withMessage: '2 is not (greater than or) equal to 2.'.
+  self assertTrue: 2 >= 1 withMessage: '2 is not greater than (or equal to) 1.'.
+  self assertTrue: 2 >= 2 withMessage: '2 is not (greater than or) equal to 2.'.
 
 - testSimpleMultiplication
-  Assertion assert: [ 1 * 2 = 2 ] withMessage: '1 times 2 is not 2.'.
+  self assert: 1 * 2 equals: 2 withMessage: '1 times 2 is not 2.'.
 
 - testComplexMultiplication
-  Assertion assert: [ 1 * 2 * 3 = 6 ] withMessage: '1 times 2 times 3 is not 6.'.
+  self assert: 1 * 2 * 3 equals: 6 withMessage: '1 times 2 times 3 is not 6.'.
 
 - testSimpleDivision
-  Assertion assert: [ 10 / 5 = 2 ] withMessage: '10 divided by 5 is not 2.'.
+  self assert: 10 / 5 equals: 2 withMessage: '10 divided by 5 is not 2.'.
 
 - testPrecedence
-  Assertion assert: [ (25 + 3 * 4) = 112 ] withMessage: 'Mathmatical precedence is wrong.'.
+  self assert: 25 + 3 * 4 equals: 112 withMessage: 'Mathmatical precedence is wrong.'.
 
 - testFloor
-  Assertion assert: [ 1 floor = 1 ] withMessage: '1 floored is not 1.'.
+  self assert: 1 floor equals: 1 withMessage: '1 floored is not 1.'.
 
 - testTruncated
-  Assertion assert: [ 1 truncated = 1 ] withMessage: '1 truncated is not 1.'.
+  self assert: 1 truncated equals: 1 withMessage: '1 truncated is not 1.'.
 
 - testIsInteger
-  Assertion assert: [ 1 isInteger ] withMessage: '1 is not an Integer'.
+  self assertTrue: 1 isInteger withMessage: '1 is not an Integer'.

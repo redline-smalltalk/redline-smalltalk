@@ -92,11 +92,11 @@ ProtoObject < #Object
   ^ self basicAt: index put: anObject.
 
 - basicAt: index
-  "Primitive.  Assuming the object is indexable, return the value at index."
+  "Same as at: index. The method associated with this message, however, cannot be modified in any subclass."
   <primitive: 60>
 
-- basicAt: index put: value
-  "Primitive.  Assuming the object is indexable, set the value at index."
+- basicAt: index put: anObject
+  "Same as at: index put: anObject. The method associated with this message, however, cannot be modified in any subclass."
   <primitive: 61>
 
 - size
@@ -108,8 +108,36 @@ ProtoObject < #Object
   "Same as size. The method associated with this message, however, cannot be
   modified in any subclass."
   <primitive: 62>
+  
+- printString
+  "Answer a String whose characters are a description of the receiver."
+  
+  | stream |
+  stream := WriteStream on: String new.
+  self printOn: stream.
+  ^ stream contents.
 
+- printOn: aStream 
+  "Append to the argument, aStream, a sequence of characters that 
+  identifies the receiver."
+
+  | title |
+  title := self class name.
+  " This is not compiling: "
+  "
+  aStream nextPutAll: ((title at: 1) isVowel
+              ifTrue: ['an ']
+              ifFalse: ['a '])
+            , title
+  "
+  aStream nextPutAll: title.
+  						
+- yourself
+  "Answer self."
+  ^ self.
+  
 - value
+  "NOTE: This is not actually in the Blue Book."
   ^ self.
 
 + error: aMessage
