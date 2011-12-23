@@ -22,3 +22,9 @@ Number < #Integer
 
 - = aNumber
 	<primitive: 27>
+
+- * aNumber
+  <primitive: 29>
+
+- / aNumber
+  <primitive: 30>
