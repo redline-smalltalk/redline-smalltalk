@@ -11,9 +11,16 @@ at the Bistro sources to see how Java effected that implementation.
 Each method should contain a method comment that describes what it does,
 in the format given in the Blue Book / Pharo.
 
-QUESTION: IS IT BETTER TO HAVE CLASSES WITH NO METHODS UNTIL THOSE METHODS
-ARE REQUIRED? - to save implementing methods no on calls? [Comment from Lee: I don't understand
-what this is supposed to be asking. There appears to be a typo, but I can't figure it out.]
+Where a Class has no associated protocol listed this is probably because
+the protocol is covered in a superclass or not covered by the Blue Book.
+When you adopt a Class please double check the Blue Book and Pharo.
+
+NOTE: The implementation of the methods needs to respect that it is ontop
+of Java, therefore some things that deal with bytes or characters need to
+realise they are Java byte and character sizes.
+
+If you find yourself needing a new primitive or are unsure about primitives
+then contact James Ladd.
 
 PLEASE double check the class you adopt and the Blue Book to make sure
 all the methods have been covered. Note: during cut-n-paste some L's 
@@ -35,6 +42,32 @@ Object -- Lee Breisacher
    SmallInteger
  LookupKey
   Association
+
+Exception - Bob Calco
+  Abort
+  Error - Bob Calco
+    ArithmeticError
+      DomainError
+      FloatingPointException
+      NaNException
+    BlockCannotReturn
+    DuplicatedVariableError
+    NonBooleanReceiver
+    OutOfMemory
+    SelectorException - Bob Calco
+      PrimitiveFailed
+      ShouldBeImplemented
+      ShouldNotImplement
+      SubclassResponsibility - Bob Calco
+    SubcriptOutOfBounds
+  Halt
+    AssertionFailure
+  IllegalResumeAttempt
+  Notification
+    Warning
+      Deprecation
+  UnhandledError
+ExceptionSet
 
 ?Link
  ?Process
@@ -65,7 +98,7 @@ Collection
       FileStream
  Random
  
- File
+ File -- brweber2|Bryan Weber
   FileDirectory
   ?FilePage
  
@@ -75,8 +108,8 @@ Collection
   False
 
  ?ProcessScheduler
- Delay
- SharedQueue 
+ ?Delay
+ ?SharedQueue 
 
  Behavior
   ClassDescription
@@ -120,6 +153,27 @@ error: aString
 primitiveFailed 
 shouldNotImplement
 subclassResponsibility
+addDependent: anObject
+removeDependent: anObject 
+dependents 
+release
+changed
+changed: aParameter
+update: aParameter 
+broadcast: aSymbol 
+broadcast: aSymboi with: anObject
+perform: aSymbol
+perform: aSymbol with: anObject
+perform: aSymbol with: firstObject with: secondObject
+perform: aSymbol with: firstObject with: secondObject with: thirdObject
+perform: selector withArguments: anArray
+become: otherObject
+instVarAt: index
+instVarAt: index put: value
+nextlnstance
+numberOfPointers
+refct
+
 
 -- Magnitude protocol --
 
@@ -362,9 +416,174 @@ internCharacter: aCharacter
 
 -- MappedCollection Protocol --
 
+-- Stream Protocol --
 
+next
+next: anInteger
+nextMatchFor: anObject
+contents
+nextPut: anObject
+nextPutAll: aCollection
+next: aninteger put: anObject
+atEnd
+do: aBlock
 
-**I'm upto MappedCollection** Pg 190
+-- PositionableStream Protocol --
+on: aCollection
+on: aCollection from: firstindex to: lastlndex
+isEmpty
+peek
+peekFor: anObject 
+upTo: anObject 
+reverseContents 
+position
+position: anInteger
+reset 
+setToEnd 
+skip: anInteger
+skipTo: anObject
 
+-- ReadStream Protocol --
+-- WriteStream Protocol --
+-- ReadWriteStream Protocol --
+
+-- ExternalStream Protocol --
+
+nextNumber: n
+nextNumber: n put: v 
+nextString 
+nextStringPut: aString 
+nextWord 
+nextWordPut: anInteger 
+padTo: bsize
+padTo: bsize put: aCharacter 
+padToNextWord 
+padToNextWordPut: aCharacter 
+skipWords: nWords 
+wordPosition 
+wordPosition: wp 
+
+-- UndefinedObject Protocol --
+isNil
+notNil
+
+-- Boolean Protocol --
+& aBoolean
+| aBoolean
+not
+eqv: aBoolean
+xor: aBoolean
+and: alternativeBlock
+or: alternativeBlock
+ifTrue: trueAIternativeBlock ifFalse: falseAlternativeBlock
+ifFalse: falseAIternativeBlock ifTrue: trueAlternativeBlock
+ifTrue: trueAlternativeBlock
+ifFalse: falseAlternativeBlock
+
+-- Behavior Protocol --
+methodDictionary: aDictionary
+addSelector: selector withMethod: compiledMethod
+removeSelector: selector
+compile: code
+compile: code notifying: requestor
+recompile: selector
+decompile: selector
+compileAll
+compileAllSubclasses
+new
+basicNew
+new: anInteger
+basicNew: anInteger
+superclass: aClass
+addSubclass: aClass
+removeSubclass: aClass
+selectors
+allSelectors
+compiledMethodAt: selector 
+sourceCodeAt: selector 
+sourceMethodAt: selector 
+alllnstances
+someinstance
+instanceCount
+instVarNames
+subclassInstVarNames
+allInstVarNames 
+classVarNames 
+allClassVarNames 
+sharedPools 
+allSharedPools 
+subclasses
+allSubclasses
+withAllSubclasses
+superclass
+allSuperclasses
+hasMethods
+includesSelector: selector
+canUnderstand: selector
+whichClasslncludesSelector: selector
+whichSelectorsAccess: instVarName
+whichSelectorsReferTo: anObject
+scopeHas: name ifTrue: aBlock
+isPointers
+isBits
+isBytes
+isWords
+isFixed
+isVariable
+instSize
+allSubclassesDo: aBlock
+allSuperclassesDo: aBlock
+alllnstancesDo: aBlock
+allSubinstancesDo: aBlock
+selectSubclasses: aBIock
+selectSuperclasses: aBIock
+classVariableString
+instanceVariableString
+sharedVariableString
+
+-- ClassDescription Protocol --
+
+name
+comment
+comment: aString
+addlnstVarName: aString
+removelnstVarName: aString
+category
+category: aString
+removeCategory: aString
+whichCategorylncludesSelector: selector
+fileOutOn: aFileStream
+fileOutCategory: categoryName
+fileOutChangedMessages: setOfChanges on: aFileStream
+
+-- Metaclass Protocol --
+
+subclassOf: superMeta
+name: newName
+    environment: aSystemDictionary
+    subclassOf: superClass
+    instanceVariableNames: stringOflnstVarNames
+    variable: variableBoolean
+    words: wordBoolean
+    pointers: pointerBoolean
+    classVariableNames: stringOfCiassVarNames
+    poolDictionaries: stringOfPoolNames
+    category: categoryName
+    comment: commentString
+    changed: changed
+
+-- Class Protocol --
+
+addClassVarName: aString
+removeClassVarName: aString
+addSharedPool: aDictionary
+removeSharedPooi: aDictionary
+classPool
+initialize
+subclass: classNameString
+  instanceVariableNames: stringlnstVarNames
+  classVariableNames: stringOfCiassVarNames
+  poolDictionaries: stringOfPoolNames
+  category: categoryNameString
 
 *END*
