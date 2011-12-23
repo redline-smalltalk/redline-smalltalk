@@ -43,6 +43,32 @@ Object -- Lee Breisacher
  LookupKey
   Association
 
+Exception - Bob Calco
+  Abort
+  Error - Bob Calco
+    ArithmeticError
+      DomainError
+      FloatingPointException
+      NaNException
+    BlockCannotReturn
+    DuplicatedVariableError
+    NonBooleanReceiver
+    OutOfMemory
+    SelectorException - Bob Calco
+      PrimitiveFailed
+      ShouldBeImplemented
+      ShouldNotImplement
+      SubclassResponsibility - Bob Calco
+    SubcriptOutOfBounds
+  Halt
+    AssertionFailure
+  IllegalResumeAttempt
+  Notification
+    Warning
+      Deprecation
+  UnhandledError
+ExceptionSet
+
 ?Link
  ?Process
 
