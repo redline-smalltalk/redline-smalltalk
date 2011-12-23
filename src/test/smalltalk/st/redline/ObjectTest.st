@@ -46,26 +46,42 @@ Assert assert: [ (object1 ~= object1) not ] withMessage: 'test not equal'.
 Assert assert: [ object1 ~~ object2 ] withMessage: 'test not equality'.
 Assert assert: [ (object1 ~~ object1) not ] withMessage: 'test not equality'.
 
-" java.lang.NoSuchMethodError   (issue #52)
-Transcript show: object1 hash;cr.
-Assert assert: [ (object1 hash) == (object1 hash) ] withMessage: 'test #hash'.
-Assert assert: [ object1 hash == object3 hash ] withMessage: 'test #hash'.
-Assert assert: [ (object1 hash ~= object2 hash) not ] withMessage: 'test #hash'. "
+Assert assert: [ object1 hash = object1 hash ] withMessage: 'test #hash'.
+Assert assert: [ object1 hash = object3 hash ] withMessage: 'test #hash'.
+Assert assert: [ object1 hash ~= object2 hash ] withMessage: 'test #hash'. 
+"Fails, is it a bug?
+Assert assert: [ 123 hash = 123 hash ] withMessage: 'test #hash'. "
 
 Assert assert: [ nil isNil ] withMessage: 'test #isNil'.
 Assert assert: [ object1 isNil not ] withMessage: 'test #isNil'.
 
 Assert assert: [ object1 notNil ] withMessage: 'test #notNil'.
-" Fails: (issue #53)
-Assert assert: [ nil notNil not ] withMessage: 'test #notNil'. "
+Assert assert: [ nil notNil not ] withMessage: 'test #notNil'. 
 
 array1 := #(1 2 3).
 Assert assert: [ (array1 at: 1) = 1 ] withMessage: 'test #at:'.
 Assert assert: [ (array1 at: 2) = 2 ] withMessage: 'test #at:'.
+Assert assert: [ (array1 basicAt: 1) = 1 ] withMessage: 'test #basicAt:'.
+Assert assert: [ (array1 basicAt: 2) = 2 ] withMessage: 'test #basicAt:'.
 "This fails as it should, but can't Assert test it yet: array1 at: 0. "
 "This fails as it should, but can't Assert test it yet: array1 at: 4. "
 "This gets a NPE, is that right? Object new at: 1. "
 anInt := 1.
 Assert assert: [ (array1 at: anInt) = 1 ] withMessage: 'test #at:'.
+Assert assert: [ (array1 basicAt: anInt) = 1 ] withMessage: 'test #basicAt:'.
+
+array1 at: 1 put: 3.
+Assert assert: [ (array1 at: 1) = 3 ] withMessage: 'test #at:put:'.
+array1 basicAt: 2 put: object1.
+Assert assert: [ (array1 at: 2) = object1 ] withMessage: 'test #basicAt:put:'.
+
+"Fail - issue #61
+Transcript show: array1 basicSize;cr.
+Transcript show: object1 basicSize;cr.
+Assert assert: [ array1 size = 3 ] withMessage: 'test #size'.
+Assert assert: [ object1 size = 1 ] withMessage: 'test #size'. "
+
+
+
 
 

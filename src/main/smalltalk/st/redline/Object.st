@@ -87,11 +87,11 @@ ProtoObject < #Object
   ^ self basicAt: index put: anObject.
 
 - basicAt: index
-  "Primitive.  Assuming the object is indexable, return the value at index."
+  "Same as at: index. The method associated with this message, however, cannot be modified in any subclass."
   <primitive: 60>
 
-- basicAt: index put: value
-  "Primitive.  Assuming the object is indexable, set the value at index."
+- basicAt: index put: anObject
+  "Same as at: index put: anObject. The method associated with this message, however, cannot be modified in any subclass."
   <primitive: 61>
 
 - size
