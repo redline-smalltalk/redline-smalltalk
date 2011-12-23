@@ -4,13 +4,13 @@ Magnitude < #Number
 
 "intervals"
 - to: stop
-    ^ Interval from: self to: stop by: 1.
+  ^ Interval from: self to: stop by: 1.
 
 - to: stop do: aBlock
-    | nextValue |
-    nextValue := self.
+  | nextValue |
+  nextValue := self.
 
-    [nextValue <= stop]
-        whileTrue:
-            [aBlock value: nextValue.
-            nextValue := nextValue + 1].
+  [nextValue <= stop]
+    whileTrue:
+      [aBlock value: nextValue.
+      nextValue := nextValue + 1].
