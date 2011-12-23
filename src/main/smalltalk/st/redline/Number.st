@@ -2,6 +2,26 @@
 
 Magnitude < #Number
 
+- * aNumber 
+  "Answer the result of multiplying the receiver by aNumber."
+
+  self subclassResponsibility
+
+- + aNumber 
+  "Answer the sum of the receiver and aNumber."
+
+  self subclassResponsibility
+  
+- - aNumber 
+  "Answer the difference between the receiver and aNumber."
+
+  self subclassResponsibility
+  
+- / aNumber 
+  "Answer the result of dividing the receiver by aNumber."
+
+  self subclassResponsibility
+        
 "intervals"
 - to: stop
   ^ Interval from: self to: stop by: 1.
