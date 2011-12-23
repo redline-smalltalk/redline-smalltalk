@@ -33,10 +33,10 @@ Object -- Lee Breisacher
   Character
   Date
   Time
- Number
-  Float
-  Fraction
-  Integer
+ Number -- Sean T Allen
+  Float -- Sean T Allen
+  Fraction -- Sean T Allen
+  Integer -- Sean T Allen
    LargeNegativeInteger
    LargePositiveInteger
    SmallInteger
