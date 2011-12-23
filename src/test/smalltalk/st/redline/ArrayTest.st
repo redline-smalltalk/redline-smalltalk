@@ -10,7 +10,7 @@ TestCase < #ArrayTest
   array := #(1 'one' 17 symbol $f 3).
   element := array at: 3.
  
-  Assertion assert: [ element = 17 ] withMessage: 'Array test failed'.
+  self assert: element equals: 17 withMessage: 'Array test failed'.
 
 - testDo
   | array |

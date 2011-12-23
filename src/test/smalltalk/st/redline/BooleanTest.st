@@ -6,8 +6,8 @@ TestCase < #BooleanTest
 
 - testTrue
   true ifTrue:  [] 
-       ifFalse: [ Assertion assert: [ false ] withMessage: 'true is false' ].
+       ifFalse: [ self assertTrue: [ false ] withMessage: 'true is false' ].
 
 - testFalse
-  false ifTrue:  [ Assertion assert: [ false ] withMessage: 'false is true']
+  false ifTrue:  [ self assertTrue: [ false ] withMessage: 'false is true']
         ifFalse: [].
