@@ -1,3 +1,7 @@
+24/12/2011
+
+Fixed issue with nested arrays ('foo' ('bar') 'baz').
+
 21/12/2011
 
 Finished Objects and Protocols Document.

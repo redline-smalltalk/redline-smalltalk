@@ -404,6 +404,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	public void callPrimitivePutAt(int index, int line) {
+//		System.out.println("callPrimitivePutAt() " + index + " " + line);
 		visitLine(line);
 		stackPushNumeric(index);
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_PUT_AT, PRIMITIVE_PUT_AT_SIGNATURE);
