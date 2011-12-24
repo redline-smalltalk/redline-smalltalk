@@ -3,6 +3,7 @@
 Fixed issue with nested arrays ('foo' ('bar') 'baz').
 Fixed issue relating to basicSize. There is an associated issue with iterating through arrays.
 I have not tested if this fix also fixes that issue.
+Added size for non-indexed objects.
 
 21/12/2011
 
