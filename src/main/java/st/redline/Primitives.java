@@ -148,6 +148,14 @@ public class Primitives {
 
 	public static ProtoObject p62(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// does this primitive make sense for Redline?
+		Object value = receiver.javaValue();
+		if (value instanceof ProtoObject[])
+			try {
+				int length = ((ProtoObject[]) value).length - 1;
+				return createInteger(receiver, (length < 0) ? 0 : length);
+			} catch (ClassNotFoundException e) {
+				throw new RedlineException(e);
+			}
 		return ProtoObject.NIL;
 	}
 

@@ -1,6 +1,8 @@
 24/12/2011
 
 Fixed issue with nested arrays ('foo' ('bar') 'baz').
+Fixed issue relating to basicSize. There is an associated issue with iterating through arrays.
+I have not tested if this fix also fixes that issue.
 
 21/12/2011
 
