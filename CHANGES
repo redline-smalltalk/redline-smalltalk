@@ -1,3 +1,8 @@
+23/12/2011
+
+Modified Maven pom to have a "no-tests" profile for convenience that
+skips the JUnit-based tests and the Smalltalk-based tests.
+
 20/12/2011
 
 Added notNil to UndefinedObject as resolution of raised issue.
