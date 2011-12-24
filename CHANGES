@@ -1,7 +1,17 @@
+24/12/2011
+
+Fixed issue with nested arrays ('foo' ('bar') 'baz').
+Fixed issue relating to basicSize. There is an associated issue with iterating through arrays.
+I have not tested if this fix also fixes that issue.
+
 23/12/2011
 
 Modified Maven pom to have a "no-tests" profile for convenience that
 skips the JUnit-based tests and the Smalltalk-based tests.
+
+21/12/2011
+
+Finished Objects and Protocols Document.
 
 20/12/2011
 

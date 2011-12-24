@@ -31,6 +31,9 @@ public class ProtoObject {
 		if(javaValue() instanceof String) {
 			return (String)javaValue();
 		} else {
+			if (javaValue() instanceof Number) {
+				return ((Number)javaValue()).toString();
+			}
 			if (name != null) return name;
 			if (cls() != null)
 				return super.toString() + "(" + String.valueOf(cls().name) + ")";

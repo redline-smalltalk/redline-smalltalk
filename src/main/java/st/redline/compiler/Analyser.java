@@ -334,9 +334,8 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Array array) {
+//		System.out.println("visit(Array) " + array);
 		classBytecodeWriter.callPrimitiveArray(array.size(), array.line());
-		if (insideArray())
-			classBytecodeWriter.callPrimitivePutAt(array.index(), array.line());
 		arrayDepth++;
 	}
 
@@ -347,6 +346,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	private boolean insideArray() {
+//		System.out.println("insideArray() " + (arrayDepth != 0));
 		return arrayDepth != 0;
 	}
 
