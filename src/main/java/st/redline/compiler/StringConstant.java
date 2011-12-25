@@ -8,8 +8,14 @@ public class StringConstant implements IndexedVisitableNode {
 	private int index = 0;
 
 	public StringConstant(String value, int line) {
-		this.value = value;
+		this.value = homogenize(value);
 		this.line = line;
+	}
+
+	private String homogenize(String value) {
+		if (value == null || value.length() == 2)
+			return value;
+		return value.replaceAll("''","'");
 	}
 
 	public void accept(NodeVisitor visitor) {
