@@ -49,7 +49,8 @@ public class Bootstrapper {
 		protoObject.methodAtPut("poolDictionaries:", new PoolDictionariesMethod());
 		protoObject.methodAtPut("category:", new CategoryMethod());
 		protoObject.methodAtPut("import:", new ImportMethod());
-        protoObject.methodAtPut("initialize", new InitializeMethod());
+		protoObject.methodAtPut("initialize", new InitializeMethod());
+		protoObject.methodAtPut("subclass:instanceVariableNames:classVariableNames:poolDictionaries:", new ClassSubclassWithVariablesMethod());
 	}
 
 	private void markBootstrapping(boolean bootstrapping) {

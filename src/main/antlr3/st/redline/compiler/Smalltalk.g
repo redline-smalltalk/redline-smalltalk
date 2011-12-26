@@ -395,7 +395,7 @@ numberConstant returns [NumberConstant n]
 DIGITS: ('+'|'-') ? ('0'..'9')+;
 NAME: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 KEYWORD: NAME ':';
-STRING_LITERAL: '\'' .* '\'';
+STRING_LITERAL: '\'' (~'\''|'\'\'')* '\'';
 STRING_CHUNK: '`' .* '`';
 BINARY_SYMBOL: ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',') ('~'|'!'|'@'|'%'|'&'|'*'|'-'|'+'|'='|'\\'|'|'|'?'|'/'|'>'|'<'|',')*;
 CHARACTER: '$' . ;
