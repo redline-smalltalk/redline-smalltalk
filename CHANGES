@@ -1,4 +1,8 @@
-25/12/2001
+27/12/2011
+
+Fixed issue #65 with block referring to outer self and getting block, not outer self.
+
+25/12/2011
 
 Added support for subclass:instanceVariableNames:classVariableNames:poolDictionaries:
 *Note, need support for classInstanceVariableNames.

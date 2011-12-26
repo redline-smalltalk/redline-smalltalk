@@ -54,6 +54,11 @@ public class BlockAnalyserDelegate extends MethodAnalyser {
 		}
 	}
 
+	public void visit(SelfReservedWord selfReservedWord, int line) {
+//		System.out.println("visit(Self) in block ");
+		classBytecodeWriter.stackPushOuterReceiver(line);
+	}
+
 	public void visit(BlockVariableName blockVariableName, String value, int line) {
 //		System.out.println("Blockvisit(BlockVariableName) " + value);
 		registerMethodArgument(blockVariableName);

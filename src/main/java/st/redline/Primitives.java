@@ -129,6 +129,8 @@ public class Primitives {
 		// basicAt: / at:
 //		System.out.println("** p60 at: " + arg1.javaValue());
 		ProtoObject[] slots = (ProtoObject[]) receiver.javaValue();
+		if (slots == null)
+			throw new IllegalStateException("Receivers slots are null! " + receiver);
 		int index = ((BigInteger) arg1.javaValue()).intValue();
 		if (index == 0)
 			throw new IllegalStateException("Index to slot cannot be zero!");
@@ -139,6 +141,8 @@ public class Primitives {
 //		System.out.println("** p61 at: " + arg1.javaValue() + " put: " + arg2);
 		// basicAt:put: / at:put:
 		ProtoObject[] slots = (ProtoObject[]) receiver.javaValue();
+		if (slots == null)
+			throw new IllegalStateException("Receivers slots are null! " + receiver);
 		int index = ((BigInteger) arg1.javaValue()).intValue();
 		if (index == 0)
 			throw new IllegalStateException("Index to slot cannot be zero!");
@@ -619,6 +623,10 @@ public class Primitives {
 
 	public static ProtoObject outerContextMethodArgumentAt(ProtoObject receiver, int index) {
 		return receiver.outerContext().argumentAt(index);
+	}
+
+	public static ProtoObject outerContextReceiver(ProtoObject receiver) {
+		return receiver.outerReceiver();
 	}
 
 	public static ProtoObject temporaryAt(ProtoObject receiver, ThisContext thisContext, int index, boolean isLocal) {

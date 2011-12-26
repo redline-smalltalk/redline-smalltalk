@@ -134,6 +134,10 @@ public class ProtoObject {
 		throw new IllegalStateException("Subclass should implement.");
 	}
 
+	public ProtoObject outerReceiver() {
+		throw new IllegalStateException("Subclass should implement.");
+	}
+
 	private ClassLoader classLoader() {
 		return Thread.currentThread().getContextClassLoader();
 	}

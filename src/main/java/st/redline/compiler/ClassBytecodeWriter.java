@@ -16,6 +16,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	protected static final String INIT = "<init>";
 	protected static final String INIT_SIGNATURE = "()V";
 	protected static final String PROTOOBJECT = "st/redline/ProtoObject";
+	protected static final String PROTOBLOCK = "st/redline/ProtoBlock";
 	protected static final String PRIMITIVE = "st/redline/Primitives";
 
 	private static final String SUPERCLASS = PROTOOBJECT;
@@ -47,6 +48,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String PRIMITIVE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
 	private static final String PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT = "outerContextMethodArgumentAt";
 	private static final String PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT_SIGNATURE = "(Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
+	private static final String PRIMITIVE_OUTERCONTEXT_RECEIVER = "outerContextReceiver";
+	private static final String PRIMITIVE_OUTERCONTEXT_RECEIVER_SIGNATURE = "(Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
 	private static final String[] SEND_SIGNATURES = {
 		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
 		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
@@ -287,6 +290,11 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	public void stackPushBoolean(boolean bool) {
 		mv.visitInsn(bool ? ICONST_1 : ICONST_0);
+	}
+
+	public void stackPushOuterReceiver(int line) {
+		stackPushReceiver(line);
+		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_OUTERCONTEXT_RECEIVER, PRIMITIVE_OUTERCONTEXT_RECEIVER_SIGNATURE);
 	}
 
 	public void stackPushNumeric(int value) {
