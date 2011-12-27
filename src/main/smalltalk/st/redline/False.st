@@ -2,40 +2,57 @@
 
 Boolean < #False
 
-- & anObject
-    "answer anObject since receiver is false."
-    ^ self.
+- & alternativeObject 
+  "Evaluating conjunction -- answer false since receiver is false."
 
-- and: aBlock
-   "answer with false since the receiver is false."
-   ^ self.
-
-- xor: aBoolean
-   ^ aBoolean.
-
-- or: aBlock
-   "answer aBlock since the receiver is false."
-   ^ aBlock value.
-
-- ifFalse: aBlock
-   "Answer the value of aBlock since the receiver is false."
-   ^ aBlock value.
-
-- ifTrue: aBlock
-   "Since the condition is false, answer the value of the false alternative, which is nil."
-   ^ nil.
-
-- ifFalse: falseBlock ifTrue: trueBlock
-  "Answer the value of falseBlock"
-   ^ falseBlock value.
-
-- ifTrue: trueBlock ifFalse: falseBlock
-   "Answer the value of falseBlock"
-   ^ falseBlock value.
+  ^self
 
 - not
-   "answer true since the receiver is false."
-   ^ true.
+  "Negation -- answer true since the receiver is false."
 
-- printOn: aStream
-   aStream nextPutAll: 'false'.
+  ^true
+
+" TODO The vertical bar (|) operator produces a parse error and NPE: "
+" - | aBoolean "
+  "Evaluating disjunction (OR) -- answer with the argument, aBoolean."
+
+"  ^aBoolean"
+  
+- and: alternativeBlock 
+  "Nonevaluating conjunction -- answer with false since the receiver is false."
+
+  ^self
+
+- ifFalse: alternativeBlock 
+  "Answer the value of alternativeBlock. Execution does not actually
+  reach here because the expression is compiled in-line."
+
+  ^alternativeBlock value
+
+- ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock 
+  "Answer the value of falseAlternativeBlock. Execution does not
+  actually reach here because the expression is compiled in-line."
+
+  ^falseAlternativeBlock value
+
+- ifTrue: alternativeBlock 
+  "Since the condition is false, answer the value of the false alternative, 
+  which is nil. Execution does not actually reach here because the
+  expression is compiled in-line."
+
+  ^nil
+
+- ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock 
+  "Answer the value of falseAlternativeBlock. Execution does not
+  actually reach here because the expression is compiled in-line."
+
+  ^falseAlternativeBlock value
+
+- or: alternativeBlock 
+  "Nonevaluating disjunction -- answer value of alternativeBlock."
+
+  ^alternativeBlock value
+  
+- printOn: aStream 
+
+  aStream nextPutAll: 'false'

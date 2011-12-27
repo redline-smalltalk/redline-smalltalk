@@ -140,8 +140,35 @@ ProtoObject < #Object
   "NOTE: This is not actually in the Blue Book."
   ^ self.
 
-+ error: aMessage
+- error: aString
+  "Report to the user that an error occurred in
+  the context of responding to a message to the
+  receiver. The report uses the argument,
+  aString, as part of the error notification comment."
   <primitive: 216>
 
+- doesNotUnderstand: aMessage 
+  "Report to the user that the receiver does not understand the argument, aMessage, as a message."
+  self error: aMessage
+
+- primitiveFailed
+  "Announce that a primitive has failed and there is no appropriate 
+  Smalltalk code to run."
+
+  self error: 'a primitive has failed'
+	
+- shouldNotImplement
+  "Announce that, although the receiver inherits this message, it should 
+  not implement it."
+
+  self error: 'This message is not appropriate for this object'
+
+- subclassResponsibility
+  "This message sets up a framework for the behavior of the class' 
+  subclasses. Announce that the subclass should have implemented this 
+  message."
+
+  self error: 'My subclass should have overridden one of my messages.'
+	
 + testClassMethod
   Transcript show: 'test'; cr.

@@ -24,6 +24,7 @@ TestCase < #ObjectTest
   self testAtPut.
   self testSize.
   self testYourself.
+  " self testDoesNotUnderstand. Cannot really be tested yet -- need something like aBlock ifError:... "
 
 - testIsKindOfObject
   self assertTrue: (object1 isKindOf: Object) withMessage: 'Object new should be isKindOf Object'.  
@@ -132,16 +133,11 @@ TestCase < #ObjectTest
 - testYourself
   self assertTrue: object1 yourself == object1 withMessage: 'yourself should answer self'.
 
+- testDoesNotUnderstand
+  self shouldFail.
 
 - testWIP
   "Not ready yet..."  
   object1 := WriteStream on: String new.
   object1 nextPutAll: 'test'.
   self assert: object1 printString equals: 'anObject' withMessage: 'testing #printString'.
-
-
-
-
-
-
-

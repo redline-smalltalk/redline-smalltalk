@@ -13,3 +13,24 @@ Object < #UndefinedObject
 - notNil
   "Refer to the comment in Object|notNil."
   ^ false.
+
+- deepCopy
+  "Only one instance of UndefinedObject should ever be made, so answer with self."
+	
+  ^ self
+	
+- shallowCopy
+  "Only one instance of UndefinedObject should ever be made, so answer with self."
+
+  ^ self
+	
+- printOn: aStream 
+  "Refer to the comment in Object|printOn:." 
+
+  aStream nextPutAll: 'nil'
+
+- storeOn: aStream 
+  "Refer to the comment in Object|storeOn:." 
+
+  aStream nextPutAll: 'nil'
+	
