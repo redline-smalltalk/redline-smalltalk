@@ -103,9 +103,9 @@ Collection
   ?FilePage
  
  UndefinedObject
- Boolean
-  True
-  False
+ Boolean - Lee Breisacher
+  True - Lee Breisacher
+  False - Lee Breisacher
 
  ?ProcessScheduler
  ?Delay
