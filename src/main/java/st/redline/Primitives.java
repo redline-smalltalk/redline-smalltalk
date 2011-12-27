@@ -341,6 +341,16 @@ public class Primitives {
         return result;
     }
 
+	public static ProtoObject p218(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// name
+		try {
+			String name = receiver.name();
+			return createString(receiver, name != null ? name : "unnamed");
+		} catch (ClassNotFoundException e) {
+			throw new RedlineException(e);
+		}
+	}
+
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
 		// answers receiver.
 //		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);

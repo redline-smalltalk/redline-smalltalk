@@ -207,7 +207,7 @@ public class BlockAnalyserNoOpDelegate extends BlockAnalyserDelegate {
 	}
 
 	public void visitEnd(Block block) {
-		System.out.println("BlockAnalyserNoOp.Block() Analysis end " + block + " " + thisBlock);
+//		System.out.println("BlockAnalyserNoOp.Block() Analysis end " + block + " " + thisBlock);
 		blockAnalyser.useDelegate(block);
 	}
 

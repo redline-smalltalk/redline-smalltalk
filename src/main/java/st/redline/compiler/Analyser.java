@@ -327,7 +327,7 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(Symbol symbol, String value, int line) {
-		System.out.println("TODO Symbol() " + value);
+//		System.out.println("TODO Symbol() " + value);
 		classBytecodeWriter.callPrimitiveSymbol(value, line);
 		if (insideArray())
 			classBytecodeWriter.callPrimitivePutAt(symbol.index(), line);
