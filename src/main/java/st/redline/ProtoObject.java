@@ -26,7 +26,15 @@ public class ProtoObject {
 	private Map<String, ProtoObject> instanceVariables;
 
 	private String name; // <- this is temporary to help with development/debugging.
-	public void name(String name) { this.name = name; }
+
+	public void name(String name) {
+		this.name = name;
+	}
+
+	public String name() {
+		return name;
+	}
+
 	public String toString() {
 		if(javaValue() instanceof String) {
 			return (String)javaValue();

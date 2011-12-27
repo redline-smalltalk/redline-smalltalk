@@ -1,3 +1,8 @@
+28/12/2011
+
+Added primitive p218 which gets the internal fullyqualified name of the receiver,
+or 'unnamed' if the receiver is not a class.
+
 27/12/2011
 
 Fixed issue #65 with block referring to outer self and getting block, not outer self.
