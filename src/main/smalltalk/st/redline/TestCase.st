@@ -4,13 +4,13 @@ Object < #TestCase
   self subclassResponsibility.
 
 - assert: anObject equals: expectedObject withMessage: aString
-  anObject = expectedObject ifFalse: [ Object error: aString ].
+  anObject = expectedObject ifFalse: [ self error: aString ].
 
 - assert: anObject isNotEqualTo: unexpectedObject withMessage: aString
-  anObject = unexpectedObject ifTrue: [ Object error: aString ].
+  anObject = unexpectedObject ifTrue: [ self error: aString ].
 
 - assertTrue: aCondition withMessage: aString
-  aCondition ifFalse: [ Object error: aString ].
+  aCondition ifFalse: [ self error: aString ].
 
 - assertFalse: aCondition withMessage: aString
-  aCondition ifTrue: [ Object error: aString ].
+  aCondition ifTrue: [ self error: aString ].
