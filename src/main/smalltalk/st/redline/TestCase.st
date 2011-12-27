@@ -14,3 +14,6 @@ Object < #TestCase
 
 - assertFalse: aCondition withMessage: aString
   aCondition ifTrue: [ self error: aString ].
+
+- fail: aString
+  self error: aString.
