@@ -59,7 +59,7 @@ TestCase < #ObjectTest
   object3 := object1.
   self assertTrue: object1 == object3 withMessage: 'two variables, same object'.
   self assertTrue: object3 == object1 withMessage: 'two variables, same object'.
-  self assertFalse: 'a' == 'a' withMessage: 'string literals are not =='.
+  self assertTrue: 'a' == 'a' withMessage: 'string literals are not =='.
 
 - testSimpleLiteralsEquivalence
   self assertTrue: 1 == 1 withMessage: 'integer literal equivalence'.

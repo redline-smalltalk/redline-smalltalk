@@ -58,6 +58,17 @@ public class ProtoObject {
 		initialize();
 	}
 
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof ProtoObject))
+			return false;
+		ProtoObject other = (ProtoObject) o;
+		if (javaValue != null)
+			return javaValue.equals(other.javaValue);
+		return false;
+	}
+
 	public boolean isBlock() {
 		return false;
 	}
