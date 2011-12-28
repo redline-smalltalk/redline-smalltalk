@@ -1,3 +1,7 @@
+29/12/2011
+
+Fixed issue #50 ==. All ObjectTests pass. One test was a false positive and has been fixed.
+
 28/12/2011
 
 Added primitive p218 which gets the internal fullyqualified name of the receiver,

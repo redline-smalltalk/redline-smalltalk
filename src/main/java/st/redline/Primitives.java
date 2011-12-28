@@ -205,7 +205,7 @@ public class Primitives {
 
 	public static ProtoObject p110(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// ==
-		return receiver == arg1 ? ProtoObject.TRUE : ProtoObject.FALSE;
+		return receiver.equals(arg1) ? ProtoObject.TRUE : ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p111(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
