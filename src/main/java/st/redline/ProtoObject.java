@@ -25,7 +25,7 @@ public class ProtoObject {
 	private Map<String, ProtoObject> variables;
 	private Map<String, ProtoObject> instanceVariables;
 
-	private String name; // <- this is temporary to help with development/debugging.
+	private String name;
 
 	public void name(String name) {
 		this.name = name;
