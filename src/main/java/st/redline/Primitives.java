@@ -713,7 +713,7 @@ public class Primitives {
 	}
 
 	private static ProtoObject sendDoesNotUnderstand(ProtoObject receiver, String selector, ThisContext thisContext, ProtoObject[] arguments) {
-		throw RedlineException.withMessage("TODO -  need to implement send of doesNotUnderstand - '" + selector + "' " + receiver);
+		throw RedlineException.withMessage("TODO -  need to implement send of doesNotUnderstand - '" + selector + "' " + receiver + " " + receiver.cls().superclass());
 	}
 
 	public static ProtoObject send(ProtoObject receiver, String selector, ThisContext thisContext) {
