@@ -257,7 +257,7 @@ public class ProtoObject {
 	protected ProtoObject superclass(ProtoObject superclass) {
 		this.superclass = superclass;
 		copySuperclassClassInstanceVariables(this, superclass);
-		if (cls != null && superclass != null) {
+		if (cls != null && cls != METACLASS_INSTANCE && superclass != null) {
 			cls.superclass = superclass.cls();
 			copySuperclassClassInstanceVariables(cls, superclass.cls());
 		}
