@@ -1,3 +1,7 @@
+30/12/2011 
+
+Fixed issue #49. Bootstrapped Mataclass had incorrect superclass set.
+
 29/12/2011
 
 Fixed issue #50 ==. All ObjectTests pass. One test was a false positive and has been fixed.
