@@ -34,6 +34,11 @@ public class Bootstrapper {
 		ProtoObject cls = Primitives.resolveObject(protoObject, "Class");
 		ProtoObject object = Primitives.resolveObject(protoObject, "Object");
 		object.cls().superclass(cls);
+//		System.out.println("Object......................... " + object);
+//		System.out.println("Object class................... " + object.cls());
+//		System.out.println("Object class class............. " + object.cls().cls() + " " + object.cls().cls().hashCode());
+//		System.out.println("Object class class superclass.. " + object.cls().cls().superclass());
+//		System.out.println("Object class class class....... " + object.cls().cls().cls());
 	}
 
 	private void tearDownProtoObject() {
@@ -68,6 +73,7 @@ public class Bootstrapper {
 
 	private void instantiateBootstrappedSingletons() {
 		ProtoObject.METACLASS_INSTANCE = createMetaclassInstance();
+		Primitives.registerAs(ProtoObject.METACLASS_INSTANCE, "st.redline.MetaClass");
 		ProtoObject.NIL = createUndefinedObjectInstance();
 	}
 
@@ -80,6 +86,7 @@ public class Bootstrapper {
 
 	private ProtoObject createMetaclassInstance() {
 		ProtoObject classClass = new ProtoObject();
+		classClass.name("Metaclass-classclass");
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name("Metaclass");
 		return cls;
