@@ -351,6 +351,16 @@ public class Primitives {
 		}
 	}
 
+	public static ProtoObject p219(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// superclass
+		return receiver.superclass();
+	}
+
+	public static ProtoObject p220(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
+		// canUnderstand: selector
+		return receiver.cls().methodAt((String) arg1.javaValue()) != null ? ProtoObject.TRUE : ProtoObject.FALSE;
+	}
+
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
 		// answers receiver.
 //		System.out.println("putAt() " + receiver + " put: " + value + " at: " + index);

@@ -1,6 +1,7 @@
 30/12/2011 
 
 Fixed issue #49. Bootstrapped Mataclass had incorrect superclass set.
+Added primitive 220 to lookup if a receiver canUnderstand a selector.
 
 29/12/2011
 
