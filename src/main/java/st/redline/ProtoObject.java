@@ -180,6 +180,10 @@ public class ProtoObject {
 		return this;
 	}
 
+	protected boolean hasMethod(String name) {
+		return methods != null && methods.containsKey(name);
+	}
+
 	public ProtoObject category(String category) {
 		return this;
 	}

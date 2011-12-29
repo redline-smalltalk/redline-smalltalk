@@ -2,6 +2,7 @@
 
 Fixed issue #49. Bootstrapped Mataclass had incorrect superclass set.
 Added primitive 220 to lookup if a receiver canUnderstand a selector.
+Added primitive 221 to see which class contains a method dictionary that includes a selector.
 
 29/12/2011
 
