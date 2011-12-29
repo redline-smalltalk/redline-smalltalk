@@ -29,3 +29,8 @@ Object < #Behavior
   is the argument. The selector can be in the method dictionary of the
   receiver's class or any of its superclasses."
   <primitive: 220>
+
+- includesSelector: aSymbol
+  "Answer whether the message whose selector is the argument is in the
+  method dictionary of the receiver's class."
+  <primitive: 221>
