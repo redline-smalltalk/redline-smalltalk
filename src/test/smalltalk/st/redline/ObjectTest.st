@@ -11,7 +11,7 @@ TestCase < #ObjectTest
   " self testRespondsTo. FAILS, see issue #48 "
   self testClass.
   self testEquivalence.
-  " self testSimpleLiteralsEquivalence. FAILS, see issue #50. "
+  self testSimpleLiteralsEquivalence.
   self testSimpleEquals.
   " self testStringEquals. FAILS (not implemented yet in String). "
   self testNotEquals.
