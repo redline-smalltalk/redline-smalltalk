@@ -34,6 +34,11 @@ public class Bootstrapper {
 		ProtoObject cls = Primitives.resolveObject(protoObject, "Class");
 		ProtoObject object = Primitives.resolveObject(protoObject, "Object");
 		object.cls().superclass(cls);
+//		System.out.println("Object......................... " + object);
+//		System.out.println("Object class................... " + object.cls());
+//		System.out.println("Object class class............. " + object.cls().cls() + " " + object.cls().cls().hashCode());
+//		System.out.println("Object class class superclass.. " + object.cls().cls().superclass());
+//		System.out.println("Object class class class....... " + object.cls().cls().cls());
 	}
 
 	private void tearDownProtoObject() {

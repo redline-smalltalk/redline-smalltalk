@@ -421,6 +421,7 @@ public class Primitives {
 	public static ProtoObject createSubclass(ProtoObject superclass, String name) {
 //		System.out.println("createSubclass() of " + superclass + " called " + name + "  **  " + superclass.cls());
 		ProtoObject classClass = new ProtoObject(ProtoObject.METACLASS_INSTANCE);
+		classClass.name(name + " class");
 		classClass.superclass0(superclass.cls());
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name(name);
