@@ -68,6 +68,7 @@ public class Bootstrapper {
 
 	private void instantiateBootstrappedSingletons() {
 		ProtoObject.METACLASS_INSTANCE = createMetaclassInstance();
+		Primitives.registerAs(ProtoObject.METACLASS_INSTANCE, "st.redline.MetaClass");
 		ProtoObject.NIL = createUndefinedObjectInstance();
 	}
 
@@ -80,6 +81,7 @@ public class Bootstrapper {
 
 	private ProtoObject createMetaclassInstance() {
 		ProtoObject classClass = new ProtoObject();
+		classClass.name("Metaclass-classclass");
 		ProtoObject cls = new ProtoObject(classClass);
 		cls.name("Metaclass");
 		return cls;
