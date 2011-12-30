@@ -358,12 +358,12 @@ public class Primitives {
 
 	public static ProtoObject p220(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// canUnderstand: selector
-		return receiver.cls().methodAt((String) arg1.javaValue()) != null ? ProtoObject.TRUE : ProtoObject.FALSE;
+		return receiver.methodAt((String) arg1.javaValue()) != null ? ProtoObject.TRUE : ProtoObject.FALSE;
 	}
 
 	public static ProtoObject p221(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// includesSelector: selector
-		return receiver.cls().hasMethod((String) arg1.javaValue()) ? ProtoObject.TRUE : ProtoObject.FALSE;
+		return receiver.hasMethod((String) arg1.javaValue()) ? ProtoObject.TRUE : ProtoObject.FALSE;
 	}
 
 	public static ProtoObject putAt(ProtoObject receiver, ProtoObject value, int index) throws ClassNotFoundException {
