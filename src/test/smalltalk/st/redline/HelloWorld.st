@@ -1,3 +1,4 @@
+"Using blocks to show more than just a hello world."
 
-Transcript show: 'Hello World from Redline Smalltalk.';cr.
+[:msg | Transcript show: msg;cr] value: 'Hello World from Redline Smalltalk.'.
 
