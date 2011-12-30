@@ -420,6 +420,7 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	public void callPrimitiveBlockAnswer() {
 		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "blockAnswer", "(Lst/redline/ProtoObject;)V");
+		stackPushNull();
 	}
 
 	public void setupTryForBlockReturn(SimpleExpression simpleExpression) {
