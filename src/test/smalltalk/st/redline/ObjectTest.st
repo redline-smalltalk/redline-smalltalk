@@ -8,7 +8,7 @@ TestCase < #ObjectTest
   " self testIsKindOfArrayLiteral. FAILS, see issue #46 "
   self testIsMemberOfObject.
   self testIsMemberOfArrayLiteral.
-  " self testRespondsTo. FAILS, see issue #48 "
+  self testRespondsTo.
   self testClass.
   self testEquivalence.
   self testSimpleLiteralsEquivalence.
@@ -44,7 +44,13 @@ TestCase < #ObjectTest
 - testRespondsTo
   self assertTrue: (Object new respondsTo: #isKindOf:) withMessage: 'object should #respondsTo: #isKindOf:'.
   self assertTrue: (3 respondsTo: #isKindOf:) withMessage: 'integer literal should respond to #isKindOf:'.
+  self assertTrue: (ArrayedCollection includesSelector: #size) withMessage: 'includesSelector fail'.
+  self assertTrue: (Integer includesSelector: #floor) withMessage: 'includesSelector fail'.
+  self assertTrue: (3 respondsTo: #floor) withMessage: 'integer literal should respond to #floor'.
+  self assertTrue: (3 respondsTo: #+) withMessage: 'integer literal should respond to #+'.
   self assertFalse: (object1 respondsTo: #xyz:) withMessage: 'test #respondsTo:'.
+  self assertTrue: (Integer canUnderstand: #floor) withMessage: 'canUnderstand: failure'.
+  self assertTrue: (Integer canUnderstand: #to:) withMessage: 'canUnderstand: failure'.
 
 - testClass
   self assertTrue: (Object new class == Object) withMessage: 'object class should be Object'.
@@ -54,7 +60,7 @@ TestCase < #ObjectTest
   
 - testEquivalence
   | object3 |
-  "FAILS, issue #49: self assertTrue: Object class == Object class withMessage: 'equivalence of class objects'."
+  self assertTrue: Object class == Object class withMessage: 'equivalence of class objects'.
   self assertTrue: object1 == object1 withMessage: 'object should == itself'.
   self assertFalse: object1 == object2 withMessage: 'different objects are not =='.
   object3 := object1.
