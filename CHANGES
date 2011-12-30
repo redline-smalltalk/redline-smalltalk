@@ -5,6 +5,7 @@ Added primitive 220 to lookup if a receiver canUnderstand a selector.
 Added primitive 221 to see which class contains a method dictionary that includes a selector.
 Adjusted primitive 220/221 to look in receiver not receivers class.
 Added HelloWorld back, it was accidentally deleted.
+Fixed empty stack bug when block return isn't followed by other stack activity.
 
 29/12/2011
 
