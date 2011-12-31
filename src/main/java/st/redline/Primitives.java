@@ -353,7 +353,7 @@ public class Primitives {
 
 	public static ProtoObject p219(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
 		// superclass
-		return receiver.superclass();
+		return receiver.superclass() != null ? receiver.superclass() : ProtoObject.NIL;
 	}
 
 	public static ProtoObject p220(ProtoObject receiver, ThisContext thisContext, ProtoObject arg1, ProtoObject arg2, ProtoObject arg3, ProtoObject arg4, ProtoObject arg5, ProtoObject arg6, ProtoObject arg7) {
