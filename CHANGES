@@ -1,3 +1,7 @@
+01/01/2012
+
+Added check for null in superclass call. Answers nil if null.
+
 30/12/2011 
 
 Fixed issue #49. Bootstrapped Mataclass had incorrect superclass set.
