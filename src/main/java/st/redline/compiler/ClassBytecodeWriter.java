@@ -5,7 +5,6 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import st.redline.ClassPathUtilities;
-import st.redline.SmalltalkClassLoader;
 
 import java.io.PrintWriter;
 
@@ -15,8 +14,6 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SEND_MESSAGES = "_sendMessages_";
 	private static final String SEND_MESSAGES_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObjectMetaclass;";
 
-	private final String className;
-	private final String packageName;
 	private final boolean verbose;
 	private ClassWriter cw;
 	private MethodVisitor mv;
@@ -28,8 +25,6 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	ClassBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter) {
-		this.className = className;
-		this.packageName = packageName;
 		this.verbose = verbose;
 		this.cw = classWriter;
 		fullyQualifiedClassName = ClassPathUtilities.classNameToFullyQualifiedClassName(packageName, className);
@@ -62,6 +57,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		return className.substring(0, index);
 	}
 
+	void methodVisitor(MethodVisitor methodVisitor) {
+		mv = methodVisitor;
+	}
+
 	void openClass() {
 		cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, superclass(), null);
 		cw.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
@@ -72,26 +71,26 @@ public class ClassBytecodeWriter implements Opcodes {
 	void openMessageSendsMethod() {
 		mv = cw.visitMethod(ACC_PROTECTED, SEND_MESSAGES, SEND_MESSAGES_SIG, null, null);
 		mv.visitCode();
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitVarInsn(ALOAD, 1);
-		mv.visitVarInsn(ALOAD, 2);
+		pushThis();
+		pushReceiver();
+		pushContext();
 		mv.visitMethodInsn(INVOKESPECIAL, superclass(), SEND_MESSAGES, SEND_MESSAGES_SIG);
 		mv.visitInsn(POP);
-		mv.visitVarInsn(ALOAD, 0);
+		pushThis();
 	}
 
-	private void writeInitializeMethod() {
+	void writeInitializeMethod() {
 		openInitializeMethod();
 		invokeMessageSends();
 		closeInitializeMethod();
 	}
 
 	void invokeMessageSends() {
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitVarInsn(ALOAD, 0);
+		pushThis();
+		pushThis();
 		mv.visitTypeInsn(NEW, "st/redline/PrimContext");
 		mv.visitInsn(DUP);
-		mv.visitVarInsn(ALOAD, 0);
+		pushThis();
 		mv.visitMethodInsn(INVOKESPECIAL, "st/redline/PrimContext", "<init>", "(Lst/redline/PrimObject;)V");
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, SEND_MESSAGES, SEND_MESSAGES_SIG);
 	}
@@ -124,21 +123,29 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
 		mv.visitCode();
 		visitLine(0);
-		mv.visitVarInsn(ALOAD, 0);
+		pushThis();
 		mv.visitMethodInsn(INVOKESPECIAL, superclass(), "<init>", "()V");
 	}
 
 	void invokeContextTemporariesInit(int size) {
-		primContext();
+		pushContext();
 		pushNumber(size);
 		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporariesInit", "(I)V");
 	}
 
-	private void primContext() {
+	void pushThis() {
+		pushThis();
+	}
+
+	void pushReceiver() {
+		mv.visitVarInsn(ALOAD, 1);
+	}
+
+	void pushContext() {
 		mv.visitVarInsn(ALOAD, 2);
 	}
 
-	public void pushNumber(int value) {
+	void pushNumber(int value) {
 		switch (value) {
 			case 0: mv.visitInsn(ICONST_0); break;
 			case 1: mv.visitInsn(ICONST_1); break;
