@@ -11,4 +11,7 @@ class BinarySelector extends ValuePrimary {
 		line(line);
 		value(value() + value);
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

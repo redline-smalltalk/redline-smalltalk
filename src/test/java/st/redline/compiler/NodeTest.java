@@ -20,6 +20,28 @@ public class NodeTest {
 	}
 
 	@Test
+	public void simpleExpressionNodeWithCascadeShouldBeVisitable() {
+		Cascade cascade = mock(Cascade.class);
+		Primary primary = mock(Primary.class);
+		MessageExpression messageExpression = mock(MessageExpression.class);
+		MessageElement messageElement = mock(MessageElement.class);
+		SimpleExpression.cascade = cascade;
+		SimpleExpression simpleExpression = new SimpleExpression();
+		simpleExpression.add(primary);
+		simpleExpression.add(messageExpression);
+		simpleExpression.add(messageElement);
+		simpleExpression.add(messageElement);
+		simpleExpression.accept(visitor);
+		verify(visitor).visitBegin(simpleExpression);
+		verify(primary).accept(visitor);
+		verify(messageExpression).accept(visitor);
+		verify(cascade, times(2)).begin(visitor);
+		verify(messageElement, times(2)).accept(visitor);
+		verify(cascade).end(visitor);
+		verify(visitor).visitEnd(simpleExpression);
+	}
+
+	@Test
 	public void statementsNodeShouldBeVisitable() {
 		Expression expression = mock(Expression.class);
 		Statements nestedStatements = mock(Statements.class);

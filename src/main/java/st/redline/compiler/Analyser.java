@@ -52,4 +52,20 @@ public class Analyser implements NodeVisitor {
 	public void visit(Temporary temporary, String value, int line) {
 		delegate.visit(temporary, value, line);
 	}
+
+	public void visitBegin(SimpleExpression simpleExpression) {
+		delegate.visitBegin(simpleExpression);
+	}
+
+	public void visitEnd(SimpleExpression simpleExpression) {
+		delegate.visitEnd(simpleExpression);
+	}
+
+	public void visitBegin(Cascade cascade) {
+		delegate.visitBegin(cascade);
+	}
+
+	public void visitEnd(Cascade cascade) {
+		delegate.visitEnd(cascade);
+	}
 }

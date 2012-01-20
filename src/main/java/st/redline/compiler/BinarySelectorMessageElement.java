@@ -18,4 +18,7 @@ public class BinarySelectorMessageElement implements MessageElement {
 	UnaryObjectDescription unaryObjectDescription() {
 		return unaryObjectDescription;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

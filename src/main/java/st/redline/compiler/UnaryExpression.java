@@ -28,4 +28,7 @@ public class UnaryExpression implements MessageExpression {
 	MessageExpression messageExpression() {
 		return messageExpression;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

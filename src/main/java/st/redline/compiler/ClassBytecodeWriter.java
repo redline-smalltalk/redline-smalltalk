@@ -134,7 +134,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	void pushThis() {
-		pushThis();
+		mv.visitVarInsn(ALOAD, 0);
 	}
 
 	void pushReceiver() {

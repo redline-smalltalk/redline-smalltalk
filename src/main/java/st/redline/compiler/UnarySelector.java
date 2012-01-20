@@ -6,4 +6,7 @@ class UnarySelector extends ValuePrimary {
 	UnarySelector(String value, int line) {
 		super(value, line);
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

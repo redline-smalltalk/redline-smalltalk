@@ -6,4 +6,7 @@ class SymbolConstant extends ValuePrimary {
 	SymbolConstant(String value, int line) {
 		super(value, line);
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

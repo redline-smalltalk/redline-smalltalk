@@ -6,4 +6,7 @@ class Identifier extends ValuePrimary {
 	Identifier(String value, int line) {
 		super(value, line);
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

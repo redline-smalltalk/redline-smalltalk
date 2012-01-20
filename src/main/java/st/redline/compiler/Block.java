@@ -30,4 +30,7 @@ class Block extends Primary {
 	Temporaries temporaries() {
 		return temporaries;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

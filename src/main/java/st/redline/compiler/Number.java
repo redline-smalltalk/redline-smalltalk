@@ -37,4 +37,7 @@ class Number extends Primary implements ArrayElement {
 	public int line() {
 		return line;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

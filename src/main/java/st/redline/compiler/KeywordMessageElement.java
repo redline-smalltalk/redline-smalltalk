@@ -29,4 +29,7 @@ public class KeywordMessageElement implements MessageElement {
 	List<BinaryObjectDescription> binaryObjectDescriptions() {
 		return binaryObjectDescriptions;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

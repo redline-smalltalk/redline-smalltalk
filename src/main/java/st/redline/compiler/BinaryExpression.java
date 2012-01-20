@@ -28,4 +28,7 @@ public class BinaryExpression implements MessageExpression {
 	List<BinarySelectorUnaryObjectDescription> binarySelectorUnaryObjectDescriptions() {
 		return binarySelectorUnaryObjectDescriptions;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

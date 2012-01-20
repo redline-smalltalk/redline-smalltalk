@@ -10,4 +10,7 @@ class StringConstant extends ValuePrimary implements ArrayElement {
 	private static String homgenize(String value) {
 		return value.substring(1, value.length()-1).replaceAll("''", "'");
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

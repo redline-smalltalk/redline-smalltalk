@@ -12,4 +12,7 @@ public class UnarySelectorMessageElement implements MessageElement {
 	UnarySelector unarySelector() {
 		return unarySelector;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

@@ -18,4 +18,7 @@ class ArrayConstant extends Primary {
 	Array array() {
 		return array;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

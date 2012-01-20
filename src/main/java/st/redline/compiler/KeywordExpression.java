@@ -30,4 +30,7 @@ public class KeywordExpression implements MessageExpression {
 	List<BinaryObjectDescription> binaryObjectDescriptions() {
 		return binaryObjectDescriptions;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

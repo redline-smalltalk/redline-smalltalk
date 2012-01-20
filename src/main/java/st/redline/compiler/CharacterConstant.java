@@ -6,4 +6,7 @@ class CharacterConstant extends ValuePrimary implements ArrayElement {
 	CharacterConstant(String value, int line) {
 		super(value, line);
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

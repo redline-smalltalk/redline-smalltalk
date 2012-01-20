@@ -53,16 +53,31 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitEnd(Temporaries temporaries) {
+		// we don't take any action when visiting end of temporaries.
 	}
 
 	public void visitBegin(Statements statements) {
+		// we don't take any action when visiting statements.
 	}
 
 	public void visitEnd(Statements statements) {
+		// we don't take any action when visiting statements.
 	}
 
 	public void visit(Temporary temporary, String value, int line) {
 		// todo.jcl - output a warning if registered twice?
 		temporariesRegistry.put(value, temporariesIndex++);
+	}
+
+	public void visitBegin(SimpleExpression simpleExpression) {
+	}
+
+	public void visitEnd(SimpleExpression simpleExpression) {
+	}
+
+	public void visitBegin(Cascade cascade) {
+	}
+
+	public void visitEnd(Cascade cascade) {
 	}
 }

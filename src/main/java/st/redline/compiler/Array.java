@@ -31,4 +31,7 @@ class Array extends Primary implements ArrayElement {
 	public int line() {
 		return elements.get(0).line();
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

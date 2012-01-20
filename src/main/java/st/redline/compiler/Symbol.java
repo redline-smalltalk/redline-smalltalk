@@ -20,4 +20,7 @@ class Symbol extends ValuePrimary implements ArrayElement {
 		else
 			value(value() + value);
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }
