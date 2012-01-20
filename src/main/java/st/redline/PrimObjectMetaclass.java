@@ -63,7 +63,7 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	void bootstrap() {
 	}
 
-	protected PrimObjectMetaclass _sendMessages_(PrimObject receiver, PrimContext context) {
+	protected PrimObject _sendMessages_(PrimObject receiver, PrimContext context) {
 		return this;
 	}
 }

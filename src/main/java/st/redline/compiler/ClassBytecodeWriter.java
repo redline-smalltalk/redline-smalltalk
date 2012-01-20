@@ -12,7 +12,7 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	private static final String CONTEXT = "st/redline/PrimContext";
 	private static final String SEND_MESSAGES = "_sendMessages_";
-	private static final String SEND_MESSAGES_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObjectMetaclass;";
+	private static final String SEND_MESSAGES_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
 
 	private final boolean verbose;
 	private ClassWriter cw;
@@ -76,7 +76,6 @@ public class ClassBytecodeWriter implements Opcodes {
 		pushContext();
 		mv.visitMethodInsn(INVOKESPECIAL, superclass(), SEND_MESSAGES, SEND_MESSAGES_SIG);
 		pop();
-		pushThis();
 	}
 
 	void writeInitializeMethod() {

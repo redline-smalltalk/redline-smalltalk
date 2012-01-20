@@ -1,7 +1,6 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-import com.sun.org.apache.bcel.internal.generic.ALOAD;
 import org.junit.Before;
 import org.junit.Test;
 import org.objectweb.asm.ClassWriter;
@@ -58,6 +57,7 @@ public class ClassBytecodeWriterTest implements Opcodes {
 	public void shouldCreateLoadableClassWhenClassOpenedAndClosed() throws IllegalAccessException, InstantiationException {
 		ClassBytecodeWriter writerNotUsingMocks = new ClassBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false);
 		writerNotUsingMocks.openClass();
+		writerNotUsingMocks.pushReceiver(); // <- required because the default it to return the receiver so we push it.
 		writerNotUsingMocks.closeClass();
 		byte[] classBytes = writerNotUsingMocks.contents();
 		assertNotNull(new TemporaryClassLoader().defineClass(classBytes).newInstance());
