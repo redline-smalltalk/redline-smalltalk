@@ -11,9 +11,30 @@ public class SimpleExpression implements Expression {
 	private Primary primary;
 	private MessageExpression messageExpression;
 	private List<MessageElement> messageElements;
+	private boolean resultLeftOnStack;
+	private boolean duplicateResultOnStack;
+
 
 	SimpleExpression() {
 		messageElements = new ArrayList<MessageElement>();
+		resultLeftOnStack = false;
+		duplicateResultOnStack = false;
+	}
+
+	boolean isResultLeftOnStack() {
+		return resultLeftOnStack;
+	}
+
+	void leaveResultOnStack() {
+		resultLeftOnStack = true;
+	}
+
+	boolean isResultDuplicatedOnStack() {
+		return duplicateResultOnStack;
+	}
+
+	void duplicateResultOnStack() {
+		duplicateResultOnStack = true;
 	}
 
 	void add(Primary primary) {

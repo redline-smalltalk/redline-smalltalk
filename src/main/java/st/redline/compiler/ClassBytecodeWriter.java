@@ -75,7 +75,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		pushReceiver();
 		pushContext();
 		mv.visitMethodInsn(INVOKESPECIAL, superclass(), SEND_MESSAGES, SEND_MESSAGES_SIG);
-		mv.visitInsn(POP);
+		pop();
 		pushThis();
 	}
 
@@ -89,7 +89,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		pushThis();
 		pushThis();
 		mv.visitTypeInsn(NEW, "st/redline/PrimContext");
-		mv.visitInsn(DUP);
+		pushDuplicate();
 		pushThis();
 		mv.visitMethodInsn(INVOKESPECIAL, "st/redline/PrimContext", "<init>", "(Lst/redline/PrimObject;)V");
 		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, SEND_MESSAGES, SEND_MESSAGES_SIG);
@@ -131,6 +131,14 @@ public class ClassBytecodeWriter implements Opcodes {
 		pushContext();
 		pushNumber(size);
 		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporariesInit", "(I)V");
+	}
+
+	void pop() {
+		mv.visitInsn(POP);
+	}
+
+	void pushDuplicate() {
+		mv.visitInsn(DUP);
 	}
 
 	void pushThis() {

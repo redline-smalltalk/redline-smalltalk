@@ -73,11 +73,17 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
+		if (simpleExpression.isResultDuplicatedOnStack())
+			writer.pushDuplicate();
+		if (!simpleExpression.isResultLeftOnStack())
+			writer.pop();
 	}
 
 	public void visitBegin(Cascade cascade) {
+		writer.pushDuplicate();
 	}
 
 	public void visitEnd(Cascade cascade) {
+		writer.pop();
 	}
 }

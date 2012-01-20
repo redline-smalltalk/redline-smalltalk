@@ -24,6 +24,36 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldPopResultFromStackWhenSimpleExpressionResultIsNotToBeLeftOnStack() {
+		SimpleExpression simpleExpression = mock(SimpleExpression.class);
+		when(simpleExpression.isResultLeftOnStack()).thenReturn(false);
+		when(simpleExpression.isResultDuplicatedOnStack()).thenReturn(false);
+		analyser.visitEnd(simpleExpression);
+		verify(writer).pop();
+	}
+
+	@Test
+	public void shouldDuplicateResultOnStackWhenSimpleExpressionResultIsToBeDuplicatedOnStack() {
+		SimpleExpression simpleExpression = mock(SimpleExpression.class);
+		when(simpleExpression.isResultDuplicatedOnStack()).thenReturn(true);
+		when(simpleExpression.isResultLeftOnStack()).thenReturn(false);
+		analyser.visitEnd(simpleExpression);
+		verify(writer).pushDuplicate();
+	}
+
+	@Test
+	public void shouldDuplicateStackWhenCascadeBegins() {
+		analyser.visitBegin(mock(Cascade.class));
+		verify(writer).pushDuplicate();
+	}
+
+	@Test
+	public void shouldPopStackWhenCascadeEnds() {
+		analyser.visitEnd(mock(Cascade.class));
+		verify(writer).pop();
+	}
+
+	@Test
 	public void shouldHaveNoTemporariesRegistryWhenCreated() {
 		ProgramAnalyser programAnalyser = new ProgramAnalyser("foo", "com.domain", false);
 		assertNull(programAnalyser.temporariesRegistry());
