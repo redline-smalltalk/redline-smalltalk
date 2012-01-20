@@ -1,44 +1,33 @@
-/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Temporaries implements VisitableNode {
+class Temporaries implements VisitableNode {
 
 	private final List<Temporary> temporaries;
-	private int line = 0;
-	private int offset = 0;
 
-	public Temporaries() {
-		temporaries = new ArrayList<Temporary>();
+	Temporaries(List<Temporary> temporaries) {
+		this.temporaries = temporaries;
 	}
 
-	public boolean isEmpty() {
+	boolean isEmpty() {
 		return temporaries.isEmpty();
 	}
 
-	public void line(int line) {
-		this.line = line;
+	int size() {
+		return temporaries != null ? temporaries.size() : 0;
 	}
 
-	public int line() {
-		return line;
+	Temporary get(int index) {
+		return temporaries.get(index);
 	}
 
-	public void add(Temporary temporary) {
-		temporary.index(offset++);
-		temporaries.add(temporary);
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
+	public void accept(NodeVisitor nodeVisitor) {
+		if (temporaries == null)
+			return;
+		nodeVisitor.visitBegin(this);
 		for (Temporary temporary : temporaries)
-			temporary.accept(visitor);
-		visitor.visitEnd(this);
-	}
-
-	public int size() {
-		return temporaries.size();
+			temporary.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this);
 	}
 }

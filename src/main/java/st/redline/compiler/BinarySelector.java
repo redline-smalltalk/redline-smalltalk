@@ -1,17 +1,14 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class BinarySelector implements VisitableNode {
+class BinarySelector extends ValuePrimary {
 
-	protected final String value;
-	protected final int line;
-
-	public BinarySelector(String value, int line) {
-		this.value = value;
-		this.line = line;
+	BinarySelector() {
+		super("", 0);
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, value, line);
+	void add(String value, int line) {
+		line(line);
+		value(value() + value);
 	}
 }

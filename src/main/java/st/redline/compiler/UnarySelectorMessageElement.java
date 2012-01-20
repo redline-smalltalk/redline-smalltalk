@@ -5,11 +5,11 @@ public class UnarySelectorMessageElement implements MessageElement {
 
 	private final UnarySelector unarySelector;
 
-	public UnarySelectorMessageElement(UnarySelector unarySelector) {
+	UnarySelectorMessageElement(UnarySelector unarySelector) {
 		this.unarySelector = unarySelector;
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, unarySelector.value, unarySelector.line);
+	UnarySelector unarySelector() {
+		return unarySelector;
 	}
 }

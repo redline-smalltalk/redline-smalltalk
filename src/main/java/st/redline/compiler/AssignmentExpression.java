@@ -1,33 +1,30 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class AssignmentExpression implements Expression {
+class AssignmentExpression implements Expression {
 
-	private final VariableName variableName;
+	private final String variableName;
+	private final int line;
 	private final Expression expression;
 
-	public AssignmentExpression(VariableName variableName, Expression expression) {
+	AssignmentExpression(String variableName, int line, Expression expression) {
 		this.variableName = variableName;
+		this.line = line;
 		this.expression = expression;
 	}
 
-	public void leaveResultOnStack() {
-		expression.duplicateResultOnStack();
+	String variableName() {
+		return variableName;
 	}
 
-	public void duplicateResultOnStack() {
-		throw new IllegalStateException("Assignment asked to duplicate stack top!");
+	Expression expression() {
+		return expression;
 	}
 
-	public boolean isAnswerExpression() {
-		return false;
+	public int line() {
+		return line;
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		expression.leaveResultOnStack();
-		expression.accept(visitor);
-		variableName.onStoreSideOfExpression();
-		variableName.accept(visitor);
+	public void accept(NodeVisitor nodeVisitor) {
 	}
 }

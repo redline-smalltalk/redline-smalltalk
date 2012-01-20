@@ -10,9 +10,11 @@ import st.redline.compiler.*;
 public class Compiler {
 
 	private final SourceFile sourceFile;
+	private final boolean verbose;
 
-	public Compiler(SourceFile sourceFile) {
+	public Compiler(SourceFile sourceFile, boolean verbose) {
 		this.sourceFile = sourceFile;
+		this.verbose = verbose;
 	}
 
 	protected byte[] compile() {
@@ -32,7 +34,7 @@ public class Compiler {
 	}
 
 	private Analyser analyser() {
-		return new Analyser(sourceFile.shortName(), sourceFile.packageName());
+		return new Analyser(sourceFile.shortName(), sourceFile.packageName(), verbose);
 	}
 
 	private Program parse(String sourceCode) {

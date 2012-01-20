@@ -18,13 +18,13 @@ public class SmalltalkClassLoader extends ClassLoader {
 		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 
-	protected void bootstrap() throws ClassNotFoundException {
-		loadProtoObject().bootstrap();
+	protected void bootstrap() {
+		loadPrimObject().bootstrap();
 	}
 
-	private ProtoObject loadProtoObject() {
+	private PrimObjectMetaclass loadPrimObject() {
 		try {
-			return ((ProtoObject) loadClass("st.redline.ProtoObject").newInstance());
+			return ((PrimObjectMetaclass) loadClass("st.redline.PrimObjectMetaclass").newInstance());
 		} catch (Exception e) {
 			throw RedlineException.withCause(e);
 		}
@@ -69,7 +69,7 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	private Compiler createCompiler(SourceFile sourceFile) {
-		return new Compiler(sourceFile);
+		return new Compiler(sourceFile, commandLine.verboseRequested());
 	}
 
 	private SourceFile findSource(String className) {

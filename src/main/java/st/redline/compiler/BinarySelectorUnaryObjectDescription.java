@@ -1,18 +1,21 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class BinarySelectorUnaryObjectDescription implements VisitableNode {
+public class BinarySelectorUnaryObjectDescription {
 
 	private final BinarySelector binarySelector;
 	private final UnaryObjectDescription unaryObjectDescription;
 
-	public BinarySelectorUnaryObjectDescription(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
+	BinarySelectorUnaryObjectDescription(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
 		this.binarySelector = binarySelector;
 		this.unaryObjectDescription = unaryObjectDescription;
 	}
 
-	public void accept(NodeVisitor nodeVisitor) {
-		unaryObjectDescription.accept(nodeVisitor);
-		nodeVisitor.visit(binarySelector, binarySelector.value, binarySelector.line);
+	BinarySelector binarySelector() {
+		return binarySelector;
+	}
+
+	UnaryObjectDescription unaryObjectDescription() {
+		return unaryObjectDescription;
 	}
 }

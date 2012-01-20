@@ -6,28 +6,29 @@ public class Statements implements VisitableNode {
 	private final Expression expression;
 	private final Statements statements;
 
-	public Statements(Expression expression) {
-		this.expression = expression;
-		this.statements = null;
-	}
-
-	public Statements(Expression expression, Statements statements) {
+	Statements(Expression expression, Statements statements) {
 		this.expression = expression;
 		this.statements = statements;
 	}
 
-	public boolean hasAnswerExpression() {
-		return expression.isAnswerExpression() || (statements != null && statements.hasAnswerExpression());
+	int line() {
+		return expression.line();
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		if (statements == null)
-			expression.leaveResultOnStack();
-		expression.accept(visitor);
-		visitor.visitEnd(this);
-		if (statements != null) {
-			statements.accept(visitor);
-		}
+	Expression expression() {
+		return expression;
+	}
+
+	Statements statements() {
+		return statements;
+	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visitBegin(this);
+		if (expression != null)
+			expression.accept(nodeVisitor);
+		if (statements != null)
+			statements.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this);
 	}
 }

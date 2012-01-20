@@ -6,14 +6,16 @@ public class BinarySelectorMessageElement implements MessageElement {
 	private final BinarySelector binarySelector;
 	private final UnaryObjectDescription unaryObjectDescription;
 
-	public BinarySelectorMessageElement(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
+	BinarySelectorMessageElement(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
 		this.binarySelector = binarySelector;
 		this.unaryObjectDescription = unaryObjectDescription;
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, binarySelector.value, binarySelector.line, unaryObjectDescription);
-		unaryObjectDescription.accept(visitor);
-		visitor.visitEnd(this, binarySelector.value, binarySelector.line, unaryObjectDescription);
+	BinarySelector binarySelector() {
+		return binarySelector;
+	}
+
+	UnaryObjectDescription unaryObjectDescription() {
+		return unaryObjectDescription;
 	}
 }
