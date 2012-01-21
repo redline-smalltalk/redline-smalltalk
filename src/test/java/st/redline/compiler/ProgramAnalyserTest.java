@@ -36,7 +36,7 @@ public class ProgramAnalyserTest {
 		Nil nil = mock(Nil.class);
 		analyser.visit(nil, 32);
 		verify(writer).visitLine(32);
-		verify(writer).pushPrimObjectField("NIL");
+		verify(writer).pushPrimObjectStaticField("NIL");
 	}
 
 	@Test
@@ -44,7 +44,7 @@ public class ProgramAnalyserTest {
 		True aTrue = mock(True.class);
 		analyser.visit(aTrue, 32);
 		verify(writer).visitLine(32);
-		verify(writer).pushPrimObjectField("TRUE");
+		verify(writer).pushPrimObjectStaticField("TRUE");
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class ProgramAnalyserTest {
 		False aFalse = mock(False.class);
 		analyser.visit(aFalse, 32);
 		verify(writer).visitLine(32);
-		verify(writer).pushPrimObjectField("FALSE");
+		verify(writer).pushPrimObjectStaticField("FALSE");
 	}
 
 	@Test

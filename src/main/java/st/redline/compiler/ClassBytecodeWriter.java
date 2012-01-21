@@ -152,8 +152,8 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitVarInsn(ALOAD, 2);
 	}
 
-	void pushPrimObjectField(String field) {
-		mv.visitFieldInsn(GETFIELD, "st/redline/PrimObject", field, "Lst/redline/PrimObject;");
+	void pushPrimObjectStaticField(String field) {
+		mv.visitFieldInsn(GETSTATIC, "st/redline/PrimObject", field, "Lst/redline/PrimObject;");
 	}
 
 	void pushNumber(int value) {

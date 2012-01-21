@@ -115,6 +115,6 @@ class ProgramAnalyser implements AnalyserDelegate {
 
 	void pushPrimObjectField(String field, int line) {
 		writer.visitLine(line);
-		writer.pushPrimObjectField(field);
+		writer.pushPrimObjectStaticField(field);
 	}
 }
