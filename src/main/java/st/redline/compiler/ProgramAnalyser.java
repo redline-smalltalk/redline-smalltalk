@@ -86,4 +86,35 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(Cascade cascade) {
 		writer.pop();
 	}
+
+	public void visit(Identifier identifier, String value, int line) {
+	}
+
+	public void visit(Self self, int line) {
+		writer.visitLine(line);
+		writer.pushReceiver();
+	}
+
+	public void visit(Super aSuper, int line) {
+	}
+
+	public void visit(True aTrue, int line) {
+		pushPrimObjectField("TRUE", line);
+	}
+
+	public void visit(False aFalse, int line) {
+		pushPrimObjectField("FALSE", line);
+	}
+
+	public void visit(Nil nil, int line) {
+		pushPrimObjectField("NIL", line);
+	}
+
+	public void visit(JVM jvm, int line) {
+	}
+
+	void pushPrimObjectField(String field, int line) {
+		writer.visitLine(line);
+		writer.pushPrimObjectField(field);
+	}
 }

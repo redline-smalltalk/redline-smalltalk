@@ -24,6 +24,38 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldPushReceiverWhenVisitingSelfNode() {
+		Self self = mock(Self.class);
+		analyser.visit(self, 32);
+		verify(writer).visitLine(32);
+		verify(writer).pushReceiver();
+	}
+
+	@Test
+	public void shouldPushNilPrimObjectFieldWhenVisitingNilNode() {
+		Nil nil = mock(Nil.class);
+		analyser.visit(nil, 32);
+		verify(writer).visitLine(32);
+		verify(writer).pushPrimObjectField("NIL");
+	}
+
+	@Test
+	public void shouldPushTruePrimObjectFieldWhenVisitingTrueNode() {
+		True aTrue = mock(True.class);
+		analyser.visit(aTrue, 32);
+		verify(writer).visitLine(32);
+		verify(writer).pushPrimObjectField("TRUE");
+	}
+
+	@Test
+	public void shouldPushFalsePrimObjectFieldWhenVisitingFalseNode() {
+		False aFalse = mock(False.class);
+		analyser.visit(aFalse, 32);
+		verify(writer).visitLine(32);
+		verify(writer).pushPrimObjectField("FALSE");
+	}
+
+	@Test
 	public void shouldPopResultFromStackWhenSimpleExpressionResultIsNotToBeLeftOnStack() {
 		SimpleExpression simpleExpression = mock(SimpleExpression.class);
 		when(simpleExpression.isResultLeftOnStack()).thenReturn(false);

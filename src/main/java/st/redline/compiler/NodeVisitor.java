@@ -13,4 +13,11 @@ interface NodeVisitor {
 	void visitEnd(SimpleExpression simpleExpression);
 	void visitBegin(Cascade cascade);
 	void visitEnd(Cascade cascade);
+	void visit(Identifier identifier, String value, int line);
+	void visit(Self self, int line);
+	void visit(Super aSuper, int line);
+	void visit(True aTrue, int line);
+	void visit(False aFalse, int line);
+	void visit(Nil nil, int line);
+	void visit(JVM jvm, int line);
 }

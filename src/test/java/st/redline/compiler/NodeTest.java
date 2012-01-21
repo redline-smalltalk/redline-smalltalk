@@ -1,8 +1,10 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import org.hamcrest.SelfDescribing;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,48 @@ public class NodeTest {
 	@Before
 	public void setup() {
 		visitor = mock(NodeVisitor.class);
+	}
+
+	@Test
+	public void shouldVisitSelfSyntheticNodeWhenIdentifierValueIsSelf() {
+		Identifier identifier = new Identifier("self", 1);
+		identifier.accept(visitor);
+		verify(visitor).visit((Self) argThat(new IsClass(Self.class)), anyInt());
+	}
+
+	@Test
+	public void shouldVisitSuperSyntheticNodeWhenIdentifierValueIsSuper() {
+		Identifier identifier = new Identifier("super", 1);
+		identifier.accept(visitor);
+		verify(visitor).visit((Super) argThat(new IsClass(Super.class)), anyInt());
+	}
+
+	@Test
+	public void shouldVisitTrueSyntheticNodeWhenIdentifierValueIsTrue() {
+		Identifier identifier = new Identifier("true", 1);
+		identifier.accept(visitor);
+		verify(visitor).visit((True) argThat(new IsClass(True.class)), anyInt());
+	}
+
+	@Test
+	public void shouldVisitFalseSyntheticNodeWhenIdentifierValueIsFalse() {
+		Identifier identifier = new Identifier("false", 1);
+		identifier.accept(visitor);
+		verify(visitor).visit((False) argThat(new IsClass(False.class)), anyInt());
+	}
+
+	@Test
+	public void shouldVisitNilSyntheticNodeWhenIdentifierValueIsNil() {
+		Identifier identifier = new Identifier("nil", 1);
+		identifier.accept(visitor);
+		verify(visitor).visit((Nil) argThat(new IsClass(Nil.class)), anyInt());
+	}
+
+	@Test
+	public void shouldVisitJVMSyntheticNodeWhenIdentifierValueIsJVM() {
+		Identifier identifier = new Identifier("JVM", 1);
+		identifier.accept(visitor);
+		verify(visitor).visit((JVM) argThat(new IsClass(JVM.class)), anyInt());
 	}
 
 	@Test
@@ -85,5 +129,15 @@ public class NodeTest {
 		Temporary temporary = new Temporary("x", 42);
 		temporary.accept(visitor);
 		verify(visitor).visit(temporary, "x", 42);
+	}
+
+	class IsClass extends ArgumentMatcher {
+		private Class aClass;
+		public IsClass(Class aClass) {
+			this.aClass = aClass;
+		}
+		public boolean matches(Object anObject) {
+			return aClass.equals(anObject.getClass());
+		}
 	}
 }

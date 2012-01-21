@@ -68,4 +68,32 @@ public class Analyser implements NodeVisitor {
 	public void visitEnd(Cascade cascade) {
 		delegate.visitEnd(cascade);
 	}
+
+	public void visit(Identifier identifier, String value, int line) {
+		delegate.visit(identifier, value, line);
+	}
+
+	public void visit(Self self, int line) {
+		delegate.visit(self, line);
+	}
+
+	public void visit(Super aSuper, int line) {
+		delegate.visit(aSuper, line);
+	}
+
+	public void visit(True aTrue, int line) {
+		delegate.visit(aTrue, line);
+	}
+
+	public void visit(False aFalse, int line) {
+		delegate.visit(aFalse, line);
+	}
+
+	public void visit(Nil nil, int line) {
+		delegate.visit(nil, line);
+	}
+
+	public void visit(JVM jvm, int line) {
+		delegate.visit(jvm, line);
+	}
 }

@@ -11,6 +11,9 @@ package st.redline;
 class PrimObject {
 
 	static final PrimObject NIL = null;
+	static final PrimObject TRUE = null;
+	static final PrimObject FALSE = null;
+
 	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for class
 	static final int CLASS_INDEX = 0;
 	static final PrimObject BASIC_DOES_NOT_UNDERSTAND = new PrimBasicDoesNotUnderstand();
