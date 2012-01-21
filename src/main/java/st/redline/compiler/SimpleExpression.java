@@ -17,7 +17,7 @@ public class SimpleExpression implements Expression {
 
 	SimpleExpression() {
 		messageElements = new ArrayList<MessageElement>();
-		resultLeftOnStack = false;
+		resultLeftOnStack = true;
 		duplicateResultOnStack = false;
 	}
 
@@ -25,8 +25,8 @@ public class SimpleExpression implements Expression {
 		return resultLeftOnStack;
 	}
 
-	void leaveResultOnStack() {
-		resultLeftOnStack = true;
+	void dontLeaveResultOnStack() {
+		resultLeftOnStack = false;
 	}
 
 	boolean isResultDuplicatedOnStack() {
