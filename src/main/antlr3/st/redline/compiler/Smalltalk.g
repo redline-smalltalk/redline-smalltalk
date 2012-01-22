@@ -30,8 +30,9 @@ primary returns [Primary primary]
     | STRING {primary = new StringConstant($STRING.text, $STRING.line);}
     | array_constant {primary = $array_constant.arrayConstant; }
     | block {primary = $block.block;}
-    | '(' expression WHITESPACE? ')'
-    ) 
+    | '(' expression WHITESPACE? ')' {primary = new PrimaryExpression($expression.expression);}
+    | '{' statements WHITESPACE? '}' {primary = new PrimaryStatements($statements.statements);}
+    )
   ;
 
 statements returns [Statements statements]

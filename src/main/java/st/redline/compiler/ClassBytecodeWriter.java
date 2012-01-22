@@ -76,6 +76,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		pushContext();
 		mv.visitMethodInsn(INVOKESPECIAL, superclass(), SEND_MESSAGES, SEND_MESSAGES_SIG);
 		pop();
+		pushReceiver();
 	}
 
 	void writeInitializeMethod() {
