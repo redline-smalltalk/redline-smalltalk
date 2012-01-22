@@ -22,6 +22,13 @@ public class NodeTest {
 	}
 
 	@Test
+	public void unarySelectorNodeShouldBeVisitable() {
+		UnarySelector unarySelector = new UnarySelector("yourself", 1);
+		unarySelector.accept(visitor);
+		verify(visitor).visit(unarySelector, "yourself", 1);
+	}
+
+	@Test
 	public void shouldVisitSelfSyntheticNodeWhenIdentifierValueIsSelf() {
 		Identifier identifier = new Identifier("self", 1);
 		identifier.accept(visitor);

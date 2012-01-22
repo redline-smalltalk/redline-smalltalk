@@ -38,7 +38,7 @@ class PrimObject {
 	}
 
 	// NOTE: Having perform bundle arguments and call perform0 simplifies the call process in the compiler.
-	// A future optimisation will be to remove this bundling, as creating and array and setting values is
+	// A future optimisation will be to remove this bundling, as creating an array and setting values is
 	// expensive.
 
 	public PrimObject perform(String selector) {

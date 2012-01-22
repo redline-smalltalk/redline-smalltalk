@@ -113,6 +113,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(JVM jvm, int line) {
 	}
 
+	public void visit(UnarySelector unarySelector, String selector, int line) {
+	}
+
 	void pushPrimObjectField(String field, int line) {
 		writer.visitLine(line);
 		writer.pushPrimObjectStaticField(field);

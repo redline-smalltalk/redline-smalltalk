@@ -20,4 +20,5 @@ interface NodeVisitor {
 	void visit(False aFalse, int line);
 	void visit(Nil nil, int line);
 	void visit(JVM jvm, int line);
+	void visit(UnarySelector unarySelector, String selector, int line);
 }

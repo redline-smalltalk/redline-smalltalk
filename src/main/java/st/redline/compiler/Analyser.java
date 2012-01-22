@@ -96,4 +96,8 @@ public class Analyser implements NodeVisitor {
 	public void visit(JVM jvm, int line) {
 		delegate.visit(jvm, line);
 	}
+
+	public void visit(UnarySelector unarySelector, String selector, int line) {
+		delegate.visit(unarySelector, selector, line);
+	}
 }

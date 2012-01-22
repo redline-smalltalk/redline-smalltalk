@@ -23,6 +23,13 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfUnarySelectorNode() {
+		UnarySelector unarySelector = new UnarySelector("yourself", 32);
+		analyser.visit(unarySelector, "yourself", 32);
+		verify(delegate).visit(unarySelector, "yourself", 32);
+	}
+
+	@Test
 	public void shouldDefaultToProgramAnalyserDelegate() {
 		assertTrue(new Analyser(CLASS_NAME, PACKAGE_NAME, false).currentDelegate() instanceof ProgramAnalyser);
 	}
