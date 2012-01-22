@@ -37,7 +37,35 @@ class PrimObject {
 		return newObject;
 	}
 
-	public PrimObject perform(String selector, PrimObject ... arguments) {
+	// NOTE: Having perform bundle arguments and call perform0 simplifies the call process in the compiler.
+	// A future optimisation will be to remove this bundling, as creating and array and setting values is
+	// expensive.
+
+	public PrimObject perform(String selector) {
+		return perform0(selector);
+	}
+
+	public PrimObject perform(String selector, PrimObject arg1) {
+		return perform0(selector, arg1);
+	}
+
+	public PrimObject perform(String selector, PrimObject arg1, PrimObject arg2) {
+		return perform0(selector, arg1, arg2);
+	}
+
+	public PrimObject perform(String selector, PrimObject arg1, PrimObject arg2, PrimObject arg3) {
+		return perform0(selector, arg1, arg2, arg3);
+	}
+
+	public PrimObject perform(String selector, PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4) {
+		return perform0(selector, arg1, arg2, arg3, arg4);
+	}
+
+	public PrimObject perform(String selector, PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, PrimObject arg5) {
+		return perform0(selector, arg1, arg2, arg3, arg4, arg5);
+	}
+
+	PrimObject perform0(String selector, PrimObject ... arguments) {
 		return perform(attributes[CLASS_INDEX], selector, arguments);
 	}
 
@@ -46,15 +74,15 @@ class PrimObject {
 			attributes[i] = PRIM_NIL;
 	}
 
-	PrimObject perform(PrimObject lookupClass, String selector, PrimObject ... arguments) {
-		PrimObject cls = lookupClass;
+	PrimObject perform(PrimObject foundInClass, String selector, PrimObject ... arguments) {
+		PrimObject cls = foundInClass;
 		while (!cls.includesSelector(selector))
 			cls = cls.superclass();
 		return apply(cls.methodFor(selector), cls, selector, arguments);
 	}
 
-	PrimObject apply(PrimObject method, PrimObject lookupClass, String selector, PrimObject ... arguments) {
-		return method.invoke(this, new PrimContext(this, lookupClass, selector, arguments));
+	PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
+		return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
 	}
 
 	PrimObject invoke(PrimObject receiver, PrimContext context) {

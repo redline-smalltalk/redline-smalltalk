@@ -5,7 +5,7 @@ class PrimBasicDoesNotUnderstand extends PrimObject {
 
 	PrimObject invoke(PrimObject receiver, PrimContext context) {
 		if (!"basicDoesNotUnderstand:".equals(context.selector))
-			return receiver.perform("basicDoesNotUnderstand:", copySelectorAndArguments(context));
+			return receiver.perform0("basicDoesNotUnderstand:", copySelectorAndArguments(context));
 		outputDoesNotUnderstandError(receiver, context);
 		return PRIM_NIL;
 	}
