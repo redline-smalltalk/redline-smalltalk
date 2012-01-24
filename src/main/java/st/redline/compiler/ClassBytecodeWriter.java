@@ -11,6 +11,7 @@ import java.security.SignatureSpi;
 
 public class ClassBytecodeWriter implements Opcodes {
 
+	private static final String OBJECT = "st/redline/PrimObject";
 	private static final String CONTEXT = "st/redline/PrimContext";
 	private static final String SEND_MESSAGES = "_sendMessages_";
 	private static final String SEND_MESSAGES_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
@@ -140,7 +141,7 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	void invokeObjectPerform(String selector, int argumentCount) {
 		pushLiteral(selector);
-		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, "perform", SIGNATURES[argumentCount]);
+		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "perform", SIGNATURES[argumentCount]);
 	}
 
 	void pop() {
@@ -168,7 +169,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	void pushObjectStaticField(String field) {
-		mv.visitFieldInsn(GETSTATIC, "st/redline/PrimObject", field, "Lst/redline/PrimObject;");
+		mv.visitFieldInsn(GETSTATIC, OBJECT, field, "Lst/redline/PrimObject;");
 	}
 
 	void pushNumber(int value) {
