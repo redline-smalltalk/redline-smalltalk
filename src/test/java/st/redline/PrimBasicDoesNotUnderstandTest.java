@@ -46,7 +46,7 @@ public class PrimBasicDoesNotUnderstandTest {
 			this.selector = selector;
 		}
 
-		PrimObject perform(PrimObject receiver, String selector, PrimObject ... arguments) {
+		PrimObject perform0(PrimObject receiver, String selector, PrimObject ... arguments) {
 			if (BASIC_DNU_SELECTOR.equals(selector)
 					&& arguments.length == 3 && arguments[1] == arg1 && arguments[2] == arg2
 					&& this.selector.equals(arguments[0].javaValue))

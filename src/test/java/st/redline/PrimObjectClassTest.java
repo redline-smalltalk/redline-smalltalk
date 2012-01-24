@@ -63,6 +63,6 @@ public class PrimObjectClassTest {
 				return result;
 			}
 		});
-		assertEquals(object.perform(object, "existingMethod"), result);
+		assertEquals(object.perform0(object, "existingMethod"), result);
 	}
 }

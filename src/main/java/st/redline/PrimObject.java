@@ -8,7 +8,7 @@ package st.redline;
 // Typically you don't create instances of PrimObject directly, instead you ask
 // a PrimObjectClass for an instance of the class it represents by sending it the 'new' message.
 
-class PrimObject {
+public class PrimObject {
 
 	static final PrimObject NIL = null;
 	static final PrimObject TRUE = null;
@@ -37,6 +37,10 @@ class PrimObject {
 		return newObject;
 	}
 
+	public static void dump(Object object) {
+		System.out.println(object);
+	}
+
 	// NOTE: Having perform bundle arguments and call perform0 simplifies the call process in the compiler.
 	// A future optimisation will be to remove this bundling, as creating an array and setting values is
 	// expensive.
@@ -45,28 +49,28 @@ class PrimObject {
 		return perform0(selector);
 	}
 
-	public PrimObject perform(String selector, PrimObject arg1) {
+	public PrimObject perform(PrimObject arg1, String selector) {
 		return perform0(selector, arg1);
 	}
 
-	public PrimObject perform(String selector, PrimObject arg1, PrimObject arg2) {
+	public PrimObject perform(PrimObject arg1, PrimObject arg2, String selector) {
 		return perform0(selector, arg1, arg2);
 	}
 
-	public PrimObject perform(String selector, PrimObject arg1, PrimObject arg2, PrimObject arg3) {
+	public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, String selector) {
 		return perform0(selector, arg1, arg2, arg3);
 	}
 
-	public PrimObject perform(String selector, PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4) {
+	public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, String selector) {
 		return perform0(selector, arg1, arg2, arg3, arg4);
 	}
 
-	public PrimObject perform(String selector, PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, PrimObject arg5) {
+	public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, PrimObject arg5, String selector) {
 		return perform0(selector, arg1, arg2, arg3, arg4, arg5);
 	}
 
 	PrimObject perform0(String selector, PrimObject ... arguments) {
-		return perform(attributes[CLASS_INDEX], selector, arguments);
+		return perform0(attributes[CLASS_INDEX], selector, arguments);
 	}
 
 	void initialize() {
@@ -74,7 +78,7 @@ class PrimObject {
 			attributes[i] = PRIM_NIL;
 	}
 
-	PrimObject perform(PrimObject foundInClass, String selector, PrimObject ... arguments) {
+	PrimObject perform0(PrimObject foundInClass, String selector, PrimObject ... arguments) {
 		PrimObject cls = foundInClass;
 		while (!cls.includesSelector(selector))
 			cls = cls.superclass();

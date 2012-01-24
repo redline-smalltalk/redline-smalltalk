@@ -23,6 +23,14 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfUnaryExpressionNode() {
+		UnaryExpression unaryExpression = new UnaryExpression();
+		unaryExpression.accept(analyser);
+		verify(delegate).visitBegin(unaryExpression);
+		verify(delegate).visitEnd(unaryExpression);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfUnarySelectorNode() {
 		UnarySelector unarySelector = new UnarySelector("yourself", 32);
 		analyser.visit(unarySelector, "yourself", 32);

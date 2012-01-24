@@ -69,6 +69,14 @@ public class Analyser implements NodeVisitor {
 		delegate.visitEnd(cascade);
 	}
 
+	public void visitBegin(UnaryExpression unaryExpression) {
+		delegate.visitBegin(unaryExpression);
+	}
+
+	public void visitEnd(UnaryExpression unaryExpression) {
+		delegate.visitEnd(unaryExpression);
+	}
+
 	public void visit(Identifier identifier, String value, int line) {
 		delegate.visit(identifier, value, line);
 	}

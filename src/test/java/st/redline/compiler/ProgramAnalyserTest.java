@@ -24,6 +24,14 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokePerformWhenVisitingUnarySelectorNode() {
+		UnarySelector unarySelector = new UnarySelector("yourself", 42);
+		analyser.visit(unarySelector, "yourself", 42);
+		verify(writer).visitLine(42);
+		verify(writer).invokeObjectPerform("yourself", 0);
+	}
+
+	@Test
 	public void shouldPushReceiverWhenVisitingSelfNode() {
 		Self self = mock(Self.class);
 		analyser.visit(self, 32);
@@ -36,7 +44,7 @@ public class ProgramAnalyserTest {
 		Nil nil = mock(Nil.class);
 		analyser.visit(nil, 32);
 		verify(writer).visitLine(32);
-		verify(writer).pushPrimObjectStaticField("NIL");
+		verify(writer).pushObjectStaticField("NIL");
 	}
 
 	@Test
@@ -44,7 +52,7 @@ public class ProgramAnalyserTest {
 		True aTrue = mock(True.class);
 		analyser.visit(aTrue, 32);
 		verify(writer).visitLine(32);
-		verify(writer).pushPrimObjectStaticField("TRUE");
+		verify(writer).pushObjectStaticField("TRUE");
 	}
 
 	@Test
@@ -52,7 +60,7 @@ public class ProgramAnalyserTest {
 		False aFalse = mock(False.class);
 		analyser.visit(aFalse, 32);
 		verify(writer).visitLine(32);
-		verify(writer).pushPrimObjectStaticField("FALSE");
+		verify(writer).pushObjectStaticField("FALSE");
 	}
 
 	@Test

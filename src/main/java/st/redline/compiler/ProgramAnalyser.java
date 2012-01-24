@@ -87,6 +87,12 @@ class ProgramAnalyser implements AnalyserDelegate {
 		writer.pop();
 	}
 
+	public void visitBegin(UnaryExpression unaryExpression) {
+	}
+
+	public void visitEnd(UnaryExpression unaryExpression) {
+	}
+
 	public void visit(Identifier identifier, String value, int line) {
 	}
 
@@ -114,10 +120,12 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(UnarySelector unarySelector, String selector, int line) {
+		writer.visitLine(line);
+		writer.invokeObjectPerform(selector, 0);
 	}
 
 	void pushPrimObjectField(String field, int line) {
 		writer.visitLine(line);
-		writer.pushPrimObjectStaticField(field);
+		writer.pushObjectStaticField(field);
 	}
 }

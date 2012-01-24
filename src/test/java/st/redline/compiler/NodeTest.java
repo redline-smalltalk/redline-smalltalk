@@ -22,6 +22,20 @@ public class NodeTest {
 	}
 
 	@Test
+	public void unaryExpressionNodeShouldBeVisitable() {
+		UnarySelector unarySelector = mock(UnarySelector.class);
+		MessageExpression messageExpression = mock(MessageExpression.class);
+		UnaryExpression unaryExpression = new UnaryExpression();
+		unaryExpression.add(unarySelector);
+		unaryExpression.add(messageExpression);
+		unaryExpression.accept(visitor);
+		verify(visitor).visitBegin(unaryExpression);
+		verify(unarySelector).accept(visitor);
+		verify(messageExpression).accept(visitor);
+		verify(visitor).visitEnd(unaryExpression);
+	}
+
+	@Test
 	public void unarySelectorNodeShouldBeVisitable() {
 		UnarySelector unarySelector = new UnarySelector("yourself", 1);
 		unarySelector.accept(visitor);

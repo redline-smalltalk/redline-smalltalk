@@ -30,5 +30,11 @@ public class UnaryExpression implements MessageExpression {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visitBegin(this);
+		for (UnarySelector unarySelector : unarySelectors)
+			unarySelector.accept(nodeVisitor);
+		if (messageExpression != null)
+			messageExpression.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this);
 	}
 }

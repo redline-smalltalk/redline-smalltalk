@@ -7,14 +7,19 @@ import org.objectweb.asm.Opcodes;
 import st.redline.ClassPathUtilities;
 
 import java.io.PrintWriter;
+import java.security.SignatureSpi;
 
 public class ClassBytecodeWriter implements Opcodes {
 
 	private static final String CONTEXT = "st/redline/PrimContext";
 	private static final String SEND_MESSAGES = "_sendMessages_";
 	private static final String SEND_MESSAGES_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
-
+	private static final String[] SIGNATURES = {
+		"(Ljava/lang/String;)Lst/redline/PrimObject;",
+		"(Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;"
+	};
 	private final boolean verbose;
+
 	private ClassWriter cw;
 	private MethodVisitor mv;
 	private String fullyQualifiedClassName;
@@ -133,8 +138,17 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporariesInit", "(I)V");
 	}
 
+	void invokeObjectPerform(String selector, int argumentCount) {
+		pushLiteral(selector);
+		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, "perform", SIGNATURES[argumentCount]);
+	}
+
 	void pop() {
 		mv.visitInsn(POP);
+	}
+
+	private void pushLiteral(String literal) {
+		mv.visitLdcInsn(literal);
 	}
 
 	void pushDuplicate() {
@@ -153,7 +167,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitVarInsn(ALOAD, 2);
 	}
 
-	void pushPrimObjectStaticField(String field) {
+	void pushObjectStaticField(String field) {
 		mv.visitFieldInsn(GETSTATIC, "st/redline/PrimObject", field, "Lst/redline/PrimObject;");
 	}
 

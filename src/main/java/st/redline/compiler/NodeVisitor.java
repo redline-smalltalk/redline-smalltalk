@@ -8,11 +8,13 @@ interface NodeVisitor {
 	void visitEnd(Temporaries temporaries);
 	void visitBegin(Statements statements);
 	void visitEnd(Statements statements);
-	void visit(Temporary temporary, String value, int line);
 	void visitBegin(SimpleExpression simpleExpression);
 	void visitEnd(SimpleExpression simpleExpression);
 	void visitBegin(Cascade cascade);
 	void visitEnd(Cascade cascade);
+	void visitBegin(UnaryExpression unaryExpression);
+	void visitEnd(UnaryExpression unaryExpression);
+	void visit(Temporary temporary, String value, int line);
 	void visit(Identifier identifier, String value, int line);
 	void visit(Self self, int line);
 	void visit(Super aSuper, int line);
