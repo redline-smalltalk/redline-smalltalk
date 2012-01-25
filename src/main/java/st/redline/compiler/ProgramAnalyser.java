@@ -111,6 +111,12 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(Array array) {
 	}
 
+	public void visitBegin(BinarySelectorMessageElement binarySelectorMessageElement, String selector, int line) {
+	}
+
+	public void visitEnd(BinarySelectorMessageElement binarySelectorMessageElement, String selector, int line) {
+	}
+
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
 	}
 
@@ -146,6 +152,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(UnarySelector unarySelector, String selector, int line) {
 		writer.visitLine(line);
 		writer.invokeObjectPerform(selector, 0);
+	}
+
+	public void visit(BinarySelector binarySelector, String selector, int line) {
 	}
 
 	void pushPrimObjectField(String field, int line) {

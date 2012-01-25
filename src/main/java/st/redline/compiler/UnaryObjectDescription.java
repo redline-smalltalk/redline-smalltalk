@@ -4,7 +4,7 @@ package st.redline.compiler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnaryObjectDescription {
+public class UnaryObjectDescription implements VisitableNode {
 
 	private final Primary primary;
 	private final List<UnarySelector> unarySelectors;
@@ -24,5 +24,8 @@ public class UnaryObjectDescription {
 
 	List<UnarySelector> unarySelectors() {
 		return unarySelectors;
+	}
+
+	public void accept(NodeVisitor nodeVisitor) {
 	}
 }

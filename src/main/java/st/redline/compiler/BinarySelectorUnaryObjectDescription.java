@@ -20,5 +20,9 @@ public class BinarySelectorUnaryObjectDescription {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
+		if (unaryObjectDescription != null)
+			unaryObjectDescription.accept(nodeVisitor);
+		if (binarySelector != null)
+			binarySelector.accept(nodeVisitor);
 	}
 }

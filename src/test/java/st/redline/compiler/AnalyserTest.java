@@ -23,6 +23,25 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfBinarySelectorMessageElementNode() {
+		BinarySelector binarySelector = new BinarySelector();
+		binarySelector.add("/", 42);
+		UnaryObjectDescription unaryObjectDescription = mock(UnaryObjectDescription.class);
+		BinarySelectorMessageElement binarySelectorMessageElement = new BinarySelectorMessageElement(binarySelector, unaryObjectDescription);
+		binarySelectorMessageElement.accept(analyser);
+		verify(delegate).visitBegin(binarySelectorMessageElement, "/", 42);
+		verify(delegate).visitEnd(binarySelectorMessageElement, "/", 42);
+	}
+
+	@Test
+	public void shouldDelegateVisitOfBinarySelectorNode() {
+		BinarySelector binarySelector = new BinarySelector();
+		binarySelector.add("+", 42);
+		binarySelector.accept(analyser);
+		verify(delegate).visit(binarySelector, "+", 42);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfBinaryObjectDescriptionNode() {
 		Primary primary = mock(Primary.class);
 		BinaryObjectDescription binaryObjectDescription = new BinaryObjectDescription(primary);

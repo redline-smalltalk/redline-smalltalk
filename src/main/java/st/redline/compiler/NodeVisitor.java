@@ -20,6 +20,8 @@ interface NodeVisitor {
 	void visitEnd(AssignmentExpression assignmentExpression);
 	void visitBegin(Array array);
 	void visitEnd(Array array);
+	void visitBegin(BinarySelectorMessageElement binarySelectorMessageElement, String selector, int line);
+	void visitEnd(BinarySelectorMessageElement binarySelectorMessageElement, String selector, int line);
 	void visit(BinaryObjectDescription binaryObjectDescription);
 	void visit(Temporary temporary, String value, int line);
 	void visit(Identifier identifier, String value, int line);
@@ -31,4 +33,5 @@ interface NodeVisitor {
 	void visit(JVM jvm, int line);
 	void visit(ArrayConstant arrayConstant, int line);
 	void visit(UnarySelector unarySelector, String selector, int line);
+	void visit(BinarySelector binarySelector, String selector, int line);
 }
