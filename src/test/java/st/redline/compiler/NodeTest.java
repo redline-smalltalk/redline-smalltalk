@@ -21,6 +21,15 @@ public class NodeTest {
 	}
 
 	@Test
+	public void arrayConstantNodeShouldBeVisitable() {
+		Array array = mock(Array.class);
+		ArrayConstant arrayConstant = new ArrayConstant(array, 42);
+		arrayConstant.accept(visitor);
+		verify(visitor).visit(arrayConstant, 42);
+		verify(array).accept(visitor);
+	}
+
+	@Test
 	public void arrayNodeShouldIndexElementsWhenAdded() {
 		ArrayElement arrayElement = mock(ArrayElement.class);
 		Array array = new Array();

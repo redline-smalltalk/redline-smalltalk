@@ -131,6 +131,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(JVM jvm, int line) {
 	}
 
+	public void visit(ArrayConstant arrayConstant, int line) {
+	}
+
 	public void visit(UnarySelector unarySelector, String selector, int line) {
 		writer.visitLine(line);
 		writer.invokeObjectPerform(selector, 0);

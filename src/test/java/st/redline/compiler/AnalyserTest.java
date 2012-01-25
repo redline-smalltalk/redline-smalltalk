@@ -23,6 +23,13 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfArrayConstantNode() {
+		ArrayConstant arrayConstant = new ArrayConstant(mock(Array.class),  42);
+		arrayConstant.accept(analyser);
+		verify(delegate).visit(arrayConstant, 42);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfArrayNode() {
 		Array array = new Array();
 		array.accept(analyser);
