@@ -1,7 +1,6 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-import org.hamcrest.SelfDescribing;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
@@ -19,6 +18,16 @@ public class NodeTest {
 	@Before
 	public void setup() {
 		visitor = mock(NodeVisitor.class);
+	}
+
+	@Test
+	public void arrayNodeShouldIndexElementsWhenAdded() {
+		ArrayElement arrayElement = mock(ArrayElement.class);
+		Array array = new Array();
+		array.add(arrayElement);
+		array.add(arrayElement);
+		verify(arrayElement).index(1);
+		verify(arrayElement).index(2);
 	}
 
 	@Test
