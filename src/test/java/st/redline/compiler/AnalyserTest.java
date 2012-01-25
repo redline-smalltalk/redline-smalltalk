@@ -26,6 +26,23 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfKeywordExpressionNode() {
+		KeywordExpression keywordExpression = new KeywordExpression();
+		keywordExpression.add("at:", 32, mock(BinaryObjectDescription.class));
+		keywordExpression.add("put:", 33, mock(BinaryObjectDescription.class));
+		keywordExpression.accept(analyser);
+		verify(delegate).visitBegin(keywordExpression, "at:put:", 2, 32);
+		verify(delegate).visitEnd(keywordExpression, "at:put:", 2, 32);
+	}
+
+	@Test
+	public void shouldDelegateVisitOfJVMNode() {
+		JVM jvm = new JVM();
+		jvm.accept(analyser, 32);
+		verify(delegate).visit(jvm, 32);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfCharacterConstantNode() {
 		CharacterConstant characterConstant = new CharacterConstant("z", 42);
 		characterConstant.index(2);

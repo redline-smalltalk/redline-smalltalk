@@ -16,6 +16,8 @@ interface NodeVisitor {
 	void visitEnd(UnaryExpression unaryExpression);
 	void visitBegin(BinaryExpression binaryExpression);
 	void visitEnd(BinaryExpression binaryExpression);
+	void visitBegin(KeywordExpression keywordExpression, String selector, int argumentCount, int line);
+	void visitEnd(KeywordExpression keywordExpression, String selector, int argumentCount, int line);
 	void visitBegin(AssignmentExpression assignmentExpression);
 	void visitEnd(AssignmentExpression assignmentExpression);
 	void visitBegin(Array array);

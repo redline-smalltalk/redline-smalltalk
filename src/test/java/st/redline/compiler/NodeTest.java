@@ -21,6 +21,16 @@ public class NodeTest {
 	}
 
 	@Test
+	public void keywordExpressionNodeShouldBeVisitable() {
+		BinaryObjectDescription binaryObjectDescription = mock(BinaryObjectDescription.class);
+		KeywordExpression keywordExpression = new KeywordExpression();
+		keywordExpression.add("at:", 32, binaryObjectDescription);
+		keywordExpression.accept(visitor);
+		verify(visitor).visitBegin(keywordExpression, "at:", 1, 32);
+		verify(visitor).visitEnd(keywordExpression, "at:", 1, 32);
+	}
+
+	@Test
 	public void characterConstantNodeShouldBeVisitable() {
 		CharacterConstant characterConstant = new CharacterConstant("a", 42);
 		characterConstant.index(2);

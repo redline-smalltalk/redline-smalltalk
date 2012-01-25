@@ -99,6 +99,12 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(BinaryExpression binaryExpression) {
 	}
 
+	public void visitBegin(KeywordExpression keywordExpression, String selector, int argumentCount, int line) {
+	}
+
+	public void visitEnd(KeywordExpression keywordExpression, String selector, int argumentCount, int line) {
+	}
+
 	public void visitBegin(AssignmentExpression assignmentExpression) {
 	}
 
