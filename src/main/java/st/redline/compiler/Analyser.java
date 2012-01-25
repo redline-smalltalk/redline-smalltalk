@@ -204,4 +204,8 @@ public class Analyser implements NodeVisitor {
 	public void visit(CharacterConstant characterConstant, String value, int index, int line) {
 		delegate.visit(characterConstant, value, index, line);
 	}
+
+	public void visit(StringConstant stringConstant, String value, int index, int line) {
+		delegate.visit(stringConstant, value, index, line);
+	}
 }

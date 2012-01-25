@@ -196,6 +196,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(CharacterConstant characterConstant, String value, int index, int line) {
 	}
 
+	public void visit(StringConstant stringConstant, String value, int index, int line) {
+	}
+
 	void invokeObjectPerform(String selector, int argumentCount, int line) {
 		writer.visitLine(line);
 		writer.invokeObjectPerform(selector, argumentCount);

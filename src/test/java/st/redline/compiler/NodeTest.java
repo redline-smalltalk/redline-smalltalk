@@ -21,6 +21,14 @@ public class NodeTest {
 	}
 
 	@Test
+	public void stringConstantNodeShouldBeVisitable() {
+		StringConstant stringConstant = new StringConstant("'str'", 42);
+		stringConstant.index(2);
+		stringConstant.accept(visitor);
+		verify(visitor).visit(stringConstant, "str", 2, 42);
+	}
+
+	@Test
 	public void primaryStatementsNodeShouldBeVisitable() {
 		Statements statements = mock(Statements.class);
 		when(statements.line()).thenReturn(32);

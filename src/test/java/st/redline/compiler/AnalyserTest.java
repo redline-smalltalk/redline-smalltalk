@@ -26,7 +26,15 @@ public class AnalyserTest {
 	}
 
 	@Test
-	public void shouldDelegateVisitOfPrimaryStatementsNode() {
+	public void shouldDelegateVisitOfStringConstantNode() {
+		StringConstant stringConstant = new StringConstant("'foo'", 42);
+		stringConstant.index(2);
+		stringConstant.accept(analyser);
+		verify(delegate).visit(stringConstant, "foo", 2, 42);
+	}
+
+	@Test
+	public void shouldDelegateVisiitOfPrimaryStatementsNode() {
 		Statements statements = mock(Statements.class);
 		when(statements.line()).thenReturn(12);
 		PrimaryStatements primaryStatements = new PrimaryStatements(statements);
