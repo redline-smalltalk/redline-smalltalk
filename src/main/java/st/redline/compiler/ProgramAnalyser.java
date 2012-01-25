@@ -117,6 +117,12 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(BinarySelectorMessageElement binarySelectorMessageElement, String selector, int line) {
 	}
 
+	public void visitBegin(Block block, int line) {
+	}
+
+	public void visitEnd(Block block, int line) {
+	}
+
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
 	}
 

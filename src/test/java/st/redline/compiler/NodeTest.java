@@ -21,6 +21,20 @@ public class NodeTest {
 	}
 
 	@Test
+	public void blockNodeShouldBeVisitable() {
+		BlockArguments blockArguments = mock(BlockArguments.class);
+		Temporaries temporaries = mock(Temporaries.class);
+		Statements statements = mock(Statements.class);
+		Block block = new Block(42, blockArguments, temporaries, statements);
+		block.accept(visitor);
+		verify(visitor).visitBegin(block, 42);
+		verify(blockArguments).accept(visitor);
+		verify(temporaries).accept(visitor);
+		verify(statements).accept(visitor);
+		verify(visitor).visitEnd(block, 42);
+	}
+
+	@Test
 	public void binarySelectorUnaryObjectDescriptionNodeShouldBeVisitable() {
 		BinarySelector binarySelector = mock(BinarySelector.class);
 		UnaryObjectDescription unaryObjectDescription = mock(UnaryObjectDescription.class);

@@ -23,6 +23,14 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfBlockNode() {
+		Block block = new Block(42, mock(BlockArguments.class), mock(Temporaries.class), mock(Statements.class));
+		block.accept(analyser);
+		verify(delegate).visitBegin(block, 42);
+		verify(delegate).visitEnd(block, 42);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfBinarySelectorMessageElementNode() {
 		BinarySelector binarySelector = new BinarySelector();
 		binarySelector.add("/", 42);

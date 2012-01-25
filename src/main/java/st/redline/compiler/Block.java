@@ -32,5 +32,13 @@ class Block extends Primary {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visitBegin(this, line);
+		if (blockArguments != null)
+			blockArguments.accept(nodeVisitor);
+		if (temporaries != null)
+			temporaries.accept(nodeVisitor);
+		if (statements != null)
+			statements.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this, line);
 	}
 }
