@@ -18,6 +18,8 @@ interface NodeVisitor {
 	void visitEnd(BinaryExpression binaryExpression);
 	void visitBegin(KeywordExpression keywordExpression, String selector, int argumentCount, int line);
 	void visitEnd(KeywordExpression keywordExpression, String selector, int argumentCount, int line);
+	void visitBegin(KeywordMessageElement keywordMessageElement, String selector, int argumentCount, int line);
+	void visitEnd(KeywordMessageElement keywordMessageElement, String selector, int argumentCount, int line);
 	void visitBegin(AssignmentExpression assignmentExpression);
 	void visitEnd(AssignmentExpression assignmentExpression);
 	void visitBegin(Array array);

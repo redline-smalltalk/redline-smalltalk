@@ -21,6 +21,15 @@ public class NodeTest {
 	}
 
 	@Test
+	public void keywordMessageElementNodeShouldBeVisitable() {
+		BinaryObjectDescription binaryObjectDescription = mock(BinaryObjectDescription.class);
+		KeywordMessageElement keywordMessageElement = new KeywordMessageElement("at:", 32, binaryObjectDescription);
+		keywordMessageElement.accept(visitor);
+		verify(visitor).visitBegin(keywordMessageElement, "at:", 1, 32);
+		verify(visitor).visitEnd(keywordMessageElement, "at:", 1, 32);
+	}
+
+	@Test
 	public void keywordExpressionNodeShouldBeVisitable() {
 		BinaryObjectDescription binaryObjectDescription = mock(BinaryObjectDescription.class);
 		KeywordExpression keywordExpression = new KeywordExpression();

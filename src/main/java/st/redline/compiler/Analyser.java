@@ -93,6 +93,14 @@ public class Analyser implements NodeVisitor {
 		delegate.visitEnd(keywordExpression, selector, argumentCount, line);
 	}
 
+	public void visitBegin(KeywordMessageElement keywordMessageElement, String selector, int argumentCount, int line) {
+		delegate.visitBegin(keywordMessageElement, selector, argumentCount, line);
+	}
+
+	public void visitEnd(KeywordMessageElement keywordMessageElement, String selector, int argumentCount, int line) {
+		delegate.visitEnd(keywordMessageElement, selector, argumentCount, line);
+	}
+
 	public void visitBegin(AssignmentExpression assignmentExpression) {
 		delegate.visitBegin(assignmentExpression);
 	}

@@ -26,6 +26,15 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfKeywordMessageElementNode() {
+		KeywordMessageElement keywordMessageElement = new KeywordMessageElement("at:", 32, mock(BinaryObjectDescription.class));
+		keywordMessageElement.add("put:", 33, mock(BinaryObjectDescription.class));
+		keywordMessageElement.accept(analyser);
+		verify(delegate).visitBegin(keywordMessageElement, "at:put:", 2, 32);
+		verify(delegate).visitEnd(keywordMessageElement, "at:put:", 2, 32);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfKeywordExpressionNode() {
 		KeywordExpression keywordExpression = new KeywordExpression();
 		keywordExpression.add("at:", 32, mock(BinaryObjectDescription.class));
