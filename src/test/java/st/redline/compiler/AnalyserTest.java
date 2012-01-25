@@ -26,6 +26,13 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfNumberNode() {
+		Number number = new Number(null, null, null, "123", 2, null, null, null, null);
+		number.accept(analyser);
+		verify(delegate).visit(number, "123", 2);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfKeywordMessageElementNode() {
 		KeywordMessageElement keywordMessageElement = new KeywordMessageElement("at:", 32, mock(BinaryObjectDescription.class));
 		keywordMessageElement.add("put:", 33, mock(BinaryObjectDescription.class));

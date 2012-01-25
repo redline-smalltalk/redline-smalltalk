@@ -149,6 +149,10 @@ public class Analyser implements NodeVisitor {
 		delegate.visit(identifier, value, line);
 	}
 
+	public void visit(Number number, String value, int line) {
+		delegate.visit(number, value, line);
+	}
+
 	public void visit(BlockArgument blockArgument, String value, int line) {
 		delegate.visit(blockArgument, value, line);
 	}

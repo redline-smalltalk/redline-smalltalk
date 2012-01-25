@@ -21,6 +21,13 @@ public class NodeTest {
 	}
 
 	@Test
+	public void numberNodeShouldBeVisitable() {
+		Number number = new Number(null, null, null, "123", 2, "45", null, null, null);
+		number.accept(visitor);
+		verify(visitor).visit(number, "123.45", 2);
+	}
+
+	@Test
 	public void keywordMessageElementNodeShouldBeVisitable() {
 		BinaryObjectDescription binaryObjectDescription = mock(BinaryObjectDescription.class);
 		KeywordMessageElement keywordMessageElement = new KeywordMessageElement("at:", 32, binaryObjectDescription);

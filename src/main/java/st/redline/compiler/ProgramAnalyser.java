@@ -147,6 +147,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(Identifier identifier, String value, int line) {
 	}
 
+	public void visit(Number number, String value, int line) {
+	}
+
 	public void visit(BlockArgument blockArgument, String value, int line) {
 	}
 
