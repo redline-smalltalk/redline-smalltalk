@@ -21,6 +21,16 @@ public class NodeTest {
 	}
 
 	@Test
+	public void primaryStatementsNodeShouldBeVisitable() {
+		Statements statements = mock(Statements.class);
+		when(statements.line()).thenReturn(32);
+		PrimaryStatements primaryStatements = new PrimaryStatements(statements);
+		primaryStatements.accept(visitor);
+		verify(visitor).visit(primaryStatements, 32);
+		verify(statements).accept(visitor);
+	}
+
+	@Test
 	public void primaryExpressionConstructionShouldLeaveResultOnStack() {
 		Expression expression = mock(Expression.class);
 		new PrimaryExpression(expression);
@@ -28,7 +38,7 @@ public class NodeTest {
 	}
 
 	@Test
-	public void primaryExpressionConstructionNodeShouldBeVisitable() {
+	public void primaryExpressionNodeShouldBeVisitable() {
 		Expression expression = mock(Expression.class);
 		when(expression.line()).thenReturn(32);
 		PrimaryExpression primaryExpression = new PrimaryExpression(expression);

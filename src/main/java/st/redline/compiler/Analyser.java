@@ -57,6 +57,10 @@ public class Analyser implements NodeVisitor {
 		delegate.visit(primaryExpression, line);
 	}
 
+	public void visit(PrimaryStatements primaryStatements, int line) {
+		delegate.visit(primaryStatements, line);
+	}
+
 	public void visitBegin(SimpleExpression simpleExpression) {
 		delegate.visitBegin(simpleExpression);
 	}

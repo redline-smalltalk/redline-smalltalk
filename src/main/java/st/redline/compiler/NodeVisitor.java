@@ -33,6 +33,7 @@ interface NodeVisitor {
 	void visit(BinaryObjectDescription binaryObjectDescription);
 	void visit(Temporary temporary, String value, int line);
 	void visit(PrimaryExpression primaryExpression, int line);
+	void visit(PrimaryStatements primaryStatements, int line);
 	void visit(Identifier identifier, String value, int line);
 	void visit(Number number, String value, int line);
 	void visit(BlockArgument blockArgument, String value, int line);

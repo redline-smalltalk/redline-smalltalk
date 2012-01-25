@@ -72,6 +72,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(PrimaryExpression primaryExpression, int line) {
 	}
 
+	public void visit(PrimaryStatements primaryStatements, int line) {
+	}
+
 	public void visitBegin(SimpleExpression simpleExpression) {
 	}
 

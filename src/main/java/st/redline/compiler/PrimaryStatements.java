@@ -14,5 +14,8 @@ class PrimaryStatements extends Primary {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this, line());
+		if (statements != null)
+			statements.accept(nodeVisitor);
 	}
 }

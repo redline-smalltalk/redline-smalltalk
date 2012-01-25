@@ -26,6 +26,15 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfPrimaryStatementsNode() {
+		Statements statements = mock(Statements.class);
+		when(statements.line()).thenReturn(12);
+		PrimaryStatements primaryStatements = new PrimaryStatements(statements);
+		primaryStatements.accept(analyser);
+		verify(delegate).visit(primaryStatements, 12);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfPrimaryExpressionNode() {
 		Expression expression = mock(Expression.class);
 		when(expression.line()).thenReturn(12);
