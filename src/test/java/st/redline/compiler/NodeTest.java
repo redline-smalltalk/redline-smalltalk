@@ -21,6 +21,13 @@ public class NodeTest {
 	}
 
 	@Test
+	public void blockArgumentNodeShouldBeVisitable() {
+		BlockArgument blockArgument = new BlockArgument("arg", 42);
+		blockArgument.accept(visitor);
+		verify(visitor).visit(blockArgument, "arg", 42);
+	}
+
+	@Test
 	public void blockNodeShouldBeVisitable() {
 		BlockArguments blockArguments = mock(BlockArguments.class);
 		Temporaries temporaries = mock(Temporaries.class);

@@ -6,4 +6,8 @@ class BlockArgument extends Identifier {
 	BlockArgument(String value, int line) {
 		super(value, line);
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this, value(), line());
+	}
 }

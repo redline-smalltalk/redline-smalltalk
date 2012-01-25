@@ -129,6 +129,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(Identifier identifier, String value, int line) {
 	}
 
+	public void visit(BlockArgument blockArgument, String value, int line) {
+	}
+
 	public void visit(Self self, int line) {
 		writer.visitLine(line);
 		writer.pushReceiver();

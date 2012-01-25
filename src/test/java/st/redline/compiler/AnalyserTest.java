@@ -23,6 +23,13 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfBlockArgumentNode() {
+		BlockArgument blockArgument = new BlockArgument("arg", 42);
+		blockArgument.accept(analyser);
+		verify(delegate).visit(blockArgument, "arg", 42);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfBlockNode() {
 		Block block = new Block(42, mock(BlockArguments.class), mock(Temporaries.class), mock(Statements.class));
 		block.accept(analyser);
