@@ -26,6 +26,15 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfPrimaryExpressionNode() {
+		Expression expression = mock(Expression.class);
+		when(expression.line()).thenReturn(12);
+		PrimaryExpression primaryExpression = new PrimaryExpression(expression);
+		primaryExpression.accept(analyser);
+		verify(delegate).visit(primaryExpression, 12);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfNumberNode() {
 		Number number = new Number(null, null, null, "123", 2, null, null, null, null);
 		number.accept(analyser);

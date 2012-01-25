@@ -9,10 +9,10 @@ class PrimaryStatements extends Primary {
 		this.statements = statements;
 	}
 
-	public void accept(NodeVisitor nodeVisitor) {
-	}
-
 	int line() {
 		return statements != null ? statements.line() : 0;
+	}
+
+	public void accept(NodeVisitor nodeVisitor) {
 	}
 }

@@ -7,12 +7,16 @@ class PrimaryExpression extends Primary {
 
 	PrimaryExpression(Expression expression) {
 		this.expression = expression;
-	}
-
-	public void accept(NodeVisitor nodeVisitor) {
+		expression.leaveResultOnStack();
 	}
 
 	int line() {
 		return expression != null ? expression.line() : 0;
+	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this, line());
+		if (expression != null)
+			expression.accept(nodeVisitor);
 	}
 }

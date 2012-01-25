@@ -69,6 +69,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 		temporariesRegistry.put(value, temporariesIndex++);
 	}
 
+	public void visit(PrimaryExpression primaryExpression, int line) {
+	}
+
 	public void visitBegin(SimpleExpression simpleExpression) {
 	}
 

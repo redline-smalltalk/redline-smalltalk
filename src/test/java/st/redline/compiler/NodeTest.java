@@ -21,6 +21,23 @@ public class NodeTest {
 	}
 
 	@Test
+	public void primaryExpressionConstructionShouldLeaveResultOnStack() {
+		Expression expression = mock(Expression.class);
+		new PrimaryExpression(expression);
+		verify(expression).leaveResultOnStack();
+	}
+
+	@Test
+	public void primaryExpressionConstructionNodeShouldBeVisitable() {
+		Expression expression = mock(Expression.class);
+		when(expression.line()).thenReturn(32);
+		PrimaryExpression primaryExpression = new PrimaryExpression(expression);
+		primaryExpression.accept(visitor);
+		verify(visitor).visit(primaryExpression, 32);
+		verify(expression).accept(visitor);
+	}
+
+	@Test
 	public void numberNodeShouldBeVisitable() {
 		Number number = new Number(null, null, null, "123", 2, "45", null, null, null);
 		number.accept(visitor);
