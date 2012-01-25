@@ -93,6 +93,12 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(UnaryExpression unaryExpression) {
 	}
 
+	public void visitBegin(AssignmentExpression assignmentExpression) {
+	}
+
+	public void visitEnd(AssignmentExpression assignmentExpression) {
+	}
+
 	public void visit(Identifier identifier, String value, int line) {
 	}
 

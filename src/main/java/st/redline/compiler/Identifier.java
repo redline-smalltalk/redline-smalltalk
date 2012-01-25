@@ -7,6 +7,7 @@ import java.util.Map;
 class Identifier extends ValuePrimary {
 
 	static final Map<String, ReservedWord> RESERVED_WORDS = new HashMap<String, ReservedWord>();
+	private boolean onLoadSideOfExpression;
 
 	static {
 		RESERVED_WORDS.put("self", new Self());
@@ -19,6 +20,11 @@ class Identifier extends ValuePrimary {
 
 	Identifier(String value, int line) {
 		super(value, line);
+		this.onLoadSideOfExpression = true;
+	}
+
+	void onStoreSideOfExpression() {
+		onLoadSideOfExpression = false;
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {

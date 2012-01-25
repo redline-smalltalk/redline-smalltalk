@@ -22,6 +22,35 @@ public class NodeTest {
 	}
 
 	@Test
+	public void answerStatementNodeConstructionShouldTellExpressionToLeaveResultOnStack() {
+		SimpleExpression simpleExpression = mock(SimpleExpression.class);
+		new AnswerStatement(42, simpleExpression);
+		verify(simpleExpression).leaveResultOnStack();
+	}
+
+	@Test
+	public void answerStatementNodeShouldBeVisitable() {
+		SimpleExpression simpleExpression = mock(SimpleExpression.class);
+		AnswerStatement answerStatement = new AnswerStatement(42, simpleExpression);
+		answerStatement.accept(visitor);
+		verify(visitor).visitBegin(answerStatement);
+		verify(simpleExpression).accept(visitor);
+		verify(visitor).visitEnd(answerStatement);
+	}
+
+	@Test
+	public void assignmentExpressionNodeShouldBeVisitable() {
+		Identifier identifier = mock(Identifier.class);
+		SimpleExpression simpleExpression = mock(SimpleExpression.class);
+		AssignmentExpression assignmentExpression = new AssignmentExpression(identifier, simpleExpression);
+		assignmentExpression.accept(visitor);
+		verify(visitor).visitBegin(assignmentExpression);
+		verify(identifier).accept(visitor);
+		verify(simpleExpression).accept(visitor);
+		verify(visitor).visitEnd(assignmentExpression);
+	}
+
+	@Test
 	public void unaryExpressionNodeShouldBeVisitable() {
 		UnarySelector unarySelector = mock(UnarySelector.class);
 		MessageExpression messageExpression = mock(MessageExpression.class);

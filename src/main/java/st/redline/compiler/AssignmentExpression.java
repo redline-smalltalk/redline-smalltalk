@@ -3,18 +3,18 @@ package st.redline.compiler;
 
 class AssignmentExpression implements Expression {
 
-	private final String variableName;
-	private final int line;
+	private final Identifier identifier;
 	private final Expression expression;
 
-	AssignmentExpression(String variableName, int line, Expression expression) {
-		this.variableName = variableName;
-		this.line = line;
+	AssignmentExpression(Identifier identifier, Expression expression) {
+		this.identifier = identifier;
+		this.identifier.onStoreSideOfExpression();
 		this.expression = expression;
+		this.expression.leaveResultOnStack();
 	}
 
 	String variableName() {
-		return variableName;
+		return identifier.value();
 	}
 
 	Expression expression() {
@@ -22,9 +22,23 @@ class AssignmentExpression implements Expression {
 	}
 
 	public int line() {
-		return line;
+		return identifier.line();
+	}
+
+	public void leaveResultOnStack() {
+		expression.duplicateResultOnStack();
+	}
+
+	public void duplicateResultOnStack() {
+		throw new IllegalStateException("Assignment asked to duplicate stack top!");
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visitBegin(this);
+		if (identifier != null)
+			identifier.accept(nodeVisitor);
+		if (expression != null)
+			expression.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this);
 	}
 }

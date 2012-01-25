@@ -45,7 +45,7 @@ non_empty_statements returns [Statements statements]
   ;
 
 expression returns [Expression expression]
-  :  WHITESPACE? IDENTIFIER WHITESPACE? ':=' e=expression {expression = new AssignmentExpression($IDENTIFIER.text, $IDENTIFIER.line, $e.expression);}
+  :  WHITESPACE? IDENTIFIER WHITESPACE? ':=' e=expression {expression = new AssignmentExpression(new Identifier($IDENTIFIER.text, $IDENTIFIER.line), $e.expression);}
   | simple_expression {expression = $simple_expression.simpleExpression;}
   ;
 

@@ -8,9 +8,17 @@ class AnswerStatement extends Statements {
 	AnswerStatement(int line, Expression expression) {
 		super(expression, null);
 		this.line = line;
+		expression.leaveResultOnStack();
 	}
 
 	public int line() {
 		return line;
+	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visitBegin(this);
+		if (expression() != null)
+			expression().accept(nodeVisitor);
+		nodeVisitor.visitEnd(this);
 	}
 }

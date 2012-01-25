@@ -14,6 +14,8 @@ interface NodeVisitor {
 	void visitEnd(Cascade cascade);
 	void visitBegin(UnaryExpression unaryExpression);
 	void visitEnd(UnaryExpression unaryExpression);
+	void visitBegin(AssignmentExpression assignmentExpression);
+	void visitEnd(AssignmentExpression assignmentExpression);
 	void visit(Temporary temporary, String value, int line);
 	void visit(Identifier identifier, String value, int line);
 	void visit(Self self, int line);

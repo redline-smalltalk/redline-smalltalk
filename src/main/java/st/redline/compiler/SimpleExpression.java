@@ -25,15 +25,15 @@ public class SimpleExpression implements Expression {
 		return resultLeftOnStack;
 	}
 
-	void dontLeaveResultOnStack() {
-		resultLeftOnStack = false;
+	public void leaveResultOnStack() {
+		resultLeftOnStack = true;
 	}
 
 	boolean isResultDuplicatedOnStack() {
 		return duplicateResultOnStack;
 	}
 
-	void duplicateResultOnStack() {
+	public void duplicateResultOnStack() {
 		duplicateResultOnStack = true;
 	}
 

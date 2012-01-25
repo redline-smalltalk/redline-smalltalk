@@ -23,6 +23,14 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfAssignmentExpressionNode() {
+		AssignmentExpression assignmentExpression = new AssignmentExpression(mock(Identifier.class), mock(Expression.class));
+		assignmentExpression.accept(analyser);
+		verify(delegate).visitBegin(assignmentExpression);
+		verify(delegate).visitEnd(assignmentExpression);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfUnaryExpressionNode() {
 		UnaryExpression unaryExpression = new UnaryExpression();
 		unaryExpression.accept(analyser);
