@@ -150,11 +150,16 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(UnarySelector unarySelector, String selector, int line) {
-		writer.visitLine(line);
-		writer.invokeObjectPerform(selector, 0);
+		invokeObjectPerform(selector, 0, line);
 	}
 
 	public void visit(BinarySelector binarySelector, String selector, int line) {
+		invokeObjectPerform(selector, 1, line);
+	}
+
+	void invokeObjectPerform(String selector, int argumentCount, int line) {
+		writer.visitLine(line);
+		writer.invokeObjectPerform(selector, argumentCount);
 	}
 
 	void pushPrimObjectField(String field, int line) {
