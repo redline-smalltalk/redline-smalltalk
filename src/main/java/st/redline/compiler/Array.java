@@ -6,14 +6,18 @@ import java.util.ArrayList;
 class Array extends Primary implements ArrayElement {
 
 	private final ArrayList<ArrayElement> elements;
+	private int index;
+	private int elementIndex = 0;
 
 	Array() {
 		elements = new ArrayList<ArrayElement>();
 	}
 
 	void add(ArrayElement arrayElement) {
-		if (arrayElement != null)
+		if (arrayElement != null) {
+			arrayElement.index(++elementIndex);
 			elements.add(arrayElement);
+		}
 	}
 
 	int size() {
@@ -22,6 +26,14 @@ class Array extends Primary implements ArrayElement {
 
 	ArrayElement get(int index) {
 		return elements.get(index);
+	}
+
+	public int index() {
+		return index;
+	}
+
+	public void index(int index) {
+		this.index = index;
 	}
 
 	public String value() {
@@ -33,5 +45,9 @@ class Array extends Primary implements ArrayElement {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visitBegin(this);
+		for (ArrayElement arrayElement : elements)
+			arrayElement.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this);
 	}
 }

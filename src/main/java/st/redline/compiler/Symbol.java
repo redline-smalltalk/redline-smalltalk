@@ -3,8 +3,18 @@ package st.redline.compiler;
 
 class Symbol extends ValuePrimary implements ArrayElement {
 
+	private int index;
+
 	Symbol() {
 		super(null, 0);
+	}
+
+	public int index() {
+		return index;
+	}
+
+	public void index(int index) {
+		this.index = index;
 	}
 
 	void valueAndLine(String value, int line) {

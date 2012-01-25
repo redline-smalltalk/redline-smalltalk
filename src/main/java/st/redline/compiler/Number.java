@@ -5,6 +5,7 @@ class Number extends Primary implements ArrayElement {
 
 	private final int line;
 	private final String value;
+	private int index;
 
 	Number(String d1, String r, String m1, String d2, int line, String d3, String e, String m2, String d4) {
 		this.line = line;
@@ -28,6 +29,14 @@ class Number extends Primary implements ArrayElement {
 		if (d4 != null)
 			number.append(d4);
 		value = number.toString();
+	}
+
+	public int index() {
+		return index;
+	}
+
+	public void index(int index) {
+		this.index = index;
 	}
 
 	public String value() {

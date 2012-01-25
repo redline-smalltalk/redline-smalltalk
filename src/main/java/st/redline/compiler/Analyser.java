@@ -85,6 +85,14 @@ public class Analyser implements NodeVisitor {
 		delegate.visitEnd(assignmentExpression);
 	}
 
+	public void visitBegin(Array array) {
+		delegate.visitBegin(array);
+	}
+
+	public void visitEnd(Array array) {
+		delegate.visitEnd(array);
+	}
+
 	public void visit(Identifier identifier, String value, int line) {
 		delegate.visit(identifier, value, line);
 	}

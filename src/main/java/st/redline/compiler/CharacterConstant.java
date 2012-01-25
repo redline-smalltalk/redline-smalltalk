@@ -3,8 +3,18 @@ package st.redline.compiler;
 
 class CharacterConstant extends ValuePrimary implements ArrayElement {
 
+	private int index;
+
 	CharacterConstant(String value, int line) {
 		super(value, line);
+	}
+
+	public int index() {
+		return index;
+	}
+
+	public void index(int index) {
+		this.index = index;
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {

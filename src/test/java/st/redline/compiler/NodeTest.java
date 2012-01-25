@@ -22,6 +22,17 @@ public class NodeTest {
 	}
 
 	@Test
+	public void arrayNodeShouldBeVisitable() {
+		ArrayElement arrayElement = mock(ArrayElement.class);
+		Array array = new Array();
+		array.add(arrayElement);
+		array.accept(visitor);
+		verify(visitor).visitBegin(array);
+		verify(arrayElement).accept(visitor);
+		verify(visitor).visitEnd(array);
+	}
+
+	@Test
 	public void answerStatementNodeConstructionShouldTellExpressionToLeaveResultOnStack() {
 		SimpleExpression simpleExpression = mock(SimpleExpression.class);
 		new AnswerStatement(42, simpleExpression);

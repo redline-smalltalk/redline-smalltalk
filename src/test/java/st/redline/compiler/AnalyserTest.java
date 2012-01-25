@@ -23,6 +23,14 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfArrayNode() {
+		Array array = new Array();
+		array.accept(analyser);
+		verify(delegate).visitBegin(array);
+		verify(delegate).visitEnd(array);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfAssignmentExpressionNode() {
 		AssignmentExpression assignmentExpression = new AssignmentExpression(mock(Identifier.class), mock(Expression.class));
 		assignmentExpression.accept(analyser);
