@@ -23,6 +23,14 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfBinaryObjectDescriptionNode() {
+		Primary primary = mock(Primary.class);
+		BinaryObjectDescription binaryObjectDescription = new BinaryObjectDescription(primary);
+		binaryObjectDescription.accept(analyser);
+		verify(delegate).visit(binaryObjectDescription);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfBinaryExpressionNode() {
 		BinaryExpression binaryExpression = new BinaryExpression();
 		binaryExpression.accept(analyser);

@@ -20,6 +20,7 @@ interface NodeVisitor {
 	void visitEnd(AssignmentExpression assignmentExpression);
 	void visitBegin(Array array);
 	void visitEnd(Array array);
+	void visit(BinaryObjectDescription binaryObjectDescription);
 	void visit(Temporary temporary, String value, int line);
 	void visit(Identifier identifier, String value, int line);
 	void visit(Self self, int line);

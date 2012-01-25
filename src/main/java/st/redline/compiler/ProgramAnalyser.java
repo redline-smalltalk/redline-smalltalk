@@ -111,6 +111,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(Array array) {
 	}
 
+	public void visit(BinaryObjectDescription binaryObjectDescription) {
+	}
+
 	public void visit(Identifier identifier, String value, int line) {
 	}
 

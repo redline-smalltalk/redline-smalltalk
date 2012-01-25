@@ -21,6 +21,41 @@ public class NodeTest {
 	}
 
 	@Test
+	public void binaryObjectDescriptionNodeShouldAddBinarySelectorAndUnaryObjectDescription() {
+		Primary primary = mock(Primary.class);
+		BinarySelector binarySelector = mock(BinarySelector.class);
+		UnaryObjectDescription unaryObjectDescription = mock(UnaryObjectDescription.class);
+		BinaryObjectDescription binaryObjectDescription = new BinaryObjectDescription(primary);
+		binaryObjectDescription.add(binarySelector, unaryObjectDescription);
+		assertEquals(binarySelector, binaryObjectDescription.binarySelectorUnaryObjectDescriptions().get(0).binarySelector());
+		assertEquals(unaryObjectDescription, binaryObjectDescription.binarySelectorUnaryObjectDescriptions().get(0).unaryObjectDescription());
+	}
+
+	@Test
+	public void binaryObjectDescriptionNodeShouldAddUnarySelectors() {
+		Primary primary = mock(Primary.class);
+		UnarySelector unarySelector = mock(UnarySelector.class);
+		BinaryObjectDescription binaryObjectDescription = new BinaryObjectDescription(primary);
+		binaryObjectDescription.add(unarySelector);
+		assertEquals(unarySelector, binaryObjectDescription.unarySelectors().get(0));
+	}
+
+	@Test
+	public void binaryObjectDescriptionNodeShouldBeVisitable() {
+		Primary primary = mock(Primary.class);
+		UnarySelector unarySelector = mock(UnarySelector.class);
+		BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription = mock(BinarySelectorUnaryObjectDescription.class);
+		BinaryObjectDescription binaryObjectDescription = new BinaryObjectDescription(primary);
+		binaryObjectDescription.add(unarySelector);
+		binaryObjectDescription.binarySelectorUnaryObjectDescriptions().add(binarySelectorUnaryObjectDescription);
+		binaryObjectDescription.accept(visitor);
+		verify(visitor).visit(binaryObjectDescription);
+		verify(primary).accept(visitor);
+		verify(unarySelector).accept(visitor);
+		verify(binarySelectorUnaryObjectDescription).accept(visitor);
+	}
+
+	@Test
 	public void binaryExpressionNodeShouldBeVisitable() {
 		BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription = mock(BinarySelectorUnaryObjectDescription.class);
 		KeywordExpression keywordExpression = mock(KeywordExpression.class);

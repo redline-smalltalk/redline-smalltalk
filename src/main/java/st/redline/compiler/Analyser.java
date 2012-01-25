@@ -101,6 +101,10 @@ public class Analyser implements NodeVisitor {
 		delegate.visitEnd(array);
 	}
 
+	public void visit(BinaryObjectDescription binaryObjectDescription) {
+		delegate.visit(binaryObjectDescription);
+	}
+
 	public void visit(Identifier identifier, String value, int line) {
 		delegate.visit(identifier, value, line);
 	}
