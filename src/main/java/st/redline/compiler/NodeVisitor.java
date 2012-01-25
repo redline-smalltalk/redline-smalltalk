@@ -24,6 +24,8 @@ interface NodeVisitor {
 	void visitEnd(BinarySelectorMessageElement binarySelectorMessageElement, String selector, int line);
 	void visitBegin(Block block, int line);
 	void visitEnd(Block block, int line);
+	void visitBegin(BlockArguments blockArguments, int argumentCount);
+	void visitEnd(BlockArguments blockArguments, int argumentCount);
 	void visit(BinaryObjectDescription binaryObjectDescription);
 	void visit(Temporary temporary, String value, int line);
 	void visit(Identifier identifier, String value, int line);

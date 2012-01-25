@@ -4,6 +4,9 @@ package st.redline.compiler;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -20,6 +23,17 @@ public class AnalyserTest {
 		analyser = new Analyser(CLASS_NAME, PACKAGE_NAME, false);
 		delegate = mock(ProgramAnalyser.class);
 		analyser.currentDelegate(delegate);
+	}
+
+	@Test
+	public void shouldDelegateVisitOfBlockArgumentsNode() {
+		BlockArgument blockArgument = mock(BlockArgument.class);
+		List<BlockArgument> blockArgumentList = new ArrayList<BlockArgument>();
+		blockArgumentList.add(blockArgument);
+		BlockArguments blockArguments = new BlockArguments(blockArgumentList);
+		blockArguments.accept(analyser);
+		verify(delegate).visitBegin(blockArguments, 1);
+		verify(delegate).visitEnd(blockArguments, 1);
 	}
 
 	@Test

@@ -123,6 +123,12 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(Block block, int line) {
 	}
 
+	public void visitBegin(BlockArguments blockArguments, int argumentCount) {
+	}
+
+	public void visitEnd(BlockArguments blockArguments, int argumentCount) {
+	}
+
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
 	}
 

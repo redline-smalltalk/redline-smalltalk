@@ -21,6 +21,18 @@ public class NodeTest {
 	}
 
 	@Test
+	public void blockArgumentsNodeShouldBeVisitable() {
+		BlockArgument blockArgument = mock(BlockArgument.class);
+		List<BlockArgument> blockArgumentsList = new ArrayList<BlockArgument>();
+		blockArgumentsList.add(blockArgument);
+		BlockArguments blockArguments = new BlockArguments(blockArgumentsList);
+		blockArguments.accept(visitor);
+		verify(visitor).visitBegin(blockArguments, 1);
+		verify(blockArgument).accept(visitor);
+		verify(visitor).visitEnd(blockArguments, 1);
+	}
+
+	@Test
 	public void blockArgumentNodeShouldBeVisitable() {
 		BlockArgument blockArgument = new BlockArgument("arg", 42);
 		blockArgument.accept(visitor);

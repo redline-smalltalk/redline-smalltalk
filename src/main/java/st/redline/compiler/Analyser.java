@@ -117,6 +117,14 @@ public class Analyser implements NodeVisitor {
 		delegate.visitEnd(block, line);
 	}
 
+	public void visitBegin(BlockArguments blockArguments, int argumentCount) {
+		delegate.visitBegin(blockArguments, argumentCount);
+	}
+
+	public void visitEnd(BlockArguments blockArguments, int argumentCount) {
+		delegate.visitEnd(blockArguments, argumentCount);
+	}
+
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
 		delegate.visit(binaryObjectDescription);
 	}
