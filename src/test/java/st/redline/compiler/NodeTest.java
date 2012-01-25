@@ -21,6 +21,16 @@ public class NodeTest {
 	}
 
 	@Test
+	public void binarySelectorUnaryObjectDescriptionNodeShouldBeVisitable() {
+		BinarySelector binarySelector = mock(BinarySelector.class);
+		UnaryObjectDescription unaryObjectDescription = mock(UnaryObjectDescription.class);
+		BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription = new BinarySelectorUnaryObjectDescription(binarySelector, unaryObjectDescription);
+		binarySelectorUnaryObjectDescription.accept(visitor);
+		verify(unaryObjectDescription).accept(visitor);
+		verify(binarySelector).accept(visitor);
+	}
+
+	@Test
 	public void binarySelectorMessageElementNodeShouldBeVisitable() {
 		BinarySelector binarySelector = new BinarySelector();
 		binarySelector.add("+", 32);
