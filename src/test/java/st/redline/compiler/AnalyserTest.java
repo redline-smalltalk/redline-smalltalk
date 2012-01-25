@@ -23,6 +23,14 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfBinaryExpressionNode() {
+		BinaryExpression binaryExpression = new BinaryExpression();
+		binaryExpression.accept(analyser);
+		verify(delegate).visitBegin(binaryExpression);
+		verify(delegate).visitEnd(binaryExpression);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfArrayConstantNode() {
 		ArrayConstant arrayConstant = new ArrayConstant(mock(Array.class),  42);
 		arrayConstant.accept(analyser);

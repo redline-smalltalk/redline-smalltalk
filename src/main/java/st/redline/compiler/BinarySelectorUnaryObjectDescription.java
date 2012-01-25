@@ -18,4 +18,7 @@ public class BinarySelectorUnaryObjectDescription {
 	UnaryObjectDescription unaryObjectDescription() {
 		return unaryObjectDescription;
 	}
+
+	public void accept(NodeVisitor nodeVisitor) {
+	}
 }

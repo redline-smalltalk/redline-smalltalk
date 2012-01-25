@@ -21,6 +21,30 @@ public class NodeTest {
 	}
 
 	@Test
+	public void binaryExpressionNodeShouldBeVisitable() {
+		BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription = mock(BinarySelectorUnaryObjectDescription.class);
+		KeywordExpression keywordExpression = mock(KeywordExpression.class);
+		BinaryExpression binaryExpression = new BinaryExpression();
+		binaryExpression.add(keywordExpression);
+		binaryExpression.binarySelectorUnaryObjectDescriptions().add(binarySelectorUnaryObjectDescription);
+		binaryExpression.accept(visitor);
+		verify(visitor).visitBegin(binaryExpression);
+		verify(keywordExpression).accept(visitor);
+		verify(binarySelectorUnaryObjectDescription).accept(visitor);
+		verify(visitor).visitEnd(binaryExpression);
+	}
+
+	@Test
+	public void binaryExpressionNodeShouldAddBinarySelectorAndUnaryObjectDescription() {
+		BinarySelector binarySelector = mock(BinarySelector.class);
+		UnaryObjectDescription unaryObjectDescription = mock(UnaryObjectDescription.class);
+		BinaryExpression binaryExpression = new BinaryExpression();
+		binaryExpression.add(binarySelector, unaryObjectDescription);
+		assertEquals(binarySelector, binaryExpression.binarySelectorUnaryObjectDescriptions().get(0).binarySelector());
+		assertEquals(unaryObjectDescription, binaryExpression.binarySelectorUnaryObjectDescriptions().get(0).unaryObjectDescription());
+	}
+
+	@Test
 	public void arrayConstantNodeShouldBeVisitable() {
 		Array array = mock(Array.class);
 		ArrayConstant arrayConstant = new ArrayConstant(array, 42);

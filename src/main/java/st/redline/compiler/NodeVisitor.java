@@ -14,6 +14,8 @@ interface NodeVisitor {
 	void visitEnd(Cascade cascade);
 	void visitBegin(UnaryExpression unaryExpression);
 	void visitEnd(UnaryExpression unaryExpression);
+	void visitBegin(BinaryExpression binaryExpression);
+	void visitEnd(BinaryExpression binaryExpression);
 	void visitBegin(AssignmentExpression assignmentExpression);
 	void visitEnd(AssignmentExpression assignmentExpression);
 	void visitBegin(Array array);
