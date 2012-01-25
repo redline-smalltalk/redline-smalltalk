@@ -172,4 +172,8 @@ public class Analyser implements NodeVisitor {
 	public void visit(BinarySelector binarySelector, String selector, int line) {
 		delegate.visit(binarySelector, selector, line);
 	}
+
+	public void visit(CharacterConstant characterConstant, String value, int index, int line) {
+		delegate.visit(characterConstant, value, index, line);
+	}
 }

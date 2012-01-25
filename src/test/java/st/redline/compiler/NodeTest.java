@@ -21,6 +21,14 @@ public class NodeTest {
 	}
 
 	@Test
+	public void characterConstantNodeShouldBeVisitable() {
+		CharacterConstant characterConstant = new CharacterConstant("a", 42);
+		characterConstant.index(2);
+		characterConstant.accept(visitor);
+		verify(visitor).visit(characterConstant, "a", 2, 42);
+	}
+
+	@Test
 	public void blockArgumentsNodeShouldBeVisitable() {
 		BlockArgument blockArgument = mock(BlockArgument.class);
 		List<BlockArgument> blockArgumentsList = new ArrayList<BlockArgument>();

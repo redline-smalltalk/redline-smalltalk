@@ -26,6 +26,14 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfCharacterConstantNode() {
+		CharacterConstant characterConstant = new CharacterConstant("z", 42);
+		characterConstant.index(2);
+		characterConstant.accept(analyser);
+		verify(delegate).visit(characterConstant, "z", 2, 42);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfBlockArgumentsNode() {
 		BlockArgument blockArgument = mock(BlockArgument.class);
 		List<BlockArgument> blockArgumentList = new ArrayList<BlockArgument>();
