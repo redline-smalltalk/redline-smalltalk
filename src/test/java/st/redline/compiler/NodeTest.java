@@ -39,14 +39,23 @@ public class NodeTest {
 	}
 
 	@Test
+	public void assignmentExpressionNodeConstructionShouldTellIdentifierItsOnLoadSideOfExpressionAndExpressionToLeaveResultOnStack() {
+		Identifier identifier = mock(Identifier.class);
+		SimpleExpression simpleExpression = mock(SimpleExpression.class);
+		new AssignmentExpression(identifier, simpleExpression);
+		verify(identifier).onStoreSideOfExpression();
+		verify(simpleExpression).leaveResultOnStack();
+	}
+
+	@Test
 	public void assignmentExpressionNodeShouldBeVisitable() {
 		Identifier identifier = mock(Identifier.class);
 		SimpleExpression simpleExpression = mock(SimpleExpression.class);
 		AssignmentExpression assignmentExpression = new AssignmentExpression(identifier, simpleExpression);
 		assignmentExpression.accept(visitor);
 		verify(visitor).visitBegin(assignmentExpression);
-		verify(identifier).accept(visitor);
 		verify(simpleExpression).accept(visitor);
+		verify(identifier).accept(visitor);
 		verify(visitor).visitEnd(assignmentExpression);
 	}
 

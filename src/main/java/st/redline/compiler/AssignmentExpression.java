@@ -35,10 +35,12 @@ class AssignmentExpression implements Expression {
 
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visitBegin(this);
+		// Note: The order of visiting below is important. Expression before variable we store result into.
+		if (expression != null) {
+			expression.accept(nodeVisitor);
+		}
 		if (identifier != null)
 			identifier.accept(nodeVisitor);
-		if (expression != null)
-			expression.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this);
 	}
 }
