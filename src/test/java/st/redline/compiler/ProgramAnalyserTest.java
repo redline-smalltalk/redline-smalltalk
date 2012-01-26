@@ -24,6 +24,15 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokePerformWhenVisitingUnarySelectorMessageElementNode() {
+		UnarySelector unarySelector = new UnarySelector("yourself", 42);
+		UnarySelectorMessageElement unarySelectorMessageElement = new UnarySelectorMessageElement(unarySelector);
+		analyser.visit(unarySelectorMessageElement, "yourself", 42);
+		verify(writer).visitLine(42);
+		verify(writer).invokeObjectPerform("yourself", 0);
+	}
+
+	@Test
 	public void shouldInvokePerformWhenVisitingUnarySelectorNode() {
 		UnarySelector unarySelector = new UnarySelector("yourself", 42);
 		analyser.visit(unarySelector, "yourself", 42);

@@ -208,7 +208,8 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(SymbolConstant symbolConstant, String value, int line) {
 	}
 
-	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
+	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String selector, int line) {
+		invokeObjectPerform(selector, 0, line);
 	}
 
 	void invokeObjectPerform(String selector, int argumentCount, int line) {
