@@ -153,6 +153,10 @@ public class Analyser implements NodeVisitor {
 		delegate.visit(binaryObjectDescription);
 	}
 
+	public void visit(UnaryObjectDescription unaryObjectDescription) {
+		delegate.visit(unaryObjectDescription);
+	}
+
 	public void visit(Identifier identifier, String value, int line) {
 		delegate.visit(identifier, value, line);
 	}
@@ -211,5 +215,9 @@ public class Analyser implements NodeVisitor {
 
 	public void visit(Symbol symbol, String value, int index, int line) {
 		delegate.visit(symbol, value, index, line);
+	}
+
+	public void visit(SymbolConstant symbolConstant, String value, int line) {
+		//To change body of implemented methods use File | Settings | File Templates.
 	}
 }

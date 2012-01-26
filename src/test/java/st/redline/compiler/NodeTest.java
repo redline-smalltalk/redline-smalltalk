@@ -21,6 +21,18 @@ public class NodeTest {
 	}
 
 	@Test
+	public void unaryObjectDescriptionNodeShouldBeVisitable() {
+		Primary primary = mock(Primary.class);
+		UnarySelector unarySelector = mock(UnarySelector.class);
+		UnaryObjectDescription unaryObjectDescription = new UnaryObjectDescription(primary);
+		unaryObjectDescription.add(unarySelector);
+		unaryObjectDescription.accept(visitor);
+		verify(visitor).visit(unaryObjectDescription);
+		verify(primary).accept(visitor);
+		verify(unarySelector).accept(visitor);
+	}
+
+	@Test
 	public void symbolConstantNodeShouldBeVisitable() {
 		SymbolConstant symbolConstant = new SymbolConstant("sym", 32);
 		symbolConstant.accept(visitor);

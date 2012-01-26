@@ -26,6 +26,14 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfUnaryObjectDescriptionNode() {
+		Primary primary = mock(Primary.class);
+		UnaryObjectDescription unaryObjectDescription = new UnaryObjectDescription(primary);
+		unaryObjectDescription.accept(analyser);
+		verify(delegate).visit(unaryObjectDescription);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfSymbolNode() {
 		Symbol symbol = new Symbol();
 		symbol.index(2);

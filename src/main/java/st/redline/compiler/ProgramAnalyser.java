@@ -150,6 +150,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
 	}
 
+	public void visit(UnaryObjectDescription unaryObjectDescription) {
+	}
+
 	public void visit(Identifier identifier, String value, int line) {
 	}
 
@@ -200,6 +203,10 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(Symbol symbol, String value, int index, int line) {
+	}
+
+	public void visit(SymbolConstant symbolConstant, String value, int line) {
+		//To change body of implemented methods use File | Settings | File Templates.
 	}
 
 	void invokeObjectPerform(String selector, int argumentCount, int line) {
