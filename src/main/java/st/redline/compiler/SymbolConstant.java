@@ -8,5 +8,6 @@ class SymbolConstant extends ValuePrimary {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this, value(), line());
 	}
 }

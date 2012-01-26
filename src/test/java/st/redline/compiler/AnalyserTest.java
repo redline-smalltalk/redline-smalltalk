@@ -26,6 +26,15 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfSymbolNode() {
+		Symbol symbol = new Symbol();
+		symbol.index(2);
+		symbol.valueAndLine("sym", 42);
+		symbol.accept(analyser);
+		verify(delegate).visit(symbol, "sym", 2, 42);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfStringConstantNode() {
 		StringConstant stringConstant = new StringConstant("'foo'", 42);
 		stringConstant.index(2);

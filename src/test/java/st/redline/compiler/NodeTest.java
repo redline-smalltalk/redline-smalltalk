@@ -21,6 +21,22 @@ public class NodeTest {
 	}
 
 	@Test
+	public void symbolConstantNodeShouldBeVisitable() {
+		SymbolConstant symbolConstant = new SymbolConstant("sym", 32);
+		symbolConstant.accept(visitor);
+		verify(visitor).visit(symbolConstant, "sym", 32);
+	}
+
+	@Test
+	public void symbolNodeShouldBeVisitable() {
+		Symbol symbol = new Symbol();
+		symbol.index(2);
+		symbol.valueAndLine("sym", 42);
+		symbol.accept(visitor);
+		verify(visitor).visit(symbol, "sym", 2, 42);
+	}
+
+	@Test
 	public void stringConstantNodeShouldBeVisitable() {
 		StringConstant stringConstant = new StringConstant("'str'", 42);
 		stringConstant.index(2);

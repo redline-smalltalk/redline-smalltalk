@@ -32,5 +32,6 @@ class Symbol extends ValuePrimary implements ArrayElement {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this, value(), index, line());
 	}
 }
