@@ -3,6 +3,4 @@ package st.redline.compiler;
 
 interface AnalyserDelegate extends NodeVisitor {
 	byte[] classBytes();
-	void visitBegin(Program program);
-	void visitEnd(Program program);
 }

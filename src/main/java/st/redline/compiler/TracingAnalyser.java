@@ -1,33 +1,11 @@
 package st.redline.compiler;
 
-import java.util.Stack;
+public class TracingAnalyser implements AnalyserDelegate {
 
-public class Analyser implements NodeVisitor {
+	private final AnalyserDelegate delegate;
 
-	private final Stack<AnalyserDelegate> delegates;
-	private AnalyserDelegate delegate;
-
-	public Analyser(String className, String packageName, boolean verbose) {
-		delegates = new Stack<AnalyserDelegate>();
-		currentDelegate(verbose ? verboseDelegate(className, packageName)
-								: normalDelegate(className, packageName, verbose));
-	}
-
-	AnalyserDelegate normalDelegate(String className, String packageName, boolean verbose) {
-		return new ProgramAnalyser(className, packageName, verbose);
-	}
-
-	AnalyserDelegate verboseDelegate(String className, String packageName) {
-		return new TracingAnalyser(normalDelegate(className, packageName, true));
-	}
-
-	void currentDelegate(AnalyserDelegate analyserDelegate) {
-		delegate = analyserDelegate;
-		delegates.push(delegate);
-	}
-
-	AnalyserDelegate currentDelegate() {
-		return delegates.peek();
+	public TracingAnalyser(AnalyserDelegate delegate) {
+		this.delegate = delegate;
 	}
 
 	public byte[] classBytes() {

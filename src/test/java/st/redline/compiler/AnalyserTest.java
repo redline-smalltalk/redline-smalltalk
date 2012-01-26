@@ -224,6 +224,11 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDefaultToTracingAnalyserDelegateWhenVerbose() {
+		assertTrue(new Analyser(CLASS_NAME, PACKAGE_NAME, true).currentDelegate() instanceof TracingAnalyser);
+	}
+
+	@Test
 	public void shouldDelegateGetOfClassBytes() {
 		analyser.classBytes();
 		verify(delegate).classBytes();
