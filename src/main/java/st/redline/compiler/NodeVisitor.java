@@ -51,4 +51,5 @@ interface NodeVisitor {
 	void visit(StringConstant stringConstant, String value, int index, int line);
 	void visit(Symbol symbol, String value, int index, int line);
 	void visit(SymbolConstant symbolConstant, String value, int line);
+	void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line);
 }

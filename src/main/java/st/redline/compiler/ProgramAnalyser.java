@@ -206,7 +206,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(SymbolConstant symbolConstant, String value, int line) {
-		//To change body of implemented methods use File | Settings | File Templates.
+	}
+
+	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
 	}
 
 	void invokeObjectPerform(String selector, int argumentCount, int line) {

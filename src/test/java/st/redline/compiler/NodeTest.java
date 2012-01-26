@@ -21,6 +21,16 @@ public class NodeTest {
 	}
 
 	@Test
+	public void unarySelectorMessageElementNodeShouldBeVisitable() {
+		UnarySelector unarySelector = mock(UnarySelector.class);
+		when(unarySelector.value()).thenReturn("yourself");
+		when(unarySelector.line()).thenReturn(32);
+		UnarySelectorMessageElement unarySelectorMessageElement = new UnarySelectorMessageElement(unarySelector);
+		unarySelectorMessageElement.accept(visitor);
+		verify(visitor).visit(unarySelectorMessageElement, "yourself", 32);
+	}
+
+	@Test
 	public void unaryObjectDescriptionNodeShouldBeVisitable() {
 		Primary primary = mock(Primary.class);
 		UnarySelector unarySelector = mock(UnarySelector.class);

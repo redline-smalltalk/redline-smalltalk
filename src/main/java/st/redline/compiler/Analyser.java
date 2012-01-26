@@ -218,6 +218,10 @@ public class Analyser implements NodeVisitor {
 	}
 
 	public void visit(SymbolConstant symbolConstant, String value, int line) {
-		//To change body of implemented methods use File | Settings | File Templates.
+		delegate.visit(symbolConstant, value, line);
+	}
+
+	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
+		delegate.visit(unarySelectorMessageElement, value, line);
 	}
 }

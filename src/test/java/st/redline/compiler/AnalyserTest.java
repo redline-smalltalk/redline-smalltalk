@@ -26,6 +26,16 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitOfUnarySelectorMessageElementNode() {
+		UnarySelector unarySelector = mock(UnarySelector.class);
+		when(unarySelector.value()).thenReturn("yourself");
+		when(unarySelector.line()).thenReturn(32);
+		UnarySelectorMessageElement unarySelectorMessageElement = new UnarySelectorMessageElement(unarySelector);
+		unarySelectorMessageElement.accept(analyser);
+		verify(delegate).visit(unarySelectorMessageElement, "yourself", 32);
+	}
+
+	@Test
 	public void shouldDelegateVisitOfUnaryObjectDescriptionNode() {
 		Primary primary = mock(Primary.class);
 		UnaryObjectDescription unaryObjectDescription = new UnaryObjectDescription(primary);
@@ -51,7 +61,7 @@ public class AnalyserTest {
 	}
 
 	@Test
-	public void shouldDelegateVisiitOfPrimaryStatementsNode() {
+	public void shouldDelegateVisitOfPrimaryStatementsNode() {
 		Statements statements = mock(Statements.class);
 		when(statements.line()).thenReturn(12);
 		PrimaryStatements primaryStatements = new PrimaryStatements(statements);
