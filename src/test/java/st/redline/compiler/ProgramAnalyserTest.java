@@ -24,6 +24,20 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokePerformWhenVisitEndsOfKeywordExpression() {
+		KeywordExpression keywordExpression = mock(KeywordExpression.class);
+		analyser.visitEnd(keywordExpression, "at:", 1, 3);
+		verify(writer).invokeObjectPerform("at:", 1);
+	}
+
+	@Test
+	public void shouldInvokePerformWhenVisitEndsOfKeywordMessageElementNode() {
+		KeywordMessageElement keywordMessageElement = mock(KeywordMessageElement.class);
+		analyser.visitEnd(keywordMessageElement, "at:put:", 2, 3);
+		verify(writer).invokeObjectPerform("at:put:", 2);
+	}
+
+	@Test
 	public void shouldInvokePerformWhenVisitingUnarySelectorMessageElementNode() {
 		UnarySelector unarySelector = new UnarySelector("yourself", 42);
 		UnarySelectorMessageElement unarySelectorMessageElement = new UnarySelectorMessageElement(unarySelector);
