@@ -24,6 +24,14 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokeVariableAtWhenVisitIdentifierOnLoadSideOfExpression() {
+		Identifier identifier = mock(Identifier.class);
+		when(identifier.isOnLoadSideOfExpression()).thenReturn(true);
+		analyser.visit(identifier, "var", 3);
+		verify(writer).invokeVariableAt("var", 3);
+	}
+
+	@Test
 	public void shouldInvokePerformWhenVisitEndsOfKeywordExpression() {
 		KeywordExpression keywordExpression = mock(KeywordExpression.class);
 		analyser.visitEnd(keywordExpression, "at:", 1, 3);

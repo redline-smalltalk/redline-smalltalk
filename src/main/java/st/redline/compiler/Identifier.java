@@ -27,6 +27,10 @@ class Identifier extends ValuePrimary {
 		onLoadSideOfExpression = false;
 	}
 
+	boolean isOnLoadSideOfExpression() {
+		return onLoadSideOfExpression;
+	}
+
 	public void accept(NodeVisitor nodeVisitor) {
 		ReservedWord reservedWord = RESERVED_WORDS.get(value());
 		if (reservedWord != null)

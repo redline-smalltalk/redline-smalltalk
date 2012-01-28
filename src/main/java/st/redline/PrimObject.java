@@ -8,7 +8,12 @@ package st.redline;
 // Typically you don't create instances of PrimObject directly, instead you ask
 // a PrimObjectClass for an instance of the class it represents by sending it the 'new' message.
 
+import java.util.Hashtable;
+import java.util.Map;
+
 public class PrimObject {
+
+	static final Map<String, PrimObject> classes = new Hashtable<String, PrimObject>();
 
 	static final PrimObject NIL = null;
 	static final PrimObject TRUE = null;
@@ -39,6 +44,14 @@ public class PrimObject {
 
 	public static void dump(Object object) {
 		System.out.println(object);
+	}
+
+	public PrimObject variableAt(String name) {
+		return resolveObject(name);
+	}
+
+	PrimObject resolveObject(String name) {
+		return null;
 	}
 
 	// NOTE: Having perform bundle arguments and call perform0 simplifies the call process in the compiler.

@@ -4,9 +4,29 @@ package st.redline;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class PrimObjectTest {
+
+	@Test
+	public void resolveObjectShould() {
+		// this ones next :)
+	}
+
+	@Test
+	public void variableAtShouldCallResolveObject() {
+		PrimObject primObject = new PrimObject();
+		PrimObject spy = spy(primObject);
+		spy.variableAt("Thing");
+		verify(spy).resolveObject("Thing");
+	}
+
+	@Test
+	public void shouldHaveClassesRegistry() {
+		assertNotNull(PrimObject.classes);
+	}
 
 	@Test
 	public void shouldAddSlotToAttributesForClass() {

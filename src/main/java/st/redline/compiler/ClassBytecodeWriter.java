@@ -144,6 +144,13 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "perform", SIGNATURES[argumentCount]);
 	}
 
+	void invokeVariableAt(String name, int line) {
+		visitLine(line);
+		pushReceiver();
+		pushLiteral(name);
+		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "variableAt", "(Ljava/lang/String;)Lst/redline/PrimObject;");
+	}
+
 	void pop() {
 		mv.visitInsn(POP);
 	}

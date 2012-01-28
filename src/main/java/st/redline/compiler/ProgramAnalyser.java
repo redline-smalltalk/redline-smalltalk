@@ -156,6 +156,8 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
+		if (identifier.isOnLoadSideOfExpression())
+			writer.invokeVariableAt(value, line);
 	}
 
 	public void visit(Number number, String value, int line) {
