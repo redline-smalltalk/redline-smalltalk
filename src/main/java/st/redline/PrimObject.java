@@ -51,6 +51,20 @@ public class PrimObject {
 	}
 
 	PrimObject resolveObject(String name) {
+		if (classes.containsKey(name))
+			return classes.get(name);
+		if (Character.isUpperCase(name.charAt(0))) {
+			String fullyQualifiedName = packageFor(name);
+			if (fullyQualifiedName != null)
+				return resolveObject(fullyQualifiedName);
+		}
+		return null;
+	}
+
+	String packageFor(String name) {
+		PrimObject cls = cls();
+		if (cls != null)
+			return cls.packageFor(name);
 		return null;
 	}
 

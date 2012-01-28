@@ -24,6 +24,10 @@ class PrimObjectClass extends PrimObject {
 		javaValue = new HashMap<String, PrimObject>();
 	}
 
+	String packageFor(String name) {
+		return null;
+	}
+
 	boolean includesSelector(String selector) {
 		return methods().containsKey(selector);
 	}

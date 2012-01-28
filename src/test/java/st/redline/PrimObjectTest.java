@@ -11,8 +11,30 @@ import static org.mockito.Mockito.*;
 public class PrimObjectTest {
 
 	@Test
-	public void resolveObjectShould() {
-		// this ones next :)
+	public void shouldDelegatePackageLookupToClass() {
+		PrimObject aClass = mock(PrimObject.class);
+		PrimObject primObject = new PrimObject();
+		primObject.cls(aClass);
+		primObject.packageFor("SomeClass");
+		verify(aClass).packageFor("SomeClass");
+	}
+
+	@Test
+	public void shouldLookupImportsForFullyQualifiedClassNameWhenResolvingObjects() {
+		PrimObject aClass = mock(PrimObject.class);
+		PrimObject primObject = new PrimObject();
+		PrimObject spy = spy(primObject);
+		when(spy.packageFor("Thing")).thenReturn("st.redline.Thing");
+		when(spy.resolveObject("st.redline.Thing")).thenReturn(aClass);
+		assertEquals(aClass, spy.resolveObject("Thing"));
+	}
+
+	@Test
+	public void resolveObjectShouldReturnClassFromClassesRegistryIfFound() {
+		PrimObject aClass = mock(PrimObject.class);
+		PrimObject.classes.put("Thing", aClass);
+		PrimObject primObject = new PrimObject();
+		assertEquals(aClass, primObject.resolveObject("Thing"));
 	}
 
 	@Test

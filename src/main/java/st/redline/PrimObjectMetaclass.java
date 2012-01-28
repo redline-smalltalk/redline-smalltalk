@@ -63,6 +63,10 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	void bootstrap() {
 	}
 
+	String packageFor(String name) {
+		return null;
+	}
+
 	protected PrimObject _sendMessages_(PrimObject receiver, PrimContext context) {
 		return this;
 	}
