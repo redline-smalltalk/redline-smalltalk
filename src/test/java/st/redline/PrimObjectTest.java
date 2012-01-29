@@ -11,6 +11,16 @@ import static org.mockito.Mockito.*;
 public class PrimObjectTest {
 
 	@Test
+	public void shouldRaiseRedlineExceptionWhenObjectCantBeResolved() {
+		try {
+			new PrimObject().resolveObject("Foo");
+		} catch (RedlineException e) {
+			assertTrue(e.getCause() instanceof ClassNotFoundException);
+			assertEquals("java.lang.ClassNotFoundException: Foo", e.getCause().toString());
+		}
+	}
+
+	@Test
 	public void shouldDelegatePackageLookupToClass() {
 		PrimObject aClass = mock(PrimObject.class);
 		PrimObject primObject = new PrimObject();
@@ -23,10 +33,13 @@ public class PrimObjectTest {
 	public void shouldLookupImportsForFullyQualifiedClassNameWhenResolvingObjects() {
 		PrimObject aClass = mock(PrimObject.class);
 		PrimObject primObject = new PrimObject();
-		PrimObject spy = spy(primObject);
-		when(spy.packageFor("Thing")).thenReturn("st.redline.Thing");
-		when(spy.resolveObject("st.redline.Thing")).thenReturn(aClass);
-		assertEquals(aClass, spy.resolveObject("Thing"));
+		when(aClass.packageFor("Thing")).thenReturn("st.redline.Thing");
+		primObject.cls(aClass);
+		try {
+			primObject.resolveObject("Thing");
+		} catch (RedlineException e) {
+			assertEquals("st.redline.RedlineException: java.lang.ClassNotFoundException: st.redline.Thing", e.toString());
+		}
 	}
 
 	@Test

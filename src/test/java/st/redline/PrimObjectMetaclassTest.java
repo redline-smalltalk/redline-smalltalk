@@ -2,10 +2,24 @@ package st.redline;
 
 import org.junit.Test;
 
+import java.util.Hashtable;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class PrimObjectMetaclassTest {
+
+	@Test
+	public void shouldLookInImportsMapWhenFindingPackageForClassName() {
+		Map<String, String> imports = mock(Map.class);
+		PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
+		metaclass.imports = imports;
+		metaclass.packageFor("ClassName");
+		verify(imports).get("ClassName");
+	}
 
 	@Test
 	public void shouldCreateMetaclassSubclass() {

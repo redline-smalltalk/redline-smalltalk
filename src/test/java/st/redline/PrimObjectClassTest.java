@@ -4,8 +4,19 @@ package st.redline;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class PrimObjectClassTest {
+
+	@Test
+	public void shouldDelegatePackageLookupToClass() {
+		PrimObject aClass = mock(PrimObject.class);
+		PrimObjectClass primObjectClass = new PrimObjectClass();
+		primObjectClass.cls(aClass);
+		primObjectClass.packageFor("SomeClass");
+		verify(aClass).packageFor("SomeClass");
+	}
 
 	@Test
 	public void shouldProvideAccessToSuperclass() {

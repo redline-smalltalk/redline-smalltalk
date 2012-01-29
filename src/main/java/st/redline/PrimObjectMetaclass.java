@@ -6,6 +6,9 @@ package st.redline;
 // Call basicSubclassOf: to get a subclass of Metaclass,
 // Call basicCreate:... to create the Metaclass' sole instance.
 
+import java.util.Hashtable;
+import java.util.Map;
+
 public class PrimObjectMetaclass extends PrimObjectClass {
 
 	static final PrimObjectMetaclass METACLASS = new PrimObjectMetaclass();
@@ -15,6 +18,8 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	static {
 		METACLASS.cls(null);
 	}
+
+	Map<String, String> imports;
 
 	public static PrimObjectMetaclass basicSubclassOf(PrimObjectMetaclass superMeta) {
 		PrimObjectMetaclass newMetaclass = new PrimObjectMetaclass();
@@ -64,6 +69,8 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	}
 
 	String packageFor(String name) {
+		if (imports != null)
+			return imports.get(name);
 		return null;
 	}
 

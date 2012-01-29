@@ -25,6 +25,9 @@ class PrimObjectClass extends PrimObject {
 	}
 
 	String packageFor(String name) {
+		PrimObject cls = cls();
+		if (cls != null)
+			cls.packageFor(name);
 		return null;
 	}
 

@@ -58,7 +58,27 @@ public class PrimObject {
 			if (fullyQualifiedName != null)
 				return resolveObject(fullyQualifiedName);
 		}
-		return null;
+		// It is expected the loading of an object results in the registering of
+		// a Smalltalk class in the class registry (classes).
+		PrimObject primObject = loadObject(name);
+		if (primObject != null) {
+			if (classes.containsKey(name))
+				return classes.get(name);
+			return primObject;
+		}
+		throw new IllegalStateException("Line should never be reached.");
+	}
+
+	PrimObject loadObject(String name) {
+		try {
+			return (PrimObject) Class.forName(name, true, classLoader()).newInstance();
+		} catch (Exception e) {
+			throw RedlineException.withCause(e);
+		}
+	}
+
+	ClassLoader classLoader() {
+		return Thread.currentThread().getContextClassLoader();
 	}
 
 	String packageFor(String name) {
