@@ -126,9 +126,9 @@ public abstract class AbstractPreProcLexer
 	 */
 	public String getOutput() {
 		if (haveMethods) {
-			sb.append("]\n");
+			sb.append("].\n");
 			sb.append(methodName);
-			sb.append(" initialize\n");
+			sb.append(" initialize.\n");
 		}
 		return sb.toString();
 	}

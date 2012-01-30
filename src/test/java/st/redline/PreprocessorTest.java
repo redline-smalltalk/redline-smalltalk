@@ -1,14 +1,15 @@
-package st.redline.compiler;
+package st.redline;
 
 import org.antlr.runtime.*;
 import org.junit.Test;
+import st.redline.compiler.PreProcLexer;
 
 import java.io.IOException;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
-public class PreProcessorTest {
+public class PreprocessorTest {
 
 	private PreProcLexer lexer;
 
@@ -38,17 +39,17 @@ public class PreProcessorTest {
 				"Test class atSelector: #initialize put: [\n" +
 				"  \"class method\"\n" +
 				"  ^ self.\n" +
-				"] Test atSelector: #yourself put: [\n" +
+				"]. Test atSelector: #yourself put: [\n" +
 				"  \"instance method\"\n" +
 				"  ^ self.\n" +
-				"] Test atSelector: #at:put: put: [ :key :value |\n" +
+				"]. Test atSelector: #at:put: put: [ :key :value |\n" +
 				"  \"keyword method\"\n" +
 				"  ^ self.\n" +
-				"] Test atSelector: #* put: [ :num |\n" +
+				"]. Test atSelector: #* put: [ :num |\n" +
 				"  \"binary selector method\"\n" +
 				"  ^ self.\n" +
-				"]\n" +
-				"Test initialize\n";
+				"].\n" +
+				"Test initialize.\n";
 		String result = preprocess(input);
 		assertEquals(expected, result);
 	}

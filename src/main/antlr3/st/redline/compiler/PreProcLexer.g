@@ -47,7 +47,7 @@ PREPROC
           |  v = ( '+'| '-')       // Only these are predicted.
             {
                 if (!firstMethod()) {
-                    sb.append("] ");   // DONT append this if this is first +/- seen.
+                    sb.append("]. ");   // DONT append this if this is first +/- seen.
                 }
                 sb.append(methodName);
 
