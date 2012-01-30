@@ -7,6 +7,8 @@ import org.antlr.runtime.RecognitionException;
 
 import st.redline.compiler.*;
 
+import java.util.List;
+
 public class Compiler {
 
 	private final SourceFile sourceFile;
@@ -41,10 +43,19 @@ public class Compiler {
 		SmalltalkLexer smalltalkLexer = lexorOn(sourceCode);
 		SmalltalkParser smalltalkParser = parserUsing(smalltalkLexer);
 		try {
+			if (!smalltalkLexer.getExceptions().isEmpty())
+				throw RedlineException.withMessage(messageFrom(smalltalkLexer.getExceptions()));
 			return smalltalkParser.program();
 		} catch (RecognitionException e) {
 			throw RedlineException.withCause(e);
 		}
+	}
+
+	private String messageFrom(List<RecognitionException> recognitionExceptions) {
+		StringBuffer messages = new StringBuffer();
+		for (RecognitionException recognitionException : recognitionExceptions)
+			messages.append(recognitionException.toString()).append("\n");
+		return messages.toString();
 	}
 
 	private SmalltalkParser parserUsing(SmalltalkLexer smalltalkLexer) {
