@@ -1,10 +1,10 @@
 " Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution "
 
-Object < #BlockClosure
+Object < #BlockClosure.
 
 - value
-     "Activate the receiver, a closure activation."
-     <primitive: 201>
+    "Activate the receiver, a closure activation."
+    <primitive: 201>
 
 - value: firstArg
     "Activate the receiver, a closure activation."
@@ -43,4 +43,3 @@ Object < #BlockClosure
 - whileTrue: aBlock
     "Evaluate the argument, aBlock, as long as the value of the receiver is true."
     <primitive: 210>
-

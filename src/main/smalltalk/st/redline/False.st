@@ -1,16 +1,16 @@
 " Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution "
 
-Boolean < #False
+Boolean < #False.
 
 - & alternativeObject 
-  "Evaluating conjunction -- answer false since receiver is false."
+    "Evaluating conjunction -- answer false since receiver is false."
 
-  ^self
+    ^ self
 
 - not
-  "Negation -- answer true since the receiver is false."
+    "Negation -- answer true since the receiver is false."
 
-  ^true
+    ^ true
 
 " TODO The vertical bar (|) operator produces a parse error and NPE: "
 " - | aBoolean "
@@ -19,40 +19,39 @@ Boolean < #False
 "  ^aBoolean"
   
 - and: alternativeBlock 
-  "Nonevaluating conjunction -- answer with false since the receiver is false."
+    "Nonevaluating conjunction -- answer with false since the receiver is false."
 
-  ^self
+    ^ self
 
 - ifFalse: alternativeBlock 
-  "Answer the value of alternativeBlock. Execution does not actually
-  reach here because the expression is compiled in-line."
+    "Answer the value of alternativeBlock. Execution does not actually
+    reach here because the expression is compiled in-line."
 
-  ^alternativeBlock value
+    ^ alternativeBlock value
 
 - ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock 
-  "Answer the value of falseAlternativeBlock. Execution does not
-  actually reach here because the expression is compiled in-line."
+    "Answer the value of falseAlternativeBlock. Execution does not
+    actually reach here because the expression is compiled in-line."
 
-  ^falseAlternativeBlock value
+    ^ falseAlternativeBlock value
 
 - ifTrue: alternativeBlock 
-  "Since the condition is false, answer the value of the false alternative, 
-  which is nil. Execution does not actually reach here because the
-  expression is compiled in-line."
+    "Since the condition is false, answer the value of the false alternative,
+    which is nil. Execution does not actually reach here because the
+    expression is compiled in-line."
 
-  ^nil
+    ^ nil
 
 - ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock 
-  "Answer the value of falseAlternativeBlock. Execution does not
-  actually reach here because the expression is compiled in-line."
+    "Answer the value of falseAlternativeBlock. Execution does not
+    actually reach here because the expression is compiled in-line."
 
-  ^falseAlternativeBlock value
+    ^ falseAlternativeBlock value
 
 - or: alternativeBlock 
-  "Nonevaluating disjunction -- answer value of alternativeBlock."
+    "Nonevaluating disjunction -- answer value of alternativeBlock."
 
-  ^alternativeBlock value
+    ^ alternativeBlock value
   
 - printOn: aStream 
-
-  aStream nextPutAll: 'false'
+    aStream nextPutAll: 'false'

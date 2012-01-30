@@ -33,6 +33,8 @@ SequenceableCollection < #Interval
     index := 0.
     size := self size.
     [index < size]
-        whileTrue: [aValue := start + (index * step).
-            index := index + 1.].
-            aBlock value: aValue].
+      whileTrue: [
+        aValue := start + (index * step).
+        index := index + 1.
+        aBlock value: aValue.
+      ].
