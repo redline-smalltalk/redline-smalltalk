@@ -24,7 +24,7 @@ class PrimObjectClass extends PrimObject {
 		javaValue = new HashMap<String, PrimObject>();
 	}
 
-	String packageFor(String name) {
+	public String packageFor(String name) {
 		PrimObject cls = cls();
 		if (cls != null)
 			cls.packageFor(name);
@@ -43,7 +43,7 @@ class PrimObjectClass extends PrimObject {
 		return (Map<String, PrimObject>) javaValue;
 	}
 
-	PrimObject superclass() {
+	public PrimObject superclass() {
 		return attributes[SUPERCLASS_INDEX];
 	}
 

@@ -14,11 +14,11 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	static final PrimObjectMetaclass METACLASS = new PrimObjectMetaclass();
 	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for name, superclass etc etc
 	static final int NAME_INDEX = PrimObjectClass.SUPERCLASS_INDEX + 1;
-
 	static {
 		METACLASS.cls(null);
 	}
 
+	static Map<String, String> IMPORTS = new Hashtable<String, String>();
 	Map<String, String> imports;
 
 	public static PrimObjectMetaclass basicSubclassOf(PrimObjectMetaclass superMeta) {
@@ -66,12 +66,16 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	}
 
 	void bootstrap() {
+		new Bootstrapper(METACLASS).bootstrap();
 	}
 
-	String packageFor(String name) {
-		if (imports != null)
-			return imports.get(name);
-		return null;
+	public String packageFor(String name) {
+		String packageName;
+		if (imports != null && (packageName = imports.get(name)) != null)
+			return packageName;
+		if (superclass() != null && (packageName = superclass().packageFor(name)) != null)
+			return packageName;
+		return IMPORTS.get(name);
 	}
 
 	protected PrimObject _sendMessages_(PrimObject receiver, PrimContext context) {

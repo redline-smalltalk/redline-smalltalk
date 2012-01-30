@@ -7,10 +7,30 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class PrimObjectMetaclassTest {
+
+	@Test
+	public void shouldLookInGlobalImportsMapWhenFindingPackageForClassName() {
+		Map<String, String> imports = mock(Map.class);
+		PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
+		PrimObjectMetaclass.IMPORTS = imports;
+		metaclass.packageFor("ClassName");
+		verify(imports).get("ClassName");
+	}
+
+	@Test
+	public void shouldLookInImportsMapInSuperclassChainWhenFindingPackageForClassName() {
+		PrimObjectMetaclass superclass = mock(PrimObjectMetaclass.class);
+		when(superclass.packageFor("ClassName")).thenReturn("com.foo.ClassName");
+		PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
+		metaclass.superclass(superclass);
+		assertEquals("com.foo.ClassName", metaclass.packageFor("ClassName"));
+	}
 
 	@Test
 	public void shouldLookInImportsMapWhenFindingPackageForClassName() {
@@ -54,5 +74,10 @@ public class PrimObjectMetaclassTest {
 	@Test
 	public void basicMetaClassShouldNotHaveClass() {
 		assertEquals(null, PrimObjectMetaclass.METACLASS.cls());
+	}
+
+	@Test
+	public void shouldNotHaveSuperclass() {
+		assertEquals(PrimObject.PRIM_NIL, new PrimObjectMetaclass().superclass());
 	}
 }

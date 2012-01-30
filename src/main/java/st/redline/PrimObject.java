@@ -43,7 +43,9 @@ public class PrimObject {
 	}
 
 	public static void dump(Object object) {
-		System.out.println(object);
+		System.out.println("Dump: " + object);
+		for (int i = 0; i < ((PrimObject) object).attributes.length; i++)
+			System.out.println(i + " " + ((PrimObject) object).attributes[i]);
 	}
 
 	public PrimObject variableAt(String name) {
@@ -81,7 +83,7 @@ public class PrimObject {
 		return Thread.currentThread().getContextClassLoader();
 	}
 
-	String packageFor(String name) {
+	public String packageFor(String name) {
 		PrimObject cls = cls();
 		if (cls != null)
 			return cls.packageFor(name);
@@ -148,7 +150,7 @@ public class PrimObject {
 		return BASIC_DOES_NOT_UNDERSTAND;
 	}
 
-	PrimObject superclass() {
+	public PrimObject superclass() {
 		return this;
 	}
 
