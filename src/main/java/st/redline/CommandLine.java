@@ -47,6 +47,10 @@ public class CommandLine {
 		return haveVerboseOption();
 	}
 
+	public boolean ignoreCompilerErrors() {
+		return haveIgnoreOption();
+	}
+
 	boolean helpRequested() {
 		return haveHelpOption() || haveNoArguments();
 	}
@@ -65,6 +69,10 @@ public class CommandLine {
 
 	boolean haveVerboseOption() {
 		return commandLine.hasOption('v');
+	}
+
+	boolean haveIgnoreOption() {
+		return commandLine.hasOption('i');
 	}
 
 	void tryParseArguments() {
@@ -131,6 +139,11 @@ public class CommandLine {
 			addOption(runtimePath());
 			addOption(executeNow());
 			addOption(verbose());
+			addOption(ignore());
+		}
+
+		private Option ignore() {
+			return new Option("i", "ignore", false, "ignore parsing errors. When not specified parse errors raise an exception.");
 		}
 
 		private Option verbose() {

@@ -13,10 +13,12 @@ public class Compiler {
 
 	private final SourceFile sourceFile;
 	private final boolean verbose;
+	private boolean ignoreCompilerErrors;
 
-	public Compiler(SourceFile sourceFile, boolean verbose) {
+	public Compiler(SourceFile sourceFile, boolean verbose, boolean ignoreCompilerErrors) {
 		this.sourceFile = sourceFile;
 		this.verbose = verbose;
+		this.ignoreCompilerErrors = ignoreCompilerErrors;
 	}
 
 	protected byte[] compile() {
@@ -43,7 +45,7 @@ public class Compiler {
 		SmalltalkLexer smalltalkLexer = lexorOn(sourceCode);
 		SmalltalkParser smalltalkParser = parserUsing(smalltalkLexer);
 		try {
-			if (!smalltalkLexer.getExceptions().isEmpty())
+			if (!ignoreCompilerErrors && !smalltalkLexer.getExceptions().isEmpty())
 				throw RedlineException.withMessage(messageFrom(smalltalkLexer.getExceptions()));
 			return smalltalkParser.program();
 		} catch (RecognitionException e) {

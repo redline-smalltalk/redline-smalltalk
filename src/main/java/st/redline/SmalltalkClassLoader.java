@@ -69,7 +69,7 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	private Compiler createCompiler(SourceFile sourceFile) {
-		return new Compiler(sourceFile, commandLine.verboseRequested());
+		return new Compiler(sourceFile, commandLine.verboseRequested(), commandLine.ignoreCompilerErrors());
 	}
 
 	private SourceFile findSource(String className) {
