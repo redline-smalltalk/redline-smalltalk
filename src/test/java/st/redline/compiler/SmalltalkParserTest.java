@@ -234,6 +234,16 @@ public class SmalltalkParserTest {
 	}
 
 	@Test
+	public void parsePrimitiveAsPrimary() throws IOException, RecognitionException {
+		String input = "<primitive: 32>";
+		Primitive primitive = (Primitive) createParser(input).primary();
+		assertEquals("primitive:", primitive.value());
+		assertEquals(1, primitive.line());
+		assertEquals("32", primitive.digits());
+		assertNoLexerExceptions();
+	}
+
+	@Test
 	public void parseIdentifierAsPrimary() throws IOException, RecognitionException {
 		// Identifier is any letter followed by a 0 or more letters or digits.
 		// Letters are A..Z or a..Z

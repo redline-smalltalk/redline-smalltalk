@@ -266,4 +266,9 @@ public class TracingAnalyser implements AnalyserDelegate {
 		trace("visit(UnarySelectorMessageElement) " + unarySelectorMessageElement + " " + String.valueOf(value) + " " + line);
 		delegate.visit(unarySelectorMessageElement, value, line);
 	}
+
+	public void visit(Primitive primitive, String keyword, int line, String digits) {
+		trace("visit(Primitive) " + primitive + " " + String.valueOf(keyword) + " " + line + " " + digits);
+		delegate.visit(primitive, keyword, line, digits);
+	}
 }

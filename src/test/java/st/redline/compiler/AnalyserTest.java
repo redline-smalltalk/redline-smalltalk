@@ -26,6 +26,13 @@ public class AnalyserTest {
 	}
 
 	@Test
+	public void shouldDelegateVisitPrimitiveNode() {
+		Primitive primitive = new Primitive("primitive:", 2, "43");
+		primitive.accept(analyser);
+		verify(delegate).visit(primitive, "primitive:", 2, "43");
+	}
+
+	@Test
 	public void shouldDelegateVisitOfUnarySelectorMessageElementNode() {
 		UnarySelector unarySelector = mock(UnarySelector.class);
 		when(unarySelector.value()).thenReturn("yourself");

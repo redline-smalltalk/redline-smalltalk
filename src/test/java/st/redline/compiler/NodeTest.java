@@ -21,6 +21,13 @@ public class NodeTest {
 	}
 
 	@Test
+	public void primitiveShouldBeVisitable() {
+		Primitive primitive = new Primitive("primitive:", 2, "43");
+		primitive.accept(visitor);
+		verify(visitor).visit(primitive, "primitive:", 2, "43");
+	}
+
+	@Test
 	public void unarySelectorMessageElementNodeShouldBeVisitable() {
 		UnarySelector unarySelector = mock(UnarySelector.class);
 		when(unarySelector.value()).thenReturn("yourself");

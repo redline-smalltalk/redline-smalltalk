@@ -233,4 +233,8 @@ public class Analyser implements NodeVisitor {
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
 		delegate.visit(unarySelectorMessageElement, value, line);
 	}
+
+	public void visit(Primitive primitive, String keyword, int line, String digits) {
+		delegate.visit(primitive, keyword, line, digits);
+	}
 }

@@ -216,6 +216,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 		invokeObjectPerform(selector, 0, line);
 	}
 
+	public void visit(Primitive primitive, String keyword, int line, String digits) {
+	}
+
 	void invokeObjectPerform(String selector, int argumentCount, int line) {
 		writer.visitLine(line);
 		writer.invokeObjectPerform(selector, argumentCount);

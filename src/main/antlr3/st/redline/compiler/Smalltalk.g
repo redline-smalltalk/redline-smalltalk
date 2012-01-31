@@ -32,6 +32,7 @@ primary returns [Primary primary]
     | block {primary = $block.block;}
     | '(' expression WHITESPACE? ')' {primary = new PrimaryExpression($expression.expression);}
     | '{' statements WHITESPACE? '}' {primary = new PrimaryStatements($statements.statements);}
+    | '<' KEYWORD WHITESPACE DIGITS '>' {primary = new Primitive($KEYWORD.text, $KEYWORD.line, $DIGITS.text);}
     )
   ;
 
