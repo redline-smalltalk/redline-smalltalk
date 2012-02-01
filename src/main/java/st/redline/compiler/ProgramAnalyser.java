@@ -8,16 +8,18 @@ class ProgramAnalyser implements AnalyserDelegate {
 
 	private final Analyser analyser;
 	private final ClassBytecodeWriter writer;
+	private final boolean verbose;
 	private Map<String, Integer> temporariesRegistry;
 	private int temporariesIndex = 0;
 
 	ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
-		this(analyser, new ClassBytecodeWriter(className, packageName, verbose));
+		this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose);
 	}
 
-	ProgramAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter) {
+	ProgramAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose) {
 		this.analyser = analyser;
-		writer = classBytecodeWriter;
+		this.writer = classBytecodeWriter;
+		this.verbose = verbose;
 	}
 
 	ClassBytecodeWriter classBytecodeWriter() {
@@ -55,15 +57,12 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitEnd(Temporaries temporaries) {
-		// we don't take any action when visiting end of temporaries.
 	}
 
 	public void visitBegin(Statements statements) {
-		// we don't take any action when visiting statements.
 	}
 
 	public void visitEnd(Statements statements) {
-		// we don't take any action when visiting statements.
 	}
 
 	public void visit(Temporary temporary, String value, int line) {
@@ -140,6 +139,8 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(Block block, int line) {
+		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, analyser.className(), analyser.packageName(), verbose);
+		analyser.currentDelegate(verbose ? analyser.tracingDelegate(blockAnalyser) : blockAnalyser);
 	}
 
 	public void visitEnd(Block block, int line) {

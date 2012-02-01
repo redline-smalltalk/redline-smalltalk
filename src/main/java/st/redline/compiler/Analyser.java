@@ -5,12 +5,24 @@ import java.util.Stack;
 public class Analyser implements NodeVisitor {
 
 	private final Stack<AnalyserDelegate> delegates;
+	private final String className;
+	private final String packageName;
 	private AnalyserDelegate delegate;
 
 	public Analyser(String className, String packageName, boolean verbose) {
+		this.className = className;
+		this.packageName = packageName;
 		delegates = new Stack<AnalyserDelegate>();
 		currentDelegate(verbose ? verboseDelegate(className, packageName)
 								: normalDelegate(className, packageName, verbose));
+	}
+
+	String className() {
+		return className;
+	}
+
+	String packageName() {
+		return packageName;
 	}
 
 	AnalyserDelegate normalDelegate(String className, String packageName, boolean verbose) {

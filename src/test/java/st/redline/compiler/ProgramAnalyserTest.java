@@ -8,6 +8,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -22,7 +23,16 @@ public class ProgramAnalyserTest {
 	public void setup() {
 		writer = mock(ClassBytecodeWriter.class);
 		parent = mock(Analyser.class);
-		analyser = new ProgramAnalyser(parent, writer);
+		analyser = new ProgramAnalyser(parent, writer, false);
+	}
+
+	@Test
+	public void shouldMakeBlockAnalyserCurrentAnalyserWhenVisitBeginOfBlock() {
+		Block block = mock(Block.class);
+		when(parent.className()).thenReturn("block");
+		when(parent.packageName()).thenReturn("st.redline");
+		analyser.visitBegin(block, 1);
+		verify(parent).currentDelegate(notNull(AnalyserDelegate.class));
 	}
 
 	@Test
