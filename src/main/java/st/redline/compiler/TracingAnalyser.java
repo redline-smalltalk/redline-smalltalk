@@ -242,9 +242,9 @@ public class TracingAnalyser implements AnalyserDelegate {
 		delegate.visit(binarySelector, selector, line);
 	}
 
-	public void visit(CharacterConstant characterConstant, String value, int index, int line) {
-		trace("visit(CharacterConstant) " + characterConstant + " " + String.valueOf(value) + " " + index + " " + line);
-		delegate.visit(characterConstant, value, index, line);
+	public void visit(CharacterConstant characterConstant, String value, int index, boolean insideArray, int line) {
+		trace("visit(CharacterConstant) " + characterConstant + " " + String.valueOf(value) + " " + index + " " + insideArray + " " + line);
+		delegate.visit(characterConstant, value, index, insideArray, line);
 	}
 
 	public void visit(StringConstant stringConstant, String value, int index, boolean insideArray, int line) {

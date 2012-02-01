@@ -203,7 +203,10 @@ class ProgramAnalyser implements AnalyserDelegate {
 		invokeObjectPerform(selector, 1, line);
 	}
 
-	public void visit(CharacterConstant characterConstant, String value, int index, int line) {
+	public void visit(CharacterConstant characterConstant, String value, int index, boolean insideArray, int line) {
+		writer.invokeObjectCharacter(value, line);
+		if (insideArray)
+			writer.invokeArrayPut(index, line);
 	}
 
 	public void visit(StringConstant stringConstant, String value, int index, boolean insideArray, int line) {

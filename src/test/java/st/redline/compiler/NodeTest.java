@@ -132,7 +132,7 @@ public class NodeTest {
 		CharacterConstant characterConstant = new CharacterConstant("a", 42);
 		characterConstant.index(2);
 		characterConstant.accept(visitor);
-		verify(visitor).visit(characterConstant, "a", 2, 42);
+		verify(visitor).visit(characterConstant, "a", 2, false, 42);
 	}
 
 	@Test

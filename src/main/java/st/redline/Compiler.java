@@ -45,19 +45,13 @@ public class Compiler {
 		SmalltalkLexer smalltalkLexer = lexorOn(sourceCode);
 		SmalltalkParser smalltalkParser = parserUsing(smalltalkLexer);
 		try {
-			if (!ignoreCompilerErrors && !smalltalkLexer.getExceptions().isEmpty())
-				throw RedlineException.withMessage(messageFrom(smalltalkLexer.getExceptions()));
-			return smalltalkParser.program();
+			Program program = smalltalkParser.program();
+			if (!ignoreCompilerErrors && smalltalkParser.getNumberOfSyntaxErrors() > 0)
+				throw RedlineException.withMessage("Syntax error(s) detected");
+			return program;
 		} catch (RecognitionException e) {
 			throw RedlineException.withCause(e);
 		}
-	}
-
-	private String messageFrom(List<RecognitionException> recognitionExceptions) {
-		StringBuffer messages = new StringBuffer();
-		for (RecognitionException recognitionException : recognitionExceptions)
-			messages.append(recognitionException.toString()).append("\n");
-		return messages.toString();
 	}
 
 	private SmalltalkParser parserUsing(SmalltalkLexer smalltalkLexer) {

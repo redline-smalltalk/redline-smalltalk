@@ -24,6 +24,21 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokeArrayPutWhenVisitCharacterConstantInsideAnArray() {
+		CharacterConstant characterConstant = mock(CharacterConstant.class);
+		analyser.visit(characterConstant, "c", 32, true, 1);
+		verify(writer).invokeObjectCharacter("c", 1);
+		verify(writer).invokeArrayPut(32, 1);
+	}
+
+	@Test
+	public void shouldInvokePrimObjectCharacterWhenVisitCharacterConstant() {
+		CharacterConstant characterConstant = mock(CharacterConstant.class);
+		analyser.visit(characterConstant, "c", 32, false, 1);
+		verify(writer).invokeObjectCharacter("c", 1);
+	}
+
+	@Test
 	public void shouldInvokeArrayPutWhenVisitNumberInsideAnArray() {
 		Number number = mock(Number.class);
 		analyser.visit(number, "16", 32, true, 1);

@@ -46,6 +46,10 @@ public class PrimObject {
 		throw new IllegalStateException("implement me");
 	}
 
+	public static PrimObject character(Object javaValue) {
+		throw new IllegalStateException("implement me");
+	}
+
 	public static void dump(Object object) {
 		System.out.println("Dump: " + object);
 		for (int i = 0; i < ((PrimObject) object).attributes.length; i++)

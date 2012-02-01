@@ -123,7 +123,7 @@ public class AnalyserTest {
 		CharacterConstant characterConstant = new CharacterConstant("z", 42);
 		characterConstant.index(2);
 		characterConstant.accept(analyser);
-		verify(delegate).visit(characterConstant, "z", 2, 42);
+		verify(delegate).visit(characterConstant, "z", 2, false, 42);
 	}
 
 	@Test
