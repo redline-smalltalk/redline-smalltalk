@@ -18,10 +18,12 @@ public class Stic {
 			commandLine.printHelp(new PrintWriter(System.out));
 			return null;
 		}
-		String inputFilename = (String) commandLine.arguments().get(0);
+		String inputFilename;
 		if (commandLine.executeNowRequested()) {
 			inputFilename = writeInputCodeToTemporaryFile(commandLine).getName();
 			inputFilename = inputFilename.substring(0, inputFilename.lastIndexOf("."));
+		} else {
+			inputFilename = (String) commandLine.arguments().get(0);
 		}
 		return new Stic(commandLine).invoke(inputFilename);
 	}

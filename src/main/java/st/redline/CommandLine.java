@@ -60,7 +60,7 @@ public class CommandLine {
 	}
 
 	public boolean haveNoArguments() {
-		return commandLine.getArgList().isEmpty();
+		return commandLine.getArgList().isEmpty() && input() == null;
 	}
 
 	boolean haveHelpOption() {
@@ -88,7 +88,6 @@ public class CommandLine {
 	}
 
 	String input() {
-		System.out.println(commandLine.getOptionValue(EXECUTE_NOW_OPTION));
 		return commandLine.getOptionValue(EXECUTE_NOW_OPTION);
 	}
 
