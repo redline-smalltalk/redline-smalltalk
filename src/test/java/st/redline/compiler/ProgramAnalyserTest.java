@@ -24,6 +24,28 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokePrimObjectSymbolWhenVisitSymbolConstant() {
+		SymbolConstant symbolConstant = mock(SymbolConstant.class);
+		analyser.visit(symbolConstant, "sym", 1);
+		verify(writer).invokeObjectSymbol("sym", 1);
+	}
+
+	@Test
+	public void shouldInvokeArrayPutWhenVisitSymbolInsideAnArray() {
+		Symbol symbol = mock(Symbol.class);
+		analyser.visit(symbol, "sym", 32, true, 1);
+		verify(writer).invokeObjectSymbol("sym", 1);
+		verify(writer).invokeArrayPut(32, 1);
+	}
+
+	@Test
+	public void shouldInvokePrimObjectSymbolWhenVisitSymbol() {
+		Symbol symbol = mock(Symbol.class);
+		analyser.visit(symbol, "sym", 32, false, 1);
+		verify(writer).invokeObjectSymbol("sym", 1);
+	}
+
+	@Test
 	public void shouldInvokeArrayPutWhenVisitCharacterConstantInsideAnArray() {
 		CharacterConstant characterConstant = mock(CharacterConstant.class);
 		analyser.visit(characterConstant, "c", 32, true, 1);

@@ -56,7 +56,7 @@ public class AnalyserTest {
 		symbol.index(2);
 		symbol.valueAndLine("sym", 42);
 		symbol.accept(analyser);
-		verify(delegate).visit(symbol, "sym", 2, 42);
+		verify(delegate).visit(symbol, "sym", 2, false, 42);
 	}
 
 	@Test

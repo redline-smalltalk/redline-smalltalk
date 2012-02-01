@@ -215,10 +215,14 @@ class ProgramAnalyser implements AnalyserDelegate {
 			writer.invokeArrayPut(index, line);
 	}
 
-	public void visit(Symbol symbol, String value, int index, int line) {
+	public void visit(Symbol symbol, String value, int index, boolean insideArray, int line) {
+		writer.invokeObjectSymbol(value, line);
+		if (insideArray)
+			writer.invokeArrayPut(index, line);
 	}
 
 	public void visit(SymbolConstant symbolConstant, String value, int line) {
+		writer.invokeObjectSymbol(value, line);
 	}
 
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String selector, int line) {

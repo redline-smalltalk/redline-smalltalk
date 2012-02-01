@@ -62,7 +62,7 @@ public class NodeTest {
 		symbol.index(2);
 		symbol.valueAndLine("sym", 42);
 		symbol.accept(visitor);
-		verify(visitor).visit(symbol, "sym", 2, 42);
+		verify(visitor).visit(symbol, "sym", 2, false, 42);
 	}
 
 	@Test

@@ -222,8 +222,8 @@ public class Analyser implements NodeVisitor {
 		delegate.visit(stringConstant, value, index, insideArray, line);
 	}
 
-	public void visit(Symbol symbol, String value, int index, int line) {
-		delegate.visit(symbol, value, index, line);
+	public void visit(Symbol symbol, String value, int index, boolean insideArray, int line) {
+		delegate.visit(symbol, value, index, insideArray, line);
 	}
 
 	public void visit(SymbolConstant symbolConstant, String value, int line) {

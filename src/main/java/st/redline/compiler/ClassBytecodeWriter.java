@@ -154,6 +154,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		invokeObjectCreate("string", value, line);
 	}
 
+	void invokeObjectSymbol(String value, int line) {
+		invokeObjectCreate("symbol", value, line);
+	}
+
 	void invokeObjectCharacter(String value, int line) {
 		invokeObjectCreate("character", value, line);
 	}
