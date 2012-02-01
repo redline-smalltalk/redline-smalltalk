@@ -10,4 +10,8 @@ class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 	BlockAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose) {
 		super(analyser, classBytecodeWriter, verbose);
 	}
+
+	public void visitEnd(Block block, int line) {
+		analyser.previousDelegate();
+	}
 }

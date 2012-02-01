@@ -6,11 +6,12 @@ import java.util.Map;
 
 class ProgramAnalyser implements AnalyserDelegate {
 
-	private final Analyser analyser;
+	protected final Analyser analyser;
 	private final ClassBytecodeWriter writer;
 	private final boolean verbose;
 	private Map<String, Integer> temporariesRegistry;
 	private int temporariesIndex = 0;
+	private int blockSequence = 0;
 
 	ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
 		this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose);
@@ -139,7 +140,9 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(Block block, int line) {
-		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, analyser.className(), analyser.packageName(), verbose);
+		blockSequence++;
+		String blockClassName = analyser.className() + "$B" + blockSequence;
+		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose);
 		analyser.currentDelegate(verbose ? analyser.tracingDelegate(blockAnalyser) : blockAnalyser);
 	}
 

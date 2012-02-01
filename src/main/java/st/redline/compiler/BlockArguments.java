@@ -15,7 +15,7 @@ class BlockArguments implements VisitableNode {
 	}
 
 	int size() {
-		return blockArguments.size();
+		return blockArguments != null ? blockArguments.size() : 0;
 	}
 
 	BlockArgument get(int index) {
@@ -24,8 +24,9 @@ class BlockArguments implements VisitableNode {
 
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visitBegin(this, size());
-		for (BlockArgument blockArgument : blockArguments)
-			blockArgument.accept(nodeVisitor);
+		if (blockArguments != null)
+			for (BlockArgument blockArgument : blockArguments)
+ 	    		blockArgument.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this, size());
 	}
 }

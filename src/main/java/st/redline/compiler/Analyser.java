@@ -46,6 +46,11 @@ public class Analyser implements NodeVisitor {
 		return delegates.peek();
 	}
 
+	void previousDelegate() {
+		delegates.pop();
+		delegate = delegates.peek();
+	}
+
 	public byte[] classBytes() {
 		return delegate.classBytes();
 	}
