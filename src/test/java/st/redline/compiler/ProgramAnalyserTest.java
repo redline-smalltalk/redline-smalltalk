@@ -16,11 +16,13 @@ public class ProgramAnalyserTest {
 
 	ProgramAnalyser analyser;
 	ClassBytecodeWriter writer;
+	Analyser parent;
 
 	@Before
 	public void setup() {
 		writer = mock(ClassBytecodeWriter.class);
-		analyser = new ProgramAnalyser(writer);
+		parent = mock(Analyser.class);
+		analyser = new ProgramAnalyser(parent, writer);
 	}
 
 	@Test
@@ -193,14 +195,14 @@ public class ProgramAnalyserTest {
 
 	@Test
 	public void shouldHaveNoTemporariesRegistryWhenCreated() {
-		ProgramAnalyser programAnalyser = new ProgramAnalyser("foo", "com.domain", false);
+		ProgramAnalyser programAnalyser = new ProgramAnalyser(parent, "foo", "com.domain", false);
 		assertNull(programAnalyser.temporariesRegistry());
 		assertEquals(0, programAnalyser.temporariesIndex());
 	}
 
 	@Test
 	public void shouldCreateClassBytecodeWriter() {
-		assertNotNull(new ProgramAnalyser("foo", "com.domain", false).classBytecodeWriter());
+		assertNotNull(new ProgramAnalyser(parent, "foo", "com.domain", false).classBytecodeWriter());
 	}
 
 	@Test

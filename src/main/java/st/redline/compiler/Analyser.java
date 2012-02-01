@@ -14,11 +14,15 @@ public class Analyser implements NodeVisitor {
 	}
 
 	AnalyserDelegate normalDelegate(String className, String packageName, boolean verbose) {
-		return new ProgramAnalyser(className, packageName, verbose);
+		return new ProgramAnalyser(this, className, packageName, verbose);
 	}
 
 	AnalyserDelegate verboseDelegate(String className, String packageName) {
-		return new TracingAnalyser(normalDelegate(className, packageName, true));
+		return tracingDelegate(normalDelegate(className, packageName, true));
+	}
+
+	AnalyserDelegate tracingDelegate(AnalyserDelegate analyserDelegate) {
+		return new TracingAnalyser(analyserDelegate);
 	}
 
 	void currentDelegate(AnalyserDelegate analyserDelegate) {

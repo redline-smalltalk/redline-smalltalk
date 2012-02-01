@@ -6,15 +6,17 @@ import java.util.Map;
 
 class ProgramAnalyser implements AnalyserDelegate {
 
+	private final Analyser analyser;
 	private final ClassBytecodeWriter writer;
 	private Map<String, Integer> temporariesRegistry;
 	private int temporariesIndex = 0;
 
-	ProgramAnalyser(String className, String packageName, boolean verbose) {
-		this(new ClassBytecodeWriter(className, packageName, verbose));
+	ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
+		this(analyser, new ClassBytecodeWriter(className, packageName, verbose));
 	}
 
-	ProgramAnalyser(ClassBytecodeWriter classBytecodeWriter) {
+	ProgramAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter) {
+		this.analyser = analyser;
 		writer = classBytecodeWriter;
 	}
 
