@@ -48,7 +48,7 @@ interface NodeVisitor {
 	void visit(UnarySelector unarySelector, String selector, int line);
 	void visit(BinarySelector binarySelector, String selector, int line);
 	void visit(CharacterConstant characterConstant, String value, int index, int line);
-	void visit(StringConstant stringConstant, String value, int index, int line);
+	void visit(StringConstant stringConstant, String value, int index, boolean insideArray, int line);
 	void visit(Symbol symbol, String value, int index, int line);
 	void visit(SymbolConstant symbolConstant, String value, int line);
 	void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line);

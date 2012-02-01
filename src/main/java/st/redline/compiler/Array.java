@@ -8,6 +8,7 @@ class Array extends Primary implements ArrayElement {
 	private final ArrayList<ArrayElement> elements;
 	private int index;
 	private int elementIndex = 0;
+	private boolean insideArray = false;
 
 	Array() {
 		elements = new ArrayList<ArrayElement>();
@@ -15,6 +16,7 @@ class Array extends Primary implements ArrayElement {
 
 	void add(ArrayElement arrayElement) {
 		if (arrayElement != null) {
+			arrayElement.insideArray();
 			arrayElement.index(++elementIndex);
 			elements.add(arrayElement);
 		}
@@ -30,6 +32,14 @@ class Array extends Primary implements ArrayElement {
 
 	public int index() {
 		return index;
+	}
+
+	public void insideArray() {
+		insideArray = true;
+	}
+
+	public boolean isInsideArray() {
+		return insideArray;
 	}
 
 	public void index(int index) {

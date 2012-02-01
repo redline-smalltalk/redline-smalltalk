@@ -9,6 +9,8 @@ public class Statements implements VisitableNode {
 	Statements(Expression expression, Statements statements) {
 		this.expression = expression;
 		this.statements = statements;
+		if (statements == null && expression != null)
+			expression.leaveResultOnStack();
 	}
 
 	int line() {

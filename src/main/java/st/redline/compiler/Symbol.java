@@ -4,6 +4,7 @@ package st.redline.compiler;
 class Symbol extends ValuePrimary implements ArrayElement {
 
 	private int index;
+	private boolean insideArray = false;
 
 	Symbol() {
 		super(null, 0);
@@ -11,6 +12,14 @@ class Symbol extends ValuePrimary implements ArrayElement {
 
 	public int index() {
 		return index;
+	}
+
+	public void insideArray() {
+		insideArray = true;
+	}
+
+	public boolean isInsideArray() {
+		return insideArray;
 	}
 
 	public void index(int index) {

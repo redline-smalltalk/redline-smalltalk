@@ -64,7 +64,7 @@ public class AnalyserTest {
 		StringConstant stringConstant = new StringConstant("'foo'", 42);
 		stringConstant.index(2);
 		stringConstant.accept(analyser);
-		verify(delegate).visit(stringConstant, "foo", 2, 42);
+		verify(delegate).visit(stringConstant, "foo", 2, false, 42);
 	}
 
 	@Test

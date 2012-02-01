@@ -6,4 +6,6 @@ interface ArrayElement extends VisitableNode {
 	int line();
 	void index(int index);
 	int index();
+	void insideArray();
+	boolean isInsideArray();
 }

@@ -69,8 +69,9 @@ public class NodeTest {
 	public void stringConstantNodeShouldBeVisitable() {
 		StringConstant stringConstant = new StringConstant("'str'", 42);
 		stringConstant.index(2);
+		stringConstant.insideArray();
 		stringConstant.accept(visitor);
-		verify(visitor).visit(stringConstant, "str", 2, 42);
+		verify(visitor).visit(stringConstant, "str", 2, true, 42);
 	}
 
 	@Test
@@ -288,10 +289,17 @@ public class NodeTest {
 	}
 
 	@Test
+	public void statementsNodeConstructionShouldTellExpressionToLeaveResultOnStackWhenNoAdditionalStatements() {
+		Expression expression = mock(Expression.class);
+		new Statements(expression, null);
+		verify(expression).leaveResultOnStack();
+	}
+
+	@Test
 	public void answerStatementNodeConstructionShouldTellExpressionToLeaveResultOnStack() {
 		SimpleExpression simpleExpression = mock(SimpleExpression.class);
 		new AnswerStatement(42, simpleExpression);
-		verify(simpleExpression).leaveResultOnStack();
+		verify(simpleExpression, times(2)).leaveResultOnStack();
 	}
 
 	@Test

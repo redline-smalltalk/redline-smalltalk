@@ -24,6 +24,13 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokePrimObjectStringWhenVisitStringConstant() {
+		StringConstant stringConstant = mock(StringConstant.class);
+		analyser.visit(stringConstant, "hello", 0, false, 1);
+		verify(writer).invokeObjectString("hello", 1);
+	}
+
+	@Test
 	public void shouldInvokeVariableAtWhenVisitIdentifierOnLoadSideOfExpression() {
 		Identifier identifier = mock(Identifier.class);
 		when(identifier.isOnLoadSideOfExpression()).thenReturn(true);

@@ -4,6 +4,7 @@ package st.redline.compiler;
 class StringConstant extends ValuePrimary implements ArrayElement {
 
 	private int index;
+	private boolean insideArray = false;
 
 	StringConstant(java.lang.String value, int line) {
 		super(homgenize(value), line);
@@ -11,6 +12,14 @@ class StringConstant extends ValuePrimary implements ArrayElement {
 
 	private static String homgenize(String value) {
 		return value.substring(1, value.length()-1).replaceAll("''", "'");
+	}
+
+	public void insideArray() {
+		insideArray = true;
+	}
+
+	public boolean isInsideArray() {
+		return insideArray;
 	}
 
 	public int index() {
@@ -22,6 +31,6 @@ class StringConstant extends ValuePrimary implements ArrayElement {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this, value(), index, line());
+		nodeVisitor.visit(this, value(), index, insideArray, line());
 	}
 }

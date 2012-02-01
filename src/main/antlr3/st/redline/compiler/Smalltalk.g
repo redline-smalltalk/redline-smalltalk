@@ -113,7 +113,7 @@ block_arguments returns [List<BlockArgument> blockArguments]
   @init { blockArguments = new ArrayList<BlockArgument>(); }
   : WHITESPACE? (':' IDENTIFIER WHITESPACE? {blockArguments.add(new BlockArgument($IDENTIFIER.text, $IDENTIFIER.line));})+  '|'
   ;
-	
+
 array_constant returns [ArrayConstant arrayConstant]
   : h='#' array {arrayConstant = new ArrayConstant($array.array, $h.line);}
   ;
@@ -130,10 +130,6 @@ array_element returns [ArrayElement arrayElement]
   | STRING {arrayElement = new StringConstant($STRING.text, $STRING.line);}
   | CHARACTER_CONSTANT {arrayElement = new CharacterConstant($CHARACTER_CONSTANT.text.substring(1), $CHARACTER_CONSTANT.line);}
   | array {arrayElement = $array.array;}
-  ;
-
-character_constant returns [CharacterConstant characterConstant]
-  : '$'  c=('\'' | '"' | SPECIAL_CHAR | NORMAL_CHAR | DIGIT | LETTER) {characterConstant = new CharacterConstant($c.text, $c.line);} 
   ;
 
 symbol_constant returns [SymbolConstant symbolConstant]

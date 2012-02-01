@@ -4,9 +4,18 @@ package st.redline.compiler;
 class CharacterConstant extends ValuePrimary implements ArrayElement {
 
 	private int index;
+	private boolean insideArray = false;
 
 	CharacterConstant(String value, int line) {
 		super(value, line);
+	}
+
+	public void insideArray() {
+		insideArray = true;
+	}
+
+	public boolean isInsideArray() {
+		return insideArray;
 	}
 
 	public int index() {

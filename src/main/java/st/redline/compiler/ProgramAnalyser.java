@@ -203,7 +203,8 @@ class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(CharacterConstant characterConstant, String value, int index, int line) {
 	}
 
-	public void visit(StringConstant stringConstant, String value, int index, int line) {
+	public void visit(StringConstant stringConstant, String value, int index, boolean insideArray, int line) {
+		writer.invokeObjectString(value, line);
 	}
 
 	public void visit(Symbol symbol, String value, int index, int line) {
