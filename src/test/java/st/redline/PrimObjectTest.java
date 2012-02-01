@@ -45,7 +45,7 @@ public class PrimObjectTest {
 	@Test
 	public void resolveObjectShouldReturnClassFromClassesRegistryIfFound() {
 		PrimObject aClass = mock(PrimObject.class);
-		PrimObject.classes.put("Thing", aClass);
+		PrimObject.CLASSES.put("Thing", aClass);
 		PrimObject primObject = new PrimObject();
 		assertEquals(aClass, primObject.resolveObject("Thing"));
 	}
@@ -60,7 +60,7 @@ public class PrimObjectTest {
 
 	@Test
 	public void shouldHaveClassesRegistry() {
-		assertNotNull(PrimObject.classes);
+		assertNotNull(PrimObject.CLASSES);
 	}
 
 	@Test

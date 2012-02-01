@@ -26,7 +26,7 @@ class BlockArguments implements VisitableNode {
 		nodeVisitor.visitBegin(this, size());
 		if (blockArguments != null)
 			for (BlockArgument blockArgument : blockArguments)
- 	    		blockArgument.accept(nodeVisitor);
+ 				blockArgument.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this, size());
 	}
 }

@@ -1,7 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-// Provides a way of constructing classes. A Metaclass is a class who's instances are classes of classes.
+// Provides a way of constructing CLASSES. A Metaclass is a class who's instances are CLASSES of CLASSES.
 // Each class is an instance of its own Metaclass.
 // Call basicSubclassOf: to get a subclass of Metaclass,
 // Call basicCreate:... to create the Metaclass' sole instance.

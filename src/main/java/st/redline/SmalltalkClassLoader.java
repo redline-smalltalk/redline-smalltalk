@@ -1,12 +1,15 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-// TODO.JCL - make this classloader delegate to another so we can replace the delegate at runtime to reload all classes on fly.
+// TODO.JCL - make this classloader delegate to another so we can replace the delegate at runtime to reload all CLASSES on fly.
 
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 public class SmalltalkClassLoader extends ClassLoader {
 
+	static Map<String, Object> BLOCKS_TO_BE_COMPILED = new Hashtable<String, Object>();
 	private final CommandLine commandLine;
 
 	public SmalltalkClassLoader(java.lang.ClassLoader classLoader, CommandLine commandLine) {
@@ -86,5 +89,11 @@ public class SmalltalkClassLoader extends ClassLoader {
 
 	private SourceFilesFinder sourceFilesFinder(String paths) {
 		return new SourceFilesFinder(paths);
+	}
+
+	public void registerBlockToBeCompiled(Object block, String name) {
+		if (BLOCKS_TO_BE_COMPILED.containsKey(name))
+			throw new IllegalStateException("Block to be compiled registered twice: " + name);
+		BLOCKS_TO_BE_COMPILED.put(name, block);
 	}
 }

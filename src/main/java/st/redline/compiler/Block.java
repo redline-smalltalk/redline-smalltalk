@@ -7,6 +7,7 @@ class Block extends Primary {
 	private final BlockArguments blockArguments;
 	private final Temporaries temporaries;
 	private final Statements statements;
+	private BlockAnalyser analyser;
 
 	Block(int line, BlockArguments blockArguments, Temporaries temporaries, Statements statements) {
 		this.line = line;
@@ -40,5 +41,13 @@ class Block extends Primary {
 		if (statements != null)
 			statements.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this, line);
+	}
+
+	void analyser(BlockAnalyser analyser) {
+		this.analyser = analyser;
+	}
+
+	BlockAnalyser analyser() {
+		return analyser;
 	}
 }

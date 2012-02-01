@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class PrimObject {
 
-	static final Map<String, PrimObject> classes = new Hashtable<String, PrimObject>();
+	static final Map<String, PrimObject> CLASSES = new Hashtable<String, PrimObject>();
 
 	static final PrimObject NIL = null;
 	static final PrimObject TRUE = null;
@@ -65,19 +65,19 @@ public class PrimObject {
 	}
 
 	PrimObject resolveObject(String name) {
-		if (classes.containsKey(name))
-			return classes.get(name);
+		if (CLASSES.containsKey(name))
+			return CLASSES.get(name);
 		if (Character.isUpperCase(name.charAt(0))) {
 			String fullyQualifiedName = packageFor(name);
 			if (fullyQualifiedName != null)
 				return resolveObject(fullyQualifiedName);
 		}
 		// It is expected the loading of an object results in the registering of
-		// a Smalltalk class in the class registry (classes).
+		// a Smalltalk class in the class registry (CLASSES).
 		PrimObject primObject = loadObject(name);
 		if (primObject != null) {
-			if (classes.containsKey(name))
-				return classes.get(name);
+			if (CLASSES.containsKey(name))
+				return CLASSES.get(name);
 			return primObject;
 		}
 		throw new IllegalStateException("Line should never be reached.");

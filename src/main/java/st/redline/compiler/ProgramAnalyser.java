@@ -1,6 +1,10 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import st.redline.PrimObjectMetaclass;
+import st.redline.SmalltalkClassLoader;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -140,10 +144,21 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(Block block, int line) {
+//		String blockClassName = createBlockName();
+//		String fullBlockClassName = analyser.packageName() + File.separator + blockClassName;
+//		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose);
+//		block.analyser(blockAnalyser);
+//		smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
+		analyser.currentDelegate(new NoOpAnalyser(analyser));
+	}
+
+	SmalltalkClassLoader smalltalkClassLoader() {
+		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+	}
+
+	String createBlockName() {
 		blockSequence++;
-		String blockClassName = analyser.className() + "$B" + blockSequence;
-		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose);
-		analyser.currentDelegate(verbose ? analyser.tracingDelegate(blockAnalyser) : blockAnalyser);
+		return analyser.className() + "$M" + blockSequence;
 	}
 
 	public void visitEnd(Block block, int line) {
