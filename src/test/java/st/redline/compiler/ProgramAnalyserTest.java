@@ -24,6 +24,14 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokeArrayPutWhenVisitStringConstantInsideAnArray() {
+		StringConstant stringConstant = mock(StringConstant.class);
+		analyser.visit(stringConstant, "hello", 32, true, 1);
+		verify(writer).invokeObjectString("hello", 1);
+		verify(writer).invokeArrayPut(32, 1);
+	}
+
+	@Test
 	public void shouldInvokePrimObjectStringWhenVisitStringConstant() {
 		StringConstant stringConstant = mock(StringConstant.class);
 		analyser.visit(stringConstant, "hello", 0, false, 1);

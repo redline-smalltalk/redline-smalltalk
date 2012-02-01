@@ -205,6 +205,8 @@ class ProgramAnalyser implements AnalyserDelegate {
 
 	public void visit(StringConstant stringConstant, String value, int index, boolean insideArray, int line) {
 		writer.invokeObjectString(value, line);
+		if (insideArray)
+			writer.invokeArrayPut(index, line);
 	}
 
 	public void visit(Symbol symbol, String value, int index, int line) {
