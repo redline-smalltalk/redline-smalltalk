@@ -57,6 +57,6 @@ class Number extends Primary implements ArrayElement {
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this, value(), line());
+		nodeVisitor.visit(this, value(), index, insideArray, line());
 	}
 }

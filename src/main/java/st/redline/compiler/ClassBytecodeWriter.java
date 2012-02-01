@@ -150,6 +150,12 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "string", "(Ljava/lang/Object;)Lst/redline/PrimObject;");
 	}
 
+	void invokeObjectNumber(String value, int line) {
+		visitLine(line);
+		pushLiteral(value);
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "number", "(Ljava/lang/Object;)Lst/redline/PrimObject;");
+	}
+
 	void invokeVariableAt(String name, int line) {
 		visitLine(line);
 		pushReceiver();

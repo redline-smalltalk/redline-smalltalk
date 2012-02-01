@@ -36,7 +36,7 @@ interface NodeVisitor {
 	void visit(PrimaryExpression primaryExpression, int line);
 	void visit(PrimaryStatements primaryStatements, int line);
 	void visit(Identifier identifier, String value, int line);
-	void visit(Number number, String value, int line);
+	void visit(Number number, String value, int index, boolean insideArray, int line);
 	void visit(BlockArgument blockArgument, String value, int line);
 	void visit(Self self, int line);
 	void visit(Super aSuper, int line);

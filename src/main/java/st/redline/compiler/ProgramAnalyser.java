@@ -160,7 +160,10 @@ class ProgramAnalyser implements AnalyserDelegate {
 			writer.invokeVariableAt(value, line);
 	}
 
-	public void visit(Number number, String value, int line) {
+	public void visit(Number number, String value, int index, boolean insideArray, int line) {
+		writer.invokeObjectNumber(value, line);
+		if (insideArray)
+			writer.invokeArrayPut(index, line);
 	}
 
 	public void visit(BlockArgument blockArgument, String value, int line) {

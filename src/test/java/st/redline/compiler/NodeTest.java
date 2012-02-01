@@ -105,7 +105,7 @@ public class NodeTest {
 	public void numberNodeShouldBeVisitable() {
 		Number number = new Number(null, null, null, "123", 2, "45", null, null, null);
 		number.accept(visitor);
-		verify(visitor).visit(number, "123.45", 2);
+		verify(visitor).visit(number, "123.45", 0, false, 2);
 	}
 
 	@Test

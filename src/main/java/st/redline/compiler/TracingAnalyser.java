@@ -187,9 +187,9 @@ public class TracingAnalyser implements AnalyserDelegate {
 		delegate.visit(identifier, value, line);
 	}
 
-	public void visit(Number number, String value, int line) {
-		trace("visit(Number) " + number + " " + String.valueOf(value) + " " + line);
-		delegate.visit(number, value, line);
+	public void visit(Number number, String value, int index, boolean insideArray, int line) {
+		trace("visit(Number) " + number + " " + String.valueOf(value) + " " + index + " " + insideArray + " " + line);
+		delegate.visit(number, value, index, insideArray, line);
 	}
 
 	public void visit(BlockArgument blockArgument, String value, int line) {
