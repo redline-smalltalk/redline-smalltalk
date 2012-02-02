@@ -144,15 +144,16 @@ class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(Block block, int line) {
-//		String blockClassName = createBlockName();
-//		String fullBlockClassName = analyser.packageName() + File.separator + blockClassName;
-//		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose);
-//		block.analyser(blockAnalyser);
-//		smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
+		String blockClassName = createBlockName();
+		String fullBlockClassName = analyser.packageName() + File.separator + blockClassName;
+		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose);
+		block.analyser(blockAnalyser);
+		smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
 		analyser.currentDelegate(new NoOpAnalyser(analyser));
+		writer.invokeObjectCompileBlock(fullBlockClassName, line);
 	}
 
-	SmalltalkClassLoader smalltalkClassLoader() {
+	public SmalltalkClassLoader smalltalkClassLoader() {
 		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class SmalltalkClassLoader extends ClassLoader {
 
-	static Map<String, Object> BLOCKS_TO_BE_COMPILED = new Hashtable<String, Object>();
+	public static Map<String, Object> BLOCKS_TO_BE_COMPILED = new Hashtable<String, Object>();
 	private final CommandLine commandLine;
 
 	public SmalltalkClassLoader(java.lang.ClassLoader classLoader, CommandLine commandLine) {

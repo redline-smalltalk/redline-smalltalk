@@ -3,15 +3,15 @@ package st.redline.compiler;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Spy;
+import st.redline.SmalltalkClassLoader;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.notNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ProgramAnalyserTest {
 
@@ -27,12 +27,23 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
-	public void shouldMakeBlockAnalyserCurrentAnalyserWhenVisitBeginOfBlock() {
+	public void shouldRegisterAndInvokeCompilerOfBlockWhenVisitBeginOfBlock() {
 		Block block = mock(Block.class);
-		when(parent.className()).thenReturn("block");
-		when(parent.packageName()).thenReturn("st.redline");
+		when(parent.className()).thenReturn("SomeClass");
+		when(parent.packageName()).thenReturn("st/redline");
+		ProgramAnalyser spy = spy(analyser);
+		SmalltalkClassLoader smalltalkClassLoader = mock(SmalltalkClassLoader.class);
+		doReturn(smalltalkClassLoader).when(spy).smalltalkClassLoader();
+		spy.visitBegin(block, 1);
+		verify(smalltalkClassLoader).registerBlockToBeCompiled(block, "st/redline/SomeClass$M1");
+		verify(writer).invokeObjectCompileBlock("st/redline/SomeClass$M1", 1);
+	}
+
+	@Test
+	public void shouldMakeNoOpAnalyserCurrentAnalyserWhenVisitBeginOfBlock() {
+		Block block = mock(Block.class);
 		analyser.visitBegin(block, 1);
-		verify(parent).currentDelegate(notNull(AnalyserDelegate.class));
+		verify(parent).currentDelegate(notNull(NoOpAnalyser.class));
 	}
 
 	@Test
