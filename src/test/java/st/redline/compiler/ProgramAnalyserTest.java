@@ -42,7 +42,12 @@ public class ProgramAnalyserTest {
 	@Test
 	public void shouldMakeNoOpAnalyserCurrentAnalyserWhenVisitBeginOfBlock() {
 		Block block = mock(Block.class);
-		analyser.visitBegin(block, 1);
+		when(parent.className()).thenReturn("SomeClass");
+		when(parent.packageName()).thenReturn("st/redline");
+		ProgramAnalyser spy = spy(analyser);
+		SmalltalkClassLoader smalltalkClassLoader = mock(SmalltalkClassLoader.class);
+		doReturn(smalltalkClassLoader).when(spy).smalltalkClassLoader();
+		spy.visitBegin(block, 1);
 		verify(parent).currentDelegate(notNull(NoOpAnalyser.class));
 	}
 
