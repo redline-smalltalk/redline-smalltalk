@@ -10,22 +10,25 @@ package st.redline;
 
 import st.redline.compiler.Block;
 
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PrimObject {
 
-	static final Map<String, PrimObject> BLOCKS = new Hashtable<String, PrimObject>();
-	static final Map<String, PrimObject> CLASSES = new Hashtable<String, PrimObject>();
-
+	static final Map<Object, Object> INTERNED_SYMBOLS = new ConcurrentHashMap<Object, Object>();
+	static final Map<String, PrimObject> BLOCKS = new ConcurrentHashMap<String, PrimObject>();
+	static final Map<String, PrimObject> CLASSES = new ConcurrentHashMap<String, PrimObject>();
 	static final PrimObject NIL = null;
+
 	static final PrimObject TRUE = null;
 	static final PrimObject FALSE = null;
-
 	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // default attribute is class
+
 	static final int CLASS_INDEX = 0;
 	static final PrimObject BASIC_DOES_NOT_UNDERSTAND = new PrimBasicDoesNotUnderstand();
 	static final PrimObject PRIM_NIL = new PrimObject();
+
+	static boolean BOOTSTRAPPING = false;
 
 	Object javaValue = null;
 	PrimObject[] attributes;
@@ -84,7 +87,20 @@ public class PrimObject {
 	}
 
 	public static PrimObject symbol(Object javaValue) {
+		Object internedValue = intern(javaValue);
+		if (BOOTSTRAPPING) {
+			PrimObject newObject = new PrimObject();
+			newObject.javaValue = internedValue;
+			return newObject;
+		}
 		throw new IllegalStateException("implement me");
+	}
+
+	static Object intern(Object value) {
+		if (INTERNED_SYMBOLS.containsKey(value))
+			return INTERNED_SYMBOLS.get(value);
+		INTERNED_SYMBOLS.put(value, value);
+		return value;
 	}
 
 	public static void dump(Object object) {

@@ -13,10 +13,23 @@ public class Bootstrapper {
 	}
 
 	public void bootstrap() {
+		markBootstrapping(true);
 		mapPackages(PrimObjectMetaclass.IMPORTS);
+		createAndRegisterProtoObject();
+		markBootstrapping(true);
 	}
 
-	private void mapPackages(Map<String, String> imports) {
+	void markBootstrapping(boolean bootstrapping) {
+		PrimObject.BOOTSTRAPPING = bootstrapping;
+	}
+
+	void createAndRegisterProtoObject() {
+		PrimObjectMetaclass protoObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
+		PrimObjectMetaclass protoObjectClass = protoObjectMetaClass.basicCreate("ProtoObject", null, "", "", "", "");
+		PrimObject.CLASSES.put("st.redline.ProtoObject", protoObjectClass);
+	}
+
+	void mapPackages(Map<String, String> imports) {
 		imports.put("ProtoObject", "st.redline.ProtoObject");
 		for (String sourceFile : SourceFileFinder.findIn("st" + File.separator + "redline")) {
 			String packageName = ClassPathUtilities.filenameWithExtensionToPackageName(sourceFile);

@@ -14,10 +14,10 @@ class PrimBasicDoesNotUnderstand extends PrimObject {
 		System.err.print("Object '" + receiver + "' does not understand '" + context.arguments[0].javaValue + "'");
 		if (context.arguments.length > 1) {
 			System.err.println(" with arguments:");
-			for (PrimObject argument : context.arguments)
-				System.err.println(argument);
-		}
-		System.err.println(".");
+			for (int i = 1; i < context.arguments.length; i++)
+				System.err.println(i + "\t" + context.arguments[i] + " " + context.arguments[i].javaValue());
+		} else
+			System.err.println(".");
 	}
 
 	private PrimObject[] copySelectorAndArguments(PrimContext context) {
