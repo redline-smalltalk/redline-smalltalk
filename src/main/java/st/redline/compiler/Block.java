@@ -1,7 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-class Block extends Primary {
+public class Block extends Primary {
 
 	private final int line;
 	private final BlockArguments blockArguments;
@@ -9,7 +9,7 @@ class Block extends Primary {
 	private final Statements statements;
 	private BlockAnalyser analyser;
 
-	Block(int line, BlockArguments blockArguments, Temporaries temporaries, Statements statements) {
+	public Block(int line, BlockArguments blockArguments, Temporaries temporaries, Statements statements) {
 		this.line = line;
 		this.blockArguments = blockArguments;
 		this.temporaries = temporaries;
@@ -43,11 +43,11 @@ class Block extends Primary {
 		nodeVisitor.visitEnd(this, line);
 	}
 
-	void analyser(BlockAnalyser analyser) {
+	public void analyser(BlockAnalyser analyser) {
 		this.analyser = analyser;
 	}
 
-	BlockAnalyser analyser() {
+	public BlockAnalyser analyser() {
 		return analyser;
 	}
 }

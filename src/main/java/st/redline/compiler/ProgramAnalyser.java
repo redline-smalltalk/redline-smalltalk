@@ -1,14 +1,13 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-import st.redline.PrimObjectMetaclass;
 import st.redline.SmalltalkClassLoader;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-class ProgramAnalyser implements AnalyserDelegate {
+public class ProgramAnalyser implements AnalyserDelegate {
 
 	protected final Analyser analyser;
 	private final ClassBytecodeWriter writer;

@@ -2,6 +2,9 @@
 package st.redline;
 
 import org.junit.Test;
+import st.redline.compiler.Analyser;
+import st.redline.compiler.Block;
+import st.redline.compiler.BlockAnalyser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,14 +15,15 @@ public class PrimObjectTest {
 
 	@Test (expected = IllegalStateException.class)
 	public void shouldThrowExceptionWhenBlockToBeCompiledNotFound() {
-		PrimObject.block("st/redline/Thing$M1");
+		new PrimObject().block("st/redline/Thing$M1");
 	}
 
 	@Test
 	public void shouldCreateInstanceOfExistingBlockWhenBlockCalledWithNameOfRegisteredBlock() {
+		PrimObject primObject = new PrimObject();
 		PrimObject block = mock(PrimObject.class);
 		PrimObject.BLOCKS.put("st/redline/Thing$M1", block);
-		PrimObject.block("st/redline/Thing$M1");
+		primObject.block("st/redline/Thing$M1");
 		// not a test so much as documentation.
 	}
 

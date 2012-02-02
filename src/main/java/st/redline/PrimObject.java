@@ -8,6 +8,8 @@ package st.redline;
 // Typically you don't create instances of PrimObject directly, instead you ask
 // a PrimObjectClass for an instance of the class it represents by sending it the 'new' message.
 
+import st.redline.compiler.Block;
+
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -37,13 +39,23 @@ public class PrimObject {
 		initialize();
 	}
 
-	public static PrimObject block(String name) {
+	public PrimObject block(String name) {
 		if (BLOCKS.containsKey(name))
 			return createInstanceOf(BLOCKS.get(name));
-		Object block = SmalltalkClassLoader.BLOCKS_TO_BE_COMPILED.remove(name);
+		Block block = (Block) SmalltalkClassLoader.BLOCKS_TO_BE_COMPILED.remove(name);
 		if (block == null)
 			throw new IllegalStateException("Block to be compiled '" + name + "' not found.");
-		throw new IllegalStateException("implement me");
+		block.accept(block.analyser());
+		try {
+			byte[] newClass = block.analyser().classBytes();
+			return (PrimObject) smalltalkClassLoader().defineClass(newClass).newInstance();
+		} catch (Exception e) {
+			throw new RedlineException(e);
+		}
+	}
+
+	SmalltalkClassLoader smalltalkClassLoader() {
+		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 
 	static PrimObject createInstanceOf(PrimObject primObject) {
