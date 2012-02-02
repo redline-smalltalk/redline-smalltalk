@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class PrimObject {
 
+	static final Map<String, PrimObject> BLOCKS = new Hashtable<String, PrimObject>();
 	static final Map<String, PrimObject> CLASSES = new Hashtable<String, PrimObject>();
 
 	static final PrimObject NIL = null;
@@ -34,6 +35,23 @@ public class PrimObject {
 	PrimObject(int basicSize) {
 		attributes = new PrimObject[basicSize + DEFAULT_ATTRIBUTE_COUNT];
 		initialize();
+	}
+
+	public static PrimObject block(String name) {
+		if (BLOCKS.containsKey(name))
+			return createInstanceOf(BLOCKS.get(name));
+		Object block = SmalltalkClassLoader.BLOCKS_TO_BE_COMPILED.remove(name);
+		if (block == null)
+			throw new IllegalStateException("Block to be compiled '" + name + "' not found.");
+		throw new IllegalStateException("implement me");
+	}
+
+	static PrimObject createInstanceOf(PrimObject primObject) {
+		try {
+			return primObject.getClass().newInstance();
+		} catch (Exception e) {
+			throw new RedlineException(e);
+		}
 	}
 
 	public static PrimObject string(Object javaValue) {

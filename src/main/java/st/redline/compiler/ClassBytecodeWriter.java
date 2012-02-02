@@ -153,7 +153,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	void invokeObjectCompileBlock(String name, int line) {
 		visitLine(line);
 		pushLiteral(name);
-		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "compileBlock", "(Ljava/lang/String;)Lst/redline/PrimObject;");
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "block", "(Ljava/lang/String;)Lst/redline/PrimObject;");
 	}
 
 	void invokeObjectString(String value, int line) {

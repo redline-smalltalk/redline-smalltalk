@@ -10,6 +10,19 @@ import static org.mockito.Mockito.*;
 
 public class PrimObjectTest {
 
+	@Test (expected = IllegalStateException.class)
+	public void shouldThrowExceptionWhenBlockToBeCompiledNotFound() {
+		PrimObject.block("st/redline/Thing$M1");
+	}
+
+	@Test
+	public void shouldCreateInstanceOfExistingBlockWhenBlockCalledWithNameOfRegisteredBlock() {
+		PrimObject block = mock(PrimObject.class);
+		PrimObject.BLOCKS.put("st/redline/Thing$M1", block);
+		PrimObject.block("st/redline/Thing$M1");
+		// not a test so much as documentation.
+	}
+
 	@Test
 	public void shouldRaiseRedlineExceptionWhenObjectCantBeResolved() {
 		try {
