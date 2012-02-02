@@ -52,4 +52,14 @@ public class Block extends Primary {
 	public BlockAnalyser analyser() {
 		return analyser;
 	}
+
+	public byte[] classBytes() {
+		return analyser.classBytes();
+	}
+
+	public int temporariesCount() {
+		if (temporaries != null)
+			return temporaries.size();
+		return 0;
+	}
 }

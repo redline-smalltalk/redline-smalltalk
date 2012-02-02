@@ -6,7 +6,7 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 	private Block thisBlock;
 
 	BlockAnalyser(Analyser analyser, String className, String packageName, boolean verbose, Block block) {
-		this(analyser, new BlockBytecodeWriter(className, packageName, verbose), verbose, block);
+		this(analyser, new BlockBytecodeWriter(className, packageName, verbose, block.temporariesCount()), verbose, block);
 	}
 
 	BlockAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose, Block block) {

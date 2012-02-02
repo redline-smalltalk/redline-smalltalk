@@ -41,14 +41,15 @@ public class PrimObject {
 
 	public PrimObject block(String name) {
 		if (BLOCKS.containsKey(name))
-			return createInstanceOf(BLOCKS.get(name));
+			return createBlockInstance(BLOCKS.get(name));
 		Block block = (Block) SmalltalkClassLoader.BLOCKS_TO_BE_COMPILED.remove(name);
 		if (block == null)
 			throw new IllegalStateException("Block to be compiled '" + name + "' not found.");
 		block.accept(block.analyser());
 		try {
-			byte[] newClass = block.analyser().classBytes();
-			return (PrimObject) smalltalkClassLoader().defineClass(newClass).newInstance();
+			PrimObject newblock = (PrimObject) smalltalkClassLoader().defineClass(block.classBytes()).newInstance();
+			BLOCKS.put(name, newblock);
+			return newblock;
 		} catch (Exception e) {
 			throw new RedlineException(e);
 		}
@@ -58,9 +59,11 @@ public class PrimObject {
 		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 
-	static PrimObject createInstanceOf(PrimObject primObject) {
+	static PrimObject createBlockInstance(PrimObject block) {
 		try {
-			return primObject.getClass().newInstance();
+			// We don't create a new instance because the context passed to a block contains space for args and temps.
+			// Nb: first thing a block's invoke methods does is set the context temporary space.
+			return block;
 		} catch (Exception e) {
 			throw new RedlineException(e);
 		}
