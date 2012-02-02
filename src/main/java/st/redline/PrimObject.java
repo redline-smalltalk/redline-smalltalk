@@ -30,7 +30,7 @@ public class PrimObject {
 	Object javaValue = null;
 	PrimObject[] attributes;
 
-	PrimObject() {
+	public PrimObject() {
 		this(0);
 	}
 
@@ -180,7 +180,7 @@ public class PrimObject {
 		return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
 	}
 
-	PrimObject invoke(PrimObject receiver, PrimContext context) {
+	protected PrimObject invoke(PrimObject receiver, PrimContext context) {
 		return this;
 	}
 

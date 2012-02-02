@@ -21,8 +21,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	};
 	private final boolean verbose;
 
-	private ClassWriter cw;
-	private MethodVisitor mv;
+	protected ClassWriter cw;
+	protected MethodVisitor mv;
 	private String fullyQualifiedClassName;
 
 	ClassBytecodeWriter(String className, String packageName, boolean verbose) {

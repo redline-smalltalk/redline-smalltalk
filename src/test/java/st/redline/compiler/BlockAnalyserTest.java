@@ -3,6 +3,7 @@ package st.redline.compiler;
 
 import org.junit.Before;
 import org.junit.Test;
+import st.redline.PrimObject;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -15,18 +16,31 @@ public class BlockAnalyserTest {
 	BlockAnalyser analyser;
 	ClassBytecodeWriter writer;
 	Analyser parent;
+	Block block;
 
 	@Before
 	public void setup() {
-		writer = mock(ClassBytecodeWriter.class);
+		writer = mock(BlockBytecodeWriter.class);
 		parent = mock(Analyser.class);
-		analyser = new BlockAnalyser(parent, writer, false);
+		block = mock(Block.class);
+		analyser = new BlockAnalyser(parent, writer, false, block);
 	}
 
 	@Test
-	public void shouldMakeRemoveBlockAnalyserAsCurrentAnalyserWhenVisitEndOfBlock() {
-		Block block = mock(Block.class);
+	public void shouldRemoveBlockAnalyserAsCurrentAnalyserWhenVisitEndOfBlock() {
 		analyser.visitEnd(block, 1);
 		verify(parent).previousDelegate();
+	}
+
+	@Test
+	public void shouldOpenClassWhenVisitBeginOfBlock() {
+		analyser.visitBegin(block, 1);
+		verify(writer).openClass();
+	}
+
+	@Test
+	public void shouldCloseClassWhenVisitEndOfBlock() {
+		analyser.visitEnd(block, 1);
+		verify(writer).closeClass();
 	}
 }

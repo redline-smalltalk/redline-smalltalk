@@ -5,57 +5,31 @@ import org.junit.Before;
 import org.junit.Test;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import st.redline.PrimObject;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class ClassBytecodeWriterTest implements Opcodes {
+public class BlockBytecodeWriterTest {
 
 	static String CLASS_NAME = "Example";
 	static String PACKAGE_NAME = "com.domain";
 
 	ClassWriter classWriter;
 	MethodVisitor methodVisitor;
-	ClassBytecodeWriter writer;
+	BlockBytecodeWriter writer;
 
 	@Before
 	public void setup() {
 		methodVisitor = mock(MethodVisitor.class);
 		classWriter = mock(ClassWriter.class);
-		writer = new ClassBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, classWriter);
-	}
-
-	@Test
-	public void shouldCreateClassWriterDuringDefaultConstruction() {
-		assertNotNull(new ClassBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false).classWriter());
-	}
-
-	@Test
-	public void shouldPushSlot0AsJavaThis() {
-		writer.methodVisitor(methodVisitor);
-		writer.pushThis();
-		verify(methodVisitor).visitVarInsn(ALOAD, 0);
-	}
-
-	@Test
-	public void shouldPushSlot1AsSmalltalkReceiver() {
-		writer.methodVisitor(methodVisitor);
-		writer.pushReceiver();
-		verify(methodVisitor).visitVarInsn(ALOAD, 1);
-	}
-
-	@Test
-	public void shouldPushSlot2AsContext() {
-		writer.methodVisitor(methodVisitor);
-		writer.pushContext();
-		verify(methodVisitor).visitVarInsn(ALOAD, 2);
+		writer = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, classWriter);
 	}
 
 	@Test
 	public void shouldCreateLoadableClassWhenClassOpenedAndClosed() throws IllegalAccessException, InstantiationException {
-		ClassBytecodeWriter writerNotUsingMocks = new ClassBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false);
+		BlockBytecodeWriter writerNotUsingMocks = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false);
 		writerNotUsingMocks.openClass();
 		writerNotUsingMocks.closeClass();
 		byte[] classBytes = writerNotUsingMocks.contents();

@@ -48,7 +48,7 @@ public class Analyser implements NodeVisitor {
 
 	void previousDelegate() {
 		delegates.pop();
-		delegate = delegates.peek();
+		delegate = delegates.isEmpty() ? null : delegates.peek();
 	}
 
 	public byte[] classBytes() {

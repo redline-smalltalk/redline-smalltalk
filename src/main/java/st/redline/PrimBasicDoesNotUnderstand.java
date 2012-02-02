@@ -3,7 +3,7 @@ package st.redline;
 
 class PrimBasicDoesNotUnderstand extends PrimObject {
 
-	PrimObject invoke(PrimObject receiver, PrimContext context) {
+	protected PrimObject invoke(PrimObject receiver, PrimContext context) {
 		if (!"basicDoesNotUnderstand:".equals(context.selector))
 			return receiver.perform0("basicDoesNotUnderstand:", copySelectorAndArguments(context));
 		outputDoesNotUnderstandError(receiver, context);

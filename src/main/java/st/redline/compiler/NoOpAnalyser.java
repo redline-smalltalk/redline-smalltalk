@@ -164,6 +164,6 @@ class NoOpAnalyser implements AnalyserDelegate {
 	}
 
 	public byte[] classBytes() {
-		return new byte[0];  //To change body of implemented methods use File | Settings | File Templates.
+		return new byte[0];
 	}
 }

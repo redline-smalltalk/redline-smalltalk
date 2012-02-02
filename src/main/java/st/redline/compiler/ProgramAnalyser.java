@@ -10,7 +10,7 @@ import java.util.Map;
 public class ProgramAnalyser implements AnalyserDelegate {
 
 	protected final Analyser analyser;
-	private final ClassBytecodeWriter writer;
+	protected final ClassBytecodeWriter writer;
 	private final boolean verbose;
 	private Map<String, Integer> temporariesRegistry;
 	private int temporariesIndex = 0;
@@ -144,12 +144,19 @@ public class ProgramAnalyser implements AnalyserDelegate {
 
 	public void visitBegin(Block block, int line) {
 		String blockClassName = createBlockName();
-		String fullBlockClassName = analyser.packageName() + (analyser.packageName() == "" ? "" : File.separator) + blockClassName;
-		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose);
-		block.analyser(blockAnalyser);
+		String fullBlockClassName = createFullBlockName(blockClassName);
+		block.analyser(createBlockAnalyser(blockClassName, block));
 		smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
 		analyser.currentDelegate(new NoOpAnalyser(analyser));
 		writer.invokeObjectCompileBlock(fullBlockClassName, line);
+	}
+
+	String createFullBlockName(String blockClassName) {
+		return analyser.packageName() + (analyser.packageName() == "" ? "" : File.separator) + blockClassName;
+	}
+
+	BlockAnalyser createBlockAnalyser(String blockClassName, Block block) {
+		return new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose, block);
 	}
 
 	public SmalltalkClassLoader smalltalkClassLoader() {
