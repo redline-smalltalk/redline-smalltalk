@@ -9,12 +9,13 @@ import java.util.Map;
 
 public class ProgramAnalyser implements AnalyserDelegate {
 
+	protected static int BLOCK_NUMBER = 0;
+
 	protected final Analyser analyser;
 	protected final ClassBytecodeWriter writer;
 	private final boolean verbose;
 	private Map<String, Integer> temporariesRegistry;
 	private int temporariesIndex = 0;
-	private int blockSequence = 0;
 
 	ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
 		this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose);
@@ -142,12 +143,15 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(BinarySelectorMessageElement binarySelectorMessageElement, String selector, int line) {
 	}
 
+	public boolean skipBlockVisit(Block block) {
+		return true;
+	}
+
 	public void visitBegin(Block block, int line) {
 		String blockClassName = createBlockName();
 		String fullBlockClassName = createFullBlockName(blockClassName);
 		block.analyser(createBlockAnalyser(blockClassName, block));
 		smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
-		analyser.currentDelegate(new NoOpAnalyser(analyser));
 		writer.invokeObjectCompileBlock(fullBlockClassName, line);
 	}
 
@@ -164,8 +168,8 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	String createBlockName() {
-		blockSequence++;
-		return analyser.className() + "$M" + blockSequence;
+		BLOCK_NUMBER++;
+		return analyser.className() + "$M" + BLOCK_NUMBER;
 	}
 
 	public void visitEnd(Block block, int line) {

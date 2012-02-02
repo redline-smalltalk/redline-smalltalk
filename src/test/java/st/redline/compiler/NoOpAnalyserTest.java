@@ -18,10 +18,10 @@ public class NoOpAnalyserTest {
 		analyser = new NoOpAnalyser(parent);
 	}
 
-	@Test
-	public void shouldMakeRemoveNoOpAnalyserAsCurrentAnalyserWhenVisitEndOfBlock() {
-		Block block = mock(Block.class);
-		analyser.visitEnd(block, 1);
-		verify(parent).previousDelegate();
-	}
+//	@Test
+//	public void shouldMakeRemoveNoOpAnalyserAsCurrentAnalyserWhenVisitEndOfBlock() {
+//		Block block = mock(Block.class);
+//		analyser.visitEnd(block, 1);
+//		verify(parent).previousDelegate();
+//	}
 }

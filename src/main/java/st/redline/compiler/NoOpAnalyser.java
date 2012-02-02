@@ -81,11 +81,14 @@ class NoOpAnalyser implements AnalyserDelegate {
 	public void visitEnd(BinarySelectorMessageElement binarySelectorMessageElement, String selector, int line) {
 	}
 
+	public boolean skipBlockVisit(Block block) {
+		return true;
+	}
+
 	public void visitBegin(Block block, int line) {
 	}
 
 	public void visitEnd(Block block, int line) {
-		analyser.previousDelegate();
 	}
 
 	public void visitBegin(BlockArguments blockArguments, int argumentCount) {

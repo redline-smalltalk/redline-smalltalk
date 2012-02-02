@@ -258,4 +258,8 @@ public class Analyser implements NodeVisitor {
 	public void visit(Primitive primitive, String keyword, int line, String digits) {
 		delegate.visit(primitive, keyword, line, digits);
 	}
+
+	public boolean skipBlockVisit(Block block) {
+		return delegate.skipBlockVisit(block);
+	}
 }

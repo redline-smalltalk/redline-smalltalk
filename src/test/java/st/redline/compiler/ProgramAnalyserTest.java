@@ -1,6 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Spy;
@@ -40,16 +41,21 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
-	public void shouldMakeNoOpAnalyserCurrentAnalyserWhenVisitBeginOfBlock() {
-		Block block = mock(Block.class);
-		when(parent.className()).thenReturn("SomeClass");
-		when(parent.packageName()).thenReturn("st/redline");
-		ProgramAnalyser spy = spy(analyser);
-		SmalltalkClassLoader smalltalkClassLoader = mock(SmalltalkClassLoader.class);
-		doReturn(smalltalkClassLoader).when(spy).smalltalkClassLoader();
-		spy.visitBegin(block, 1);
-		verify(parent).currentDelegate(notNull(NoOpAnalyser.class));
+	public void shouldAlwaysSkipBlockVisits() {
+		Assert.assertTrue(analyser.skipBlockVisit(null));
 	}
+
+//	@Test
+//	public void shouldMakeNoOpAnalyserCurrentAnalyserWhenVisitBeginOfBlock() {
+//		Block block = mock(Block.class);
+//		when(parent.className()).thenReturn("SomeClass");
+//		when(parent.packageName()).thenReturn("st/redline");
+//		ProgramAnalyser spy = spy(analyser);
+//		SmalltalkClassLoader smalltalkClassLoader = mock(SmalltalkClassLoader.class);
+//		doReturn(smalltalkClassLoader).when(spy).smalltalkClassLoader();
+//		spy.visitBegin(block, 1);
+//		verify(parent).currentDelegate(notNull(NoOpAnalyser.class));
+//	}
 
 	@Test
 	public void shouldInvokePrimObjectSymbolWhenVisitSymbolConstant() {

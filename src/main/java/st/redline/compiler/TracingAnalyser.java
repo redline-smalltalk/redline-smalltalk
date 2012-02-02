@@ -271,4 +271,9 @@ public class TracingAnalyser implements AnalyserDelegate {
 		trace("visit(Primitive) " + primitive + " " + String.valueOf(keyword) + " " + line + " " + digits);
 		delegate.visit(primitive, keyword, line, digits);
 	}
+
+	public boolean skipBlockVisit(Block block) {
+		trace("skipBlockVisit() " + block);
+		return delegate.skipBlockVisit(block);
+	}
 }

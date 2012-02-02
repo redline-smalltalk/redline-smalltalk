@@ -14,17 +14,26 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 		this.thisBlock = block;
 	}
 
+	public boolean skipBlockVisit(Block block) {
+		return block != thisBlock;
+	}
+
 	public void visitBegin(Block block, int line) {
 		if (block == thisBlock)
 			writer.openClass();
 		else
-			throw new IllegalStateException("Handle visiting new block.");
+			super.visitBegin(block, line);
 	}
 
 	public void visitEnd(Block block, int line) {
 		if (block != thisBlock)
-			throw new IllegalStateException("Expected visitEnd of own block.");
+			throw new IllegalStateException("Expected visitEnd of own block. Got " + block);
 		writer.closeClass();
 		analyser.previousDelegate();
+	}
+
+	String createBlockName() {
+		BLOCK_NUMBER++;
+		return analyser.className() + "B" + BLOCK_NUMBER;
 	}
 }

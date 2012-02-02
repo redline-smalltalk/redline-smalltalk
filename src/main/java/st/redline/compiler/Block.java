@@ -34,6 +34,8 @@ public class Block extends Primary {
 
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visitBegin(this, line);
+		if (nodeVisitor.skipBlockVisit(this))
+			return;
 		if (blockArguments != null)
 			blockArguments.accept(nodeVisitor);
 		if (temporaries != null)
