@@ -92,7 +92,6 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	public void registerBlockToBeCompiled(Object block, String name) {
-		System.out.println("registerBlockToBeCompiled() " + block + " " + name);
 		if (BLOCKS_TO_BE_COMPILED.containsKey(name))
 			throw new IllegalStateException("Block to be compiled registered twice: " + name);
 		BLOCKS_TO_BE_COMPILED.put(name, block);
