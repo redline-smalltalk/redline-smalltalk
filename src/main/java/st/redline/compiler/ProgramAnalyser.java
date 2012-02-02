@@ -145,7 +145,7 @@ class ProgramAnalyser implements AnalyserDelegate {
 
 	public void visitBegin(Block block, int line) {
 		String blockClassName = createBlockName();
-		String fullBlockClassName = analyser.packageName() + File.separator + blockClassName;
+		String fullBlockClassName = analyser.packageName() + (analyser.packageName() == "" ? "" : File.separator) + blockClassName;
 		BlockAnalyser blockAnalyser = new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose);
 		block.analyser(blockAnalyser);
 		smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
