@@ -30,15 +30,6 @@ public class BlockBytecodeWriterTest implements Opcodes {
 	}
 
 	@Test
-	public void shouldInvokeContextTemporariesInitWhenBlockHasTemporaries() {
-		when(classWriter.visitMethod(ACC_PROTECTED, "invoke", "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;", null, null)).thenReturn(methodVisitor);
-		writer.openInvokeMethod();
-		verify(methodVisitor).visitVarInsn(ALOAD, 2);
-		verify(methodVisitor).visitInsn(ICONST_2);
-		verify(methodVisitor).visitMethodInsn(INVOKEVIRTUAL, "st/redline/PrimContext", "temporariesInit", "(I)V");
-	}
-
-	@Test
 	public void shouldCreateLoadableClassWhenClassOpenedAndClosed() throws IllegalAccessException, InstantiationException {
 		BlockBytecodeWriter writerNotUsingMocks = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, 0);
 		writerNotUsingMocks.openClass();

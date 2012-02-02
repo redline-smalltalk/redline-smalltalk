@@ -35,11 +35,6 @@ public class BlockBytecodeWriter extends ClassBytecodeWriter implements Opcodes 
 	void openInvokeMethod() {
 		mv = cw.visitMethod(ACC_PROTECTED, "invoke", INVOKE_SIG, null, null);
 		mv.visitCode();
-		if (temporariesCount > 0) {
-			pushContext();
-			pushNumber(temporariesCount);
-			mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporariesInit", "(I)V");
-		}
 		pushReceiver();
 	}
 }
