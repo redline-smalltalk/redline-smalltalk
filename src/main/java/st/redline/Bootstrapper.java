@@ -20,7 +20,7 @@ public class Bootstrapper {
 		markBootstrapping(true);
 		mapPackages(PrimObjectMetaclass.IMPORTS);
 		createAndRegisterProtoObject();
-		markBootstrapping(true);
+		markBootstrapping(false);
 	}
 
 	void markBootstrapping(boolean bootstrapping) {
