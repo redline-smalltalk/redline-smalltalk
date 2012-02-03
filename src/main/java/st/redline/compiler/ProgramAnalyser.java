@@ -156,7 +156,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	String createFullBlockName(String blockClassName) {
-		return analyser.packageName() + (analyser.packageName() == "" ? "" : File.separator) + blockClassName;
+		return analyser.packageName() + (analyser.packageName() == "" ? "" : ".") + blockClassName;
 	}
 
 	BlockAnalyser createBlockAnalyser(String blockClassName, Block block) {

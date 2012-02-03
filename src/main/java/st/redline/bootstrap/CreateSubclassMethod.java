@@ -15,7 +15,7 @@ public class CreateSubclassMethod extends PrimObject {
 	}
 
 	String fullyQualifiedClassName(String name) {
-		String packageName = PrimObject.PACKAGE_REGISTRY.isEmpty() ? null : PrimObject.PACKAGE_REGISTRY.pop();
+		String packageName = PrimObject.PACKAGE_REGISTRY.isEmpty() ? null : PrimObject.PACKAGE_REGISTRY.peek();
 		return packageName == null ? name : packageName + "." + name;
 	}
 

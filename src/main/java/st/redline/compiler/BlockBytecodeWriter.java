@@ -9,16 +9,12 @@ public class BlockBytecodeWriter extends ClassBytecodeWriter implements Opcodes 
 	private static final String CONTEXT = "st/redline/PrimContext";
 	private static final String INVOKE_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
 
-	private final int temporariesCount;
-
-	BlockBytecodeWriter(String className, String packageName, boolean verbose, int temporariesCount) {
+	BlockBytecodeWriter(String className, String packageName, boolean verbose) {
 		super(className, packageName, verbose);
-		this.temporariesCount = temporariesCount;
 	}
 
-	BlockBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter, int temporariesCount) {
+	BlockBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter) {
 		super(className, packageName, verbose, classWriter);
-		this.temporariesCount = temporariesCount;
 	}
 
 	String superclass() {

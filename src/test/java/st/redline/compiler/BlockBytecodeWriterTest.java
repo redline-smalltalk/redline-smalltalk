@@ -26,12 +26,12 @@ public class BlockBytecodeWriterTest implements Opcodes {
 	public void setup() {
 		methodVisitor = mock(MethodVisitor.class);
 		classWriter = mock(ClassWriter.class);
-		writer = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, classWriter, 2);
+		writer = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, classWriter);
 	}
 
 	@Test
 	public void shouldCreateLoadableClassWhenClassOpenedAndClosed() throws IllegalAccessException, InstantiationException {
-		BlockBytecodeWriter writerNotUsingMocks = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, 0);
+		BlockBytecodeWriter writerNotUsingMocks = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false);
 		writerNotUsingMocks.openClass();
 		writerNotUsingMocks.closeClass();
 		byte[] classBytes = writerNotUsingMocks.contents();

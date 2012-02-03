@@ -31,13 +31,13 @@ public class ProgramAnalyserTest {
 	public void shouldRegisterAndInvokeCompilerOfBlockWhenVisitBeginOfBlock() {
 		Block block = mock(Block.class);
 		when(parent.className()).thenReturn("SomeClass");
-		when(parent.packageName()).thenReturn("st/redline");
+		when(parent.packageName()).thenReturn("st.redline");
 		ProgramAnalyser spy = spy(analyser);
 		SmalltalkClassLoader smalltalkClassLoader = mock(SmalltalkClassLoader.class);
 		doReturn(smalltalkClassLoader).when(spy).smalltalkClassLoader();
 		spy.visitBegin(block, 1);
-		verify(smalltalkClassLoader).registerBlockToBeCompiled(block, "st/redline/SomeClass$M1");
-		verify(writer).invokeObjectCompileBlock("st/redline/SomeClass$M1", 1);
+		verify(smalltalkClassLoader).registerBlockToBeCompiled(block, "st.redline.SomeClass$M1");
+		verify(writer).invokeObjectCompileBlock("st.redline.SomeClass$M1", 1);
 	}
 
 	@Test
