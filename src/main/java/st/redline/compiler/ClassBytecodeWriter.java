@@ -17,7 +17,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String SEND_MESSAGES_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
 	private static final String[] SIGNATURES = {
 		"(Ljava/lang/String;)Lst/redline/PrimObject;",
-		"(Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;"
+		"(Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
+		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
+		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;"
 	};
 	private final String packageName;
 	private final boolean verbose;
