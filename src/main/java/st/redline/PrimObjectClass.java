@@ -10,7 +10,7 @@ import java.util.Map;
 // a PrimObjectMetaclass for an instance of the class it represents.
 // NOTE: DONT EVER CREATE AN INSTANCE OF THIS CLASS DIRECTLY - SEE OBJECTMETACLASS.
 
-class PrimObjectClass extends PrimObject {
+public class PrimObjectClass extends PrimObject {
 
 	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for superclass
 	static final int SUPERCLASS_INDEX = PrimObject.CLASS_INDEX + 1;
@@ -39,7 +39,7 @@ class PrimObjectClass extends PrimObject {
 		return methods().get(selector);
 	}
 
-	Map<String, PrimObject> methods() {
+	public Map<String, PrimObject> methods() {
 		return (Map<String, PrimObject>) javaValue;
 	}
 
