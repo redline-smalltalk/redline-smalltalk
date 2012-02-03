@@ -24,6 +24,10 @@ public class PrimContext {
 		return temporaries;
 	}
 
+	public PrimObject argumentAt(int index) {
+		return arguments[index];
+	}
+
 	public void temporariesInit(int size) {
 		temporaries = new PrimObject[size];
 		for (int i = 0; i < size; i++)

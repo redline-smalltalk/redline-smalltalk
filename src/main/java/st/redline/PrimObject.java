@@ -11,13 +11,15 @@ package st.redline;
 import st.redline.compiler.Block;
 
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PrimObject {
 
+	public static final Stack<String> PACKAGE_REGISTRY = new Stack<String>();
+	public static final Map<String, PrimObject> CLASSES = new ConcurrentHashMap<String, PrimObject>();
 	static final Map<Object, Object> INTERNED_SYMBOLS = new ConcurrentHashMap<Object, Object>();
 	static final Map<String, PrimObject> BLOCKS = new ConcurrentHashMap<String, PrimObject>();
-	static final Map<String, PrimObject> CLASSES = new ConcurrentHashMap<String, PrimObject>();
 	static final PrimObject NIL = null;
 
 	static final PrimObject TRUE = null;
@@ -215,16 +217,16 @@ public class PrimObject {
 		return this;
 	}
 
-	Object javaValue() {
+	public Object javaValue() {
 		return javaValue;
 	}
 
-	PrimObject javaValue(Object javaValue) {
+	public PrimObject javaValue(Object javaValue) {
 		this.javaValue = javaValue;
 		return this;
 	}
 
-	PrimObject cls() {
+	public PrimObject cls() {
 		return attributes[CLASS_INDEX];
 	}
 

@@ -19,6 +19,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		"(Ljava/lang/String;)Lst/redline/PrimObject;",
 		"(Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;"
 	};
+	private final String packageName;
 	private final boolean verbose;
 
 	protected ClassWriter cw;
@@ -31,6 +32,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	ClassBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter) {
+		this.packageName = packageName;
 		this.verbose = verbose;
 		this.cw = classWriter;
 		fullyQualifiedClassName = ClassPathUtilities.classNameToFullyQualifiedClassName(packageName, className);
@@ -87,8 +89,27 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	void writeInitializeMethod() {
 		openInitializeMethod();
+		registerPackage();
 		invokeMessageSends();
+		deregisterPackage();
 		closeInitializeMethod();
+	}
+
+	void deregisterPackage() {
+		if (packageName == "")
+			return;
+		mv.visitFieldInsn(GETSTATIC, OBJECT, "PACKAGE_REGISTRY", "Ljava/util/Stack;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Stack", "pop", "()Ljava/lang/Object;");
+		mv.visitInsn(POP);
+	}
+
+	void registerPackage() {
+		if (packageName == "")
+			return;
+		mv.visitFieldInsn(GETSTATIC, OBJECT, "PACKAGE_REGISTRY", "Ljava/util/Stack;");
+		pushLiteral(packageName);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Stack", "push", "(Ljava/lang/Object;)Ljava/lang/Object;");
+		mv.visitInsn(POP);
 	}
 
 	void invokeMessageSends() {

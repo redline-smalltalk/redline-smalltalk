@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
+import st.redline.bootstrap.CreateSubclassMethod;
+
 import java.io.File;
 import java.util.Map;
 
@@ -25,6 +27,7 @@ public class Bootstrapper {
 
 	void createAndRegisterProtoObject() {
 		PrimObjectMetaclass protoObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
+		protoObjectMetaClass.methods().put("<", new CreateSubclassMethod());
 		PrimObjectMetaclass protoObjectClass = protoObjectMetaClass.basicCreate("ProtoObject", null, "", "", "", "");
 		PrimObject.CLASSES.put("st.redline.ProtoObject", protoObjectClass);
 	}
