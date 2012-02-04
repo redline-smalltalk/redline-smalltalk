@@ -4,6 +4,7 @@ package st.redline;
 import st.redline.bootstrap.AccessClassMethod;
 import st.redline.bootstrap.AtSelectorPutMethod;
 import st.redline.bootstrap.CreateSubclassMethod;
+import st.redline.bootstrap.InitializeMethod;
 
 import java.io.File;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class Bootstrapper {
 		protoObjectMetaClass.methods().put("<", new CreateSubclassMethod());
 		protoObjectMetaClass.methods().put("atSelector:put:", new AtSelectorPutMethod());
 		protoObjectMetaClass.methods().put("class", new AccessClassMethod());
+		protoObjectMetaClass.methods().put("initialize", new InitializeMethod());
 		PrimObjectMetaclass protoObjectClass = protoObjectMetaClass.basicCreate("ProtoObject", null, "", "", "", "");
 		PrimObject.CLASSES.put("st.redline.ProtoObject", protoObjectClass);
 	}
