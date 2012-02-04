@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class PrimObjectMetaclass extends PrimObjectClass {
 
-	static final PrimObjectMetaclass METACLASS = new PrimObjectMetaclass();
 	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for name, superclass etc etc
 	static final int NAME_INDEX = PrimObjectClass.SUPERCLASS_INDEX + 1;
+	static final PrimObjectMetaclass METACLASS;
 	static {
-		METACLASS.cls(null);
+		METACLASS = basicSubclassOf(null).basicCreate("Metaclass", null, "", "", "", "");
 	}
 
 	static Map<String, String> IMPORTS = new Hashtable<String, String>();

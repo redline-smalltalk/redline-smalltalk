@@ -7,6 +7,7 @@ package st.redline;
 // - hold 'n' + 1 primitive objects, one is class object
 // Typically you don't create instances of PrimObject directly, instead you ask
 // a PrimObjectClass for an instance of the class it represents by sending it the 'new' message.
+// A PrimObjectClass instance is obtained via its MetaClass, see PrimObjectMetaclass.
 
 import st.redline.compiler.Block;
 
@@ -16,7 +17,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PrimObject {
 
-	public static final Stack<String> PACKAGE_REGISTRY = new Stack<String>();
+	public static final ThreadLocal<Stack<String>> PACKAGE_REGISTRY = new ThreadLocal<Stack<String>>();
+	static {
+		PACKAGE_REGISTRY.set(new Stack<String>());
+	}
 	public static final Map<String, PrimObject> CLASSES = new ConcurrentHashMap<String, PrimObject>();
 	static final Map<Object, Object> INTERNED_SYMBOLS = new ConcurrentHashMap<Object, Object>();
 	static final Map<String, PrimObject> BLOCKS = new ConcurrentHashMap<String, PrimObject>();

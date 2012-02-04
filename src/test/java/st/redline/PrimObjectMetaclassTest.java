@@ -72,8 +72,8 @@ public class PrimObjectMetaclassTest {
 	}
 
 	@Test
-	public void basicMetaClassShouldNotHaveClass() {
-		assertEquals(null, PrimObjectMetaclass.METACLASS.cls());
+	public void basicMetaClassShouldHaveClass() {
+		assertNotNull(PrimObjectMetaclass.METACLASS.cls());
 	}
 
 	@Test

@@ -21,7 +21,11 @@ public class Bootstrapper {
 		markBootstrapping(true);
 		mapPackages(PrimObjectMetaclass.IMPORTS);
 		createAndRegisterProtoObject();
+		registerBootstrappedSingletons();
 		markBootstrapping(false);
+	}
+
+	void registerBootstrappedSingletons() {
 	}
 
 	void markBootstrapping(boolean bootstrapping) {
