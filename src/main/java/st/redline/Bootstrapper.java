@@ -22,10 +22,33 @@ public class Bootstrapper {
 		mapPackages(PrimObjectMetaclass.IMPORTS);
 		createAndRegisterProtoObject();
 		registerBootstrappedSingletons();
+		makeClassSuperclassOfObjectsClass();
+		makeClassDescriptionSuperclassOfMetaclassClass();
 		markBootstrapping(false);
+		instantiateNonBootstrappedSingletons();
+	}
+
+	void makeClassDescriptionSuperclassOfMetaclassClass() {
+		primObjectMetaclass.superclass(primObjectMetaclass.resolveObject("st.redline.ClassDescription"));
+	}
+
+	void makeClassSuperclassOfObjectsClass() {
+		PrimObjectClass objectClass = (PrimObjectClass) primObjectMetaclass.resolveObject("st.redline.Object").cls();
+		objectClass.superclass(primObjectMetaclass.resolveObject("st.redline.Class"));
+	}
+
+	void instantiateNonBootstrappedSingletons() {
+		PrimObject.NIL.cls(primObjectMetaclass.resolveObject("st.redline.UndefinedObject"));
+		PrimObject.TRUE = primObjectMetaclass.resolveObject("st.redline.True").perform("new");
+		PrimObject.FALSE = primObjectMetaclass.resolveObject("st.redline.False").perform("new");
 	}
 
 	void registerBootstrappedSingletons() {
+		PrimObject.CLASSES.put("st.redline.Metaclass", primObjectMetaclass);
+		PrimObjectMetaclass undefinedObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
+		PrimObjectMetaclass undefinedObjectClass = undefinedObjectMetaClass.basicCreate("UndefinedObject", null, "", "", "", "");
+		PrimObject.NIL = new PrimObject();
+		PrimObject.NIL.cls(undefinedObjectClass);
 	}
 
 	void markBootstrapping(boolean bootstrapping) {

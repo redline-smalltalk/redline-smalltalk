@@ -24,12 +24,12 @@ public class PrimObject {
 	public static final Map<String, PrimObject> CLASSES = new ConcurrentHashMap<String, PrimObject>();
 	static final Map<Object, Object> INTERNED_SYMBOLS = new ConcurrentHashMap<Object, Object>();
 	static final Map<String, PrimObject> BLOCKS = new ConcurrentHashMap<String, PrimObject>();
-	static final PrimObject NIL = null;
 
-	static final PrimObject TRUE = null;
-	static final PrimObject FALSE = null;
+	static PrimObject NIL = null;
+	static PrimObject TRUE = null;
+	static PrimObject FALSE = null;
+
 	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // default attribute is class
-
 	static final int CLASS_INDEX = 0;
 	static final PrimObject BASIC_DOES_NOT_UNDERSTAND = new PrimBasicDoesNotUnderstand();
 	static final PrimObject PRIM_NIL = new PrimObject();

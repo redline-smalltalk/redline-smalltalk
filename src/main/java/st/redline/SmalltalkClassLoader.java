@@ -22,10 +22,10 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	protected void bootstrap() {
-		loadPrimObject().bootstrap();
+		loadPrimObjectMetaclass().bootstrap();
 	}
 
-	private PrimObjectMetaclass loadPrimObject() {
+	private PrimObjectMetaclass loadPrimObjectMetaclass() {
 		try {
 			return ((PrimObjectMetaclass) loadClass("st.redline.PrimObjectMetaclass").newInstance());
 		} catch (Exception e) {
