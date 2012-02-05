@@ -15,6 +15,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	private static final String CONTEXT = "st/redline/PrimContext";
 	private static final String SEND_MESSAGES = "_sendMessages_";
 	private static final String SEND_MESSAGES_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
+	private static final String PRIMITIVE_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
 	private static final String[] SIGNATURES = {
 		"(Ljava/lang/String;)Lst/redline/PrimObject;",
 		"(Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
@@ -209,6 +210,17 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	void invokeArrayPut(int index, int line) {
 		throw new IllegalStateException("implement me");
+	}
+
+	void invokePrimitive(int line, String primitive) {
+		// TODO.JCL - cater for case where primitive fails - for now return primitive result.
+		// Doing ARETURN here means there can be more than one ARETURN emitted, this is OK.
+		visitLine(line);
+		pushThis();
+		pushReceiver();
+		pushContext();
+		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "p" + primitive, PRIMITIVE_SIG);
+		mv.visitInsn(ARETURN);
 	}
 
 	void pop() {

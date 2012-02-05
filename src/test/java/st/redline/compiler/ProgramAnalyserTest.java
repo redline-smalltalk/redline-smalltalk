@@ -28,6 +28,13 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokePrimitives() {
+		Primitive primitive = new Primitive("primitive:", 2, "43");
+		primitive.accept(analyser);
+		verify(writer).invokePrimitive(2, "43");
+	}
+
+	@Test
 	public void shouldRegisterAndInvokeCompilerOfBlockWhenVisitBeginOfBlock() {
 		Block block = mock(Block.class);
 		when(parent.className()).thenReturn("SomeClass");

@@ -262,6 +262,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(Primitive primitive, String keyword, int line, String digits) {
+		writer.invokePrimitive(line, digits);
 	}
 
 	void invokeObjectPerform(String selector, int argumentCount, int line) {
