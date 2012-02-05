@@ -28,8 +28,11 @@ public class PrimBasicDoesNotUnderstandTest {
 		System.setErr(capturedStream);
 		PrimObject receiver = new PrimObject();
 		PrimBasicDoesNotUnderstand bdnu = new PrimBasicDoesNotUnderstand();
-		bdnu.invoke(receiver, new PrimContext(receiver, null, "aMethod"));
-		assertEquals(os.toString(), "Object '" + receiver.toString() + "' does not understand 'aMethod'.\n");
+		try {
+			bdnu.invoke(receiver, new PrimContext(receiver, null, "aMethod"));
+		} catch (RedlineException e) {
+			assertEquals(e.getMessage(), "Object '" + receiver.toString() + "' does not understand 'aMethod'.\n");
+		}
 	}
 
 	private class Fake extends PrimObject {

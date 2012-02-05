@@ -11,13 +11,17 @@ class PrimBasicDoesNotUnderstand extends PrimObject {
 	}
 
 	private void outputDoesNotUnderstandError(PrimObject receiver, PrimContext context) {
-		System.err.print("Object '" + receiver + "' does not understand '" + context.arguments[0].javaValue + "'");
+		StringBuilder message = new StringBuilder();
+		message.append("Object '").append(receiver).append("' does not understand '")
+				.append(context.arguments[0].javaValue).append("'");
 		if (context.arguments.length > 1) {
-			System.err.println(" with arguments:");
+			message.append(" with arguments:\n");
 			for (int i = 1; i < context.arguments.length; i++)
-				System.err.println(i + "\t" + context.arguments[i] + " " + context.arguments[i].javaValue());
+				message.append(i).append("\t").append(context.arguments[i]).append(" ")
+						.append(context.arguments[i].javaValue()).append("\n");
 		} else
-			System.err.println(".");
+			message.append(".\n");
+		throw new RedlineException(message.toString());
 	}
 
 	private PrimObject[] copySelectorAndArguments(PrimContext context) {

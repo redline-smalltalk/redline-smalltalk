@@ -4,6 +4,7 @@ package st.redline;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -60,9 +61,13 @@ public class PrimObjectClassTest {
 	}
 
 	@Test
-	public void performShouldAnswerPimitiveNilWhenNoMethodsSet() {
+	public void performShouldInvokeDNUWhenNoMethodsSet() {
 		PrimObjectClass object = new PrimObjectClass();
-		assertEquals(object.perform("aMethod"), PrimObject.PRIM_NIL);
+		try {
+			object.perform("aMethod");
+		} catch (RedlineException e) {
+			assertEquals(e.getMessage(), "Object '" + object.toString() + "' does not understand 'aMethod'.\n");
+		}
 	}
 
 	@Test

@@ -195,7 +195,7 @@ public class PrimObject {
 	}
 
 	PrimObject perform0(PrimObject foundInClass, String selector, PrimObject ... arguments) {
-		System.out.println("perform0() " + foundInClass + " " + selector);
+//		System.out.println("perform0() " + foundInClass + " " + selector);
 		PrimObject cls = foundInClass;
 		while (!cls.includesSelector(selector))
 			cls = cls.superclass();

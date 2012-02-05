@@ -23,7 +23,7 @@ public class RedlineException extends RuntimeException {
 		super(exception);
 	}
 
-	private RedlineException(String message) {
+	public RedlineException(String message) {
 		super(message);
 	}
 

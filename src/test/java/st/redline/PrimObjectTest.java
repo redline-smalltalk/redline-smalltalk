@@ -120,9 +120,13 @@ public class PrimObjectTest {
 	}
 
 	@Test
-	public void performShouldAnswerPrimitiveNilWhenNoClassSet() {
+	public void performShouldInvokeDnuWhenNoClassSet() {
 		PrimObject object = new PrimObject();
-		assertEquals(object.perform("anything"), PrimObject.PRIM_NIL);
+		try {
+			object.perform("anything");
+		} catch (RedlineException e) {
+			assertEquals(e.getMessage(), "Object '" + object.toString() + "' does not understand 'anything'.\n");
+		}
 	}
 
 	@Test
