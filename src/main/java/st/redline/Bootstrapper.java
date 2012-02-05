@@ -45,6 +45,7 @@ public class Bootstrapper {
 
 	void registerBootstrappedSingletons() {
 		PrimObject.CLASSES.put("st.redline.Metaclass", primObjectMetaclass);
+		primObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
 		PrimObjectMetaclass undefinedObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
 		PrimObjectMetaclass undefinedObjectClass = undefinedObjectMetaClass.basicCreate("UndefinedObject", null, "", "", "", "");
 		PrimObject.NIL = new PrimObject();
@@ -56,12 +57,12 @@ public class Bootstrapper {
 	}
 
 	void createAndRegisterProtoObject() {
-		PrimObjectMetaclass protoObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
-		protoObjectMetaClass.methods().put("<", new CreateSubclassMethod());
-		protoObjectMetaClass.methods().put("atSelector:put:", new AtSelectorPutMethod());
-		protoObjectMetaClass.methods().put("class", new AccessClassMethod());
-		protoObjectMetaClass.methods().put("initialize", new InitializeMethod());
-		PrimObjectMetaclass protoObjectClass = protoObjectMetaClass.basicCreate("ProtoObject", null, "", "", "", "");
+		PrimObjectMetaclass protoObjectMetaclass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
+		protoObjectMetaclass.methods().put("<", new CreateSubclassMethod());
+		protoObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
+		protoObjectMetaclass.methods().put("class", new AccessClassMethod());
+		protoObjectMetaclass.methods().put("initialize", new InitializeMethod());
+		PrimObjectMetaclass protoObjectClass = protoObjectMetaclass.basicCreate("ProtoObject", null, "", "", "", "");
 		PrimObject.CLASSES.put("st.redline.ProtoObject", protoObjectClass);
 	}
 
