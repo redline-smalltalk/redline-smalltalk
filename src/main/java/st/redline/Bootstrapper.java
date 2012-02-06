@@ -1,10 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-import st.redline.bootstrap.AccessClassMethod;
-import st.redline.bootstrap.AtSelectorPutMethod;
-import st.redline.bootstrap.CreateSubclassMethod;
-import st.redline.bootstrap.InitializeMethod;
+import st.redline.bootstrap.*;
 
 import java.io.File;
 import java.util.Map;
@@ -46,6 +43,7 @@ public class Bootstrapper {
 	void registerBootstrappedSingletons() {
 		PrimObject.CLASSES.put("st.redline.Metaclass", primObjectMetaclass);
 		primObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
+		primObjectMetaclass.methods().put("instanceVariableNames:", new InstanceVariableNamesMethod());
 		PrimObjectMetaclass undefinedObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
 		PrimObjectMetaclass undefinedObjectClass = undefinedObjectMetaClass.basicCreate("UndefinedObject", null, "", "", "", "");
 		PrimObject.NIL = new PrimObject();
