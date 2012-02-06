@@ -15,6 +15,7 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	static final int NAME_INDEX = PrimObjectClass.SUPERCLASS_INDEX + 1;
 	static final PrimObjectMetaclass METACLASS;
 	static {
+		PrimObject.BOOTSTRAPPING = true;
 		METACLASS = basicSubclassOf(null).basicCreate("Metaclass", null, "", "", "", "");
 		METACLASS.superclass(PrimObject.PRIM_NIL);
 	}
