@@ -19,10 +19,15 @@ public class Bootstrapper {
 		mapPackages(PrimObjectMetaclass.IMPORTS);
 		createAndRegisterProtoObject();
 		registerBootstrappedSingletons();
+		createClasses();
 		makeClassSuperclassOfObjectsClass();
 		makeClassDescriptionSuperclassOfMetaclassClass();
 		markBootstrapping(false);
 		instantiateNonBootstrappedSingletons();
+	}
+
+	private void createClasses() {
+		primObjectMetaclass.resolveObject("st.redline.Symbol");
 	}
 
 	void makeClassDescriptionSuperclassOfMetaclassClass() {

@@ -16,8 +16,7 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	static final PrimObjectMetaclass METACLASS;
 	static {
 		PrimObject.BOOTSTRAPPING = true;
-		METACLASS = basicSubclassOf(null).basicCreate("Metaclass", null, "", "", "", "");
-		METACLASS.superclass(PrimObject.PRIM_NIL);
+		METACLASS = basicSubclassOf(null).basicCreate("Metaclass", PrimObject.PRIM_NIL, "", "", "", "");
 	}
 
 	static Map<String, String> IMPORTS = new Hashtable<String, String>();

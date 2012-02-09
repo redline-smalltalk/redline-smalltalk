@@ -93,13 +93,15 @@ public class PrimObject {
 	}
 
 	public static PrimObject symbol(Object javaValue) {
-		Object internedValue = intern(javaValue);
-		if (BOOTSTRAPPING) {
-			PrimObject newObject = new PrimObject();
-			newObject.javaValue = internedValue;
-			return newObject;
-		}
-		throw new IllegalStateException("implement me");
+		return instanceOf("st.redline.Symbol").with(intern(javaValue));
+	}
+
+	PrimObject with(Object value) {
+		return javaValue(value);
+	}
+
+	static PrimObject instanceOf(String type) {
+		return BOOTSTRAPPING ? new PrimObject() : PrimObjectMetaclass.METACLASS.resolveObject(type).perform("new");
 	}
 
 	static Object intern(Object value) {
@@ -120,6 +122,7 @@ public class PrimObject {
 	}
 
 	PrimObject resolveObject(String name) {
+//		System.out.println("resolveObject: " + name);
 		if (CLASSES.containsKey(name))
 			return CLASSES.get(name);
 		if (Character.isUpperCase(name.charAt(0))) {
