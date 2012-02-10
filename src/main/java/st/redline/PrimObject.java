@@ -22,7 +22,7 @@ public class PrimObject {
 		PACKAGE_REGISTRY.set(new Stack<String>());
 	}
 	public static final Map<String, PrimObject> CLASSES = new ConcurrentHashMap<String, PrimObject>();
-	static final Map<Object, Object> INTERNED_SYMBOLS = new ConcurrentHashMap<Object, Object>();
+	static final Map<String, PrimObject> INTERNED_SYMBOLS = new ConcurrentHashMap<String, PrimObject>();
 	static final Map<String, PrimObject> BLOCKS = new ConcurrentHashMap<String, PrimObject>();
 
 	static PrimObject NIL = null;
@@ -89,11 +89,16 @@ public class PrimObject {
 	}
 
 	public static PrimObject character(Object javaValue) {
-		throw new IllegalStateException("implement me");
+		return instanceOf("st.redline.Character").with(javaValue);
 	}
 
 	public static PrimObject symbol(Object javaValue) {
-		return instanceOf("st.redline.Symbol").with(intern(javaValue));
+		String symbol = (String) javaValue;
+		if (INTERNED_SYMBOLS.containsKey(symbol))
+			return INTERNED_SYMBOLS.get(symbol);
+		PrimObject primObject = instanceOf("st.redline.Symbol").with(symbol);
+		INTERNED_SYMBOLS.put(symbol, primObject);
+		return primObject;
 	}
 
 	PrimObject with(Object value) {
@@ -102,13 +107,6 @@ public class PrimObject {
 
 	static PrimObject instanceOf(String type) {
 		return BOOTSTRAPPING ? new PrimObject() : PrimObjectMetaclass.METACLASS.resolveObject(type).perform("new");
-	}
-
-	static Object intern(Object value) {
-		if (INTERNED_SYMBOLS.containsKey(value))
-			return INTERNED_SYMBOLS.get(value);
-		INTERNED_SYMBOLS.put(value, value);
-		return value;
 	}
 
 	public static void dump(Object object) {

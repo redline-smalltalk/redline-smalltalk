@@ -50,7 +50,7 @@ public class Bootstrapper {
 		primObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
 		primObjectMetaclass.methods().put("instanceVariableNames:", new InstanceVariableNamesMethod());
 		PrimObjectMetaclass undefinedObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
-		PrimObjectMetaclass undefinedObjectClass = undefinedObjectMetaClass.basicCreate("UndefinedObject", null, "", "", "", "");
+		PrimObjectMetaclass undefinedObjectClass = undefinedObjectMetaClass.basicCreate("UndefinedObject", PrimObject.PRIM_NIL, "", "", "", "");
 		PrimObject.NIL = new PrimObject();
 		PrimObject.NIL.cls(undefinedObjectClass);
 	}
@@ -65,8 +65,7 @@ public class Bootstrapper {
 		protoObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
 		protoObjectMetaclass.methods().put("class", new AccessClassMethod());
 		protoObjectMetaclass.methods().put("initialize", new InitializeMethod());
-		PrimObjectMetaclass protoObjectClass = protoObjectMetaclass.basicCreate("ProtoObject", null, "", "", "", "");
-		protoObjectClass.superclass(PrimObject.PRIM_NIL);
+		PrimObjectMetaclass protoObjectClass = protoObjectMetaclass.basicCreate("ProtoObject", PrimObject.PRIM_NIL, "", "", "", "");
 		PrimObject.CLASSES.put("st.redline.ProtoObject", protoObjectClass);
 	}
 
