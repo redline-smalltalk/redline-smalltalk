@@ -20,7 +20,11 @@ public class ClassBytecodeWriter implements Opcodes {
 		"(Ljava/lang/String;)Lst/redline/PrimObject;",
 		"(Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
 		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
-		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;"
+		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
+		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
+		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
+		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;",
+		"(Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;Ljava/lang/String;)Lst/redline/PrimObject;"
 	};
 	private final String packageName;
 	private final boolean verbose;
