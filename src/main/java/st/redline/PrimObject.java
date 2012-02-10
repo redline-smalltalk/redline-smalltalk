@@ -11,6 +11,7 @@ package st.redline;
 
 import st.redline.compiler.Block;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
@@ -83,7 +84,7 @@ public class PrimObject {
 	}
 
 	public static PrimObject number(Object javaValue) {
-		throw new IllegalStateException("implement me");
+		return instanceOf("st.redline.Integer").with(Integer.valueOf((String) javaValue));
 	}
 
 	public static PrimObject character(Object javaValue) {

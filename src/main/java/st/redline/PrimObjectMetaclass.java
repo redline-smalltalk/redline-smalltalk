@@ -11,8 +11,9 @@ import java.util.Map;
 
 public class PrimObjectMetaclass extends PrimObjectClass {
 
-	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for name, superclass etc etc
+	static final int DEFAULT_ATTRIBUTE_COUNT = 2;  // for name, superclass etc etc
 	static final int NAME_INDEX = PrimObjectClass.SUPERCLASS_INDEX + 1;
+	static final int INSTANCE_SIZE_INDEX = NAME_INDEX + 1;
 	static final PrimObjectMetaclass METACLASS;
 	static {
 		PrimObject.BOOTSTRAPPING = true;
@@ -58,6 +59,19 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 
 	PrimObjectMetaclass name(PrimObject name) {
 		attributes[NAME_INDEX] = name;
+		return this;
+	}
+
+	PrimObject instanceSize() {
+		return attributes[INSTANCE_SIZE_INDEX];
+	}
+
+	PrimObjectMetaclass instanceSize(int size) {
+		return instanceSize(number(String.valueOf(size)));
+	}
+
+	PrimObjectMetaclass instanceSize(PrimObject size) {
+		attributes[INSTANCE_SIZE_INDEX] = size;
 		return this;
 	}
 

@@ -57,6 +57,16 @@ public class PrimObjectMetaclassTest {
 	}
 
 	@Test
+	public void shouldProvideAccessToInstanceSize() {
+		int size = 4;
+		PrimObjectMetaclass metaclass = PrimObjectMetaclass.basicSubclassOf(null);
+		PrimObjectMetaclass aClass = metaclass.basicCreate("test", null, null, null, null, null);
+		aClass.instanceSize(size);
+		assertNotNull(aClass.instanceSize());
+		assertEquals(aClass.instanceSize().javaValue, Integer.valueOf(size));
+	}
+
+	@Test
 	public void shouldProvideAccessToName() {
 		String name = "name";
 		PrimObjectMetaclass metaclass = PrimObjectMetaclass.basicSubclassOf(null);
