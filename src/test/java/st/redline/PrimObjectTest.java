@@ -13,6 +13,17 @@ import static org.mockito.Mockito.*;
 
 public class PrimObjectTest {
 
+	@Test
+	public void shouldCheckSizeOfInstanceWhenCreatingInstanceWithP70() {
+		PrimObjectMetaclass aClass = new PrimObjectMetaclass();
+		PrimObjectMetaclass spy = spy(aClass);
+		when(spy.primInstanceSize()).thenReturn(new Integer(4));
+		PrimObject newInstance = spy.p70(spy, null);
+		assertNotNull(newInstance);
+		assertNotNull(newInstance.cls());
+		assertEquals(5, newInstance.attributes.length);
+	}
+
 	@Test (expected = IllegalStateException.class)
 	public void shouldThrowExceptionWhenBlockToBeCompiledNotFound() {
 		new PrimObject().block("st/redline/Thing$M1");

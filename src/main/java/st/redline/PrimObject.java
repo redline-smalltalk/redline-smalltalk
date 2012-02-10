@@ -118,6 +118,13 @@ public class PrimObject {
 		return resolveObject(name);
 	}
 
+	public PrimObject p70(PrimObject receiver, PrimContext context) {
+		PrimObjectMetaclass aClass = (PrimObjectMetaclass) receiver;
+		PrimObject newInstance = new PrimObject(aClass.primInstanceSize());
+		newInstance.cls(aClass);
+		return newInstance;
+	}
+
 	PrimObject resolveObject(String name) {
 //		System.out.println("resolveObject: " + name);
 		if (CLASSES.containsKey(name))
@@ -203,6 +210,7 @@ public class PrimObject {
 	}
 
 	PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
+//		System.out.println("apply " + " " + selector + " to " + this);
 		return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
 	}
 
