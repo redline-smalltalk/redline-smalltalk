@@ -79,9 +79,7 @@ public class PrimObject {
 	}
 
 	public static PrimObject string(Object javaValue) {
-		PrimObject newObject = new PrimObject();
-		newObject.javaValue = javaValue;
-		return newObject;
+		return instanceOf("st.redline.String").with(javaValue);
 	}
 
 	public static PrimObject number(Object javaValue) {

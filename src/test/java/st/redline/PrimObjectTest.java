@@ -137,6 +137,7 @@ public class PrimObjectTest {
 
 	@Test
 	public void shouldCreateWithStringJavaValue() {
+		PrimObjectMetaclass.BOOTSTRAPPING = true;
 		String javaValue = "string";
 		PrimObject object = PrimObject.string(javaValue);
 		assertEquals(object.javaValue(), javaValue);
