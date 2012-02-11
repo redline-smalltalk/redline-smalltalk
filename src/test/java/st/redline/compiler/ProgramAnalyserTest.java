@@ -52,18 +52,6 @@ public class ProgramAnalyserTest {
 		Assert.assertTrue(analyser.skipBlockVisit(null));
 	}
 
-//	@Test
-//	public void shouldMakeNoOpAnalyserCurrentAnalyserWhenVisitBeginOfBlock() {
-//		Block block = mock(Block.class);
-//		when(parent.className()).thenReturn("SomeClass");
-//		when(parent.packageName()).thenReturn("st/redline");
-//		ProgramAnalyser spy = spy(analyser);
-//		SmalltalkClassLoader smalltalkClassLoader = mock(SmalltalkClassLoader.class);
-//		doReturn(smalltalkClassLoader).when(spy).smalltalkClassLoader();
-//		spy.visitBegin(block, 1);
-//		verify(parent).currentDelegate(notNull(NoOpAnalyser.class));
-//	}
-
 	@Test
 	public void shouldInvokePrimObjectSymbolWhenVisitSymbolConstant() {
 		SymbolConstant symbolConstant = mock(SymbolConstant.class);
@@ -240,6 +228,13 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldHaveNoArgumentsRegistryWhenCreated() {
+		ProgramAnalyser programAnalyser = new ProgramAnalyser(parent, "foo", "com.domain", false);
+		assertNull(programAnalyser.argumentsRegistry());
+		assertEquals(0, programAnalyser.argumentsIndex());
+	}
+
+	@Test
 	public void shouldCreateClassBytecodeWriter() {
 		assertNotNull(new ProgramAnalyser(parent, "foo", "com.domain", false).classBytecodeWriter());
 	}
@@ -260,6 +255,14 @@ public class ProgramAnalyserTest {
 	public void shouldCloseClassWhenVisitingProgramNodeEnds() {
 		analyser.visitEnd(mock(Program.class));
 		verify(writer).closeClass();
+	}
+
+	@Test
+	public void shouldInitializeArgumentRegistryWhenVisitingBlockArguments() {
+		BlockArguments blockArguments = mock(BlockArguments.class);
+		analyser.visitBegin(blockArguments, 1);
+		assertNotNull(analyser.argumentsRegistry());
+		assertEquals(0, analyser.argumentsRegistry().size());
 	}
 
 	@Test
@@ -288,5 +291,17 @@ public class ProgramAnalyserTest {
 		assertEquals(1, analyser.temporariesRegistry().size());
 		assertEquals(0, (int) analyser.temporariesRegistry().get("temp"));
 		assertEquals(1, analyser.temporariesIndex());
+	}
+
+	@Test
+	public void shouldRegisterArgumentWhenVisitingBlockArgument() {
+		BlockArguments blockArguments = mock(BlockArguments.class);
+		BlockArgument blockArgument = mock(BlockArgument.class);
+		analyser.visitBegin(blockArguments, 1);
+		analyser.visit(blockArgument, "arg", 1);
+		assertNotNull(analyser.argumentsRegistry());
+		assertEquals(1, analyser.argumentsRegistry().size());
+		assertEquals(0, (int) analyser.argumentsRegistry().get("arg"));
+		assertEquals(1, analyser.argumentsIndex());
 	}
 }

@@ -14,6 +14,8 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	protected final Analyser analyser;
 	protected final ClassBytecodeWriter writer;
 	private final boolean verbose;
+	private Map<String, Integer> argumentsRegistry;
+	private int argumentsIndex = 0;
 	private Map<String, Integer> temporariesRegistry;
 	private int temporariesIndex = 0;
 
@@ -37,6 +39,14 @@ public class ProgramAnalyser implements AnalyserDelegate {
 
 	Map<String, Integer> temporariesRegistry() {
 		return temporariesRegistry;
+	}
+
+	int argumentsIndex() {
+		return argumentsIndex;
+	}
+
+	Map<String, Integer> argumentsRegistry() {
+		return argumentsRegistry;
 	}
 
 	public byte[] classBytes() {
@@ -176,9 +186,20 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(BlockArguments blockArguments, int argumentCount) {
+		initializeBlockArgumentsRegistration();
+	}
+
+	void initializeBlockArgumentsRegistration() {
+		argumentsIndex = 0;
+		argumentsRegistry = new HashMap<String, Integer>();
 	}
 
 	public void visitEnd(BlockArguments blockArguments, int argumentCount) {
+	}
+
+	public void visit(BlockArgument blockArgument, String value, int line) {
+		// todo.jcl - output a warning if registered twice?
+		argumentsRegistry.put(value, argumentsIndex++);
 	}
 
 	public void visit(BinaryObjectDescription binaryObjectDescription) {
@@ -196,9 +217,6 @@ public class ProgramAnalyser implements AnalyserDelegate {
 		writer.invokeObjectNumber(value, line);
 		if (insideArray)
 			writer.invokeArrayPut(index, line);
-	}
-
-	public void visit(BlockArgument blockArgument, String value, int line) {
 	}
 
 	public void visit(Self self, int line) {

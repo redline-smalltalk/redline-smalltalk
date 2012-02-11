@@ -210,7 +210,7 @@ public class PrimObject {
 	}
 
 	PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
-		System.out.println("apply " + " " + selector + " to " + this);
+//		System.out.println("apply " + " " + selector + " to " + this);
 		return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
 	}
 
