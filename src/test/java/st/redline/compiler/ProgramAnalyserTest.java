@@ -128,6 +128,16 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldPushArgumentWhenVisitArgumentOnLoadSideOfExpression() {
+		Identifier identifier = mock(Identifier.class);
+		when(identifier.isOnLoadSideOfExpression()).thenReturn(true);
+		analyser.initializeBlockArgumentsRegistration();
+		analyser.argumentsRegistry().put("arg", 1);
+		analyser.visit(identifier, "arg", 3);
+		verify(writer).pushArgument(1);
+	}
+
+	@Test
 	public void shouldInvokePerformWhenVisitEndsOfKeywordExpression() {
 		KeywordExpression keywordExpression = mock(KeywordExpression.class);
 		analyser.visitEnd(keywordExpression, "at:", 1, 3);

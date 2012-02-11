@@ -198,6 +198,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(BlockArgument blockArgument, String value, int line) {
+//		System.out.println("visit(BLockArgument) " + value);
 		// todo.jcl - output a warning if registered twice?
 		argumentsRegistry.put(value, argumentsIndex++);
 	}
@@ -210,7 +211,14 @@ public class ProgramAnalyser implements AnalyserDelegate {
 
 	public void visit(Identifier identifier, String value, int line) {
 		if (identifier.isOnLoadSideOfExpression())
-			writer.invokeVariableAt(value, line);
+			if (isArgument(value))
+				writer.pushArgument(argumentsRegistry.get(value));
+			else
+				writer.invokeVariableAt(value, line);
+	}
+
+	boolean isArgument(String name) {
+		return argumentsRegistry != null && argumentsRegistry.containsKey(name);
 	}
 
 	public void visit(Number number, String value, int index, boolean insideArray, int line) {
