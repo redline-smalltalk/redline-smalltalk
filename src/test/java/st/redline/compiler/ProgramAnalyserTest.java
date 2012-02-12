@@ -138,6 +138,16 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldPushTemporaryWhenVisitTemporaryOnLoadSideOfExpression() {
+		Identifier identifier = mock(Identifier.class);
+		when(identifier.isOnLoadSideOfExpression()).thenReturn(true);
+		analyser.initializeTemporariesRegistration();
+		analyser.temporariesRegistry().put("tmp", 1);
+		analyser.visit(identifier, "tmp", 3);
+		verify(writer).pushTemporary(1);
+	}
+
+	@Test
 	public void shouldInvokePerformWhenVisitEndsOfKeywordExpression() {
 		KeywordExpression keywordExpression = mock(KeywordExpression.class);
 		analyser.visitEnd(keywordExpression, "at:", 1, 3);

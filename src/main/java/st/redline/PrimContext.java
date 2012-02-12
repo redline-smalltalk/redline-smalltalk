@@ -24,6 +24,10 @@ public class PrimContext {
 		return temporaries;
 	}
 
+	public PrimObject temporaryAt(int index) {
+		return temporaries[index];
+	}
+
 	public PrimObject argumentAt(int index) {
 		return arguments[index];
 	}

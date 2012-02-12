@@ -237,6 +237,12 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "argumentAt", "(I)Lst/redline/PrimObject;");
 	}
 
+	void pushTemporary(int index) {
+		pushContext();
+		pushNumber(index);
+		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporaryAt", "(I)Lst/redline/PrimObject;");
+	}
+
 	void pushLiteral(String literal) {
 		mv.visitLdcInsn(literal);
 	}

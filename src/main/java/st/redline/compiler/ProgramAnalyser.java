@@ -213,8 +213,14 @@ public class ProgramAnalyser implements AnalyserDelegate {
 		if (identifier.isOnLoadSideOfExpression())
 			if (isArgument(value))
 				writer.pushArgument(argumentsRegistry.get(value));
+			else if (isTemporary(value))
+				writer.pushTemporary(temporariesRegistry.get(value));
 			else
 				writer.invokeVariableAt(value, line);
+	}
+
+	boolean isTemporary(String name) {
+		return temporariesRegistry != null && temporariesRegistry.containsKey(name);
 	}
 
 	boolean isArgument(String name) {
