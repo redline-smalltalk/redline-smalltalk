@@ -9,6 +9,7 @@ package st.redline;
 // a PrimObjectClass for an instance of the class it represents by sending it the 'new' message.
 // A PrimObjectClass instance is obtained via its MetaClass, see PrimObjectMetaclass.
 
+import st.redline.bootstrap.CreateSubclassMethod;
 import st.redline.compiler.Block;
 
 import java.math.BigDecimal;
@@ -123,6 +124,14 @@ public class PrimObject {
 		PrimObject newInstance = new PrimObject(aClass.primInstanceSize());
 		newInstance.cls(aClass);
 		return newInstance;
+	}
+
+	public PrimObject p128(PrimObject receiver, PrimContext context) {
+		return createSubclass(receiver, context);
+	}
+
+	public PrimObject createSubclass(PrimObject receiver, PrimContext context) {
+		return new CreateSubclassMethod().invoke(receiver, context);
 	}
 
 	PrimObject resolveObject(String name) {

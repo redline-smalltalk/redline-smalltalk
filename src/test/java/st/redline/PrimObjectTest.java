@@ -14,6 +14,15 @@ import static org.mockito.Mockito.*;
 public class PrimObjectTest {
 
 	@Test
+	public void shouldPassArgumentsFromP128ToCreateSubclassMethod() {
+		PrimContext context = mock(PrimContext.class);
+		PrimObject aClass = new PrimObject();
+		PrimObject spy = spy(aClass);
+		doReturn(mock(PrimObject.class)).when(spy).createSubclass(spy, context);
+		spy.p128(spy, context);
+	}
+
+	@Test
 	public void shouldCheckSizeOfInstanceWhenCreatingInstanceWithP70() {
 		PrimObjectMetaclass aClass = new PrimObjectMetaclass();
 		PrimObjectMetaclass spy = spy(aClass);
