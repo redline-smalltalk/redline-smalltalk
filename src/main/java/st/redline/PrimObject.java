@@ -81,6 +81,10 @@ public class PrimObject {
 		}
 	}
 
+	public static PrimObject array() {
+		throw new IllegalStateException("implement me");
+	}
+
 	public static PrimObject string(Object javaValue) {
 		return instanceOf("st.redline.String").with(javaValue);
 	}

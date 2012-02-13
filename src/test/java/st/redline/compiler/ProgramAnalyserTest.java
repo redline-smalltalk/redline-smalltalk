@@ -4,7 +4,6 @@ package st.redline.compiler;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Spy;
 import st.redline.SmalltalkClassLoader;
 
 import static junit.framework.Assert.assertEquals;
@@ -53,6 +52,13 @@ public class ProgramAnalyserTest {
 	}
 
 	@Test
+	public void shouldInvokePrimObjectArrayWhenVisitArray() {
+		Array array = mock(Array.class);
+		analyser.visitBegin(array);
+		verify(writer).invokeObjectArray();
+	}
+
+	@Test
 	public void shouldInvokePrimObjectSymbolWhenVisitSymbolConstant() {
 		SymbolConstant symbolConstant = mock(SymbolConstant.class);
 		analyser.visit(symbolConstant, "sym", 1);
@@ -64,7 +70,7 @@ public class ProgramAnalyserTest {
 		Symbol symbol = mock(Symbol.class);
 		analyser.visit(symbol, "sym", 32, true, 1);
 		verify(writer).invokeObjectSymbol("sym", 1);
-		verify(writer).invokeArrayPut(32, 1);
+		verify(writer).invokeArrayPutAt(32, 1);
 	}
 
 	@Test
@@ -79,7 +85,7 @@ public class ProgramAnalyserTest {
 		CharacterConstant characterConstant = mock(CharacterConstant.class);
 		analyser.visit(characterConstant, "c", 32, true, 1);
 		verify(writer).invokeObjectCharacter("c", 1);
-		verify(writer).invokeArrayPut(32, 1);
+		verify(writer).invokeArrayPutAt(32, 1);
 	}
 
 	@Test
@@ -94,7 +100,7 @@ public class ProgramAnalyserTest {
 		Number number = mock(Number.class);
 		analyser.visit(number, "16", 32, true, 1);
 		verify(writer).invokeObjectNumber("16", 1);
-		verify(writer).invokeArrayPut(32, 1);
+		verify(writer).invokeArrayPutAt(32, 1);
 	}
 
 	@Test
@@ -109,7 +115,7 @@ public class ProgramAnalyserTest {
 		StringConstant stringConstant = mock(StringConstant.class);
 		analyser.visit(stringConstant, "hello", 32, true, 1);
 		verify(writer).invokeObjectString("hello", 1);
-		verify(writer).invokeArrayPut(32, 1);
+		verify(writer).invokeArrayPutAt(32, 1);
 	}
 
 	@Test

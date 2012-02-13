@@ -212,7 +212,11 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "variableAt", "(Ljava/lang/String;)Lst/redline/PrimObject;");
 	}
 
-	void invokeArrayPut(int index, int line) {
+	void invokeObjectArray() {
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "array", "()Lst/redline/PrimObject;");
+	}
+
+	void invokeArrayPutAt(int index, int line) {
 		throw new IllegalStateException("implement me");
 	}
 

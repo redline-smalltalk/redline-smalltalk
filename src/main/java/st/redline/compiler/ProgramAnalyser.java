@@ -3,7 +3,6 @@ package st.redline.compiler;
 
 import st.redline.SmalltalkClassLoader;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -142,6 +141,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(Array array) {
+		writer.invokeObjectArray();
 	}
 
 	public void visitEnd(Array array) {
@@ -230,7 +230,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(Number number, String value, int index, boolean insideArray, int line) {
 		writer.invokeObjectNumber(value, line);
 		if (insideArray)
-			writer.invokeArrayPut(index, line);
+			writer.invokeArrayPutAt(index, line);
 	}
 
 	public void visit(Self self, int line) {
@@ -257,6 +257,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(ArrayConstant arrayConstant, int line) {
+		writer.visitLine(line);
 	}
 
 	public void visit(UnarySelector unarySelector, String selector, int line) {
@@ -270,19 +271,19 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(CharacterConstant characterConstant, String value, int index, boolean insideArray, int line) {
 		writer.invokeObjectCharacter(value, line);
 		if (insideArray)
-			writer.invokeArrayPut(index, line);
+			writer.invokeArrayPutAt(index, line);
 	}
 
 	public void visit(StringConstant stringConstant, String value, int index, boolean insideArray, int line) {
 		writer.invokeObjectString(value, line);
 		if (insideArray)
-			writer.invokeArrayPut(index, line);
+			writer.invokeArrayPutAt(index, line);
 	}
 
 	public void visit(Symbol symbol, String value, int index, boolean insideArray, int line) {
 		writer.invokeObjectSymbol(value, line);
 		if (insideArray)
-			writer.invokeArrayPut(index, line);
+			writer.invokeArrayPutAt(index, line);
 	}
 
 	public void visit(SymbolConstant symbolConstant, String value, int line) {
