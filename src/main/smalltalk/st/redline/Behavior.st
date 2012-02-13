@@ -12,7 +12,10 @@ Object < #Behavior
     <primitive: 70>
 
 - superclass
-    <primitive: 219>
+    <primitive: 130>
+
+- atSelector: selector put: method
+    <primitive: 129>
 
 - inheritsFrom: aClass
 "	| aSuperclass |

@@ -14,6 +14,15 @@ import static org.mockito.Mockito.*;
 public class PrimObjectTest {
 
 	@Test
+	public void shouldPassArgumentsFromP129ToAtSelectorPutMethod() {
+		PrimContext context = mock(PrimContext.class);
+		PrimObject aClass = new PrimObject();
+		PrimObject spy = spy(aClass);
+		doReturn(mock(PrimObject.class)).when(spy).atSelectorPut(spy, context);
+		spy.p129(spy, context);
+	}
+
+	@Test
 	public void shouldPassArgumentsFromP128ToCreateSubclassMethod() {
 		PrimContext context = mock(PrimContext.class);
 		PrimObject aClass = new PrimObject();

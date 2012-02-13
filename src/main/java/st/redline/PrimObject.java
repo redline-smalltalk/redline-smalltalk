@@ -9,6 +9,7 @@ package st.redline;
 // a PrimObjectClass for an instance of the class it represents by sending it the 'new' message.
 // A PrimObjectClass instance is obtained via its MetaClass, see PrimObjectMetaclass.
 
+import st.redline.bootstrap.AtSelectorPutMethod;
 import st.redline.bootstrap.CreateSubclassMethod;
 import st.redline.compiler.Block;
 
@@ -130,8 +131,20 @@ public class PrimObject {
 		return createSubclass(receiver, context);
 	}
 
-	public PrimObject createSubclass(PrimObject receiver, PrimContext context) {
+	PrimObject createSubclass(PrimObject receiver, PrimContext context) {
 		return new CreateSubclassMethod().invoke(receiver, context);
+	}
+
+	public PrimObject p129(PrimObject receiver, PrimContext context) {
+		return atSelectorPut(receiver, context);
+	}
+
+	PrimObject atSelectorPut(PrimObject receiver, PrimContext context) {
+		return new AtSelectorPutMethod().invoke(receiver, context);
+	}
+
+	public PrimObject p130(PrimObject receiver, PrimContext context) {
+		return receiver.superclass();
 	}
 
 	PrimObject resolveObject(String name) {
