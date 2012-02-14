@@ -14,6 +14,8 @@ import st.redline.bootstrap.CreateSubclassMethod;
 import st.redline.compiler.Block;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
@@ -81,8 +83,12 @@ public class PrimObject {
 		}
 	}
 
-	public static PrimObject array() {
-		throw new IllegalStateException("implement me");
+	public static PrimObject array(int size) {
+		List<PrimObject> array = new ArrayList<PrimObject>();
+        PrimObject initialElement = BOOTSTRAPPING ? PRIM_NIL : NIL;
+        while (array.size() < size)
+            array.add(initialElement);
+        return instanceOf("st.redline.Array").with(array);
 	}
 
 	public static PrimObject string(Object javaValue) {

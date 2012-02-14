@@ -141,7 +141,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(Array array) {
-		writer.invokeObjectArray();
+		writer.invokeObjectArray(array.size());
 	}
 
 	public void visitEnd(Array array) {
@@ -166,7 +166,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	String createFullBlockName(String blockClassName) {
-		return analyser.packageName() + (analyser.packageName() == "" ? "" : ".") + blockClassName;
+		return analyser.packageName() + (analyser.packageName().equals("") ? "" : ".") + blockClassName;
 	}
 
 	BlockAnalyser createBlockAnalyser(String blockClassName, Block block) {

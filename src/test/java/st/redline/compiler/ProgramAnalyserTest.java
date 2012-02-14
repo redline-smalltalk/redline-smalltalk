@@ -54,8 +54,9 @@ public class ProgramAnalyserTest {
 	@Test
 	public void shouldInvokePrimObjectArrayWhenVisitArray() {
 		Array array = mock(Array.class);
+        when(array.size()).thenReturn(2);
 		analyser.visitBegin(array);
-		verify(writer).invokeObjectArray();
+		verify(writer).invokeObjectArray(2);
 	}
 
 	@Test
