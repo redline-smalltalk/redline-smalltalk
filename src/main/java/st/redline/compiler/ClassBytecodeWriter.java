@@ -213,11 +213,15 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	void invokeObjectArray(int size) {
+		pushReceiver();
+		pushNumber(size);
 		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "array", "(I)Lst/redline/PrimObject;");
 	}
 
 	void invokeArrayPutAt(int index, int line) {
-		throw new IllegalStateException("implement me");
+		pushReceiver();
+		invokeObjectCreate("number", String.valueOf(index), line);
+		invokeObjectPerform("put:at:", 2);
 	}
 
 	void invokePrimitive(int line, String primitive) {

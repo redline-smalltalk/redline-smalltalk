@@ -86,7 +86,7 @@ public class PrimObject {
 	public static PrimObject array(int size) {
 		List<PrimObject> array = new ArrayList<PrimObject>();
         PrimObject initialElement = BOOTSTRAPPING ? PRIM_NIL : NIL;
-        while (array.size() < size)
+        while (array.size() < size + 1)
             array.add(initialElement);
         return instanceOf("st.redline.Array").with(array);
 	}
@@ -135,6 +135,10 @@ public class PrimObject {
 		PrimObject newInstance = new PrimObject(aClass.primInstanceSize());
 		newInstance.cls(aClass);
 		return newInstance;
+	}
+
+	public PrimObject p111(PrimObject receiver, PrimContext context) {
+		return receiver.cls();
 	}
 
 	public PrimObject p128(PrimObject receiver, PrimContext context) {
