@@ -219,9 +219,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	void invokeArrayPutAt(int index, int line) {
-		pushReceiver();
-		invokeObjectCreate("number", String.valueOf(index), line);
-		invokeObjectPerform("put:at:", 2);
+        visitLine(line);
+        pushNumber(index);
+        mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "putAt", "(Lst/redline/PrimObject;I)Lst/redline/PrimObject;");
 	}
 
 	void invokePrimitive(int line, String primitive) {

@@ -86,10 +86,13 @@ public class PrimObject {
 	public static PrimObject array(int size) {
 		List<PrimObject> array = new ArrayList<PrimObject>();
         PrimObject initialElement = BOOTSTRAPPING ? PRIM_NIL : NIL;
+        array.add(initialElement); // we add NIL at index 0 because smalltalk indexes start at 1.
         while (array.size() < size + 1)
             array.add(initialElement);
-        return instanceOf("st.redline.Array").with(array);
-	}
+        PrimObject object = instanceOf("st.redline.Array").with(array);
+        System.out.println("** array ** " + object + " " + array);
+        return object;
+    }
 
 	public static PrimObject string(Object javaValue) {
 		return instanceOf("st.redline.String").with(javaValue);
@@ -129,6 +132,28 @@ public class PrimObject {
 	public PrimObject variableAt(String name) {
 		return resolveObject(name);
 	}
+
+    public PrimObject putAt(PrimObject object, int index) {
+        // re-order arguments, convert int to object and send proper message.
+        perform(number(String.valueOf(index)), object, "at:put:");
+        System.out.println("** putAt() ** " + this);
+        return this;
+    }
+
+	public PrimObject p61(PrimObject receiver, PrimContext context) {
+        // at:put:
+        System.out.println("p61() " + this + " at: " + context.argumentAt(0).javaValue() + " put: " + context.argumentAt(1));
+        int index = (Integer) context.argumentAt(0).javaValue();
+        if (index == 0)
+            throw new IllegalStateException("Primitive at:put given index of zero.");
+        PrimObject object = context.argumentAt(1);
+        List<PrimObject> slots = (List<PrimObject>) javaValue();
+        System.out.println();
+        if (slots == null || slots.size() < index)
+            throw new IllegalStateException("Primitive at:put given null or insufficient slots.");
+        slots.set(index, object);
+        return object; // return stored value according to BlueBook.
+    }
 
 	public PrimObject p70(PrimObject receiver, PrimContext context) {
 		PrimObjectMetaclass aClass = (PrimObjectMetaclass) receiver;
