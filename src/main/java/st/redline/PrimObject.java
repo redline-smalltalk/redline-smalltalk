@@ -89,28 +89,28 @@ public class PrimObject {
         array.add(initialElement); // we add NIL at index 0 because smalltalk indexes start at 1.
         while (array.size() < size + 1)
             array.add(initialElement);
-        PrimObject object = instanceOf("st.redline.Array").with(array);
+        PrimObject object = instanceOf("Array").with(array);
         System.out.println("** array ** " + object + " " + array);
         return object;
     }
 
 	public static PrimObject string(Object javaValue) {
-		return instanceOf("st.redline.String").with(javaValue);
+		return instanceOf("String").with(javaValue);
 	}
 
 	public static PrimObject number(Object javaValue) {
-		return instanceOf("st.redline.Integer").with(Integer.valueOf((String) javaValue));
+		return instanceOf("Integer").with(Integer.valueOf((String) javaValue));
 	}
 
 	public static PrimObject character(Object javaValue) {
-		return instanceOf("st.redline.Character").with(javaValue);
+		return instanceOf("Character").with(javaValue);
 	}
 
 	public static PrimObject symbol(Object javaValue) {
 		String symbol = (String) javaValue;
 		if (INTERNED_SYMBOLS.containsKey(symbol))
 			return INTERNED_SYMBOLS.get(symbol);
-		PrimObject primObject = instanceOf("st.redline.Symbol").with(symbol);
+		PrimObject primObject = instanceOf("Symbol").with(symbol);
 		INTERNED_SYMBOLS.put(symbol, primObject);
 		return primObject;
 	}
@@ -136,7 +136,6 @@ public class PrimObject {
     public PrimObject putAt(PrimObject object, int index) {
         // re-order arguments, convert int to object and send proper message.
         perform(number(String.valueOf(index)), object, "at:put:");
-        System.out.println("** putAt() ** " + this);
         return this;
     }
 
@@ -271,7 +270,7 @@ public class PrimObject {
 	}
 
 	PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
-//		System.out.println("apply " + " " + selector + " to " + this);
+		System.out.println("apply " + " " + selector + " to " + this);
 		return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
 	}
 

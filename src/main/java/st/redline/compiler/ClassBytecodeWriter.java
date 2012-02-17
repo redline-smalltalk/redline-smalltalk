@@ -213,15 +213,14 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	void invokeObjectArray(int size) {
-		pushReceiver();
 		pushNumber(size);
 		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "array", "(I)Lst/redline/PrimObject;");
 	}
 
 	void invokeArrayPutAt(int index, int line) {
-        visitLine(line);
-        pushNumber(index);
-        mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "putAt", "(Lst/redline/PrimObject;I)Lst/redline/PrimObject;");
+		visitLine(line);
+		pushNumber(index);
+		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "putAt", "(Lst/redline/PrimObject;I)Lst/redline/PrimObject;");
 	}
 
 	void invokePrimitive(int line, String primitive) {
@@ -292,8 +291,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	void visitLine(int line) {
-		Label l0 = new Label();
-		mv.visitLabel(l0);
-		mv.visitLineNumber(line, l0);
+		// TODO.jcl uncomment me ASAP.
+//		Label l0 = new Label();
+//		mv.visitLabel(l0);
+//		mv.visitLineNumber(line, l0);
 	}
 }
