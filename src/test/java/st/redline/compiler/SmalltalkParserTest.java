@@ -341,6 +341,37 @@ public class SmalltalkParserTest {
 		assertNoLexerExceptions();
 	}
 
+	@Test
+	public void parseArrayConstantUsingArrayConstantRule() throws IOException, RecognitionException {
+		String input = "#(12.3 Abc + at:put: 'str' $c () ('nested'))";
+		ArrayConstant arrayConstant = (ArrayConstant) createParser(input).array_constant();
+		assertEquals(1, arrayConstant.line());
+		Array array = arrayConstant.array();
+		assertNotNull(array);
+		assertEquals(8, array.size());
+		assertEquals("12.3", array.get(0).value());
+		assertTrue(array.get(0) instanceof Number);
+		assertEquals("Abc", array.get(1).value());
+		assertTrue(array.get(1) instanceof Symbol);
+		assertEquals("+", array.get(2).value());
+		assertTrue(array.get(2) instanceof Symbol);
+		assertEquals("at:put:", array.get(3).value());
+		assertTrue(array.get(3) instanceof Symbol);
+		assertEquals("str", array.get(4).value());
+		assertTrue(array.get(4) instanceof StringConstant);
+		assertEquals("c", array.get(5).value());
+		assertTrue(array.get(5) instanceof CharacterConstant);
+		assertEquals("<array>", array.get(6).value());
+		assertTrue(array.get(6) instanceof Array);
+		assertEquals(0, ((Array) array.get(6)).size());
+		assertEquals("<array>", array.get(7).value());
+		assertTrue(array.get(7) instanceof Array);
+		assertEquals(1, ((Array) array.get(7)).size());
+		assertTrue(((Array) array.get(7)).get(0) instanceof StringConstant);
+		assertEquals("nested", ((Array) array.get(7)).get(0).value());
+		assertNoLexerExceptions();
+	}
+
 	private void assertNoLexerExceptions() {
 		assertTrue(lexer.getExceptions().isEmpty());
 	}

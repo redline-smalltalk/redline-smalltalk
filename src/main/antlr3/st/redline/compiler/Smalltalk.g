@@ -120,12 +120,11 @@ array_constant returns [ArrayConstant arrayConstant]
 
 array returns [Array array]
   @init { array = new Array(); }
-  : '(' (array_element {array.add($array_element.arrayElement);})* ')'
+  : '(' (WHITESPACE? array_element {array.add($array_element.arrayElement);})* WHITESPACE? ')'
   ;
 
 array_element returns [ArrayElement arrayElement]
-  : WHITESPACE
-  | number {arrayElement = $number.number;}
+  : number {arrayElement = $number.number;}
   | symbol {arrayElement = $symbol.symbol;}
   | STRING {arrayElement = new StringConstant($STRING.text, $STRING.line);}
   | CHARACTER_CONSTANT {arrayElement = new CharacterConstant($CHARACTER_CONSTANT.text.substring(1), $CHARACTER_CONSTANT.line);}
