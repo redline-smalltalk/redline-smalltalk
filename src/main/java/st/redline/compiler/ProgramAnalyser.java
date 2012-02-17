@@ -1,6 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import st.redline.RedlineException;
 import st.redline.SmalltalkClassLoader;
 
 import java.util.HashMap;
@@ -210,13 +211,21 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
-		if (identifier.isOnLoadSideOfExpression())
+		if (identifier.isOnLoadSideOfExpression()) {
 			if (isArgument(value))
 				writer.pushArgument(argumentsRegistry.get(value));
 			else if (isTemporary(value))
 				writer.pushTemporary(temporariesRegistry.get(value));
 			else
 				writer.invokeVariableAt(value, line);
+		} else {
+			if (isArgument(value))
+				throw new RedlineException("Can't store into an argument, only temporaries and variables.");
+			else if (isTemporary(value))
+				writer.storeTemporary(temporariesRegistry.get(value));
+			else
+				writer.invokeVariablePutAt(value, line);
+		}
 	}
 
 	boolean isTemporary(String name) {

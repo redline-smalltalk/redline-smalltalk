@@ -212,6 +212,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "variableAt", "(Ljava/lang/String;)Lst/redline/PrimObject;");
 	}
 
+	void invokeVariablePutAt(String name, int line) {
+		throw new IllegalStateException("IMPLEMENT ME");
+	}
+
 	void invokeObjectArray(int size) {
 		pushNumber(size);
 		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "array", "(I)Lst/redline/PrimObject;");
@@ -248,6 +252,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		pushContext();
 		pushNumber(index);
 		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporaryAt", "(I)Lst/redline/PrimObject;");
+	}
+
+	void storeTemporary(int index) {
+		throw new IllegalStateException("IMPLEMENT ME");
 	}
 
 	void pushLiteral(String literal) {
