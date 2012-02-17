@@ -134,7 +134,7 @@ public class PrimObject {
 	}
 
 	public static PrimObject putAt(PrimObject receiver, PrimObject object, int index) {
-		System.out.println("putAt() " + receiver + " put: " + object + " at: " + index);
+//		System.out.println("putAt() " + receiver + " put: " + object + " at: " + index);
 		// re-order arguments, convert int to object and send proper message.
 		receiver.perform(number(String.valueOf(index)), object, "at:put:");
 		return receiver;
@@ -142,7 +142,7 @@ public class PrimObject {
 
 	public PrimObject p61(PrimObject receiver, PrimContext context) {
         // at:put:
-        System.out.println("p61() " + receiver + " at: " + context.argumentAt(0).javaValue() + " put: " + context.argumentAt(1));
+//        System.out.println("p61() " + receiver + " at: " + context.argumentAt(0).javaValue() + " put: " + context.argumentAt(1));
         int index = (Integer) context.argumentAt(0).javaValue();
         if (index == 0)
             throw new IllegalStateException("Primitive at:put given index of zero.");
@@ -270,7 +270,7 @@ public class PrimObject {
 	}
 
 	PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
-		System.out.println("apply " + " " + selector + " to " + this);
+//		System.out.println("apply " + " " + selector + " to " + this);
 		return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
 	}
 
