@@ -46,9 +46,11 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 		return newClass;
 	}
 
-//	public String toString() {
-//		return (String) name().javaValue;
-//	}
+	public String toString() {
+		if (name().javaValue == null)
+			return super.toString();
+		return (String) name().javaValue;
+	}
 
 	PrimObject name() {
 		return attributes[NAME_INDEX];

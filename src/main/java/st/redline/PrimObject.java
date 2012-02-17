@@ -11,6 +11,7 @@ package st.redline;
 
 import st.redline.bootstrap.AtSelectorPutMethod;
 import st.redline.bootstrap.CreateSubclassMethod;
+import st.redline.bootstrap.InstanceVariableNamesMethod;
 import st.redline.compiler.Block;
 
 import java.math.BigDecimal;
@@ -90,7 +91,7 @@ public class PrimObject {
         while (array.size() < size + 1)
             array.add(initialElement);
         PrimObject object = instanceOf("Array").with(array);
-        System.out.println("** array ** " + object + " " + array);
+//        System.out.println("** array ** " + object + " " + array);
         return object;
     }
 
@@ -183,6 +184,38 @@ public class PrimObject {
 
 	public PrimObject p130(PrimObject receiver, PrimContext context) {
 		return receiver.superclass();
+	}
+
+	public PrimObject p131(PrimObject receiver, PrimContext context) {
+		return addInstanceVariableNames(receiver, context);
+	}
+
+	PrimObject addInstanceVariableNames(PrimObject receiver, PrimContext context) {
+		return new InstanceVariableNamesMethod().invoke(receiver, context);
+	}
+
+	public PrimObject p132(PrimObject receiver, PrimContext context) {
+		// classInstanceVariableNames: names
+		System.err.println("invoke->classInstanceVariableNames: IMPLEMENT ME.");
+		return receiver;
+	}
+
+	public PrimObject p133(PrimObject receiver, PrimContext context) {
+		// classVariableNames: names
+		System.err.println("invoke->classVariableNames: IMPLEMENT ME.");
+		return receiver;
+	}
+
+	public PrimObject p134(PrimObject receiver, PrimContext context) {
+		// poolDictionaries: dictionaries
+		System.err.println("invoke->poolDictionaries: IMPLEMENT ME.");
+		return receiver;
+	}
+
+	public PrimObject p135(PrimObject receiver, PrimContext context) {
+		// category: name
+		// Nb: we don't store category, here for compatibility with older Smalltalk.
+		return receiver;
 	}
 
 	PrimObject resolveObject(String name) {

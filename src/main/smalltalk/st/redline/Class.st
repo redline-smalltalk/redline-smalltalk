@@ -13,3 +13,17 @@ ClassDescription < #Class.
     "Provides compatability for other Smalltalks. Nb: we drop category."
     ^ self subclass: name instanceVariableNames: instVarNames classVariableNames: classVarNames poolDictionaries classInstanceVariableNames: ''.
 
+- instanceVariableNames: names
+    <primitive: 131>
+
+- classInstanceVariableNames: names
+    <primitive: 132>
+
+- classVariableNames: names
+    <primitive: 133>
+
+- poolDictionaries: dictionaries
+    <primitive: 134>
+
+- category: name
+    <primitive: 135>
