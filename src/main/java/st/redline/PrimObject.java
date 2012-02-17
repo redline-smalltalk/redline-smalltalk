@@ -133,21 +133,21 @@ public class PrimObject {
 		return resolveObject(name);
 	}
 
-    public PrimObject putAt(PrimObject object, int index) {
-        // re-order arguments, convert int to object and send proper message.
-        perform(number(String.valueOf(index)), object, "at:put:");
-        return this;
-    }
+	public static PrimObject putAt(PrimObject receiver, PrimObject object, int index) {
+		System.out.println("putAt() " + receiver + " put: " + object + " at: " + index);
+		// re-order arguments, convert int to object and send proper message.
+		receiver.perform(number(String.valueOf(index)), object, "at:put:");
+		return receiver;
+	}
 
 	public PrimObject p61(PrimObject receiver, PrimContext context) {
         // at:put:
-        System.out.println("p61() " + this + " at: " + context.argumentAt(0).javaValue() + " put: " + context.argumentAt(1));
+        System.out.println("p61() " + receiver + " at: " + context.argumentAt(0).javaValue() + " put: " + context.argumentAt(1));
         int index = (Integer) context.argumentAt(0).javaValue();
         if (index == 0)
             throw new IllegalStateException("Primitive at:put given index of zero.");
         PrimObject object = context.argumentAt(1);
-        List<PrimObject> slots = (List<PrimObject>) javaValue();
-        System.out.println();
+        List<PrimObject> slots = (List<PrimObject>) receiver.javaValue();
         if (slots == null || slots.size() < index)
             throw new IllegalStateException("Primitive at:put given null or insufficient slots.");
         slots.set(index, object);

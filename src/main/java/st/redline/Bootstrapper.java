@@ -18,12 +18,12 @@ public class Bootstrapper {
 		markBootstrapping(true);
 		mapPackages(PrimObjectMetaclass.IMPORTS);
 		createAndRegisterProtoObject();
-//		registerBootstrappedSingletons();
-//		createClasses();
-//		makeClassSuperclassOfObjectsClass();
-//		makeClassDescriptionSuperclassOfMetaclassClass();
-//		markBootstrapping(false);
-//		instantiateNonBootstrappedSingletons();
+		registerBootstrappedSingletons();
+		createClasses();
+		makeClassSuperclassOfObjectsClass();
+		makeClassDescriptionSuperclassOfMetaclassClass();
+		markBootstrapping(false);
+		instantiateNonBootstrappedSingletons();
 	}
 
 	private void createClasses() {

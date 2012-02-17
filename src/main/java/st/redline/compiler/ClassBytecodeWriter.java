@@ -220,7 +220,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	void invokeArrayPutAt(int index, int line) {
 		visitLine(line);
 		pushNumber(index);
-		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "putAt", "(Lst/redline/PrimObject;I)Lst/redline/PrimObject;");
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "putAt", "(Lst/redline/PrimObject;Lst/redline/PrimObject;I)Lst/redline/PrimObject;");
 	}
 
 	void invokePrimitive(int line, String primitive) {
