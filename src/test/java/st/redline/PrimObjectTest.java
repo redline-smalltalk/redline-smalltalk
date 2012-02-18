@@ -99,6 +99,9 @@ public class PrimObjectTest {
 	@Test
 	public void variableAtShouldCallResolveObject() {
 		PrimObject primObject = new PrimObject();
+		PrimObjectClass primObjectClass = mock(PrimObjectClass.class);
+		when(primObjectClass.indexOf("Thing")).thenReturn(0);
+		primObject.cls(primObjectClass);
 		PrimObject spy = spy(primObject);
 		spy.variableAt("Thing");
 		verify(spy).resolveObject("Thing");

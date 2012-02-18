@@ -131,7 +131,14 @@ public class PrimObject {
 	}
 
 	public PrimObject variableAt(String name) {
+		int index = cls().indexOf(name);
+		if (index != 0)
+			return attributes[index];
 		return resolveObject(name);
+	}
+
+	int indexOf(String name) {
+		throw new IllegalStateException("Subclass should override.");
 	}
 
 	public static PrimObject putAt(PrimObject receiver, PrimObject object, int index) {

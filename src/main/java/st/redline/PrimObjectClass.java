@@ -24,6 +24,11 @@ public class PrimObjectClass extends PrimObject {
 		javaValue = new HashMap<String, PrimObject>();
 	}
 
+	int indexOf(String name) {
+		System.out.println("Class indexOf() " + name);
+		return 0;
+	}
+
 	public String packageFor(String name) {
 		PrimObject cls = cls();
 		if (cls != null)
