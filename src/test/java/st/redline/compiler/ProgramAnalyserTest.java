@@ -4,6 +4,7 @@ package st.redline.compiler;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import st.redline.RedlineException;
 import st.redline.SmalltalkClassLoader;
 
 import static junit.framework.Assert.assertEquals;
@@ -152,6 +153,26 @@ public class ProgramAnalyserTest {
 		analyser.temporariesRegistry().put("tmp", 1);
 		analyser.visit(identifier, "tmp", 3);
 		verify(writer).pushTemporary(1);
+	}
+
+	@Test (expected = RedlineException.class)
+	public void shouldNotAllowStoreIntoMethodOrBlockArgument() {
+		Identifier identifier = mock(Identifier.class);
+		when(identifier.isOnLoadSideOfExpression()).thenReturn(false);
+		analyser.initializeBlockArgumentsRegistration();
+		analyser.argumentsRegistry().put("arg", 1);
+		analyser.initializeTemporariesRegistration();
+		analyser.visit(identifier, "arg", 3);
+	}
+
+	@Test
+	public void shouldStoreTemporaryWhenVisitTemporaryOnStoreSideOfExpression() {
+		Identifier identifier = mock(Identifier.class);
+		when(identifier.isOnLoadSideOfExpression()).thenReturn(false);
+		analyser.initializeTemporariesRegistration();
+		analyser.temporariesRegistry().put("tmp", 1);
+		analyser.visit(identifier, "tmp", 3);
+		verify(writer).storeTemporary(1);
 	}
 
 	@Test
