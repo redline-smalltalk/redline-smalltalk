@@ -24,6 +24,14 @@ public class PrimContext {
 		return temporaries;
 	}
 
+	public static void temporaryPutAtIn(PrimObject object, int index, PrimContext context) {
+		context.temporaryAtPut(index, object);
+	}
+
+	public void temporaryAtPut(int index, PrimObject object) {
+		temporaries[index] = object;
+	}
+
 	public PrimObject temporaryAt(int index) {
 		return temporaries[index];
 	}

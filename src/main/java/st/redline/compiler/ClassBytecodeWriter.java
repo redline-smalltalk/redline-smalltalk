@@ -255,7 +255,9 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	void storeTemporary(int index) {
-		throw new IllegalStateException("IMPLEMENT ME");
+		pushNumber(index);
+		pushContext();
+		mv.visitMethodInsn(INVOKESTATIC, CONTEXT, "temporaryPutAtIn", "(Lst/redline/PrimObject;ILst/redline/PrimContext;)V");
 	}
 
 	void pushLiteral(String literal) {
