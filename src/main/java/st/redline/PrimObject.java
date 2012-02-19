@@ -14,7 +14,6 @@ import st.redline.bootstrap.CreateSubclassMethod;
 import st.redline.bootstrap.InstanceVariableNamesMethod;
 import st.redline.compiler.Block;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -131,13 +130,13 @@ public class PrimObject {
 	}
 
 	public PrimObject variableAt(String name) {
-		int index = cls().indexOf(name);
+		int index = cls().indexOfVariable(name);
 		if (index != 0)
 			return attributes[index];
 		return resolveObject(name);
 	}
 
-	int indexOf(String name) {
+	int indexOfVariable(String name) {
 		throw new IllegalStateException("Subclass should override.");
 	}
 

@@ -10,6 +10,12 @@ import static org.mockito.Mockito.verify;
 
 public class PrimObjectClassTest {
 
+    @Test
+    public void shouldHaveRegistryOfVariableIndexesWhenConstructed() {
+        PrimObjectClass object = new PrimObjectClass();
+        assertNotNull(object.variableIndexes());
+    }
+
 	@Test
 	public void shouldDelegatePackageLookupToClass() {
 		PrimObject aClass = mock(PrimObject.class);

@@ -2,9 +2,6 @@
 package st.redline;
 
 import org.junit.Test;
-import st.redline.compiler.Analyser;
-import st.redline.compiler.Block;
-import st.redline.compiler.BlockAnalyser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -100,7 +97,7 @@ public class PrimObjectTest {
 	public void variableAtShouldCallResolveObject() {
 		PrimObject primObject = new PrimObject();
 		PrimObjectClass primObjectClass = mock(PrimObjectClass.class);
-		when(primObjectClass.indexOf("Thing")).thenReturn(0);
+		when(primObjectClass.indexOfVariable("Thing")).thenReturn(0);
 		primObject.cls(primObjectClass);
 		PrimObject spy = spy(primObject);
 		spy.variableAt("Thing");

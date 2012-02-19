@@ -15,18 +15,29 @@ public class PrimObjectClass extends PrimObject {
 	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for superclass
 	static final int SUPERCLASS_INDEX = PrimObject.CLASS_INDEX + 1;
 
-	PrimObjectClass() {
+    HashMap<String, Integer> variableIndexes;
+    int nextVariableIndex = SUPERCLASS_INDEX + 1;
+
+    PrimObjectClass() {
 		this(0);
 	}
 
 	PrimObjectClass(int basicSize) {
 		super(basicSize + DEFAULT_ATTRIBUTE_COUNT);
 		javaValue = new HashMap<String, PrimObject>();
+        variableIndexes = new HashMap<String, Integer>();
+        nextVariableIndex = basicSize + DEFAULT_ATTRIBUTE_COUNT + 1;
 	}
 
-	int indexOf(String name) {
-		System.out.println("Class indexOf() " + name);
-		return 0;
+    Map<String, Integer> variableIndexes() {
+        return variableIndexes;
+    }
+
+	int indexOfVariable(String name) {
+        Integer index = variableIndexes.get(name);
+        if (index != null)
+            return index;
+		return 0;  // indexes can't be zero (0).
 	}
 
 	public String packageFor(String name) {
