@@ -6,6 +6,7 @@ package st.redline;
 // Call basicSubclassOf: to get a subclass of Metaclass,
 // Call basicCreate:... to create the Metaclass' sole instance.
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 		METACLASS = basicSubclassOf(null).basicCreate("Metaclass", PrimObject.PRIM_NIL, "", "", "", "");
 	}
 	static Map<String, String> IMPORTS = new Hashtable<String, String>();
+
 	Map<String, String> imports;
 
 	public static PrimObjectMetaclass basicSubclassOf(PrimObjectMetaclass superMeta) {

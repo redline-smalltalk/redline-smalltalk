@@ -29,7 +29,23 @@ public class PrimObjectClass extends PrimObject {
         nextVariableIndex = basicSize + DEFAULT_ATTRIBUTE_COUNT + 1;
 	}
 
-    Map<String, Integer> variableIndexes() {
+	public void addVariableNamed(String name) {
+//		System.out.println("addVariableNamed() " + name + " @ " + (nextVariableIndex + 1));
+		if (hasVariableNamed(name))
+			throw new IllegalStateException("Variable '" + name + "' already defined.");
+		variableIndexes().put(name, nextVariableIndex);
+		nextVariableIndex++;
+	}
+
+	boolean hasVariableNamed(String name) {
+		if (variableIndexes().containsKey(name))
+			return true;
+		if (superclass() != PRIM_NIL)
+			return ((PrimObjectClass) superclass()).hasVariableNamed(name);
+		return false;
+	}
+
+	Map<String, Integer> variableIndexes() {
         return variableIndexes;
     }
 

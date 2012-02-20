@@ -10,6 +10,20 @@ import static org.mockito.Mockito.verify;
 
 public class PrimObjectClassTest {
 
+	@Test (expected = IllegalStateException.class)
+	public void shouldThrowIllegalArgumentExceptionWhenVariableAlreadyRegistered() {
+		PrimObjectClass object = new PrimObjectClass();
+		object.variableIndexes().put("var", 1);
+		object.addVariableNamed("var");
+	}
+
+	@Test
+	public void shouldAddVariables() {
+		PrimObjectClass object = new PrimObjectClass();
+		object.addVariableNamed("var");
+		assertTrue(object.variableIndexes().containsKey("var"));
+	}
+
     @Test
     public void shouldHaveRegistryOfVariableIndexesWhenConstructed() {
         PrimObjectClass object = new PrimObjectClass();
