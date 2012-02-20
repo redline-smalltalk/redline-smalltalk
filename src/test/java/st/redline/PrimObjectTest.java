@@ -32,7 +32,7 @@ public class PrimObjectTest {
 	public void shouldCheckSizeOfInstanceWhenCreatingInstanceWithP70() {
 		PrimObjectMetaclass aClass = new PrimObjectMetaclass();
 		PrimObjectMetaclass spy = spy(aClass);
-		when(spy.primInstanceSize()).thenReturn(new Integer(4));
+		when(spy.primInstanceSize()).thenReturn(4);
 		PrimObject newInstance = spy.p70(spy, null);
 		assertNotNull(newInstance);
 		assertNotNull(newInstance.cls());

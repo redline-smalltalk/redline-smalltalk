@@ -38,11 +38,8 @@ public class PrimObjectClass extends PrimObject {
 	}
 
 	boolean hasVariableNamed(String name) {
-		if (variableIndexes().containsKey(name))
-			return true;
-		if (superclass() != PRIM_NIL)
-			return ((PrimObjectClass) superclass()).hasVariableNamed(name);
-		return false;
+		return variableIndexes().containsKey(name)
+               || (superclass() != PRIM_NIL && ((PrimObjectClass) superclass()).hasVariableNamed(name));
 	}
 
 	Map<String, Integer> variableIndexes() {
@@ -55,6 +52,14 @@ public class PrimObjectClass extends PrimObject {
             return index;
 		return 0;  // indexes can't be zero (0).
 	}
+
+    int primInstanceSize() {
+        return nextVariableIndex;
+    }
+
+    PrimObject instanceSize() {
+        return number(String.valueOf(primInstanceSize()));
+    }
 
 	public String packageFor(String name) {
 		PrimObject cls = cls();

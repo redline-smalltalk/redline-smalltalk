@@ -10,6 +10,13 @@ import static org.mockito.Mockito.verify;
 
 public class PrimObjectClassTest {
 
+    @Test
+    public void shouldProvideAccessToInstanceSize() {
+        PrimObjectMetaclass metaclass = PrimObjectMetaclass.basicSubclassOf(null);
+        PrimObjectMetaclass aClass = metaclass.basicCreate("test", null, null, null, null, null);
+        assertNotNull(aClass.instanceSize());
+    }
+
 	@Test (expected = IllegalStateException.class)
 	public void shouldThrowIllegalArgumentExceptionWhenVariableAlreadyRegistered() {
 		PrimObjectClass object = new PrimObjectClass();
