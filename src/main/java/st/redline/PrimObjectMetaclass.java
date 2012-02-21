@@ -6,16 +6,13 @@ package st.redline;
 // Call basicSubclassOf: to get a subclass of Metaclass,
 // Call basicCreate:... to create the Metaclass' sole instance.
 
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
 public class PrimObjectMetaclass extends PrimObjectClass {
 
-	static final Integer ZERO_SIZE = 0;
-	static final int DEFAULT_ATTRIBUTE_COUNT = 2;  // for name, superclass etc etc
+	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for name, superclass etc etc
 	static final int NAME_INDEX = PrimObjectClass.SUPERCLASS_INDEX + 1;
-	static final int INSTANCE_SIZE_INDEX = NAME_INDEX + 1;
 	static final PrimObjectMetaclass METACLASS;
 
 	static {
@@ -45,10 +42,16 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 		newClass.superclass(superclass);
 		newClass.name(name);
 		// TODO.jcl take other parameters into account.
+        if (containsString(instVarNames))
+            newClass.perform(instVarNames, "instanceVariableNames:");
 		return newClass;
 	}
 
-	public String toString() {
+    boolean containsString(PrimObject object) {
+        return object != null && object.javaValue() != null && String.valueOf(object.javaValue()).length() > 0;
+    }
+
+    public String toString() {
 		if (name().javaValue == null)
 			return super.toString();
 		return (String) name().javaValue;
