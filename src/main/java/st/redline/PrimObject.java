@@ -136,6 +136,19 @@ public class PrimObject {
 		return resolveObject(name);
 	}
 
+	public static PrimObject variablePutAtIn(PrimObject object, String name, PrimObject receiver) {
+		return receiver.variableAtPut(name, object);
+	}
+
+	PrimObject variableAtPut(String name, PrimObject object) {
+		int index = cls().indexOfVariable(name);
+		if (index != 0) {
+			attributes[index] = object;
+			return this;
+		}
+		throw new IllegalStateException("Slot for '" + name + "' not found.");
+	}
+
 	int indexOfVariable(String name) {
 		throw new IllegalStateException("Subclass should override.");
 	}
@@ -208,8 +221,15 @@ public class PrimObject {
 
 	public PrimObject p133(PrimObject receiver, PrimContext context) {
 		// classVariableNames: names
-		System.err.println("invoke->classVariableNames: IMPLEMENT ME.");
+		PrimObjectClass aClass = (PrimObjectClass) receiver;
+		PrimObjectMetaclass aMetaclass = (PrimObjectMetaclass) aClass.cls();
+		for (String name : names(context).split(" "))
+			aMetaclass.addClassVariableNamed(name);
 		return receiver;
+	}
+
+	String names(PrimContext context) {
+		return (String) context.argumentAt(0).javaValue();
 	}
 
 	public PrimObject p134(PrimObject receiver, PrimContext context) {

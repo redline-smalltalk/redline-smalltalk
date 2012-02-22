@@ -70,6 +70,15 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 		return this;
 	}
 
+	public void addClassVariableNamed(String name) {
+		System.out.println("addClassVariableNamed() " + name + " @ " + (nextVariableIndex + 1));
+		if (hasVariableNamed(name))
+			throw new IllegalStateException("Variable '" + name + "' already defined.");
+		variableIndexes().put(name, nextVariableIndex);
+		nextVariableIndex++;
+		throw new IllegalStateException("Need to expand attributes array.");
+	}
+
 	public PrimObjectMetaclass() {
 		this(0);
 	}
