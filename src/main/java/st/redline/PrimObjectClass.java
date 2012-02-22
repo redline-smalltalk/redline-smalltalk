@@ -42,6 +42,12 @@ public class PrimObjectClass extends PrimObject {
                || (superclass() != PRIM_NIL && ((PrimObjectClass) superclass()).hasVariableNamed(name));
 	}
 
+    boolean hasClassVariableNamed(String name) {
+        PrimObjectClass aClass = (PrimObjectClass) cls();
+        return aClass.variableIndexes().containsKey(name)
+                || (aClass.superclass() != PRIM_NIL && ((PrimObjectClass) aClass.superclass()).hasVariableNamed(name));
+    }
+
 	Map<String, Integer> variableIndexes() {
         return variableIndexes;
     }

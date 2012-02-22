@@ -2,17 +2,50 @@ package st.redline;
 
 import org.junit.Test;
 
-import java.util.Hashtable;
 import java.util.Map;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class PrimObjectMetaclassTest {
+
+    @Test
+    public void shouldExpandAttributesWhenNewClassVariableAdded() {
+        PrimObject newElement = PrimObject.BOOTSTRAPPING ? PrimObject.PRIM_NIL : PrimObject.NIL;
+        PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
+        int before = metaclass.attributes.length;
+        int currentNextVariableIndex = metaclass.nextVariableIndex;
+        metaclass.addClassVariableNamed("newvar");
+        assertTrue(metaclass.hasClassVariableNamed("newvar"));
+        assertEquals(before + 1, metaclass.attributes.length);
+        assertEquals(newElement, metaclass.attributes[metaclass.attributes.length - 1]);
+        assertEquals(newElement, metaclass.attributes[currentNextVariableIndex]);
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void shouldNotBeAbleToAddClassVariableTwice() {
+        String name = "var1";
+        PrimObject newvar = mock(PrimObject.class);
+        PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
+        metaclass.addClassVariableNamed(name);
+        metaclass.variableAtPut(name, newvar);
+        assertEquals(newvar, metaclass.variableAt(name));
+        metaclass.addClassVariableNamed(name);
+    }
+
+    @Test
+    public void shouldSetAndGetClassVariables() {
+        String name = "setget";
+        PrimObject newvar = mock(PrimObject.class);
+        PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
+        metaclass.addClassVariableNamed(name);
+        metaclass.variableAtPut(name, newvar);
+        assertEquals(newvar, metaclass.variableAt(name));
+    }
 
 	@Test
 	public void shouldLookInGlobalImportsMapWhenFindingPackageForClassName() {

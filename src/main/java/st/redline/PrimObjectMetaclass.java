@@ -44,6 +44,8 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 		// TODO.jcl take other parameters into account.
         if (containsString(instVarNames))
             newClass.perform(instVarNames, "instanceVariableNames:");
+        if (containsString(classVarNames))
+            newClass.perform(classVarNames, "classVariableNames:");
 		return newClass;
 	}
 
@@ -71,15 +73,22 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	}
 
 	public void addClassVariableNamed(String name) {
-		System.out.println("addClassVariableNamed() " + name + " @ " + (nextVariableIndex + 1));
-		if (hasVariableNamed(name))
-			throw new IllegalStateException("Variable '" + name + "' already defined.");
-		variableIndexes().put(name, nextVariableIndex);
-		nextVariableIndex++;
-		throw new IllegalStateException("Need to expand attributes array.");
-	}
+		System.out.println("addClassVariableNamed() " + name + " @ " + nextVariableIndex);
+		if (hasClassVariableNamed(name))
+			throw new IllegalStateException("Class variable '" + name + "' already defined.");
+		((PrimObjectClass) cls()).variableIndexes().put(name, nextVariableIndex);
+        expandAttributes();
+        nextVariableIndex++;
+    }
 
-	public PrimObjectMetaclass() {
+    void expandAttributes() {
+        PrimObject[] to = new PrimObject[attributes.length + 1];
+        System.arraycopy(attributes, 0, to, 0, attributes.length);
+        attributes = to;
+        attributes[attributes.length - 1] = BOOTSTRAPPING ? PRIM_NIL : NIL;
+    }
+
+    public PrimObjectMetaclass() {
 		this(0);
 	}
 
