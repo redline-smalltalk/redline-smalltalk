@@ -30,9 +30,9 @@ public class PrimObject {
 	static final Map<String, PrimObject> INTERNED_SYMBOLS = new ConcurrentHashMap<String, PrimObject>();
 	static final Map<String, PrimObject> BLOCKS = new ConcurrentHashMap<String, PrimObject>();
 
-	static PrimObject NIL = null;
-	static PrimObject TRUE = null;
-	static PrimObject FALSE = null;
+	public static PrimObject NIL = null;
+	public static PrimObject TRUE = null;
+	public static PrimObject FALSE = null;
 
 	static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // default attribute is class
 	static final int CLASS_INDEX = 0;
@@ -130,7 +130,7 @@ public class PrimObject {
 	}
 
 	public PrimObject variableAt(String name) {
-//        System.out.println("variableAt() " + name);
+        System.out.println("variableAt() " + name + " in " + this);
 		int index = cls().indexOfVariable(name);
 		if (index != 0)
 			return attributes[index];
@@ -222,11 +222,11 @@ public class PrimObject {
 	}
 
 	public PrimObject p133(PrimObject receiver, PrimContext context) {
+        System.out.println("p133 classVariableNames " + receiver);
 		// classVariableNames: names
-		PrimObjectClass aClass = (PrimObjectClass) receiver;
-		PrimObjectMetaclass aMetaclass = (PrimObjectMetaclass) aClass.cls();
+		PrimObjectMetaclass aClass = (PrimObjectMetaclass) receiver;
 		for (String name : names(context).split(" "))
-			aMetaclass.addClassVariableNamed(name);
+			aClass.addClassVariableNamed(name);
 		return receiver;
 	}
 
@@ -331,7 +331,7 @@ public class PrimObject {
 	}
 
 	PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
-//		System.out.println("apply " + " " + selector + " to " + this);
+		System.out.println("apply " + " " + selector + " to " + this + " " + this.cls());
 		return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
 	}
 
