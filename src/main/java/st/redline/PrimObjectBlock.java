@@ -5,12 +5,23 @@ package st.redline;
 
 public class PrimObjectBlock extends PrimObject {
 
+	static PrimObject blockClosure;
+
 	public PrimObjectBlock() {
 		this(0);
 	}
 
 	PrimObjectBlock(int basicSize) {
 		super(basicSize);
-		System.out.println("** Block created **");
+		cls(resolveBlockClosure());
+	}
+
+	PrimObject resolveBlockClosure() {
+		if (blockClosure != null)
+			return blockClosure;
+		if (PrimObject.BOOTSTRAPPING)
+			return PRIM_NIL;
+		blockClosure = resolveObject("st.redline.BlockClosure");
+		return blockClosure;
 	}
 }
