@@ -304,9 +304,8 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	void visitLine(int line) {
-		// TODO.jcl uncomment me ASAP.
-//		Label l0 = new Label();
-//		mv.visitLabel(l0);
-//		mv.visitLineNumber(line, l0);
+		Label l0 = new Label();
+		mv.visitLabel(l0);
+		mv.visitLineNumber(line, l0);
 	}
 }

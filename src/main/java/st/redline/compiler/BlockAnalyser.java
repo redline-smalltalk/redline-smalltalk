@@ -5,8 +5,8 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 
 	private Block thisBlock;
 
-	BlockAnalyser(Analyser analyser, String className, String packageName, boolean verbose, Block block) {
-		this(analyser, new BlockBytecodeWriter(className, packageName, verbose), verbose, block);
+	BlockAnalyser(Analyser analyser, String className, String packageName, boolean verbose, boolean methodBlock, Block block) {
+		this(analyser, new BlockBytecodeWriter(className, packageName, verbose, methodBlock), verbose, block);
 	}
 
 	BlockAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose, Block block) {
@@ -30,6 +30,10 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 			throw new IllegalStateException("Expected visitEnd of own block. Got " + block);
 		writer.closeClass();
 		analyser.previousDelegate();
+	}
+
+	boolean isMethodBlock() {
+		return false;
 	}
 
 	String createBlockName() {

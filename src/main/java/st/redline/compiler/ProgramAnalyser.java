@@ -171,11 +171,15 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	BlockAnalyser createBlockAnalyser(String blockClassName, Block block) {
-		return new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose, block);
+		return new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose, isMethodBlock(), block);
 	}
 
 	public SmalltalkClassLoader smalltalkClassLoader() {
 		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+	}
+
+	boolean isMethodBlock() {
+		return true;
 	}
 
 	String createBlockName() {

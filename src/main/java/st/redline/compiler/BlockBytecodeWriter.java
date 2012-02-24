@@ -5,20 +5,22 @@ import org.objectweb.asm.Opcodes;
 
 public class BlockBytecodeWriter extends ClassBytecodeWriter implements Opcodes {
 
-	private static final String OBJECT = "st/redline/PrimObject";
-	private static final String CONTEXT = "st/redline/PrimContext";
 	private static final String INVOKE_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
 
-	BlockBytecodeWriter(String className, String packageName, boolean verbose) {
+	final boolean methodBlock;
+
+	BlockBytecodeWriter(String className, String packageName, boolean verbose, boolean methodBlock) {
 		super(className, packageName, verbose);
+		this.methodBlock = methodBlock;
 	}
 
 	BlockBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter) {
 		super(className, packageName, verbose, classWriter);
+		this.methodBlock = false;
 	}
 
 	String superclass() {
-		return "st/redline/PrimObject";
+		return methodBlock ? "st/redline/PrimObject" : "st/redline/PrimObjectBlock";
 	}
 
 	void deregisterPackage() {
