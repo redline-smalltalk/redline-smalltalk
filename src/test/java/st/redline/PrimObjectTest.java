@@ -11,6 +11,15 @@ import static org.mockito.Mockito.*;
 public class PrimObjectTest {
 
 	@Test
+	public void shouldCallInvokeOnReceiverWhenP81Called() {
+		PrimContext context = mock(PrimContext.class);
+		PrimObject receiver = mock(PrimObject.class);
+		PrimObject anObject = new PrimObject();
+		anObject.p81(receiver, context);
+		verify(receiver).invoke(receiver, context);
+	}
+
+	@Test
 	public void shouldPassArgumentsFromP129ToAtSelectorPutMethod() {
 		PrimContext context = mock(PrimContext.class);
 		PrimObject aClass = new PrimObject();

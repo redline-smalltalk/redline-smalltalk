@@ -4,23 +4,23 @@ Object < #BlockClosure.
 
 - value
     "Activate the receiver, a closure activation."
-    <primitive: 201>
+    <primitive: 81>
 
 - value: firstArg
     "Activate the receiver, a closure activation."
-    <primitive: 202>
+    <primitive: 81>
 
 - value: firstArg value: secondArg
     "Activate the receiver, a closure activation."
-    <primitive: 203>
+    <primitive: 81>
 
 - value: firstArg value: secondArg value: thirdArg
     "Activate the receiver, a closure activation."
-    <primitive: 204>
+    <primitive: 81>
 
 - value: firstArg value: secondArg value: thirdArg value: forthArg
     "Activate the receiver, a closure activation."
-    <primitive: 205>
+    <primitive: 81>
 
 - whileFalse
     "Evaluate the receiver, as long as its value is false."

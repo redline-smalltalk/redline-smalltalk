@@ -183,6 +183,11 @@ public class PrimObject {
 		return newInstance;
 	}
 
+	public PrimObject p81(PrimObject receiver, PrimContext context) {
+		// [] value, value:, value:value: etc
+		return receiver.invoke(receiver, context);
+	}
+
 	public PrimObject p111(PrimObject receiver, PrimContext context) {
 		return receiver.cls();
 	}
