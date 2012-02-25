@@ -155,6 +155,8 @@ public class JVMAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(UnarySelector unarySelector, String selector, int line) {
+		writer.visitLine(line);
+		writer.visitInsn(selector.toUpperCase());
 	}
 
 	public void visit(BinarySelector binarySelector, String selector, int line) {
