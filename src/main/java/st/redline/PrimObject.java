@@ -183,6 +183,13 @@ public class PrimObject {
 		return newInstance;
 	}
 
+	public PrimObject p71(PrimObject receiver, PrimContext context) {
+		int size = (Integer) context.argumentAt(0).javaValue();
+		PrimObject newInstance = new PrimObject(size);
+		newInstance.cls(receiver);
+		return newInstance;
+	}
+
 	public PrimObject p81(PrimObject receiver, PrimContext context) {
 		// [] value, value:, value:value: etc
 		return receiver.invoke(receiver, context);
