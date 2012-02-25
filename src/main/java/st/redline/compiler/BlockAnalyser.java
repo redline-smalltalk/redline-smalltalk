@@ -38,6 +38,6 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 
 	String createBlockName() {
 		BLOCK_NUMBER++;
-		return analyser.className() + "B" + BLOCK_NUMBER;
+		return analyser.className() + "$B" + BLOCK_NUMBER;
 	}
 }
