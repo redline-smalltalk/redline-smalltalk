@@ -65,7 +65,7 @@ message_element returns [MessageElement messageElement]
           }  else { 
               $messageElement = new KeywordMessageElement($KEYWORD.text, $KEYWORD.line, $binary_object_description.binaryObjectDescription);
           }
-      } )+
+      } WHITESPACE? )+
   ;
 
 message_expression returns [MessageExpression messageExpression]
