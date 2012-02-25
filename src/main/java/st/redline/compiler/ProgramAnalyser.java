@@ -267,6 +267,9 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(JVM jvm, int line) {
+		writer.visitLine(line);
+		JVMAnalyser jvmAnalyser = new JVMAnalyser(analyser, writer, verbose);
+		analyser.currentDelegate(verbose ? analyser.tracingDelegate(jvmAnalyser) : jvmAnalyser);
 	}
 
 	public void visit(ArrayConstant arrayConstant, int line) {
