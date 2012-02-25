@@ -82,14 +82,14 @@ ProtoObject < #Object.
     index is the argument, index. If the receiver does not have indexed variables,
     or if the argument is greater than the number of indexed variables, then
     report an error."
-    ^ self basicAt: index.
+    <primitive: 136>
 
 - at: index put: anObject
     "Store the argument, anObject, as the value of the indexed instance variable of
     the receiver whose index is the argument, index. If the receiver does not have
     indexed variables, or if the argument is greater than the number of indexed
     variables, then report an error. Answer anObject."
-    ^ self basicAt: index put: anObject.
+    <primitive: 137>
 
 - basicAt: index
     "Same as at: index. The method associated with this message, however, cannot be modified in any subclass."
@@ -102,7 +102,7 @@ ProtoObject < #Object.
 - size
     "Answer the receiver's number of indexed variables. This value is the same
     as the largest legal index."
-    ^ self basicSize.
+    <primitive: 138>
 
 - basicSize
     "Same as size. The method associated with this message, however, cannot be
@@ -130,10 +130,6 @@ ProtoObject < #Object.
 - yourself
     "Answer self."
     ^ self.
-
-- value
-   "NOTE: This is not actually in the Blue Book."
-   ^ self.
 
 - error: aString
     "Report to the user that an error occurred in

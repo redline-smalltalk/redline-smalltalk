@@ -185,8 +185,9 @@ public class PrimObject {
 
 	public PrimObject p71(PrimObject receiver, PrimContext context) {
 		int size = (Integer) context.argumentAt(0).javaValue();
-		PrimObject newInstance = new PrimObject(size);
-		newInstance.cls(receiver);
+		PrimObjectMetaclass aClass = (PrimObjectMetaclass) receiver;
+		PrimObject newInstance = new PrimObject(aClass.primInstanceSize() + size);
+		newInstance.cls(aClass);
 		return newInstance;
 	}
 
@@ -234,7 +235,6 @@ public class PrimObject {
 	}
 
 	public PrimObject p133(PrimObject receiver, PrimContext context) {
-        System.out.println("p133 classVariableNames " + receiver);
 		// classVariableNames: names
 		PrimObjectMetaclass aClass = (PrimObjectMetaclass) receiver;
 		for (String name : names(context).split(" "))
@@ -256,6 +256,21 @@ public class PrimObject {
 		// category: name
 		// Nb: we don't store category, here for compatibility with older Smalltalk.
 		return receiver;
+	}
+
+	public PrimObject p136(PrimObject receiver, PrimContext context) {
+		// at: (take into account class required data offset.
+		throw new IllegalStateException("at: IMPLEMENT ME.");
+	}
+
+	public PrimObject p137(PrimObject receiver, PrimContext context) {
+		// at:put: (take into account class required data offset.
+		throw new IllegalStateException("at:put: IMPLEMENT ME.");
+	}
+
+	public PrimObject p138(PrimObject receiver, PrimContext context) {
+		// size (take into account class required data offset.
+		throw new IllegalStateException("size IMPLEMENT ME.");
 	}
 
 	PrimObject resolveObject(String name) {
@@ -343,7 +358,7 @@ public class PrimObject {
 	}
 
 	PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
-		System.out.println("apply " + " " + selector + " to " + this + " " + this.cls());
+//		System.out.println("apply " + " " + selector + " to " + this + " " + this.cls());
 		return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
 	}
 
