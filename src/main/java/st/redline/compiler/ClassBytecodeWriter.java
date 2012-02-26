@@ -323,6 +323,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		return OPCODES.get(opcode);
 	}
 
+    void visitFieldInsn(int opcode, String owner, String name, String desc) {
+        mv.visitFieldInsn(opcode, owner, name, desc);
+    }
+
 	static {
 		OPCODES.put("V1_1", 196653);
 		OPCODES.put("V1_2", 46);

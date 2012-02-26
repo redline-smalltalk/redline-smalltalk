@@ -4,6 +4,8 @@ package st.redline.compiler;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -19,6 +21,44 @@ public class JVMAnalyserTest {
 		parent = mock(Analyser.class);
 		analyser = new JVMAnalyser(parent, writer, false);
 	}
+
+    @Test
+    public void shouldVisitFieldInsnWithOpcodeGetStaticWhenKeywordExpressionMatches() {
+        analyser.visitBegin(mock(KeywordExpression.class), "getStatic:named:as:", 3, 0);
+        assertNotNull(analyser.builder);
+        assertTrue(analyser.builder instanceof JVMAnalyser.VisitFieldInsnBuilder);
+    }
+
+    @Test
+    public void shouldWriteCurrentInstructionWhenVisitOfKeywordExpressionEnds() {
+        analyser.builder = mock(JVMAnalyser.Builder.class);
+        analyser.visitEnd(mock(KeywordExpression.class), "getStatic:named:as:", 3, 0);
+        verify(analyser.builder).writeUsing(writer);
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void shouldBeAnExceptionToVisitUnsupportedKeywordExpression() {
+        analyser.visitBegin(mock(KeywordExpression.class), "unsupportedKeyword:", 1, 0);
+    }
+
+    @Test
+    public void shouldVisitFieldInsnWithOpcodeGetStaticWhenKeywordMessageElementMatches() {
+        analyser.visitBegin(mock(KeywordMessageElement.class), "getStatic:named:as:", 3, 0);
+        assertNotNull(analyser.builder);
+        assertTrue(analyser.builder instanceof JVMAnalyser.VisitFieldInsnBuilder);
+    }
+
+    @Test
+    public void shouldWriteCurrentInstructionWhenVisitOfKeywordMessageElementEnds() {
+        analyser.builder = mock(JVMAnalyser.Builder.class);
+        analyser.visitEnd(mock(KeywordMessageElement.class), "getStatic:named:as:", 3, 0);
+        verify(analyser.builder).writeUsing(writer);
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void shouldBeAnExceptionToVisitUnsupportedKeywordMessageElement() {
+        analyser.visitBegin(mock(KeywordMessageElement.class), "unsupportedKeyword:", 1, 0);
+    }
 
 	@Test
 	public void shouldRestorePreviousAnalyserWhenVisitLastStatementEnd() {

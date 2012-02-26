@@ -1,15 +1,26 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class JVMAnalyser implements AnalyserDelegate {
+import org.objectweb.asm.Opcodes;
 
-	protected final Analyser analyser;
+import java.util.HashMap;
+import java.util.Map;
+
+public class JVMAnalyser implements AnalyserDelegate, Opcodes {
+
+    final static Map<String, Builder> builders = new HashMap<String, Builder>();
+    static {
+        builders.put("getStatic:named:as:", new VisitFieldInsnBuilder(GETSTATIC));
+    }
+
+    protected final Analyser analyser;
 	protected final ClassBytecodeWriter writer;
 	private final boolean verbose;
 
 	private int nesting;
+    Builder builder;
 
-	JVMAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose) {
+    JVMAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose) {
 		this.analyser = analyser;
 		this.writer = classBytecodeWriter;
 		this.verbose = verbose;
@@ -67,15 +78,23 @@ public class JVMAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(KeywordExpression keywordExpression, String selector, int argumentCount, int line) {
+        if (!builders.containsKey(selector))
+            throw new IllegalStateException("Builder not found for keyword: '" + selector + "'.");
+        builder = builders.get(selector).create();
 	}
 
 	public void visitEnd(KeywordExpression keywordExpression, String selector, int argumentCount, int line) {
+        builder.writeUsing(writer);
 	}
 
 	public void visitBegin(KeywordMessageElement keywordMessageElement, String selector, int argumentCount, int line) {
+        if (!builders.containsKey(selector))
+            throw new IllegalStateException("Builder not found for keyword: '" + selector + "'.");
+        builder = builders.get(selector).create();
 	}
 
 	public void visitEnd(KeywordMessageElement keywordMessageElement, String selector, int argumentCount, int line) {
+        builder.writeUsing(writer);
 	}
 
 	public void visitBegin(AssignmentExpression assignmentExpression) {
@@ -183,4 +202,30 @@ public class JVMAnalyser implements AnalyserDelegate {
 	public boolean skipBlockVisit(Block block) {
 		throw new IllegalStateException("Should not be calling this on JVMAnalyser.");
 	}
+
+    static abstract class Builder {
+
+        int opcode;
+        int argumentCount;
+        Object[] arguments;
+
+        abstract Builder create();
+        abstract void writeUsing(ClassBytecodeWriter writer);
+
+        public Builder(int opcode, int argumentCount) {
+            this.opcode = opcode;
+            this.argumentCount = argumentCount;
+            this.arguments = new Object[argumentCount];
+        }
+        
+        String string(int index) {
+            return String.valueOf(arguments[index]);
+        }
+    }
+
+    static class VisitFieldInsnBuilder extends Builder {
+        VisitFieldInsnBuilder(int opcode) { super(opcode, 3); }
+        Builder create() { return new VisitFieldInsnBuilder(opcode); }
+        void writeUsing(ClassBytecodeWriter writer) { writer.visitFieldInsn(opcode, string(0), string(1), string(2)); }
+    }
 }
