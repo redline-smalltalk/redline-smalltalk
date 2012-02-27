@@ -3,6 +3,7 @@ package st.redline.compiler;
 
 public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 
+	private boolean verbose;
 	private Block thisBlock;
 
 	BlockAnalyser(Analyser analyser, String className, String packageName, boolean verbose, boolean methodBlock, Block block) {
@@ -11,6 +12,7 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 
 	BlockAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose, Block block) {
 		super(analyser, classBytecodeWriter, verbose);
+		this.verbose = verbose;
 		this.thisBlock = block;
 	}
 

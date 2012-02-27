@@ -23,6 +23,13 @@ public class JVMAnalyserTest {
 	}
 
 	@Test
+	public void shouldVisitVarInsnWhenKeywordExpressionAload() {
+		analyser.visitBegin(mock(KeywordExpression.class), "aload:", 1, 0);
+		assertNotNull(analyser.builder);
+		assertTrue(analyser.builder instanceof JVMAnalyser.VisitVarInsnBuilder);
+	}
+
+	@Test
 	public void shouldAddStringConstantAsBuilderArgument() {
 		analyser.builder = mock(JVMAnalyser.Builder.class);
 		analyser.visit(mock(StringConstant.class), "literal string", 0, false, 0);

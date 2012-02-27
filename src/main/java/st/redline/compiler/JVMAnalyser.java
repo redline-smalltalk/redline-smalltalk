@@ -12,6 +12,7 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
     static {
         builders.put("getStatic:named:as:", new VisitFieldInsnBuilder(GETSTATIC));
         builders.put("ldc:", new VisitLdcInsnBuilder());
+        builders.put("aload:", new VisitVarInsnBuilder());
         builders.put("invokeVirtual:method:returning:", new VisitMethodInsnBuilder(INVOKEVIRTUAL));
     }
 
@@ -262,6 +263,17 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 				writer.pushNumber(number(0));
 			else
 				throw new IllegalArgumentException("Unsupported Ldc type: " + arguments[0]);
+		}
+	}
+
+	static class VisitVarInsnBuilder extends Builder {
+		VisitVarInsnBuilder() { super(0, 1); }
+		Builder create() { return new VisitVarInsnBuilder(); }
+		void writeUsing(ClassBytecodeWriter writer) {
+			if (arguments[0] instanceof Integer)
+				writer.visitVarInsn(ALOAD, number(0));
+			else
+				throw new IllegalArgumentException("Unsupported Var type: " + arguments[0]);
 		}
 	}
 }
