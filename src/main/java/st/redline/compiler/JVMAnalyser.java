@@ -11,6 +11,8 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
     final static Map<String, Builder> builders = new HashMap<String, Builder>();
     static {
         builders.put("getStatic:named:as:", new VisitFieldInsnBuilder(GETSTATIC));
+        builders.put("ldc:", new VisitLdcInsnBuilder());
+        builders.put("invokeVirtual:method:returning:", new VisitMethodInsnBuilder(INVOKEVIRTUAL));
     }
 
     protected final Analyser analyser;
@@ -221,11 +223,36 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         String string(int index) {
             return String.valueOf(arguments[index]);
         }
+
+	    Integer number(int index) {
+		    return Integer.valueOf(string(index));
+	    }
     }
 
     static class VisitFieldInsnBuilder extends Builder {
         VisitFieldInsnBuilder(int opcode) { super(opcode, 3); }
         Builder create() { return new VisitFieldInsnBuilder(opcode); }
-        void writeUsing(ClassBytecodeWriter writer) { writer.visitFieldInsn(opcode, string(0), string(1), string(2)); }
+        void writeUsing(ClassBytecodeWriter writer) {
+	        writer.visitFieldInsn(opcode, string(0), string(1), string(2));
+        }
     }
+
+	static class VisitMethodInsnBuilder extends Builder {
+		VisitMethodInsnBuilder(int opcode) { super(opcode, 3); }
+		Builder create() { return new VisitMethodInsnBuilder(opcode); }
+		void writeUsing(ClassBytecodeWriter writer) {
+			writer.visitMethodInsn(opcode, string(0), string(1), string(2));
+		}
+	}
+
+	static class VisitLdcInsnBuilder extends Builder {
+		VisitLdcInsnBuilder() { super(0, 1); }
+		Builder create() { return new VisitLdcInsnBuilder(); }
+		void writeUsing(ClassBytecodeWriter writer) {
+			if (arguments[0] instanceof java.lang.String)
+				writer.visitLdcInsn(string(0));
+			else
+				writer.pushNumber(number(0));
+		}
+	}
 }

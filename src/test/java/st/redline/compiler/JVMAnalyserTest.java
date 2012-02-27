@@ -22,6 +22,20 @@ public class JVMAnalyserTest {
 		analyser = new JVMAnalyser(parent, writer, false);
 	}
 
+	@Test
+	public void shouldVisitMethodInsnWhenKeywordExpressionInvokeVirtual() {
+		analyser.visitBegin(mock(KeywordExpression.class), "invokeVirtual:method:returning:", 3, 0);
+		assertNotNull(analyser.builder);
+		assertTrue(analyser.builder instanceof JVMAnalyser.VisitMethodInsnBuilder);
+	}
+
+	@Test
+	public void shouldVisitLdcInsnWhenKeywordExpressionLds() {
+		analyser.visitBegin(mock(KeywordExpression.class), "ldc:", 1, 0);
+		assertNotNull(analyser.builder);
+		assertTrue(analyser.builder instanceof JVMAnalyser.VisitLdcInsnBuilder);
+	}
+
     @Test
     public void shouldVisitFieldInsnWithOpcodeGetStaticWhenKeywordExpressionMatches() {
         analyser.visitBegin(mock(KeywordExpression.class), "getStatic:named:as:", 3, 0);
