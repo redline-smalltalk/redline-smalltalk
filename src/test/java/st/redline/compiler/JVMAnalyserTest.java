@@ -23,6 +23,13 @@ public class JVMAnalyserTest {
 	}
 
 	@Test
+	public void shouldAddStringConstantAsBuilderArgument() {
+		analyser.builder = mock(JVMAnalyser.Builder.class);
+		analyser.visit(mock(StringConstant.class), "literal string", 0, false, 0);
+		verify(analyser.builder).addArgument("literal string");
+	}
+
+	@Test
 	public void shouldVisitMethodInsnWhenKeywordExpressionInvokeVirtual() {
 		analyser.visitBegin(mock(KeywordExpression.class), "invokeVirtual:method:returning:", 3, 0);
 		assertNotNull(analyser.builder);

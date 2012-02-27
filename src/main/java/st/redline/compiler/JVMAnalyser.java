@@ -187,6 +187,7 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 	}
 
 	public void visit(StringConstant stringConstant, String value, int index, boolean insideArray, int line) {
+		builder.addArgument(value);
 	}
 
 	public void visit(Symbol symbol, String value, int index, boolean insideArray, int line) {
@@ -210,6 +211,7 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         int opcode;
         int argumentCount;
         Object[] arguments;
+	    int offset = 0;
 
         abstract Builder create();
         abstract void writeUsing(ClassBytecodeWriter writer);
@@ -220,6 +222,11 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
             this.arguments = new Object[argumentCount];
         }
         
+	    void addArgument(String argument) {
+		    arguments[offset] = argument;
+		    offset++;
+	    }
+
         String string(int index) {
             return String.valueOf(arguments[index]);
         }
@@ -251,8 +258,10 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 		void writeUsing(ClassBytecodeWriter writer) {
 			if (arguments[0] instanceof java.lang.String)
 				writer.visitLdcInsn(string(0));
-			else
+			else if (arguments[0] instanceof Integer)
 				writer.pushNumber(number(0));
+			else
+				throw new IllegalArgumentException("Unsupported Ldc type: " + arguments[0]);
 		}
 	}
 }
