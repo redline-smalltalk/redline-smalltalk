@@ -14,6 +14,8 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         builders.put("ldc:", new VisitLdcInsnBuilder());
         builders.put("aload:", new VisitVarInsnBuilder());
         builders.put("invokeVirtual:method:returning:", new VisitMethodInsnBuilder(INVOKEVIRTUAL));
+        // commands added by Redline - not true JVM instructions.
+        builders.put("arg:", new VisitArgumentFetchBuilder());
     }
 
     protected final Analyser analyser;
@@ -282,4 +284,16 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 				throw new IllegalArgumentException("Unsupported Var type: " + arguments[0]);
 		}
 	}
+
+    // this builder provides access to method arguments
+    static class VisitArgumentFetchBuilder extends Builder {
+        VisitArgumentFetchBuilder() { super(0, 1); }
+        Builder create() { return new VisitArgumentFetchBuilder(); }
+        void writeUsing(ClassBytecodeWriter writer) {
+            if (arguments[0] instanceof Integer)
+                writer.pushArgument(number(0));
+            else
+                throw new IllegalArgumentException("Unsupported Arg type: " + arguments[0]);
+        }
+    }
 }

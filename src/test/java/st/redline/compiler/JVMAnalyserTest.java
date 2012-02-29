@@ -22,6 +22,13 @@ public class JVMAnalyserTest {
 		analyser = new JVMAnalyser(parent, writer, false);
 	}
 
+    @Test
+    public void shouldVisitArgumentBuilderWhenKeywordExpressionArg() {
+        analyser.visitBegin(mock(KeywordExpression.class), "arg:", 1, 0);
+        assertNotNull(analyser.builder);
+        assertTrue(analyser.builder instanceof JVMAnalyser.VisitArgumentFetchBuilder);
+    }
+
 	@Test
 	public void shouldVisitVarInsnWhenKeywordExpressionAload() {
 		analyser.visitBegin(mock(KeywordExpression.class), "aload:", 1, 0);
