@@ -149,7 +149,7 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 	}
 
 	public void visit(Number number, String value, int index, boolean insideArray, int line) {
-		builder.addArgument(value);
+		builder.addArgument(Integer.valueOf(value));
 	}
 
 	public void visit(BlockArgument blockArgument, String value, int line) {
@@ -225,6 +225,11 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         }
         
 	    void addArgument(String argument) {
+		    arguments[offset] = argument;
+		    offset++;
+	    }
+
+	    void addArgument(Integer argument) {
 		    arguments[offset] = argument;
 		    offset++;
 	    }
