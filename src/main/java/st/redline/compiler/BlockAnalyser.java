@@ -21,9 +21,10 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(Block block, int line) {
-		if (block == thisBlock)
+		if (block == thisBlock) {
+			analyser.currentDelegate(verbose ? analyser.tracingDelegate(this) : this);
 			writer.openClass();
-		else
+		} else
 			super.visitBegin(block, line);
 	}
 

@@ -149,6 +149,7 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 	}
 
 	public void visit(Number number, String value, int index, boolean insideArray, int line) {
+		builder.addArgument(value);
 	}
 
 	public void visit(BlockArgument blockArgument, String value, int line) {

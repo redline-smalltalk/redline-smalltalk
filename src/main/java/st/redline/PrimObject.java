@@ -130,7 +130,7 @@ public class PrimObject {
 	}
 
 	public PrimObject variableAt(String name) {
-        System.out.println("variableAt() " + name + " in " + this);
+//        System.out.println("variableAt() " + name + " in " + this);
 		int index = cls().indexOfVariable(name);
 		if (index != 0)
 			return attributes[index];
@@ -142,7 +142,7 @@ public class PrimObject {
 	}
 
 	PrimObject variableAtPut(String name, PrimObject object) {
-        System.out.println("variableAtPut() " + name + " " + object);
+//        System.out.println("variableAtPut() " + name + " " + object);
 		int index = cls().indexOfVariable(name);
 		if (index != 0) {
 			attributes[index] = object;
