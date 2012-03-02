@@ -30,7 +30,6 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 		this.writer = classBytecodeWriter;
 		this.verbose = verbose;
 		this.nesting = 1;
-	    System.out.println("*** ENTERING JVM MODE ***");
 	}
 
 	public byte[] classBytes() {
@@ -56,14 +55,12 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 	}
 
 	public void visitBegin(SimpleExpression simpleExpression) {
-		System.out.println("*** ENTERING JVM MODE ***");
 		nesting++;
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
 		nesting--;
 		if (nesting == 0) {
-			System.out.println("*** LEAVING JVM MODE ***");
 			analyser.previousDelegate();
 		}
 	}
