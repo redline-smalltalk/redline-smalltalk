@@ -96,8 +96,8 @@ public class JVMAnalyserTest {
     }
 
 	@Test
-	public void shouldRestorePreviousAnalyserWhenVisitLastStatementEnd() {
-		analyser.visitEnd(mock(Statements.class));
+	public void shouldRestorePreviousAnalyserWhenVisitLastSimpleExpressionEnds() {
+		analyser.visitEnd(mock(SimpleExpression.class));
 		verify(parent).previousDelegate();
 	}
 

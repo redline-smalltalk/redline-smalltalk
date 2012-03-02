@@ -35,6 +35,13 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 		analyser.previousDelegate();
 	}
 
+	public void visit(JVM jvm, int line) {
+		System.out.println("VISIT JVM IN BLOCK");
+		writer.visitLine(line);
+		JVMAnalyser jvmAnalyser = new JVMAnalyser(analyser, writer, verbose);
+		analyser.currentDelegate(verbose ? analyser.tracingDelegate(jvmAnalyser) : jvmAnalyser);
+	}
+
 	boolean isMethodBlock() {
 		return false;
 	}

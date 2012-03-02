@@ -12,6 +12,10 @@ public class TracingAnalyser implements AnalyserDelegate {
 		System.out.println(trace);
 	}
 
+	public String toString() {
+		return "tracing(" + delegate + ")";
+	}
+
 	public byte[] classBytes() {
 		trace("classBytes()");
 		return delegate.classBytes();

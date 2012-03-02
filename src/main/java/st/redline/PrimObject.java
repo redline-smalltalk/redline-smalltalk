@@ -59,7 +59,9 @@ public class PrimObject {
 		Block block = (Block) SmalltalkClassLoader.BLOCKS_TO_BE_COMPILED.remove(name);
 		if (block == null)
 			throw new IllegalStateException("Block to be compiled '" + name + "' not found.");
+		System.out.println("*** BEGIN COMPILE BLOCK *** " + block.analyser());
 		block.accept(block.analyser());
+		System.out.println("*** END COMPILE BLOCK *** " + block.analyser());
 		try {
 			PrimObject newblock = (PrimObject) smalltalkClassLoader().defineClass(block.classBytes()).newInstance();
 			BLOCKS.put(name, newblock);

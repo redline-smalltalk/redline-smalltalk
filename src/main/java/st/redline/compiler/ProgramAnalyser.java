@@ -122,6 +122,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(KeywordExpression keywordExpression, String selector, int argumentCount, int line) {
+		System.out.println(this + " " + analyser.delegate());
 	}
 
 	public void visitEnd(KeywordExpression keywordExpression, String selector, int argumentCount, int line) {
