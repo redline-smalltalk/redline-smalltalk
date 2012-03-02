@@ -53,6 +53,12 @@ public class PrimObject {
 		initialize();
 	}
 
+	public String toString() {
+		if (javaValue != null)
+			return javaValue.toString();
+		return super.toString();
+	}
+
 	public PrimObject block(String name) {
 		if (BLOCKS.containsKey(name))
 			return createBlockInstance(BLOCKS.get(name));

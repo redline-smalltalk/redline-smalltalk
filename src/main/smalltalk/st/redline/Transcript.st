@@ -11,5 +11,5 @@ Object < #Transcript.
 
 + stdout: string
     JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
-        aload: 3;
+        arg: 0;
         invokeVirtual: 'java/io/PrintStream' method: 'print' returning: '(Ljava/lang/Object;)V'.
