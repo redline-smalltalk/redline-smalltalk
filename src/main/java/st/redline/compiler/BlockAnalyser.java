@@ -22,7 +22,6 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 
 	public void visitBegin(Block block, int line) {
 		if (block == thisBlock) {
-			analyser.currentDelegate(verbose ? analyser.tracingDelegate(this) : this);
 			writer.openClass();
 		} else
 			super.visitBegin(block, line);
@@ -32,11 +31,9 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 		if (block != thisBlock)
 			throw new IllegalStateException("Expected visitEnd of own block. Got " + block);
 		writer.closeClass();
-		analyser.previousDelegate();
 	}
 
 	public void visit(JVM jvm, int line) {
-		System.out.println("VISIT JVM IN BLOCK");
 		writer.visitLine(line);
 		JVMAnalyser jvmAnalyser = new JVMAnalyser(analyser, writer, verbose);
 		analyser.currentDelegate(verbose ? analyser.tracingDelegate(jvmAnalyser) : jvmAnalyser);

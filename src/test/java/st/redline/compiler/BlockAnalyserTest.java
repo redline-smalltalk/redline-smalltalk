@@ -27,12 +27,6 @@ public class BlockAnalyserTest {
 	}
 
 	@Test
-	public void shouldRemoveBlockAnalyserAsCurrentAnalyserWhenVisitEndOfBlock() {
-		analyser.visitEnd(block, 1);
-		verify(parent).previousDelegate();
-	}
-
-	@Test
 	public void shouldOpenClassWhenVisitBeginOfBlock() {
 		analyser.visitBegin(block, 1);
 		verify(writer).openClass();

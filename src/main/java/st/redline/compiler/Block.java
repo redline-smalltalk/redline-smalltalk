@@ -7,7 +7,7 @@ public class Block extends Primary {
 	private final BlockArguments blockArguments;
 	private final Temporaries temporaries;
 	private final Statements statements;
-	private BlockAnalyser analyser;
+	private Analyser analyser;
 
 	public Block(int line, BlockArguments blockArguments, Temporaries temporaries, Statements statements) {
 		this.line = line;
@@ -45,11 +45,11 @@ public class Block extends Primary {
 		nodeVisitor.visitEnd(this, line);
 	}
 
-	public void analyser(BlockAnalyser analyser) {
+	public void analyser(Analyser analyser) {
 		this.analyser = analyser;
 	}
 
-	public BlockAnalyser analyser() {
+	public Analyser analyser() {
 		return analyser;
 	}
 

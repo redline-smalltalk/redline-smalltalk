@@ -122,7 +122,6 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(KeywordExpression keywordExpression, String selector, int argumentCount, int line) {
-		System.out.println(this + " " + analyser.delegate());
 	}
 
 	public void visitEnd(KeywordExpression keywordExpression, String selector, int argumentCount, int line) {
@@ -171,8 +170,11 @@ public class ProgramAnalyser implements AnalyserDelegate {
 		return analyser.packageName() + (analyser.packageName().equals("") ? "" : ".") + blockClassName;
 	}
 
-	BlockAnalyser createBlockAnalyser(String blockClassName, Block block) {
-		return new BlockAnalyser(analyser, blockClassName, analyser.packageName(), verbose, isMethodBlock(), block);
+	Analyser createBlockAnalyser(String blockClassName, Block block) {
+		Analyser analyserDelegator = new Analyser(analyser.className(), analyser.packageName(), verbose);
+		BlockAnalyser blockAnalyser = new BlockAnalyser(analyserDelegator, blockClassName, analyser.packageName(), verbose, isMethodBlock(), block);
+		analyserDelegator.currentDelegate(blockAnalyser);
+		return analyserDelegator;
 	}
 
 	public SmalltalkClassLoader smalltalkClassLoader() {
