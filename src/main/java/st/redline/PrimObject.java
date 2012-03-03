@@ -54,9 +54,7 @@ public class PrimObject {
 	}
 
 	public String toString() {
-		if (javaValue != null)
-			return javaValue.toString();
-		return super.toString();
+		return javaValue != null ? javaValue.toString() : super.toString();
 	}
 
 	public PrimObject block(String name) {
@@ -131,8 +129,13 @@ public class PrimObject {
 
 	public static void dump(Object object) {
 		System.out.println("Dump: " + object);
-		for (int i = 0; i < ((PrimObject) object).attributes.length; i++)
-			System.out.println(i + " " + ((PrimObject) object).attributes[i]);
+		for (int i = 0; i < ((PrimObject) object).attributes.length; i++) {
+			System.out.print(i + " " + ((PrimObject) object).attributes[i]);
+			if (((PrimObject) object).attributes[i].javaValue() != null)
+				System.out.println(" -> " + ((PrimObject) object).attributes[i].javaValue());
+			else
+				System.out.println();
+		}
 	}
 
 	public PrimObject variableAt(String name) {
@@ -260,23 +263,33 @@ public class PrimObject {
 
 	public PrimObject p135(PrimObject receiver, PrimContext context) {
 		// category: name
-		// Nb: we don't store category, here for compatibility with older Smalltalk.
+		// Nb: we don't store category - here for compatibility with older Smalltalk.
 		return receiver;
 	}
 
 	public PrimObject p136(PrimObject receiver, PrimContext context) {
 		// at: (take into account class required data offset.
-		throw new IllegalStateException("at: IMPLEMENT ME.");
+		if (!(receiver.javaValue() instanceof ArrayList))
+			throw new IllegalStateException("Receiver javaValue can't handle at:.");
+		ArrayList<PrimObject> array = (ArrayList<PrimObject>) receiver.javaValue();
+		return array.get(context.intArgumentAt(0));
 	}
 
 	public PrimObject p137(PrimObject receiver, PrimContext context) {
-		// at:put: (take into account class required data offset.
-		throw new IllegalStateException("at:put: IMPLEMENT ME.");
+		// at:put:
+		if (!(receiver.javaValue() instanceof ArrayList))
+			throw new IllegalStateException("Receiver javaValue can't handle at:put:.");
+		ArrayList<PrimObject> array = (ArrayList<PrimObject>) receiver.javaValue();
+		array.set(context.intArgumentAt(0), context.argumentAt(1));
+		return receiver;
 	}
 
 	public PrimObject p138(PrimObject receiver, PrimContext context) {
 		// size (take into account class required data offset.
-		throw new IllegalStateException("size IMPLEMENT ME.");
+		if (!(receiver.javaValue() instanceof ArrayList))
+			throw new IllegalStateException("Receiver javaValue can't handle size:.");
+		ArrayList<PrimObject> array = (ArrayList<PrimObject>) receiver.javaValue();
+		return number(array.size());
 	}
 
 	PrimObject resolveObject(String name) {

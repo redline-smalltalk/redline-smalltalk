@@ -159,18 +159,22 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 	}
 
 	public void visit(Self self, int line) {
+		writer.pushReceiver();
 	}
 
 	public void visit(Super aSuper, int line) {
 	}
 
 	public void visit(True aTrue, int line) {
+		writer.pushObjectStaticField("TRUE");
 	}
 
 	public void visit(False aFalse, int line) {
+		writer.pushObjectStaticField("FALSE");
 	}
 
 	public void visit(Nil nil, int line) {
+		writer.pushObjectStaticField("NIL");
 	}
 
 	public void visit(JVM jvm, int line) {

@@ -40,6 +40,11 @@ public class PrimContext {
 		return arguments[index];
 	}
 
+	public int intArgumentAt(int index) {
+		PrimObject value = argumentAt(index);
+		return ((Integer) value.javaValue()).intValue();
+	}
+
 	public void temporariesInit(int size) {
 		temporaries = new PrimObject[size];
 		for (int i = 0; i < size; i++)
