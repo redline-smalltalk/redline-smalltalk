@@ -46,7 +46,7 @@ public class Stic {
 		return new CommandLine(args);
 	}
 
-	Stic(CommandLine commandLine) throws ClassNotFoundException {
+	public Stic(CommandLine commandLine) throws ClassNotFoundException {
 		initializeClassLoader(commandLine);
 		bootstrap();
 	}
