@@ -42,7 +42,7 @@ public class Stic {
 		return input;
 	}
 
-	static CommandLine createCommandLineWith(String[] args) {
+	public static CommandLine createCommandLineWith(String[] args) {
 		return new CommandLine(args);
 	}
 
@@ -67,7 +67,7 @@ public class Stic {
 		return SmalltalkClassLoader.instance();
 	}
 
-	PrimObject invoke(String className) throws Exception {
+	public PrimObject invoke(String className) throws Exception {
 		return (PrimObject) classLoader().loadClass(className).newInstance();
 	}
 }

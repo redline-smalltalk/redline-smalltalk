@@ -2,7 +2,6 @@
 package st.redline.stout;
 
 import org.mortbay.jetty.Handler;
-import org.mortbay.jetty.Request;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.handler.AbstractHandler;
 import st.redline.CommandLine;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.channels.NonWritableChannelException;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -48,20 +46,24 @@ public class Run {
 		stic = new Stic(commandLine);
 		httpServletRequest = stic.invoke("st.redline.stout.HttpServletRequest");
 		httpServletResponse = stic.invoke("st.redline.stout.HttpServletResponse");
-		requestSymbol = Primitives.createSymbol(httpServletRequest, "Request");
-		forwardSymbol = Primitives.createSymbol(httpServletRequest, "Forward");
-		includeSymbol = Primitives.createSymbol(httpServletRequest, "Include");
-		errorSymbol = Primitives.createSymbol(httpServletRequest, "Error");
-		httpVerbMap.put("GET", Primitives.createSymbol(httpServletRequest, "GET"));
-		httpVerbMap.put("PUT", Primitives.createSymbol(httpServletRequest, "PUT"));
-		httpVerbMap.put("POST", Primitives.createSymbol(httpServletRequest, "POST"));
-		httpVerbMap.put("OPTIONS", Primitives.createSymbol(httpServletRequest, "OPTIONS"));
-		httpVerbMap.put("DELETE", Primitives.createSymbol(httpServletRequest, "DELETE"));
-		httpVerbMap.put("TRACE", Primitives.createSymbol(httpServletRequest, "TRACE"));
-		httpVerbMap.put("HEAD", Primitives.createSymbol(httpServletRequest, "HEAD"));
+		requestSymbol = symbol("Request");
+		forwardSymbol = symbol("Forward");
+		includeSymbol = symbol("Include");
+		errorSymbol = symbol("Error");
+		httpVerbMap.put("GET", symbol("GET"));
+		httpVerbMap.put("PUT", symbol("PUT"));
+		httpVerbMap.put("POST", symbol("POST"));
+		httpVerbMap.put("OPTIONS", symbol("OPTIONS"));
+		httpVerbMap.put("DELETE", symbol("DELETE"));
+		httpVerbMap.put("TRACE", symbol("TRACE"));
+		httpVerbMap.put("HEAD", symbol("HEAD"));
 	}
 
-	private static void startServer(CommandLine commandLine) throws Exception {
+    private static PrimObject symbol(String value) {
+        return PrimObject.symbol(value);
+    }
+
+    private static void startServer(CommandLine commandLine) throws Exception {
 		server = new Server(8080);
 		server.setHandler(initialHandler(commandLine));
 		server.start();
@@ -69,7 +71,7 @@ public class Run {
 	}
 
 	private static PrimObject object(CommandLine commandLine) throws Exception {
-		return Primitives.send(stic.invoke((String) commandLine.arguments().get(0)), "new", null);
+		return stic.invoke((String) commandLine.arguments().get(0)).perform("new");
 	}
 
 	private static Handler initialHandler(final CommandLine commandLine) throws Exception {
@@ -91,17 +93,16 @@ public class Run {
 	private static Handler continuingHandler(final PrimObject receiver) {
 		return new AbstractHandler() {
 			public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
-				throws IOException, ServletException {
+                    throws IOException, ServletException {
 				try {
-					System.out.println("continuingHandler() " + receiver + " " + request.getMethod() + " " + target);
-					Primitives.send(receiver,
-							method(request.getMethod()),
-							string(target),
-							request(request),
-							response(response),
-							dispatch(dispatch),
-							"handle:on:with:and:and:",
-							null);
+                    System.out.println("continuingHandler() " + receiver + " " + request.getMethod() + " " + target);
+                    receiver.perform(
+                            method(request.getMethod()),
+                            string(target),
+                            request(request),
+                            response(response),
+                              dispatch(dispatch),
+                              "handle:on:with:and:and:");
 				} catch (ClassNotFoundException e) {
 					throw new ServletException(e);
 				}
@@ -123,12 +124,16 @@ public class Run {
 			}
 
 			private PrimObject request(HttpServletRequest request) throws ClassNotFoundException {
-				return Primitives.newWith(httpServletRequest, request);
+				return newWith(httpServletRequest, request);
 			}
 
 			private PrimObject response(HttpServletResponse response) throws ClassNotFoundException {
-				return Primitives.newWith(httpServletResponse, response);
+				return newWith(httpServletResponse, response);
 			}
+
+            private PrimObject newWith(PrimObject receiver, Object value) {
+                return receiver.perform("new").with(value);
+            }
 
 			private PrimObject method(String value) {
 				return httpVerbMap.get(value);

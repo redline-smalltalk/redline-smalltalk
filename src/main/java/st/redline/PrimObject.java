@@ -119,7 +119,7 @@ public class PrimObject {
 		return primObject;
 	}
 
-	PrimObject with(Object value) {
+	public PrimObject with(Object value) {
 		return javaValue(value);
 	}
 

@@ -4,7 +4,6 @@ package st.redline.stout;
 import st.redline.PrimContext;
 import st.redline.PrimObject;
 import st.redline.PrimObjectBlock;
-import st.redline.ProtoBlock;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
