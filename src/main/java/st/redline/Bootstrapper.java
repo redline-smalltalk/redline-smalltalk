@@ -49,6 +49,7 @@ public class Bootstrapper {
 		PrimObject.CLASSES.put("st.redline.Metaclass", primObjectMetaclass);
 		primObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
 		primObjectMetaclass.methods().put("instanceVariableNames:", new InstanceVariableNamesMethod());
+		primObjectMetaclass.methods().put("import:", new ImportMethod());
 		PrimObjectMetaclass undefinedObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
 		PrimObjectMetaclass undefinedObjectClass = undefinedObjectMetaClass.basicCreate("UndefinedObject", PrimObject.PRIM_NIL, "", "", "", "");
 		PrimObject.NIL = new PrimObject();

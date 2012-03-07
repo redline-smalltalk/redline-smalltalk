@@ -54,7 +54,7 @@ public class PrimObject {
 	}
 
 	public String toString() {
-		return javaValue != null ? javaValue.toString() : super.toString();
+		return (javaValue != null && !(javaValue instanceof Map)) ? javaValue.toString() : super.toString();
 	}
 
 	public PrimObject block(String name) {

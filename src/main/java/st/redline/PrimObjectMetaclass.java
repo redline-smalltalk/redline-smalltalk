@@ -110,6 +110,15 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 		return IMPORTS.get(name);
 	}
 
+    public void packageAtPut(String name, String packageName) {
+        System.out.println("packageAtPut() " + this + " at: " + name + " package: " + packageName);
+        if (imports == null)
+            imports = new Hashtable<String, String>();
+        if (imports.containsKey(name))
+            throw new IllegalStateException("'" + name + "' already registered to a package.");
+        imports.put(name, packageName);
+    }
+
 	protected PrimObject _sendMessages_(PrimObject receiver, PrimContext context) {
 		return this;
 	}
