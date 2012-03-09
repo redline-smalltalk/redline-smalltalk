@@ -13,8 +13,12 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         builders.put("getStatic:named:as:", new VisitFieldInsnBuilder(GETSTATIC));
         builders.put("ldc:", new VisitLdcInsnBuilder());
         builders.put("aload:", new VisitVarInsnBuilder());
-        builders.put("invokeVirtual:method:returning:", new VisitMethodInsnBuilder(INVOKEVIRTUAL));
-        // commands added by Redline - not true JVM instructions.
+	    builders.put("invokeVirtual:method:returning:", new VisitMethodInsnBuilder(INVOKEVIRTUAL));
+	    builders.put("invokeSpecial:method:returning:", new VisitMethodInsnBuilder(INVOKESPECIAL));
+	    builders.put("invokeInterface:method:returning:", new VisitMethodInsnBuilder(INVOKEINTERFACE));
+	    builders.put("new:", new VisitTypeInsnBuilder(NEW));
+	    builders.put("checkcast:", new VisitTypeInsnBuilder(CHECKCAST));
+	    // commands added by Redline - not true JVM instructions.
         builders.put("arg:", new VisitArgumentFetchBuilder());
     }
 
@@ -287,6 +291,14 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 				writer.visitVarInsn(ALOAD, number(0));
 			else
 				throw new IllegalArgumentException("Unsupported Var type: " + arguments[0]);
+		}
+	}
+
+	static class VisitTypeInsnBuilder extends Builder {
+		VisitTypeInsnBuilder(int opcode) { super(opcode, 1); }
+		Builder create() { return new VisitTypeInsnBuilder(opcode); }
+		void writeUsing(ClassBytecodeWriter writer) {
+			writer.visitTypeInsn(opcode, string(0));
 		}
 	}
 

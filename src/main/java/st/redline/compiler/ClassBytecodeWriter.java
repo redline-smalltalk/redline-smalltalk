@@ -339,6 +339,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitVarInsn(opcode, value);
 	}
 
+	public void visitTypeInsn(int opcode, String type) {
+		mv.visitTypeInsn(opcode, type);
+	}
+
 	static {
 		OPCODES.put("V1_1", 196653);
 		OPCODES.put("V1_2", 46);

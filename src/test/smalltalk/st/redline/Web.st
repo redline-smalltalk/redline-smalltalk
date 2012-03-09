@@ -5,5 +5,6 @@ import: 'st.redline.stout.Stout'.
 Stout < #Web.
 
 - initialize
+    Transcript show: 'Web initialize'; cr.
     super initialize.
     self get: '/' do: [ Transcript show: 'here'; cr ].

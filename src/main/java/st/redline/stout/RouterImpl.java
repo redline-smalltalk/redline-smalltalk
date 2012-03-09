@@ -27,7 +27,7 @@ public class RouterImpl implements Router {
     }
 
     public void dispatchToBlock(HttpServletResponse servletResponse, String requestPath) throws IOException {
-//        System.out.println("dispatchToBlock()" + servletResponse + " " + requestPath);
+        System.out.println("dispatchToBlock()" + servletResponse + " " + requestPath);
         Map<String, String> parameters = retrieveParametersAccordingToSpecification(requestPath);
         Object responseValue = invokeTargetBlock(parameters);
         String response = serializeResponse(responseValue);
