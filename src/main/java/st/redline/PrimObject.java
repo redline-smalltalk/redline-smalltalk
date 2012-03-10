@@ -390,6 +390,7 @@ public class PrimObject {
 	PrimObject perform0s(String selector, PrimObject ... arguments) {
 		if (attributes[CLASS_INDEX] == null || attributes[CLASS_INDEX].superclass() == null)
 			throw new IllegalStateException("Receiver '" + this + "' is expected to have a superclass.");
+		System.out.println("perform0s() " + selector + " " + this + " " + attributes[CLASS_INDEX] + " " + attributes[CLASS_INDEX].superclass());
 		return perform0(attributes[CLASS_INDEX].superclass(), selector, arguments);
 	}
 
@@ -432,6 +433,7 @@ public class PrimObject {
 	}
 
 	public PrimObject javaValue(Object javaValue) {
+//		System.out.println("javaValue() of " + this + " set to " + javaValue);
 		this.javaValue = javaValue;
 		return this;
 	}

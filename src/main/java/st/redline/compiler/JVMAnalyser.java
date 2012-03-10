@@ -210,6 +210,8 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 	}
 
 	public void visit(UnarySelectorMessageElement unarySelectorMessageElement, String value, int line) {
+		writer.visitLine(line);
+		writer.visitInsn(value.toUpperCase());
 	}
 
 	public void visit(Primitive primitive, String keyword, int line, String digits) {
