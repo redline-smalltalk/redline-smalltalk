@@ -18,6 +18,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	private int argumentsIndex = 0;
 	private Map<String, Integer> temporariesRegistry;
 	private int temporariesIndex = 0;
+	private boolean sendToSuper = false;
 
 	ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
 		this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose);
@@ -255,6 +256,8 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(Super aSuper, int line) {
+		sendToSuper = true;
+		writer.pushReceiver();
 	}
 
 	public void visit(True aTrue, int line) {
@@ -319,7 +322,8 @@ public class ProgramAnalyser implements AnalyserDelegate {
 
 	void invokeObjectPerform(String selector, int argumentCount, int line) {
 		writer.visitLine(line);
-		writer.invokeObjectPerform(selector, argumentCount);
+		writer.invokeObjectPerform(selector, argumentCount, sendToSuper);
+		sendToSuper = false;
 	}
 
 	void pushPrimObjectField(String field, int line) {

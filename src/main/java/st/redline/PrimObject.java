@@ -333,34 +333,64 @@ public class PrimObject {
 
 	// NOTE: Having perform bundle arguments and call perform0 simplifies the call process in the compiler.
 	// A future optimisation will be to remove this bundling, as creating an array and setting values is
-	// expensive.
+	// expensive (compared to not doing it).
 
 	public PrimObject perform(String selector) {
 		return perform0(selector);
+	}
+
+	public PrimObject superPerform(String selector) {
+		return perform0s(selector);
 	}
 
 	public PrimObject perform(PrimObject arg1, String selector) {
 		return perform0(selector, arg1);
 	}
 
+	public PrimObject superPerform(PrimObject arg1, String selector) {
+		return perform0s(selector, arg1);
+	}
+
 	public PrimObject perform(PrimObject arg1, PrimObject arg2, String selector) {
 		return perform0(selector, arg1, arg2);
+	}
+
+	public PrimObject superPerform(PrimObject arg1, PrimObject arg2, String selector) {
+		return perform0s(selector, arg1, arg2);
 	}
 
 	public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, String selector) {
 		return perform0(selector, arg1, arg2, arg3);
 	}
 
+	public PrimObject superPerform(PrimObject arg1, PrimObject arg2, PrimObject arg3, String selector) {
+		return perform0s(selector, arg1, arg2, arg3);
+	}
+
 	public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, String selector) {
 		return perform0(selector, arg1, arg2, arg3, arg4);
+	}
+
+	public PrimObject superPerform(PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, String selector) {
+		return perform0s(selector, arg1, arg2, arg3, arg4);
 	}
 
 	public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, PrimObject arg5, String selector) {
 		return perform0(selector, arg1, arg2, arg3, arg4, arg5);
 	}
 
+	public PrimObject superPerform(PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, PrimObject arg5, String selector) {
+		return perform0s(selector, arg1, arg2, arg3, arg4, arg5);
+	}
+
 	PrimObject perform0(String selector, PrimObject ... arguments) {
 		return perform0(attributes[CLASS_INDEX], selector, arguments);
+	}
+
+	PrimObject perform0s(String selector, PrimObject ... arguments) {
+		if (attributes[CLASS_INDEX] == null || attributes[CLASS_INDEX].superclass() == null)
+			throw new IllegalStateException("Receiver '" + this + "' is expected to have a superclass.");
+		return perform0(attributes[CLASS_INDEX].superclass(), selector, arguments);
 	}
 
 	void initialize() {

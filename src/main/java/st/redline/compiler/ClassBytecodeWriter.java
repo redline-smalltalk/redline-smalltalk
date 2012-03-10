@@ -30,6 +30,7 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	private final static Map<String, Integer> OPCODES = new HashMap<String, Integer>();
 
+	private final String className;
 	private final String packageName;
 	private final boolean verbose;
 
@@ -43,6 +44,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	ClassBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter) {
+		this.className = className;
 		this.packageName = packageName;
 		this.verbose = verbose;
 		this.cw = classWriter;
@@ -101,9 +103,17 @@ public class ClassBytecodeWriter implements Opcodes {
 	void writeInitializeMethod() {
 		openInitializeMethod();
 		registerPackage();
+		addClassToImports();
 		invokeMessageSends();
 		deregisterPackage();
 		closeInitializeMethod();
+	}
+
+	void addClassToImports() {
+		pushThis();
+		pushLiteral(className);
+		pushLiteral(ClassPathUtilities.fullyQualifiedClassNameToPackageName(fullyQualifiedClassName));
+		mv.visitMethodInsn(INVOKEVIRTUAL, superclass(), "packageAtPut", "(Ljava/lang/String;Ljava/lang/String;)V");
 	}
 
 	void deregisterPackage() {
@@ -175,9 +185,9 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporariesInit", "(I)V");
 	}
 
-	void invokeObjectPerform(String selector, int argumentCount) {
+	void invokeObjectPerform(String selector, int argumentCount, boolean sendToSuper) {
 		pushLiteral(selector);
-		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "perform", SIGNATURES[argumentCount]);
+		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, sendToSuper ? "superPerform" : "perform", SIGNATURES[argumentCount]);
 	}
 
 	void invokeObjectCreate(String type, String value, int line) {

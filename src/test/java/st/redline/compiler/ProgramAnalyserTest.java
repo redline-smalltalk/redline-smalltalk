@@ -179,14 +179,14 @@ public class ProgramAnalyserTest {
 	public void shouldInvokePerformWhenVisitEndsOfKeywordExpression() {
 		KeywordExpression keywordExpression = mock(KeywordExpression.class);
 		analyser.visitEnd(keywordExpression, "at:", 1, 3);
-		verify(writer).invokeObjectPerform("at:", 1);
+		verify(writer).invokeObjectPerform("at:", 1, false);
 	}
 
 	@Test
 	public void shouldInvokePerformWhenVisitEndsOfKeywordMessageElementNode() {
 		KeywordMessageElement keywordMessageElement = mock(KeywordMessageElement.class);
 		analyser.visitEnd(keywordMessageElement, "at:put:", 2, 3);
-		verify(writer).invokeObjectPerform("at:put:", 2);
+		verify(writer).invokeObjectPerform("at:put:", 2, false);
 	}
 
 	@Test
@@ -195,7 +195,7 @@ public class ProgramAnalyserTest {
 		UnarySelectorMessageElement unarySelectorMessageElement = new UnarySelectorMessageElement(unarySelector);
 		analyser.visit(unarySelectorMessageElement, "yourself", 42);
 		verify(writer).visitLine(42);
-		verify(writer).invokeObjectPerform("yourself", 0);
+		verify(writer).invokeObjectPerform("yourself", 0, false);
 	}
 
 	@Test
@@ -203,7 +203,7 @@ public class ProgramAnalyserTest {
 		UnarySelector unarySelector = new UnarySelector("yourself", 42);
 		analyser.visit(unarySelector, "yourself", 42);
 		verify(writer).visitLine(42);
-		verify(writer).invokeObjectPerform("yourself", 0);
+		verify(writer).invokeObjectPerform("yourself", 0, false);
 	}
 
 	@Test

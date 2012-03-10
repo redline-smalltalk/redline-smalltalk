@@ -3,8 +3,8 @@
 Object < #Stout
 
 - initialize
-    super initialize.
     Transcript show: 'stout initialize'; cr.
+    super initialize.
     "create router registry."
     JVM aload: 1;
         new: 'st/redline/stout/RouterRegistryImpl';

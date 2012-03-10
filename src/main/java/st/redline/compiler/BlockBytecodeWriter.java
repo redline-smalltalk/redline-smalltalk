@@ -23,6 +23,9 @@ public class BlockBytecodeWriter extends ClassBytecodeWriter implements Opcodes 
 		return methodBlock ? "st/redline/PrimObject" : "st/redline/PrimObjectBlock";
 	}
 
+	void addClassToImports() {
+	}
+
 	void deregisterPackage() {
 	}
 

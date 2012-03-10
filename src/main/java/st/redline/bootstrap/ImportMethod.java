@@ -9,7 +9,7 @@ import java.util.List;
 public class ImportMethod extends PrimObject {
 
     public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
-		System.out.println("import into " + receiver + " of " + primContext.argumentAt(0).javaValue());
+//		System.out.println("import into " + receiver + " of " + primContext.argumentAt(0).javaValue());
         PrimObjectMetaclass metaclass = (PrimObjectMetaclass) receiver;
 		SmalltalkClassLoader smalltalkClassLoader = smalltalkClassLoader();
 		for (SourceFile sourceFile : findSources(smalltalkClassLoader, primContext.argumentAt(0).javaValue()))
