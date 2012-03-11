@@ -24,11 +24,11 @@ Object < #Stout.
     JVM aload: 1;
         invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' returning: '()Ljava/lang/Object;';
         checkcast: 'st/redline/stout/RouterRegistry';
-        arg: 3;
-        arg: 2;
+        arg: 1;
+        arg: 0;
         invokeInterface: 'st/redline/stout/RouterRegistry' method: 'lookup' returning: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
-        arg: 5;
-        arg: 2;
+        arg: 3;
+        arg: 1;
         invokeInterface: 'st/redline/stout/Router' method: 'dispatchToBlock' returning: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)V';
         aload: 1.
 
