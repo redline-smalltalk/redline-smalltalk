@@ -187,7 +187,10 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	void invokeObjectPerform(String selector, int argumentCount, boolean sendToSuper) {
 		pushLiteral(selector);
-		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, sendToSuper ? "superPerform" : "perform", SIGNATURES[argumentCount]);
+		if (sendToSuper)
+			mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "superPerform", "(Lst/redline/PrimContext;" + SIGNATURES[argumentCount].substring(1));
+		else
+			mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "perform", SIGNATURES[argumentCount]);
 	}
 
 	void invokeObjectCreate(String type, String value, int line) {

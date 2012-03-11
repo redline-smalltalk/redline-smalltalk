@@ -258,6 +258,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	public void visit(Super aSuper, int line) {
 		sendToSuper = true;
 		writer.pushReceiver();
+		writer.pushContext();
 	}
 
 	public void visit(True aTrue, int line) {
