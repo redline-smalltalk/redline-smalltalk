@@ -38,9 +38,9 @@ Object < #Stout.
     JVM aload: 1;
         invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' returning: '()Ljava/lang/Object;';
         checkcast: 'st/redline/stout/RouterRegistry';
-        arg: 1;
+        arg: 0;
         ldc: 'JSON';
         ldc: 'GET';
-        arg: 2;
+        arg: 1;
         invokeInterface: 'st/redline/stout/RouterRegistry' method: 'register' returning: '(Lst/redline/PrimObject;Ljava/lang/String;Ljava/lang/String;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
         aload: 1.
