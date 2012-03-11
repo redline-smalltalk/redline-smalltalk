@@ -12,7 +12,8 @@ class PrimBasicDoesNotUnderstand extends PrimObject {
 
 	private void outputDoesNotUnderstandError(PrimObject receiver, PrimContext context) {
 		StringBuilder message = new StringBuilder();
-		message.append("Object '").append(receiver).append("' does not understand '")
+		message.append("Object '").append(receiver).append("' (").append(receiver.cls()).append(")")
+				.append(" does not understand '")
 				.append(context.arguments[0].javaValue).append("'");
 		if (context.arguments.length > 1) {
 			message.append(" with arguments:\n");
@@ -20,7 +21,12 @@ class PrimBasicDoesNotUnderstand extends PrimObject {
 				message.append(i).append("\t").append(context.arguments[i]).append(" ")
 						.append(context.arguments[i].javaValue()).append("\n");
 		} else
-			message.append(".\n");
+			message.append(".");
+		System.out.println();
+		System.out.println();
+		System.out.println(receiver);
+		System.out.println(receiver.cls());
+		System.out.println(receiver.cls().superclass());
 		throw new RedlineException(message.toString());
 	}
 

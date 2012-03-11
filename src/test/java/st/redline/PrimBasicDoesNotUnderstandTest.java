@@ -31,7 +31,7 @@ public class PrimBasicDoesNotUnderstandTest {
 		try {
 			bdnu.invoke(receiver, new PrimContext(receiver, null, "aMethod"));
 		} catch (RedlineException e) {
-			assertEquals(e.getMessage(), "Object '" + receiver.toString() + "' does not understand 'aMethod'.\n");
+			assertEquals(e.getMessage(), "Object '" + receiver.toString() + "' (" + receiver.cls().toString() + ") does not understand 'aMethod'.");
 		}
 	}
 

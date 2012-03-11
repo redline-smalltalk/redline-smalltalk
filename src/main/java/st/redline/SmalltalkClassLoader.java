@@ -22,6 +22,7 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	protected void bootstrap() {
+		System.out.println("**** BOOTSTRAP ****");
 		loadPrimObjectMetaclass().bootstrap();
 	}
 
@@ -42,7 +43,6 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	public Class findClass0(String className) throws ClassNotFoundException {
-//		System.out.println("findClass() " + className);
 		SourceFile sourceFile = findSource(className);
 		if (sourceFile == null)
 			return tryFindSystemClass(className);
@@ -58,7 +58,6 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	private Class classFrom(SourceFile sourceFile) {
-//		System.out.println("classFrom() " + sourceFile);
 		byte[] classBytes = compile(sourceFile);
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}

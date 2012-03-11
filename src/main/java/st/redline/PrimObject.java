@@ -127,6 +127,23 @@ public class PrimObject {
 		return BOOTSTRAPPING ? new PrimObject() : PrimObjectMetaclass.METACLASS.resolveObject(type).perform("new");
 	}
 
+	public static void registerPackage(String name) {
+//		System.out.println("registerPackage() " + name);
+		Stack<String> stack = PACKAGE_REGISTRY.get();
+		if (stack == null) {
+			stack = new Stack<String>();
+			PACKAGE_REGISTRY.set(stack);
+		}
+		stack.push(name.replace("/", "."));
+	}
+
+	public static void deregisterPackage() {
+//		System.out.println("deregisterPackage()");
+		Stack<String> stack = PACKAGE_REGISTRY.get();
+		if (stack != null)
+			stack.pop();
+	}
+
 	public static void dump(Object object) {
 		System.out.println("Dump: " + object);
 		for (int i = 0; i < ((PrimObject) object).attributes.length; i++) {
@@ -388,6 +405,7 @@ public class PrimObject {
 	}
 
 	PrimObject perform0s(PrimContext context, String selector, PrimObject ... arguments) {
+		System.out.println(" SUPER SEND ");
 		return perform0(context.lookupClass.superclass(), selector, arguments);
 	}
 
@@ -397,10 +415,12 @@ public class PrimObject {
 	}
 
 	PrimObject perform0(PrimObject foundInClass, String selector, PrimObject ... arguments) {
-//		System.out.println("perform0() " + foundInClass + " " + selector);
+		System.out.println("perform0() " + foundInClass + " " + selector);
 		PrimObject cls = foundInClass;
-		while (!cls.includesSelector(selector))
+		while (!cls.includesSelector(selector)) {
 			cls = cls.superclass();
+			System.out.println(" looking in: " + cls);
+		}
 		return apply(cls.methodFor(selector), cls, selector, arguments);
 	}
 

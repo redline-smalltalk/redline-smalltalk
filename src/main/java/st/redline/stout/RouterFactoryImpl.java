@@ -1,6 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
+import st.redline.PrimObject;
 import st.redline.PrimObjectBlock;
 
 /*
@@ -24,7 +25,7 @@ public class RouterFactoryImpl implements RouterFactory {
     /*
       type parameter should be used to determine which implementation of the st.redline.stout.ResponseSerializer to be used.
      */
-    public Router create(String requestPathSpec, String type, PrimObjectBlock block) {
+    public Router create(String requestPathSpec, String type, PrimObject block) {
         return new RouterImpl(TO_STRING_SERIALIZER, block, requestPathSpecificationFactory.create(requestPathSpec));
     }
 }

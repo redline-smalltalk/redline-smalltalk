@@ -119,22 +119,14 @@ public class ClassBytecodeWriter implements Opcodes {
 	void deregisterPackage() {
 		if (packageName == "")
 			return;
-		mv.visitFieldInsn(GETSTATIC, OBJECT, "PACKAGE_REGISTRY", "Ljava/lang/ThreadLocal;");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/ThreadLocal", "get", "()Ljava/lang/Object;");
-		mv.visitTypeInsn(CHECKCAST, "java/util/Stack");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Stack", "pop", "()Ljava/lang/Object;");
-		mv.visitInsn(POP);
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "deregisterPackage", "()V");
 	}
 
 	void registerPackage() {
 		if (packageName == "")
 			return;
-		mv.visitFieldInsn(GETSTATIC, OBJECT, "PACKAGE_REGISTRY", "Ljava/lang/ThreadLocal;");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/ThreadLocal", "get", "()Ljava/lang/Object;");
-		mv.visitTypeInsn(CHECKCAST, "java/util/Stack");
 		pushLiteral(packageName);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Stack", "push", "(Ljava/lang/Object;)Ljava/lang/Object;");
-		mv.visitInsn(POP);
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "registerPackage", "(Ljava/lang/String;)V");
 	}
 
 	void invokeMessageSends() {

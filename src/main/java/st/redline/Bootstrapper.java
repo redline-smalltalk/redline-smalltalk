@@ -67,6 +67,7 @@ public class Bootstrapper {
 		protoObjectMetaclass.methods().put("class", new AccessClassMethod());
 		protoObjectMetaclass.methods().put("initialize", new InitializeMethod());
 		PrimObjectMetaclass protoObjectClass = protoObjectMetaclass.basicCreate("ProtoObject", PrimObject.PRIM_NIL, "", "", "", "");
+		protoObjectClass.methods().put("initialize", new InitializeMethod());
 		PrimObject.CLASSES.put("st.redline.ProtoObject", protoObjectClass);
 	}
 

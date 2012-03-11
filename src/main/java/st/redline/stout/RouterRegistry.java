@@ -6,7 +6,7 @@ import st.redline.PrimObjectBlock;
 
 public interface RouterRegistry {
     Router register(PrimObject spec, String type, String method, PrimObject block);
-    Router register(String spec, String type, String method, PrimObjectBlock block);
+    Router register(String spec, String type, String method, PrimObject block);
     Router lookup(String path, String method);
     Router lookup(PrimObject path, PrimObject method);
 }

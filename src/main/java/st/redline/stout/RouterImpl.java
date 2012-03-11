@@ -12,10 +12,10 @@ import java.util.Map;
 public class RouterImpl implements Router {
 
     private ResponseSerializer responseSerializer;
-    private PrimObjectBlock block;
+    private PrimObject block;
     private RequestPathSpecification requestPathSpecification;
 
-    public RouterImpl(ResponseSerializer responseSerializer, PrimObjectBlock block,
+    public RouterImpl(ResponseSerializer responseSerializer, PrimObject block,
                       RequestPathSpecification requestPathSpecification) {
         this.responseSerializer = responseSerializer;
         this.block = block;

@@ -163,7 +163,7 @@ public class PrimObjectTest {
 		try {
 			object.perform("anything");
 		} catch (RedlineException e) {
-			assertEquals(e.getMessage(), "Object '" + object.toString() + "' does not understand 'anything'.\n");
+			assertEquals(e.getMessage(), "Object '" + object.toString() + "' (" + object.cls().toString() + ") does not understand 'anything'.");
 		}
 	}
 
