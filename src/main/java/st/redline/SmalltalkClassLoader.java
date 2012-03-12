@@ -22,7 +22,6 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	protected void bootstrap() {
-		System.out.println("**** BOOTSTRAP ****");
 		loadPrimObjectMetaclass().bootstrap();
 	}
 

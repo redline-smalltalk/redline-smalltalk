@@ -5,14 +5,16 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 
 public class Stic {
 
 	public static void main(String[] args) throws Exception {
-		invokeWith(args);
+		invokeWith(Stic.class, args);
 	}
 
-	public static PrimObject invokeWith(String[] args) throws Exception {
+	// NOTE: The object returned by this method can be an eigenClass.
+	public static PrimObject invokeWith(Class aClass, String[] args) throws Exception {
 		CommandLine commandLine = createCommandLineWith(args);
 		if (commandLine.haveNoArguments()) {
 			commandLine.printHelp(new PrintWriter(System.out));
@@ -25,7 +27,12 @@ public class Stic {
 		} else {
 			inputFilename = (String) commandLine.arguments().get(0);
 		}
-		return new Stic(commandLine).invoke(inputFilename);
+		return instanceOfWith(aClass, commandLine).invoke(inputFilename);
+	}
+
+	private static Stic instanceOfWith(Class aClass, CommandLine commandLine) throws Exception {
+		Constructor constructor = aClass.getConstructor(CommandLine.class);
+		return (Stic) constructor.newInstance(commandLine);
 	}
 
 	static File writeInputCodeToTemporaryFile(CommandLine commandLine) throws Exception {
