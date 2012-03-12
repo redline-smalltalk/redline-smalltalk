@@ -37,7 +37,6 @@ public class RouterRegistryImpl implements RouterRegistry {
     }
 
     public Router lookup(PrimObject path, PrimObject method) {
-	    System.out.println("lookup() " + path + " " + method);
         return lookup((String) path.javaValue(), (String) method.javaValue());
     }
 
