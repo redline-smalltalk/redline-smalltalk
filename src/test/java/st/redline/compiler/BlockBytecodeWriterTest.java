@@ -32,19 +32,7 @@ public class BlockBytecodeWriterTest implements Opcodes {
 
 	@Test
 	public void shouldCreateLoadableClassWhenClassOpenedAndClosed() throws IllegalAccessException, InstantiationException {
-		BlockBytecodeWriter writerNotUsingMocks = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, true);
-		writerNotUsingMocks.openClass();
-		writerNotUsingMocks.closeClass();
-		byte[] classBytes = writerNotUsingMocks.contents();
-		PrimObject newClass = (PrimObject) new TemporaryClassLoader().defineClass(classBytes).newInstance();
-		assertNotNull(newClass);
-		assertFalse(newClass instanceof PrimObjectBlock);
-	}
-
-	@Test
-	public void shouldCreateSubclassOfPrimBlockWhenNotMethodBlock() throws IllegalAccessException, InstantiationException {
-		boolean methodBlock = false;
-		BlockBytecodeWriter writerNotUsingMocks = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, methodBlock);
+		BlockBytecodeWriter writerNotUsingMocks = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false);
 		writerNotUsingMocks.openClass();
 		writerNotUsingMocks.closeClass();
 		byte[] classBytes = writerNotUsingMocks.contents();
