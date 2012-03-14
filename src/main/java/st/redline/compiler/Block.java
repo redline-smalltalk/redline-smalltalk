@@ -32,6 +32,10 @@ public class Block extends Primary {
 		return temporaries;
 	}
 
+    boolean isBlockWithAnswerExpression() {
+        return (statements != null && statements.hasAnswerExpression());
+    }
+
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visitBegin(this, line);
 		if (nodeVisitor.skipBlockVisit(this))

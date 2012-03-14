@@ -33,6 +33,10 @@ class AssignmentExpression implements Expression {
 		throw new IllegalStateException("Assignment asked to duplicate stack top!");
 	}
 
+    public boolean isAnswerExpression() {
+        return false;
+    }
+
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visitBegin(this);
 		// Note: The order of visiting below is important. Expression before variable we store result into.

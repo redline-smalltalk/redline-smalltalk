@@ -65,6 +65,10 @@ public class SimpleExpression implements Expression {
 		return primary.line();
 	}
 
+    public boolean isAnswerExpression() {
+        return false;
+    }
+
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visitBegin(this);
 		if (primary != null)

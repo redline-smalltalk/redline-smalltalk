@@ -5,4 +5,5 @@ interface Expression extends VisitableNode {
 	int line();
 	void leaveResultOnStack();
 	void duplicateResultOnStack();
+    boolean isAnswerExpression();
 }

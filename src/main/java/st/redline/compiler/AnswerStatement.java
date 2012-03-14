@@ -15,6 +15,10 @@ class AnswerStatement extends Statements {
 		return line;
 	}
 
+    public boolean isAnswerExpression() {
+        return true;
+    }
+
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visitBegin(this);
 		if (expression() != null)
