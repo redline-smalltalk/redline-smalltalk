@@ -2,5 +2,10 @@
 package st.redline.compiler;
 
 public abstract class Primary implements VisitableNode {
+
 	abstract int line();
+
+    boolean isBlockWithAnswerExpression() {
+        return false;
+    }
 }

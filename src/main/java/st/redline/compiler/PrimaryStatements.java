@@ -13,6 +13,10 @@ class PrimaryStatements extends Primary {
 		return statements != null ? statements.line() : 0;
 	}
 
+    boolean isBlockWithAnswerExpression() {
+        return false;
+    }
+
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visit(this, line());
 		if (statements != null)

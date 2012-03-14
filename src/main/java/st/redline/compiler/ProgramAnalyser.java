@@ -19,8 +19,9 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	private Map<String, Integer> temporariesRegistry;
 	private int temporariesIndex = 0;
 	private boolean sendToSuper = false;
+    private boolean hasBlockWithAnswerExpression = false;
 
-	ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
+    ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
 		this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose);
 	}
 
@@ -93,10 +94,16 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(SimpleExpression simpleExpression) {
+        hasBlockWithAnswerExpression = simpleExpression.hasBlockWithAnswerExpression();
+		System.out.println("** visit(SimpleExpression) ** Has block with ^: " + hasBlockWithAnswerExpression);
+        if (hasBlockWithAnswerExpression)
+            writer.setupTryForBlockReturn(simpleExpression);
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
-		if (simpleExpression.isResultDuplicatedOnStack())
+        if (hasBlockWithAnswerExpression)
+            writer.setupCatchForBlockReturn(simpleExpression);
+        if (simpleExpression.isResultDuplicatedOnStack())
 			writer.pushDuplicate();
 		if (!simpleExpression.isResultLeftOnStack())
 			writer.pop();

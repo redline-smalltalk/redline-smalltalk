@@ -14,6 +14,10 @@ class PrimaryExpression extends Primary {
 		return expression != null ? expression.line() : 0;
 	}
 
+    boolean isBlockWithAnswerExpression() {
+        return false;
+    }
+
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visit(this, line());
 		if (expression != null)

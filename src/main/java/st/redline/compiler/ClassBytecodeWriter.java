@@ -318,7 +318,42 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitLineNumber(line, l0);
 	}
 
-	public void visitInsn(String opcode) {
+    void setupTryForBlockReturn(SimpleExpression simpleExpression) {
+        Label l0 = new Label();
+        Label l1 = new Label();
+        Label l2 = new Label();
+
+        simpleExpression.label0(l0);
+        simpleExpression.label1(l1);
+        simpleExpression.label2(l2);
+
+        mv.visitTryCatchBlock(l0, l1, l2, "st/redline/BlockReturn");
+        mv.visitLabel(l0);
+    }
+
+    void setupCatchForBlockReturn(SimpleExpression simpleExpression) {
+        Label l0 = (Label) simpleExpression.label0();
+        Label l1 = (Label) simpleExpression.label1();
+        Label l2 = (Label) simpleExpression.label2();
+
+        mv.visitLabel(l1);
+
+        Label l3 = new Label();
+        mv.visitJumpInsn(GOTO, l3);
+        mv.visitLabel(l2);
+
+        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {"st/redline/BlockReturn"});
+        mv.visitVarInsn(ASTORE, 11);
+
+        mv.visitVarInsn(ALOAD, 11);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/BlockReturn", "answer", "()Lst/redline/PrimObject;");
+        mv.visitInsn(ARETURN);
+
+        mv.visitLabel(l3);
+        mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+    }
+
+    public void visitInsn(String opcode) {
 		mv.visitInsn(opcodeValue(opcode));
 	}
 
