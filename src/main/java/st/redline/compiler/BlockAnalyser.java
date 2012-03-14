@@ -39,9 +39,11 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 		analyser.currentDelegate(verbose ? analyser.tracingDelegate(jvmAnalyser) : jvmAnalyser);
 	}
 
-	boolean isMethodBlock() {
-		return false;
-	}
+    public void visitEnd(AnswerStatement answerStatement) {
+        throw new IllegalStateException("Handle ANSWER STATEMENT");
+//		System.out.println("BlockAnalyserDelegate.visitEnd(AnswerExpression)");
+//        classBytecodeWriter.callPrimitiveBlockAnswer();
+    }
 
 	String createBlockName() {
 		BLOCK_NUMBER++;

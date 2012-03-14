@@ -8,6 +8,8 @@ interface NodeVisitor {
 	void visitEnd(Temporaries temporaries);
 	void visitBegin(Statements statements);
 	void visitEnd(Statements statements);
+    void visitBegin(AnswerStatement answerStatements);
+    void visitEnd(AnswerStatement answerStatements);
 	void visitBegin(SimpleExpression simpleExpression);
 	void visitEnd(SimpleExpression simpleExpression);
 	void visitBegin(Cascade cascade);

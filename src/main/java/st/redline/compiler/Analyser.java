@@ -82,6 +82,14 @@ public class Analyser implements NodeVisitor {
 		delegate.visitEnd(statements);
 	}
 
+    public void visitBegin(AnswerStatement answerStatement) {
+        delegate.visitBegin(answerStatement);
+    }
+
+    public void visitEnd(AnswerStatement answerStatement) {
+        delegate.visitEnd(answerStatement);
+    }
+
 	public void visit(Temporary temporary, String value, int line) {
 		delegate.visit(temporary, value, line);
 	}

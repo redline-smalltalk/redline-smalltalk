@@ -82,6 +82,15 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(Statements statements) {
 	}
 
+    public void visitBegin(AnswerStatement answerStatement) {
+        System.out.println("********************************");
+        System.out.println("********************************");
+        System.out.println("********************************");
+    }
+
+    public void visitEnd(AnswerStatement answerStatement) {
+    }
+
 	public void visit(Temporary temporary, String value, int line) {
 		// todo.jcl - output a warning if registered twice?
 		temporariesRegistry.put(value, temporariesIndex++);

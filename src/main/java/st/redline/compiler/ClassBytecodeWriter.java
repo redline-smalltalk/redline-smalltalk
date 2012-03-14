@@ -332,7 +332,6 @@ public class ClassBytecodeWriter implements Opcodes {
     }
 
     void setupCatchForBlockReturn(SimpleExpression simpleExpression) {
-        Label l0 = (Label) simpleExpression.label0();
         Label l1 = (Label) simpleExpression.label1();
         Label l2 = (Label) simpleExpression.label2();
 
