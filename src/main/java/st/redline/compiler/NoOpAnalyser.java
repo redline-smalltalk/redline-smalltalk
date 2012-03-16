@@ -27,6 +27,12 @@ class NoOpAnalyser implements AnalyserDelegate {
 	public void visitEnd(Statements statements) {
 	}
 
+	public void visitBegin(AnswerStatement answerStatement) {
+	}
+
+	public void visitEnd(AnswerStatement answerStatement) {
+	}
+
 	public void visitBegin(SimpleExpression simpleExpression) {
 	}
 

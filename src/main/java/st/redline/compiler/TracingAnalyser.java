@@ -51,6 +51,16 @@ public class TracingAnalyser implements AnalyserDelegate {
 		delegate.visitEnd(statements);
 	}
 
+	public void visitBegin(AnswerStatement answerStatement) {
+		trace("visitBegin(AnswerStatement) " + answerStatement);
+		delegate.visitBegin(answerStatement);
+	}
+
+	public void visitEnd(AnswerStatement answerStatement) {
+		trace("visitEnd(AnswerStatement) " + answerStatement);
+		delegate.visitEnd(answerStatement);
+	}
+
 	public void visit(Temporary temporary, String value, int line) {
 		trace("visit(Temporary) " + temporary + " " + String.valueOf(value) + " " + line);
 		delegate.visit(temporary, value, line);

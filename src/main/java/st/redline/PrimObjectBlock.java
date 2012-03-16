@@ -7,6 +7,8 @@ public class PrimObjectBlock extends PrimObject {
 
 	static PrimObject blockClosure;
 
+	private boolean methodBlock = false;
+
 	public PrimObjectBlock() {
 		this(0);
 	}
@@ -23,5 +25,13 @@ public class PrimObjectBlock extends PrimObject {
 			return PRIM_NIL;
 		blockClosure = resolveObject("st.redline.BlockClosure");
 		return blockClosure;
+	}
+
+	public void markAsMethodBlock() {
+		methodBlock = true;
+	}
+
+	public boolean isMethodBlock() {
+		return methodBlock;
 	}
 }

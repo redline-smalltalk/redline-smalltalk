@@ -37,4 +37,10 @@ public class BlockAnalyserTest {
 		analyser.visitEnd(block, 1);
 		verify(writer).closeClass();
 	}
+
+	@Test
+	public void shouldInvokeBlockAnswerWhenVisitAnswerStatementEnd() {
+		analyser.visitEnd(mock(AnswerStatement.class));
+		verify(writer).invokeBlockAnswer();
+	}
 }

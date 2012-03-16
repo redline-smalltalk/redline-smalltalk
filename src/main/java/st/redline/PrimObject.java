@@ -119,6 +119,12 @@ public class PrimObject {
 		return primObject;
 	}
 
+	public static PrimObject blockAnswer(PrimObject answer, PrimObjectBlock block) {
+		if (block.isMethodBlock())
+			return answer;
+		throw new BlockReturn(answer);
+	}
+
 	public PrimObject with(Object value) {
 		return javaValue(value);
 	}

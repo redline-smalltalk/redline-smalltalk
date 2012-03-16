@@ -3,6 +3,7 @@ package st.redline.bootstrap;
 import org.junit.Test;
 import st.redline.PrimContext;
 import st.redline.PrimObject;
+import st.redline.PrimObjectBlock;
 import st.redline.PrimObjectClass;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ public class AtSelectorPutMethodTest {
 	public void shouldAddBlockAtSelector() {
 		HashMap methods = mock(HashMap.class);
 		PrimObject value = mock(PrimObject.class);
-		PrimObject block = mock(PrimObject.class);
+		PrimObjectBlock block = mock(PrimObjectBlock.class);
 		PrimObjectClass receiver = mock(PrimObjectClass.class);
 		PrimContext context = mock(PrimContext.class);
 		when(context.argumentAt(0)).thenReturn(value);

@@ -250,6 +250,11 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitInsn(ARETURN);
 	}
 
+	public void invokeBlockAnswer() {
+		pushThis();
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "blockAnswer", "(Lst/redline/PrimObject;Lst/redline/PrimObjectBlock;)Lst/redline/PrimObject;");
+	}
+
 	void pop() {
 		mv.visitInsn(POP);
 	}
@@ -290,6 +295,10 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	void pushContext() {
 		mv.visitVarInsn(ALOAD, 2);
+	}
+
+	void pushNull() {
+		mv.visitInsn(ACONST_NULL);
 	}
 
 	void pushObjectStaticField(String field) {

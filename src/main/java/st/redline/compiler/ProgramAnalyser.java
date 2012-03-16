@@ -82,14 +82,11 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	public void visitEnd(Statements statements) {
 	}
 
-    public void visitBegin(AnswerStatement answerStatement) {
-        System.out.println("********************************");
-        System.out.println("********************************");
-        System.out.println("********************************");
-    }
+	public void visitBegin(AnswerStatement answerStatement) {
+	}
 
-    public void visitEnd(AnswerStatement answerStatement) {
-    }
+	public void visitEnd(AnswerStatement answerStatement) {
+	}
 
 	public void visit(Temporary temporary, String value, int line) {
 		// todo.jcl - output a warning if registered twice?
@@ -103,16 +100,15 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(SimpleExpression simpleExpression) {
-        hasBlockWithAnswerExpression = simpleExpression.hasBlockWithAnswerExpression();
-		System.out.println("** visit(SimpleExpression) ** Has block with ^: " + hasBlockWithAnswerExpression);
-        if (hasBlockWithAnswerExpression)
-            writer.setupTryForBlockReturn(simpleExpression);
+		hasBlockWithAnswerExpression = simpleExpression.hasBlockWithAnswerExpression();
+		if (hasBlockWithAnswerExpression)
+			writer.setupTryForBlockReturn(simpleExpression);
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
-        if (hasBlockWithAnswerExpression)
-            writer.setupCatchForBlockReturn(simpleExpression);
-        if (simpleExpression.isResultDuplicatedOnStack())
+		if (hasBlockWithAnswerExpression)
+			writer.setupCatchForBlockReturn(simpleExpression);
+		if (simpleExpression.isResultDuplicatedOnStack())
 			writer.pushDuplicate();
 		if (!simpleExpression.isResultLeftOnStack())
 			writer.pop();
