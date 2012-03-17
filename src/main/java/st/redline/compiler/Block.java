@@ -8,6 +8,7 @@ public class Block extends Primary {
 	private final Temporaries temporaries;
 	private final Statements statements;
 	private Analyser analyser;
+	private String blockReturnType;
 
 	public Block(int line, BlockArguments blockArguments, Temporaries temporaries, Statements statements) {
 		this.line = line;
@@ -65,5 +66,13 @@ public class Block extends Primary {
 		if (temporaries != null)
 			return temporaries.size();
 		return 0;
+	}
+
+	public void blockReturnType(String blockReturnType) {
+		this.blockReturnType = blockReturnType;
+	}
+
+	public String blockReturnType() {
+		return blockReturnType;
 	}
 }

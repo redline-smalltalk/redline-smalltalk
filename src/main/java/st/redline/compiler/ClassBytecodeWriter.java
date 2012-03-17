@@ -327,7 +327,7 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitLineNumber(line, l0);
 	}
 
-    void setupTryForBlockReturn(SimpleExpression simpleExpression) {
+    void setupTryForBlockReturn(SimpleExpression simpleExpression, String blockReturnType) {
         Label l0 = new Label();
         Label l1 = new Label();
         Label l2 = new Label();
@@ -336,11 +336,11 @@ public class ClassBytecodeWriter implements Opcodes {
         simpleExpression.label1(l1);
         simpleExpression.label2(l2);
 
-        mv.visitTryCatchBlock(l0, l1, l2, "st/redline/BlockReturn");
+        mv.visitTryCatchBlock(l0, l1, l2, blockReturnType);
         mv.visitLabel(l0);
     }
 
-    void setupCatchForBlockReturn(SimpleExpression simpleExpression) {
+    void setupCatchForBlockReturn(SimpleExpression simpleExpression, String blockReturnType) {
         Label l1 = (Label) simpleExpression.label1();
         Label l2 = (Label) simpleExpression.label2();
 
@@ -350,11 +350,11 @@ public class ClassBytecodeWriter implements Opcodes {
         mv.visitJumpInsn(GOTO, l3);
         mv.visitLabel(l2);
 
-        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {"st/redline/BlockReturn"});
-        mv.visitVarInsn(ASTORE, 11);
+        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {blockReturnType});
+        mv.visitVarInsn(ASTORE, 4);
 
-        mv.visitVarInsn(ALOAD, 11);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/BlockReturn", "answer", "()Lst/redline/PrimObject;");
+        mv.visitVarInsn(ALOAD, 4);
+        mv.visitMethodInsn(INVOKEVIRTUAL, blockReturnType, "answer", "()Lst/redline/PrimObject;");
         mv.visitInsn(ARETURN);
 
         mv.visitLabel(l3);

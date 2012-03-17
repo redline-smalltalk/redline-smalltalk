@@ -102,12 +102,12 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	public void visitBegin(SimpleExpression simpleExpression) {
 		hasBlockWithAnswerExpression = simpleExpression.hasBlockWithAnswerExpression();
 		if (hasBlockWithAnswerExpression)
-			writer.setupTryForBlockReturn(simpleExpression);
+			writer.setupTryForBlockReturn(simpleExpression, blockReturnType());
 	}
 
 	public void visitEnd(SimpleExpression simpleExpression) {
 		if (hasBlockWithAnswerExpression)
-			writer.setupCatchForBlockReturn(simpleExpression);
+			writer.setupCatchForBlockReturn(simpleExpression, blockReturnType());
 		if (simpleExpression.isResultDuplicatedOnStack())
 			writer.pushDuplicate();
 		if (!simpleExpression.isResultLeftOnStack())
@@ -175,6 +175,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 		String blockClassName = createBlockName();
 		String fullBlockClassName = createFullBlockName(blockClassName);
 		block.analyser(createBlockAnalyser(blockClassName, block));
+		block.blockReturnType(blockReturnType());
 		smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
 		writer.invokeObjectCompileBlock(fullBlockClassName, line);
 	}
@@ -192,6 +193,10 @@ public class ProgramAnalyser implements AnalyserDelegate {
 
 	public SmalltalkClassLoader smalltalkClassLoader() {
 		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+	}
+
+	String blockReturnType() {
+		return analyser.className() + "$MAnswer";
 	}
 
 	String createBlockName() {
