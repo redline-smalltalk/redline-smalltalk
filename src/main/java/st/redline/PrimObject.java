@@ -120,9 +120,7 @@ public class PrimObject {
 	}
 
 	public static PrimObject blockAnswer(PrimObject answer, PrimObjectBlock block) {
-		if (block.isMethodBlock())
-			return answer;
-		throw new BlockReturn(answer);
+        return block.answer(answer);
 	}
 
 	public PrimObject with(Object value) {

@@ -34,4 +34,14 @@ public class PrimObjectBlock extends PrimObject {
 	public boolean isMethodBlock() {
 		return methodBlock;
 	}
+
+    public PrimObject answer(PrimObject answer) {
+        if (!isMethodBlock())
+            throwAnswer(answer);
+        return answer;
+    }
+
+    void throwAnswer(PrimObject answer) {
+        throw new RedlineException("Subclass should implement.");
+    }
 }
