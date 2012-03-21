@@ -37,4 +37,16 @@ public class BinaryExpression implements MessageExpression {
 			keywordExpression.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this);
 	}
+
+    public boolean hasBlockWithAnswerExpression() {
+        return (keywordExpression != null && keywordExpression.hasBlockWithAnswerExpression())
+                || binarySelectorUnaryObjectDescriptionsHaveBlockWithAnswerExpression();
+    }
+
+    boolean binarySelectorUnaryObjectDescriptionsHaveBlockWithAnswerExpression() {
+        for (BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription : binarySelectorUnaryObjectDescriptions())
+            if (binarySelectorUnaryObjectDescription.hasBlockWithAnswerExpression())
+                return true;
+        return false;
+    }
 }

@@ -72,7 +72,16 @@ public class SimpleExpression implements Expression {
     }
 
     boolean hasBlockWithAnswerExpression() {
-        return primary.isBlockWithAnswerExpression();
+        return primary.isBlockWithAnswerExpression()
+               || (messageExpression != null && messageExpression.hasBlockWithAnswerExpression())
+               || (messageElementsHaveBlockWithAnswerExpression());
+    }
+
+    boolean messageElementsHaveBlockWithAnswerExpression() {
+        for (MessageElement messageElement : messageElements)
+            if (messageElement.hasBlockWithAnswerExpression())
+                return true;
+        return false;
     }
 
     Object label0() {

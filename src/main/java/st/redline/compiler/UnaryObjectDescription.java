@@ -33,4 +33,8 @@ public class UnaryObjectDescription implements VisitableNode {
 		for (UnarySelector unarySelector : unarySelectors)
 			unarySelector.accept(nodeVisitor);
 	}
+
+    boolean hasBlockWithAnswerExpression() {
+        return primary.isBlockWithAnswerExpression();
+    }
 }

@@ -16,4 +16,8 @@ public class UnarySelectorMessageElement implements MessageElement {
 	public void accept(NodeVisitor nodeVisitor) {
 		nodeVisitor.visit(this, unarySelector.value(), unarySelector.line());
 	}
+
+    public boolean hasBlockWithAnswerExpression() {
+        return false;
+    }
 }

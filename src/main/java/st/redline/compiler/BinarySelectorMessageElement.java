@@ -25,4 +25,8 @@ public class BinarySelectorMessageElement implements MessageElement {
 			unaryObjectDescription.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this, binarySelector.value(), binarySelector.line());
 	}
+
+    public boolean hasBlockWithAnswerExpression() {
+        return (unaryObjectDescription != null && unaryObjectDescription.hasBlockWithAnswerExpression());
+    }
 }

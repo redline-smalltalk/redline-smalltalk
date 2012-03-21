@@ -2,4 +2,5 @@
 package st.redline.compiler;
 
 interface MessageElement extends VisitableNode {
+    boolean hasBlockWithAnswerExpression();
 }

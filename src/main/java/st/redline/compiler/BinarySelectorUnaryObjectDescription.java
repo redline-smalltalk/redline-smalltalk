@@ -25,4 +25,8 @@ public class BinarySelectorUnaryObjectDescription {
 		if (binarySelector != null)
 			binarySelector.accept(nodeVisitor);
 	}
+
+    boolean hasBlockWithAnswerExpression() {
+        return (unaryObjectDescription != null && unaryObjectDescription.hasBlockWithAnswerExpression());
+    }
 }

@@ -4,6 +4,7 @@ package st.redline.compiler;
 import st.redline.RedlineException;
 import st.redline.SmalltalkClassLoader;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,11 +102,19 @@ public class ProgramAnalyser implements AnalyserDelegate {
 
 	public void visitBegin(SimpleExpression simpleExpression) {
 		hasBlockWithAnswerExpression = simpleExpression.hasBlockWithAnswerExpression();
-		if (hasBlockWithAnswerExpression)
-			writer.setupTryForBlockReturn(simpleExpression, blockReturnType());
+		if (hasBlockWithAnswerExpression) {
+            String blockReturnType = blockReturnType();
+			writer.setupTryForBlockReturn(simpleExpression, blockReturnType);
+            createBlockReturnType(blockReturnType);
+        }
 	}
 
-	public void visitEnd(SimpleExpression simpleExpression) {
+    void createBlockReturnType(String blockReturnType) {
+        System.out.println("***********************");
+        System.out.println("createBlockReturnType: " + blockReturnType);
+    }
+
+    public void visitEnd(SimpleExpression simpleExpression) {
 		if (hasBlockWithAnswerExpression)
 			writer.setupCatchForBlockReturn(simpleExpression, blockReturnType());
 		if (simpleExpression.isResultDuplicatedOnStack())

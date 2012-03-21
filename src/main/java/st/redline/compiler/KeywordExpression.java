@@ -38,4 +38,11 @@ public class KeywordExpression implements MessageExpression {
 			binaryObjectDescription.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this, keywords, binaryObjectDescriptions.size(), line);
 	}
+
+    public boolean hasBlockWithAnswerExpression() {
+        for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
+            if (binaryObjectDescription.hasBlockWithAnswerExpression())
+                return true;
+        return false;
+    }
 }

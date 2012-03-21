@@ -37,4 +37,8 @@ public class UnaryExpression implements MessageExpression {
 			messageExpression.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this);
 	}
+
+    public boolean hasBlockWithAnswerExpression() {
+        return (messageExpression != null && messageExpression.hasBlockWithAnswerExpression());
+    }
 }

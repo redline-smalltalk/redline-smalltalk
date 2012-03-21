@@ -49,4 +49,16 @@ public class BinaryObjectDescription implements VisitableNode {
 		for (BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription : binarySelectorUnaryObjectDescriptions())
 			binarySelectorUnaryObjectDescription.accept(nodeVisitor);
 	}
+
+    public boolean hasBlockWithAnswerExpression() {
+        return primary.isBlockWithAnswerExpression()
+                || binarySelectorUnaryObjectDescriptionsHaveBlockWithAnswerExpression();
+    }
+
+    boolean binarySelectorUnaryObjectDescriptionsHaveBlockWithAnswerExpression() {
+        for (BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription : binarySelectorUnaryObjectDescriptions())
+            if (binarySelectorUnaryObjectDescription.hasBlockWithAnswerExpression())
+                return true;
+        return false;
+    }
 }
