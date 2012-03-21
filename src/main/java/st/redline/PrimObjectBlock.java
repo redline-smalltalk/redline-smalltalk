@@ -3,6 +3,8 @@ package st.redline;
 
 // Adds block functionality
 
+import java.lang.reflect.InvocationTargetException;
+
 public class PrimObjectBlock extends PrimObject {
 
 	static PrimObject blockClosure;
@@ -46,6 +48,20 @@ public class PrimObjectBlock extends PrimObject {
     }
 
     public void throwAnswer(PrimObject answer, String blockReturnType) {
-        throw new RedlineException("Subclass should implement: " + blockReturnType);
+        try {
+            throw (BlockReturn) Class.forName(blockReturnType)
+                                     .getConstructor(PrimObject.class)
+                                     .newInstance(answer);
+        } catch (InstantiationException e) {
+            throw new RedlineException(e);
+        } catch (IllegalAccessException e) {
+            throw new RedlineException(e);
+        } catch (InvocationTargetException e) {
+            throw new RedlineException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RedlineException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RedlineException(e);
+        }
     }
 }
