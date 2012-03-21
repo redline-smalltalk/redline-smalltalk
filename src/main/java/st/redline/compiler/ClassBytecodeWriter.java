@@ -250,9 +250,10 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitInsn(ARETURN);
 	}
 
-	public void invokeBlockAnswer() {
+	public void invokeBlockAnswer(String blockReturnType) {
 		pushThis();
-		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "blockAnswer", "(Lst/redline/PrimObject;Lst/redline/PrimObjectBlock;)Lst/redline/PrimObject;");
+		pushLiteral(blockReturnType);
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "blockAnswer", "(Lst/redline/PrimObject;Lst/redline/PrimObjectBlock;Ljava/lang/String;)Lst/redline/PrimObject;");
 	}
 
 	void pop() {

@@ -39,13 +39,13 @@ public class PrimObjectBlock extends PrimObject {
         return !isMethodBlock();
     }
 
-    public PrimObject answer(PrimObject answer) {
+    public PrimObject answer(PrimObject answer, String blockReturnType) {
         if (notMethodBlock())
-            throwAnswer(answer);
+            throwAnswer(answer, blockReturnType);
         return answer;
     }
 
-    void throwAnswer(PrimObject answer) {
-        throw new RedlineException("Subclass should implement.");
+    public void throwAnswer(PrimObject answer, String blockReturnType) {
+        throw new RedlineException("Subclass should implement: " + blockReturnType);
     }
 }

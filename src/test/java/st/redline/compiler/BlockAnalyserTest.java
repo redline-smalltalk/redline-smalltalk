@@ -40,7 +40,8 @@ public class BlockAnalyserTest {
 
 	@Test
 	public void shouldInvokeBlockAnswerWhenVisitAnswerStatementEnd() {
+		when(block.blockReturnType()).thenReturn("blockreturntype");
 		analyser.visitEnd(mock(AnswerStatement.class));
-		verify(writer).invokeBlockAnswer();
+		verify(writer).invokeBlockAnswer("blockreturntype");
 	}
 }

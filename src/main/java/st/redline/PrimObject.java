@@ -119,8 +119,8 @@ public class PrimObject {
 		return primObject;
 	}
 
-	public static PrimObject blockAnswer(PrimObject answer, PrimObjectBlock block) {
-        return block.answer(answer);
+	public static PrimObject blockAnswer(PrimObject answer, PrimObjectBlock block, String blockReturnType) {
+        return block.answer(answer, blockReturnType);
 	}
 
 	public PrimObject with(Object value) {

@@ -40,7 +40,7 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitEnd(AnswerStatement answerStatement) {
-		writer.invokeBlockAnswer();
+		writer.invokeBlockAnswer(thisBlock.blockReturnType());
 	}
 
 	String createBlockName() {

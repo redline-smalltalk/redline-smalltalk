@@ -7,8 +7,11 @@ public class BlockBytecodeWriter extends ClassBytecodeWriter implements Opcodes 
 
 	private static final String INVOKE_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
 
+	private Block block;
+
 	BlockBytecodeWriter(String className, String packageName, boolean verbose) {
 		super(className, packageName, verbose);
+		this.block = block;
 	}
 
 	BlockBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter) {
