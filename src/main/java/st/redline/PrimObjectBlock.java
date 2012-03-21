@@ -35,8 +35,12 @@ public class PrimObjectBlock extends PrimObject {
 		return methodBlock;
 	}
 
+    public boolean notMethodBlock() {
+        return !isMethodBlock();
+    }
+
     public PrimObject answer(PrimObject answer) {
-        if (!isMethodBlock())
+        if (notMethodBlock())
             throwAnswer(answer);
         return answer;
     }
