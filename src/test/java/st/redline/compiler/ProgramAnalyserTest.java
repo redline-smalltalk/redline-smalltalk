@@ -24,7 +24,7 @@ public class ProgramAnalyserTest {
 	public void setup() {
 		writer = mock(ClassBytecodeWriter.class);
 		parent = mock(Analyser.class);
-		analyser = new ProgramAnalyser(parent, writer, false);
+		analyser = new ProgramAnalyser(parent, writer, false, "");
 	}
 
 	@Test

@@ -23,7 +23,7 @@ public class BlockAnalyserTest {
 		writer = mock(BlockBytecodeWriter.class);
 		parent = mock(Analyser.class);
 		block = mock(Block.class);
-		analyser = new BlockAnalyser(parent, writer, false, block);
+		analyser = new BlockAnalyser(parent, writer, false, "", block);
 	}
 
 	@Test

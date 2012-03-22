@@ -73,7 +73,7 @@ public class PrimObject {
 		}
 	}
 
-	SmalltalkClassLoader smalltalkClassLoader() {
+	public static SmalltalkClassLoader smalltalkClassLoader() {
 		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 

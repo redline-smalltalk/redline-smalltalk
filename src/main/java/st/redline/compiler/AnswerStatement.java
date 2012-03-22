@@ -15,6 +15,10 @@ class AnswerStatement extends Statements {
 		return line;
 	}
 
+    boolean hasAnswerExpression() {
+        return isAnswerExpression();
+    }
+
     public boolean isAnswerExpression() {
         return true;
     }

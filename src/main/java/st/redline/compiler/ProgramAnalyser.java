@@ -21,15 +21,17 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	private int temporariesIndex = 0;
 	private boolean sendToSuper = false;
     private boolean hasBlockWithAnswerExpression = false;
+    private String packageName;
 
     ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
-		this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose);
+		this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose, packageName);
 	}
 
-	ProgramAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose) {
+	ProgramAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose, String packageName) {
 		this.analyser = analyser;
 		this.writer = classBytecodeWriter;
 		this.verbose = verbose;
+        this.packageName = packageName;
 	}
 
 	ClassBytecodeWriter classBytecodeWriter() {
@@ -110,8 +112,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
     void createBlockReturnType(String blockReturnType) {
-        System.out.println("***********************");
-        System.out.println("createBlockReturnType: " + blockReturnType);
+        new BlockReturnTypeCreator(blockReturnType, packageName).create();
     }
 
     public void visitEnd(SimpleExpression simpleExpression) {
