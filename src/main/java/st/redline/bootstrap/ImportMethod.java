@@ -29,7 +29,7 @@ public class ImportMethod extends PrimObject {
 		return smalltalkClassLoader.findSources(String.valueOf(importPaths));
 	}
 
-	private SmalltalkClassLoader smalltalkClassLoader() {
-		return SmalltalkClassLoader.instance();
-	}
+//	private SmalltalkClassLoader smalltalkClassLoader() {
+//		return SmalltalkClassLoader.instance();
+//	}
 }

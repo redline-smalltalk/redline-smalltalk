@@ -1,6 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import st.redline.ClassPathUtilities;
 import st.redline.RedlineException;
 import st.redline.SmalltalkClassLoader;
 
@@ -112,7 +113,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
     void createBlockReturnType(String blockReturnType) {
-        new BlockReturnTypeCreator(blockReturnType, packageName).create();
+        new BlockReturnTypeCreator(blockReturnType).create();
     }
 
     public void visitEnd(SimpleExpression simpleExpression) {
@@ -206,7 +207,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	String blockReturnType() {
-		return analyser.className() + "$MAnswer";
+		return ClassPathUtilities.classNameToFullyQualifiedClassName(packageName, analyser.className() + "$MAnswer");
 	}
 
 	String createBlockName() {

@@ -74,7 +74,7 @@ public class PrimObject {
 	}
 
 	public static SmalltalkClassLoader smalltalkClassLoader() {
-		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+		return SmalltalkClassLoader.instance();
 	}
 
 	static PrimObject createBlockInstance(PrimObject block) {
@@ -335,6 +335,7 @@ public class PrimObject {
 
 	PrimObject loadObject(String name) {
 		try {
+			System.out.println("Loading: " + name);
 			return (PrimObject) Class.forName(name, true, classLoader()).newInstance();
 		} catch (Exception e) {
 			throw RedlineException.withCause(e);
