@@ -69,6 +69,7 @@ public class Block extends Primary {
 	}
 
 	public void blockReturnType(String blockReturnType) {
+		System.out.println("blockReturnType: " + blockReturnType);
 		this.blockReturnType = blockReturnType;
 	}
 

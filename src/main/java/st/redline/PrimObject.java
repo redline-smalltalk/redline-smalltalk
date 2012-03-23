@@ -335,7 +335,7 @@ public class PrimObject {
 
 	PrimObject loadObject(String name) {
 		try {
-			System.out.println("Loading: " + name);
+			System.out.println("loadObject: " + name);
 			return (PrimObject) Class.forName(name, true, classLoader()).newInstance();
 		} catch (Exception e) {
 			throw RedlineException.withCause(e);

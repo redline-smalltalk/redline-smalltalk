@@ -21,6 +21,7 @@ public class BlockReturnTypeCreator implements Opcodes {
     }
 
     void create() {
+	    System.out.println("blockReturnTypeCreator: " + fullyQualifiedClassName);
         if (registry.containsKey(fullyQualifiedClassName))
             return;
         registry.put(fullyQualifiedClassName, fullyQualifiedClassName);
