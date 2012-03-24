@@ -30,7 +30,9 @@ public class BlockReturnTypeCreator implements Opcodes {
 
     private void loadClass(byte[] aClass) {
         try {
-            PrimObject.smalltalkClassLoader().defineClass(aClass);
+            Class cls = PrimObject.smalltalkClassLoader().defineClass(aClass);
+	        cls.newInstance();
+	        System.out.println("BlockReturnTypeCreator class: " + cls);
         } catch (Exception e) {
             throw new RedlineException(e);
         }
