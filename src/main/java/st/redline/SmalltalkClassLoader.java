@@ -15,13 +15,11 @@ public class SmalltalkClassLoader extends ClassLoader {
 	public SmalltalkClassLoader(java.lang.ClassLoader classLoader, CommandLine commandLine) {
 		super(classLoader);
 		this.commandLine = commandLine;
-		System.out.println("******");
-		System.out.println("******");
-		System.out.println("SmalltalkClassLoader created: " + this);
+//		System.out.println("SmalltalkClassLoader created: " + this);
 	}
 
 	public static SmalltalkClassLoader instance() {
-		System.out.println("SmalltalkClassLoader instance: " + Thread.currentThread().getContextClassLoader());
+//		System.out.println("SmalltalkClassLoader instance: " + Thread.currentThread().getContextClassLoader());
 		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 
@@ -68,6 +66,10 @@ public class SmalltalkClassLoader extends ClassLoader {
 	public Class defineClass(byte[] classBytes) {
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
+
+    public Class defineClass(String name, byte[] classBytes) {
+        return defineClass(name, classBytes, 0, classBytes.length);
+    }
 
 	private byte[] compile(SourceFile sourceFile) {
 		return createCompiler(sourceFile).compile();

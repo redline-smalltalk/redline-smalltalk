@@ -17,11 +17,11 @@ public class BlockReturnTypeCreator implements Opcodes {
     private final String fullyQualifiedClassName;
 
     public BlockReturnTypeCreator(String fullyQualifedClassName) {
-        this.fullyQualifiedClassName = fullyQualifedClassName.replace(".", "/");
+        this.fullyQualifiedClassName = fullyQualifedClassName;
     }
 
     void create() {
-	    System.out.println("blockReturnTypeCreator: " + fullyQualifiedClassName);
+//	    System.out.println("blockReturnTypeCreator: " + fullyQualifiedClassName);
         if (registry.containsKey(fullyQualifiedClassName))
             return;
         registry.put(fullyQualifiedClassName, fullyQualifiedClassName);
@@ -30,9 +30,7 @@ public class BlockReturnTypeCreator implements Opcodes {
 
     private void loadClass(byte[] aClass) {
         try {
-            Class cls = PrimObject.smalltalkClassLoader().defineClass(aClass);
-	        cls.newInstance();
-	        System.out.println("BlockReturnTypeCreator class: " + cls);
+            PrimObject.smalltalkClassLoader().defineClass(fullyQualifiedClassName.replace("/", "."), aClass);
         } catch (Exception e) {
             throw new RedlineException(e);
         }
