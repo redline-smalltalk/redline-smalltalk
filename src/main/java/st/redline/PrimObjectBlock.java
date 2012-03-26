@@ -49,7 +49,8 @@ public class PrimObjectBlock extends PrimObject {
 
     public void throwAnswer(PrimObject answer, String blockReturnType) {
         try {
-            throw (BlockReturn) Class.forName(blockReturnType)
+            throw (BlockReturn) SmalltalkClassLoader.instance()
+                                     .loadClass(blockReturnType)
                                      .getConstructor(PrimObject.class)
                                      .newInstance(answer);
         } catch (InstantiationException e) {

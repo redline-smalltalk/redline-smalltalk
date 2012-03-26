@@ -21,16 +21,16 @@ public class BlockReturnTypeCreator implements Opcodes {
     }
 
     void create() {
-//	    System.out.println("blockReturnTypeCreator: " + fullyQualifiedClassName);
         if (registry.containsKey(fullyQualifiedClassName))
             return;
+//        System.out.println("blockReturnTypeCreator: " + fullyQualifiedClassName);
         registry.put(fullyQualifiedClassName, fullyQualifiedClassName);
         loadClass(createClass());
     }
 
     private void loadClass(byte[] aClass) {
         try {
-            PrimObject.smalltalkClassLoader().defineClass(fullyQualifiedClassName.replace("/", "."), aClass);
+            PrimObject.smalltalkClassLoader().defineClass(aClass);
         } catch (Exception e) {
             throw new RedlineException(e);
         }
@@ -44,7 +44,7 @@ public class BlockReturnTypeCreator implements Opcodes {
 		return writer.toByteArray();
 	}
 
-	private void createAnswerArgumentConstructor(ClassWriter writer) {
+	void createAnswerArgumentConstructor(ClassWriter writer) {
 		MethodVisitor mv = writer.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/PrimObject;)V", null, null);
 		mv.visitCode();
 		mv.visitVarInsn(ALOAD, 0);
