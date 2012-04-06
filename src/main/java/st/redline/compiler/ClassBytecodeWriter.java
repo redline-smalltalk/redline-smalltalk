@@ -159,7 +159,7 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	private void closeMethod() {
-		mv.visitMaxs(1, 1);
+		mv.visitMaxs(1, 3);
 		mv.visitEnd();
 	}
 
@@ -351,12 +351,13 @@ public class ClassBytecodeWriter implements Opcodes {
         mv.visitJumpInsn(GOTO, l3);
         mv.visitLabel(l2);
 
-        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {blockReturnType});
+//        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {blockReturnType});
+	    mv.visitFrame(Opcodes.F_FULL, 4, new Object[] {fullyQualifiedClassName, OBJECT, CONTEXT, OBJECT}, 1, new Object[] {blockReturnType});
         mv.visitVarInsn(ASTORE, 4);
 
         mv.visitVarInsn(ALOAD, 4);
         mv.visitMethodInsn(INVOKEVIRTUAL, blockReturnType, "answer", "()Lst/redline/PrimObject;");
-        mv.visitInsn(ARETURN);
+		mv.visitVarInsn(ASTORE, 3);
 
         mv.visitLabel(l3);
         mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);

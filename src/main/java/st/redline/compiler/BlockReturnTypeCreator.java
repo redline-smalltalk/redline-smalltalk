@@ -51,7 +51,7 @@ public class BlockReturnTypeCreator implements Opcodes {
 		mv.visitVarInsn(ALOAD, 1);
 		mv.visitMethodInsn(INVOKESPECIAL, "st/redline/BlockReturn", "<init>", "(Lst/redline/PrimObject;)V");
 		mv.visitInsn(RETURN);
-		mv.visitMaxs(2, 2);
+		mv.visitMaxs(2, 3);
 		mv.visitEnd();
 	}
 }

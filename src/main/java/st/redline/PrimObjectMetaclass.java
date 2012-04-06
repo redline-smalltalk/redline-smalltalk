@@ -73,7 +73,7 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 	}
 
 	public void addClassVariableNamed(String name) {
-		System.out.println("addClassVariableNamed() " + name + " @ " + nextVariableIndex + " to " + this);
+//		System.out.println("addClassVariableNamed() " + name + " @ " + nextVariableIndex + " to " + this);
 		if (hasClassVariableNamed(name))
 			throw new IllegalStateException("Class variable '" + name + "' already defined.");
 		((PrimObjectClass) cls()).variableIndexes().put(name, nextVariableIndex);
