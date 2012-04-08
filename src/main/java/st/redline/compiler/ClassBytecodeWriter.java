@@ -358,6 +358,7 @@ public class ClassBytecodeWriter implements Opcodes {
         mv.visitVarInsn(ALOAD, 4);
         mv.visitMethodInsn(INVOKEVIRTUAL, blockReturnType, "answer", "()Lst/redline/PrimObject;");
 		mv.visitVarInsn(ASTORE, 3);
+	    mv.visitVarInsn(ALOAD, 3);
 
         mv.visitLabel(l3);
         mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
