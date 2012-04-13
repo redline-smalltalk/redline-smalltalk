@@ -333,6 +333,7 @@ public class ClassBytecodeWriter implements Opcodes {
         Label l1 = new Label();
         Label l2 = new Label();
 
+        simpleExpression.leaveResultOnStack();
         simpleExpression.label0(l0);
         simpleExpression.label1(l1);
         simpleExpression.label2(l2);
@@ -355,10 +356,10 @@ public class ClassBytecodeWriter implements Opcodes {
         System.out.println("** start handler **");
         mv.visitLabel(l2);
 
-        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {blockReturnType});
-//	    mv.visitFrame(Opcodes.F_FULL, 4, new Object[] {fullyQualifiedClassName, OBJECT, CONTEXT, OBJECT}, 1, new Object[] {blockReturnType});
-//        mv.visitVarInsn(ASTORE, 4);
-//        mv.visitVarInsn(ALOAD, 4);
+//        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {blockReturnType});
+	    mv.visitFrame(Opcodes.F_FULL, 4, new Object[] {fullyQualifiedClassName, OBJECT, CONTEXT, OBJECT}, 1, new Object[] {blockReturnType});
+        mv.visitVarInsn(ASTORE, 4);
+        mv.visitVarInsn(ALOAD, 4);
         mv.visitMethodInsn(INVOKEVIRTUAL, blockReturnType, "answer", "()Lst/redline/PrimObject;");
 
         System.out.println("** end handler **");
