@@ -37,7 +37,7 @@ public class BlockReturnTypeCreator implements Opcodes {
     }
 
 	private byte[] createClass() {
-		ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+		ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 		writer.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, "st/redline/BlockReturn", null);
 		createAnswerArgumentConstructor(writer);
 		writer.visitEnd();

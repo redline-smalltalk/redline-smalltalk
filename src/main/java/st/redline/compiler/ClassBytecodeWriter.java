@@ -56,11 +56,11 @@ public class ClassBytecodeWriter implements Opcodes {
 	}
 
 	static ClassWriter nonTracingClassWriter() {
-		return new ClassWriter(ClassWriter.COMPUTE_MAXS);
+		return new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 	}
 
 	static ClassWriter tracingClassWriter() {
-		return new TracingClassWriter(ClassWriter.COMPUTE_MAXS, new PrintWriter(System.out));
+		return new TracingClassWriter(ClassWriter.COMPUTE_FRAMES, new PrintWriter(System.out));
 	}
 
 	ClassWriter classWriter() {
@@ -338,10 +338,8 @@ public class ClassBytecodeWriter implements Opcodes {
         simpleExpression.label1(l1);
         simpleExpression.label2(l2);
 
-        System.out.println("** setup try catch block **");
         mv.visitTryCatchBlock(l0, l1, l2, blockReturnType);
         mv.visitLabel(l0);
-        System.out.println("** try scope begin **");
     }
 
     void setupCatchForBlockReturn(SimpleExpression simpleExpression, String blockReturnType) {
@@ -351,18 +349,14 @@ public class ClassBytecodeWriter implements Opcodes {
         mv.visitLabel(l1);
         Label l3 = new Label();
         mv.visitJumpInsn(GOTO, l3);
-        System.out.println("** end try scope **");
-
-        System.out.println("** start handler **");
         mv.visitLabel(l2);
 
-//        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {blockReturnType});
-	    mv.visitFrame(Opcodes.F_FULL, 4, new Object[] {fullyQualifiedClassName, OBJECT, CONTEXT, OBJECT}, 1, new Object[] {blockReturnType});
-        mv.visitVarInsn(ASTORE, 4);
-        mv.visitVarInsn(ALOAD, 4);
+        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {blockReturnType});
+//        mv.visitVarInsn(ASTORE, 4);
+//        mv.visitVarInsn(ALOAD, 4);
         mv.visitMethodInsn(INVOKEVIRTUAL, blockReturnType, "answer", "()Lst/redline/PrimObject;");
+	    mv.visitInsn(ARETURN);
 
-        System.out.println("** end handler **");
         mv.visitLabel(l3);
         mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
     }
