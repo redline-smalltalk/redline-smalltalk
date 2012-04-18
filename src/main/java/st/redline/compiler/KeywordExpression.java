@@ -40,9 +40,12 @@ public class KeywordExpression implements MessageExpression {
 	}
 
     public boolean hasBlockWithAnswerExpression() {
+	    String selector = keywords();
         for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
-            if (binaryObjectDescription.hasBlockWithAnswerExpression())
+            if (binaryObjectDescription.hasBlockWithAnswerExpression() && !selector.equals("atSelector:put:")) {
+	            System.out.println("FOUND keyword expression '" + selector + "' with block containing answer");
                 return true;
+            }
         return false;
     }
 }
