@@ -42,10 +42,8 @@ public class KeywordExpression implements MessageExpression {
     public boolean hasBlockWithAnswerExpression() {
 	    String selector = keywords();
         for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
-            if (binaryObjectDescription.hasBlockWithAnswerExpression() && !selector.equals("atSelector:put:")) {
-	            System.out.println("FOUND keyword expression '" + selector + "' with block containing answer");
+            if (binaryObjectDescription.hasBlockWithAnswerExpression() && !selector.equals("atSelector:put:"))
                 return true;
-            }
         return false;
     }
 }
