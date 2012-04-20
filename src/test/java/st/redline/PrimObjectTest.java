@@ -50,15 +50,16 @@ public class PrimObjectTest {
 
 	@Test (expected = IllegalStateException.class)
 	public void shouldThrowExceptionWhenBlockToBeCompiledNotFound() {
-		new PrimObject().block("st/redline/Thing$M1");
+		new PrimObject().block("st/redline/Thing$M1", null);
 	}
 
 	@Test
 	public void shouldCreateInstanceOfExistingBlockWhenBlockCalledWithNameOfRegisteredBlock() {
 		PrimObject primObject = new PrimObject();
 		PrimObject block = mock(PrimObject.class);
+		when(block.isMethodBlock()).thenReturn(true);
 		PrimObject.BLOCKS.put("st/redline/Thing$M1", block);
-		primObject.block("st/redline/Thing$M1");
+		primObject.block("st/redline/Thing$M1", null);
 		// not a test so much as documentation.
 	}
 

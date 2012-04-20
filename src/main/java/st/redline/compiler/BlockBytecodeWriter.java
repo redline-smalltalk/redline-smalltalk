@@ -19,6 +19,23 @@ public class BlockBytecodeWriter extends ClassBytecodeWriter implements Opcodes 
 		return "st/redline/PrimObjectBlock";
 	}
 
+	void openInitializeMethod() {
+		createInitializeMethodWithContext();
+		super.openInitializeMethod();
+	}
+
+	private void createInitializeMethodWithContext() {
+		mv = cw.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/PrimContext;)V", null, null);
+		mv.visitCode();
+		visitLine(0);
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitMethodInsn(INVOKESPECIAL, superclass(), "<init>", "(Lst/redline/PrimContext;)V");
+		mv.visitInsn(RETURN);
+		mv.visitMaxs(1, 3);
+		mv.visitEnd();
+	}
+
 	void addClassToImports() {
 	}
 

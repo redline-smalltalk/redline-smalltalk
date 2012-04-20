@@ -14,6 +14,7 @@ import st.redline.bootstrap.CreateSubclassMethod;
 import st.redline.bootstrap.InstanceVariableNamesMethod;
 import st.redline.compiler.Block;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,9 +58,17 @@ public class PrimObject {
 		return (javaValue != null && !(javaValue instanceof Map)) ? javaValue.toString() : super.toString();
 	}
 
-	public PrimObject block(String name) {
+	public boolean isMethodBlock() {
+		return false;
+	}
+
+	public PrimObject block(String name, PrimContext context) {
+		// NOTE: When asking a keyword expression is it contains a block with an answer expression,
+		// we should also take that opportunity to mark the block node as being a method block or
+		// not, then when we create the block, pass this into the block object.
+		// This flag will be used during createBlockInstance().
 		if (BLOCKS.containsKey(name))
-			return createBlockInstance(BLOCKS.get(name));
+			return createBlockInstance(BLOCKS.get(name), context);
 		Block block = (Block) SmalltalkClassLoader.BLOCKS_TO_BE_COMPILED.remove(name);
 		if (block == null)
 			throw new IllegalStateException("Block to be compiled '" + name + "' not found.");
@@ -67,7 +76,7 @@ public class PrimObject {
 		try {
 			PrimObject newblock = (PrimObject) smalltalkClassLoader().defineClass(block.classBytes()).newInstance();
 			BLOCKS.put(name, newblock);
-			return newblock;
+			return createBlockInstance(newblock, context);
 		} catch (Exception e) {
 			throw new RedlineException(e);
 		}
@@ -77,11 +86,12 @@ public class PrimObject {
 		return SmalltalkClassLoader.instance();
 	}
 
-	static PrimObject createBlockInstance(PrimObject block) {
-		try {
-			// We don't create a new instance because the context passed to a block contains space for args and temps.
-			// Nb: first thing a block's invoke methods does is set the context temporary space.
+	static PrimObject createBlockInstance(PrimObject block, PrimContext context) {
+		if (block.isMethodBlock())
 			return block;
+		try {
+			Constructor constructor = block.getClass().getConstructor(PrimContext.class);
+			return (PrimObjectBlock) constructor.newInstance(context);
 		} catch (Exception e) {
 			throw new RedlineException(e);
 		}
@@ -160,7 +170,7 @@ public class PrimObject {
 	}
 
 	public PrimObject variableAt(String name) {
-        System.out.println("variableAt() " + name);
+//        System.out.println("variableAt() " + name);
 		int index = cls().indexOfVariable(name);
 		if (index != 0)
 			return attributes[index];

@@ -183,6 +183,10 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visitBegin(Block block, int line) {
+		// NOTE: When asking a keyword expression is it contains a block with an answer expression,
+		// we should also take that opportunity to mark the block node as being a method block or
+		// not, then when we create the block, pass this into the block object.
+		// This flag will be used during createBlockInstance().
 		String blockClassName = createBlockName();
 		String fullBlockClassName = createFullBlockName(blockClassName);
 		block.analyser(createBlockAnalyser(blockClassName, block));

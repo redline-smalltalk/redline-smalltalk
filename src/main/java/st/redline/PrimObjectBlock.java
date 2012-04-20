@@ -10,14 +10,20 @@ public class PrimObjectBlock extends PrimObject {
 	static PrimObject blockClosure;
 
 	private boolean methodBlock = false;
+	private PrimContext outerContext;
 
 	public PrimObjectBlock() {
-		this(0);
+		this(0, null);
 	}
 
-	PrimObjectBlock(int basicSize) {
+	public PrimObjectBlock(PrimContext outerContext) {
+		this(0, outerContext);
+	}
+
+	PrimObjectBlock(int basicSize, PrimContext outerContext) {
 		super(basicSize);
 		cls(resolveBlockClosure());
+		this.outerContext = outerContext;
 	}
 
 	PrimObject resolveBlockClosure() {
@@ -36,6 +42,7 @@ public class PrimObjectBlock extends PrimObject {
 			attributes[index] = object;
 			return this;
 		}
+		System.out.println("OuterContext: " + outerContext + " OuterReceiver: " + outerContext.receiver);
 		throw new IllegalStateException("Slot for '" + name + "' not found.");
 	}
 
