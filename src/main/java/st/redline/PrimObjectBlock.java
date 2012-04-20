@@ -29,6 +29,16 @@ public class PrimObjectBlock extends PrimObject {
 		return blockClosure;
 	}
 
+	PrimObject variableAtPut(String name, PrimObject object) {
+		System.out.println("Block variableAtPut() " + name + " " + object);
+		int index = cls().indexOfVariable(name);
+		if (index != 0) {
+			attributes[index] = object;
+			return this;
+		}
+		throw new IllegalStateException("Slot for '" + name + "' not found.");
+	}
+
 	public void markAsMethodBlock() {
 		methodBlock = true;
 	}

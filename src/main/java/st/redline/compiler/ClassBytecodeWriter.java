@@ -218,16 +218,14 @@ public class ClassBytecodeWriter implements Opcodes {
 		visitLine(line);
 		pushReceiver();
 		pushLiteral(name);
-		pushContext();
-		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "variableAtWithin", "(Ljava/lang/String;Lst/redline/PrimContext;)Lst/redline/PrimObject;");
+		mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "variableAt", "(Ljava/lang/String;)Lst/redline/PrimObject;");
 	}
 
 	void invokeVariablePutAt(String name, int line) {
 		visitLine(line);
 		pushLiteral(name);
 		pushReceiver();
-		pushContext();
-		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "variablePutAtInWithin", "(Lst/redline/PrimObject;Ljava/lang/String;Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;");
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "variablePutAtIn", "(Lst/redline/PrimObject;Ljava/lang/String;Lst/redline/PrimObject;)Lst/redline/PrimObject;");
 	}
 
 	void invokeObjectArray(int size) {

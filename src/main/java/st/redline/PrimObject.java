@@ -159,20 +159,20 @@ public class PrimObject {
 		}
 	}
 
-	public PrimObject variableAtWithin(String name, PrimContext context) {
-        System.out.println("variableAt() " + name + " in " + this + " " + context);
+	public PrimObject variableAt(String name) {
+        System.out.println("variableAt() " + name);
 		int index = cls().indexOfVariable(name);
 		if (index != 0)
 			return attributes[index];
 		return resolveObject(name);
 	}
 
-	public static PrimObject variablePutAtInWithin(PrimObject object, String name, PrimObject receiver, PrimContext context) {
+	public static PrimObject variablePutAtIn(PrimObject object, String name, PrimObject receiver) {
 		return receiver.variableAtPut(name, object);
 	}
 
 	PrimObject variableAtPut(String name, PrimObject object) {
-//        System.out.println("variableAtPut() " + name + " " + object);
+        System.out.println("Object variableAtPut() " + name + " " + object);
 		int index = cls().indexOfVariable(name);
 		if (index != 0) {
 			attributes[index] = object;
