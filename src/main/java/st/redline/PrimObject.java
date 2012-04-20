@@ -42,6 +42,8 @@ public class PrimObject {
 
 	static boolean BOOTSTRAPPING = false;
 
+	boolean trueness = false;
+	boolean falseness = false;
 	Object javaValue = null;
 	PrimObject[] attributes;
 
@@ -60,6 +62,24 @@ public class PrimObject {
 
 	public boolean isMethodBlock() {
 		return false;
+	}
+
+	public PrimObject markTrueness() {
+		trueness = true;
+		return this;
+	}
+
+	public PrimObject markFalseness() {
+		falseness = true;
+		return this;
+	}
+
+	public boolean isTrueObject() {
+		return trueness;
+	}
+
+	public boolean isFalseObject() {
+		return falseness;
 	}
 
 	public PrimObject block(String name, PrimContext context) {
@@ -320,6 +340,76 @@ public class PrimObject {
 			throw new IllegalStateException("Receiver javaValue can't handle size:.");
 		ArrayList<PrimObject> array = (ArrayList<PrimObject>) receiver.javaValue();
 		return number(array.size());
+	}
+
+	public PrimObject p210(PrimObject receiver, PrimContext context) {
+		// whileTrue: aBlock
+		// Evaluate the argument, aBlock, as long as the value of the receiver is true.
+		PrimObject aBlockResult = PrimObject.NIL;
+		PrimObject aBlock = context.argumentAt(0);
+		PrimObject receiverResult = receiver.perform("value");
+		while (receiverResult.isTrueObject()) {
+			aBlockResult = aBlock.perform("value");
+			receiverResult = receiver.perform("value");
+		}
+		return aBlockResult;
+	}
+
+	public PrimObject p211(PrimObject receiver, PrimContext context) {
+		// whileFalse: aBlock
+		// Evaluate the argument, aBlock, as long as the value of the receiver is false.
+		PrimObject aBlockResult = PrimObject.NIL;
+		PrimObject aBlock = context.argumentAt(0);
+		PrimObject receiverResult = receiver.perform("value");
+		while (receiverResult.isFalseObject()) {
+			aBlockResult = aBlock.perform("value");
+			receiverResult = receiver.perform("value");
+		}
+		return aBlockResult;
+	}
+
+	public PrimObject p212(PrimObject receiver, PrimContext context) {
+		// whileNotNil: aBlock
+		// Evaluate the argument, aBlock, as long as the value of the receiver is not nil.
+		PrimObject aBlockResult = PrimObject.NIL;
+		PrimObject aBlock = context.argumentAt(0);
+		PrimObject receiverResult = receiver.perform("value").perform("notNil");
+		while (receiverResult.isTrueObject()) {
+			aBlockResult = aBlock.perform("value");
+			receiverResult = receiver.perform("value").perform("notNil");
+		}
+		return aBlockResult;
+	}
+
+	public PrimObject p213(PrimObject receiver, PrimContext context) {
+		// whileNil: aBlock
+		// Evaluate the argument, aBlock, as long as the value of the receiver is nil.
+		PrimObject aBlockResult = PrimObject.NIL;
+		PrimObject aBlock = context.argumentAt(0);
+		PrimObject receiverResult = receiver.perform("value").perform("isNil");
+		while (receiverResult.isTrueObject()) {
+			aBlockResult = aBlock.perform("value");
+			receiverResult = receiver.perform("value").perform("isNil");
+		}
+		return aBlockResult;
+	}
+
+	public PrimObject p214(PrimObject receiver, PrimContext context) {
+		// whileFalse
+		// Evaluate the receiver, as long as its value is false.
+		PrimObject receiverResult = receiver.perform("value");
+		while (receiverResult.isFalseObject())
+			receiverResult = receiver.perform("value");
+		return receiverResult;
+	}
+
+	public PrimObject p215(PrimObject receiver, PrimContext context) {
+		// whileTrue
+		// Evaluate the receiver, as long as its value is true.
+		PrimObject receiverResult = receiver.perform("value");
+		while (receiverResult.isTrueObject())
+			receiverResult = receiver.perform("value");
+		return receiverResult;
 	}
 
 	PrimObject resolveObject(String name) {

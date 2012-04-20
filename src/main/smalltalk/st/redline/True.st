@@ -2,6 +2,11 @@
 
 Boolean < #True.
 
+- initialize
+    "Mark the resulting objects trueness so internally we can distinguish a True instance."
+    JVM aload: 1;
+        invokeVirtual: 'st/redline/PrimObject' method: 'markTrueness' returning: '()Lst/redline/PrimObject;'.
+
 - & alternativeObject 
     "Evaluating conjunction -- answer alternativeObject since receiver is true."
 
