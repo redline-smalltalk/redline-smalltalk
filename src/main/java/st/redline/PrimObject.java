@@ -182,7 +182,6 @@ public class PrimObject {
 	}
 
 	PrimObject variableAtPut(String name, PrimObject object) {
-        System.out.println("Object variableAtPut() " + name + " " + object);
 		int index = cls().indexOfVariable(name);
 		if (index != 0) {
 			attributes[index] = object;
