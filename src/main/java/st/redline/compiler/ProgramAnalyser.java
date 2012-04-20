@@ -191,6 +191,8 @@ public class ProgramAnalyser implements AnalyserDelegate {
 		String fullBlockClassName = createFullBlockName(blockClassName);
 		block.analyser(createBlockAnalyser(blockClassName, block));
 		block.blockReturnType(blockReturnType());
+		block.outerTemporariesRegistry(temporariesRegistry);
+		block.outerArgumentsRegistry(argumentsRegistry);
 		smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
 		writer.invokeObjectCompileBlock(fullBlockClassName, line);
 	}
@@ -247,6 +249,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	public void visit(Identifier identifier, String value, int line) {
+//		System.out.println("visit(Identifier) " + identifier + " " + value);
 		if (identifier.isOnLoadSideOfExpression()) {
 			if (isArgument(value))
 				writer.pushArgument(argumentsRegistry.get(value));
@@ -265,10 +268,12 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	boolean isTemporary(String name) {
+		System.out.println("isTemporary() " + name + " " + (temporariesRegistry != null && temporariesRegistry.containsKey(name)));
 		return temporariesRegistry != null && temporariesRegistry.containsKey(name);
 	}
 
 	boolean isArgument(String name) {
+		System.out.println("isArgument() " + name + " " + (argumentsRegistry != null && argumentsRegistry.containsKey(name)));
 		return argumentsRegistry != null && argumentsRegistry.containsKey(name);
 	}
 

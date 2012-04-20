@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import java.util.Map;
+
 public class Block extends Primary {
 
 	private final int line;
@@ -9,6 +11,8 @@ public class Block extends Primary {
 	private final Statements statements;
 	private Analyser analyser;
 	private String blockReturnType;
+	private Map<String, Integer> outerTemporariesRegistry;
+	private Map<String, Integer> outerArgumentsRegistry;
 
 	public Block(int line, BlockArguments blockArguments, Temporaries temporaries, Statements statements) {
 		this.line = line;
@@ -75,5 +79,29 @@ public class Block extends Primary {
 
 	public String blockReturnType() {
 		return blockReturnType;
+	}
+
+	public void outerTemporariesRegistry(Map<String, Integer> temporariesRegistry) {
+		outerTemporariesRegistry = temporariesRegistry;
+	}
+
+	public boolean isOuterTemporary(String name) {
+		return outerTemporariesRegistry != null && outerTemporariesRegistry.containsKey(name);
+	}
+
+	public int outerTemporary(String name) {
+		return outerTemporariesRegistry.get(name);
+	}
+
+	public void outerArgumentsRegistry(Map<String, Integer> argumentsRegistry) {
+		outerArgumentsRegistry = argumentsRegistry;
+	}
+
+	public boolean isOuterArgument(String name) {
+		return outerArgumentsRegistry != null && outerArgumentsRegistry.containsKey(name);
+	}
+
+	public int outerArgument(String name) {
+		return outerArgumentsRegistry.get(name);
 	}
 }

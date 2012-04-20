@@ -13,7 +13,7 @@ Magnitude < #Character
 + initialize
     CharacterTable ifNil: [
       CharacterTable := Array new: 256.
-      1 to: 256 do: [:i |
+      1 to: 256 do: [ :i |
         CharacterTable at: i put: (Character withValue: i)]].
     self initializeDigitValues.
 

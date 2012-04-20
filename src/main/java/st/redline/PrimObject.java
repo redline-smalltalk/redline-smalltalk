@@ -15,6 +15,7 @@ import st.redline.bootstrap.InstanceVariableNamesMethod;
 import st.redline.compiler.Block;
 
 import java.lang.reflect.Constructor;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -410,6 +411,11 @@ public class PrimObject {
 		while (receiverResult.isTrueObject())
 			receiverResult = receiver.perform("value");
 		return receiverResult;
+	}
+
+	public PrimObject p217(PrimObject receiver, PrimContext context) {
+		// create a new Character with value anArg.
+		return character(Character.valueOf((char) context.intArgumentAt(0)));
 	}
 
 	PrimObject resolveObject(String name) {
