@@ -159,8 +159,8 @@ public class PrimObject {
 		}
 	}
 
-	public PrimObject variableAt(String name) {
-//        System.out.println("variableAt() " + name + " in " + this);
+	public PrimObject variableAtWithin(String name, PrimContext context) {
+        System.out.println("variableAt() " + name + " in " + this + " " + context);
 		int index = cls().indexOfVariable(name);
 		if (index != 0)
 			return attributes[index];

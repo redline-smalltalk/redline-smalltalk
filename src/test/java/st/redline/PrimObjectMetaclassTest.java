@@ -33,7 +33,7 @@ public class PrimObjectMetaclassTest {
         PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
         metaclass.addClassVariableNamed(name);
         metaclass.variableAtPut(name, newvar);
-        assertEquals(newvar, metaclass.variableAt(name));
+        assertEquals(newvar, metaclass.variableAtWithin(name, null));
         metaclass.addClassVariableNamed(name);
     }
 
@@ -44,7 +44,7 @@ public class PrimObjectMetaclassTest {
         PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
         metaclass.addClassVariableNamed(name);
         metaclass.variableAtPut(name, newvar);
-        assertEquals(newvar, metaclass.variableAt(name));
+        assertEquals(newvar, metaclass.variableAtWithin(name, null));
     }
 
 	@Test

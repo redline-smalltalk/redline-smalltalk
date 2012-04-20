@@ -109,7 +109,7 @@ public class PrimObjectTest {
 		when(primObjectClass.indexOfVariable("Thing")).thenReturn(0);
 		primObject.cls(primObjectClass);
 		PrimObject spy = spy(primObject);
-		spy.variableAt("Thing");
+		spy.variableAtWithin("Thing", null);
 		verify(spy).resolveObject("Thing");
 	}
 
