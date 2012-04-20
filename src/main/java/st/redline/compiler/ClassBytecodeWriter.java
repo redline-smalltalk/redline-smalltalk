@@ -225,7 +225,8 @@ public class ClassBytecodeWriter implements Opcodes {
 		visitLine(line);
 		pushLiteral(name);
 		pushReceiver();
-		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "variablePutAtIn", "(Lst/redline/PrimObject;Ljava/lang/String;Lst/redline/PrimObject;)Lst/redline/PrimObject;");
+		pushContext();
+		mv.visitMethodInsn(INVOKESTATIC, OBJECT, "variablePutAtInWithin", "(Lst/redline/PrimObject;Ljava/lang/String;Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;");
 	}
 
 	void invokeObjectArray(int size) {

@@ -6,7 +6,7 @@ public class BlockReturn extends RuntimeException {
 	private PrimObject answer = PrimObject.NIL;
 
 	public BlockReturn(PrimObject answer) {
-		System.out.println("BlockReturn() " + answer);
+//		System.out.println("BlockReturn() " + answer);
 		if (answer != null)
 			this.answer = answer;
 	}

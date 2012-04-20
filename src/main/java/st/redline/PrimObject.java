@@ -167,7 +167,7 @@ public class PrimObject {
 		return resolveObject(name);
 	}
 
-	public static PrimObject variablePutAtIn(PrimObject object, String name, PrimObject receiver) {
+	public static PrimObject variablePutAtInWithin(PrimObject object, String name, PrimObject receiver, PrimContext context) {
 		return receiver.variableAtPut(name, object);
 	}
 
