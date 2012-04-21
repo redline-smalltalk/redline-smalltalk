@@ -268,12 +268,10 @@ public class ProgramAnalyser implements AnalyserDelegate {
 	}
 
 	boolean isTemporary(String name) {
-		System.out.println("isTemporary() " + name + " " + (temporariesRegistry != null && temporariesRegistry.containsKey(name)));
 		return temporariesRegistry != null && temporariesRegistry.containsKey(name);
 	}
 
 	boolean isArgument(String name) {
-		System.out.println("isArgument() " + name + " " + (argumentsRegistry != null && argumentsRegistry.containsKey(name)));
 		return argumentsRegistry != null && argumentsRegistry.containsKey(name);
 	}
 

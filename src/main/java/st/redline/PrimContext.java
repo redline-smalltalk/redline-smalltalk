@@ -28,6 +28,11 @@ public class PrimContext {
 		context.temporaryAtPut(index, object);
 	}
 
+	public static void temporaryPutAtInFrom(PrimObject object, int index, PrimContext context, PrimObject receiver) {
+		System.out.println("temporaryPutAtInFrom: " + index + " " + receiver);
+		throw new IllegalStateException("HERE");
+	}
+
 	public void temporaryAtPut(int index, PrimObject object) {
 		temporaries[index] = object;
 	}
@@ -36,8 +41,16 @@ public class PrimContext {
 		return temporaries[index];
 	}
 
+	public PrimObject temporaryAtFrom(int index, PrimObject receiver) {
+		return ((PrimObjectBlock) receiver).outerContext().temporaryAt(index);
+	}
+
 	public PrimObject argumentAt(int index) {
 		return arguments[index];
+	}
+
+	public PrimObject argumentAtFrom(int index, PrimObject receiver) {
+		return ((PrimObjectBlock) receiver).outerContext().argumentAt(index);
 	}
 
 	public int intArgumentAt(int index) {

@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import st.redline.RedlineException;
+
 public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 
 	private boolean verbose;
@@ -31,6 +33,32 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 		if (block != thisBlock)
 			throw new IllegalStateException("Expected visitEnd of own block. Got " + block);
 		writer.closeClass();
+	}
+
+	public void visit(Identifier identifier, String value, int line) {
+		if (identifier.isOnLoadSideOfExpression()) {
+			if (isOuterArgument(value))
+				writer.pushOuterArgument(thisBlock.outerArgument(value));
+			else if (isOuterTemporary(value))
+				writer.pushOuterTemporary(thisBlock.outerTemporary(value));
+			else
+				super.visit(identifier, value, line);
+		} else {
+			if (isOuterArgument(value))
+				throw new RedlineException("Can't store into an argument, only temporaries and variables.");
+			else if (isOuterTemporary(value))
+				writer.storeOuterTemporary(thisBlock.outerTemporary(value));
+			else
+				super.visit(identifier, value, line);
+		}
+	}
+
+	boolean isOuterTemporary(String name) {
+		return thisBlock.isOuterTemporary(name);
+	}
+
+	boolean isOuterArgument(String name) {
+		return thisBlock.isOuterArgument(name);
 	}
 
 	public void visit(JVM jvm, int line) {

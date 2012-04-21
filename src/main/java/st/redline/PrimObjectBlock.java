@@ -36,7 +36,6 @@ public class PrimObjectBlock extends PrimObject {
 	}
 
 	public PrimObject variableAt(String name) {
-        System.out.println("variableAt() " + name);
 		int index = cls().indexOfVariable(name);
 		if (index != 0)
 			return attributes[index];
@@ -51,6 +50,10 @@ public class PrimObjectBlock extends PrimObject {
 		}
 		outerContext.receiver.variableAtPut(name, object);
 		return this;
+	}
+
+	public PrimContext outerContext() {
+		return outerContext;
 	}
 
 	public void markAsMethodBlock() {

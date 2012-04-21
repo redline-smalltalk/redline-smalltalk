@@ -14,6 +14,7 @@ public class ClassBytecodeWriter implements Opcodes {
 
 	private static final String OBJECT = "st/redline/PrimObject";
 	private static final String CONTEXT = "st/redline/PrimContext";
+	private static final String BLOCK = "st/redline/PrimObjectBlock";
 	private static final String SEND_MESSAGES = "_sendMessages_";
 	private static final String SEND_MESSAGES_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
 	private static final String PRIMITIVE_SIG = "(Lst/redline/PrimObject;Lst/redline/PrimContext;)Lst/redline/PrimObject;";
@@ -267,16 +268,37 @@ public class ClassBytecodeWriter implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "argumentAt", "(I)Lst/redline/PrimObject;");
 	}
 
+	void pushOuterArgument(int index) {
+		pushContext();
+		pushNumber(index);
+		pushReceiver();
+		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "argumentAtFrom", "(ILst/redline/PrimObject;)Lst/redline/PrimObject;");
+	}
+
 	void pushTemporary(int index) {
 		pushContext();
 		pushNumber(index);
 		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporaryAt", "(I)Lst/redline/PrimObject;");
 	}
 
+	void pushOuterTemporary(int index) {
+		pushContext();
+		pushNumber(index);
+		pushReceiver();
+		mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporaryAtFrom", "(ILst/redline/PrimObject;)Lst/redline/PrimObject;");
+	}
+
 	void storeTemporary(int index) {
 		pushNumber(index);
 		pushContext();
 		mv.visitMethodInsn(INVOKESTATIC, CONTEXT, "temporaryPutAtIn", "(Lst/redline/PrimObject;ILst/redline/PrimContext;)V");
+	}
+
+	void storeOuterTemporary(int index) {
+		pushNumber(index);
+		pushContext();
+		pushReceiver();
+		mv.visitMethodInsn(INVOKESTATIC, CONTEXT, "temporaryPutAtInFrom", "(Lst/redline/PrimObject;ILst/redline/PrimContext;Lst/redline/PrimObject;)V");
 	}
 
 	void pushLiteral(String literal) {
