@@ -16,6 +16,7 @@ import st.redline.compiler.Block;
 
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -125,7 +126,7 @@ public class PrimObject {
         while (array.size() < size + 1)
             array.add(initialElement);
         PrimObject object = instanceOf("Array").with(array);
-//        System.out.println("** array ** " + object + " " + array);
+//        System.out.println("** array ** " + object + " -> " + array);
         return object;
     }
 
@@ -134,7 +135,7 @@ public class PrimObject {
 	}
 
 	public static PrimObject number(Object javaValue) {
-		return instanceOf("Integer").with(Integer.valueOf((String) javaValue));
+		return instanceOf("Integer").with(new BigDecimal((String) javaValue));
 	}
 
 	public static PrimObject character(Object javaValue) {
@@ -222,6 +223,16 @@ public class PrimObject {
 		return receiver;
 	}
 
+	public PrimObject p25(PrimObject receiver, PrimContext context) {
+		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) context.argumentAt(0).javaValue());
+		return result <= 0 ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
+	public PrimObject p26(PrimObject receiver, PrimContext context) {
+		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) context.argumentAt(0).javaValue());
+		return result >= 0 ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
 	public PrimObject p61(PrimObject receiver, PrimContext context) {
         // at:put:
 //        System.out.println("p61() " + receiver + " at: " + context.argumentAt(0).javaValue() + " put: " + context.argumentAt(1));
@@ -244,7 +255,7 @@ public class PrimObject {
 	}
 
 	public PrimObject p71(PrimObject receiver, PrimContext context) {
-		int size = (Integer) context.argumentAt(0).javaValue();
+		int size = context.intArgumentAt(0);
 		PrimObjectMetaclass aClass = (PrimObjectMetaclass) receiver;
 		PrimObject newInstance = new PrimObject(aClass.primInstanceSize() + size);
 		newInstance.cls(aClass);
@@ -328,8 +339,10 @@ public class PrimObject {
 
 	public PrimObject p137(PrimObject receiver, PrimContext context) {
 		// at:put:
+		if (receiver.javaValue() == null)
+			throw new IllegalStateException("Receiver javaValue unexpectedly null. Receiver: " + receiver + " class: " + receiver.cls());
 		if (!(receiver.javaValue() instanceof ArrayList))
-			throw new IllegalStateException("Receiver javaValue can't handle at:put:.");
+			throw new IllegalStateException("Receiver javaValue can't handle at:put:. Was " + receiver.javaValue().getClass());
 		ArrayList<PrimObject> array = (ArrayList<PrimObject>) receiver.javaValue();
 		array.set(context.intArgumentAt(0), context.argumentAt(1));
 		return receiver;

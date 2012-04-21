@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
+import java.math.BigDecimal;
+
 public class PrimContext {
 
 	public PrimObject receiver;
@@ -54,8 +56,7 @@ public class PrimContext {
 	}
 
 	public int intArgumentAt(int index) {
-		PrimObject value = argumentAt(index);
-		return ((Integer) value.javaValue()).intValue();
+		return ((BigDecimal) argumentAt(index).javaValue()).intValue();
 	}
 
 	public void temporariesInit(int size) {
