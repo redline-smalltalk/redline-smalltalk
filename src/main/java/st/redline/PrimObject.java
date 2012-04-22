@@ -233,19 +233,17 @@ public class PrimObject {
 		return result >= 0 ? PrimObject.TRUE : PrimObject.FALSE;
 	}
 
+	public PrimObject p60(PrimObject receiver, PrimContext context) {
+		return p136(receiver, context);
+	}
+
 	public PrimObject p61(PrimObject receiver, PrimContext context) {
-        // at:put:
-//        System.out.println("p61() " + receiver + " at: " + context.argumentAt(0).javaValue() + " put: " + context.argumentAt(1));
-        int index = (Integer) context.argumentAt(0).javaValue();
-        if (index == 0)
-            throw new IllegalStateException("Primitive at:put given index of zero.");
-        PrimObject object = context.argumentAt(1);
-        List<PrimObject> slots = (List<PrimObject>) receiver.javaValue();
-        if (slots == null || slots.size() < index)
-            throw new IllegalStateException("Primitive at:put given null or insufficient slots.");
-        slots.set(index, object);
-        return object; // return stored value according to BlueBook.
+        return p137(receiver, context);
     }
+
+	public PrimObject p62(PrimObject receiver, PrimContext context) {
+		return p138(receiver, context);
+	}
 
 	public PrimObject p70(PrimObject receiver, PrimContext context) {
 		PrimObjectMetaclass aClass = (PrimObjectMetaclass) receiver;
@@ -331,29 +329,29 @@ public class PrimObject {
 
 	public PrimObject p136(PrimObject receiver, PrimContext context) {
 		// at: (take into account class required data offset.
-		if (!(receiver.javaValue() instanceof ArrayList))
-			throw new IllegalStateException("Receiver javaValue can't handle at:.");
-		ArrayList<PrimObject> array = (ArrayList<PrimObject>) receiver.javaValue();
-		return array.get(context.intArgumentAt(0));
+		int offset = context.intArgumentAt(0);
+		if (receiver.attributes.length < offset)
+			throw new IllegalStateException("Receiver can't handle at: " + offset + ". Only " + receiver.attributes.length + " slots.");
+		if (offset == 0)
+			throw new IllegalStateException("at:put given index of zero.");
+		return receiver.attributes[offset];
 	}
 
 	public PrimObject p137(PrimObject receiver, PrimContext context) {
 		// at:put:
-		if (receiver.javaValue() == null)
-			throw new IllegalStateException("Receiver javaValue unexpectedly null. Receiver: " + receiver + " class: " + receiver.cls());
-		if (!(receiver.javaValue() instanceof ArrayList))
-			throw new IllegalStateException("Receiver javaValue can't handle at:put:. Was " + receiver.javaValue().getClass());
-		ArrayList<PrimObject> array = (ArrayList<PrimObject>) receiver.javaValue();
-		array.set(context.intArgumentAt(0), context.argumentAt(1));
-		return receiver;
+		int offset = context.intArgumentAt(0);
+		if (receiver.attributes.length < offset)
+			throw new IllegalStateException("Receiver can't handle at: " + offset + ". Only " + receiver.attributes.length + " slots.");
+		if (offset == 0)
+			throw new IllegalStateException("at:put given index of zero.");
+		PrimObject object = context.argumentAt(1);
+		receiver.attributes[offset] = object;
+		return object;
 	}
 
 	public PrimObject p138(PrimObject receiver, PrimContext context) {
 		// size (take into account class required data offset.
-		if (!(receiver.javaValue() instanceof ArrayList))
-			throw new IllegalStateException("Receiver javaValue can't handle size:.");
-		ArrayList<PrimObject> array = (ArrayList<PrimObject>) receiver.javaValue();
-		return number(array.size());
+		return number(receiver.attributes.length + 1);
 	}
 
 	public PrimObject p210(PrimObject receiver, PrimContext context) {
@@ -429,6 +427,43 @@ public class PrimObject {
 	public PrimObject p217(PrimObject receiver, PrimContext context) {
 		// create a new Character with value anArg.
 		return character(Character.valueOf((char) context.intArgumentAt(0)));
+	}
+
+	public PrimObject p220(PrimObject receiver, PrimContext context) {
+		// answer the size of the ArrayedCollection
+		if (receiver.javaValue() == null)
+			return number(0);
+		return number(((ArrayList) receiver.javaValue()).size());
+	}
+
+	public PrimObject p221(PrimObject receiver, PrimContext context) {
+		// answer a new array of the size requested.
+		PrimObject array = p70(receiver, context);
+		ArrayList<PrimObject> list = new ArrayList<PrimObject>();
+		for (int i = 0; i < context.intArgumentAt(0) + 1; i++)
+			list.add(PRIM_NIL);
+		array.javaValue(list);
+		return array;
+	}
+
+	public PrimObject p222(PrimObject receiver, PrimContext context) {
+		// at: index
+		if (!(receiver.javaValue() instanceof ArrayList))
+			throw new IllegalStateException("Receiver is expected to have an ArrayList javaValue but doesn't.");
+		int offset = context.intArgumentAt(0);
+		if (offset == 0)
+			throw new IllegalStateException("An at: of index zero (0) is invalid.");
+		return ((ArrayList<PrimObject>) receiver.javaValue()).get(offset);
+	}
+
+	public PrimObject p223(PrimObject receiver, PrimContext context) {
+		// at: index put: anObject and answer anObject.
+		if (!(receiver.javaValue() instanceof ArrayList))
+			throw new IllegalStateException("Receiver is expected to have an ArrayList javaValue but doesn't.");
+		int offset = context.intArgumentAt(0);
+		PrimObject anObject = context.argumentAt(1);
+		((ArrayList<PrimObject>) receiver.javaValue()).set(offset, anObject);
+		return anObject;
 	}
 
 	PrimObject resolveObject(String name) {

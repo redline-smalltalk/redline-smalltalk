@@ -3,4 +3,10 @@
 SequenceableCollection < #ArrayedCollection.
 
 - size
-    <primitive: 62>
+    <primitive: 220>
+
+- at: index
+    <primitive: 222>
+
+- at: index put: anObject
+    <primitive: 223>

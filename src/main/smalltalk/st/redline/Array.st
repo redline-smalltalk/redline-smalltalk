@@ -3,7 +3,7 @@
 ArrayedCollection < #Array.
 
 + new: sizeRequested
-    <primitive: 71>
+    <primitive: 221>
 
 - add: newObject
     self shouldNotImplement.
