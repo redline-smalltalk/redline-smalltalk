@@ -15,6 +15,7 @@ public class PrimObjectMetaclassTest {
 
     @Test
     public void shouldExpandAttributesWhenNewClassVariableAdded() {
+	    PrimObject.BOOTSTRAPPING = true;
         PrimObject newElement = PrimObject.BOOTSTRAPPING ? PrimObject.PRIM_NIL : PrimObject.NIL;
         PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
         int before = metaclass.attributes.length;
