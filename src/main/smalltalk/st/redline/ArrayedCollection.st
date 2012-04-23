@@ -10,3 +10,9 @@ SequenceableCollection < #ArrayedCollection.
 
 - at: index put: anObject
     <primitive: 223>
+
+- basicAt: index
+    <primitive: 222>
+
+- basicAt: index put: anObject
+    <primitive: 223>

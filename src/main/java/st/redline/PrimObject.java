@@ -62,6 +62,17 @@ public class PrimObject {
 		return (javaValue != null && !(javaValue instanceof Map)) ? javaValue.toString() : super.toString();
 	}
 
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof PrimObject))
+			return false;
+		PrimObject other = (PrimObject) o;
+		if (javaValue != null)
+			return javaValue.equals(other.javaValue);
+		return false;
+	}
+
 	public boolean isMethodBlock() {
 		return false;
 	}
@@ -314,6 +325,10 @@ public class PrimObject {
 		return newInstance;
 	}
 
+	public PrimObject p75(PrimObject receiver, PrimContext context) {
+		return number(new BigDecimal(receiver.hashCode()));
+	}
+
 	public PrimObject p81(PrimObject receiver, PrimContext context) {
 		// [] value, value:, value:value: etc
 		return receiver.invoke(receiver, context);
@@ -411,7 +426,7 @@ public class PrimObject {
 
 	public PrimObject p138(PrimObject receiver, PrimContext context) {
 		// size (take into account class required data offset.
-		return number(receiver.attributes.length + 1);
+		return number(new BigDecimal(receiver.attributes.length + 1));
 	}
 
 	public PrimObject p210(PrimObject receiver, PrimContext context) {
@@ -497,7 +512,7 @@ public class PrimObject {
 		// answer the size of the ArrayedCollection
 		if (receiver.javaValue() == null)
 			return number(0);
-		return number(((ArrayList) receiver.javaValue()).size());
+		return number(new BigDecimal(((ArrayList) receiver.javaValue()).size() - 1));
 	}
 
 	public PrimObject p221(PrimObject receiver, PrimContext context) {
