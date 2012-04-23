@@ -1,21 +1,13 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class Temporary extends VariableName {
+class Temporary extends Identifier implements VisitableNode {
 
-	public Temporary(VariableName variableName) {
-		super(variableName.value, variableName.line);
+	Temporary(String value, int line) {
+		super(value, line);
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, index, value, line);
-	}
-
-	public void index(int index) {
-		this.index = index;
-	}
-
-	public boolean isClassReference() {
-		return false;
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this, value(), line());
 	}
 }

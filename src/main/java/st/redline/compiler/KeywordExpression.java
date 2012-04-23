@@ -8,25 +8,42 @@ public class KeywordExpression implements MessageExpression {
 
 	private final List<BinaryObjectDescription> binaryObjectDescriptions;
 	private final StringBuffer keywords;
-	private int line = -1;
+	private int line;
 
-	public KeywordExpression() {
+	KeywordExpression() {
 		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
 		keywords = new StringBuffer();
+		line = -1;
 	}
 
-	public void add(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
-		if (line == -1)
-			line = keyword.line;
-		keywords.append(keyword.value);
+	void add(String keyword, int line, BinaryObjectDescription binaryObjectDescription) {
+		if (this.line == -1)
+			this.line = line;
+		keywords.append(keyword);
 		binaryObjectDescriptions.add(binaryObjectDescription);
 	}
 
+	String keywords() {
+		return keywords.toString();
+	}
+
+	List<BinaryObjectDescription> binaryObjectDescriptions() {
+		return binaryObjectDescriptions;
+	}
+
 	public void accept(NodeVisitor nodeVisitor) {
-		String keywords = this.keywords.toString();
-		nodeVisitor.visit(this, keywords, binaryObjectDescriptions.size(), line);
+		String keywords = keywords();
+		nodeVisitor.visitBegin(this, keywords, binaryObjectDescriptions.size(), line);
 		for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
 			binaryObjectDescription.accept(nodeVisitor);
 		nodeVisitor.visitEnd(this, keywords, binaryObjectDescriptions.size(), line);
 	}
+
+    public boolean hasBlockWithAnswerExpression() {
+	    String selector = keywords();
+        for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
+            if (binaryObjectDescription.hasBlockWithAnswerExpression() && !selector.equals("atSelector:put:"))
+                return true;
+        return false;
+    }
 }

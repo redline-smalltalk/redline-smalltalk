@@ -47,6 +47,10 @@ public class CommandLine {
 		return haveVerboseOption();
 	}
 
+	public boolean ignoreCompilerErrors() {
+		return haveIgnoreOption();
+	}
+
 	boolean helpRequested() {
 		return haveHelpOption() || haveNoArguments();
 	}
@@ -56,7 +60,7 @@ public class CommandLine {
 	}
 
 	public boolean haveNoArguments() {
-		return commandLine.getArgList().isEmpty();
+		return commandLine.getArgList().isEmpty() && input() == null;
 	}
 
 	boolean haveHelpOption() {
@@ -65,6 +69,10 @@ public class CommandLine {
 
 	boolean haveVerboseOption() {
 		return commandLine.hasOption('v');
+	}
+
+	boolean haveIgnoreOption() {
+		return commandLine.hasOption('i');
 	}
 
 	void tryParseArguments() {
@@ -80,7 +88,6 @@ public class CommandLine {
 	}
 
 	String input() {
-		System.out.println(commandLine.getOptionValue(EXECUTE_NOW_OPTION));
 		return commandLine.getOptionValue(EXECUTE_NOW_OPTION);
 	}
 
@@ -131,6 +138,11 @@ public class CommandLine {
 			addOption(runtimePath());
 			addOption(executeNow());
 			addOption(verbose());
+			addOption(ignore());
+		}
+
+		private Option ignore() {
+			return new Option("i", "ignore", false, "ignore parsing errors. When not specified parse errors raise an exception.");
 		}
 
 		private Option verbose() {

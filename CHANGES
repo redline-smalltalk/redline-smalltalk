@@ -1,3 +1,15 @@
+20/01/2012
+
+In response to feedback - I did the following:
+Rewrote the grammar to make it cleaner and remove some grammar bugs that were hindering us.
+Rewrote Analyser that walks the Abstract Syntax tree, since grammar nodes changed, and we 
+learnt a lot from previous attempts which means we can have a smaller better Analyser.
+Rewrote Bytecode generator to be cleaner.
+Rewrote Java layer of classes to more closely reflect the "meta" nature of Smalltalk. Making
+a class correctly requires the creation and population of a Metaclass and then asking it for
+an instance of the class.
+Added tests, tests and more tests.
+
 01/01/2012
 
 Added check for null in superclass call. Answers nil if null.

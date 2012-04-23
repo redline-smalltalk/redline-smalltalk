@@ -1,30 +1,35 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline;
 
-// TODO.JCL - make this classloader delegate to another so we can replace the delegate at runtime to reload all classes on fly.
+// TODO.JCL - make this classloader delegate to another so we can replace the delegate at runtime to reload all CLASSES on fly.
 
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 public class SmalltalkClassLoader extends ClassLoader {
 
+	public static Map<String, Object> BLOCKS_TO_BE_COMPILED = new Hashtable<String, Object>();
 	private final CommandLine commandLine;
 
 	public SmalltalkClassLoader(java.lang.ClassLoader classLoader, CommandLine commandLine) {
 		super(classLoader);
 		this.commandLine = commandLine;
+//		System.out.println("SmalltalkClassLoader created: " + this);
 	}
 
 	public static SmalltalkClassLoader instance() {
+//		System.out.println("SmalltalkClassLoader instance: " + Thread.currentThread().getContextClassLoader());
 		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
 	}
 
-	protected void bootstrap() throws ClassNotFoundException {
-		loadProtoObject().bootstrap();
+	protected void bootstrap() {
+		loadPrimObjectMetaclass().bootstrap();
 	}
 
-	private ProtoObject loadProtoObject() {
+	private PrimObjectMetaclass loadPrimObjectMetaclass() {
 		try {
-			return ((ProtoObject) loadClass("st.redline.ProtoObject").newInstance());
+			return ((PrimObjectMetaclass) loadClass("st.redline.PrimObjectMetaclass").newInstance());
 		} catch (Exception e) {
 			throw RedlineException.withCause(e);
 		}
@@ -39,7 +44,6 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	public Class findClass0(String className) throws ClassNotFoundException {
-//		System.out.println("findClass() " + className);
 		SourceFile sourceFile = findSource(className);
 		if (sourceFile == null)
 			return tryFindSystemClass(className);
@@ -55,7 +59,6 @@ public class SmalltalkClassLoader extends ClassLoader {
 	}
 
 	private Class classFrom(SourceFile sourceFile) {
-//		System.out.println("classFrom() " + sourceFile);
 		byte[] classBytes = compile(sourceFile);
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
@@ -64,12 +67,16 @@ public class SmalltalkClassLoader extends ClassLoader {
 		return defineClass(null, classBytes, 0, classBytes.length);
 	}
 
+    public Class defineClass(String name, byte[] classBytes) {
+        return defineClass(name, classBytes, 0, classBytes.length);
+    }
+
 	private byte[] compile(SourceFile sourceFile) {
 		return createCompiler(sourceFile).compile();
 	}
 
 	private Compiler createCompiler(SourceFile sourceFile) {
-		return new Compiler(sourceFile);
+		return new Compiler(sourceFile, commandLine.verboseRequested(), commandLine.ignoreCompilerErrors());
 	}
 
 	private SourceFile findSource(String className) {
@@ -86,5 +93,11 @@ public class SmalltalkClassLoader extends ClassLoader {
 
 	private SourceFilesFinder sourceFilesFinder(String paths) {
 		return new SourceFilesFinder(paths);
+	}
+
+	public void registerBlockToBeCompiled(Object block, String name) {
+		if (BLOCKS_TO_BE_COMPILED.containsKey(name))
+			throw new IllegalStateException("Block to be compiled registered twice: " + name);
+		BLOCKS_TO_BE_COMPILED.put(name, block);
 	}
 }

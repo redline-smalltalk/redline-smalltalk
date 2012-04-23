@@ -1,21 +1,27 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
-import org.easymock.EasyMockSupport;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Matchers.eq;
+
+import org.mockito.ArgumentMatcher;
+import org.mockito.internal.matchers.Not;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import st.redline.ProtoBlock;
+import st.redline.PrimObjectBlock;
 import st.redline.stout.*;
 
 import java.util.UUID;
 
-import static org.easymock.EasyMock.eq;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.not;
 import static org.junit.Assert.assertSame;
 
-public class RouterRegistryImplTest extends EasyMockSupport {
+public class RouterRegistryImplTest {
+    
     private RouterRegistryImpl routerRegistry;
     private RouterFactory routerFactory;
 
@@ -27,21 +33,17 @@ public class RouterRegistryImplTest extends EasyMockSupport {
         String expectedPathMatchesWithSpec2 = createRandomString();
         String type = createRandomString();
         String method = createRandomString();
-        ProtoBlock block1 = createMock(ProtoBlock.class);
-        ProtoBlock block2 = createMock(ProtoBlock.class);
+        PrimObjectBlock block1 = mock(PrimObjectBlock.class);
+        PrimObjectBlock block2 = mock(PrimObjectBlock.class);
 
         Router expectedRouterForSpec1 = expectCreateRouter(spec1, type, block1, expectedPathMatchesWithSpec1);
         Router expectedRouterForSpec2 = expectCreateRouter(spec2, type, block2, expectedPathMatchesWithSpec2);
-
-        replayAll();
 
         assertSame(expectedRouterForSpec1, routerRegistry.register(spec1, type, method, block1));
         assertSame(expectedRouterForSpec1, routerRegistry.lookup(expectedPathMatchesWithSpec1, method));
 
         assertSame(expectedRouterForSpec2, routerRegistry.register(spec2, type, method, block2));
         assertSame(expectedRouterForSpec2, routerRegistry.lookup(expectedPathMatchesWithSpec2, method));
-
-        verifyAll();
     }
 
     @Test
@@ -52,21 +54,17 @@ public class RouterRegistryImplTest extends EasyMockSupport {
         String type = createRandomString();
         String method1 = createRandomString();
         String method2 = createRandomString();
-        ProtoBlock block1 = createMock(ProtoBlock.class);
-        ProtoBlock block2 = createMock(ProtoBlock.class);
+        PrimObjectBlock block1 = mock(PrimObjectBlock.class);
+        PrimObjectBlock block2 = mock(PrimObjectBlock.class);
 
         Router expectedRouterForMethod1 = expectCreateRouter(spec1, type, block1, expectedPathMatchesWithSpec);
         Router expectedRouterForMethod2 = expectCreateRouter(spec2, type, block2, expectedPathMatchesWithSpec);
-
-        replayAll();
 
         routerRegistry.register(spec1, type, method1, block1);
         assertSame(expectedRouterForMethod1, routerRegistry.lookup(expectedPathMatchesWithSpec, method1));
 
         routerRegistry.register(spec2, type, method2, block2);
         assertSame(expectedRouterForMethod2, routerRegistry.lookup(expectedPathMatchesWithSpec, method2));
-
-        verifyAll();
     }
 
     @Test
@@ -74,12 +72,13 @@ public class RouterRegistryImplTest extends EasyMockSupport {
         assertSame(NoOpRouter.INSTANCE, routerRegistry.lookup(createRandomString(), createRandomString()));
     }
 
-    private Router expectCreateRouter(String spec, String type, ProtoBlock block, String expectedPathMatchesWithSpec) {
-        Router router = createMock(Router.class);
+    private Router expectCreateRouter(String spec, String type, PrimObjectBlock block, String expectedPathMatchesWithSpec) {
+        Router router = mock(Router.class);
 
-        expect(routerFactory.create(spec, type, block)).andReturn(router);
-        expect(router.canHandleRequest(expectedPathMatchesWithSpec)).andReturn(true).anyTimes();
-        expect(router.canHandleRequest(not(eq(expectedPathMatchesWithSpec)))).andReturn(false).anyTimes();
+        when(routerFactory.create(spec, type, block)).thenReturn(router);
+        when(router.canHandleRequest(expectedPathMatchesWithSpec)).thenReturn(true);
+// JCL - not sure how to do this with mockito.
+//        when(router.canHandleRequest(not expectedPathMatchesWithSpec)).thenReturn(false);
 
         return router;
     }
@@ -90,12 +89,24 @@ public class RouterRegistryImplTest extends EasyMockSupport {
 
     @Before
     public void setUp() {
-        routerFactory = createMock(RouterFactory.class);
+        routerFactory = mock(RouterFactory.class);
         routerRegistry = new RouterRegistryImpl(routerFactory);
     }
 
     @After
     public void tearDown() {
         routerRegistry = null;
+    }
+
+    class NotEquals extends ArgumentMatcher {
+        private String value;
+        public NotEquals(String value) {
+            this.value = value;
+        }
+        public boolean matches(Object o) {
+            if (o instanceof String)
+                return !value.equals(o);
+            return false;
+        }
     }
 }

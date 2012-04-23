@@ -27,6 +27,10 @@ public class ClassPathUtilities {
 		return simpleFilenameToPackageName(filename);
     }
 
+	public static String fullyQualifiedClassNameToPackageName(String className) {
+		return className.replace("/", ".");
+	}
+
     public static String classNameToFullyQualifiedClassName(String packageName, String className) {
         return (packageName.length() > 0 ? packageName + "." + className : className).replace(".", "/");
     }

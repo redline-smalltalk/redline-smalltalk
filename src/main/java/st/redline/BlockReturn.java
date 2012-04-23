@@ -3,15 +3,15 @@ package st.redline;
 
 public class BlockReturn extends RuntimeException {
 
-	private ProtoObject answer = ProtoObject.NIL;
+	private PrimObject answer = PrimObject.NIL;
 
-	public BlockReturn(ProtoObject answer) {
-		System.out.println("BlockReturn() " + answer);
+	public BlockReturn(PrimObject answer) {
+//		System.out.println("BlockReturn() " + answer);
 		if (answer != null)
 			this.answer = answer;
 	}
 
-	public ProtoObject answer() {
+	public PrimObject answer() {
 		return answer;
 	}
 }

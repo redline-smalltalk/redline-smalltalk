@@ -1,69 +1,107 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
-public class Block extends BasePrimary {
+public class Block extends Primary {
 
-	private final List<BlockVariableName> blockVariableNames;
-	private Temporaries temporaries;
-	private Statements statements;
+	private final int line;
+	private final BlockArguments blockArguments;
+	private final Temporaries temporaries;
+	private final Statements statements;
 	private Analyser analyser;
+	private String blockReturnType;
+	private Map<String, Integer> outerTemporariesRegistry;
+	private Map<String, Integer> outerArgumentsRegistry;
 
-	public Block() {
-		this.blockVariableNames = new ArrayList<BlockVariableName>();
-	}
-
-	public void add(BlockVariableName blockVariableName) {
-		blockVariableNames.add(blockVariableName);
-	}
-
-	public void add(Temporaries temporaries) {
+	public Block(int line, BlockArguments blockArguments, Temporaries temporaries, Statements statements) {
+		this.line = line;
+		this.blockArguments = blockArguments;
 		this.temporaries = temporaries;
-	}
-
-	public void add(Statements statements) {
 		this.statements = statements;
 	}
 
-	public boolean hasStatements() {
-		return statements != null;
+	Statements statements() {
+		return statements;
 	}
 
-	public int argumentCount() {
-		return blockVariableNames.size();
+	int line() {
+		return line;
 	}
 
-	public boolean isBlockWithAnswerExpression() {
-		return (statements != null && statements.hasAnswerExpression());
+	BlockArguments arguments() {
+		return blockArguments;
 	}
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		// we don't visit the rest during class / method analysis, but we do during block analysis.
-		if (!visitor.continueBlockVisit())
+	Temporaries temporaries() {
+		return temporaries;
+	}
+
+    boolean isBlockWithAnswerExpression() {
+        return (statements != null && statements.hasAnswerExpression());
+    }
+
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visitBegin(this, line);
+		if (nodeVisitor.skipBlockVisit(this))
 			return;
-		for (BlockVariableName blockVariableName : blockVariableNames)
-			blockVariableName.accept(visitor);
+		if (blockArguments != null)
+			blockArguments.accept(nodeVisitor);
 		if (temporaries != null)
-			temporaries.accept(visitor);
+			temporaries.accept(nodeVisitor);
 		if (statements != null)
-			statements.accept(visitor);
-		visitor.visitEnd(this);
-	}
-
-	// analyser is passed through to Block compilation.
-
-	public Analyser analyser() {
-		return analyser;
+			statements.accept(nodeVisitor);
+		nodeVisitor.visitEnd(this, line);
 	}
 
 	public void analyser(Analyser analyser) {
 		this.analyser = analyser;
 	}
 
-	public boolean hasAnsweredValue() {
-		return (statements != null && statements.hasAnswerExpression());
+	public Analyser analyser() {
+		return analyser;
+	}
+
+	public byte[] classBytes() {
+		return analyser.classBytes();
+	}
+
+	public int temporariesCount() {
+		if (temporaries != null)
+			return temporaries.size();
+		return 0;
+	}
+
+	public void blockReturnType(String blockReturnType) {
+//		System.out.println("blockReturnType: " + blockReturnType);
+		this.blockReturnType = blockReturnType;
+	}
+
+	public String blockReturnType() {
+		return blockReturnType;
+	}
+
+	public void outerTemporariesRegistry(Map<String, Integer> temporariesRegistry) {
+		outerTemporariesRegistry = temporariesRegistry;
+	}
+
+	public boolean isOuterTemporary(String name) {
+		return outerTemporariesRegistry != null && outerTemporariesRegistry.containsKey(name);
+	}
+
+	public int outerTemporary(String name) {
+		return outerTemporariesRegistry.get(name);
+	}
+
+	public void outerArgumentsRegistry(Map<String, Integer> argumentsRegistry) {
+		outerArgumentsRegistry = argumentsRegistry;
+	}
+
+	public boolean isOuterArgument(String name) {
+		return outerArgumentsRegistry != null && outerArgumentsRegistry.containsKey(name);
+	}
+
+	public int outerArgument(String name) {
+		return outerArgumentsRegistry.get(name);
 	}
 }

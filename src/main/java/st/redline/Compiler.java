@@ -7,12 +7,18 @@ import org.antlr.runtime.RecognitionException;
 
 import st.redline.compiler.*;
 
+import java.util.List;
+
 public class Compiler {
 
 	private final SourceFile sourceFile;
+	private final boolean verbose;
+	private boolean ignoreCompilerErrors;
 
-	public Compiler(SourceFile sourceFile) {
+	public Compiler(SourceFile sourceFile, boolean verbose, boolean ignoreCompilerErrors) {
 		this.sourceFile = sourceFile;
+		this.verbose = verbose;
+		this.ignoreCompilerErrors = ignoreCompilerErrors;
 	}
 
 	protected byte[] compile() {
@@ -32,14 +38,17 @@ public class Compiler {
 	}
 
 	private Analyser analyser() {
-		return new Analyser(sourceFile.shortName(), sourceFile.packageName());
+		return new Analyser(sourceFile.shortName(), sourceFile.packageName(), verbose);
 	}
 
 	private Program parse(String sourceCode) {
 		SmalltalkLexer smalltalkLexer = lexorOn(sourceCode);
 		SmalltalkParser smalltalkParser = parserUsing(smalltalkLexer);
 		try {
-			return smalltalkParser.program();
+			Program program = smalltalkParser.program();
+			if (!ignoreCompilerErrors && smalltalkParser.getNumberOfSyntaxErrors() > 0)
+				throw RedlineException.withMessage("Syntax error(s) detected");
+			return program;
 		} catch (RecognitionException e) {
 			throw RedlineException.withCause(e);
 		}

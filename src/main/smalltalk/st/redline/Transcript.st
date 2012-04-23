@@ -1,21 +1,15 @@
 " Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution "
 
-Object < #Transcript
+Object < #Transcript.
 
 + show: anObject
-	self stdout: anObject
+  self stdout: anObject.
 
 + cr
-	<fieldInsn: GETSTATIC, 'java/lang/System', 'out', 'Ljava/io/PrintStream;'>.
-	<methodInsn: INVOKEVIRTUAL, 'java/io/PrintStream', 'println', '()V'>.
-	<varInsn: ALOAD, 1>.
+    JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
+        invokeVirtual: 'java/io/PrintStream' method: 'println' returning: '()V'.
 
 + stdout: string
-	"load System.out"
-	<fieldInsn: GETSTATIC, 'java/lang/System', 'out', 'Ljava/io/PrintStream;'>.
-	"Load anObject onto stack. 0 = this method, 1 = receiver, 2 = class method was found in, 3 = first argument."
-	<varInsn: ALOAD, 3>.
-	"Invoke print on System.out"
-	<methodInsn: INVOKEVIRTUAL, 'java/io/PrintStream', 'print', '(Ljava/lang/Object;)V'>.
-	"Load receiver as Smalltalk methods always return a value."
-	<varInsn: ALOAD, 1>.
+    JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
+        arg: 0;
+        invokeVirtual: 'java/io/PrintStream' method: 'print' returning: '(Ljava/lang/Object;)V'.

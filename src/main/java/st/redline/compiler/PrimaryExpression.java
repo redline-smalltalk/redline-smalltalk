@@ -1,21 +1,26 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class PrimaryExpression extends BasePrimary {
+class PrimaryExpression extends Primary {
 
-	protected final Expression expression;
+	private final Expression expression;
 
-	public PrimaryExpression(Expression expression) {
+	PrimaryExpression(Expression expression) {
 		this.expression = expression;
-	}
-
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
 		expression.leaveResultOnStack();
-		expression.accept(visitor);
 	}
 
-	public boolean isBlockWithAnswerExpression() {
-		return false;
+	int line() {
+		return expression != null ? expression.line() : 0;
+	}
+
+    boolean isBlockWithAnswerExpression() {
+        return false;
+    }
+
+	public void accept(NodeVisitor nodeVisitor) {
+		nodeVisitor.visit(this, line());
+		if (expression != null)
+			expression.accept(nodeVisitor);
 	}
 }

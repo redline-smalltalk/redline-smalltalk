@@ -5,28 +5,37 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 
 public class Stic {
 
 	public static void main(String[] args) throws Exception {
-		invokeWith(args);
+		invokeWith(Stic.class, args);
 	}
 
-	public static ProtoObject invokeWith(String[] args) throws Exception {
+	// NOTE: The object returned by this method can be an eigenClass.
+	public static PrimObject invokeWith(Class aClass, String[] args) throws Exception {
 		CommandLine commandLine = createCommandLineWith(args);
 		if (commandLine.haveNoArguments()) {
 			commandLine.printHelp(new PrintWriter(System.out));
 			return null;
 		}
-		String inputFilename = (String) commandLine.arguments().get(0);
+		String inputFilename;
 		if (commandLine.executeNowRequested()) {
 			inputFilename = writeInputCodeToTemporaryFile(commandLine).getName();
 			inputFilename = inputFilename.substring(0, inputFilename.lastIndexOf("."));
+		} else {
+			inputFilename = (String) commandLine.arguments().get(0);
 		}
-		return new Stic(commandLine).invoke(inputFilename);
+		return instanceOfWith(aClass, commandLine).invoke(inputFilename);
 	}
 
-	private static File writeInputCodeToTemporaryFile(CommandLine commandLine) throws Exception {
+	private static Stic instanceOfWith(Class aClass, CommandLine commandLine) throws Exception {
+		Constructor constructor = aClass.getConstructor(CommandLine.class);
+		return (Stic) constructor.newInstance(commandLine);
+	}
+
+	static File writeInputCodeToTemporaryFile(CommandLine commandLine) throws Exception {
 		File input = File.createTempFile("Tmp" + commandLine.hashCode(), ".st", new File(commandLine.userPath()));
 		input.deleteOnExit();
 		BufferedWriter out = new BufferedWriter(new FileWriter(input));
@@ -49,31 +58,23 @@ public class Stic {
 		bootstrap();
 	}
 
-	private void bootstrap() throws ClassNotFoundException {
+	void bootstrap() throws ClassNotFoundException {
 		classLoader().bootstrap();
 	}
 
-	private void initializeClassLoader(CommandLine commandLine) {
+	void initializeClassLoader(CommandLine commandLine) {
 		Thread.currentThread().setContextClassLoader(createClassLoader(commandLine));
 	}
 
-	private ClassLoader createClassLoader(CommandLine commandLine) {
+	ClassLoader createClassLoader(CommandLine commandLine) {
 		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader(), commandLine);
 	}
 
-	private SmalltalkClassLoader classLoader() {
+	SmalltalkClassLoader classLoader() {
 		return SmalltalkClassLoader.instance();
 	}
 
-	public ProtoObject invoke(String className) throws Exception {
-		return createClassInstance(protoObjectInstance(), className);
-	}
-
-	private ProtoObject createClassInstance(ProtoObject root, String className) throws Exception {
-		return ProtoObject.resolveObject(root, className);
-	}
-
-	private ProtoObject protoObjectInstance() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-		return (ProtoObject) classLoader().loadClass("st.redline.ProtoObject").newInstance();
+	public PrimObject invoke(String className) throws Exception {
+		return (PrimObject) classLoader().loadClass(className).newInstance();
 	}
 }

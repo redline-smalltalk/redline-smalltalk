@@ -2,130 +2,81 @@
 package st.redline;
 
 import st.redline.bootstrap.*;
-import st.redline.bootstrap.InitializeMethod;
 
 import java.io.File;
+import java.util.Map;
 
 public class Bootstrapper {
 
-	private ProtoObject protoObject;
+	PrimObjectMetaclass primObjectMetaclass;
 
-	protected Bootstrapper(ProtoObject protoObject) {
-		this.protoObject = protoObject;
+	Bootstrapper(PrimObjectMetaclass primObjectMetaclass) {
+		this.primObjectMetaclass = primObjectMetaclass;
 	}
 
-	public void bootstrap() throws ClassNotFoundException {
+	public void bootstrap() {
 		markBootstrapping(true);
-		mapPackages();
-		registerRootClasses();
-		instantiateBootstrappedSingletons();
+		mapPackages(PrimObjectMetaclass.IMPORTS);
+		createAndRegisterProtoObject();
+		registerBootstrappedSingletons();
 		createClasses();
 		makeClassSuperclassOfObjectsClass();
 		makeClassDescriptionSuperclassOfMetaclassClass();
-		reclassBootstrappedSingletons();
 		markBootstrapping(false);
 		instantiateNonBootstrappedSingletons();
 	}
 
-	private void reclassBootstrappedSingletons() throws ClassNotFoundException {
-		ProtoObject.NIL.cls(Primitives.resolveObject(protoObject, "UndefinedObject"));
-	}
-
-	private void makeClassSuperclassOfObjectsClass() throws ClassNotFoundException {
-		ProtoObject cls = Primitives.resolveObject(protoObject, "Class");
-		ProtoObject object = Primitives.resolveObject(protoObject, "Object");
-		object.cls().superclass(cls);
-	}
-
-	private void makeClassDescriptionSuperclassOfMetaclassClass() throws ClassNotFoundException {
-		ProtoObject classDescription = Primitives.resolveObject(protoObject, "ClassDescription");
-		ProtoObject.METACLASS_INSTANCE.superclass0(classDescription);
-	}
-
-	private void tearDownProtoObject() {
-		protoObject.cls(null);
-	}
-
-	private void setupProtoObject() {
-		protoObject.cls(protoObject);
-		protoObject.methodAtPut("<", new ClassSubclassMethod());
-		protoObject.methodAtPut("instanceVariableNames:", new InstanceVariableNamesMethod());
-		protoObject.methodAtPut("classVariableNames:", new ClassVariableNamesMethod());
-		protoObject.methodAtPut("classInstanceVariableNames:", new ClassInstanceVariableNamesMethod());
-		protoObject.methodAtPut("poolDictionaries:", new PoolDictionariesMethod());
-		protoObject.methodAtPut("category:", new CategoryMethod());
-		protoObject.methodAtPut("import:", new ImportMethod());
-		protoObject.methodAtPut("initialize", new InitializeMethod());
-		protoObject.methodAtPut("subclass:instanceVariableNames:classVariableNames:poolDictionaries:", new ClassSubclassWithVariablesMethod());
-	}
-
-	private void markBootstrapping(boolean bootstrapping) {
-		Primitives.bootstrapping = bootstrapping;
-	}
-
-	private void loadUsing(String name, SmalltalkClassLoader smalltalk) {
-		try {
-			smalltalk.findClass(name).newInstance();
-		} catch (Exception e) {
-			markBootstrapping(false);
-			throw RedlineException.withCauseAndMessage(String.format("Unable to load class %s", name), e);
-		}
-	}
-
-	private void instantiateBootstrappedSingletons() {
-		ProtoObject.METACLASS_INSTANCE = createMetaclassInstance();
-		Primitives.registerAs(ProtoObject.METACLASS_INSTANCE, "st.redline.MetaClass");
-		ProtoObject.NIL = createUndefinedObjectInstance();
-	}
-
-	private void instantiateNonBootstrappedSingletons() throws ClassNotFoundException {
-		ProtoObject trueClass = Primitives.resolveObject(protoObject, "st.redline.True");
-		ProtoObject.TRUE = Primitives.send(trueClass, "new", null);
-		ProtoObject falseClass = Primitives.resolveObject(protoObject, "st.redline.False");
-		ProtoObject.FALSE = Primitives.send(falseClass, "new", null);
-	}
-
-	private ProtoObject createMetaclassInstance() {
-		ProtoObject classClass = new ProtoObject();
-		classClass.name("Metaclass-classclass");
-		ProtoObject cls = new ProtoObject(classClass);
-		cls.name("Metaclass");
-		return cls;
-	}
-
-	private ProtoObject createUndefinedObjectInstance() {
-		ProtoObject classClass = new ProtoObject();
-		ProtoObject cls = new ProtoObject(classClass);
-		cls.name("UndefinedObject");
-		return new ProtoObject(cls);
-	}
-
 	private void createClasses() {
-		SmalltalkClassLoader smalltalk = currentClassLoader();
-		setupProtoObject();
-		loadUsing("st.redline.Object", smalltalk);
-		tearDownProtoObject();
-		loadUsing("st.redline.UndefinedObject", smalltalk);
-		loadUsing("st.redline.Symbol", smalltalk);
-		loadUsing("st.redline.Class", smalltalk);
-		loadUsing("st.redline.True", smalltalk);
-		loadUsing("st.redline.False", smalltalk);
+		primObjectMetaclass.resolveObject("st.redline.Symbol");
 	}
 
-	private SmalltalkClassLoader currentClassLoader() {
-		return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+	void makeClassDescriptionSuperclassOfMetaclassClass() {
+		primObjectMetaclass.superclass(primObjectMetaclass.resolveObject("st.redline.ClassDescription"));
 	}
 
-	private void registerRootClasses() {
-		Primitives.registerAs(protoObject, "st.redline.ProtoObject");
+	void makeClassSuperclassOfObjectsClass() {
+		PrimObjectClass objectClass = (PrimObjectClass) primObjectMetaclass.resolveObject("st.redline.Object").cls();
+		objectClass.superclass(primObjectMetaclass.resolveObject("st.redline.Class"));
 	}
 
-	private void mapPackages() {
-		ProtoObject.packageMap.put("ProtoObject", "st.redline.ProtoObject");
+	void instantiateNonBootstrappedSingletons() {
+		PrimObject.NIL.cls(primObjectMetaclass.resolveObject("st.redline.UndefinedObject"));
+		PrimObject.TRUE = primObjectMetaclass.resolveObject("st.redline.True").perform("new");
+		PrimObject.FALSE = primObjectMetaclass.resolveObject("st.redline.False").perform("new");
+	}
+
+	void registerBootstrappedSingletons() {
+		PrimObject.CLASSES.put("st.redline.Metaclass", primObjectMetaclass);
+		primObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
+		primObjectMetaclass.methods().put("instanceVariableNames:", new InstanceVariableNamesMethod());
+		primObjectMetaclass.methods().put("import:", new ImportMethod());
+		PrimObjectMetaclass undefinedObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
+		PrimObjectMetaclass undefinedObjectClass = undefinedObjectMetaClass.basicCreate("UndefinedObject", PrimObject.PRIM_NIL, "", "", "", "");
+		PrimObject.NIL = new PrimObject();
+		PrimObject.NIL.cls(undefinedObjectClass);
+	}
+
+	void markBootstrapping(boolean bootstrapping) {
+		PrimObject.BOOTSTRAPPING = bootstrapping;
+	}
+
+	void createAndRegisterProtoObject() {
+		PrimObjectMetaclass protoObjectMetaclass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
+		protoObjectMetaclass.methods().put("<", new CreateSubclassMethod());
+		protoObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
+		protoObjectMetaclass.methods().put("class", new AccessClassMethod());
+		protoObjectMetaclass.methods().put("initialize", new InitializeMethod());
+		PrimObjectMetaclass protoObjectClass = protoObjectMetaclass.basicCreate("ProtoObject", PrimObject.PRIM_NIL, "", "", "", "");
+		protoObjectClass.methods().put("initialize", new InitializeMethod());
+		PrimObject.CLASSES.put("st.redline.ProtoObject", protoObjectClass);
+	}
+
+	void mapPackages(Map<String, String> imports) {
+		imports.put("ProtoObject", "st.redline.ProtoObject");
 		for (String sourceFile : SourceFileFinder.findIn("st" + File.separator + "redline")) {
 			String packageName = ClassPathUtilities.filenameWithExtensionToPackageName(sourceFile);
 			String name = ClassPathUtilities.filenameToClassName(sourceFile);
-			ProtoObject.packageMap.put(name, packageName + "." + name);
+			imports.put(name, packageName + "." + name);
 		}
 	}
 }

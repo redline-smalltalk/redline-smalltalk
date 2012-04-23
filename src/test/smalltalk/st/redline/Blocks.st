@@ -1,6 +1,8 @@
+" Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution "
+
 | tmp |
 tmp := 'Hello World'.
-[Transcript show: tmp; cr; cr.] value.
+[ Transcript show: tmp; cr; cr. ] value.
 
 Transcript cr; show: 'whileTrue block, looping 10 times until tmp <= 10'; cr.
 tmp := 0.

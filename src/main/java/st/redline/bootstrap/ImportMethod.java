@@ -6,18 +6,19 @@ import st.redline.*;
 import java.io.File;
 import java.util.List;
 
-public class ImportMethod extends ProtoMethod {
+public class ImportMethod extends PrimObject {
 
-	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject argument) {
-//		System.out.println("import into " + receiver + " of " + argument.javaValue());
+    public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
+//		System.out.println("import into " + receiver + " of " + primContext.argumentAt(0).javaValue());
+        PrimObjectMetaclass metaclass = (PrimObjectMetaclass) receiver;
 		SmalltalkClassLoader smalltalkClassLoader = smalltalkClassLoader();
-		for (SourceFile sourceFile : findSources(smalltalkClassLoader, argument.javaValue()))
-			addAssociationBetweenObjectAndPackage(receiver, sourceFile.shortName(), sourceFile.packageName());
+		for (SourceFile sourceFile : findSources(smalltalkClassLoader, primContext.argumentAt(0).javaValue()))
+			addAssociationBetweenObjectAndPackage(metaclass, sourceFile.shortName(), sourceFile.packageName());
 		return receiver;
 	}
 
-	private void addAssociationBetweenObjectAndPackage(ProtoObject receiver, String className, String packageName) {
-		Primitives.packageAtPut(receiver, className, makeFullyQualifiedPath(packageName, className));
+	private void addAssociationBetweenObjectAndPackage(PrimObjectMetaclass metaclass, String className, String packageName) {
+		metaclass.packageAtPut(className, makeFullyQualifiedPath(packageName, className));
 	}
 
 	public static String makeFullyQualifiedPath(String packageName, String className) {
@@ -28,7 +29,7 @@ public class ImportMethod extends ProtoMethod {
 		return smalltalkClassLoader.findSources(String.valueOf(importPaths));
 	}
 
-	private SmalltalkClassLoader smalltalkClassLoader() {
-		return SmalltalkClassLoader.instance();
-	}
+//	private SmalltalkClassLoader smalltalkClassLoader() {
+//		return SmalltalkClassLoader.instance();
+//	}
 }

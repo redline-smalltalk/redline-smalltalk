@@ -1,17 +1,31 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class Primitive implements VisitableNode {
+class Primitive extends Primary {
 
-	private final String value;
+	private final String keyword;
 	private final int line;
+	private final String digits;
 
-	public Primitive(String value, int line) {
-		this.value = value;
+	Primitive(String keyword, int line, String digits) {
+		this.keyword = keyword;
 		this.line = line;
+		this.digits = digits;
+	}
+
+	int line() {
+		return line;
+	}
+
+	String value() {
+		return keyword;
+	}
+
+	String digits() {
+		return digits;
 	}
 
 	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this, value, line);
+		nodeVisitor.visit(this, keyword, line, digits);
 	}
 }
