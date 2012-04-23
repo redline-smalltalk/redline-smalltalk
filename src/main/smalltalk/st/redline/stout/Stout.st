@@ -3,7 +3,6 @@
 Object < #Stout.
 
 - initialize
-    Transcript show: 'stout initialize'; cr.
     super initialize.
     "create router registry."
     JVM aload: 1;
@@ -19,7 +18,6 @@ Object < #Stout.
         invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' returning: '(Ljava/lang/Object;)Lst/redline/PrimObject;'.
 
 - handle: action on: target with: request and: response and: dispatch
-    Transcript show: 'stout handle'; cr.
     "handle http request type 'action' on 'target' uri."
     JVM aload: 1;
         invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' returning: '()Ljava/lang/Object;';
@@ -33,7 +31,6 @@ Object < #Stout.
         aload: 1.
 
 - get: target do: aBlock
-    Transcript show: 'stout get'; cr.
     "register aBlock to be executed when a HTTP GET of target is received."
     JVM aload: 1;
         invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' returning: '()Ljava/lang/Object;';
