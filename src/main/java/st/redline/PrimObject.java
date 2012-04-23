@@ -138,6 +138,10 @@ public class PrimObject {
 		return instanceOf("Integer").with(new BigDecimal((String) javaValue));
 	}
 
+	public static PrimObject number(BigDecimal javaValue) {
+		return instanceOf("Integer").with(javaValue);
+	}
+
 	public static PrimObject character(Object javaValue) {
 		return instanceOf("Character").with(javaValue);
 	}
@@ -223,6 +227,36 @@ public class PrimObject {
 		return receiver;
 	}
 
+	public PrimObject p9(PrimObject receiver, PrimContext context) {
+		BigDecimal result = ((BigDecimal) receiver.javaValue()).multiply((BigDecimal) context.argumentAt(0).javaValue());
+		return number(result);
+	}
+
+	public PrimObject p10(PrimObject receiver, PrimContext context) {
+		BigDecimal result = ((BigDecimal) receiver.javaValue()).divide((BigDecimal) context.argumentAt(0).javaValue());
+		return number(result);
+	}
+
+	public PrimObject p21(PrimObject receiver, PrimContext context) {
+		BigDecimal result = ((BigDecimal) receiver.javaValue()).add((BigDecimal) context.argumentAt(0).javaValue());
+		return number(result);
+	}
+
+	public PrimObject p22(PrimObject receiver, PrimContext context) {
+		BigDecimal result = ((BigDecimal) receiver.javaValue()).subtract((BigDecimal) context.argumentAt(0).javaValue());
+		return number(result);
+	}
+
+	public PrimObject p23(PrimObject receiver, PrimContext context) {
+		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) context.argumentAt(0).javaValue());
+		return result < 0 ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
+	public PrimObject p24(PrimObject receiver, PrimContext context) {
+		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) context.argumentAt(0).javaValue());
+		return result > 0 ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
 	public PrimObject p25(PrimObject receiver, PrimContext context) {
 		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) context.argumentAt(0).javaValue());
 		return result <= 0 ? PrimObject.TRUE : PrimObject.FALSE;
@@ -231,6 +265,26 @@ public class PrimObject {
 	public PrimObject p26(PrimObject receiver, PrimContext context) {
 		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) context.argumentAt(0).javaValue());
 		return result >= 0 ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
+	public PrimObject p27(PrimObject receiver, PrimContext context) {
+		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) context.argumentAt(0).javaValue());
+		return result == 0 ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
+	public PrimObject p28(PrimObject receiver, PrimContext context) {
+		int result = ((BigDecimal) receiver.javaValue()).compareTo((BigDecimal) context.argumentAt(0).javaValue());
+		return result != 0 ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
+	public PrimObject p29(PrimObject receiver, PrimContext context) {
+		BigDecimal result = ((BigDecimal) receiver.javaValue()).multiply((BigDecimal) context.argumentAt(0).javaValue());
+		return number(result);
+	}
+
+	public PrimObject p30(PrimObject receiver, PrimContext context) {
+		BigDecimal result = ((BigDecimal) receiver.javaValue()).divide((BigDecimal) context.argumentAt(0).javaValue());
+		return number(result);
 	}
 
 	public PrimObject p60(PrimObject receiver, PrimContext context) {
@@ -265,7 +319,13 @@ public class PrimObject {
 		return receiver.invoke(receiver, context);
 	}
 
+	public PrimObject p110(PrimObject receiver, PrimContext context) {
+		// ==
+		return receiver.equals(context.argumentAt(0)) ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
 	public PrimObject p111(PrimObject receiver, PrimContext context) {
+		// class
 		return receiver.cls();
 	}
 
@@ -424,6 +484,10 @@ public class PrimObject {
 		return receiverResult;
 	}
 
+	public PrimObject p216(PrimObject receiver, PrimContext context) {
+		throw RedlineException.withMessage(context.argumentAt(0).javaValue().toString());
+	}
+
 	public PrimObject p217(PrimObject receiver, PrimContext context) {
 		// create a new Character with value anArg.
 		return character(Character.valueOf((char) context.intArgumentAt(0)));
@@ -464,6 +528,22 @@ public class PrimObject {
 		PrimObject anObject = context.argumentAt(1);
 		((ArrayList<PrimObject>) receiver.javaValue()).set(offset, anObject);
 		return anObject;
+	}
+
+	public PrimObject p225(PrimObject receiver, PrimContext context) {
+		// canUnderstand:
+		String selector = (String) context.argumentAt(0).javaValue();
+		PrimObject aClass = receiver;
+		boolean included = false;
+		while (aClass.cls() != null && (included = aClass.includesSelector(selector)) == false)
+			aClass = aClass.superclass();
+		return included ? PrimObject.TRUE : PrimObject.FALSE;
+	}
+
+	public PrimObject p226(PrimObject receiver, PrimContext context) {
+		// includesSelector:
+		String selector = (String) context.argumentAt(0).javaValue();
+		return receiver.includesSelector(selector) ? PrimObject.TRUE : PrimObject.FALSE;
 	}
 
 	PrimObject resolveObject(String name) {

@@ -8,6 +8,11 @@ ProtoObject < #Object.
 - initialize
     "Subclasses should redefine this method to perform initializations on instance creation"
 
+"evaluating"
+
+- value
+    ^ self.
+
 "comparing"
 
 - == anObject 

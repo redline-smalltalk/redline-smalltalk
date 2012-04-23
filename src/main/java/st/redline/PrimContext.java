@@ -31,8 +31,8 @@ public class PrimContext {
 	}
 
 	public static void temporaryPutAtInFrom(PrimObject object, int index, PrimContext context, PrimObject receiver) {
-		System.out.println("temporaryPutAtInFrom: " + index + " " + receiver);
-		throw new IllegalStateException("HERE");
+//		System.out.println("temporaryPutAtInFrom: " + index + " " + receiver);
+		((PrimObjectBlock) receiver).outerContext().temporaryAtPut(index, object);
 	}
 
 	public void temporaryAtPut(int index, PrimObject object) {

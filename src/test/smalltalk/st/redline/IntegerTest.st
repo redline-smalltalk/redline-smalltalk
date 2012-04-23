@@ -21,7 +21,7 @@ TestCase < #IntegerTest.
     self testIsInteger.
 
 - testSimpleEquality
-    self assert: 1 equals: 1withMessage: '1 is not 1.'
+    self assert: 1 equals: 1 withMessage: '1 is not 1.'
 
 - testSimpleAddition
     self assert: 1 + 1 equals: 2 withMessage: '1 and 1 do not make 2.'

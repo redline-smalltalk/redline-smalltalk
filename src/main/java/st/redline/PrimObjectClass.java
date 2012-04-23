@@ -26,11 +26,11 @@ public class PrimObjectClass extends PrimObject {
 		super(basicSize + DEFAULT_ATTRIBUTE_COUNT);
 		javaValue = new HashMap<String, PrimObject>();
         variableIndexes = new HashMap<String, Integer>();
-        nextVariableIndex = basicSize + DEFAULT_ATTRIBUTE_COUNT + 1;
+        nextVariableIndex = basicSize + DEFAULT_ATTRIBUTE_COUNT;
 	}
 
 	public void addVariableNamed(String name) {
-//		System.out.println("addVariableNamed() " + name + " @ " + (nextVariableIndex + 1));
+//		System.out.println("addVariableNamed() " + name + " @ " + nextVariableIndex);
 		if (hasVariableNamed(name))
 			throw new IllegalStateException("Variable '" + name + "' already defined.");
 		variableIndexes().put(name, nextVariableIndex);

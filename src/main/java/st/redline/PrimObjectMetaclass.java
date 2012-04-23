@@ -78,7 +78,7 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 			throw new IllegalStateException("Class variable '" + name + "' already defined.");
 		((PrimObjectClass) cls()).variableIndexes().put(name, nextVariableIndex);
         expandAttributes();
-        nextVariableIndex++;
+		nextVariableIndex++;
     }
 
     void expandAttributes() {
