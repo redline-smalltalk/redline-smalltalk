@@ -6,4 +6,4 @@ Stout < #Web.
 
 - initialize
     super initialize.
-    self get: '/' do: [ 'Hello World from Smalltalk Web' ].
+    self whenGet: '/' do: [ 'Hello World from Smalltalk Web' ].

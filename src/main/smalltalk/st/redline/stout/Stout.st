@@ -30,14 +30,22 @@ Object < #Stout.
         invokeInterface: 'st/redline/stout/Router' method: 'dispatchToBlock' matching: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)V';
         aload: 1.
 
-- get: target do: aBlock
-    "register aBlock to be executed when a HTTP GET of target is received."
+- whenGet: target do: aBlock
+    "register aBlock to be executed when a HTTP GET on 'target' accepting JSON is received."
+    self when: #GET of: target accepting: #JSON do: aBlock.
+
+- whenPost: target do: aBlock
+    "register aBlock to be executed when a HTTP POST on 'target' accepting JSON is received."
+    self when: #POST of: target accepting: #JSON do: aBlock.
+
+- when: method of: target accepting: type do: aBlock
+    "register aBlock to be executed when a HTTP 'method' on 'target' accepting 'type' is received."
     JVM aload: 1;
         invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' matching: '()Ljava/lang/Object;';
         checkcast: 'st/redline/stout/RouterRegistry';
-        arg: 0;
+        arg: 1;
         ldc: 'JSON';
         ldc: 'GET';
-        arg: 1;
+        arg: 3;
         invokeInterface: 'st/redline/stout/RouterRegistry' method: 'register' matching: '(Lst/redline/PrimObject;Ljava/lang/String;Ljava/lang/String;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
         aload: 1.
