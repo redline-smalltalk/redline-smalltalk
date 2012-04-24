@@ -7,9 +7,9 @@ Object < #Transcript.
 
 + cr
     JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
-        invokeVirtual: 'java/io/PrintStream' method: 'println' returning: '()V'.
+        invokeVirtual: 'java/io/PrintStream' method: 'println' matching: '()V'.
 
 + stdout: string
     JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
         arg: 0;
-        invokeVirtual: 'java/io/PrintStream' method: 'print' returning: '(Ljava/lang/Object;)V'.
+        invokeVirtual: 'java/io/PrintStream' method: 'print' matching: '(Ljava/lang/Object;)V'.

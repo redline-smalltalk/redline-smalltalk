@@ -3,31 +3,31 @@ package st.redline;
 
 public class RedlineException extends RuntimeException {
 
-	public static RedlineException withCauseAndMessage(String message, Exception exception) {
-		if (exception instanceof RedlineException)
-			return (RedlineException) exception;
-		return new RedlineException(message, exception);
-	}
-	
-	public static RedlineException withCause(Exception exception) {
-		if (exception instanceof RedlineException)
-			return (RedlineException) exception;
-		return new RedlineException(exception);
-	}
+    public static RedlineException withCauseAndMessage(String message, Exception exception) {
+        if (exception instanceof RedlineException)
+            return (RedlineException) exception;
+        return new RedlineException(message, exception);
+    }
 
-	public static RedlineException withMessage(String message) {
-		return new RedlineException(message);
-	}
+    public static RedlineException withCause(Exception exception) {
+        if (exception instanceof RedlineException)
+            return (RedlineException) exception;
+        return new RedlineException(exception);
+    }
 
-	public RedlineException(Exception exception) {
-		super(exception);
-	}
+    public static RedlineException withMessage(String message) {
+        return new RedlineException(message);
+    }
 
-	public RedlineException(String message) {
-		super(message);
-	}
+    public RedlineException(Exception exception) {
+        super(exception);
+    }
 
-	private RedlineException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public RedlineException(String message) {
+        super(message);
+    }
+
+    private RedlineException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

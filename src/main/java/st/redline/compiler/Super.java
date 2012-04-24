@@ -2,7 +2,7 @@
 package st.redline.compiler;
 
 public class Super implements ReservedWord {
-	public void accept(NodeVisitor nodeVisitor, int line) {
-		nodeVisitor.visit(this, line);
-	}
+    public void accept(NodeVisitor nodeVisitor, int line) {
+        nodeVisitor.visit(this, line);
+    }
 }

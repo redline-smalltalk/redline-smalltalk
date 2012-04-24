@@ -2,5 +2,5 @@
 package st.redline.compiler;
 
 interface VisitableNode {
-	void accept(NodeVisitor nodeVisitor);
+    void accept(NodeVisitor nodeVisitor);
 }

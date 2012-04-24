@@ -6,15 +6,14 @@ import st.redline.PrimObjectClass;
 
 public class InstanceVariableNamesMethod extends PrimObject {
 
-	public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
-//		System.out.println("instanceVariableNames: " + names(primContext));
-		PrimObjectClass aClass = (PrimObjectClass) receiver;
-		for (String name : names(primContext).split(" "))
-			aClass.addVariableNamed(name);
-		return receiver;
-	}
+    public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
+        PrimObjectClass aClass = (PrimObjectClass) receiver;
+        for (String name : names(primContext).split(" "))
+            aClass.addVariableNamed(name);
+        return receiver;
+    }
 
-	String names(PrimContext primContext) {
-		return (String) primContext.argumentAt(0).javaValue();
-	}
+    String names(PrimContext primContext) {
+        return (String) primContext.argumentAt(0).javaValue();
+    }
 }

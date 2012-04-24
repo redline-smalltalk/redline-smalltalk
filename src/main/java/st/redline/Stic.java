@@ -9,72 +9,72 @@ import java.lang.reflect.Constructor;
 
 public class Stic {
 
-	public static void main(String[] args) throws Exception {
-		invokeWith(Stic.class, args);
-	}
+    public static void main(String[] args) throws Exception {
+        invokeWith(Stic.class, args);
+    }
 
-	// NOTE: The object returned by this method can be an eigenClass.
-	public static PrimObject invokeWith(Class aClass, String[] args) throws Exception {
-		CommandLine commandLine = createCommandLineWith(args);
-		if (commandLine.haveNoArguments()) {
-			commandLine.printHelp(new PrintWriter(System.out));
-			return null;
-		}
-		String inputFilename;
-		if (commandLine.executeNowRequested()) {
-			inputFilename = writeInputCodeToTemporaryFile(commandLine).getName();
-			inputFilename = inputFilename.substring(0, inputFilename.lastIndexOf("."));
-		} else {
-			inputFilename = (String) commandLine.arguments().get(0);
-		}
-		return instanceOfWith(aClass, commandLine).invoke(inputFilename);
-	}
+    // NOTE: The object returned by this method can be an eigenClass.
+    public static PrimObject invokeWith(Class aClass, String[] args) throws Exception {
+        CommandLine commandLine = createCommandLineWith(args);
+        if (commandLine.haveNoArguments()) {
+            commandLine.printHelp(new PrintWriter(System.out));
+            return null;
+        }
+        String inputFilename;
+        if (commandLine.executeNowRequested()) {
+            inputFilename = writeInputCodeToTemporaryFile(commandLine).getName();
+            inputFilename = inputFilename.substring(0, inputFilename.lastIndexOf("."));
+        } else {
+            inputFilename = (String) commandLine.arguments().get(0);
+        }
+        return instanceOfWith(aClass, commandLine).invoke(inputFilename);
+    }
 
-	private static Stic instanceOfWith(Class aClass, CommandLine commandLine) throws Exception {
-		Constructor constructor = aClass.getConstructor(CommandLine.class);
-		return (Stic) constructor.newInstance(commandLine);
-	}
+    private static Stic instanceOfWith(Class aClass, CommandLine commandLine) throws Exception {
+        Constructor constructor = aClass.getConstructor(CommandLine.class);
+        return (Stic) constructor.newInstance(commandLine);
+    }
 
-	static File writeInputCodeToTemporaryFile(CommandLine commandLine) throws Exception {
-		File input = File.createTempFile("Tmp" + commandLine.hashCode(), ".st", new File(commandLine.userPath()));
-		input.deleteOnExit();
-		BufferedWriter out = new BufferedWriter(new FileWriter(input));
-		try {
-			out.write(commandLine.input());
-			out.write("\n\n");
-			out.flush();
-		} finally {
-			out.close();
-		}
-		return input;
-	}
+    static File writeInputCodeToTemporaryFile(CommandLine commandLine) throws Exception {
+        File input = File.createTempFile("Tmp" + commandLine.hashCode(), ".st", new File(commandLine.userPath()));
+        input.deleteOnExit();
+        BufferedWriter out = new BufferedWriter(new FileWriter(input));
+        try {
+            out.write(commandLine.input());
+            out.write("\n\n");
+            out.flush();
+        } finally {
+            out.close();
+        }
+        return input;
+    }
 
-	public static CommandLine createCommandLineWith(String[] args) {
-		return new CommandLine(args);
-	}
+    public static CommandLine createCommandLineWith(String[] args) {
+        return new CommandLine(args);
+    }
 
-	public Stic(CommandLine commandLine) throws ClassNotFoundException {
-		initializeClassLoader(commandLine);
-		bootstrap();
-	}
+    public Stic(CommandLine commandLine) throws ClassNotFoundException {
+        initializeClassLoader(commandLine);
+        bootstrap();
+    }
 
-	void bootstrap() throws ClassNotFoundException {
-		classLoader().bootstrap();
-	}
+    void bootstrap() throws ClassNotFoundException {
+        classLoader().bootstrap();
+    }
 
-	void initializeClassLoader(CommandLine commandLine) {
-		Thread.currentThread().setContextClassLoader(createClassLoader(commandLine));
-	}
+    void initializeClassLoader(CommandLine commandLine) {
+        Thread.currentThread().setContextClassLoader(createClassLoader(commandLine));
+    }
 
-	ClassLoader createClassLoader(CommandLine commandLine) {
-		return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader(), commandLine);
-	}
+    ClassLoader createClassLoader(CommandLine commandLine) {
+        return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader(), commandLine);
+    }
 
-	SmalltalkClassLoader classLoader() {
-		return SmalltalkClassLoader.instance();
-	}
+    SmalltalkClassLoader classLoader() {
+        return SmalltalkClassLoader.instance();
+    }
 
-	public PrimObject invoke(String className) throws Exception {
-		return (PrimObject) classLoader().loadClass(className).newInstance();
-	}
+    public PrimObject invoke(String className) throws Exception {
+        return (PrimObject) classLoader().loadClass(className).newInstance();
+    }
 }

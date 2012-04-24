@@ -3,4 +3,4 @@
 
 JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
     ldc: 'hello Smalltalk JVM bytecode manipulation!';
-    invokeVirtual: 'java/io/PrintStream' method: 'println' returning: '(Ljava/lang/String;)V'.
+    invokeVirtual: 'java/io/PrintStream' method: 'println' matching: '(Ljava/lang/String;)V'.

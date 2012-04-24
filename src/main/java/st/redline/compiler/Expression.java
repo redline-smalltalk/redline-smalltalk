@@ -2,8 +2,8 @@
 package st.redline.compiler;
 
 interface Expression extends VisitableNode {
-	int line();
-	void leaveResultOnStack();
-	void duplicateResultOnStack();
+    int line();
+    void leaveResultOnStack();
+    void duplicateResultOnStack();
     boolean isAnswerExpression();
 }

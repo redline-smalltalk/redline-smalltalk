@@ -5,59 +5,59 @@ import java.util.ArrayList;
 
 class Array extends Primary implements ArrayElement {
 
-	private final ArrayList<ArrayElement> elements;
-	private int index;
-	private int elementIndex = 0;
-	private boolean insideArray = false;
+    private final ArrayList<ArrayElement> elements;
+    private int index;
+    private int elementIndex = 0;
+    private boolean insideArray = false;
 
-	Array() {
-		elements = new ArrayList<ArrayElement>();
-	}
+    Array() {
+        elements = new ArrayList<ArrayElement>();
+    }
 
-	void add(ArrayElement arrayElement) {
-		if (arrayElement != null) {
-			arrayElement.insideArray();
-			arrayElement.index(++elementIndex);
-			elements.add(arrayElement);
-		}
-	}
+    void add(ArrayElement arrayElement) {
+        if (arrayElement != null) {
+            arrayElement.insideArray();
+            arrayElement.index(++elementIndex);
+            elements.add(arrayElement);
+        }
+    }
 
-	int size() {
-		return elements.size();
-	}
+    int size() {
+        return elements.size();
+    }
 
-	ArrayElement get(int index) {
-		return elements.get(index);
-	}
+    ArrayElement get(int index) {
+        return elements.get(index);
+    }
 
-	public int index() {
-		return index;
-	}
+    public int index() {
+        return index;
+    }
 
-	public void insideArray() {
-		insideArray = true;
-	}
+    public void insideArray() {
+        insideArray = true;
+    }
 
-	public boolean isInsideArray() {
-		return insideArray;
-	}
+    public boolean isInsideArray() {
+        return insideArray;
+    }
 
-	public void index(int index) {
-		this.index = index;
-	}
+    public void index(int index) {
+        this.index = index;
+    }
 
-	public String value() {
-		return "<array>";
-	}
+    public String value() {
+        return "<array>";
+    }
 
-	public int line() {
-		return elements.get(0).line();
-	}
+    public int line() {
+        return elements.get(0).line();
+    }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visitBegin(this);
-		for (ArrayElement arrayElement : elements)
-			arrayElement.accept(nodeVisitor);
-		nodeVisitor.visitEnd(this);
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visitBegin(this);
+        for (ArrayElement arrayElement : elements)
+            arrayElement.accept(nodeVisitor);
+        nodeVisitor.visitEnd(this);
+    }
 }

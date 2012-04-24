@@ -6,66 +6,66 @@ import java.util.List;
 
 public class SimpleExpression implements Expression {
 
-	public static Cascade cascade = new Cascade();
+    public static Cascade cascade = new Cascade();
 
-	private Primary primary;
-	private MessageExpression messageExpression;
-	private List<MessageElement> messageElements;
-	private boolean resultLeftOnStack;
-	private boolean duplicateResultOnStack;
+    private Primary primary;
+    private MessageExpression messageExpression;
+    private List<MessageElement> messageElements;
+    private boolean resultLeftOnStack;
+    private boolean duplicateResultOnStack;
     private Object l0;
     private Object l1;
     private Object l2;
 
-	SimpleExpression() {
-		messageElements = new ArrayList<MessageElement>();
-		resultLeftOnStack = false;
-		duplicateResultOnStack = false;
-	}
+    SimpleExpression() {
+        messageElements = new ArrayList<MessageElement>();
+        resultLeftOnStack = false;
+        duplicateResultOnStack = false;
+    }
 
-	boolean isResultLeftOnStack() {
-		return resultLeftOnStack;
-	}
+    boolean isResultLeftOnStack() {
+        return resultLeftOnStack;
+    }
 
-	public void leaveResultOnStack() {
-		resultLeftOnStack = true;
-	}
+    public void leaveResultOnStack() {
+        resultLeftOnStack = true;
+    }
 
-	boolean isResultDuplicatedOnStack() {
-		return duplicateResultOnStack;
-	}
+    boolean isResultDuplicatedOnStack() {
+        return duplicateResultOnStack;
+    }
 
-	public void duplicateResultOnStack() {
-		duplicateResultOnStack = true;
-	}
+    public void duplicateResultOnStack() {
+        duplicateResultOnStack = true;
+    }
 
-	void add(Primary primary) {
-		this.primary = primary;
-	}
+    void add(Primary primary) {
+        this.primary = primary;
+    }
 
-	void add(MessageExpression messageExpression) {
-		this.messageExpression = messageExpression;
-	}
+    void add(MessageExpression messageExpression) {
+        this.messageExpression = messageExpression;
+    }
 
-	void add(MessageElement messageElement) {
-		this.messageElements.add(messageElement);
-	}
+    void add(MessageElement messageElement) {
+        this.messageElements.add(messageElement);
+    }
 
-	Primary primary() {
-		return primary;
-	}
+    Primary primary() {
+        return primary;
+    }
 
-	MessageExpression messageExpression() {
-		return messageExpression;
-	}
+    MessageExpression messageExpression() {
+        return messageExpression;
+    }
 
-	List<MessageElement> messageElements() {
-		return messageElements;
-	}
+    List<MessageElement> messageElements() {
+        return messageElements;
+    }
 
-	public int line() {
-		return primary.line();
-	}
+    public int line() {
+        return primary.line();
+    }
 
     public boolean isAnswerExpression() {
         return false;
@@ -108,21 +108,21 @@ public class SimpleExpression implements Expression {
         this.l2 = l2;
     }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visitBegin(this);
-		if (primary != null)
-			primary.accept(nodeVisitor);
-		if (messageExpression != null)
-			messageExpression.accept(nodeVisitor);
-		// We duplicate the stack top for cascaded expressions and don't always pop them off.
-		// This is ok, JVM balances the stack (checked with ASM folks).
-		int countOfMessageElements = messageElements.size();
-		for (int index = 0; index < countOfMessageElements; index++) {
-			cascade.begin(nodeVisitor);
-			messageElements.get(index).accept(nodeVisitor);
-			if (index + 1 < countOfMessageElements)
-				cascade.end(nodeVisitor);
-		}
-		nodeVisitor.visitEnd(this);
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visitBegin(this);
+        if (primary != null)
+            primary.accept(nodeVisitor);
+        if (messageExpression != null)
+            messageExpression.accept(nodeVisitor);
+        // We duplicate the stack top for cascaded expressions and don't always pop them off.
+        // This is ok, JVM balances the stack (checked with ASM folks).
+        int countOfMessageElements = messageElements.size();
+        for (int index = 0; index < countOfMessageElements; index++) {
+            cascade.begin(nodeVisitor);
+            messageElements.get(index).accept(nodeVisitor);
+            if (index + 1 < countOfMessageElements)
+                cascade.end(nodeVisitor);
+        }
+        nodeVisitor.visitEnd(this);
+    }
 }

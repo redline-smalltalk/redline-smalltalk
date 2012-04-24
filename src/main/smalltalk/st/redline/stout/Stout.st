@@ -3,7 +3,6 @@
 Object < #Stout.
 
 - initialize
-    Transcript show: 'stout initialize'; cr.
     super initialize.
     "create router registry."
     JVM aload: 1;
@@ -13,34 +12,32 @@ Object < #Stout.
         dup;
         new: 'st/redline/stout/RequestPathSpecificationFactoryImpl';
         dup;
-        invokeSpecial: 'st/redline/stout/RequestPathSpecificationFactoryImpl' method: '<init>' returning: '()V';
-        invokeSpecial: 'st/redline/stout/RouterFactoryImpl' method: '<init>' returning: '(Lst/redline/stout/RequestPathSpecificationFactory;)V';
-        invokeSpecial: 'st/redline/stout/RouterRegistryImpl' method: '<init>' returning: '(Lst/redline/stout/RouterFactory;)V';
-        invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' returning: '(Ljava/lang/Object;)Lst/redline/PrimObject;'.
+        invokeSpecial: 'st/redline/stout/RequestPathSpecificationFactoryImpl' method: '<init>' matching: '()V';
+        invokeSpecial: 'st/redline/stout/RouterFactoryImpl' method: '<init>' matching: '(Lst/redline/stout/RequestPathSpecificationFactory;)V';
+        invokeSpecial: 'st/redline/stout/RouterRegistryImpl' method: '<init>' matching: '(Lst/redline/stout/RouterFactory;)V';
+        invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' matching: '(Ljava/lang/Object;)Lst/redline/PrimObject;'.
 
 - handle: action on: target with: request and: response and: dispatch
-    Transcript show: 'stout handle'; cr.
     "handle http request type 'action' on 'target' uri."
     JVM aload: 1;
-        invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' returning: '()Ljava/lang/Object;';
+        invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' matching: '()Ljava/lang/Object;';
         checkcast: 'st/redline/stout/RouterRegistry';
         arg: 1;
         arg: 0;
-        invokeInterface: 'st/redline/stout/RouterRegistry' method: 'lookup' returning: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
+        invokeInterface: 'st/redline/stout/RouterRegistry' method: 'lookup' matching: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
         arg: 3;
         arg: 1;
-        invokeInterface: 'st/redline/stout/Router' method: 'dispatchToBlock' returning: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)V';
+        invokeInterface: 'st/redline/stout/Router' method: 'dispatchToBlock' matching: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)V';
         aload: 1.
 
 - get: target do: aBlock
-    Transcript show: 'stout get'; cr.
     "register aBlock to be executed when a HTTP GET of target is received."
     JVM aload: 1;
-        invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' returning: '()Ljava/lang/Object;';
+        invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' matching: '()Ljava/lang/Object;';
         checkcast: 'st/redline/stout/RouterRegistry';
         arg: 0;
         ldc: 'JSON';
         ldc: 'GET';
         arg: 1;
-        invokeInterface: 'st/redline/stout/RouterRegistry' method: 'register' returning: '(Lst/redline/PrimObject;Ljava/lang/String;Ljava/lang/String;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
+        invokeInterface: 'st/redline/stout/RouterRegistry' method: 'register' matching: '(Lst/redline/PrimObject;Ljava/lang/String;Ljava/lang/String;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
         aload: 1.
