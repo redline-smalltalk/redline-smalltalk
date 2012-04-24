@@ -2,5 +2,5 @@
 package st.redline.compiler;
 
 interface ReservedWord {
-	void accept(NodeVisitor nodeVisitor, int line);
+    void accept(NodeVisitor nodeVisitor, int line);
 }

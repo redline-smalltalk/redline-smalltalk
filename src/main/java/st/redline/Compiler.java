@@ -11,62 +11,62 @@ import java.util.List;
 
 public class Compiler {
 
-	private final SourceFile sourceFile;
-	private final boolean verbose;
-	private boolean ignoreCompilerErrors;
+    private final SourceFile sourceFile;
+    private final boolean verbose;
+    private boolean ignoreCompilerErrors;
 
-	public Compiler(SourceFile sourceFile, boolean verbose, boolean ignoreCompilerErrors) {
-		this.sourceFile = sourceFile;
-		this.verbose = verbose;
-		this.ignoreCompilerErrors = ignoreCompilerErrors;
-	}
+    public Compiler(SourceFile sourceFile, boolean verbose, boolean ignoreCompilerErrors) {
+        this.sourceFile = sourceFile;
+        this.verbose = verbose;
+        this.ignoreCompilerErrors = ignoreCompilerErrors;
+    }
 
-	protected byte[] compile() {
-		return compileSource(preprocessSource());
-	}
+    protected byte[] compile() {
+        return compileSource(preprocessSource());
+    }
 
-	private byte[] compileSource(Source source) {
-		Program program = parse(source.source());
-		Analyser analyser = analyse(program);
-		return analyser.classBytes();
-	}
+    private byte[] compileSource(Source source) {
+        Program program = parse(source.source());
+        Analyser analyser = analyse(program);
+        return analyser.classBytes();
+    }
 
-	private Analyser analyse(Program program) {
-		Analyser analyser = analyser();
-		program.accept(analyser);
-		return analyser;
-	}
+    private Analyser analyse(Program program) {
+        Analyser analyser = analyser();
+        program.accept(analyser);
+        return analyser;
+    }
 
-	private Analyser analyser() {
-		return new Analyser(sourceFile.shortName(), sourceFile.packageName(), verbose);
-	}
+    private Analyser analyser() {
+        return new Analyser(sourceFile.shortName(), sourceFile.packageName(), verbose);
+    }
 
-	private Program parse(String sourceCode) {
-		SmalltalkLexer smalltalkLexer = lexorOn(sourceCode);
-		SmalltalkParser smalltalkParser = parserUsing(smalltalkLexer);
-		try {
-			Program program = smalltalkParser.program();
-			if (!ignoreCompilerErrors && smalltalkParser.getNumberOfSyntaxErrors() > 0)
-				throw RedlineException.withMessage("Syntax error(s) detected");
-			return program;
-		} catch (RecognitionException e) {
-			throw RedlineException.withCause(e);
-		}
-	}
+    private Program parse(String sourceCode) {
+        SmalltalkLexer smalltalkLexer = lexorOn(sourceCode);
+        SmalltalkParser smalltalkParser = parserUsing(smalltalkLexer);
+        try {
+            Program program = smalltalkParser.program();
+            if (!ignoreCompilerErrors && smalltalkParser.getNumberOfSyntaxErrors() > 0)
+                throw RedlineException.withMessage("Syntax error(s) detected");
+            return program;
+        } catch (RecognitionException e) {
+            throw RedlineException.withCause(e);
+        }
+    }
 
-	private SmalltalkParser parserUsing(SmalltalkLexer smalltalkLexer) {
-		return new SmalltalkParser(new CommonTokenStream(smalltalkLexer));
-	}
+    private SmalltalkParser parserUsing(SmalltalkLexer smalltalkLexer) {
+        return new SmalltalkParser(new CommonTokenStream(smalltalkLexer));
+    }
 
-	private SmalltalkLexer lexorOn(String sourceCode) {
-		return new SmalltalkLexer(new ANTLRStringStream(sourceCode));
-	}
+    private SmalltalkLexer lexorOn(String sourceCode) {
+        return new SmalltalkLexer(new ANTLRStringStream(sourceCode));
+    }
 
-	private Source preprocessSource() {
-		return preprocessor().parse(sourceFile);
-	}
+    private Source preprocessSource() {
+        return preprocessor().parse(sourceFile);
+    }
 
-	private Preprocessor preprocessor() {
-		return new Preprocessor();
-	}
+    private Preprocessor preprocessor() {
+        return new Preprocessor();
+    }
 }

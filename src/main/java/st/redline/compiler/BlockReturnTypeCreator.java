@@ -1,3 +1,4 @@
+/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
 import org.objectweb.asm.ClassWriter;
@@ -23,7 +24,6 @@ public class BlockReturnTypeCreator implements Opcodes {
     void create() {
         if (registry.containsKey(fullyQualifiedClassName))
             return;
-//        System.out.println("blockReturnTypeCreator: " + fullyQualifiedClassName);
         registry.put(fullyQualifiedClassName, fullyQualifiedClassName);
         loadClass(createClass());
     }
@@ -36,22 +36,22 @@ public class BlockReturnTypeCreator implements Opcodes {
         }
     }
 
-	private byte[] createClass() {
-		ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-		writer.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, "st/redline/BlockReturn", null);
-		createAnswerArgumentConstructor(writer);
-		writer.visitEnd();
-		return writer.toByteArray();
-	}
+    private byte[] createClass() {
+        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        writer.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, "st/redline/BlockReturn", null);
+        createAnswerArgumentConstructor(writer);
+        writer.visitEnd();
+        return writer.toByteArray();
+    }
 
-	void createAnswerArgumentConstructor(ClassWriter writer) {
-		MethodVisitor mv = writer.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/PrimObject;)V", null, null);
-		mv.visitCode();
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitVarInsn(ALOAD, 1);
-		mv.visitMethodInsn(INVOKESPECIAL, "st/redline/BlockReturn", "<init>", "(Lst/redline/PrimObject;)V");
-		mv.visitInsn(RETURN);
-		mv.visitMaxs(2, 3);
-		mv.visitEnd();
-	}
+    void createAnswerArgumentConstructor(ClassWriter writer) {
+        MethodVisitor mv = writer.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/PrimObject;)V", null, null);
+        mv.visitCode();
+        mv.visitVarInsn(ALOAD, 0);
+        mv.visitVarInsn(ALOAD, 1);
+        mv.visitMethodInsn(INVOKESPECIAL, "st/redline/BlockReturn", "<init>", "(Lst/redline/PrimObject;)V");
+        mv.visitInsn(RETURN);
+        mv.visitMaxs(2, 3);
+        mv.visitEnd();
+    }
 }

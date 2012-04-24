@@ -3,16 +3,16 @@ package st.redline.compiler;
 
 class BinarySelector extends ValuePrimary {
 
-	BinarySelector() {
-		super("", 0);
-	}
+    BinarySelector() {
+        super("", 0);
+    }
 
-	void add(String value, int line) {
-		line(line);
-		value(value() + value);
-	}
+    void add(String value, int line) {
+        line(line);
+        value(value() + value);
+    }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this, value(), line());
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visit(this, value(), line());
+    }
 }

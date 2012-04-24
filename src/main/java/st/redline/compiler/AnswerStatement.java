@@ -3,17 +3,17 @@ package st.redline.compiler;
 
 class AnswerStatement extends Statements {
 
-	private final int line;
+    private final int line;
 
-	AnswerStatement(int line, Expression expression) {
-		super(expression, null);
-		this.line = line;
-		expression.leaveResultOnStack();
-	}
+    AnswerStatement(int line, Expression expression) {
+        super(expression, null);
+        this.line = line;
+        expression.leaveResultOnStack();
+    }
 
-	public int line() {
-		return line;
-	}
+    public int line() {
+        return line;
+    }
 
     boolean hasAnswerExpression() {
         return isAnswerExpression();
@@ -23,10 +23,10 @@ class AnswerStatement extends Statements {
         return true;
     }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visitBegin(this);
-		if (expression() != null)
-			expression().accept(nodeVisitor);
-		nodeVisitor.visitEnd(this);
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visitBegin(this);
+        if (expression() != null)
+            expression().accept(nodeVisitor);
+        nodeVisitor.visitEnd(this);
+    }
 }

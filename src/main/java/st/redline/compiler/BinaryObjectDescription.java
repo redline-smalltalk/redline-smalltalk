@@ -6,49 +6,49 @@ import java.util.List;
 
 public class BinaryObjectDescription implements VisitableNode {
 
-	private final Primary primary;
-	private final List<UnarySelector> unarySelectors;
-	private final List<BinarySelectorUnaryObjectDescription> binarySelectorUnaryObjectDescriptions;
+    private final Primary primary;
+    private final List<UnarySelector> unarySelectors;
+    private final List<BinarySelectorUnaryObjectDescription> binarySelectorUnaryObjectDescriptions;
 
-	BinaryObjectDescription(Primary primary) {
-		this.primary = primary;
-		this.unarySelectors = new ArrayList<UnarySelector>();
-		this.binarySelectorUnaryObjectDescriptions = new ArrayList<BinarySelectorUnaryObjectDescription>();
-	}
+    BinaryObjectDescription(Primary primary) {
+        this.primary = primary;
+        this.unarySelectors = new ArrayList<UnarySelector>();
+        this.binarySelectorUnaryObjectDescriptions = new ArrayList<BinarySelectorUnaryObjectDescription>();
+    }
 
-	void add(UnarySelector unarySelector) {
-		unarySelectors.add(unarySelector);
-	}
+    void add(UnarySelector unarySelector) {
+        unarySelectors.add(unarySelector);
+    }
 
-	void add(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
-		add(new BinarySelectorUnaryObjectDescription(binarySelector, unaryObjectDescription));
-	}
+    void add(BinarySelector binarySelector, UnaryObjectDescription unaryObjectDescription) {
+        add(new BinarySelectorUnaryObjectDescription(binarySelector, unaryObjectDescription));
+    }
 
-	void add(BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription) {
-		binarySelectorUnaryObjectDescriptions.add(binarySelectorUnaryObjectDescription);
-	}
+    void add(BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription) {
+        binarySelectorUnaryObjectDescriptions.add(binarySelectorUnaryObjectDescription);
+    }
 
-	Primary primary() {
-		return primary;
-	}
+    Primary primary() {
+        return primary;
+    }
 
-	List<UnarySelector> unarySelectors() {
-		return  unarySelectors;
-	}
+    List<UnarySelector> unarySelectors() {
+        return  unarySelectors;
+    }
 
-	List<BinarySelectorUnaryObjectDescription> binarySelectorUnaryObjectDescriptions() {
-		return binarySelectorUnaryObjectDescriptions;
-	}
+    List<BinarySelectorUnaryObjectDescription> binarySelectorUnaryObjectDescriptions() {
+        return binarySelectorUnaryObjectDescriptions;
+    }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this);
-		if (primary != null)
-			primary.accept(nodeVisitor);
-		for (UnarySelector unarySelector : unarySelectors)
-			unarySelector.accept(nodeVisitor);
-		for (BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription : binarySelectorUnaryObjectDescriptions())
-			binarySelectorUnaryObjectDescription.accept(nodeVisitor);
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visit(this);
+        if (primary != null)
+            primary.accept(nodeVisitor);
+        for (UnarySelector unarySelector : unarySelectors)
+            unarySelector.accept(nodeVisitor);
+        for (BinarySelectorUnaryObjectDescription binarySelectorUnaryObjectDescription : binarySelectorUnaryObjectDescriptions())
+            binarySelectorUnaryObjectDescription.accept(nodeVisitor);
+    }
 
     public boolean hasBlockWithAnswerExpression() {
         return primary.isBlockWithAnswerExpression()

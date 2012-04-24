@@ -3,27 +3,27 @@ package st.redline.compiler;
 
 abstract class ValuePrimary extends Primary {
 
-	private String value;
-	private int line;
+    private String value;
+    private int line;
 
-	ValuePrimary(String value, int line) {
-		this.value = value;
-		this.line = line;
-	}
+    ValuePrimary(String value, int line) {
+        this.value = value;
+        this.line = line;
+    }
 
-	public String value() {
-		return value;
-	}
+    public String value() {
+        return value;
+    }
 
-	void value(String value) {
-		this.value = value;
-	}
+    void value(String value) {
+        this.value = value;
+    }
 
-	public int line() {
-		return line;
-	}
+    public int line() {
+        return line;
+    }
 
-	void line(int line) {
-		this.line = line;
-	}
+    void line(int line) {
+        this.line = line;
+    }
 }

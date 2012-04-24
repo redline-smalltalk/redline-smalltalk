@@ -3,11 +3,11 @@ package st.redline.compiler;
 
 class Temporary extends Identifier implements VisitableNode {
 
-	Temporary(String value, int line) {
-		super(value, line);
-	}
+    Temporary(String value, int line) {
+        super(value, line);
+    }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this, value(), line());
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visit(this, value(), line());
+    }
 }

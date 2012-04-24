@@ -3,15 +3,15 @@ package st.redline;
 
 public class Source {
 
-	private final String source;
-	private final SourceFile sourceFile;
+    private final String source;
+    private final SourceFile sourceFile;
 
-	public Source(String source, SourceFile sourceFile) {
-		this.source = source;
-		this.sourceFile = sourceFile;
-	}
+    public Source(String source, SourceFile sourceFile) {
+        this.source = source;
+        this.sourceFile = sourceFile;
+    }
 
-	public String source() {
-		return source;
-	}
+    public String source() {
+        return source;
+    }
 }

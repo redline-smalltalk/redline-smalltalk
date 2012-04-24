@@ -3,23 +3,23 @@ package st.redline.compiler;
 
 class PrimaryStatements extends Primary {
 
-	private final Statements statements;
+    private final Statements statements;
 
-	PrimaryStatements(Statements statements) {
-		this.statements = statements;
-	}
+    PrimaryStatements(Statements statements) {
+        this.statements = statements;
+    }
 
-	int line() {
-		return statements != null ? statements.line() : 0;
-	}
+    int line() {
+        return statements != null ? statements.line() : 0;
+    }
 
     boolean isBlockWithAnswerExpression() {
         return false;
     }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this, line());
-		if (statements != null)
-			statements.accept(nodeVisitor);
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visit(this, line());
+        if (statements != null)
+            statements.accept(nodeVisitor);
+    }
 }

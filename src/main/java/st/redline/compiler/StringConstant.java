@@ -3,34 +3,34 @@ package st.redline.compiler;
 
 class StringConstant extends ValuePrimary implements ArrayElement {
 
-	private int index;
-	private boolean insideArray = false;
+    private int index;
+    private boolean insideArray = false;
 
-	StringConstant(java.lang.String value, int line) {
-		super(homgenize(value), line);
-	}
+    StringConstant(java.lang.String value, int line) {
+        super(homgenize(value), line);
+    }
 
-	private static String homgenize(String value) {
-		return value.substring(1, value.length()-1).replaceAll("''", "'");
-	}
+    private static String homgenize(String value) {
+        return value.substring(1, value.length() - 1).replaceAll("''", "'");
+    }
 
-	public void insideArray() {
-		insideArray = true;
-	}
+    public void insideArray() {
+        insideArray = true;
+    }
 
-	public boolean isInsideArray() {
-		return insideArray;
-	}
+    public boolean isInsideArray() {
+        return insideArray;
+    }
 
-	public int index() {
-		return index;
-	}
+    public int index() {
+        return index;
+    }
 
-	public void index(int index) {
-		this.index = index;
-	}
+    public void index(int index) {
+        this.index = index;
+    }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this, value(), index, insideArray, line());
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visit(this, value(), index, insideArray, line());
+    }
 }

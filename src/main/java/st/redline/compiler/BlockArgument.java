@@ -3,11 +3,11 @@ package st.redline.compiler;
 
 class BlockArgument extends Identifier {
 
-	BlockArgument(String value, int line) {
-		super(value, line);
-	}
+    BlockArgument(String value, int line) {
+        super(value, line);
+    }
 
-	public void accept(NodeVisitor nodeVisitor) {
-		nodeVisitor.visit(this, value(), line());
-	}
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visit(this, value(), line());
+    }
 }
