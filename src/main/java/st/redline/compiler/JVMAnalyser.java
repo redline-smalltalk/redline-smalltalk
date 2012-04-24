@@ -13,9 +13,9 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         builders.put("getStatic:named:as:", new VisitFieldInsnBuilder(GETSTATIC));
         builders.put("ldc:", new VisitLdcInsnBuilder());
         builders.put("aload:", new VisitVarInsnBuilder());
-	    builders.put("invokeVirtual:method:returning:", new VisitMethodInsnBuilder(INVOKEVIRTUAL));
-	    builders.put("invokeSpecial:method:returning:", new VisitMethodInsnBuilder(INVOKESPECIAL));
-	    builders.put("invokeInterface:method:returning:", new VisitMethodInsnBuilder(INVOKEINTERFACE));
+	    builders.put("invokeVirtual:method:matching:", new VisitMethodInsnBuilder(INVOKEVIRTUAL));
+	    builders.put("invokeSpecial:method:matching:", new VisitMethodInsnBuilder(INVOKESPECIAL));
+	    builders.put("invokeInterface:method:matching:", new VisitMethodInsnBuilder(INVOKEINTERFACE));
 	    builders.put("new:", new VisitTypeInsnBuilder(NEW));
 	    builders.put("checkcast:", new VisitTypeInsnBuilder(CHECKCAST));
 	    // commands added by Redline - not true JVM instructions.

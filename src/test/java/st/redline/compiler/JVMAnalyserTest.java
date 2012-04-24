@@ -45,7 +45,7 @@ public class JVMAnalyserTest {
 
 	@Test
 	public void shouldVisitMethodInsnWhenKeywordExpressionInvokeVirtual() {
-		analyser.visitBegin(mock(KeywordExpression.class), "invokeVirtual:method:returning:", 3, 0);
+		analyser.visitBegin(mock(KeywordExpression.class), "invokeVirtual:method:matching:", 3, 0);
 		assertNotNull(analyser.builder);
 		assertTrue(analyser.builder instanceof JVMAnalyser.VisitMethodInsnBuilder);
 	}
