@@ -16,7 +16,7 @@ Object < #Stout.
         invokeSpecial: 'st/redline/stout/RouterFactoryImpl' method: '<init>' matching: '(Lst/redline/stout/RequestPathSpecificationFactory;)V';
         invokeSpecial: 'st/redline/stout/RouterRegistryImpl' method: '<init>' matching: '(Lst/redline/stout/RouterFactory;)V';
         invokeVirtual: 'st/redline/PrimObject' method: 'javaValue' matching: '(Ljava/lang/Object;)Lst/redline/PrimObject;'.
-    self setupRoutes.
+    self route.
 
 - handle: action on: target with: request and: response and: dispatch
     "handle http request type 'action' on 'target' uri."
@@ -31,25 +31,25 @@ Object < #Stout.
         invokeInterface: 'st/redline/stout/Router' method: 'dispatchToBlock' matching: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)V';
         aload: 1.
 
-- defaultType
+- defaultAcceptType
     "answer the default accepted content type."
     ^ #JSON.
 
-- setupRoutes
-    "setup the routes and handlers."
+- route
+    "setup the routes for the Web App."
     ^ self.
 
 - onGet: target do: aBlock
     "register aBlock to be executed when a HTTP GET of 'target' accepting JSON is received."
-    self when: #GET on: target accepting: (self defaultType) do: aBlock.
+    self when: #GET on: target accepting: (self defaultAcceptType) do: aBlock.
 
 - onPost: target do: aBlock
     "register aBlock to be executed when a HTTP POST to 'target' accepting JSON is received."
-    self when: #POST on: target accepting: (self defaultType) do: aBlock.
+    self when: #POST on: target accepting: (self defaultAcceptType) do: aBlock.
 
 - onPut: target do: aBlock
     "register aBlock to be executed when a HTTP PUT to 'target' accepting JSON is received."
-    self when: #PUT on: target accepting: (self defaultType) do: aBlock.
+    self when: #PUT on: target accepting: (self defaultAcceptType) do: aBlock.
 
 - when: action on: target accepting: type do: aBlock
     "register aBlock to be executed when a HTTP 'action' on 'target' accepting 'type' is received."
