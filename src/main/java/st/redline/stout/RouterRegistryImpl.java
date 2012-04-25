@@ -18,9 +18,9 @@ public class RouterRegistryImpl implements RouterRegistry {
         this.routerFactory = routerFactory;
     }
 
-    public Router register(PrimObject spec, String type, String method, PrimObject block) {
+    public Router register(PrimObject spec, PrimObject type, PrimObject method, PrimObject block) {
         System.out.println("register() spec: " + spec + " type: " + type + " method: " + method + " block: " + block);
-        return register((String) spec.javaValue(), type, method, block);
+        return register((String) spec.javaValue(), (String) type.javaValue(), (String) method.javaValue(), block);
     }
 
     public Router register(String spec, String type, String method, PrimObject block) {
