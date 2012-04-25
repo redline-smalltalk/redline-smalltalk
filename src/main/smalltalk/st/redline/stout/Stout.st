@@ -33,7 +33,7 @@ Object < #Stout.
 
 - defaultAcceptType
     "answer the default accepted content type."
-    ^ #JSON.
+    ^ #json.
 
 - route
     "setup the routes for the Web App."
