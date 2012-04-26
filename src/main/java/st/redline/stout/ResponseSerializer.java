@@ -7,5 +7,5 @@ import java.io.IOException;
 import java.io.Writer;
 
 public interface ResponseSerializer {
-    void serializeOn(PrimObject object, Writer writer) throws IOException;
+    void serializeOn(PrimObject object, Writer writer) throws Exception;
 }

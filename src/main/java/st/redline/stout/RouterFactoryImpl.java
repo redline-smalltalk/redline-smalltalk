@@ -3,6 +3,7 @@ package st.redline.stout;
 
 import st.redline.PrimObject;
 import st.redline.PrimObjectBlock;
+import st.redline.SmalltalkClassLoader;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -19,18 +20,18 @@ public class RouterFactoryImpl implements RouterFactory {
 
     private static final ResponseSerializer JSON_SERIALIZER = new ResponseSerializer() {
 
-        public void serializeOn(PrimObject object, Writer writer) throws IOException {
+        public void serializeOn(PrimObject object, Writer writer) throws Exception {
             object.perform(createStreamOn(writer), "storeOn:");
         }
 
-        private PrimObject createStreamOn(Writer writer) {
+        private PrimObject createStreamOn(Writer writer) throws Exception {
             PrimObject stream = newJSONStream();
             stream.javaValue(writer);
             return stream;
         }
 
-        private PrimObject newJSONStream() {
-            return PrimObject.CLASSES.get("st.redline.stout.JSONStream").perform("new");
+        private PrimObject newJSONStream() throws Exception {
+            return ((PrimObject) SmalltalkClassLoader.instance().findClass("st.redline.stout.JSONStream").newInstance()).perform("new");
         }
     };
 
