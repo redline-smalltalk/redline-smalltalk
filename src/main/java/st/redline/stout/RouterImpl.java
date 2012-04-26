@@ -6,18 +6,21 @@ import st.redline.PrimObjectBlock;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Map;
 
 public class RouterImpl implements Router {
 
     private ResponseSerializer responseSerializer;
+    private String type;
     private PrimObject block;
     private RequestPathSpecification requestPathSpecification;
 
-    public RouterImpl(ResponseSerializer responseSerializer, PrimObject block,
+    public RouterImpl(ResponseSerializer responseSerializer, String type, PrimObject block,
                       RequestPathSpecification requestPathSpecification) {
         this.responseSerializer = responseSerializer;
+        this.type  = type;
         this.block = block;
         this.requestPathSpecification = requestPathSpecification;
     }
@@ -29,27 +32,35 @@ public class RouterImpl implements Router {
     public void dispatchToBlock(HttpServletResponse servletResponse, String requestPath) throws IOException {
         System.out.println("dispatchToBlock() " + servletResponse + " " + requestPath);
         Map<String, String> parameters = retrieveParametersAccordingToSpecification(requestPath);
-        Object responseValue = invokeTargetBlock(parameters);
-        String response = serializeResponse(responseValue);
-        sendClientResponse(servletResponse, response);
+        PrimObject responseValue = invokeTargetBlock(parameters);
+        serializeResponseOn(responseValue, servletResponse);
     }
 
     public boolean canHandleRequest(String requestPath) {
         return requestPathSpecification.isPathMatching(requestPath);
     }
 
-    private void sendClientResponse(HttpServletResponse servletResponse, String response) throws IOException {
-        Writer writer = servletResponse.getWriter();
-        writer.write(response);
-        writer.close();
+    private void serializeResponseOn(PrimObject response, HttpServletResponse servletResponse) throws IOException {
+        Writer writer = null;
+        try {
+            writer = servletResponse.getWriter();
+            serializeResponseOn(response, writer);
+        } finally {
+            if (writer != null)
+                writer.close();
+        }
     }
 
-    private String serializeResponse(Object response) {
-        return responseSerializer.serialize(response);
+    private void serializeResponseOn(PrimObject response, Writer writer) throws IOException {
+        try {
+            responseSerializer.serializeOn(response, writer);
+        } catch (Exception e) {
+            e.printStackTrace(new PrintWriter(writer));
+        }
     }
 
-    private Object invokeTargetBlock(Map<String, String> parameters) {
-	    System.out.println("invokeTargetBlock() " + parameters);
+    private PrimObject invokeTargetBlock(Map<String, String> parameters) {
+        System.out.println("invokeTargetBlock() " + parameters);
         PrimObject[] arguments = new PrimObject[parameters.size()];
         int index = 0;
         for (String value : parameters.values())

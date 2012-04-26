@@ -59,7 +59,7 @@ public class RouterImplTest {
 
         when(requestPathSpecification.isPathMatching(requestPath)).thenReturn(canHandleRequest);
 
-        RouterImpl router = new RouterImpl(null, null, requestPathSpecification);
+        RouterImpl router = new RouterImpl(null, null, null, requestPathSpecification);
         assertEquals(canHandleRequest, router.canHandleRequest(requestPath));
     }
 
