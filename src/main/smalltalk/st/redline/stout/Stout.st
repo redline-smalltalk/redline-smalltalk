@@ -25,7 +25,8 @@ Object < #Stout.
         checkcast: 'st/redline/stout/RouterRegistry';
         arg: 1;
         arg: 0;
-        invokeInterface: 'st/redline/stout/RouterRegistry' method: 'lookup' matching: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
+        arg: 2;
+        invokeInterface: 'st/redline/stout/RouterRegistry' method: 'lookup' matching: '(Lst/redline/PrimObject;Lst/redline/PrimObject;Lst/redline/PrimObject;)Lst/redline/stout/Router;';
         arg: 3;
         arg: 1;
         invokeInterface: 'st/redline/stout/Router' method: 'dispatchToBlock' matching: '(Lst/redline/PrimObject;Lst/redline/PrimObject;)V';
@@ -33,7 +34,7 @@ Object < #Stout.
 
 - defaultAcceptContentType
     "answer the default accepted content type."
-    ^ 'application/json'.
+    ^ 'text/html'.
 
 - route
     "setup the routes for the Web App."

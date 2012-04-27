@@ -2,7 +2,6 @@
 package st.redline.stout;
 
 import st.redline.PrimObject;
-import st.redline.PrimObjectBlock;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -13,14 +12,14 @@ import java.util.Map;
 public class RouterImpl implements Router {
 
     private ResponseSerializer responseSerializer;
-    private String type;
+    private String acceptType;
     private PrimObject block;
     private RequestPathSpecification requestPathSpecification;
 
-    public RouterImpl(ResponseSerializer responseSerializer, String type, PrimObject block,
+    public RouterImpl(ResponseSerializer responseSerializer, String acceptType, PrimObject block,
                       RequestPathSpecification requestPathSpecification) {
         this.responseSerializer = responseSerializer;
-        this.type  = type;
+        this.acceptType = acceptType;
         this.block = block;
         this.requestPathSpecification = requestPathSpecification;
     }
@@ -36,8 +35,9 @@ public class RouterImpl implements Router {
         serializeResponseOn(responseValue, servletResponse);
     }
 
-    public boolean canHandleRequest(String requestPath) {
-        return requestPathSpecification.isPathMatching(requestPath);
+    public boolean canHandleRequest(String requestPath, String acceptType) {
+        return requestPathSpecification.isPathMatching(requestPath)
+                && acceptType.indexOf(this.acceptType) != -1;
     }
 
     private void serializeResponseOn(PrimObject response, HttpServletResponse servletResponse) throws IOException {

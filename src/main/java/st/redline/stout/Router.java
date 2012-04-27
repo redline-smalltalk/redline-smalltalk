@@ -9,5 +9,5 @@ import java.io.IOException;
 public interface Router {
     void dispatchToBlock(HttpServletResponse servletResponse, String requestPath) throws IOException;
     void dispatchToBlock(PrimObject servletResponse, PrimObject requestPath) throws IOException;
-    boolean canHandleRequest(String requestPath);
+    boolean canHandleRequest(String requestPath, String acceptType);
 }

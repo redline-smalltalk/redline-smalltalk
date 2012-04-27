@@ -40,10 +40,10 @@ public class RouterRegistryImplTest {
         Router expectedRouterForSpec2 = expectCreateRouter(spec2, type, block2, expectedPathMatchesWithSpec2);
 
         assertSame(expectedRouterForSpec1, routerRegistry.register(spec1, type, method, block1));
-        assertSame(expectedRouterForSpec1, routerRegistry.lookup(expectedPathMatchesWithSpec1, method));
+        assertSame(expectedRouterForSpec1, routerRegistry.lookup(expectedPathMatchesWithSpec1, method, type));
 
         assertSame(expectedRouterForSpec2, routerRegistry.register(spec2, type, method, block2));
-        assertSame(expectedRouterForSpec2, routerRegistry.lookup(expectedPathMatchesWithSpec2, method));
+        assertSame(expectedRouterForSpec2, routerRegistry.lookup(expectedPathMatchesWithSpec2, method, type));
     }
 
     @Test
@@ -61,22 +61,22 @@ public class RouterRegistryImplTest {
         Router expectedRouterForMethod2 = expectCreateRouter(spec2, type, block2, expectedPathMatchesWithSpec);
 
         routerRegistry.register(spec1, type, method1, block1);
-        assertSame(expectedRouterForMethod1, routerRegistry.lookup(expectedPathMatchesWithSpec, method1));
+        assertSame(expectedRouterForMethod1, routerRegistry.lookup(expectedPathMatchesWithSpec, method1, type));
 
         routerRegistry.register(spec2, type, method2, block2);
-        assertSame(expectedRouterForMethod2, routerRegistry.lookup(expectedPathMatchesWithSpec, method2));
+        assertSame(expectedRouterForMethod2, routerRegistry.lookup(expectedPathMatchesWithSpec, method2, type));
     }
 
     @Test
     public void shouldHaveNoOpRouterForRequestThatDoNotHaveRouterRegistered() {
-        assertSame(NoOpRouter.INSTANCE, routerRegistry.lookup(createRandomString(), createRandomString()));
+        assertSame(NoOpRouter.INSTANCE, routerRegistry.lookup(createRandomString(), createRandomString(), createRandomString()));
     }
 
     private Router expectCreateRouter(String spec, String type, PrimObjectBlock block, String expectedPathMatchesWithSpec) {
         Router router = mock(Router.class);
 
         when(routerFactory.create(spec, type, block)).thenReturn(router);
-        when(router.canHandleRequest(expectedPathMatchesWithSpec)).thenReturn(true);
+        when(router.canHandleRequest(expectedPathMatchesWithSpec, type)).thenReturn(true);
 // JCL - not sure how to do this with mockito.
 //        when(router.canHandleRequest(not expectedPathMatchesWithSpec)).thenReturn(false);
 

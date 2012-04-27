@@ -4,10 +4,8 @@ package st.redline.stout;
 import st.redline.PrimObjectBlock;
 import st.redline.PrimObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 public class RouterRegistryImpl implements RouterRegistry {
 
@@ -36,14 +34,20 @@ public class RouterRegistryImpl implements RouterRegistry {
         return routers.get(method);
     }
 
-    public Router lookup(PrimObject path, PrimObject method) {
-        return lookup((String) path.javaValue(), (String) method.javaValue());
+    public Router lookup(PrimObject path, PrimObject method, PrimObject request) {
+        String type = acceptHeaderFrom((HttpServletRequest) request.javaValue());
+        return lookup((String) path.javaValue(), (String) method.javaValue(), type);
     }
 
-    public Router lookup(String path, String method) {
-        System.out.println("lookup() " + path + " " + method);
+    private String acceptHeaderFrom(HttpServletRequest httpServletRequest) {
+        Object attribute = httpServletRequest.getHeader("Accept");
+        return attribute != null ? attribute.toString() : "";
+    }
+
+    public Router lookup(String path, String method, String type) {
+        System.out.println("lookup() " + path + " " + method + " (Accept: " + type + ")");
         for (Router router : getRoutersForMethod(method)) {
-            if (router.canHandleRequest(path)) return router;
+            if (router.canHandleRequest(path, type)) return router;
         }
         return NoOpRouter.INSTANCE;
     }
