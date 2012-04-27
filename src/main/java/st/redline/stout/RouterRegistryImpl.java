@@ -17,7 +17,6 @@ public class RouterRegistryImpl implements RouterRegistry {
     }
 
     public Router register(PrimObject spec, PrimObject type, PrimObject method, PrimObject block) {
-        System.out.println("register() spec: " + spec + " type: " + type + " method: " + method + " block: " + block);
         return register((String) spec.javaValue(), (String) type.javaValue(), (String) method.javaValue(), block);
     }
 
@@ -45,7 +44,6 @@ public class RouterRegistryImpl implements RouterRegistry {
     }
 
     public Router lookup(String path, String method, String type) {
-        System.out.println("lookup() " + path + " " + method + " (Accept: " + type + ")");
         for (Router router : getRoutersForMethod(method)) {
             if (router.canHandleRequest(path, type)) return router;
         }
