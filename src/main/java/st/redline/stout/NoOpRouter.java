@@ -15,7 +15,7 @@ class NoOpRouter implements Router {
     public void dispatchToBlock(PrimObject servletResponse, PrimObject requestPath) throws IOException { System.out.println("NOOP"); }
     public void dispatchToBlock(HttpServletResponse servletResponse, String requestPath) throws IOException { System.out.println("NOOP"); }
 
-    public boolean canHandleRequest(String requestPath) {
+    public boolean canHandleRequest(String requestPath, String acceptType) {
         return true;
     }
 }

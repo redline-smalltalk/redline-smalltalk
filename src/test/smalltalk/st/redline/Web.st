@@ -4,6 +4,5 @@ import: 'st.redline.stout.Stout'.
 
 Stout < #Web.
 
-- initialize
-    super initialize.
-    self get: '/' do: [ 'Hello World from Smalltalk Web' ].
+- route
+    self onGet: '/' do: [ 'Hello World from Redline Smalltalk Web' ].

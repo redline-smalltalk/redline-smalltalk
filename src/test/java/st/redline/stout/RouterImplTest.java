@@ -59,8 +59,8 @@ public class RouterImplTest {
 
         when(requestPathSpecification.isPathMatching(requestPath)).thenReturn(canHandleRequest);
 
-        RouterImpl router = new RouterImpl(null, null, requestPathSpecification);
-        assertEquals(canHandleRequest, router.canHandleRequest(requestPath));
+        RouterImpl router = new RouterImpl(null, "x", null, requestPathSpecification);
+        assertEquals(canHandleRequest, router.canHandleRequest(requestPath, "x"));
     }
 
     private String createRandomString() {

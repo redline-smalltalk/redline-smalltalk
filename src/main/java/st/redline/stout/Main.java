@@ -33,7 +33,7 @@ public class Main {
     private static void serveRequest(RouterRegistryImpl routerRegistry) throws IOException {
         String path = "/user/344645";
         HttpServletResponse response = new MockServletResponse();
-        routerRegistry.lookup(path, "get").dispatchToBlock(response, path);
+        routerRegistry.lookup(path, "get", "text/html").dispatchToBlock(response, path);
     }
 
     private static RouterRegistryImpl createRouterRegistry() {
