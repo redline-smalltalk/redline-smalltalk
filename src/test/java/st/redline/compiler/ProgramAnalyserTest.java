@@ -4,8 +4,8 @@ package st.redline.compiler;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import st.redline.RedlineException;
-import st.redline.SmalltalkClassLoader;
+import st.redline.core.RedlineException;
+import st.redline.core.SmalltalkClassLoader;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;

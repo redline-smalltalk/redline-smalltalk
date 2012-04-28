@@ -3,7 +3,6 @@ package st.redline.compiler;
 
 import org.junit.Before;
 import org.junit.Test;
-import st.redline.PrimObject;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

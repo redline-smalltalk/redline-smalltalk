@@ -1,11 +1,10 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
-import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 
 import org.mockito.ArgumentMatcher;
-import org.mockito.internal.matchers.Not;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,8 +12,7 @@ import static org.mockito.Mockito.when;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import st.redline.PrimObjectBlock;
-import st.redline.stout.*;
+import st.redline.core.PrimObjectBlock;
 
 import java.util.UUID;
 

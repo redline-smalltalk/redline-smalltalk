@@ -1,5 +1,5 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
-package st.redline;
+package st.redline.core;
 
 // Adds block functionality
 
@@ -29,9 +29,9 @@ public class PrimObjectBlock extends PrimObject {
     PrimObject resolveBlockClosure() {
         if (blockClosure != null)
             return blockClosure;
-        if (PrimObject.BOOTSTRAPPING)
+        if (BOOTSTRAPPING)
             return PRIM_NIL;
-        blockClosure = resolveObject("st.redline.BlockClosure");
+        blockClosure = resolveObject("st.redline.core.BlockClosure");
         return blockClosure;
     }
 

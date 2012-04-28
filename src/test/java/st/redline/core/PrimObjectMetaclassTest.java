@@ -1,4 +1,4 @@
-package st.redline;
+package st.redline.core;
 
 import org.junit.Test;
 

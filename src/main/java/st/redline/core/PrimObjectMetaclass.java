@@ -1,5 +1,5 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
-package st.redline;
+package st.redline.core;
 
 // Provides a way of constructing CLASSES. A Metaclass is a class who's instances are CLASSES of CLASSES.
 // Each class is an instance of its own Metaclass.
@@ -12,12 +12,12 @@ import java.util.Map;
 public class PrimObjectMetaclass extends PrimObjectClass {
 
     static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for name, superclass etc etc
-    static final int NAME_INDEX = PrimObjectClass.SUPERCLASS_INDEX + 1;
+    static final int NAME_INDEX = SUPERCLASS_INDEX + 1;
     static final PrimObjectMetaclass METACLASS;
 
     static {
-        PrimObject.BOOTSTRAPPING = true;
-        METACLASS = basicSubclassOf(null).basicCreate("Metaclass", PrimObject.PRIM_NIL, "", "", "", "");
+        BOOTSTRAPPING = true;
+        METACLASS = basicSubclassOf(null).basicCreate("Metaclass", PRIM_NIL, "", "", "", "");
     }
     static Map<String, String> IMPORTS = new Hashtable<String, String>();
 

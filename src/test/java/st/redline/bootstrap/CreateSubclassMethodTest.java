@@ -1,8 +1,8 @@
 package st.redline.bootstrap;
 
 import org.junit.Test;
-import st.redline.PrimContext;
-import st.redline.PrimObject;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObject;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

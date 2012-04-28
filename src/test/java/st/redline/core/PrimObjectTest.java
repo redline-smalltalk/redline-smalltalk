@@ -1,5 +1,5 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
-package st.redline;
+package st.redline.core;
 
 import org.junit.Test;
 
@@ -50,7 +50,7 @@ public class PrimObjectTest {
 
 	@Test (expected = IllegalStateException.class)
 	public void shouldThrowExceptionWhenBlockToBeCompiledNotFound() {
-		new PrimObject().block("st/redline/Thing$M1", null);
+		new PrimObject().block("st/redline/core/Thing$M1", null);
 	}
 
 	@Test
@@ -58,8 +58,8 @@ public class PrimObjectTest {
 		PrimObject primObject = new PrimObject();
 		PrimObject block = mock(PrimObject.class);
 		when(block.isMethodBlock()).thenReturn(true);
-		PrimObject.BLOCKS.put("st/redline/Thing$M1", block);
-		primObject.block("st/redline/Thing$M1", null);
+		PrimObject.BLOCKS.put("st/redline/core/Thing$M1", block);
+		primObject.block("st/redline/core/Thing$M1", null);
 		// not a test so much as documentation.
 	}
 
@@ -91,7 +91,7 @@ public class PrimObjectTest {
 		try {
 			primObject.resolveObject("Thing");
 		} catch (RedlineException e) {
-			assertEquals("st.redline.RedlineException: java.lang.ClassNotFoundException: st.redline.Thing", e.toString());
+			assertEquals("st.redline.core.RedlineException: java.lang.ClassNotFoundException: st.redline.Thing", e.toString());
 		}
 	}
 

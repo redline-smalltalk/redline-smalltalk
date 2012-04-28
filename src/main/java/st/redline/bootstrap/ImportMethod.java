@@ -1,9 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.bootstrap;
 
-import st.redline.*;
+import st.redline.core.*;
 
-import java.io.File;
 import java.util.List;
 
 public class ImportMethod extends PrimObject {

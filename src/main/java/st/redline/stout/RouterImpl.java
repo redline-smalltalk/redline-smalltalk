@@ -1,7 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
-import st.redline.PrimObject;
+import st.redline.core.PrimObject;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

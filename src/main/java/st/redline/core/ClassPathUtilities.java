@@ -1,5 +1,5 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
-package st.redline;
+package st.redline.core;
 
 import java.io.File;
 

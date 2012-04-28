@@ -1,9 +1,9 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.bootstrap;
 
-import st.redline.PrimContext;
-import st.redline.PrimObject;
-import st.redline.PrimObjectMetaclass;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObject;
+import st.redline.core.PrimObjectMetaclass;
 
 public class CreateSubclassMethod extends PrimObject {
 

@@ -1,8 +1,9 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
-package st.redline;
+package st.redline.core;
 
 // TODO.JCL - make this classloader delegate to another so we can replace the delegate at runtime to reload all CLASSES on fly.
 
+import java.lang.*;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class SmalltalkClassLoader extends ClassLoader {
 
     private PrimObjectMetaclass loadPrimObjectMetaclass() {
         try {
-            return ((PrimObjectMetaclass) loadClass("st.redline.PrimObjectMetaclass").newInstance());
+            return ((PrimObjectMetaclass) loadClass("st.redline.core.PrimObjectMetaclass").newInstance());
         } catch (Exception e) {
             throw RedlineException.withCause(e);
         }

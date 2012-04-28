@@ -5,7 +5,7 @@ Boolean < #False.
 - initialize
     "Mark the resulting objects falseness so internally we can distinguish a False instance."
     JVM aload: 1;
-        invokeVirtual: 'st/redline/PrimObject' method: 'markFalseness' matching: '()Lst/redline/PrimObject;'.
+        invokeVirtual: 'st/redline/core/PrimObject' method: 'markFalseness' matching: '()Lst/redline/core/PrimObject;'.
 
 - & alternativeObject
     "Evaluating conjunction -- answer false since receiver is false."

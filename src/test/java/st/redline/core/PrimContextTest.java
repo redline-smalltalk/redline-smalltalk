@@ -1,5 +1,6 @@
-package st.redline;
+package st.redline.core;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,6 +22,6 @@ public class PrimContextTest {
 		context.temporariesInit(4);
 		assertEquals(4, context.temporaries().length);
 		for (int i = 0; i < context.temporaries().length; i++)
-			assertEquals(PrimObject.NIL, context.temporaries()[i]);
+			Assert.assertEquals(PrimObject.NIL, context.temporaries()[i]);
 	}
 }
