@@ -1,10 +1,10 @@
 package st.redline.bootstrap;
 
 import org.junit.Test;
-import st.redline.PrimContext;
-import st.redline.PrimObject;
-import st.redline.PrimObjectBlock;
-import st.redline.PrimObjectClass;
+import st.redline.core.PrimObject;
+import st.redline.core.PrimObjectClass;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObjectBlock;
 
 import java.util.HashMap;
 

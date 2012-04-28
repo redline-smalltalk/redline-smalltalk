@@ -311,7 +311,7 @@ else
     redline_sys_opts="-Djikes.class.path=\"$JIKESPATH\""
   fi
 fi
-redline_exec_command="exec \"$JAVACMD\" $REDLINE_OPTS -classpath \"$LOCALCLASSPATH\" -Dredline.home=\"$REDLINE_HOME\" -Dredline.library.dir=\"$REDLINE_LIB\" $redline_sys_opts st.redline.Stic $REDLINE_ARGS $redline_exec_args"
+redline_exec_command="exec \"$JAVACMD\" $REDLINE_OPTS -classpath \"$LOCALCLASSPATH\" -Dredline.home=\"$REDLINE_HOME\" -Dredline.library.dir=\"$REDLINE_LIB\" $redline_sys_opts st.redline.core.Stic $REDLINE_ARGS $redline_exec_args"
 if $redline_exec_debug ; then
     echo $redline_exec_command
 fi

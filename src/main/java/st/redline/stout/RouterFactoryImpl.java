@@ -1,9 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
-import st.redline.PrimObject;
-import st.redline.PrimObjectBlock;
-import st.redline.SmalltalkClassLoader;
+import st.redline.core.PrimObject;
+import st.redline.core.SmalltalkClassLoader;
 
 import java.io.IOException;
 import java.io.Writer;

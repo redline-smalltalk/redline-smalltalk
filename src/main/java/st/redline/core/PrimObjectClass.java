@@ -1,5 +1,5 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
-package st.redline;
+package st.redline.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.Map;
 public class PrimObjectClass extends PrimObject {
 
     static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for superclass
-    static final int SUPERCLASS_INDEX = PrimObject.CLASS_INDEX + 1;
+    static final int SUPERCLASS_INDEX = CLASS_INDEX + 1;
 
     HashMap<String, Integer> variableIndexes;
     int nextVariableIndex = SUPERCLASS_INDEX + 1;

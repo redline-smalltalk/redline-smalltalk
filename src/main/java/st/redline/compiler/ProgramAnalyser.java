@@ -1,11 +1,10 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-import st.redline.ClassPathUtilities;
-import st.redline.RedlineException;
-import st.redline.SmalltalkClassLoader;
+import st.redline.core.ClassPathUtilities;
+import st.redline.core.RedlineException;
+import st.redline.core.SmalltalkClassLoader;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.HashMap;
 import java.util.Map;
 

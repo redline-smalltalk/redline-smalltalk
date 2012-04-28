@@ -1,4 +1,4 @@
-package st.redline;
+package st.redline.core;
 
 import org.antlr.runtime.*;
 import org.junit.Test;

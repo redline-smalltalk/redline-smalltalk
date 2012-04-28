@@ -6,14 +6,13 @@ import org.junit.Test;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-import st.redline.PrimObject;
-import st.redline.PrimObjectBlock;
+import st.redline.core.PrimObject;
+import st.redline.core.PrimObjectBlock;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class BlockBytecodeWriterTest implements Opcodes {
 

@@ -173,13 +173,13 @@
                 </goals>
                 <configuration>
                   <includeProjectDependencies>true</includeProjectDependencies>
-	              <mainClass>st.redline.Stic</mainClass>
+	              <mainClass>st.redline.core.Stic</mainClass>
     	          <arguments>
         	        <argument>-r</argument>
             	    <argument>${project.basedir}${path.separator}src${path.separator}main${path.separator}smalltalk</argument>
                 	<argument>-s</argument>
 	                <argument>${project.basedir}${path.separator}src${path.separator}test${path.separator}smalltalk</argument>
-    	            <argument>st.redline.TestRunner</argument>
+    	            <argument>st.redline.core.TestRunner</argument>
         	      </arguments>
                 </configuration>
               </execution>

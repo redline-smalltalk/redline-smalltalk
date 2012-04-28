@@ -1,9 +1,9 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
-import st.redline.PrimContext;
-import st.redline.PrimObject;
-import st.redline.PrimObjectBlock;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObject;
+import st.redline.core.PrimObjectBlock;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;

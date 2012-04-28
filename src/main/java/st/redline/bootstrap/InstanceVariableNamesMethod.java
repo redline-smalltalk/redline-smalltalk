@@ -1,8 +1,8 @@
 package st.redline.bootstrap;
 
-import st.redline.PrimContext;
-import st.redline.PrimObject;
-import st.redline.PrimObjectClass;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObject;
+import st.redline.core.PrimObjectClass;
 
 public class InstanceVariableNamesMethod extends PrimObject {
 
