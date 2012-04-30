@@ -34,6 +34,10 @@ public class PrimContext {
         ((PrimObjectBlock) receiver).outerContext().temporaryAtPut(index, object);
     }
 
+    public PrimObject outerReceiver(PrimObject receiver) {
+        return ((PrimObjectBlock) receiver).outerContext().receiver;
+    }
+
     public void temporaryAtPut(int index, PrimObject object) {
         temporaries[index] = object;
     }

@@ -301,6 +301,11 @@ public class ClassBytecodeWriter implements Opcodes {
         mv.visitMethodInsn(INVOKESTATIC, CONTEXT, "temporaryPutAtInFrom", "(Lst/redline/core/PrimObject;ILst/redline/core/PrimContext;Lst/redline/core/PrimObject;)V");
     }
 
+    void pushOuterReceiver() {
+        pushReceiver();
+        mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "outerReceiver", "()Lst/redline/core/PrimObject;");
+    }
+
     void pushLiteral(String literal) {
         mv.visitLdcInsn(literal);
     }
