@@ -35,6 +35,10 @@ public class PrimObjectBlock extends PrimObject {
         return blockClosure;
     }
 
+    public PrimObject outerReceiver() {
+        return outerContext.receiver;
+    }
+
     public PrimObject variableAt(String name) {
         int index = cls().indexOfVariable(name);
         if (index != 0)

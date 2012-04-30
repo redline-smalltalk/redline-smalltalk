@@ -1,0 +1,47 @@
+- Redline Smalltalk feature ROADMAP -
+
+-- Version 1.0 --
+
+Goal: Provide a base that can be used for developing tools or applications without a UI in Smalltalk to be run on the Java Virtual Machine.
+
+001. Smalltalk Compiler
+     
+    A compiler that supports the full Smalltalk language, compiling both classes and scripts (files without classes) into JVM bytecode for execution.
+
+    The compiler should output debug information such that JVM debuggers can set break points and debug the code line by line. The debug information
+    should also be included in exceptions to show which Smalltalk source lines were involved in any exceptions.
+
+    The compiler should handle the dispatch of control to primitive methods.
+
+    The compiler should handle the integration of non-Smalltalk libraries with Smalltalk code. This has been achieved with the JVM pseudo variable
+    and the ability to directly emit bytecodes. Anything the JVM can call you can call.
+
+    The compiler should create JVM Classes in such a way that those classes are usable from non-Smalltalk languages. For example, it should be possible
+    to use a Smalltalk class from Java.
+
+    ** Status **: The Smalltalk Compiler is complete.
+
+002. Smalltalk Runtime
+
+    A Smalltalk rumtime should be provided that includes all the classes defined in the "Blue Book" (Smalltalk-80 the language and its implementation)
+    with the exception of the graphical classes and those related to threading and scheduling that won't fit the JVM's model of those same concepts.
+
+    The runtime should have a corresponding test suite that covers the functionality of each class to provide some confidence that the runtime is 
+    tested and working as expected, and that changes to the runtime do not break existing functionality.
+
+    ** Status **: Underway. Several community members signed up during the class adoption drive to implement a runtime class or two. This process is
+    continuing. We need more contributors and or a bigger push to get this completed.
+
+003. Smart Classloader
+
+    A smart classloader which should reload classes when the associated source file changes, and should also 'reload' all classes on request.
+    This functionality is essential to enable a quick development feeback loop where source is changed and on next invocation the changed source
+    is executed.
+
+    The smart classloader should also be lockable, whereby it will not reload classes nor perform checks to see if the source has changed. The smart 
+    classloader is expected to be locked in Production environments.
+
+    There is a current classloader that fits the JVM classloader model, however, these additional features are not 'standard' and will have to be built.
+
+    ** Status **: Underway. 
+

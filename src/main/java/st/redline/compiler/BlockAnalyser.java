@@ -71,6 +71,11 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
         writer.invokeBlockAnswer(thisBlock.blockReturnType().replaceAll("/", "."));
     }
 
+    public void visit(Self self, int line) {
+        writer.visitLine(line);
+        writer.pushOuterReceiver();
+    }
+
     String createBlockName() {
         BLOCK_NUMBER++;
         return analyser.className() + "$B" + BLOCK_NUMBER;

@@ -19,4 +19,5 @@ TestCase < #ArrayTest.
 
     "How do we test this?"
     array := #(1 2 3 4 5).
-    "array do: [:each |  ]."
+    array do: [ :each |  ].
+
