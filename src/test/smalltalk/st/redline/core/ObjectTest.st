@@ -46,7 +46,8 @@ TestCase < #ObjectTest
 - testRespondsTo
     self assertTrue: (Object new respondsTo: #isKindOf:) withMessage: 'object should #respondsTo: #isKindOf:'.
     self assertTrue: (3 respondsTo: #isKindOf:) withMessage: 'integer literal should respond to #isKindOf:'.
-    self assertTrue: (ArrayedCollection includesSelector: #size) withMessage: 'includesSelector fail'.
+    self assertFalse: (ArrayedCollection includesSelector: #size) withMessage: 'includesSelector fail'.
+    self assertTrue: (SequenceableCollection includesSelector: #size) withMessage: 'includesSelector fail'.
     self assertTrue: (Integer includesSelector: #floor) withMessage: 'includesSelector fail'.
     self assertTrue: (3 respondsTo: #floor) withMessage: 'integer literal should respond to #floor'.
     self assertTrue: (3 respondsTo: #+) withMessage: 'integer literal should respond to #+'.

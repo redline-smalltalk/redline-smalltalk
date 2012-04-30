@@ -2,17 +2,3 @@
 
 SequenceableCollection < #ArrayedCollection.
 
-- size
-    <primitive: 220>
-
-- at: index
-    <primitive: 222>
-
-- at: index put: anObject
-    <primitive: 223>
-
-- basicAt: index
-    <primitive: 222>
-
-- basicAt: index put: anObject
-    <primitive: 223>
