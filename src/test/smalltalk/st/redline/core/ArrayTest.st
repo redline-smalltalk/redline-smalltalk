@@ -15,9 +15,18 @@ TestCase < #ArrayTest.
     self assert: element equals: 17 withMessage: 'Array test failed'.
 
 - testDo
-    | array |
+    | array lastElement passes |
 
     "How do we test this?"
     array := #(1 2 3 4 5).
-    array do: [ :each |  ].
+    lastElement := 1.
+    passes := 0.
+    array do: [ :each |  
+      self assertTrue: (each == lastElement) withMessage: 'should be equal'.
+      lastElement := each + 1.
+      passes := passes + 1.
+    ].
+
+    self assert: passes equals: 5 withMessage: 'should be 5 items iterated over in the array.'.
+
 
