@@ -1,6 +1,6 @@
 - Redline Smalltalk feature ROADMAP -
 
--- Version 1.0 --
+-- Release 1.0 / Version 1.0 --
 
 Goal: Provide a base that can be used for developing tools or applications without a UI in Smalltalk to be run on the Java Virtual Machine.
 
@@ -44,4 +44,43 @@ Goal: Provide a base that can be used for developing tools or applications witho
     There is a current classloader that fits the JVM classloader model, however, these additional features are not 'standard' and will have to be built.
 
     ** Status **: Underway. 
+
+-- Release 2 / Version  1.0
+
+Goal: Provide tools and frameworks that help people get started with building apps in Smalltalk.
+
+004. Light weight Web Framework
+
+    A light weight Web Framework that supports the development of server side functionality in Smalltalk. 
+
+    ** Status **: Underway. This sub-project is called "Stout" and is currently part of the main source tree but will be separated out shortly.
+
+005. Smalltalk Interactive Command Line (REPL)
+
+    An interactive command line should be provided to enable developers to quickly try out Smalltalk code experiments or to interact with existing 
+    application or classes.
+
+    ** Status **: Underway. This sub-project is called "Stir" and it is available in a separate git repo. Stir has a dependency on Stout.
+
+006. IDE integration
+
+    Integration into the two leading Java IDE's should be provided. These two IDE's are Eclipse and IntelliJ.
+    
+    IDE Integration should provide as a minimum the ability to:
+    a. Create a Redline Smalltalk project, where the folder structure is consistent and in keeping with Redline expectations.
+    b. Enable the execution of Smalltalk code from the IDE.
+    c. Integrate with Stout and Stir.
+
+    ** Status **: Underway. These projects are being undertaken by community members. When usable modules are available then the associated git repo's will
+    be linked to from the main Redline Repo.
+
+007. Test Framework
+
+    A test framework and classes should be provided to enable developers to write descriptive and effective Tests for their code.
+    
+    Something a little more advanced than SUnit is expected here, although an SUnit port would be work while as well.
+    
+    ** Status **: Unknown - Steven R. Baker who wrote Ruby rspec said he would write a Test framework for Redline. Need to follow him up on this.
+
+*end*
 
