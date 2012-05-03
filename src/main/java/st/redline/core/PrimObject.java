@@ -98,6 +98,15 @@ public class PrimObject {
         return this;
     }
 
+    public void sendMessagesResult(PrimObject result) {
+        // should only be sent to subclass.
+    }
+
+    public PrimObject sendMessagesResult() {
+        // should only be sent to subclass.
+        return null;
+    }
+
     public PrimObject block(String name, PrimContext context) {
         // NOTE: When asking a keyword expression is it contains a block with an answer expression,
         // we should also take that opportunity to mark the block node as being a method block or

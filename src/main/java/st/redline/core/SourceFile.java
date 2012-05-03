@@ -9,6 +9,10 @@ public class SourceFile extends File {
         super(file.getAbsolutePath());
     }
 
+    protected SourceFile(String pathname) {
+        super(pathname);
+    }
+
     public String contents() {
         return sourceFileReader().read(this);
     }
@@ -38,7 +42,7 @@ public class SourceFile extends File {
         return name;
     }
 
-    private String userDir() {
+    protected String userDir() {
         return System.getProperty("user.dir");
     }
 }

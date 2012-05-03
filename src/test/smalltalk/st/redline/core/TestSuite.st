@@ -15,3 +15,5 @@ Object < #TestSuite.
     NumberTest new test.
     Transcript show: 'Running ObjectTest Suite'; cr.
     ObjectTest new test.
+    CompilerTest new test.
+

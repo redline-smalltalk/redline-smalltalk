@@ -17,6 +17,8 @@ public class ClassBytecodeWriter implements Opcodes {
     private static final String CONTEXT = "st/redline/core/PrimContext";
     private static final String SEND_MESSAGES = "_sendMessages_";
     private static final String SEND_MESSAGES_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
+    private static final String RESULT = "sendMessagesResult";
+    private static final String RESULT_SIG = "(Lst/redline/core/PrimObject;)V";
     private static final String PRIMITIVE_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
     private static final String[] SIGNATURES = {
         "(Ljava/lang/String;)Lst/redline/core/PrimObject;",
@@ -133,11 +135,13 @@ public class ClassBytecodeWriter implements Opcodes {
     void invokeMessageSends() {
         pushThis();
         pushThis();
+        pushThis();
         mv.visitTypeInsn(NEW, "st/redline/core/PrimContext");
         pushDuplicate();
         pushThis();
         mv.visitMethodInsn(INVOKESPECIAL, "st/redline/core/PrimContext", "<init>", "(Lst/redline/core/PrimObject;)V");
         mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, SEND_MESSAGES, SEND_MESSAGES_SIG);
+        mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, RESULT, RESULT_SIG);
     }
 
     String superclass() {
