@@ -1,3 +1,8 @@
+03/05/2012
+
+Added capture of result of sending messages that embody a file, so direct evaluation of a string can be returned into Smalltalk.
+This is a WIP for exposing the Compiler and the ability to evaluate Smalltalk strings.
+
 20/01/2012
 
 In response to feedback - I did the following:
