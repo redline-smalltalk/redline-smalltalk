@@ -7,13 +7,16 @@ import org.antlr.runtime.RecognitionException;
 
 import st.redline.compiler.*;
 
-public class Compiler {
+// Called Kompiler rather than Compiler because we have a Smalltalk class Compiler
+// in same namespace.
+
+public class Kompiler {
 
     private final SourceFile sourceFile;
     private final boolean verbose;
     private boolean ignoreCompilerErrors;
 
-    public Compiler(SourceFile sourceFile, boolean verbose, boolean ignoreCompilerErrors) {
+    public Kompiler(SourceFile sourceFile, boolean verbose, boolean ignoreCompilerErrors) {
         this.sourceFile = sourceFile;
         this.verbose = verbose;
         this.ignoreCompilerErrors = ignoreCompilerErrors;

@@ -57,7 +57,7 @@ public class SmalltalkClassLoader extends ClassLoader {
         }
     }
 
-    private Class classFrom(SourceFile sourceFile) {
+    public Class classFrom(SourceFile sourceFile) {
         byte[] classBytes = compile(sourceFile);
         return defineClass(null, classBytes, 0, classBytes.length);
     }
@@ -74,8 +74,8 @@ public class SmalltalkClassLoader extends ClassLoader {
         return createCompiler(sourceFile).compile();
     }
 
-    private Compiler createCompiler(SourceFile sourceFile) {
-        return new Compiler(sourceFile, commandLine.verboseRequested(), commandLine.ignoreCompilerErrors());
+    private Kompiler createCompiler(SourceFile sourceFile) {
+        return new Kompiler(sourceFile, commandLine.verboseRequested(), commandLine.ignoreCompilerErrors());
     }
 
     private SourceFile findSource(String className) {

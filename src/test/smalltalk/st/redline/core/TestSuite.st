@@ -9,3 +9,5 @@ Object < #TestSuite.
     IntegerTest new test.
     NumberTest new test.
     ObjectTest new test.
+    CompilerTest new test.
+

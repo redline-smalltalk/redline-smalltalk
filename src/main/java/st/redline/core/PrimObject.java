@@ -99,6 +99,12 @@ public class PrimObject {
     }
 
     public void sendMessagesResult(PrimObject result) {
+        // should only be sent to subclass.
+    }
+
+    public PrimObject sendMessagesResult() {
+        // should only be sent to subclass.
+        return null;
     }
 
     public PrimObject block(String name, PrimContext context) {

@@ -22,6 +22,7 @@ public class PrimObjectMetaclass extends PrimObjectClass {
     static Map<String, String> IMPORTS = new Hashtable<String, String>();
 
     Map<String, String> imports;
+    PrimObject sendMessagesResult;
 
     public static PrimObjectMetaclass basicSubclassOf(PrimObjectMetaclass superMeta) {
         PrimObjectMetaclass newMetaclass = new PrimObjectMetaclass();
@@ -57,6 +58,14 @@ public class PrimObjectMetaclass extends PrimObjectClass {
         if (name().javaValue == null)
             return super.toString();
         return (String) name().javaValue;
+    }
+
+    public void sendMessagesResult(PrimObject result) {
+        sendMessagesResult = result;
+    }
+
+    public PrimObject sendMessagesResult() {
+        return sendMessagesResult;
     }
 
     PrimObject name() {
