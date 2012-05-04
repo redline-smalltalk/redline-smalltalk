@@ -37,9 +37,9 @@ Object -- Lee Breisacher
   Float -- Sean T Allen
   Fraction -- Sean T Allen
   Integer -- Sean T Allen
-   LargeNegativeInteger
-   LargePositiveInteger
-   SmallInteger
+   LargeNegativeInteger -- Sean T Allen
+   LargePositiveInteger -- Sean T Allen
+   SmallInteger -- Sean T Allen
  LookupKey
   Association
 
