@@ -1,460 +1,630 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-import java.io.PrintWriter;
-
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import st.redline.core.ClassPathUtilities;
 
-import st.redline.ClassPathUtilities;
-import st.redline.SmalltalkClassLoader;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClassBytecodeWriter implements Opcodes {
 
-	protected static final String INIT = "<init>";
-	protected static final String INIT_SIGNATURE = "()V";
-	protected static final String PROTOOBJECT = "st/redline/ProtoObject";
-	protected static final String PROTOBLOCK = "st/redline/ProtoBlock";
-	protected static final String PRIMITIVE = "st/redline/Primitives";
-
-	private static final String SUPERCLASS = PROTOOBJECT;
-	private static final String SEND = "send";
-	private static final String SUPER_SEND = "superSend";
-	private static final String CONSTRUCT = "construct";
-	private static final String CONSTRUCT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_ARRAY = "createArray";
-	private static final String PRIMITIVE_ARRAY_SIGNATURE = "(Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_SYMBOL = "createSymbol";
-	private static final String PRIMITIVE_SYMBOL_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_INTEGER = "createInteger";
-	private static final String PRIMITIVE_INTEGER_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_STRING = "createString";
-	private static final String PRIMITIVE_STRING_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_CHARACTER = "createCharacter";
-	private static final String PRIMITIVE_CHARACTER_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_VARIABLE_AT = "variableAt";
-	private static final String PRIMITIVE_VARIABLE_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Z)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_VARIABLE_PUT_AT = "variablePutAt";
-	private static final String PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;Z)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_TEMPORARY_AT = "temporaryAt";
-	private static final String PRIMITIVE_TEMPORARY_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ThisContext;IZ)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_TEMPORARY_PUT_AT = "temporaryPutAt";
-	private static final String PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ThisContext;IZ)V";
-	private static final String PRIMITIVE_TEMPORARIES_INIT = "temporariesInit";
-	private static final String PRIMITIVE_TEMPORARIES_INIT_SIGNATURE = "(Lst/redline/ThisContext;I)V";
-	private static final String PRIMITIVE_PUT_AT = "putAt";
-	private static final String PRIMITIVE_PUT_AT_SIGNATURE = "(Lst/redline/ProtoObject;Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT = "outerContextMethodArgumentAt";
-	private static final String PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT_SIGNATURE = "(Lst/redline/ProtoObject;I)Lst/redline/ProtoObject;";
-	private static final String PRIMITIVE_OUTERCONTEXT_RECEIVER = "outerContextReceiver";
-	private static final String PRIMITIVE_OUTERCONTEXT_RECEIVER_SIGNATURE = "(Lst/redline/ProtoObject;)Lst/redline/ProtoObject;";
-	private static final String[] SEND_SIGNATURES = {
-		"(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
-		"(Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ThisContext;)Lst/redline/ProtoObject;",
-	};
-
-	protected final String className;
-
-	private String packageName;
-	private String fullyQualifiedClassName;
-	private int currentLine = 0;
-
-	protected ClassWriter cw;
-	protected MethodVisitor mv;
-
-	public ClassBytecodeWriter(String className, String packageName) {
-		this.className = className;
-		this.packageName = packageName;
-		initialize();
-	}
-
-	private void initialize() {
-		cw = verbose() ? tracingClassWriter() : nonTracingClassWriter();
-		fullyQualifiedClassName = ClassPathUtilities.classNameToFullyQualifiedClassName(packageName, className);
-	}
-
-	private boolean verbose() {
-		return SmalltalkClassLoader.instance().commandLine().verboseRequested();
-	}
-
-	private ClassWriter nonTracingClassWriter() {
-		return new ClassWriter(ClassWriter.COMPUTE_MAXS);
-	}
-
-	private ClassWriter tracingClassWriter() {
-		return new TracingClassWriter(ClassWriter.COMPUTE_MAXS, new PrintWriter(System.out));
-	}
-
-	public MethodVisitor methodVisitor() {
-		return mv;
-	}
-
-	public byte[] contents() {
-		return cw.toByteArray();
-	}
-
-	public void openClass() {
-		cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, superclass(), null);
-		cw.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
-		writeInitializeMethod();
-		openApplyToMethod();
-	}
-
-	protected String superclass() {
-		return SUPERCLASS;
-	}
-
-	protected void openApplyToMethod() {
-		mv = cw.visitMethod(ACC_PUBLIC, CONSTRUCT, CONSTRUCT_SIGNATURE, null, null);
-		mv.visitCode();
-	}
-
-	protected void writeInitializeMethod() {
-		mv = cw.visitMethod(ACC_PUBLIC, INIT, INIT_SIGNATURE, null, null);
-		mv.visitCode();
-		stackPushThis();
-		mv.visitMethodInsn(INVOKESPECIAL, SUPERCLASS, INIT, INIT_SIGNATURE);
-		stackPushThis();
-		mv.visitLdcInsn(className + "<Loader>");
-		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, "name", "(Ljava/lang/String;)V");
-		stackPushLiteral(packageName);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "packageRegistryCurrent", "(Ljava/lang/String;)V");
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitLdcInsn("ProtoObject");
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "resolveObject", "(Lst/redline/ProtoObject;Ljava/lang/String;)Lst/redline/ProtoObject;");
-		mv.visitLdcInsn(className + "<Eigenclass>");
-		mv.visitVarInsn(ALOAD, 0);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "createEigenSubclass", "(Lst/redline/ProtoObject;Ljava/lang/String;Lst/redline/ProtoObject;)Lst/redline/ProtoObject;");
-		stackDuplicate();
-		mv.visitLdcInsn(className);
-		mv.visitLdcInsn(makeFullQualifiedPackageName());
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "packageAtPut", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;)V");
-		mv.visitTypeInsn(NEW, "st/redline/ThisContext");
-		mv.visitInsn(DUP);
-		mv.visitMethodInsn(INVOKESPECIAL, "st/redline/ThisContext", "<init>", "()V");
-		mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, CONSTRUCT, CONSTRUCT_SIGNATURE);
-		mv.visitInsn(POP);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "initialiseNewClasses", "()V");
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "packageRegistryRemove", "()V");
-		mv.visitInsn(RETURN);
-		mv.visitMaxs(1, 1);
-		mv.visitEnd();
-	}
-
-	private String makeFullQualifiedPackageName() {
-		return fullyQualifiedClassName;
-	}
-
-	private String homogenize(String className) {
-		int index = className.indexOf("$");
-		if (index == -1)
-			return className;
-		return className.substring(0, index);
-	}
-
-	public void closeClass() {
-		closeApplyToMethod();
-		cw.visitEnd();
-	}
-
-	private void closeApplyToMethod() {
-		mv.visitInsn(ARETURN);
-		mv.visitMaxs(1, 1);
-		mv.visitEnd();
-	}
-
-	protected void visitLine(int line) {
-		// Note: we don't visit the same line repeatedly. Is this and ok debug experience? Need to check with java debugger.
-		if (line == currentLine)
-			return;
-		currentLine = line;
-		Label label = new Label();
-		mv.visitLabel(label);
-		mv.visitLineNumber(line, label);
-	}
-
-	public void callPrimitiveInitializeTemporaries(int line, int size) {
-		visitLine(line);
-		stackPushThisContext();
-		stackPushNumeric(size);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_TEMPORARIES_INIT, PRIMITIVE_TEMPORARIES_INIT_SIGNATURE);
-	}
-
-	public void callPrimitiveTemporaryAt(String value, int line, int index, boolean isLocal) {
-		stackPushReceiver(line);
-		stackPushThisContext();
-		stackPushNumeric(index);
-		stackPushBoolean(isLocal);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_TEMPORARY_AT, PRIMITIVE_TEMPORARY_AT_SIGNATURE);
-	}
-
-	public void callPrimitiveTemporaryPutAt(String value, int line, int index, boolean isLocal) {
-		stackPushReceiver(line);
-		stackPushThisContext();
-		stackPushNumeric(index);
-		stackPushBoolean(isLocal);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_TEMPORARY_PUT_AT, PRIMITIVE_TEMPORARY_PUT_AT_SIGNATURE);
-	}
-
-	public void callPrimitiveVariableAt(String value, int line, boolean isClassMethod) {
-		stackPushReceiver(line);
-		stackPushLiteral(value);
-		stackPushBoolean(isClassMethod);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_VARIABLE_AT, PRIMITIVE_VARIABLE_AT_SIGNATURE);
-	}
-
-	public void callPrimitiveVariablePutAt(String value, int line, boolean isClassMethod) {
-		visitLine(line);
-		stackPushLiteral(value);
-		stackPushReceiver(line);
-		stackPushBoolean(isClassMethod);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_VARIABLE_PUT_AT, PRIMITIVE_VARIABLE_PUT_AT_SIGNATURE);
-	}
-
-	public void callOuterContextMethodArgumentAt(int methodArgumentIndex, int line) {
-		stackPushReceiver(line);
-		stackPushNumeric(methodArgumentIndex);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT, PRIMITIVE_OUTERCONTEXT_METHOD_ARGUMENT_AT_SIGNATURE);
-	}
-
-	public void stackPushLiteral(String value) {
-		mv.visitLdcInsn(value);
-	}
-
-	public void stackPop() {
-		mv.visitInsn(POP);
-	}
-
-	public void stackDuplicate() {
-		mv.visitInsn(DUP);
-	}
-
-	public void stackPushNull() {
-		mv.visitInsn(ACONST_NULL);
-	}
-
-	public void stackPushThis() {
-		mv.visitVarInsn(ALOAD, 0); // 0 = this, 1 = receiver, 2 = class method found in.
-	}
-
-	public void stackPushReceiver(int line) {
-		visitLine(line);
-		mv.visitVarInsn(ALOAD, 1);
-	}
-
-	public void stackPushLocal(int index) {
-		mv.visitVarInsn(ALOAD, index);
-	}
-
-	public void stackPushThisContext() {
-		mv.visitVarInsn(ALOAD, 2);
-	}
-
-	public void stackPushClassMethodWasFoundIn() {
-		mv.visitVarInsn(ALOAD, 2);
-		mv.visitFieldInsn(GETFIELD, "Lst/redline/ThisContext;", "classMethodFoundIn", "Lst/redline/ProtoObject;");
-	}
-
-	public void stackPushTrue(int line) {
-		visitLine(line);
-		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "TRUE", "Lst/redline/ProtoObject;");
-	}
-
-	public void stackPushFalse(int line) {
-		visitLine(line);
-		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "FALSE", "Lst/redline/ProtoObject;");
-	}
-
-	public void stackPushNil(int line) {
-		visitLine(line);
-		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "NIL", "Lst/redline/ProtoObject;");
-	}
-
-	public void stackPushSmalltalk(int line) {
-		visitLine(line);
-		mv.visitFieldInsn(GETSTATIC, PROTOOBJECT, "SMALLTALK", "Lst/redline/ProtoObject;");
-	}
-
-	public void stackPushSuper(int line) {
-		stackPushReceiver(line);
-	}
-
-	public void stackPushBoolean(boolean bool) {
-		mv.visitInsn(bool ? ICONST_1 : ICONST_0);
-	}
-
-	public void stackPushOuterReceiver(int line) {
-		stackPushReceiver(line);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_OUTERCONTEXT_RECEIVER, PRIMITIVE_OUTERCONTEXT_RECEIVER_SIGNATURE);
-	}
-
-	public void stackPushNumeric(int value) {
-		switch (value) {
-			case 0: mv.visitInsn(ICONST_0); break;
-			case 1: mv.visitInsn(ICONST_1); break;
-			case 2: mv.visitInsn(ICONST_2); break;
-			case 3: mv.visitInsn(ICONST_3); break;
-			case 4: mv.visitInsn(ICONST_4); break;
-			case 5: mv.visitInsn(ICONST_5); break;
-			default:
-				if (value > 5 && value < 128)
-					mv.visitIntInsn(BIPUSH, value);
-				else // SIPUSH not supported yet.
-					throw new IllegalStateException("push of integer value " + value + " not yet supported.");
-		}
-	}
-
-	public void unarySend(String unarySelector, int line, boolean sendToSuper) {
-		callPrimitiveSend(unarySelector, 0, line, sendToSuper);
-	}
-
-	public void binarySend(String binarySelector, int line, boolean sendToSuper) {
-		callPrimitiveSend(binarySelector, 1, line, sendToSuper);
-	}
-
-	public void keywordSend(String keywords, int argumentCount, int line, boolean sendToSuper) {
-		callPrimitiveSend(keywords, argumentCount, line, sendToSuper);
-	}
-
-	private void callPrimitiveSend(String selector, int argumentCount, int line, boolean sendToSuper) {
-		visitLine(line);
-		stackPushLiteral(selector);
-		stackPushThisContext();
-		if (sendToSuper)
-			mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, SUPER_SEND, SEND_SIGNATURES[argumentCount]);
-		else
-			mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, SEND, SEND_SIGNATURES[argumentCount]);
-	}
-
-	public void callPrimitiveSymbol(String value, int line) {
-		stackPushReceiver(line);
-		stackPushLiteral(value);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_SYMBOL, PRIMITIVE_SYMBOL_SIGNATURE);
-	}
-
-	public void callPrimitiveInteger(String value, int line) {
-		stackPushReceiver(line);
-		stackPushLiteral(value);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_INTEGER, PRIMITIVE_INTEGER_SIGNATURE);
-	}
-
-	public void callPrimitiveInteger(int value, int line) {
-		stackPushReceiver(line);
-		stackPushLiteral(String.valueOf(value));
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_INTEGER, PRIMITIVE_INTEGER_SIGNATURE);
-	}
-
-	public void callPrimitiveString(String value, int line) {
-		stackPushReceiver(line);
-		stackPushLiteral(value);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_STRING, PRIMITIVE_STRING_SIGNATURE);
-	}
-
-	public void callPrimitiveArray(int size, int line) {
-		stackPushReceiver(line);
-		stackPushNumeric(size);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_ARRAY, PRIMITIVE_ARRAY_SIGNATURE);
-	}
-
-	public void callPrimitiveCharacter(String value, int line) {
-		stackPushReceiver(line);
-		stackPushLiteral(value);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_CHARACTER, PRIMITIVE_CHARACTER_SIGNATURE);
-	}
-
-	public void callClass() {
-		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "cls", "()Lst/redline/ProtoObject;");
-	}
-
-	public void callPrimitiveCompileMethod(String fullMethodName, String methodName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
-		stackPushLiteral(fullMethodName);
-		stackPushLiteral(methodName);
-		stackPushLiteral(className);
-		stackPushLiteral(packageName);
-		stackPushNumeric(countOfArguments);
-		stackPushBoolean(isClassMethod);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "compileMethod", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZ)V");
-	}
-
-	public void callPrimitiveCompileBlock(String fullBlockName, int line, String blockName, String className, String packageName, int countOfArguments, boolean isClassMethod) {
-		stackPushReceiver(line);
-		stackPushLiteral(fullBlockName);
-		stackPushLiteral(blockName);
-		stackPushLiteral(className);
-		stackPushLiteral(packageName);
-		stackPushNumeric(countOfArguments);
-		stackPushBoolean(isClassMethod);
-		stackPushThisContext();
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "compileBlock", "(Lst/redline/ProtoObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZLst/redline/ThisContext;)Lst/redline/ProtoBlock;");
-	}
-
-	public void callToPrimitiveByNumber(int methodArgumentCount, int methodTemporariesCount, String primitive, int line) {
-		throw new IllegalStateException("Can't call primitives from outside of a method.");
-	}
-
-	public void loadJavaValue(int line) {
-		stackPushReceiver(line);
-		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "javaValue", "()Ljava/lang/Object;");
-	}
-
-	public void storeJavaValue(int line) {
-		stackPushReceiver(line);
-		mv.visitMethodInsn(INVOKEVIRTUAL, PROTOOBJECT, "javaValue", "(Ljava/lang/Object;)V");
-	}
-
-	public void callPrimitivePutAt(int index, int line) {
-//		System.out.println("callPrimitivePutAt() " + index + " " + line);
-		visitLine(line);
-		stackPushNumeric(index);
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, PRIMITIVE_PUT_AT, PRIMITIVE_PUT_AT_SIGNATURE);
-	}
-
-	public void callPrimitiveBlockAnswer() {
-		mv.visitMethodInsn(INVOKESTATIC, PRIMITIVE, "blockAnswer", "(Lst/redline/ProtoObject;)V");
-		stackPushNull();
-	}
-
-	public void setupTryForBlockReturn(SimpleExpression simpleExpression) {
-		Label l0 = new Label();
-		Label l1 = new Label();
-		Label l2 = new Label();
-
-		simpleExpression.label0(l0);
-		simpleExpression.label1(l1);
-		simpleExpression.label2(l2);
-
-		mv.visitTryCatchBlock(l0, l1, l2, "st/redline/BlockReturn");
-		mv.visitLabel(l0);
- 	}
-
-	public void setupCatchForBlockReturn(SimpleExpression simpleExpression) {
-		Label l0 = (Label) simpleExpression.label0();
-		Label l1 = (Label) simpleExpression.label1();
-		Label l2 = (Label) simpleExpression.label2();
-
-		mv.visitLabel(l1);
-
-		Label l3 = new Label();
-		mv.visitJumpInsn(GOTO, l3);
-		mv.visitLabel(l2);
-
-		mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {"st/redline/BlockReturn"});
-		mv.visitVarInsn(ASTORE, 11);
-
-		mv.visitVarInsn(ALOAD, 11);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/BlockReturn", "answer", "()Lst/redline/ProtoObject;");
-		mv.visitInsn(ARETURN);
-
-		mv.visitLabel(l3);
-		mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-	}
+    private static final String OBJECT = "st/redline/core/PrimObject";
+    private static final String CONTEXT = "st/redline/core/PrimContext";
+    private static final String SEND_MESSAGES = "_sendMessages_";
+    private static final String SEND_MESSAGES_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
+    private static final String RESULT = "sendMessagesResult";
+    private static final String RESULT_SIG = "(Lst/redline/core/PrimObject;)V";
+    private static final String PRIMITIVE_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
+    private static final String[] SIGNATURES = {
+        "(Ljava/lang/String;)Lst/redline/core/PrimObject;",
+        "(Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+        "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+        "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+        "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+        "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+        "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+        "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;"
+    };
+
+    private final static Map<String, Integer> OPCODES = new HashMap<String, Integer>();
+
+    private final String className;
+    private final String packageName;
+    private final boolean verbose;
+
+    protected ClassWriter cw;
+    protected MethodVisitor mv;
+    private String fullyQualifiedClassName;
+
+    ClassBytecodeWriter(String className, String packageName, boolean verbose) {
+        this(className, packageName, verbose, null);
+        this.cw = createClassWriter();
+    }
+
+    ClassBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter) {
+        this.className = className;
+        this.packageName = packageName;
+        this.verbose = verbose;
+        this.cw = classWriter;
+        fullyQualifiedClassName = ClassPathUtilities.classNameToFullyQualifiedClassName(packageName, className);
+    }
+
+    ClassWriter createClassWriter() {
+        return verbose ? tracingClassWriter() : nonTracingClassWriter();
+    }
+
+    static ClassWriter nonTracingClassWriter() {
+        return new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+    }
+
+    static ClassWriter tracingClassWriter() {
+        return new TracingClassWriter(ClassWriter.COMPUTE_FRAMES, new PrintWriter(System.out));
+    }
+
+    ClassWriter classWriter() {
+        return cw;
+    }
+
+    byte[] contents() {
+        return cw.toByteArray();
+    }
+
+    String homogenize(String className) {
+        int index = className.indexOf("$");
+        if (index == -1)
+            return className;
+        return className.substring(0, index);
+    }
+
+    void methodVisitor(MethodVisitor methodVisitor) {
+        mv = methodVisitor;
+    }
+
+    void openClass() {
+        cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, superclass(), null);
+        cw.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
+        writeInitializeMethod();
+        openMessageSendsMethod();
+    }
+
+    void openMessageSendsMethod() {
+        mv = cw.visitMethod(ACC_PROTECTED, SEND_MESSAGES, SEND_MESSAGES_SIG, null, null);
+        mv.visitCode();
+        pushThis();
+        pushReceiver();
+        pushContext();
+        mv.visitMethodInsn(INVOKESPECIAL, superclass(), SEND_MESSAGES, SEND_MESSAGES_SIG);
+        pop();
+        pushReceiver();
+    }
+
+    void writeInitializeMethod() {
+        openInitializeMethod();
+        registerPackage();
+        addClassToImports();
+        invokeMessageSends();
+        deregisterPackage();
+        closeInitializeMethod();
+    }
+
+    void addClassToImports() {
+        pushThis();
+        pushLiteral(className);
+        pushLiteral(ClassPathUtilities.fullyQualifiedClassNameToPackageName(fullyQualifiedClassName));
+        mv.visitMethodInsn(INVOKEVIRTUAL, superclass(), "packageAtPut", "(Ljava/lang/String;Ljava/lang/String;)V");
+    }
+
+    void deregisterPackage() {
+        if ("".equals(packageName))
+            return;
+        mv.visitMethodInsn(INVOKESTATIC, OBJECT, "deregisterPackage", "()V");
+    }
+
+    void registerPackage() {
+        if ("".equals(packageName))
+            return;
+        pushLiteral(packageName);
+        mv.visitMethodInsn(INVOKESTATIC, OBJECT, "registerPackage", "(Ljava/lang/String;)V");
+    }
+
+    void invokeMessageSends() {
+        pushThis();
+        pushThis();
+        pushThis();
+        mv.visitTypeInsn(NEW, "st/redline/core/PrimContext");
+        pushDuplicate();
+        pushThis();
+        mv.visitMethodInsn(INVOKESPECIAL, "st/redline/core/PrimContext", "<init>", "(Lst/redline/core/PrimObject;)V");
+        mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, SEND_MESSAGES, SEND_MESSAGES_SIG);
+        mv.visitMethodInsn(INVOKEVIRTUAL, fullyQualifiedClassName, RESULT, RESULT_SIG);
+    }
+
+    String superclass() {
+        return "st/redline/core/PrimObjectMetaclass";
+    }
+
+    void closeClass() {
+        closeMessageSendsMethod();
+        cw.visitEnd();
+    }
+
+    void closeMessageSendsMethod() {
+        mv.visitInsn(ARETURN);
+        closeMethod();
+    }
+
+    void closeInitializeMethod() {
+        mv.visitInsn(RETURN);
+        closeMethod();
+    }
+
+    private void closeMethod() {
+        mv.visitMaxs(1, 3);
+        mv.visitEnd();
+    }
+
+    void openInitializeMethod() {
+        mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+        mv.visitCode();
+        visitLine(0);
+        pushThis();
+        mv.visitMethodInsn(INVOKESPECIAL, superclass(), "<init>", "()V");
+    }
+
+    void invokeContextTemporariesInit(int size) {
+        pushContext();
+        pushNumber(size);
+        mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporariesInit", "(I)V");
+    }
+
+    void invokeObjectPerform(String selector, int argumentCount, boolean sendToSuper) {
+        pushLiteral(selector);
+        if (sendToSuper)
+            mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "superPerform", "(Lst/redline/core/PrimContext;" + SIGNATURES[argumentCount].substring(1));
+        else
+            mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "perform", SIGNATURES[argumentCount]);
+    }
+
+    void invokeObjectCreate(String type, String value, int line) {
+        visitLine(line);
+        pushLiteral(value);
+        mv.visitMethodInsn(INVOKESTATIC, OBJECT, type, "(Ljava/lang/Object;)Lst/redline/core/PrimObject;");
+    }
+
+    void invokeObjectCompileBlock(String name, int line) {
+        visitLine(line);
+        pushReceiver();
+        pushLiteral(name);
+        pushContext();
+        mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "block", "(Ljava/lang/String;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;");
+    }
+
+    void invokeObjectString(String value, int line) {
+        invokeObjectCreate("string", value, line);
+    }
+
+    void invokeObjectSymbol(String value, int line) {
+        invokeObjectCreate("symbol", value, line);
+    }
+
+    void invokeObjectCharacter(String value, int line) {
+        invokeObjectCreate("character", value, line);
+    }
+
+    void invokeObjectNumber(String value, int line) {
+        invokeObjectCreate("number", value, line);
+    }
+
+    void invokeVariableAt(String name, int line) {
+        visitLine(line);
+        pushReceiver();
+        pushLiteral(name);
+        mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "variableAt", "(Ljava/lang/String;)Lst/redline/core/PrimObject;");
+    }
+
+    void invokeVariablePutAt(String name, int line) {
+        visitLine(line);
+        pushLiteral(name);
+        pushReceiver();
+        mv.visitMethodInsn(INVOKESTATIC, OBJECT, "variablePutAtIn", "(Lst/redline/core/PrimObject;Ljava/lang/String;Lst/redline/core/PrimObject;)Lst/redline/core/PrimObject;");
+    }
+
+    void invokeObjectArray(int size) {
+        pushNumber(size);
+        mv.visitMethodInsn(INVOKESTATIC, OBJECT, "array", "(I)Lst/redline/core/PrimObject;");
+    }
+
+    void invokeArrayPutAt(int index, int line) {
+        visitLine(line);
+        pushNumber(index);
+        mv.visitMethodInsn(INVOKESTATIC, OBJECT, "putAt", "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;I)Lst/redline/core/PrimObject;");
+    }
+
+    void invokePrimitive(int line, String primitive) {
+        // TODO.JCL - cater for case where primitive fails - for now return primitive result.
+        // Doing ARETURN here means there can be more than one ARETURN emitted, this is OK.
+        visitLine(line);
+        pushThis();
+        pushReceiver();
+        pushContext();
+        mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "p" + primitive, PRIMITIVE_SIG);
+        mv.visitInsn(ARETURN);
+    }
+
+    public void invokeBlockAnswer(String blockReturnType) {
+        pushThis();
+        pushLiteral(blockReturnType);
+        mv.visitMethodInsn(INVOKESTATIC, OBJECT, "blockAnswer", "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObjectBlock;Ljava/lang/String;)Lst/redline/core/PrimObject;");
+    }
+
+    void pop() {
+        mv.visitInsn(POP);
+    }
+
+    void pushArgument(int index) {
+        pushContext();
+        pushNumber(index);
+        mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "argumentAt", "(I)Lst/redline/core/PrimObject;");
+    }
+
+    void pushOuterArgument(int index) {
+        pushContext();
+        pushNumber(index);
+        pushReceiver();
+        mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "argumentAtFrom", "(ILst/redline/core/PrimObject;)Lst/redline/core/PrimObject;");
+    }
+
+    void pushTemporary(int index) {
+        pushContext();
+        pushNumber(index);
+        mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporaryAt", "(I)Lst/redline/core/PrimObject;");
+    }
+
+    void pushOuterTemporary(int index) {
+        pushContext();
+        pushNumber(index);
+        pushReceiver();
+        mv.visitMethodInsn(INVOKEVIRTUAL, CONTEXT, "temporaryAtFrom", "(ILst/redline/core/PrimObject;)Lst/redline/core/PrimObject;");
+    }
+
+    void storeTemporary(int index) {
+        pushNumber(index);
+        pushContext();
+        mv.visitMethodInsn(INVOKESTATIC, CONTEXT, "temporaryPutAtIn", "(Lst/redline/core/PrimObject;ILst/redline/core/PrimContext;)V");
+    }
+
+    void storeOuterTemporary(int index) {
+        pushNumber(index);
+        pushContext();
+        pushReceiver();
+        mv.visitMethodInsn(INVOKESTATIC, CONTEXT, "temporaryPutAtInFrom", "(Lst/redline/core/PrimObject;ILst/redline/core/PrimContext;Lst/redline/core/PrimObject;)V");
+    }
+
+    void pushOuterReceiver() {
+        pushReceiver();
+        mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "outerReceiver", "()Lst/redline/core/PrimObject;");
+    }
+
+    void pushLiteral(String literal) {
+        mv.visitLdcInsn(literal);
+    }
+
+    void pushDuplicate() {
+        mv.visitInsn(DUP);
+    }
+
+    void pushThis() {
+        mv.visitVarInsn(ALOAD, 0);
+    }
+
+    void pushReceiver() {
+        mv.visitVarInsn(ALOAD, 1);
+    }
+
+    void pushContext() {
+        mv.visitVarInsn(ALOAD, 2);
+    }
+
+    void pushNull() {
+        mv.visitInsn(ACONST_NULL);
+    }
+
+    void pushObjectStaticField(String field) {
+        mv.visitFieldInsn(GETSTATIC, OBJECT, field, "Lst/redline/core/PrimObject;");
+    }
+
+    void pushNumber(int value) {
+        switch (value) {
+            case 0: mv.visitInsn(ICONST_0); break;
+            case 1: mv.visitInsn(ICONST_1); break;
+            case 2: mv.visitInsn(ICONST_2); break;
+            case 3: mv.visitInsn(ICONST_3); break;
+            case 4: mv.visitInsn(ICONST_4); break;
+            case 5: mv.visitInsn(ICONST_5); break;
+            default:
+                if (value > 5 && value < 128)
+                    mv.visitIntInsn(BIPUSH, value);
+                else // SIPUSH not supported yet.
+                    throw new IllegalStateException("push of integer value " + value + " not yet supported.");
+        }
+    }
+
+    void visitLine(int line) {
+        Label l0 = new Label();
+        mv.visitLabel(l0);
+        mv.visitLineNumber(line, l0);
+    }
+
+    void setupTryForBlockReturn(SimpleExpression simpleExpression, String blockReturnType) {
+        Label l0 = new Label();
+        Label l1 = new Label();
+        Label l2 = new Label();
+
+        simpleExpression.leaveResultOnStack();
+        simpleExpression.label0(l0);
+        simpleExpression.label1(l1);
+        simpleExpression.label2(l2);
+
+        mv.visitTryCatchBlock(l0, l1, l2, blockReturnType);
+        mv.visitLabel(l0);
+    }
+
+    void setupCatchForBlockReturn(SimpleExpression simpleExpression, String blockReturnType) {
+        Label l1 = (Label) simpleExpression.label1();
+        Label l2 = (Label) simpleExpression.label2();
+
+        mv.visitLabel(l1);
+        Label l3 = new Label();
+        mv.visitJumpInsn(GOTO, l3);
+        mv.visitLabel(l2);
+
+        mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {blockReturnType});
+        mv.visitMethodInsn(INVOKEVIRTUAL, blockReturnType, "answer", "()Lst/redline/core/PrimObject;");
+        mv.visitInsn(ARETURN);
+
+        mv.visitLabel(l3);
+        mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+    }
+
+    public void visitInsn(String opcode) {
+        mv.visitInsn(opcodeValue(opcode));
+    }
+
+    private int opcodeValue(String opcode) {
+        if (!OPCODES.containsKey(opcode))
+            throw new IllegalStateException("Unknown OPCODE '" + opcode + "'.");
+        return OPCODES.get(opcode);
+    }
+
+    void visitFieldInsn(int opcode, String owner, String name, String desc) {
+        mv.visitFieldInsn(opcode, owner, name, desc);
+    }
+
+    void visitMethodInsn(int opcode, String owner, String name, String desc) {
+        mv.visitMethodInsn(opcode, owner, name, desc);
+    }
+
+    void visitLdcInsn(String value) {
+        mv.visitLdcInsn(value);
+    }
+
+    void visitVarInsn(int opcode, int value) {
+        mv.visitVarInsn(opcode, value);
+    }
+
+    public void visitTypeInsn(int opcode, String type) {
+        mv.visitTypeInsn(opcode, type);
+    }
+
+    static {
+        OPCODES.put("V1_1", 196653);
+        OPCODES.put("V1_2", 46);
+        OPCODES.put("V1_3", 47);
+        OPCODES.put("V1_4", 48);
+        OPCODES.put("V1_5", 49);
+        OPCODES.put("V1_6", 50);
+        OPCODES.put("V1_7", 51);
+        OPCODES.put("ACC_PUBLIC", 1);
+        OPCODES.put("ACC_PRIVATE", 2);
+        OPCODES.put("ACC_PROTECTED", 4);
+        OPCODES.put("ACC_STATIC", 8);
+        OPCODES.put("ACC_FINAL", 16);
+        OPCODES.put("ACC_SUPER", 32);
+        OPCODES.put("ACC_SYNCHRONIZED", 32);
+        OPCODES.put("ACC_VOLATILE", 64);
+        OPCODES.put("ACC_BRIDGE", 64);
+        OPCODES.put("ACC_VARARGS", 128);
+        OPCODES.put("ACC_TRANSIENT", 128);
+        OPCODES.put("ACC_NATIVE", 256);
+        OPCODES.put("ACC_INTERFACE", 512);
+        OPCODES.put("ACC_ABSTRACT", 1024);
+        OPCODES.put("ACC_STRICT", 2048);
+        OPCODES.put("ACC_SYNTHETIC", 4096);
+        OPCODES.put("ACC_ANNOTATION", 8192);
+        OPCODES.put("ACC_ENUM", 16384);
+        OPCODES.put("ACC_DEPRECATED", 131072);
+        OPCODES.put("T_BOOLEAN", 4);
+        OPCODES.put("T_CHAR", 5);
+        OPCODES.put("T_FLOAT", 6);
+        OPCODES.put("T_DOUBLE", 7);
+        OPCODES.put("T_BYTE", 8);
+        OPCODES.put("T_SHORT", 9);
+        OPCODES.put("T_INT", 10);
+        OPCODES.put("T_LONG", 11);
+        OPCODES.put("F_NEW", -1);
+        OPCODES.put("F_FULL", 0);
+        OPCODES.put("F_APPEND", 1);
+        OPCODES.put("F_CHOP", 2);
+        OPCODES.put("F_SAME", 3);
+        OPCODES.put("F_SAME1", 4);
+        OPCODES.put("TOP", TOP);
+        OPCODES.put("INTEGER", INTEGER);
+        OPCODES.put("FLOAT", FLOAT);
+        OPCODES.put("DOUBLE", DOUBLE);
+        OPCODES.put("LONG", LONG);
+        OPCODES.put("NULL", NULL);
+        OPCODES.put("UNINITIALIZED_THIS", UNINITIALIZED_THIS);
+        OPCODES.put("NOP", 0);
+        OPCODES.put("ACONST_NULL", 1);
+        OPCODES.put("ICONST_M1", 2);
+        OPCODES.put("ICONST_0", 3);
+        OPCODES.put("ICONST_1", 4);
+        OPCODES.put("ICONST_2", 5);
+        OPCODES.put("ICONST_3", 6);
+        OPCODES.put("ICONST_4", 7);
+        OPCODES.put("ICONST_5", 8);
+        OPCODES.put("LCONST_0", 9);
+        OPCODES.put("LCONST_1", 10);
+        OPCODES.put("FCONST_0", 11);
+        OPCODES.put("FCONST_1", 12);
+        OPCODES.put("FCONST_2", 13);
+        OPCODES.put("DCONST_0", 14);
+        OPCODES.put("DCONST_1", 15);
+        OPCODES.put("BIPUSH", 16);
+        OPCODES.put("SIPUSH", 17);
+        OPCODES.put("LDC", 18);
+        OPCODES.put("ILOAD", 21);
+        OPCODES.put("LLOAD", 22);
+        OPCODES.put("FLOAD", 23);
+        OPCODES.put("DLOAD", 24);
+        OPCODES.put("ALOAD", 25);
+        OPCODES.put("IALOAD", 46);
+        OPCODES.put("LALOAD", 47);
+        OPCODES.put("FALOAD", 48);
+        OPCODES.put("DALOAD", 49);
+        OPCODES.put("AALOAD", 50);
+        OPCODES.put("BALOAD", 51);
+        OPCODES.put("CALOAD", 52);
+        OPCODES.put("SALOAD", 53);
+        OPCODES.put("ISTORE", 54);
+        OPCODES.put("LSTORE", 55);
+        OPCODES.put("FSTORE", 56);
+        OPCODES.put("DSTORE", 57);
+        OPCODES.put("ASTORE", 58);
+        OPCODES.put("IASTORE", 79);
+        OPCODES.put("LASTORE", 80);
+        OPCODES.put("FASTORE", 81);
+        OPCODES.put("DASTORE", 82);
+        OPCODES.put("AASTORE", 83);
+        OPCODES.put("BASTORE", 84);
+        OPCODES.put("CASTORE", 85);
+        OPCODES.put("SASTORE", 86);
+        OPCODES.put("POP", 87);
+        OPCODES.put("POP2", 88);
+        OPCODES.put("DUP", 89);
+        OPCODES.put("DUP_X1", 90);
+        OPCODES.put("DUP_X2", 91);
+        OPCODES.put("DUP2", 92);
+        OPCODES.put("DUP2_X1", 93);
+        OPCODES.put("DUP2_X2", 94);
+        OPCODES.put("SWAP", 95);
+        OPCODES.put("IADD", 96);
+        OPCODES.put("LADD", 97);
+        OPCODES.put("FADD", 98);
+        OPCODES.put("DADD", 99);
+        OPCODES.put("ISUB", 100);
+        OPCODES.put("LSUB", 101);
+        OPCODES.put("FSUB", 102);
+        OPCODES.put("DSUB", 103);
+        OPCODES.put("IMUL", 104);
+        OPCODES.put("LMUL", 105);
+        OPCODES.put("FMUL", 106);
+        OPCODES.put("DMUL", 107);
+        OPCODES.put("IDIV", 108);
+        OPCODES.put("LDIV", 109);
+        OPCODES.put("FDIV", 110);
+        OPCODES.put("DDIV", 111);
+        OPCODES.put("IREM", 112);
+        OPCODES.put("LREM", 113);
+        OPCODES.put("FREM", 114);
+        OPCODES.put("DREM", 115);
+        OPCODES.put("INEG", 116);
+        OPCODES.put("LNEG", 117);
+        OPCODES.put("FNEG", 118);
+        OPCODES.put("DNEG", 119);
+        OPCODES.put("ISHL", 120);
+        OPCODES.put("LSHL", 121);
+        OPCODES.put("ISHR", 122);
+        OPCODES.put("LSHR", 123);
+        OPCODES.put("IUSHR", 124);
+        OPCODES.put("LUSHR", 125);
+        OPCODES.put("IAND", 126);
+        OPCODES.put("LAND", 127);
+        OPCODES.put("IOR", 128);
+        OPCODES.put("LOR", 129);
+        OPCODES.put("IXOR", 130);
+        OPCODES.put("LXOR", 131);
+        OPCODES.put("IINC", 132);
+        OPCODES.put("I2L", 133);
+        OPCODES.put("I2F", 134);
+        OPCODES.put("I2D", 135);
+        OPCODES.put("L2I", 136);
+        OPCODES.put("L2F", 137);
+        OPCODES.put("L2D", 138);
+        OPCODES.put("F2I", 139);
+        OPCODES.put("F2L", 140);
+        OPCODES.put("F2D", 141);
+        OPCODES.put("D2I", 142);
+        OPCODES.put("D2L", 143);
+        OPCODES.put("D2F", 144);
+        OPCODES.put("I2B", 145);
+        OPCODES.put("I2C", 146);
+        OPCODES.put("I2S", 147);
+        OPCODES.put("LCMP", 148);
+        OPCODES.put("FCMPL", 149);
+        OPCODES.put("FCMPG", 150);
+        OPCODES.put("DCMPL", 151);
+        OPCODES.put("DCMPG", 152);
+        OPCODES.put("IFEQ", 153);
+        OPCODES.put("IFNE", 154);
+        OPCODES.put("IFLT", 155);
+        OPCODES.put("IFGE", 156);
+        OPCODES.put("IFGT", 157);
+        OPCODES.put("IFLE", 158);
+        OPCODES.put("IF_ICMPEQ", 159);
+        OPCODES.put("IF_ICMPNE", 160);
+        OPCODES.put("IF_ICMPLT", 161);
+        OPCODES.put("IF_ICMPGE", 162);
+        OPCODES.put("IF_ICMPGT", 163);
+        OPCODES.put("IF_ICMPLE", 164);
+        OPCODES.put("IF_ACMPEQ", 165);
+        OPCODES.put("IF_ACMPNE", 166);
+        OPCODES.put("GOTO", 167);
+        OPCODES.put("JSR", 168);
+        OPCODES.put("RET", 169);
+        OPCODES.put("TABLESWITCH", 170);
+        OPCODES.put("LOOKUPSWITCH", 171);
+        OPCODES.put("IRETURN", 172);
+        OPCODES.put("LRETURN", 173);
+        OPCODES.put("FRETURN", 174);
+        OPCODES.put("DRETURN", 175);
+        OPCODES.put("ARETURN", 176);
+        OPCODES.put("RETURN", 177);
+        OPCODES.put("GETSTATIC", 178);
+        OPCODES.put("PUTSTATIC", 179);
+        OPCODES.put("GETFIELD", 180);
+        OPCODES.put("PUTFIELD", 181);
+        OPCODES.put("INVOKEVIRTUAL", 182);
+        OPCODES.put("INVOKESPECIAL", 183);
+        OPCODES.put("INVOKESTATIC", 184);
+        OPCODES.put("INVOKEINTERFACE", 185);
+        OPCODES.put("INVOKEDYNAMIC", 186);
+        OPCODES.put("NEW", 187);
+        OPCODES.put("NEWARRAY", 188);
+        OPCODES.put("ANEWARRAY", 189);
+        OPCODES.put("ARRAYLENGTH", 190);
+        OPCODES.put("ATHROW", 191);
+        OPCODES.put("CHECKCAST", 192);
+        OPCODES.put("INSTANCEOF", 193);
+        OPCODES.put("MONITORENTER", 194);
+        OPCODES.put("MONITOREXIT", 195);
+        OPCODES.put("MULTIANEWARRAY", 197);
+        OPCODES.put("IFNULL", 198);
+        OPCODES.put("IFNONNULL", 199);
+    }
 }

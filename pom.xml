@@ -17,13 +17,13 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8.2</version>
+      <version>4.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.easymock</groupId>
-      <artifactId>easymock</artifactId>
-      <version>3.0</version>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.9.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -34,7 +34,7 @@
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm</artifactId>
-      <version>3.2</version>
+      <version>3.3.1</version>
     </dependency>
     <dependency>
       <groupId>commons-cli</groupId>
@@ -173,13 +173,13 @@
                 </goals>
                 <configuration>
                   <includeProjectDependencies>true</includeProjectDependencies>
-	              <mainClass>st.redline.Stic</mainClass>
+	              <mainClass>st.redline.core.Stic</mainClass>
     	          <arguments>
         	        <argument>-r</argument>
             	    <argument>${project.basedir}${path.separator}src${path.separator}main${path.separator}smalltalk</argument>
                 	<argument>-s</argument>
 	                <argument>${project.basedir}${path.separator}src${path.separator}test${path.separator}smalltalk</argument>
-    	            <argument>st.redline.TestRunner</argument>
+    	            <argument>st.redline.core.TestRunner</argument>
         	      </arguments>
                 </configuration>
               </execution>

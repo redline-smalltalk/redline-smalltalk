@@ -1,34 +1,29 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.bootstrap;
 
-import st.redline.*;
+import st.redline.core.*;
 
-import java.io.File;
 import java.util.List;
 
-public class ImportMethod extends ProtoMethod {
+public class ImportMethod extends PrimObject {
 
-	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject argument) {
-//		System.out.println("import into " + receiver + " of " + argument.javaValue());
-		SmalltalkClassLoader smalltalkClassLoader = smalltalkClassLoader();
-		for (SourceFile sourceFile : findSources(smalltalkClassLoader, argument.javaValue()))
-			addAssociationBetweenObjectAndPackage(receiver, sourceFile.shortName(), sourceFile.packageName());
-		return receiver;
-	}
+    public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
+        PrimObjectMetaclass metaclass = (PrimObjectMetaclass) receiver;
+        SmalltalkClassLoader smalltalkClassLoader = smalltalkClassLoader();
+        for (SourceFile sourceFile : findSources(smalltalkClassLoader, primContext.argumentAt(0).javaValue()))
+            addAssociationBetweenObjectAndPackage(metaclass, sourceFile.shortName(), sourceFile.packageName());
+        return receiver;
+    }
 
-	private void addAssociationBetweenObjectAndPackage(ProtoObject receiver, String className, String packageName) {
-		Primitives.packageAtPut(receiver, className, makeFullyQualifiedPath(packageName, className));
-	}
+    private void addAssociationBetweenObjectAndPackage(PrimObjectMetaclass metaclass, String className, String packageName) {
+        metaclass.packageAtPut(className, makeFullyQualifiedPath(packageName, className));
+    }
 
-	public static String makeFullyQualifiedPath(String packageName, String className) {
-		return packageName + "." + className;
-	}
+    public static String makeFullyQualifiedPath(String packageName, String className) {
+        return packageName + "." + className;
+    }
 
-	private List<SourceFile> findSources(SmalltalkClassLoader smalltalkClassLoader, Object importPaths) {
-		return smalltalkClassLoader.findSources(String.valueOf(importPaths));
-	}
-
-	private SmalltalkClassLoader smalltalkClassLoader() {
-		return SmalltalkClassLoader.instance();
-	}
+    private List<SourceFile> findSources(SmalltalkClassLoader smalltalkClassLoader, Object importPaths) {
+        return smalltalkClassLoader.findSources(String.valueOf(importPaths));
+    }
 }

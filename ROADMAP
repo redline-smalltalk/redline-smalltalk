@@ -1,0 +1,86 @@
+- Redline Smalltalk feature ROADMAP -
+
+-- Release 1.0 / Version 1.0 --
+
+Goal: Provide a base that can be used for developing tools or applications without a UI in Smalltalk to be run on the Java Virtual Machine.
+
+001. Smalltalk Compiler
+     
+    A compiler that supports the full Smalltalk language, compiling both classes and scripts (files without classes) into JVM bytecode for execution.
+
+    The compiler should output debug information such that JVM debuggers can set break points and debug the code line by line. The debug information
+    should also be included in exceptions to show which Smalltalk source lines were involved in any exceptions.
+
+    The compiler should handle the dispatch of control to primitive methods.
+
+    The compiler should handle the integration of non-Smalltalk libraries with Smalltalk code. This has been achieved with the JVM pseudo variable
+    and the ability to directly emit bytecodes. Anything the JVM can call you can call.
+
+    The compiler should create JVM Classes in such a way that those classes are usable from non-Smalltalk languages. For example, it should be possible
+    to use a Smalltalk class from Java.
+
+    ** Status **: The Smalltalk Compiler is complete.
+
+002. Smalltalk Runtime
+
+    A Smalltalk rumtime should be provided that includes all the classes defined in the "Blue Book" (Smalltalk-80 the language and its implementation)
+    with the exception of the graphical classes and those related to threading and scheduling that won't fit the JVM's model of those same concepts.
+
+    The runtime should have a corresponding test suite that covers the functionality of each class to provide some confidence that the runtime is 
+    tested and working as expected, and that changes to the runtime do not break existing functionality.
+
+    ** Status **: Underway. Several community members signed up during the class adoption drive to implement a runtime class or two. This process is
+    continuing. We need more contributors and or a bigger push to get this completed.
+
+003. Smart Classloader
+
+    A smart classloader which should reload classes when the associated source file changes, and should also 'reload' all classes on request.
+    This functionality is essential to enable a quick development feeback loop where source is changed and on next invocation the changed source
+    is executed.
+
+    The smart classloader should also be lockable, whereby it will not reload classes nor perform checks to see if the source has changed. The smart 
+    classloader is expected to be locked in Production environments.
+
+    There is a current classloader that fits the JVM classloader model, however, these additional features are not 'standard' and will have to be built.
+
+    ** Status **: Underway. 
+
+-- Release 2 / Version  1.0
+
+Goal: Provide tools and frameworks that help people get started with building apps in Smalltalk.
+
+004. Light weight Web Framework
+
+    A light weight Web Framework that supports the development of server side functionality in Smalltalk. 
+
+    ** Status **: Underway. This sub-project is called "Stout" and is currently part of the main source tree but will be separated out shortly.
+
+005. Smalltalk Interactive Command Line (REPL)
+
+    An interactive command line should be provided to enable developers to quickly try out Smalltalk code experiments or to interact with existing 
+    application or classes.
+
+    ** Status **: Underway. This sub-project is called "Stir" and it is available in a separate git repo. Stir has a dependency on Stout.
+
+006. IDE integration
+
+    Integration into the two leading Java IDE's should be provided. These two IDE's are Eclipse and IntelliJ.
+    
+    IDE Integration should provide as a minimum the ability to:
+    a. Create a Redline Smalltalk project, where the folder structure is consistent and in keeping with Redline expectations.
+    b. Enable the execution of Smalltalk code from the IDE.
+    c. Integrate with Stout and Stir.
+
+    ** Status **: Underway. These projects are being undertaken by community members. When usable modules are available then the associated git repo's will
+    be linked to from the main Redline Repo.
+
+007. Test Framework
+
+    A test framework and classes should be provided to enable developers to write descriptive and effective Tests for their code.
+    
+    Something a little more advanced than SUnit is expected here, although an SUnit port would be work while as well.
+    
+    ** Status **: Unknown - Steven R. Baker who wrote Ruby rspec said he would write a Test framework for Redline. Need to follow him up on this.
+
+*end*
+

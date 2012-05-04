@@ -586,4 +586,4 @@ subclass: classNameString
   poolDictionaries: stringOfPoolNames
   category: categoryNameString
 
-*END*
+*END!*

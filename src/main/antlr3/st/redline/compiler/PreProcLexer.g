@@ -47,14 +47,14 @@ PREPROC
           |  v = ( '+'| '-')       // Only these are predicted.
             {
                 if (!firstMethod()) {
-                    sb.append("] ");   // DONT append this if this is first +/- seen.
+                    sb.append("]. ");   // DONT append this if this is first +/- seen.
                 }
                 sb.append(methodName);
 
                 if ($v == '+') {
-                    sb.append(" _class_");
+                    sb.append(" class");
                 }
-                sb.append(" >> ");
+                sb.append(" atSelector: #");
                 haveMethods();
             }
 
@@ -85,9 +85,9 @@ PREPROC
                                         // Write out the parts of the keyword Selector
                                         //
                                         sb.append($w1.text);        // First element of the selector
-                                        sb.append(": ");
-                                        sb.append($w2.text);        // Second element of the selector
-                                        sb.append(' ');
+                                        sb.append(":");
+                                        args.append(" :");
+                                        args.append($w2.text);        // Second element of the selector
                                       }
 
                                     | // *** ERROR - Malformed keyword selector ***
@@ -114,8 +114,8 @@ PREPROC
                                         // Write out the parts of the binary selector
                                         //
                                         sb.append($b.text);
-                                        sb.append(" ");
-                                        sb.append($w1.text);
+                                        args.append(" :");
+                                        args.append($w1.text);
                                   }
 
                                 | // *** ERROR - Malformed binary selector ***
@@ -131,8 +131,13 @@ PREPROC
 
                     {
                         // Closing info
-                        //                                        
-                        sb.append(" [");
+                        //
+                        sb.append(" put: [");
+                        if (args.length()>0) {
+                            sb.append(args); 
+                            sb.append(" |");
+                            args = new StringBuilder();
+                        }
                     }
 
                 (

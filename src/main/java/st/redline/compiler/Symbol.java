@@ -1,42 +1,46 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class Symbol implements IndexedVisitableNode {
+class Symbol extends ValuePrimary implements ArrayElement {
 
-	public final int line;
-	public final String value;
-	private Identifier identifier;
-	private BinarySelector binarySelector;
-	private Keyword keyword;
-	private int index = 0;
+    private int index;
+    private boolean insideArray = false;
 
-	public Symbol(Identifier identifier) {
-		this.identifier = identifier;
-		value = identifier.value;
-		line = identifier.line;
-	}
+    Symbol() {
+        super(null, 0);
+    }
 
-	public Symbol(BinarySelector binarySelector) {
-		this.binarySelector = binarySelector;
-		value = binarySelector.value;
-		line = binarySelector.line;
-	}
+    public int index() {
+        return index;
+    }
 
-	public Symbol(Keyword keyword) {
-		this.keyword = keyword;
-		value = keyword.value;
-		line = keyword.line;
-	}
+    public void insideArray() {
+        insideArray = true;
+    }
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this, value, line);
-	}
+    public boolean isInsideArray() {
+        return insideArray;
+    }
 
-	public void index(int index) {
-		this.index = index;
-	}
+    public void index(int index) {
+        this.index = index;
+    }
 
-	public int index() {
-		return index;
-	}
+    void valueAndLine(String value, int line) {
+        value(value);
+        line(line);
+    }
+
+    void addValueAndLine(String value, int line) {
+        if (line() == 0)
+            line(line);
+        if (value() == null)
+            value(value);
+        else
+            value(value() + value);
+    }
+
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visit(this, value(), index, insideArray, line());
+    }
 }

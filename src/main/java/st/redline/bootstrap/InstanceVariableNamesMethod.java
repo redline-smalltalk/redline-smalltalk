@@ -1,14 +1,19 @@
-/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.bootstrap;
 
-import st.redline.ProtoMethod;
-import st.redline.ProtoObject;
-import st.redline.ThisContext;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObject;
+import st.redline.core.PrimObjectClass;
 
-public class InstanceVariableNamesMethod extends ProtoMethod {
-	public ProtoObject applyTo(ProtoObject receiver, ThisContext thisContext, ProtoObject argument) {
-//		System.out.println("InstanceVariableNamesMethod() " + receiver + " " + String.valueOf(argument.javaValue()));
-		addInstanceVariableNames(receiver, String.valueOf(argument.javaValue()));
-		return receiver;
-	}
+public class InstanceVariableNamesMethod extends PrimObject {
+
+    public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
+        PrimObjectClass aClass = (PrimObjectClass) receiver;
+        for (String name : names(primContext).split(" "))
+            aClass.addVariableNamed(name);
+        return receiver;
+    }
+
+    String names(PrimContext primContext) {
+        return (String) primContext.argumentAt(0).javaValue();
+    }
 }

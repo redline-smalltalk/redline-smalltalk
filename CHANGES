@@ -1,3 +1,25 @@
+04/05/2012
+
+Added Smalltalk Compiler class to expose ability to evaluate strings of smalltalk source and answer the result of that 
+evaluation.
+
+03/05/2012
+
+Added capture of result of sending messages that embody a file, so direct evaluation of a string can be returned into Smalltalk.
+This is a WIP for exposing the Compiler and the ability to evaluate Smalltalk strings.
+
+20/01/2012
+
+In response to feedback - I did the following:
+Rewrote the grammar to make it cleaner and remove some grammar bugs that were hindering us.
+Rewrote Analyser that walks the Abstract Syntax tree, since grammar nodes changed, and we 
+learnt a lot from previous attempts which means we can have a smaller better Analyser.
+Rewrote Bytecode generator to be cleaner.
+Rewrote Java layer of classes to more closely reflect the "meta" nature of Smalltalk. Making
+a class correctly requires the creation and population of a Metaclass and then asking it for
+an instance of the class.
+Added tests, tests and more tests.
+
 01/01/2012
 
 Added check for null in superclass call. Answers nil if null.

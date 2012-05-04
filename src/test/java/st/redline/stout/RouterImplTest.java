@@ -1,10 +1,11 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
-import org.easymock.EasyMockSupport;
 import org.junit.Test;
-import st.redline.ProtoBlock;
-import st.redline.ProtoObject;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import st.redline.stout.Block;
 import st.redline.stout.RequestPathSpecification;
 import st.redline.stout.ResponseSerializer;
@@ -16,10 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.easymock.EasyMock.expect;
 import static org.junit.Assert.assertEquals;
 
-public class RouterImplTest extends EasyMockSupport {
+public class RouterImplTest {
 
 	// TODO - uncomment and fix test.
 //    @Test
@@ -55,16 +55,12 @@ public class RouterImplTest extends EasyMockSupport {
         String requestPath = createRandomString();
         boolean canHandleRequest = true;
 
-        RequestPathSpecification requestPathSpecification = createMock(RequestPathSpecification.class);
+        RequestPathSpecification requestPathSpecification = mock(RequestPathSpecification.class);
 
-        expect(requestPathSpecification.isPathMatching(requestPath)).andReturn(canHandleRequest);
+        when(requestPathSpecification.isPathMatching(requestPath)).thenReturn(canHandleRequest);
 
-        replayAll();
-
-        RouterImpl router = new RouterImpl(null, null, requestPathSpecification);
-        assertEquals(canHandleRequest, router.canHandleRequest(requestPath));
-
-        verifyAll();
+        RouterImpl router = new RouterImpl(null, "x", null, requestPathSpecification);
+        assertEquals(canHandleRequest, router.canHandleRequest(requestPath, "x"));
     }
 
     private String createRandomString() {

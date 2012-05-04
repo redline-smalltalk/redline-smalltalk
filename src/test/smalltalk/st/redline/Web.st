@@ -1,9 +1,8 @@
+" Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution "
 
 import: 'st.redline.stout.Stout'.
 
-Stout < #Web
+Stout < #Web.
 
-- initialize
-    super initialize.
-    self get: '/' do: [Transcript show: 'here'; cr].
-
+- route
+    self onGet: '/' do: [ 'Hello World from Redline Smalltalk Web' ].

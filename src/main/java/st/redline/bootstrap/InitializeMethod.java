@@ -1,12 +1,11 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.bootstrap;
 
-import st.redline.ProtoMethod;
-import st.redline.ProtoObject;
-import st.redline.ThisContext;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObject;
 
-public class InitializeMethod extends ProtoMethod {
-    public ProtoObject applyTo(ProtoObject receiver, ThisContext context) {
+public class InitializeMethod extends PrimObject {
+    public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
         return receiver;
     }
 }

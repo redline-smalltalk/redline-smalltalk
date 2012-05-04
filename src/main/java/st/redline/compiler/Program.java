@@ -3,24 +3,28 @@ package st.redline.compiler;
 
 public class Program implements VisitableNode {
 
-	private final Temporaries temporaries;
-	private final Statements statements;
-	private final Methods methods;
+    private Temporaries temporaries;
+    private Statements statements;
 
-	public Program(Temporaries temporaries, Statements statements, Methods methods) {
-		this.temporaries = temporaries;
-		this.statements = statements;
-		this.methods = methods;
-	}
+    Program(Temporaries temporaries, Statements statements) {
+        this.temporaries = temporaries;
+        this.statements = statements;
+    }
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		if (temporaries != null)
-			temporaries.accept(visitor);
-		if (statements != null)
-			statements.accept(visitor);
-		if (methods != null)
-			methods.accept(visitor);
-		visitor.visitEnd(this);
-	}
+    Statements statements() {
+        return statements;
+    }
+
+    Temporaries temporaries() {
+        return temporaries;
+    }
+
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visitBegin(this);
+        if (temporaries != null)
+            temporaries.accept(nodeVisitor);
+        if (statements != null)
+            statements.accept(nodeVisitor);
+        nodeVisitor.visitEnd(this);
+    }
 }

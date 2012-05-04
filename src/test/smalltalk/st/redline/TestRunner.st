@@ -1,1 +1,0 @@
-TestSuite new; run.

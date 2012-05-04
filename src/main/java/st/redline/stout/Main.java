@@ -1,7 +1,9 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.stout;
 
-import st.redline.ProtoBlock;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObject;
+import st.redline.core.PrimObjectBlock;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
@@ -21,9 +23,9 @@ public class Main {
 
     private static void registerRouter(RouterRegistry routerRegistry) {
         String spec = "/user/:id";
-        routerRegistry.register(spec, "JSON", "get", new ProtoBlock() {
-            public Object applyTo(Object... parameters) {
-                return "hello world";
+        routerRegistry.register(spec, "JSON", "get", new PrimObjectBlock() {
+            protected PrimObject invoke(PrimObject receiver, PrimContext context) {
+                return this;
             }
         });
     }
@@ -31,7 +33,7 @@ public class Main {
     private static void serveRequest(RouterRegistryImpl routerRegistry) throws IOException {
         String path = "/user/344645";
         HttpServletResponse response = new MockServletResponse();
-        routerRegistry.lookup(path, "get").dispatchToBlock(response, path);
+        routerRegistry.lookup(path, "get", "text/html").dispatchToBlock(response, path);
     }
 
     private static RouterRegistryImpl createRouterRegistry() {
@@ -39,6 +41,7 @@ public class Main {
     }
 
     private static class MockServletResponse implements HttpServletResponse {
+
         public void addCookie(Cookie cookie) {
         }
 

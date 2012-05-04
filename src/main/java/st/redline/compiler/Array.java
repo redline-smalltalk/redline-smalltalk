@@ -2,49 +2,62 @@
 package st.redline.compiler;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Array implements IndexedVisitableNode {
+class Array extends Primary implements ArrayElement {
 
-	private final List<IndexedVisitableNode> visitableNodes;
+    private final ArrayList<ArrayElement> elements;
+    private int index;
+    private int elementIndex = 0;
+    private boolean insideArray = false;
 
-	private int line;
-	private int index = 0;
-	private int elementIndex = 0;
+    Array() {
+        elements = new ArrayList<ArrayElement>();
+    }
 
-	public Array() {
-		visitableNodes = new ArrayList<IndexedVisitableNode>();
-	}
+    void add(ArrayElement arrayElement) {
+        if (arrayElement != null) {
+            arrayElement.insideArray();
+            arrayElement.index(++elementIndex);
+            elements.add(arrayElement);
+        }
+    }
 
-	public void add(IndexedVisitableNode visitableNode) {
-		visitableNode.index(++elementIndex);
-		visitableNodes.add(visitableNode);
-	}
+    int size() {
+        return elements.size();
+    }
 
-	public int size() {
-		return visitableNodes.size();
-	}
+    ArrayElement get(int index) {
+        return elements.get(index);
+    }
 
-	public int line() {
-		return line;
-	}
+    public int index() {
+        return index;
+    }
 
-	public void line(int line) {
-		this.line = line;
-	}
+    public void insideArray() {
+        insideArray = true;
+    }
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		for (VisitableNode visitableNode : visitableNodes)
-			visitableNode.accept(visitor);
-		visitor.visitEnd(this);
-	}
+    public boolean isInsideArray() {
+        return insideArray;
+    }
 
-	public void index(int index) {
-		this.index = index;
-	}
+    public void index(int index) {
+        this.index = index;
+    }
 
-	public int index() {
-		return index;
-	}
+    public String value() {
+        return "<array>";
+    }
+
+    public int line() {
+        return elements.get(0).line();
+    }
+
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visitBegin(this);
+        for (ArrayElement arrayElement : elements)
+            arrayElement.accept(nodeVisitor);
+        nodeVisitor.visitEnd(this);
+    }
 }

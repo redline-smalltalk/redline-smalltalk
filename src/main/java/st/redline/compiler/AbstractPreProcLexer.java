@@ -19,46 +19,47 @@ import org.antlr.runtime.RecognizerSharedState;
  * @author James Ladd - Redline
  */
 public abstract class AbstractPreProcLexer
-    extends Lexer
+		extends Lexer
 
 {
-    /**
-     * Default constructor for the lexer, when you do not yet know what
-     * the character stream to be provided is.
-     */
-    public AbstractPreProcLexer() {
-    }
+	/**
+	 * Default constructor for the lexer, when you do not yet know what
+	 * the character stream to be provided is.
+	 */
+	public AbstractPreProcLexer() {
+	}
 
-    /**
-     * Create a new instance of the lexer using the given character stream as
-     * the input to lex into tokens.
-     *
-     * @param input A valid character stream that contains the ruleSrc code you
-     *              wish to compile (or lex at least)
-     */
-    public AbstractPreProcLexer(CharStream input) {
-        this(input, new RecognizerSharedState());
-    }
+	/**
+	 * Create a new instance of the lexer using the given character stream as
+	 * the input to lex into tokens.
+	 *
+	 * @param input A valid character stream that contains the ruleSrc code you
+	 *              wish to compile (or lex at least)
+	 */
+	public AbstractPreProcLexer(CharStream input) {
+		this(input, new RecognizerSharedState());
+	}
 
-    /**
-     * Internal constructor for ANTLR - do not use.
-     *
-     * @param input The character stream we are going to lex
-     * @param state The shared state object, shared between all lexer components
-     */
-    public AbstractPreProcLexer(CharStream input, RecognizerSharedState state) {
-        super(input,state);
-    }
+	/**
+	 * Internal constructor for ANTLR - do not use.
+	 *
+	 * @param input The character stream we are going to lex
+	 * @param state The shared state object, shared between all lexer components
+	 */
+	public AbstractPreProcLexer(CharStream input, RecognizerSharedState state) {
+		super(input,state);
+	}
 
-    /**
-     * Used internally by the lexer to build the pre-processed output stream
-     */
-    StringBuilder sb;
-    
-    /**
-     * Name of the input file
-     */
-    String methodName;
+	/**
+	 * Used internally by the lexer to build the pre-processed output stream
+	 */
+	StringBuilder sb;
+	StringBuilder args;
+
+	/**
+	 * Name of the input file
+	 */
+	String methodName;
 
 	boolean haveMethods = false;
 
@@ -74,21 +75,22 @@ public abstract class AbstractPreProcLexer
 		return !haveMethods;
 	}
 
-    /**
-     * Initialize the pre-processor according to the input size.
-     * 
-     */
-    public void initPreProc(String name) {
-            
-        // Assume an expansion of 20%, which is just a guess, but is
-        // probably enough for most pre-processing situations.
-        //
-        sb = new StringBuilder( (int)(input.size() * 1.20));   
-        
-        // See if we have the file name?
-        //
-        methodName = name; // input.getSourceName();
-        
+	/**
+	 * Initialize the pre-processor according to the input size.
+	 *
+	 */
+	public void initPreProc(String name) {
+
+		// Assume an expansion of 20%, which is just a guess, but is
+		// probably enough for most pre-processing situations.
+		//
+		sb = new StringBuilder( (int)(input.size() * 1.20));
+		args = new StringBuilder();
+
+		// See if we have the file name?
+		//
+		methodName = name; // input.getSourceName();
+
 //        if  (methodName == null || methodName.isEmpty()) {
 //
 //            methodName = "unknownMethod";
@@ -104,28 +106,30 @@ public abstract class AbstractPreProcLexer
 //                methodName = methodName.substring(0, methodName.lastIndexOf('.'));
 //            }
 //        }
-    }
-   
-    /**
-     * Provide a reference to the internal StringBuilder in case it needs
-     * to be manipulated outside the pre-processor.
-     * 
-     * @return A reference to the StringBuilder that is building the output
-     *         stream.
-     */
-    public StringBuilder getPreProcBuilder() {
-        return sb;
-    }
-    
-    /**
-     * Provide the pre-processed input in String form.
-     * 
-     * @return 
-     */
-    public String getOutput() {
-	    if (haveMethods)
-		    sb.append("]");
-        return sb.toString();
-    }
-}
+	}
 
+	/**
+	 * Provide a reference to the internal StringBuilder in case it needs
+	 * to be manipulated outside the pre-processor.
+	 *
+	 * @return A reference to the StringBuilder that is building the output
+	 *         stream.
+	 */
+	public StringBuilder getPreProcBuilder() {
+		return sb;
+	}
+
+	/**
+	 * Provide the pre-processed input in String form.
+	 *
+	 * @return
+	 */
+	public String getOutput() {
+		if (haveMethods) {
+			sb.append("].\n");
+			sb.append(methodName);
+			sb.append(" initialize.\n");
+		}
+		return sb.toString();
+	}
+}

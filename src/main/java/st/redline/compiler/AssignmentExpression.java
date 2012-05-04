@@ -1,33 +1,50 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-public class AssignmentExpression implements Expression {
+class AssignmentExpression implements Expression {
 
-	private final VariableName variableName;
-	private final Expression expression;
+    private final Identifier identifier;
+    private final Expression expression;
 
-	public AssignmentExpression(VariableName variableName, Expression expression) {
-		this.variableName = variableName;
-		this.expression = expression;
-	}
+    AssignmentExpression(Identifier identifier, Expression expression) {
+        this.identifier = identifier;
+        this.identifier.onStoreSideOfExpression();
+        this.expression = expression;
+        this.expression.leaveResultOnStack();
+    }
 
-	public void leaveResultOnStack() {
-		expression.duplicateResultOnStack();
-	}
+    String variableName() {
+        return identifier.value();
+    }
 
-	public void duplicateResultOnStack() {
-		throw new IllegalStateException("Assignment asked to duplicate stack top!");
-	}
+    Expression expression() {
+        return expression;
+    }
 
-	public boolean isAnswerExpression() {
-		return false;
-	}
+    public int line() {
+        return identifier.line();
+    }
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		expression.leaveResultOnStack();
-		expression.accept(visitor);
-		variableName.onStoreSideOfExpression();
-		variableName.accept(visitor);
-	}
+    public void leaveResultOnStack() {
+        expression.duplicateResultOnStack();
+    }
+
+    public void duplicateResultOnStack() {
+        throw new IllegalStateException("Assignment asked to duplicate stack top!");
+    }
+
+    public boolean isAnswerExpression() {
+        return false;
+    }
+
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visitBegin(this);
+        // Note: The order of visiting below is important. Expression before variable we store result into.
+        if (expression != null) {
+            expression.accept(nodeVisitor);
+        }
+        if (identifier != null)
+            identifier.accept(nodeVisitor);
+        nodeVisitor.visitEnd(this);
+    }
 }

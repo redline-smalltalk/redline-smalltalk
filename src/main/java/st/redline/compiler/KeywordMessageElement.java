@@ -6,27 +6,42 @@ import java.util.List;
 
 public class KeywordMessageElement implements MessageElement {
 
-	private final StringBuffer keywords;
-	private final int line;
-	private final List<BinaryObjectDescription> binaryObjectDescriptions;
+    private final List<BinaryObjectDescription> binaryObjectDescriptions;
+    private final StringBuffer keywords;
+    private final int line;
 
-	public KeywordMessageElement(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
-		binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
-		keywords = new StringBuffer();
-		line = keyword.line;
-		add(keyword, binaryObjectDescription);
-	}
+    KeywordMessageElement(String keyword, int line, BinaryObjectDescription binaryObjectDescription) {
+        binaryObjectDescriptions = new ArrayList<BinaryObjectDescription>();
+        keywords = new StringBuffer();
+        this.line = line;
+        add(keyword, line, binaryObjectDescription);
+    }
 
-	public void add(Keyword keyword, BinaryObjectDescription binaryObjectDescription) {
-		keywords.append(keyword.value);
-		binaryObjectDescriptions.add(binaryObjectDescription);
-	}
+    void add(String keyword, int line, BinaryObjectDescription binaryObjectDescription) {
+        keywords.append(keyword);
+        binaryObjectDescriptions.add(binaryObjectDescription);
+    }
 
-	public void accept(NodeVisitor visitor) {
-		int argumentCount = binaryObjectDescriptions.size();
-		visitor.visit(this, keywords.toString(), line, argumentCount);
-		for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
-			binaryObjectDescription.accept(visitor);
-		visitor.visitEnd(this, keywords.toString(), line, argumentCount);
-	}
+    String keywords() {
+        return keywords.toString();
+    }
+
+    List<BinaryObjectDescription> binaryObjectDescriptions() {
+        return binaryObjectDescriptions;
+    }
+
+    public void accept(NodeVisitor nodeVisitor) {
+        String keywords = keywords();
+        nodeVisitor.visitBegin(this, keywords, binaryObjectDescriptions.size(), line);
+        for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
+            binaryObjectDescription.accept(nodeVisitor);
+        nodeVisitor.visitEnd(this, keywords, binaryObjectDescriptions.size(), line);
+    }
+
+    public boolean hasBlockWithAnswerExpression() {
+        for (BinaryObjectDescription binaryObjectDescription : binaryObjectDescriptions)
+            if (binaryObjectDescription.hasBlockWithAnswerExpression())
+                return true;
+        return false;
+    }
 }

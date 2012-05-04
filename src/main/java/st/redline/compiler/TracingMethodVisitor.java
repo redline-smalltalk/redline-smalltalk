@@ -9,131 +9,131 @@ import org.objectweb.asm.Opcodes;
 
 public class TracingMethodVisitor implements MethodVisitor, Opcodes {
 
-	private final MethodVisitor methodVisitor;
+    private final MethodVisitor methodVisitor;
 
-	public TracingMethodVisitor(MethodVisitor methodVisitor) {
-		this.methodVisitor = methodVisitor;
-	}
+    public TracingMethodVisitor(MethodVisitor methodVisitor) {
+        this.methodVisitor = methodVisitor;
+    }
 
-	public AnnotationVisitor visitAnnotationDefault() {
-		System.out.println("visitAnnotationDefault()");
-		return methodVisitor.visitAnnotationDefault();
-	}
+    public AnnotationVisitor visitAnnotationDefault() {
+        System.out.println("  visitAnnotationDefault()");
+        return methodVisitor.visitAnnotationDefault();
+    }
 
-	public AnnotationVisitor visitAnnotation(String s, boolean b) {
-		System.out.println("visitAnnotation('" + s + "', " + b + ")");
-		return methodVisitor.visitAnnotation(s, b);
-	}
+    public AnnotationVisitor visitAnnotation(String s, boolean b) {
+        System.out.println("  visitAnnotation('" + s + "', " + b + ")");
+        return methodVisitor.visitAnnotation(s, b);
+    }
 
-	public AnnotationVisitor visitParameterAnnotation(int i, String s, boolean b) {
-		System.out.println("visitParameterAnnotation(" + i + ", '" + s + "', " + b + ")");
-		return methodVisitor.visitParameterAnnotation(i, s, b);
-	}
+    public AnnotationVisitor visitParameterAnnotation(int i, String s, boolean b) {
+        System.out.println("  visitParameterAnnotation(" + i + ", '" + s + "', " + b + ")");
+        return methodVisitor.visitParameterAnnotation(i, s, b);
+    }
 
-	public void visitAttribute(Attribute attribute) {
-		System.out.println("visitAttribute(" + attribute + ")");
-		methodVisitor.visitAttribute(attribute);
-	}
+    public void visitAttribute(Attribute attribute) {
+        System.out.println("  visitAttribute(" + attribute + ")");
+        methodVisitor.visitAttribute(attribute);
+    }
 
-	public void visitCode() {
-		System.out.println("\nvisitCode()");
-		methodVisitor.visitCode();
-	}
+    public void visitCode() {
+        System.out.println("\nvisitCode()");
+        methodVisitor.visitCode();
+    }
 
-	public void visitFrame(int i, int i1, Object[] objects, int i2, Object[] objects1) {
-		System.out.println("visitFrame(" + i + ", " + i1 + ", " + objects + ", " + i2 + ", " + objects1 + ")");
-		methodVisitor.visitFrame(i, i1, objects, i2, objects1);
-	}
+    public void visitFrame(int i, int i1, Object[] objects, int i2, Object[] objects1) {
+        System.out.println("  visitFrame(" + i + ", " + i1 + ", " + objects + ", " + i2 + ", " + objects1 + ")");
+        methodVisitor.visitFrame(i, i1, objects, i2, objects1);
+    }
 
-	public void visitInsn(int i) {
-		System.out.println("visitInsn(" + opcodeAsString(i) + ")");
-		methodVisitor.visitInsn(i);
-	}
+    public void visitInsn(int i) {
+        System.out.println("  visitInsn(" + opcodeAsString(i) + ")");
+        methodVisitor.visitInsn(i);
+    }
 
-	public void visitIntInsn(int i, int i1) {
-		System.out.println("visitIntInsn(" + opcodeAsString(i) + ", " + i1 + ")");
-		methodVisitor.visitIntInsn(i, i1);
-	}
+    public void visitIntInsn(int i, int i1) {
+        System.out.println("  visitIntInsn(" + opcodeAsString(i) + ", " + i1 + ")");
+        methodVisitor.visitIntInsn(i, i1);
+    }
 
-	public void visitVarInsn(int i, int i1) {
-		System.out.println("visitVarInsn(" + opcodeAsString(i) + ", " + i1 + ")");
-		methodVisitor.visitVarInsn(i, i1);
-	}
+    public void visitVarInsn(int i, int i1) {
+        System.out.println("  visitVarInsn(" + opcodeAsString(i) + ", " + i1 + ")");
+        methodVisitor.visitVarInsn(i, i1);
+    }
 
-	public void visitTypeInsn(int i, String s) {
-		System.out.println("visitTypeInsn(" + opcodeAsString(i) + ", '" + s + "')");
-		methodVisitor.visitTypeInsn(i, s);
-	}
+    public void visitTypeInsn(int i, String s) {
+        System.out.println("  visitTypeInsn(" + opcodeAsString(i) + ", '" + s + "')");
+        methodVisitor.visitTypeInsn(i, s);
+    }
 
-	public void visitFieldInsn(int i, String s, String s1, String s2) {
-		System.out.println("visitFieldInsn(" + opcodeAsString(i) + ", '" + s + "', '" + s1 + "', '" + s2 + "')");
-		methodVisitor.visitFieldInsn(i, s, s1, s2);
-	}
+    public void visitFieldInsn(int i, String s, String s1, String s2) {
+        System.out.println("  visitFieldInsn(" + opcodeAsString(i) + ", '" + s + "', '" + s1 + "', '" + s2 + "')");
+        methodVisitor.visitFieldInsn(i, s, s1, s2);
+    }
 
-	public void visitMethodInsn(int i, String s, String s1, String s2) {
-		System.out.println("visitMethodInsn(" + opcodeAsString(i) + ", '" + s + "', '" + s1 + "', '" + s2 + "')");
-		methodVisitor.visitMethodInsn(i, s, s1, s2);
-	}
+    public void visitMethodInsn(int i, String s, String s1, String s2) {
+        System.out.println("  visitMethodInsn(" + opcodeAsString(i) + ", '" + s + "', '" + s1 + "', '" + s2 + "')");
+        methodVisitor.visitMethodInsn(i, s, s1, s2);
+    }
 
-	public void visitJumpInsn(int i, Label label) {
-		System.out.println("visitJumpInsn(" + opcodeAsString(i) + ", " + label + ")");
-		methodVisitor.visitJumpInsn(i, label);
-	}
+    public void visitJumpInsn(int i, Label label) {
+        System.out.println("  visitJumpInsn(" + opcodeAsString(i) + ", " + label + ")");
+        methodVisitor.visitJumpInsn(i, label);
+    }
 
-	public void visitLabel(Label label) {
-		System.out.println("visitLabel(" + label + ")");
-		methodVisitor.visitLabel(label);
-	}
+    public void visitLabel(Label label) {
+        System.out.println("  visitLabel(" + label + ")");
+        methodVisitor.visitLabel(label);
+    }
 
-	public void visitLdcInsn(Object o) {
-		System.out.println("visitLdcInsn(" + o + ")");
-		methodVisitor.visitLdcInsn(o);
-	}
+    public void visitLdcInsn(Object o) {
+        System.out.println("  visitLdcInsn(" + o + ")");
+        methodVisitor.visitLdcInsn(o);
+    }
 
-	public void visitIincInsn(int i, int i1) {
-		System.out.println("visitIincInsn(" + opcodeAsString(i) + ", " + i1 + ")");
-		methodVisitor.visitIincInsn(i, i1);
-	}
+    public void visitIincInsn(int i, int i1) {
+        System.out.println("  visitIincInsn(" + opcodeAsString(i) + ", " + i1 + ")");
+        methodVisitor.visitIincInsn(i, i1);
+    }
 
-	public void visitTableSwitchInsn(int i, int i1, Label label, Label[] labels) {
-		System.out.println("visitTableSwitchInsn(" + i + ", " + i1 + ", " + label + ", " + labels + ")");
-		methodVisitor.visitTableSwitchInsn(i, i1, label, labels);
-	}
+    public void visitTableSwitchInsn(int i, int i1, Label label, Label[] labels) {
+        System.out.println("  visitTableSwitchInsn(" + i + ", " + i1 + ", " + label + ", " + labels + ")");
+        methodVisitor.visitTableSwitchInsn(i, i1, label, labels);
+    }
 
-	public void visitLookupSwitchInsn(Label label, int[] ints, Label[] labels) {
-		System.out.println("visitLookupSwitchInsn(" + label + ", " + ints + ", " + labels + ")");
-		methodVisitor.visitLookupSwitchInsn(label, ints, labels);
-	}
+    public void visitLookupSwitchInsn(Label label, int[] ints, Label[] labels) {
+        System.out.println("  visitLookupSwitchInsn(" + label + ", " + ints + ", " + labels + ")");
+        methodVisitor.visitLookupSwitchInsn(label, ints, labels);
+    }
 
-	public void visitMultiANewArrayInsn(String s, int i) {
-		System.out.println("visitMultiANewArrayInsn('" + s + "', " + i + ")");
-		methodVisitor.visitMultiANewArrayInsn(s, i);
-	}
+    public void visitMultiANewArrayInsn(String s, int i) {
+        System.out.println("  visitMultiANewArrayInsn('" + s + "', " + i + ")");
+        methodVisitor.visitMultiANewArrayInsn(s, i);
+    }
 
-	public void visitTryCatchBlock(Label label, Label label1, Label label2, String s) {
-		System.out.println("visitTryCatchBlock(" + label + ", " + label1 + ", " + label2 + ", '" + s + "')");
-		methodVisitor.visitTryCatchBlock(label, label1, label2, s);
-	}
+    public void visitTryCatchBlock(Label label, Label label1, Label label2, String s) {
+        System.out.println("  visitTryCatchBlock(" + label + ", " + label1 + ", " + label2 + ", '" + s + "')");
+        methodVisitor.visitTryCatchBlock(label, label1, label2, s);
+    }
 
-	public void visitLocalVariable(String s, String s1, String s2, Label label, Label label1, int i) {
-		System.out.println("visitLocalVariable('" + s + "', '" + s1 + "', '" + s2 + "', " + label + ", " + label1 + ", " + i + ")");
-		methodVisitor.visitLocalVariable(s, s1, s2, label, label1, i);
-	}
+    public void visitLocalVariable(String s, String s1, String s2, Label label, Label label1, int i) {
+        System.out.println("  visitLocalVariable('" + s + "', '" + s1 + "', '" + s2 + "', " + label + ", " + label1 + ", " + i + ")");
+        methodVisitor.visitLocalVariable(s, s1, s2, label, label1, i);
+    }
 
-	public void visitLineNumber(int i, Label label) {
-		System.out.println("visitLineNumber(" + i + ", " + label + ")");
-		methodVisitor.visitLineNumber(i, label);
-	}
+    public void visitLineNumber(int i, Label label) {
+        System.out.println("  visitLineNumber(" + i + ", " + label + ")");
+        methodVisitor.visitLineNumber(i, label);
+    }
 
-	public void visitMaxs(int i, int i1) {
-		System.out.println("visitMaxs(" + i + ", " + i1 + ")");
-		methodVisitor.visitMaxs(i, i1);
-	}
+    public void visitMaxs(int i, int i1) {
+        System.out.println("  visitMaxs(" + i + ", " + i1 + ")");
+        methodVisitor.visitMaxs(i, i1);
+    }
 
-	public void visitEnd() {
-		System.out.println("visitEnd()\n");
-		methodVisitor.visitEnd();
-	}
+    public void visitEnd() {
+        System.out.println("  visitEnd()\n");
+        methodVisitor.visitEnd();
+    }
 
     public String opcodeAsString(int opcode) {
         switch (opcode) {

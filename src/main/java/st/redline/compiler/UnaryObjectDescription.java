@@ -6,22 +6,35 @@ import java.util.List;
 
 public class UnaryObjectDescription implements VisitableNode {
 
-	private final Primary primary;
-	private final List<UnarySelector> unarySelectors;
+    private final Primary primary;
+    private final List<UnarySelector> unarySelectors;
 
-	public UnaryObjectDescription(Primary primary) {
-		this.primary = primary;
-		this.unarySelectors = new ArrayList<UnarySelector>();
-	}
+    UnaryObjectDescription(Primary primary) {
+        this.primary = primary;
+        this.unarySelectors = new ArrayList<UnarySelector>();
+    }
 
-	public void add(UnarySelector unarySelector) {
-		unarySelectors.add(unarySelector);
-	}
+    void add(UnarySelector unarySelector) {
+        unarySelectors.add(unarySelector);
+    }
 
-	public void accept(NodeVisitor visitor) {
-		visitor.visit(this);
-		primary.accept(visitor);
-		for (UnarySelector unarySelector : unarySelectors)
-			unarySelector.accept(visitor);
-	}
+    Primary primary() {
+        return primary;
+    }
+
+    List<UnarySelector> unarySelectors() {
+        return unarySelectors;
+    }
+
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visit(this);
+        if (primary != null)
+            primary.accept(nodeVisitor);
+        for (UnarySelector unarySelector : unarySelectors)
+            unarySelector.accept(nodeVisitor);
+    }
+
+    boolean hasBlockWithAnswerExpression() {
+        return primary.isBlockWithAnswerExpression();
+    }
 }

@@ -6,36 +6,39 @@ import java.util.List;
 
 public class UnaryExpression implements MessageExpression {
 
-	private final List<UnarySelector> unarySelectors;
-	private BinaryExpression binaryExpression;
-	private KeywordExpression keywordExpression;
+    private List<UnarySelector> unarySelectors;
+    private MessageExpression messageExpression;
 
-	public UnaryExpression() {
-		unarySelectors = new ArrayList<UnarySelector>();
-	}
+    UnaryExpression() {
+        unarySelectors = new ArrayList<UnarySelector>();
+    }
 
-	public void add(UnarySelector unarySelector) {
-		unarySelectors.add(unarySelector);
-	}
+    void add(UnarySelector unarySelector) {
+        unarySelectors.add(unarySelector);
+    }
 
-	public void add(BinaryExpression binaryExpression) {
-		this.binaryExpression = binaryExpression;
-	}
+    List<UnarySelector> unarySelectors() {
+        return unarySelectors;
+    }
 
-	public void add(KeywordExpression keywordExpression) {
-		this.keywordExpression = keywordExpression;
-	}
+    void add(MessageExpression messageExpression) {
+        this.messageExpression = messageExpression;
+    }
 
-	public void accept(NodeVisitor visitor) {
-		if (binaryExpression != null && keywordExpression != null)
-			throw new IllegalStateException("Unary expression should not have both a binary and keyword expression.");
-		visitor.visit(this);
-		for (UnarySelector unarySelector : unarySelectors)
-			unarySelector.accept(visitor);
-		if (binaryExpression != null)
-			binaryExpression.accept(visitor);
-		else if (keywordExpression != null)
-			keywordExpression.accept(visitor);
-		visitor.visitEnd(this);
-	}
+    MessageExpression messageExpression() {
+        return messageExpression;
+    }
+
+    public void accept(NodeVisitor nodeVisitor) {
+        nodeVisitor.visitBegin(this);
+        for (UnarySelector unarySelector : unarySelectors)
+            unarySelector.accept(nodeVisitor);
+        if (messageExpression != null)
+            messageExpression.accept(nodeVisitor);
+        nodeVisitor.visitEnd(this);
+    }
+
+    public boolean hasBlockWithAnswerExpression() {
+        return (messageExpression != null && messageExpression.hasBlockWithAnswerExpression());
+    }
 }
