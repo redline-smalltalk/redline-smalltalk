@@ -73,11 +73,11 @@ ExceptionSet
  ?Process
 
 Collection
- SequenceableCollection
-  LinkedList
+ SequenceableCollection - Robert Roland
+  LinkedList - Robert Roland
    ?Semaphore
-  ArrayedCollection
-   Array
+  ArrayedCollection - Robert Roland
+   Array - Robert Roland
    ?RunArray
    String
     Symbol
