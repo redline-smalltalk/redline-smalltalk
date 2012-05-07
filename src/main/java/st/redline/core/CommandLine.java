@@ -1,12 +1,20 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.core;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -128,6 +136,23 @@ public class CommandLine {
 
     HelpFormatter helpFormatter() {
         return new HelpFormatter();
+    }
+
+    public List<File> sourceJarFiles() {
+        List<File> jars = new ArrayList<File>();
+        for (String path : sourcePaths()) {
+            jars.addAll(listJars(new File(path, "lib")));
+        }
+        return jars;
+    }
+
+    private List<File> listJars(File libDir) {
+        File[] jarFiles = libDir.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".jar");
+            }
+        });
+        return jarFiles == null ? Collections.<File>emptyList() : Arrays.asList(jarFiles);
     }
 
     private class CommandLineOptions extends Options {

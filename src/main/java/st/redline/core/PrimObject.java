@@ -114,12 +114,12 @@ public class PrimObject {
         // This flag will be used during createBlockInstance().
         if (BLOCKS.containsKey(name))
             return createBlockInstance(BLOCKS.get(name), context);
-        Block block = (Block) SmalltalkClassLoader.BLOCKS_TO_BE_COMPILED.remove(name);
+        Block block = (Block) SmalltalkEnvironment.BLOCKS_TO_BE_COMPILED.remove(name);
         if (block == null)
             throw new IllegalStateException("Block to be compiled '" + name + "' not found.");
         block.accept(block.analyser());
         try {
-            PrimObject newblock = (PrimObject) smalltalkClassLoader().defineClass(block.classBytes()).newInstance();
+            PrimObject newblock = (PrimObject) exposedClassLoader().defineClass(block.classBytes()).newInstance();
             BLOCKS.put(name, newblock);
             return createBlockInstance(newblock, context);
         } catch (Exception e) {
@@ -127,8 +127,8 @@ public class PrimObject {
         }
     }
 
-    public static SmalltalkClassLoader smalltalkClassLoader() {
-        return SmalltalkClassLoader.instance();
+    public static SmalltalkEnvironment smalltalkEnvironment() {
+        return SmalltalkEnvironment.instance();
     }
 
     static PrimObject createBlockInstance(PrimObject block, PrimContext context) {
@@ -598,8 +598,12 @@ public class PrimObject {
         }
     }
 
-    ClassLoader classLoader() {
+    public static ClassLoader classLoader() {
         return Thread.currentThread().getContextClassLoader();
+    }
+
+    public static ExposedClassLoader exposedClassLoader() {
+        return (ExposedClassLoader) classLoader();
     }
 
     public String packageFor(String name) {

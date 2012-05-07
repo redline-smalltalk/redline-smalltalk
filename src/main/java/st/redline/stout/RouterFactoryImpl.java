@@ -2,7 +2,7 @@
 package st.redline.stout;
 
 import st.redline.core.PrimObject;
-import st.redline.core.SmalltalkClassLoader;
+import st.redline.core.SmalltalkEnvironment;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -30,7 +30,11 @@ public class RouterFactoryImpl implements RouterFactory {
         }
 
         private PrimObject newJSONStream() throws Exception {
-            return ((PrimObject) SmalltalkClassLoader.instance().findClass("st.redline.stout.JSONStream").newInstance()).perform("new");
+            return ((PrimObject) classLoader().loadClass("st.redline.stout.JSONStream").newInstance()).perform("new");
+        }
+
+        private ClassLoader classLoader() {
+            return Thread.currentThread().getContextClassLoader();
         }
     };
 

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
+import java.net.MalformedURLException;
 
 public class Stic {
 
@@ -53,25 +54,25 @@ public class Stic {
         return new CommandLine(args);
     }
 
-    public Stic(CommandLine commandLine) throws ClassNotFoundException {
-        initializeClassLoader(commandLine);
+    public Stic(CommandLine commandLine) throws ClassNotFoundException, MalformedURLException {
+        initializeEnvironment(commandLine);
         bootstrap();
     }
 
     void bootstrap() throws ClassNotFoundException {
-        classLoader().bootstrap();
+        environment().bootstrap();
     }
 
-    void initializeClassLoader(CommandLine commandLine) {
-        Thread.currentThread().setContextClassLoader(createClassLoader(commandLine));
+    private SmalltalkEnvironment environment() {
+        return SmalltalkEnvironment.instance();
     }
 
-    ClassLoader createClassLoader(CommandLine commandLine) {
-        return new SmalltalkClassLoader(Thread.currentThread().getContextClassLoader(), commandLine);
+    void initializeEnvironment(CommandLine commandLine) throws MalformedURLException {
+        new SmalltalkEnvironment(commandLine);
     }
 
-    SmalltalkClassLoader classLoader() {
-        return SmalltalkClassLoader.instance();
+    ClassLoader classLoader() {
+        return SmalltalkEnvironment.classLoader();
     }
 
     public PrimObject invoke(String className) throws Exception {

@@ -8,7 +8,7 @@ public class Evaluator {
     }
 
     public static PrimObject evaluate(String source) {
-        Class cls = SmalltalkClassLoader.instance().classFrom(new InMemorySourceFile(source));
+        Class cls = SmalltalkEnvironment.exposedClassLoader().classFrom(new InMemorySourceFile(source));
         try {
             return ((PrimObject) cls.newInstance()).sendMessagesResult();
         } catch (Exception e) {
