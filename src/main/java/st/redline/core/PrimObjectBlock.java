@@ -80,10 +80,10 @@ public class PrimObjectBlock extends PrimObject {
 
     public void throwAnswer(PrimObject answer, String blockReturnType) {
         try {
-            throw (BlockReturn) SmalltalkClassLoader.instance()
-                                     .loadClass(blockReturnType)
-                                     .getConstructor(PrimObject.class)
-                                     .newInstance(answer);
+            throw (BlockReturn) classLoader()
+                                    .loadClass(blockReturnType)
+                                    .getConstructor(PrimObject.class)
+                                    .newInstance(answer);
         } catch (InstantiationException e) {
             throw new RedlineException(e);
         } catch (IllegalAccessException e) {

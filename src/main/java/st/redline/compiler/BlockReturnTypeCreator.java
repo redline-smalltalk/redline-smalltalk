@@ -29,7 +29,7 @@ public class BlockReturnTypeCreator implements Opcodes {
 
     private void loadClass(byte[] aClass) {
         try {
-            PrimObject.smalltalkClassLoader().defineClass(aClass);
+            PrimObject.exposedClassLoader().defineClass(aClass);
         } catch (Exception e) {
             throw new RedlineException(e);
         }

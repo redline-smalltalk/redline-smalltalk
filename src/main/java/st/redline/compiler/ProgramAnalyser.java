@@ -3,7 +3,7 @@ package st.redline.compiler;
 
 import st.redline.core.ClassPathUtilities;
 import st.redline.core.RedlineException;
-import st.redline.core.SmalltalkClassLoader;
+import st.redline.core.SmalltalkEnvironment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -192,7 +192,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
         block.blockReturnType(blockReturnType());
         block.outerTemporariesRegistry(temporariesRegistry);
         block.outerArgumentsRegistry(argumentsRegistry);
-        smalltalkClassLoader().registerBlockToBeCompiled(block, fullBlockClassName);
+        smalltalkEnvironment().registerBlockToBeCompiled(block, fullBlockClassName);
         writer.invokeObjectCompileBlock(fullBlockClassName, line);
     }
 
@@ -207,8 +207,8 @@ public class ProgramAnalyser implements AnalyserDelegate {
         return analyserDelegator;
     }
 
-    public SmalltalkClassLoader smalltalkClassLoader() {
-        return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+    public SmalltalkEnvironment smalltalkEnvironment() {
+        return SmalltalkEnvironment.instance();
     }
 
     String blockReturnType() {

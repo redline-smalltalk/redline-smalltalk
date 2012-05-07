@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import st.redline.core.RedlineException;
-import st.redline.core.SmalltalkClassLoader;
+import st.redline.core.SmalltalkEnvironment;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -40,10 +40,10 @@ public class ProgramAnalyserTest {
 		when(parent.className()).thenReturn("SomeClass");
 		when(parent.packageName()).thenReturn("st.redline");
 		ProgramAnalyser spy = spy(analyser);
-		SmalltalkClassLoader smalltalkClassLoader = mock(SmalltalkClassLoader.class);
-		doReturn(smalltalkClassLoader).when(spy).smalltalkClassLoader();
+		SmalltalkEnvironment smalltalkEnvironment = mock(SmalltalkEnvironment.class);
+		doReturn(smalltalkEnvironment).when(spy).smalltalkEnvironment();
 		spy.visitBegin(block, 1);
-		verify(smalltalkClassLoader).registerBlockToBeCompiled(block, "st.redline.SomeClass$M1");
+		verify(smalltalkEnvironment).registerBlockToBeCompiled(block, "st.redline.SomeClass$M1");
 		verify(writer).invokeObjectCompileBlock("st.redline.SomeClass$M1", 1);
 	}
 

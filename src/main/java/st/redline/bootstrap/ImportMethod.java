@@ -9,8 +9,8 @@ public class ImportMethod extends PrimObject {
 
     public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
         PrimObjectMetaclass metaclass = (PrimObjectMetaclass) receiver;
-        SmalltalkClassLoader smalltalkClassLoader = smalltalkClassLoader();
-        for (SourceFile sourceFile : findSources(smalltalkClassLoader, primContext.argumentAt(0).javaValue()))
+        SmalltalkEnvironment smalltalkEnvironment = smalltalkEnvironment();
+        for (SourceFile sourceFile : findSources(smalltalkEnvironment, primContext.argumentAt(0).javaValue()))
             addAssociationBetweenObjectAndPackage(metaclass, sourceFile.shortName(), sourceFile.packageName());
         return receiver;
     }
@@ -23,7 +23,7 @@ public class ImportMethod extends PrimObject {
         return packageName + "." + className;
     }
 
-    private List<SourceFile> findSources(SmalltalkClassLoader smalltalkClassLoader, Object importPaths) {
-        return smalltalkClassLoader.findSources(String.valueOf(importPaths));
+    private List<SourceFile> findSources(SmalltalkEnvironment smalltalkEnvironment, Object importPaths) {
+        return smalltalkEnvironment.findSources(String.valueOf(importPaths));
     }
 }

@@ -74,7 +74,7 @@ public class SourceFileFinder {
     }
 
     private static void addUserDefinedPathsTo(List<String> sourceFilePaths) {
-        CommandLine commandLine = SmalltalkClassLoader.instance().commandLine();
+        CommandLine commandLine = SmalltalkEnvironment.instance().commandLine();
         sourceFilePaths.addAll(commandLine.sourcePaths());
         List<String> runtimePaths = commandLine.runtimePaths();
         if (runtimePaths.isEmpty())

@@ -1,3 +1,8 @@
+07/05/2012
+
+Added new ClassLoader chain. This facilitates better extensibility in the future AND enables the loading of .class 
+files from .jars found in the lib folder on a source path.
+
 04/05/2012
 
 Added Smalltalk Compiler class to expose ability to evaluate strings of smalltalk source and answer the result of that 
