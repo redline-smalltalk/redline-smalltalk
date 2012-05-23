@@ -23,7 +23,7 @@ public class RedlineClassLoaderBuilder {
     private URL[] getSourceJarUrls(CommandLine commandLine) throws MalformedURLException {
         List<URL> urls = new ArrayList<URL>();
         for (File jarFile : commandLine.sourceJarFiles()) {
-            System.out.println("Adding: " + jarFile.toURI().toURL());
+//            System.out.println("Adding: " + jarFile.toURI().toURL());
             urls.add(jarFile.toURI().toURL());
         }
         return urls.toArray(new URL[urls.size()]);
