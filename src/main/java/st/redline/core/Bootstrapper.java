@@ -50,6 +50,7 @@ public class Bootstrapper {
         primObjectMetaclass.methods().put("atSelector:put:", new AtSelectorPutMethod());
         primObjectMetaclass.methods().put("instanceVariableNames:", new InstanceVariableNamesMethod());
         primObjectMetaclass.methods().put("import:", new ImportMethod());
+        primObjectMetaclass.methods().put("import:as:", new ImportAsMethod());
         PrimObjectMetaclass undefinedObjectMetaClass = PrimObjectMetaclass.basicSubclassOf(primObjectMetaclass);
         PrimObjectMetaclass undefinedObjectClass = undefinedObjectMetaClass.basicCreate("UndefinedObject", PrimObject.PRIM_NIL, "", "", "", "");
         PrimObject.NIL = new PrimObject();

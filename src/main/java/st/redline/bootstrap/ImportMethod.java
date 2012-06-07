@@ -10,20 +10,24 @@ public class ImportMethod extends PrimObject {
     public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
         PrimObjectMetaclass metaclass = (PrimObjectMetaclass) receiver;
         SmalltalkEnvironment smalltalkEnvironment = smalltalkEnvironment();
-        for (SourceFile sourceFile : findSources(smalltalkEnvironment, primContext.argumentAt(0).javaValue()))
-            addAssociationBetweenObjectAndPackage(metaclass, sourceFile.shortName(), sourceFile.packageName());
+        for (SourceFile sourceFile : findSources(smalltalkEnvironment, primContext.argumentAt(0).javaValue(), null))
+            addAssociationBetweenObjectAndPackage(metaclass, sourceFile.alias(), sourceFile.shortName(), sourceFile.packageName());
         return receiver;
     }
 
-    private void addAssociationBetweenObjectAndPackage(PrimObjectMetaclass metaclass, String className, String packageName) {
-        metaclass.packageAtPut(className, makeFullyQualifiedPath(packageName, className));
+    protected void addAssociationBetweenObjectAndPackage(PrimObjectMetaclass metaclass, String alias, String className, String packageName) {
+        metaclass.packageAtPut(alias, makeFullyQualifiedPath(packageName, className));
     }
 
     public static String makeFullyQualifiedPath(String packageName, String className) {
         return packageName + "." + className;
     }
 
-    private List<SourceFile> findSources(SmalltalkEnvironment smalltalkEnvironment, Object importPaths) {
-        return smalltalkEnvironment.findSources(String.valueOf(importPaths));
+    protected List<SourceFile> findSources(SmalltalkEnvironment smalltalkEnvironment, Object importPaths, Object alias) {
+        return findSources(smalltalkEnvironment, String.valueOf(importPaths), alias == null ? null : String.valueOf(alias));
+    }
+
+    protected List<SourceFile> findSources(SmalltalkEnvironment smalltalkEnvironment, String importPaths, String alias) {
+        return smalltalkEnvironment.findSources(importPaths);
     }
 }

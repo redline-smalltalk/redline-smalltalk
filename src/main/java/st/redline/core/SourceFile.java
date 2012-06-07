@@ -5,6 +5,8 @@ import java.io.File;
 
 public class SourceFile extends File {
 
+    private String alias;
+
     public SourceFile(File file) {
         super(file.getAbsolutePath());
     }
@@ -19,6 +21,16 @@ public class SourceFile extends File {
 
     private SourceFileReader sourceFileReader() {
         return new SourceFileReader();
+    }
+
+    public String alias() {
+        if (alias == null)
+            return shortName();
+        return alias;
+    }
+    
+    public void alias(String alias) {
+        this.alias = alias;
     }
 
     public String shortName() {
