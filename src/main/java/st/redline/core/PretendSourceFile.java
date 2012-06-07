@@ -21,6 +21,6 @@ public class PretendSourceFile extends SourceFile {
     }
 
     public String packageName() {
-        return name.substring(0, name.lastIndexOf("."));
+        return '#' + name.substring(0, name.lastIndexOf("."));
     }
 }

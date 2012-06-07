@@ -8,11 +8,12 @@ import st.redline.core.PrimObjectMetaclass;
 public class CreateSubclassMethod extends PrimObject {
 
     public PrimObject invoke(PrimObject receiver, PrimContext primContext) {
-    //		System.out.println("createSubclass: " + receiver + " called: " + subclassNameFrom(primContext));
+//   		System.out.println("createSubclass: " + receiver + " called: " + subclassNameFrom(primContext));
         String subclassName = subclassNameFrom(primContext);
         PrimObjectMetaclass subclassMetaClass = PrimObjectMetaclass.basicSubclassOf((PrimObjectMetaclass) receiver.cls());
         PrimObjectMetaclass subclassClass = subclassMetaClass.basicCreate(subclassName, receiver, "", "", "", "");
-    //        System.out.println("Have " + subclassNameFrom(primContext) + " " + subclassClass + " cls " + subclassMetaClass);
+//        System.out.println("Have " + subclassNameFrom(primContext) + " " + subclassClass + " cls " + subclassMetaClass);
+//        System.out.println(fullyQualifiedClassName(subclassName));
         PrimObject.CLASSES.put(fullyQualifiedClassName(subclassName), subclassClass);
         return subclassClass;
     }

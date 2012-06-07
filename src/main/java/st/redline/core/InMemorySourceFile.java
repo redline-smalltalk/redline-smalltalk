@@ -3,6 +3,7 @@ package st.redline.core;
 
 public class InMemorySourceFile extends SourceFile {
 
+    private static final String NAME_HINT = "\"@:";
     private final String contents;
 
     public InMemorySourceFile(String contents) {
@@ -15,10 +16,28 @@ public class InMemorySourceFile extends SourceFile {
     }
 
     public String shortName() {
+        if (contents.startsWith(NAME_HINT))
+            return shortNameFromEmbeddedHint();
         return "S" + contents.hashCode();
     }
 
+    private String shortNameFromEmbeddedHint() {
+        String name = embeddedName();
+        return name.substring(name.lastIndexOf('.') + 1);
+    }
+
     public String packageName() {
+        if (contents.startsWith(NAME_HINT))
+            return packageNameFromEmbeddedHint();
         return "evaled";
+    }
+
+    private String packageNameFromEmbeddedHint() {
+        String name = embeddedName();
+        return name.substring(0, name.lastIndexOf('.'));
+    }
+
+    private String embeddedName() {
+        return contents().substring(3, contents.indexOf("\"", 3)).trim();
     }
 }
