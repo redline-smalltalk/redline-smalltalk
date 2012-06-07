@@ -16,7 +16,6 @@ public class ImportMethod extends PrimObject {
     }
 
     protected void addAssociationBetweenObjectAndPackage(PrimObjectMetaclass metaclass, String alias, String className, String packageName) {
-        System.out.println("Associating: " + alias + " with " + makeFullyQualifiedPath(packageName, className));
         metaclass.packageAtPut(alias, makeFullyQualifiedPath(packageName, className));
     }
 

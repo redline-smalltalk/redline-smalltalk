@@ -574,13 +574,14 @@ public class PrimObject {
     void adaptJavaObject(String className) {
         String name = className.substring(1);
         if (!CLASSES.containsKey(name)) {
-            new DynamicJavaClassAdaptor(name, "Adaptor").build();
-            System.out.println(CLASSES);
+            String suffix = "Adaptor";
+            new DynamicJavaClassAdaptor(name, suffix).build();
+            // map dynamic class to original class.
+            CLASSES.put(name, CLASSES.get(name + suffix));
         }
     }
 
     PrimObject resolveObject(String name) {
-        System.out.println("resolveObject: " + name);
         if (CLASSES.containsKey(name))
             return CLASSES.get(name);
         if (Character.isUpperCase(name.charAt(0))) {

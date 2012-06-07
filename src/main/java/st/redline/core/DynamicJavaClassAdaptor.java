@@ -13,17 +13,7 @@ public class DynamicJavaClassAdaptor {
     }
 
     PrimObject build() {
-        System.out.println("DynamicJavaClassAdaptor.build()");
         String source = generateSmalltalkFor();
-        source = "\"@: st.redline.core.ArgThingAdaptor\"\n" +
-                "Object < #ArgThingAdaptor.\n" +
-                "\n" +
-                "ArgThingAdaptor class atSelector: #with: put: [ :args || obj |\n" +
-                "  ^ obj.\n" +
-                "].\n" +
-                "\n" +
-                "ArgThingAdaptor initialize.\n\n";
-        System.out.println(source);
         return Evaluator.evaluate(source);
     }
 

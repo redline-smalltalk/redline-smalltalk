@@ -91,11 +91,7 @@ public class ConstructorInspector implements InspectorVisitor {
         reflector.append(length == 0 ? "new" : "with:")
             .append(" put: [")
             .append(length == 0 ? "" : " :args")
-            .append(" || obj |\n  obj := ")
-            .append(classNameAdaptor)
-            .append(" new.\n")
-            .append("  JVM temp: 0;\n")
-            .append("      new: '")
+            .append(" || obj |\n  obj := self new.\n  JVM temp: 0;\n      new: '")
             .append(javaClassName)
             .append("';\n");
     }
