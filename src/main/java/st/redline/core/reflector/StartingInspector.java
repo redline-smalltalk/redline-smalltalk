@@ -8,23 +8,23 @@ public class StartingInspector extends NoOpInspector {
         this.reflector = reflector;
     }
 
-    public void visitBegin(String fullClassName) {
-        reflector.append("\"@: " + fullClassName + "Adaptor\"\n")
-                 .append("Object < #" + className(fullClassName) + ".\n");
+    public void visitBegin(String suffix, String fullClassName) {
+        reflector.append("\"@: " + fullClassName + suffix + "\"\n")
+                 .append("Object < #" + className(fullClassName, suffix) + ".\n");
     }
 
-    private String className(String fullclassName) {
-        return fullclassName.substring(fullclassName.lastIndexOf('.') + 1) + "Adaptor";
+    private String className(String fullclassName, String suffix) {
+        return fullclassName.substring(fullclassName.lastIndexOf('.') + 1) + suffix;
     }
 
-    public void visitEnd(String fullClassName) {
+    public void visitEnd(String suffix, String fullClassName) {
         reflector.append("\n")
-                 .append(className(fullClassName))
+                 .append(className(fullClassName, suffix))
                  .append(" initialize.\n");
     }
 
-    public void visitConstructorBegin(String className, String constructorName, int parameterCount) {
+    public void visitConstructorBegin(String suffix, String className, String constructorName, int parameterCount) {
         this.reflector.useConstructorVisitor();
-        this.reflector.visitConstructorBegin(className, constructorName, parameterCount);
+        this.reflector.visitConstructorBegin(suffix, className, constructorName, parameterCount);
     }
 }

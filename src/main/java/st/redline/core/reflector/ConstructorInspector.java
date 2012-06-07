@@ -25,17 +25,17 @@ public class ConstructorInspector implements InspectorVisitor {
         this.reflector = reflector;
     }
 
-    public void visitBegin(String className) {
+    public void visitBegin(String suffix, String className) {
         throw new IllegalStateException("This inspector should not be getting this.");
     }
 
-    public void visitEnd(String className) {
+    public void visitEnd(String suffix, String className) {
         throw new IllegalStateException("This inspector should not be getting this.");
     }
 
-    public void visitConstructorBegin(String className, String constructorName, int parameterCount) {
+    public void visitConstructorBegin(String suffix, String className, String constructorName, int parameterCount) {
         this.className = className;
-        this.classNameAdaptor = className.substring(className.lastIndexOf('.') + 1) + "Adaptor";
+        this.classNameAdaptor = className.substring(className.lastIndexOf('.') + 1) + suffix;
         this.javaClassName = className.replace(".", "/");
         this.javaConstructorName = constructorName.replace(".", "/");
         this.javaArgumentTypes = new String[parameterCount];
@@ -44,7 +44,7 @@ public class ConstructorInspector implements InspectorVisitor {
                  .append(" class atSelector: #");
     }
 
-    public void visitConstructorEnd(String className, String constructorName, int parameterCount) {
+    public void visitConstructorEnd(String suffix, String className, String constructorName, int parameterCount) {
         reflector.append("      dup;\n");
         loadConstructorArguments(parameterCount);
         reflector.append("      invokeSpecial: '")

@@ -9,11 +9,11 @@ public class Reflector implements InspectorVisitor {
     private Stack<InspectorVisitor> reflectors;
 
     public static void main(String[] args) throws ClassNotFoundException {
-        System.out.println(new Reflector(args[0]).reflect().result());
+        System.out.println(new Reflector(args[0], "Adaptor").reflect().result());
     }
 
-    public Reflector(String className) throws ClassNotFoundException {
-        inspector = new Inspector(className);
+    public Reflector(String className, String suffix) throws ClassNotFoundException {
+        inspector = new Inspector(className, suffix);
         result = new StringBuilder(1024);
         initializeReflectors();
     }
@@ -42,24 +42,24 @@ public class Reflector implements InspectorVisitor {
         return this;
     }
 
-    public void visitBegin(String className) {
-        currentReflector().visitBegin(className);
+    public void visitBegin(String suffix, String className) {
+        currentReflector().visitBegin(suffix, className);
     }
 
-    public void visitEnd(String className) {
-        currentReflector().visitEnd(className);
+    public void visitEnd(String suffix, String className) {
+        currentReflector().visitEnd(suffix, className);
     }
 
-    public void visitConstructorBegin(String className, String constructorName, int parameterCount) {
-        currentReflector().visitConstructorBegin(className, constructorName, parameterCount);
+    public void visitConstructorBegin(String suffix, String className, String constructorName, int parameterCount) {
+        currentReflector().visitConstructorBegin(suffix, className, constructorName, parameterCount);
     }
 
     private InspectorVisitor currentReflector() {
         return reflectors.peek();
     }
 
-    public void visitConstructorEnd(String className, String constructorName, int parameterCount) {
-        currentReflector().visitConstructorEnd(className, constructorName, parameterCount);
+    public void visitConstructorEnd(String suffix, String className, String constructorName, int parameterCount) {
+        currentReflector().visitConstructorEnd(suffix, className, constructorName, parameterCount);
     }
 
     public void visitParameterTypesBegin(int length) {

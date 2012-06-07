@@ -574,7 +574,7 @@ public class PrimObject {
     void adaptJavaObject(String className) {
         String name = className.substring(1);
         if (!CLASSES.containsKey(name)) {
-            new DynamicJavaClassAdaptor(name).build();
+            new DynamicJavaClassAdaptor(name, "Adaptor").build();
             System.out.println(CLASSES);
         }
     }

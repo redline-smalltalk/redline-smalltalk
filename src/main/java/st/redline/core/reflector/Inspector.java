@@ -5,9 +5,11 @@ import java.lang.reflect.Modifier;
 
 public class Inspector {
 
-    private Class theClass;
+    private final Class theClass;
+    private final String suffix;
 
-    public Inspector(String className) throws ClassNotFoundException {
+    public Inspector(String className, String suffix) throws ClassNotFoundException {
+        this.suffix = suffix;
         theClass = loadClassToInspect(className);
     }
 
@@ -16,9 +18,9 @@ public class Inspector {
     }
 
     public void inspectWith(InspectorVisitor inspectorVisitor) {
-        inspectorVisitor.visitBegin(theClass.getName());
+        inspectorVisitor.visitBegin(suffix, theClass.getName());
         inspectConstructorsWith(inspectorVisitor);
-        inspectorVisitor.visitEnd(theClass.getName());
+        inspectorVisitor.visitEnd(suffix, theClass.getName());
     }
 
     private void inspectConstructorsWith(InspectorVisitor inspectorVisitor) {
@@ -30,9 +32,9 @@ public class Inspector {
 
     private void inspectConstructor(Constructor constructor, InspectorVisitor inspectorVisitor) {
         Class[] parameterTypes = constructor.getParameterTypes();
-        inspectorVisitor.visitConstructorBegin(theClass.getName(), constructor.getName(), parameterTypes.length);
+        inspectorVisitor.visitConstructorBegin(suffix, theClass.getName(), constructor.getName(), parameterTypes.length);
         inspectParameterTypesWith(parameterTypes, inspectorVisitor);
-        inspectorVisitor.visitConstructorEnd(theClass.getName(), constructor.getName(), parameterTypes.length);
+        inspectorVisitor.visitConstructorEnd(suffix, theClass.getName(), constructor.getName(), parameterTypes.length);
     }
 
     private void inspectParameterTypesWith(Class[] parameterTypes, InspectorVisitor inspectorVisitor) {
