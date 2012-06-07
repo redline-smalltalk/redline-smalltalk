@@ -571,13 +571,28 @@ public class PrimObject {
         return receiver.includesSelector(selector) ? PrimObject.TRUE : PrimObject.FALSE;
     }
 
+    void adaptJavaObject(String className) {
+        String name = className.substring(1);
+        if (!CLASSES.containsKey(name)) {
+            String suffix = "Adaptor";
+            new DynamicJavaClassAdaptor(name, suffix).build();
+            // map dynamic class to original class.
+            CLASSES.put(name, CLASSES.get(name + suffix));
+        }
+    }
+
     PrimObject resolveObject(String name) {
         if (CLASSES.containsKey(name))
             return CLASSES.get(name);
         if (Character.isUpperCase(name.charAt(0))) {
             String fullyQualifiedName = packageFor(name);
-            if (fullyQualifiedName != null)
-                return resolveObject(fullyQualifiedName);
+            if (fullyQualifiedName != null) {
+                if (fullyQualifiedName.startsWith("#")) {
+                    adaptJavaObject(fullyQualifiedName);
+                    return resolveObject(fullyQualifiedName.substring(1));
+                } else
+                    return resolveObject(fullyQualifiedName);
+            }
         }
         // It is expected the loading of an object results in the registering of
         // a Smalltalk class in the class registry (CLASSES).

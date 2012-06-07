@@ -56,60 +56,16 @@ public class SmalltalkEnvironment {
         return commandLine;
     }
 
-//    public Class findClass(String className) throws ClassNotFoundException {
-//        return findClass0(className);
-//    }
-//
-//    public Class findClass0(String className) throws ClassNotFoundException {
-//        SourceFile sourceFile = findSource(className);
-//        if (sourceFile == null)
-//            return tryFindSystemClass(className);
-//        return classFrom(sourceFile);
-//    }
-
-//    private Class tryFindSystemClass(String className) {
-//        try {
-//            return findSystemClass(className);
-//        } catch (ClassNotFoundException e) {
-//            throw RedlineException.withCause(e);
-//        }
-//    }
-
-//    public Class classFrom(SourceFile sourceFile) {
-//        byte[] classBytes = compile(sourceFile);
-//        return classLoader().defineClass(null, classBytes, 0, classBytes.length);
-//    }
-//
-//    public Class defineClass(byte[] classBytes) {
-//        return defineClass(null, classBytes, 0, classBytes.length);
-//    }
-//
-//    public Class defineClass(String name, byte[] classBytes) {
-//        return defineClass(name, classBytes, 0, classBytes.length);
-//    }
-//
-//    private byte[] compile(SourceFile sourceFile) {
-//        return createCompiler(sourceFile).compile();
-//    }
-//
-//    private Kompiler createCompiler(SourceFile sourceFile) {
-//        return new Kompiler(sourceFile, commandLine.verboseRequested(), commandLine.ignoreCompilerErrors());
-//    }
-//
-//    private SourceFile findSource(String className) {
-//        return sourceFileFinder(className).findSourceFile();
-//    }
-//
-//    private SourceFileFinder sourceFileFinder(String className) {
-//        return new SourceFileFinder(className);
-//    }
-//
     public List<SourceFile> findSources(String paths) {
-        return sourceFilesFinder(paths).findSourceFiles();
+        return findSources(paths, true);
     }
 
-    private SourceFilesFinder sourceFilesFinder(String paths) {
-        return new SourceFilesFinder(paths);
+    public List<SourceFile> findSources(String paths, boolean warnings) {
+        return sourceFilesFinder(paths, warnings).findSourceFiles();
+    }
+
+    private SourceFilesFinder sourceFilesFinder(String paths, boolean warnings) {
+        return new SourceFilesFinder(paths, warnings);
     }
 
     public void registerBlockToBeCompiled(Object block, String name) {

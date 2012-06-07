@@ -2,6 +2,7 @@
 package st.redline.core;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class PrimContext {
 
@@ -52,6 +53,10 @@ public class PrimContext {
 
     public PrimObject argumentAt(int index) {
         return arguments[index];
+    }
+
+    public PrimObject argumentAtAt(int argumentIndex, int elementIndex) {
+        return ((ArrayList<PrimObject>) argumentAt(argumentIndex).javaValue()).get(elementIndex);
     }
 
     public PrimObject argumentAtFrom(int index, PrimObject receiver) {

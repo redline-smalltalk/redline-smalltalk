@@ -8,9 +8,11 @@ import java.util.List;
 public class SourceFilesFinder {
 
     private final String paths;
+    private final boolean warnings;
 
-    public SourceFilesFinder(String paths) {
+    public SourceFilesFinder(String paths, boolean warnings) {
         this.paths = paths;
+        this.warnings = warnings;
     }
 
     public List<SourceFile> findSourceFiles() {
@@ -44,8 +46,8 @@ public class SourceFilesFinder {
         SourceFile sourceFile = sourceFileFinder(path).findSourceFile();
         if (sourceFile != null)
             sourceFiles.add(sourceFile);
-        else
-            System.err.println("WARNING: Didn't find file '" + path + "'.");
+        else if (warnings)
+                System.err.println("WARNING: Didn't find file '" + path + "'.");
     }
 
     private SourceFileFinder sourceFileFinder(String className) {

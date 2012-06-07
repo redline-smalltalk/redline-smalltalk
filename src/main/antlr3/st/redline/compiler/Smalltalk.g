@@ -154,7 +154,7 @@ number returns [Number number]
 WHITESPACE:		(' '|'\t'|'\r'|'\n')+;
 COMMENT:		'"' .* '"' WHITESPACE {$channel = HIDDEN;};
 KEYWORD:		IDENTIFIER ':';
-IDENTIFIER:		LETTER (LETTER | DIGIT)*;
+IDENTIFIER:		LETTER (LETTER | DIGIT | '_')*;
 CHARACTER_CONSTANT:	'$' ('\'' | '"' | SPECIAL_CHAR | NORMAL_CHAR | DIGIT | LETTER);
 STRING:		'\'' (~'\''|'\'\'')* '\'';
 DIGITS:		DIGIT+;

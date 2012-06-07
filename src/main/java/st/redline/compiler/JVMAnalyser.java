@@ -21,6 +21,8 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         builders.put("checkcast:", new VisitTypeInsnBuilder(CHECKCAST));
         // commands added by Redline - not true JVM instructions.
         builders.put("arg:", new VisitArgumentFetchBuilder());
+        builders.put("arg:at:", new VisitArgumentAtFetchBuilder());
+        builders.put("temp:", new VisitTemporaryFetchBuilder());
     }
 
     protected final Analyser analyser;
@@ -318,6 +320,30 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         void writeUsing(ClassBytecodeWriter writer) {
             if (arguments[0] instanceof Integer)
                 writer.pushArgument(number(0));
+            else
+                throw new IllegalArgumentException("Unsupported Arg type: " + arguments[0]);
+        }
+    }
+
+    // this builder provides access to elements of method arguments
+    static class VisitArgumentAtFetchBuilder extends Builder {
+        VisitArgumentAtFetchBuilder() { super(0, 2); }
+        Builder create() { return new VisitArgumentAtFetchBuilder(); }
+        void writeUsing(ClassBytecodeWriter writer) {
+            if (arguments[0] instanceof Integer && arguments[1] instanceof Integer)
+                writer.pushArgumentElement(number(0), number(1));
+            else
+                throw new IllegalArgumentException("Unsupported Arg type: " + arguments[0]);
+        }
+    }
+
+    // this builder provides access to temporaries
+    static class VisitTemporaryFetchBuilder extends Builder {
+        VisitTemporaryFetchBuilder() { super(0, 1); }
+        Builder create() { return new VisitTemporaryFetchBuilder(); }
+        void writeUsing(ClassBytecodeWriter writer) {
+            if (arguments[0] instanceof Integer)
+                writer.pushTemporary(number(0));
             else
                 throw new IllegalArgumentException("Unsupported Arg type: " + arguments[0]);
         }
