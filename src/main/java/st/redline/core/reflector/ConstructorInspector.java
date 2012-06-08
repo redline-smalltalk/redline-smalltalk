@@ -1,3 +1,4 @@
+/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.core.reflector;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class ConstructorInspector implements InspectorVisitor {
     private String javaClassName;
     private String javaConstructorName;
     private StringBuilder javaArgumentSignature = new StringBuilder();
+    private StringBuilder methodSymbol = new StringBuilder();
     private String[] javaArgumentTypes;
     private String classNameAdaptor;
 
@@ -33,12 +35,32 @@ public class ConstructorInspector implements InspectorVisitor {
         throw new IllegalStateException("This inspector should not be getting this.");
     }
 
+    public void visitConstructorsEnd(String suffix, String className) {
+        this.classNameAdaptor = className.substring(className.lastIndexOf('.') + 1) + suffix;
+        reflector.append("\n")
+                .append(classNameAdaptor)
+                .append(" class atSelector: #with: put: [ :args || selector |\n")
+                .append("  selector := self selectorFor: args withPrefix: 'with'.\n")
+                .append("  JVM aload: 1;\n")
+                .append("      arg: 0;\n")
+                .append("      temp: 0;\n")
+                .append("      invokeVirtual: 'st/redline/core/PrimObject' method: 'perform' matching: '(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;)Lst/redline/core/PrimObject;'.\n")
+                .append("].\n")
+                .append("\n")
+                .append(classNameAdaptor)
+                .append(" class atSelector: #selectorFor:withPrefix: put: [ :args :prefix |\n")
+                .append("  <primitive: 227>\n")
+                .append("].\n");
+        reflector.usePreviousVisitor();
+    }
+
     public void visitConstructorBegin(String suffix, String className, String constructorName, int parameterCount) {
         this.className = className;
         this.classNameAdaptor = className.substring(className.lastIndexOf('.') + 1) + suffix;
         this.javaClassName = className.replace(".", "/");
         this.javaConstructorName = constructorName.replace(".", "/");
         this.javaArgumentTypes = new String[parameterCount];
+        this.methodSymbol.append("with");
         reflector.append("\n")
                  .append(classNameAdaptor)
                  .append(" class atSelector: #");
@@ -88,15 +110,15 @@ public class ConstructorInspector implements InspectorVisitor {
     }
 
     public void visitParameterTypesBegin(int length) {
-        reflector.append(length == 0 ? "new" : "with:")
-            .append(" put: [")
-            .append(length == 0 ? "" : " :args")
-            .append(" || obj |\n  obj := self new.\n  JVM temp: 0;\n      new: '")
-            .append(javaClassName)
-            .append("';\n");
     }
 
     public void visitParameterTypesEnd(int length) {
+        reflector.append(length == 0 ? "new" : methodSymbol.toString())
+                .append(": put: [")
+                .append(length == 0 ? "" : " :args")
+                .append(" || obj |\n  obj := self new.\n  JVM temp: 0;\n      new: '")
+                .append(javaClassName)
+                .append("';\n");
     }
 
     public void visitParameterType(String parameterType, int index) {
@@ -104,12 +126,18 @@ public class ConstructorInspector implements InspectorVisitor {
         String javaType = javaSignature(parameterType);
         javaArgumentTypes[index] = javaType;
         javaArgumentSignature.append(javaType);
+        methodSymbol.append(methodSymbolType(parameterType));
+    }
+
+    private Object methodSymbolType(String parameterType) {
+        if (parameterType.indexOf('.') != -1)
+            return parameterType.substring(parameterType.lastIndexOf('.') + 1);
+        return PRIMITIVE_TO_SIGNATURE_TYPE.get(parameterType);
     }
 
     private String javaSignature(String parameterType) {
         if (parameterType.indexOf('.') != -1)
             return "L" + parameterType.replace(".", "/") + ";";
-        else
-            return PRIMITIVE_TO_SIGNATURE_TYPE.get(parameterType);
+        return PRIMITIVE_TO_SIGNATURE_TYPE.get(parameterType);
     }
 }

@@ -14,6 +14,7 @@ public class DynamicJavaClassAdaptor {
 
     PrimObject build() {
         String source = generateSmalltalkFor();
+//        System.out.println(source);
         return Evaluator.evaluate(source);
     }
 
