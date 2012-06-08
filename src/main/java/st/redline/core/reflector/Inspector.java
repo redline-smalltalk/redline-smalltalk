@@ -1,3 +1,4 @@
+/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.core.reflector;
 
 import java.lang.reflect.Constructor;
@@ -28,6 +29,11 @@ public class Inspector {
         for (int i = 0; i < constructors.length; i++)
             if (Modifier.isPublic(constructors[i].getModifiers()))
                 inspectConstructor(constructors[i], inspectorVisitor);
+        inspectConstructorsEnd(inspectorVisitor);
+    }
+
+    private void inspectConstructorsEnd(InspectorVisitor inspectorVisitor) {
+        inspectorVisitor.visitConstructorsEnd(suffix, theClass.getName());
     }
 
     private void inspectConstructor(Constructor constructor, InspectorVisitor inspectorVisitor) {

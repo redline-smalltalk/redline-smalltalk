@@ -571,6 +571,13 @@ public class PrimObject {
         return receiver.includesSelector(selector) ? PrimObject.TRUE : PrimObject.FALSE;
     }
 
+    public PrimObject p227(PrimObject receiver, PrimContext context) {
+        // selectorFromArgs: - iterate array and return a string representation of argument types.
+        String prefix = (String) context.argumentAt(1).javaValue();
+        ArrayList<PrimObject> args = (ArrayList<PrimObject>) context.argumentAt(0).javaValue();
+        return string(new BaseSignatureBuilder(prefix, args).build());
+    }
+
     void adaptJavaObject(String className) {
         String name = className.substring(1);
         if (!CLASSES.containsKey(name)) {
@@ -642,6 +649,10 @@ public class PrimObject {
 
     public PrimObject perform(PrimObject arg1, String selector) {
         return perform0(selector, arg1);
+    }
+
+    public PrimObject perform(PrimObject arg1, PrimObject selector) {
+        return perform0((String) selector.javaValue(), arg1);
     }
 
     public PrimObject superPerform(PrimContext context, PrimObject arg1, String selector) {

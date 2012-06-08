@@ -1,3 +1,4 @@
+/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.core.reflector;
 
 import java.util.Stack;
@@ -52,6 +53,10 @@ public class Reflector implements InspectorVisitor {
 
     public void visitConstructorBegin(String suffix, String className, String constructorName, int parameterCount) {
         currentReflector().visitConstructorBegin(suffix, className, constructorName, parameterCount);
+    }
+
+    public void visitConstructorsEnd(String suffix, String className) {
+        currentReflector().visitConstructorsEnd(suffix, className);
     }
 
     private InspectorVisitor currentReflector() {

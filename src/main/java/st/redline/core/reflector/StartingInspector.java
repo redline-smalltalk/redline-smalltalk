@@ -1,3 +1,4 @@
+/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.core.reflector;
 
 public class StartingInspector extends NoOpInspector {
@@ -21,6 +22,11 @@ public class StartingInspector extends NoOpInspector {
         reflector.append("\n")
                  .append(className(fullClassName, suffix))
                  .append(" initialize.\n");
+    }
+
+    public void visitConstructorsEnd(String suffix, String className) {
+        this.reflector.useConstructorVisitor();
+        this.reflector.visitConstructorsEnd(suffix, className);
     }
 
     public void visitConstructorBegin(String suffix, String className, String constructorName, int parameterCount) {
