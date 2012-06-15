@@ -22,6 +22,7 @@ public class ConstructorInspector implements InspectorVisitor {
     private StringBuilder methodSymbol = new StringBuilder();
     private String[] javaArgumentTypes;
     private String classNameAdaptor;
+    private int constructorsCount;
 
     public ConstructorInspector(Reflector reflector) {
         this.reflector = reflector;
@@ -35,8 +36,12 @@ public class ConstructorInspector implements InspectorVisitor {
         throw new IllegalStateException("This inspector should not be getting this.");
     }
 
+    public void visitConstructorsBegin(String suffix, String className) {
+        constructorsCount = 0;
+    }
+
     public void visitConstructorsEnd(String suffix, String className) {
-        this.classNameAdaptor = className.substring(className.lastIndexOf('.') + 1) + suffix;
+        classNameAdaptor = className.substring(className.lastIndexOf('.') + 1) + suffix;
         reflector.append("\n")
                 .append(classNameAdaptor)
                 .append(" class atSelector: #with: put: [ :args || selector |\n")

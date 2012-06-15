@@ -6,6 +6,7 @@ public interface InspectorVisitor {
     void visitEnd(String suffix, String className);
     void visitConstructorBegin(String suffix, String className, String constructorName, int parameterCount);
     void visitConstructorEnd(String suffix, String className, String constructorName, int parameterCount);
+    void visitConstructorsBegin(String suffix, String className);
     void visitConstructorsEnd(String suffix, String className);
     void visitParameterTypesBegin(int length);
     void visitParameterTypesEnd(int length);

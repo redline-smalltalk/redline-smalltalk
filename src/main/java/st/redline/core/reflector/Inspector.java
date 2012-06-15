@@ -25,11 +25,16 @@ public class Inspector {
     }
 
     private void inspectConstructorsWith(InspectorVisitor inspectorVisitor) {
+        inspectConstructorsBegin(inspectorVisitor);
         Constructor[] constructors = theClass.getDeclaredConstructors();
         for (int i = 0; i < constructors.length; i++)
             if (Modifier.isPublic(constructors[i].getModifiers()))
                 inspectConstructor(constructors[i], inspectorVisitor);
         inspectConstructorsEnd(inspectorVisitor);
+    }
+
+    private void inspectConstructorsBegin(InspectorVisitor inspectorVisitor) {
+        inspectorVisitor.visitConstructorsBegin(suffix, theClass.getName());
     }
 
     private void inspectConstructorsEnd(InspectorVisitor inspectorVisitor) {

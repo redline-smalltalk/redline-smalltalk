@@ -19,6 +19,10 @@ public class NoOpInspector implements InspectorVisitor {
         throw new IllegalStateException("This inspector should not be getting this.");
     }
 
+    public void visitConstructorsBegin(String suffix, String className) {
+        throw new IllegalStateException("This inspector should not be getting this.");
+    }
+
     public void visitConstructorsEnd(String suffix, String className) {
         throw new IllegalStateException("This inspector should not be getting this.");
     }

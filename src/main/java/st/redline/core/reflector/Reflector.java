@@ -55,6 +55,10 @@ public class Reflector implements InspectorVisitor {
         currentReflector().visitConstructorBegin(suffix, className, constructorName, parameterCount);
     }
 
+    public void visitConstructorsBegin(String suffix, String className) {
+        currentReflector().visitConstructorsBegin(suffix, className);
+    }
+
     public void visitConstructorsEnd(String suffix, String className) {
         currentReflector().visitConstructorsEnd(suffix, className);
     }

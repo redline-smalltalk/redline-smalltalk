@@ -24,6 +24,11 @@ public class StartingInspector extends NoOpInspector {
                  .append(" initialize.\n");
     }
 
+    public void visitConstructorsBegin(String suffix, String className) {
+        this.reflector.useConstructorVisitor();
+        this.reflector.visitConstructorsBegin(suffix, className);
+    }
+
     public void visitConstructorsEnd(String suffix, String className) {
         this.reflector.useConstructorVisitor();
         this.reflector.visitConstructorsEnd(suffix, className);
