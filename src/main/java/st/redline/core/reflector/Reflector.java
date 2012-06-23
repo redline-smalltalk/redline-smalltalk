@@ -83,8 +83,28 @@ public class Reflector implements InspectorVisitor {
         currentReflector().visitParameterType(parameterType, index);
     }
 
+    public void visitMethodsBegin(String suffix, String name) {
+        currentReflector().visitMethodsBegin(suffix, name);
+    }
+
+    public void visitMethodsEnd(String suffix, String name) {
+        currentReflector().visitMethodsEnd(suffix, name);
+    }
+
+    public void visitMethodBegin(String suffix, String className, String methodName, int parameterCount, String returnType) {
+        currentReflector().visitMethodBegin(suffix , className, methodName, parameterCount, returnType);
+    }
+
+    public void visitMethodEnd(String suffix, String className, String methodName, int parameterCount, String returnType) {
+        currentReflector().visitMethodEnd(suffix , className, methodName, parameterCount, returnType);
+    }
+
     public void useConstructorVisitor() {
         reflectors.push(new ConstructorInspector(this));
+    }
+
+    public void useMethodVisitor() {
+        reflectors.push(new MethodInspector(this));
     }
 
     public void usePreviousVisitor() {

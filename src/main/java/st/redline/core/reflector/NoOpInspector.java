@@ -38,4 +38,20 @@ public class NoOpInspector implements InspectorVisitor {
     public void visitParameterType(String parameterType, int index) {
         throw new IllegalStateException("This inspector should not be getting this.");
     }
+
+    public void visitMethodsBegin(String suffix, String name) {
+        throw new IllegalStateException("This inspector should not be getting this.");
+    }
+
+    public void visitMethodsEnd(String suffix, String name) {
+        throw new IllegalStateException("This inspector should not be getting this.");
+    }
+
+    public void visitMethodBegin(String suffix, String className, String methodName, int parameterCount, String returnType) {
+        throw new IllegalStateException("This inspector should not be getting this.");
+    }
+
+    public void visitMethodEnd(String suffix, String className, String methodName, int parameterCount, String returnType) {
+        throw new IllegalStateException("This inspector should not be getting this.");
+    }
 }

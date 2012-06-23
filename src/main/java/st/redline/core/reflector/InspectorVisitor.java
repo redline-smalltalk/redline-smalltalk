@@ -11,4 +11,8 @@ public interface InspectorVisitor {
     void visitParameterTypesBegin(int length);
     void visitParameterTypesEnd(int length);
     void visitParameterType(String parameterType, int index);
+    void visitMethodsBegin(String suffix, String name);
+    void visitMethodsEnd(String suffix, String name);
+    void visitMethodBegin(String suffix, String className, String methodName, int parameterCount, String returnType);
+    void visitMethodEnd(String suffix, String className, String methodName, int parameterCount, String returnType);
 }

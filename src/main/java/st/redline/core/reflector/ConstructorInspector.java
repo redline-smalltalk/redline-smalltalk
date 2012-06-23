@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ConstructorInspector implements InspectorVisitor {
 
-    private static final Map<String, String> PRIMITIVE_TO_SIGNATURE_TYPE = new HashMap<String, String>();
+    protected static final Map<String, String> PRIMITIVE_TO_SIGNATURE_TYPE = new HashMap<String, String>();
     static {
         PRIMITIVE_TO_SIGNATURE_TYPE.put("long", "J");
         PRIMITIVE_TO_SIGNATURE_TYPE.put("int", "I");
@@ -14,15 +14,15 @@ public class ConstructorInspector implements InspectorVisitor {
         PRIMITIVE_TO_SIGNATURE_TYPE.put("byte", "B");
     }
 
-    private final Reflector reflector;
-    private String className;
-    private String javaClassName;
-    private String javaConstructorName;
-    private StringBuilder javaArgumentSignature = new StringBuilder();
-    private StringBuilder methodSymbol = new StringBuilder();
-    private String[] javaArgumentTypes;
-    private String classNameAdaptor;
-    private int constructorsCount;
+    protected final Reflector reflector;
+    protected String className;
+    protected String javaClassName;
+    protected String javaConstructorName;
+    protected StringBuilder javaArgumentSignature = new StringBuilder();
+    protected StringBuilder methodSymbol = new StringBuilder();
+    protected String[] javaArgumentTypes;
+    protected String classNameAdaptor;
+    protected int constructorsCount;
 
     public ConstructorInspector(Reflector reflector) {
         this.reflector = reflector;
@@ -135,6 +135,22 @@ public class ConstructorInspector implements InspectorVisitor {
         javaArgumentTypes[index] = javaType;
         javaArgumentSignature.append(javaType);
         methodSymbol.append(methodSymbolType(parameterType));
+    }
+
+    public void visitMethodsBegin(String suffix, String name) {
+        throw new IllegalStateException("This inspector should not be getting this.");
+    }
+
+    public void visitMethodsEnd(String suffix, String name) {
+        throw new IllegalStateException("This inspector should not be getting this.");
+    }
+
+    public void visitMethodBegin(String suffix, String className, String methodName, int parameterCount, String returnType) {
+        throw new IllegalStateException("This inspector should not be getting this.");
+    }
+
+    public void visitMethodEnd(String suffix, String className, String methodName, int parameterCount, String returnType) {
+        throw new IllegalStateException("This inspector should not be getting this.");
     }
 
     private Object methodSymbolType(String parameterType) {
