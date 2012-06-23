@@ -98,7 +98,7 @@ public class ConstructorInspector implements InspectorVisitor {
     private void appendArgumentConversion(String type) {
         if (type.startsWith("L")) {
             reflector.append("      checkcast: '")
-                     .append(type)
+                     .append(type.substring(1, type.length() - 1))
                      .append("';\n");
         } else {
             // type is primitive so map from Redline internal type to java type.
@@ -118,10 +118,13 @@ public class ConstructorInspector implements InspectorVisitor {
     }
 
     public void visitParameterTypesEnd(int length) {
-        reflector.append(length == 0 ? "new" : methodSymbol.toString())
-                .append(": put: [")
-                .append(length == 0 ? "" : " :args")
-                .append(" || obj |\n  obj := self new.\n  JVM temp: 0;\n      new: '")
+        boolean isNew = length == 0;
+        reflector.append(isNew ? "new" : methodSymbol.toString() + ":")
+                .append(" put: [")
+                .append(length == 0 ? " " : " :args |")
+                .append("| obj |\n  obj := ")
+                .append(isNew ? "super new.\n" : "self new.\n")
+                .append("  JVM temp: 0;\n      new: '")
                 .append(javaClassName)
                 .append("';\n");
     }
