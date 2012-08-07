@@ -36,9 +36,10 @@ public class SourceFileFinder {
 
     private SourceFile findSourceFile(String sourceFileName) {
         SourceFile sourceFile;
-        for (String sourceFilePath : sourceFilePaths())
+        for (String sourceFilePath : sourceFilePaths()) {
             if ((sourceFile = findSourceFile(sourceFilePath, sourceFileName)) != null)
                 return sourceFile;
+        }
         return null;
     }
 
@@ -86,5 +87,6 @@ public class SourceFileFinder {
     private static void addDefaultPathsTo(List<String> sourceFilePaths) {
         sourceFilePaths.add("src" + File.separator + "main" + File.separator + "smalltalk");
         sourceFilePaths.add("src" + File.separator + "test" + File.separator + "smalltalk");
+        sourceFilePaths.add("rt");
     }
 }
