@@ -26,6 +26,23 @@ public class RedlineClassLoaderBuilder {
 //            System.out.println("Adding: " + jarFile.toURI().toURL());
             urls.add(jarFile.toURI().toURL());
         }
+        // When running from a JAR add that JAR to source search path.
+        String runningJarName = runningJarName();
+        if (runningJarName != null) {
+            urls.add(new File(runningJarName).toURI().toURL());
+        }
         return urls.toArray(new URL[urls.size()]);
+    }
+
+    private String runningJarName() {
+        String className = this.getClass().getName().replace('.', '/');
+        String classJar = this.getClass().getResource("/" + className + ".class").toString();
+        if (classJar.startsWith("jar:")) {
+            int start = classJar.indexOf("file:");
+            int end = classJar.indexOf("!");
+            if (start != -1 && end != -1)
+                return classJar.substring(start + 5, end);
+        }
+        return null;
     }
 }

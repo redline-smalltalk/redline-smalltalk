@@ -9,10 +9,12 @@ public class SourceFilesFinder {
 
     private final String paths;
     private final boolean warnings;
+    private final ClassLoader classLoader;
 
-    public SourceFilesFinder(String paths, boolean warnings) {
+    public SourceFilesFinder(String paths, boolean warnings, ClassLoader classLoader) {
         this.paths = paths;
         this.warnings = warnings;
+        this.classLoader = classLoader;
     }
 
     public List<SourceFile> findSourceFiles() {
@@ -51,7 +53,7 @@ public class SourceFilesFinder {
     }
 
     private SourceFileFinder sourceFileFinder(String className) {
-        return new SourceFileFinder(className);
+        return new SourceFileFinder(className, classLoader);
     }
 
     private boolean isPathToClass(String path) {

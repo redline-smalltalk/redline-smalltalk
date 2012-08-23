@@ -24,6 +24,11 @@ public class StartingInspector extends NoOpInspector {
                  .append(" initialize.\n");
     }
 
+    public void visitConstructorsBegin(String suffix, String className) {
+        this.reflector.useConstructorVisitor();
+        this.reflector.visitConstructorsBegin(suffix, className);
+    }
+
     public void visitConstructorsEnd(String suffix, String className) {
         this.reflector.useConstructorVisitor();
         this.reflector.visitConstructorsEnd(suffix, className);
@@ -32,5 +37,19 @@ public class StartingInspector extends NoOpInspector {
     public void visitConstructorBegin(String suffix, String className, String constructorName, int parameterCount) {
         this.reflector.useConstructorVisitor();
         this.reflector.visitConstructorBegin(suffix, className, constructorName, parameterCount);
+    }
+
+    public void visitMethodsBegin(String suffix, String className) {
+        this.reflector.useMethodVisitor();
+        this.reflector.visitMethodsBegin(suffix, className);
+    }
+
+    public void visitMethodBegin(String suffix, String className, String constructorName, int parameterCount, String returnType) {
+        this.reflector.visitMethodBegin(suffix, className, constructorName, parameterCount, returnType);
+    }
+
+    public void visitMethodsEnd(String suffix, String className) {
+        this.reflector.useMethodVisitor();
+        this.reflector.visitMethodsEnd(suffix, className);
     }
 }

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>st.redline</groupId>
   <artifactId>redline</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Redline Smalltalk</name>
   <url>http://redline.st</url>
@@ -67,7 +67,34 @@
   
   <build>
     <defaultGoal>install</defaultGoal>
+      <resources>
+          <resource>
+              <directory>${basedir}/target/smalltalk</directory>
+          </resource>
+      </resources>
     <plugins>
+        <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>2.6</version>
+            <executions>
+                <execution>
+                    <id>copy-resources</id>
+                    <phase>validate</phase>
+                    <goals>
+                        <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${basedir}/target/smalltalk/rt</outputDirectory>
+                        <resources>
+                            <resource>
+                                <directory>src/main/smalltalk</directory>
+                                <filtering>false</filtering>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -128,9 +155,6 @@
                 <copy todir="${project.build.directory}/${project.artifactId}-deploy/extras">
                   <fileset dir="${basedir}/extras"/>
                 </copy>
-                <copy todir="${project.build.directory}/${project.artifactId}-deploy/rt">
-                  <fileset dir="${basedir}/src/main/smalltalk"/>
-                </copy>
                 <copy todir="${project.build.directory}/${project.artifactId}-deploy/examples">
                   <fileset dir="${basedir}/src/test/smalltalk"/>
                 </copy>
@@ -144,6 +168,40 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>1.6</version>
+            <configuration>
+                <createDependencyReducedPom>true</createDependencyReducedPom>
+                <filters>
+                    <filter>
+                        <artifact>*:*</artifact>
+                        <excludes>
+                            <exclude>META-INF/*.SF</exclude>
+                            <exclude>META-INF/*.DSA</exclude>
+                            <exclude>META-INF/*.RSA</exclude>
+                        </excludes>
+                    </filter>
+                </filters>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <transformers>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <mainClass>st.redline.core.Stic</mainClass>
+                            </transformer>
+                        </transformers>
+                    </configuration>
+                </execution>
+            </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
