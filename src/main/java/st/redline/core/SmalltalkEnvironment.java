@@ -65,7 +65,7 @@ public class SmalltalkEnvironment {
     }
 
     private SourceFilesFinder sourceFilesFinder(String paths, boolean warnings) {
-        return new SourceFilesFinder(paths, warnings);
+        return new SourceFilesFinder(paths, warnings, classLoader());
     }
 
     public void registerBlockToBeCompiled(Object block, String name) {

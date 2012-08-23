@@ -19,7 +19,7 @@ public class SourceFile extends File {
         return sourceFileReader().read(this);
     }
 
-    private SourceFileReader sourceFileReader() {
+    protected SourceFileReader sourceFileReader() {
         return new SourceFileReader();
     }
 

@@ -16,6 +16,15 @@ public class SourceFileReader {
         }
     }
 
+    public String read(InputStream inputStream) {
+        Reader reader = createReaderOn(inputStream);
+        try {
+            return readContentsWith(reader);
+        } finally {
+            close(reader);
+        }
+    }
+
     private String readContentsWith(Reader reader) {
         String line;
         StringBuffer lineBuffer = new StringBuffer(LINE_BUFFER_INITAL_CAPACITY);
@@ -27,6 +36,14 @@ public class SourceFileReader {
             throw RedlineException.withCause(e);
         }
         return lineBuffer.toString();
+    }
+
+    private Reader createReaderOn(InputStream inputStream) {
+        try {
+            return new InputStreamReader(inputStream);
+        } catch (Exception e) {
+            throw RedlineException.withCause(e);
+        }
     }
 
     private Reader createReaderOn(File file) {

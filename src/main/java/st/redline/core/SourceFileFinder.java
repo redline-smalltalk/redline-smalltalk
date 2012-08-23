@@ -2,8 +2,14 @@
 package st.redline.core;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 
 public class SourceFileFinder {
@@ -12,9 +18,11 @@ public class SourceFileFinder {
 
     private final String sourceFileName;
     private final String className;
+    private final ClassLoader classLoader;
 
-    public SourceFileFinder(String className) {
+    public SourceFileFinder(String className, ClassLoader classLoader) {
         this.className = className;
+        this.classLoader = classLoader;
         this.sourceFileName = makeSourceFileName(className);
     }
 
@@ -44,9 +52,13 @@ public class SourceFileFinder {
     }
 
     private SourceFile findSourceFile(String sourceFilePath, String className) {
-        File file = new File(ClassPathUtilities.classNameToFileName(sourceFilePath, className));
+        String filename = ClassPathUtilities.classNameToFileName(sourceFilePath, className);
+        File file = new File(filename);
         if (file.exists())
             return new SourceFile(file);
+        InputStream inputStream = classLoader.getResourceAsStream(filename);
+        if (inputStream != null)
+            return new SourceResource(inputStream, filename);
         return null;
     }
 
@@ -55,12 +67,36 @@ public class SourceFileFinder {
         List<String> sourceFiles = new ArrayList<String>();
         for (String sourceFilePath : sourceFilePaths()) {
             File folder = new File(sourceFilePath + File.separator + path);
-            if (folder.exists() && folder.isDirectory())
+            if (folder.exists() && folder.isDirectory()) {
                 for (File file : folder.listFiles())
                     if (file.isFile() && file.getName().endsWith(".st")) {
                         int index = file.getAbsolutePath().indexOf(sourceFilePath);
                         sourceFiles.add(file.getAbsolutePath().substring(index + sourceFilePath.length() + 1));
                     }
+            } else {
+                String resourcePath = folder.toString();
+                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                try {
+                    Enumeration<URL> enumeration = classLoader.getResources(folder.toString());
+                    while (enumeration.hasMoreElements()) {
+                        URL url = enumeration.nextElement();
+                        String upath = url.toString();
+                        if (upath.startsWith("jar:")) {
+                            upath = upath.substring(upath.indexOf(":/") + 1, upath.lastIndexOf("!"));
+                            JarFile jarFile = new JarFile(upath);
+                            for (Enumeration em1 = jarFile.entries(); em1.hasMoreElements();) {
+                                String entry = em1.nextElement().toString();
+                                if (entry.startsWith(resourcePath) && entry.endsWith(".st")) {
+                                    int index = entry.indexOf(sourceFilePath);
+                                    sourceFiles.add(entry.substring(index + sourceFilePath.length() + 1));
+                                }
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RedlineException(e);
+                }
+            }
         }
         return sourceFiles;
     }

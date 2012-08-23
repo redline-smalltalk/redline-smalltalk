@@ -39,6 +39,6 @@ public class SmalltalkSourceClassLoader extends ClassLoader {
     }
 
     private SourceFileFinder sourceFileFinder(String className) {
-        return new SourceFileFinder(className);
+        return new SourceFileFinder(className, this);
     }
 }
