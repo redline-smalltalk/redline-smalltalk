@@ -35,7 +35,6 @@ public class SmalltalkSourceClassLoader extends ClassLoader {
     }
 
     private SourceFile findSource(String className) {
-        System.out.println("SmalltalkSourceClassLoader.findSource: " + className);
         return sourceFileFinder(className).findSourceFile();
     }
 

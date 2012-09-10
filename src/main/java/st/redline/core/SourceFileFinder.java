@@ -53,9 +53,7 @@ public class SourceFileFinder {
 
     private SourceFile findSourceFile(String sourceFilePath, String className) {
         String filename = ClassPathUtilities.classNameToFileName(sourceFilePath, className);
-        System.out.println("SourceFileFinder.findSourceFile: " + filename);
         File file = new File(filename);
-        System.out.println("Exists: " + file.exists());
         if (file.exists())
             return new SourceFile(file);
         InputStream inputStream = classLoader.getResourceAsStream(filename);
