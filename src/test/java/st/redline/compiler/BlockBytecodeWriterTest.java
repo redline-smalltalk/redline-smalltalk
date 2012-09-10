@@ -1,6 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.objectweb.asm.ClassWriter;
@@ -22,15 +23,22 @@ public class BlockBytecodeWriterTest implements Opcodes {
 	ClassWriter classWriter;
 	MethodVisitor methodVisitor;
 	BlockBytecodeWriter writer;
+    boolean bootstrapping;
 
-	@Before
+    @Before
 	public void setup() {
+        bootstrapping = PrimObject.bootstrapping(true);
 		methodVisitor = mock(MethodVisitor.class);
 		classWriter = mock(ClassWriter.class);
 		writer = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false, classWriter);
 	}
 
-	@Test
+    @After
+    public void teardown() {
+        PrimObject.bootstrapping(bootstrapping);
+    }
+
+    @Test
 	public void shouldCreateLoadableClassWhenClassOpenedAndClosed() throws IllegalAccessException, InstantiationException {
 		BlockBytecodeWriter writerNotUsingMocks = new BlockBytecodeWriter(CLASS_NAME, PACKAGE_NAME, false);
 		writerNotUsingMocks.openClass();

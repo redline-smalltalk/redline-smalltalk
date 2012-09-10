@@ -61,6 +61,12 @@ public class PrimObject {
         return (javaValue != null && !(javaValue instanceof Map)) ? javaValue.toString() : super.toString();
     }
 
+    public static boolean bootstrapping(boolean flag) {
+        boolean current = BOOTSTRAPPING;
+        BOOTSTRAPPING = flag;
+        return current;
+    }
+
     public boolean equals(Object o) {
         if (this == o)
             return true;
