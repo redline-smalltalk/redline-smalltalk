@@ -22,7 +22,8 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         // commands added by Redline - not true JVM instructions.
         builders.put("arg:", new VisitArgumentFetchBuilder());
         builders.put("arg:at:", new VisitArgumentAtFetchBuilder());
-        builders.put("temp:", new VisitTemporaryFetchBuilder());
+        builders.put("atTemp:", new VisitTemporaryFetchBuilder());
+        builders.put("putTemp:", new VisitTemporaryStoreBuilder());
     }
 
     protected final Analyser analyser;
@@ -344,6 +345,17 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
         void writeUsing(ClassBytecodeWriter writer) {
             if (arguments[0] instanceof Integer)
                 writer.pushTemporary(number(0));
+            else
+                throw new IllegalArgumentException("Unsupported Arg type: " + arguments[0]);
+        }
+    }
+
+    static class VisitTemporaryStoreBuilder extends Builder {
+        VisitTemporaryStoreBuilder() { super(0, 1); }
+        Builder create() { return new VisitTemporaryStoreBuilder(); }
+        void writeUsing(ClassBytecodeWriter writer) {
+            if (arguments[0] instanceof Integer)
+                writer.storeTemporary(number(0));
             else
                 throw new IllegalArgumentException("Unsupported Arg type: " + arguments[0]);
         }
