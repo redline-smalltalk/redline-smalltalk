@@ -48,7 +48,7 @@ public class ConstructorInspector implements InspectorVisitor {
                 .append("  selector := self selectorFor: args withPrefix: 'with'.\n")
                 .append("  JVM aload: 1;\n")
                 .append("      arg: 0;\n")
-                .append("      temp: 0;\n")
+                .append("      atTemp: 0;\n")
                 .append("      invokeVirtual: 'st/redline/core/PrimObject' method: 'perform' matching: '(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;)Lst/redline/core/PrimObject;'.\n")
                 .append("].\n")
                 .append("\n")
