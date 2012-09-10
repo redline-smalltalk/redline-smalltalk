@@ -26,7 +26,6 @@ public class SourceFileReader {
     }
 
     private String readContentsWith(Reader reader) {
-        System.out.println("readContentsWith - reader");
         String line;
         StringBuffer lineBuffer = new StringBuffer(LINE_BUFFER_INITAL_CAPACITY);
         BufferedReader lineReader = new BufferedReader(reader);
@@ -36,7 +35,6 @@ public class SourceFileReader {
         } catch (IOException e) {
             throw RedlineException.withCause(e);
         }
-        System.out.println("read:\n" + lineBuffer.toString());
         return lineBuffer.toString();
     }
 
@@ -50,7 +48,6 @@ public class SourceFileReader {
 
     private Reader createReaderOn(File file) {
         try {
-            System.out.println("createReaderOn: " + file.toString());
             return new java.io.FileReader(file);
         } catch (FileNotFoundException e) {
             throw RedlineException.withCause(e);
