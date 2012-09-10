@@ -53,7 +53,9 @@ public class SourceFileFinder {
 
     private SourceFile findSourceFile(String sourceFilePath, String className) {
         String filename = ClassPathUtilities.classNameToFileName(sourceFilePath, className);
+        System.out.println("SourceFileFinder.findSourceFile: " + filename);
         File file = new File(filename);
+        System.out.println("Exists: " + file.exists());
         if (file.exists())
             return new SourceFile(file);
         InputStream inputStream = classLoader.getResourceAsStream(filename);
@@ -67,14 +69,11 @@ public class SourceFileFinder {
         List<String> sourceFiles = new ArrayList<String>();
         for (String sourceFilePath : sourceFilePaths()) {
             File folder = new File(sourceFilePath + File.separator + path);
-            System.out.println("findIn() " + folder.toString() + " isFolder: " + folder.isDirectory() + " Exists: " + folder.exists());
             if (folder.exists() && folder.isDirectory()) {
                 for (File file : folder.listFiles())
                     if (file.isFile() && file.getName().endsWith(".st")) {
-                        System.out.println("found: " + file.toString());
                         int index = file.getAbsolutePath().indexOf(sourceFilePath);
                         sourceFiles.add(file.getAbsolutePath().substring(index + sourceFilePath.length() + 1));
-                        System.out.println("adding: " + file.getAbsolutePath().substring(index + sourceFilePath.length() + 1));
                     }
             } else {
                 String resourcePath = folder.toString();
