@@ -5,8 +5,41 @@
   <artifactId>redline</artifactId>
   <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
+  
   <name>Redline Smalltalk</name>
+  <description>Redline Smalltalk is a Smalltalk for the Java Virtual Machine, because nothing is as productive as Smalltalk, and the App has to run on the Java Virtual Machine.</description>
   <url>http://redline.st</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>git://github.com/redline-smalltalk/redline-smalltalk.git</url>
+    <connection>git://github.com/redline-smalltalk/redline-smalltalk.git</connection>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>jamesladd</id>
+      <name>James Ladd</name>
+      <email>ladd.james@gmail.com</email>
+    </developer>
+    <developer>
+      <id>seantallen</id>
+      <name>Sean T Allen</name>
+      <email>sean@monkeysnatchbanana.com</email>
+    </developer>
+    <developer>
+      <id>robdaemon</id>
+      <name>Robert Roland</name>
+      <email>robert@robertroland.org</email>
+    </developer>
+  </developers>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -73,28 +106,28 @@
           </resource>
       </resources>
     <plugins>
-        <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <version>2.6</version>
-            <executions>
-                <execution>
-                    <id>copy-resources</id>
-                    <phase>validate</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${basedir}/target/smalltalk/rt</outputDirectory>
-                        <resources>
-                            <resource>
-                                <directory>src/main/smalltalk</directory>
-                                <filtering>false</filtering>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/smalltalk/rt</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/smalltalk</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -129,7 +162,6 @@
             </goals>
             <configuration>
               <outputDirectory>${project.build.directory}/${project.artifactId}-deploy/lib</outputDirectory>
-<!--              <excludeTransitive>true</excludeTransitive> -->
               <excludeScope>test</excludeScope>
               <includeScope>compile</includeScope>
             </configuration>
@@ -170,38 +202,38 @@
         </executions>
       </plugin>
       <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>1.6</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.6</version>
+        <configuration>
+          <createDependencyReducedPom>true</createDependencyReducedPom>
+          <filters>
+            <filter>
+              <artifact>*:*</artifact>
+              <excludes>
+                <exclude>META-INF/*.SF</exclude>
+                <exclude>META-INF/*.DSA</exclude>
+                <exclude>META-INF/*.RSA</exclude>
+              </excludes>
+            </filter>
+          </filters>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
             <configuration>
-                <createDependencyReducedPom>true</createDependencyReducedPom>
-                <filters>
-                    <filter>
-                        <artifact>*:*</artifact>
-                        <excludes>
-                            <exclude>META-INF/*.SF</exclude>
-                            <exclude>META-INF/*.DSA</exclude>
-                            <exclude>META-INF/*.RSA</exclude>
-                        </excludes>
-                    </filter>
-                </filters>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>st.redline.core.Stic</mainClass>
+                </transformer>
+              </transformers>
             </configuration>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <transformers>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                <mainClass>st.redline.core.Stic</mainClass>
-                            </transformer>
-                        </transformers>
-                    </configuration>
-                </execution>
-            </executions>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -264,7 +296,33 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.4</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>    
+    </profile>
   </profiles>
-
-
 </project>
