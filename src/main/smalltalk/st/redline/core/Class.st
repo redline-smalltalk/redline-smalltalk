@@ -27,3 +27,8 @@ ClassDescription < #Class.
 
 - category: name
     <primitive: 135>
+
+- fullyQualifiedName
+    "Answer the fully qualified name (FQN) of the receiver or Nil. The FQN is the package name
+    followed by the Class name separated by a period, for example: 'st.redline.Class'."
+    <primitive: 228>

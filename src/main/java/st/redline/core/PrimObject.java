@@ -584,6 +584,15 @@ public class PrimObject {
         return string(new BaseSignatureBuilder(prefix, args).build());
     }
 
+    public PrimObject p228(PrimObject receiver, PrimContext context) {
+        // fullyQualifiedName
+        if (receiver instanceof PrimObjectMetaclass) {
+            PrimObjectMetaclass cls = (PrimObjectMetaclass) receiver.cls();
+            return string(cls.fqn());
+        }
+        return PrimObject.NIL;
+    }
+
     void adaptJavaObject(String className) {
         String name = className.substring(1);
         if (!CLASSES.containsKey(name)) {
