@@ -14,7 +14,9 @@ public class CreateSubclassMethod extends PrimObject {
         PrimObjectMetaclass subclassClass = subclassMetaClass.basicCreate(subclassName, receiver, "", "", "", "");
 //        System.out.println("Have " + subclassNameFrom(primContext) + " " + subclassClass + " cls " + subclassMetaClass);
 //        System.out.println(fullyQualifiedClassName(subclassName));
-        PrimObject.CLASSES.put(fullyQualifiedClassName(subclassName), subclassClass);
+        String fqn = fullyQualifiedClassName(subclassName);
+        subclassMetaClass.fqn(fqn);
+        PrimObject.CLASSES.put(fqn, subclassClass);
         return subclassClass;
     }
 
