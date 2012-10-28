@@ -16,8 +16,22 @@ public class CreateSubclassMethod extends PrimObject {
 //        System.out.println(fullyQualifiedClassName(subclassName));
         String fqn = fullyQualifiedClassName(subclassName);
         subclassMetaClass.fqn(fqn);
+        shareEigenClassImports(subclassClass, fqn);
         PrimObject.CLASSES.put(fqn, subclassClass);
         return subclassClass;
+    }
+
+    private void shareEigenClassImports(PrimObjectMetaclass subclassClass, String fqn) {
+        PrimObjectMetaclass eigenClass = eigenClassFor(fqn);
+        if (eigenClass != null && eigenClass.imports() != null)
+            if (subclassClass.imports() == null)
+                subclassClass.imports(eigenClass.imports());
+            else
+                throw new IllegalStateException("Replacing new subclass imports with eigenClass imports.");
+    }
+
+    private PrimObjectMetaclass eigenClassFor(String fqn) {
+        return PrimObject.EIGENCLASS_REGISTRY.get().get(fqn);
     }
 
     String fullyQualifiedClassName(String name) {

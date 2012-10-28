@@ -13,6 +13,7 @@ public class ImportAsMethod extends ImportMethod {
         SmalltalkEnvironment smalltalkEnvironment = smalltalkEnvironment();
         for (SourceFile sourceFile : findSources(smalltalkEnvironment, primContext.argumentAt(0).javaValue(), primContext.argumentAt(1).javaValue()))
             addAssociationBetweenObjectAndPackage(metaclass, sourceFile.alias(), sourceFile.shortName(), sourceFile.packageName());
+        registerEigenClass(metaclass);
         return receiver;
     }
 

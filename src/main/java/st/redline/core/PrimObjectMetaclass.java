@@ -69,6 +69,14 @@ public class PrimObjectMetaclass extends PrimObjectClass {
         return fqn;
     }
 
+    public Map<String, String> imports() {
+        return imports;
+    }
+
+    public void imports(Map<String, String> imports) {
+        this.imports = imports;
+    }
+
     public void sendMessagesResult(PrimObject result) {
         sendMessagesResult = result;
     }

@@ -12,10 +12,19 @@ public class ImportMethod extends PrimObject {
         SmalltalkEnvironment smalltalkEnvironment = smalltalkEnvironment();
         for (SourceFile sourceFile : findSources(smalltalkEnvironment, primContext.argumentAt(0).javaValue(), null))
             addAssociationBetweenObjectAndPackage(metaclass, sourceFile.alias(), sourceFile.shortName(), sourceFile.packageName());
+        registerEigenClass(metaclass);
         return receiver;
     }
 
+    protected void registerEigenClass(PrimObjectMetaclass metaclass) {
+        // Register EigenClass so we can use its imports later when we create a subclass.
+        String eigenClassName = metaclass.getClass().getName();
+        PrimObject.EIGENCLASS_REGISTRY.get().put(eigenClassName, metaclass);
+//        System.out.println("Registering eigenClass: " + eigenClassName);
+    }
+
     protected void addAssociationBetweenObjectAndPackage(PrimObjectMetaclass metaclass, String alias, String className, String packageName) {
+//        System.out.println("addAssociationBetweenObjectAndPackage: " + metaclass + " ( " + metaclass.getClass() + " ) " + alias);
         metaclass.packageAtPut(alias, makeFullyQualifiedPath(packageName, className));
     }
 
