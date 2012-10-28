@@ -16,17 +16,16 @@ import st.redline.compiler.Block;
 
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PrimObject {
 
     public static final ThreadLocal<Stack<String>> PACKAGE_REGISTRY = new ThreadLocal<Stack<String>>();
+    public static final ThreadLocal<Map<String, PrimObjectMetaclass>> EIGENCLASS_REGISTRY = new ThreadLocal<Map<String, PrimObjectMetaclass>>();
     static {
         PACKAGE_REGISTRY.set(new Stack<String>());
+        EIGENCLASS_REGISTRY.set(new HashMap<String, PrimObjectMetaclass>());
     }
     public static final Map<String, PrimObject> CLASSES = new ConcurrentHashMap<String, PrimObject>();
     static final Map<String, PrimObject> INTERNED_SYMBOLS = new ConcurrentHashMap<String, PrimObject>();
