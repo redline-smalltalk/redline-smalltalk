@@ -1,28 +1,26 @@
 package st.redline.core;
 
-import st.redline.core.reflector.Reflector;
+import st.redline.compiler.SmalltalkGeneratorOfAdaptorOfAJavaClass;
 
 public class DynamicJavaClassAdaptor {
 
     private final String className;
-    private final String suffix;
 
-    DynamicJavaClassAdaptor(String className, String suffix) {
+    DynamicJavaClassAdaptor(String className) {
         this.className = className;
-        this.suffix = suffix;
     }
 
     PrimObject build() {
         String source = generateSmalltalkFor();
-        System.out.println(source);
+//        System.out.println(source);
         return Evaluator.evaluate(source);
     }
 
     private String generateSmalltalkFor() {
-        try {
-            return new Reflector(className, suffix).reflect().result();
-        } catch (ClassNotFoundException e) {
-            throw new RedlineException(e);
-        }
+        return new SmalltalkGeneratorOfAdaptorOfAJavaClass(className).adaptorSource();
+    }
+
+    public static String fullyQualifiedClassNameForJavaClassWrapperClassNamed(String fullyQualifiedJavaClassName) { // remove when old code is gone - chad
+        return "smalltalkClassesThatAdaptJavaClasses." + fullyQualifiedJavaClassName + "Adaptor";
     }
 }

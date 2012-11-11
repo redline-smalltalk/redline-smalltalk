@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class PrimObjectMetaclass extends PrimObjectClass {
 
+    public static final PrimObjectMetaclass METACLASS;
     static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for name, superclass etc etc
     static final int NAME_INDEX = SUPERCLASS_INDEX + 1;
-    static final PrimObjectMetaclass METACLASS;
 
     static {
         BOOTSTRAPPING = true;
@@ -85,7 +85,7 @@ public class PrimObjectMetaclass extends PrimObjectClass {
         return sendMessagesResult;
     }
 
-    PrimObject name() {
+    public PrimObject name() {
         return attributes[NAME_INDEX];
     }
 

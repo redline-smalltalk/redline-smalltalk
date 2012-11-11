@@ -24,3 +24,5 @@ nbactions.xml
 +*#
 +.#*
 .DS_Store
+*.iml
+

@@ -13,6 +13,7 @@ import st.redline.bootstrap.AtSelectorPutMethod;
 import st.redline.bootstrap.CreateSubclassMethod;
 import st.redline.bootstrap.InstanceVariableNamesMethod;
 import st.redline.compiler.Block;
+import st.redline.compiler.SmalltalkGeneratorOfAdaptorOfAJavaClass;
 
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
@@ -28,6 +29,7 @@ public class PrimObject {
         EIGENCLASS_REGISTRY.set(new HashMap<String, PrimObjectMetaclass>());
     }
     public static final Map<String, PrimObject> CLASSES = new ConcurrentHashMap<String, PrimObject>();
+    public static final Set<PrimObject> ADAPTOR_CLASSES = new HashSet<PrimObject>();
     static final Map<String, PrimObject> INTERNED_SYMBOLS = new ConcurrentHashMap<String, PrimObject>();
     static final Map<String, PrimObject> BLOCKS = new ConcurrentHashMap<String, PrimObject>();
 
@@ -168,6 +170,10 @@ public class PrimObject {
 
     public static PrimObject number(BigDecimal javaValue) {
         return instanceOf("Integer").with(javaValue);
+    }
+
+    public static PrimObject number(Integer javaValue) {
+        return instanceOf("Integer").with(new BigDecimal(javaValue));
     }
 
     public static PrimObject character(Object javaValue) {
@@ -592,25 +598,52 @@ public class PrimObject {
         return PrimObject.NIL;
     }
 
-    void adaptJavaObject(String className) {
-        String name = className.substring(1);
-        if (!CLASSES.containsKey(name)) {
-            String suffix = "Adaptor";
-            new DynamicJavaClassAdaptor(name, suffix).build();
-            // map dynamic class to original class.
-            CLASSES.put(name, CLASSES.get(name + suffix));
+    public PrimObject p229(PrimObject receiver, PrimContext context) {
+        // answer a new instance of the receiver with an arraylist in its javaValue .
+        PrimObject newInstance = p70(receiver, context);
+        ArrayList<PrimObject> list = new ArrayList<PrimObject>();
+        newInstance.javaValue(list);
+        return newInstance;
+    }
+
+    public PrimObject p230(PrimObject receiver, PrimContext context) {
+        // add: anObject and answer anObject.
+        if (!(receiver.javaValue() instanceof ArrayList))
+            throw new IllegalStateException("Receiver is expected to have an ArrayList javaValue but doesn't.");
+        PrimObject anObject = context.argumentAt(0);
+        ((ArrayList<PrimObject>) receiver.javaValue()).add(anObject);
+        return anObject;
+    }
+
+    public static boolean classIsAnAdaptorClass(PrimObject smalltalkClass) {
+        synchronized (PrimObject.class) {
+            return ADAPTOR_CLASSES.contains(smalltalkClass);
         }
     }
 
-    PrimObject resolveObject(String name) {
+    PrimObject adaptorClassForJavaClassNamed(String fullyQualifiedJavaClassName) {
+        if (CLASSES.containsKey(fullyQualifiedJavaClassName)) {
+            return CLASSES.get(fullyQualifiedJavaClassName);
+        }
+        new DynamicJavaClassAdaptor(fullyQualifiedJavaClassName).build();
+        String adaptorClassName = SmalltalkGeneratorOfAdaptorOfAJavaClass.fullyQualifiedNameOfSmalltalkClassToUseToAdaptJavaClass(fullyQualifiedJavaClassName);
+        PrimObject adaptorClass = resolveObject(adaptorClassName);
+        CLASSES.put(fullyQualifiedJavaClassName, adaptorClass);
+        synchronized (PrimObject.class) {
+            ADAPTOR_CLASSES.add(adaptorClass);
+        }
+        return  adaptorClass;
+    }
+
+    public PrimObject resolveObject(String name) {
         if (CLASSES.containsKey(name))
             return CLASSES.get(name);
         if (Character.isUpperCase(name.charAt(0))) {
             String fullyQualifiedName = packageFor(name);
             if (fullyQualifiedName != null) {
                 if (fullyQualifiedName.startsWith("#")) {
-                    adaptJavaObject(fullyQualifiedName);
-                    return resolveObject(fullyQualifiedName.substring(1));
+                    // fullyQualifiedName here is actually Java class name.
+                    return adaptorClassForJavaClassNamed(fullyQualifiedName.substring(1));
                 } else
                     return resolveObject(fullyQualifiedName);
             }
