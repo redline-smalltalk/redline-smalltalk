@@ -6,7 +6,7 @@ public class Greeting {
         this.defaultGreeting = defaultGreeting;
     }
     public Greeting() {
-        this("Hi Mate.");
+        this("G'Day Mate.");
     }
     public void say() {
         say(defaultGreeting);
