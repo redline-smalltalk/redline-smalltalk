@@ -5,6 +5,10 @@ Redline Smalltalk is a Smalltalk for the Java Virtual Machine, because nothing i
 Redline Smalltalk is Copyright (c) James C. Ladd and released under the MIT License.
 See the LICENSE file for more information.
 
+For a Quick Start please see:
+
+|Getting Started |"http://www.redline.st/discover/getting-started.html":http://www.redline.st/discover/getting-started.html|
+
 For the latest information please see:
 
 |discussions|"https://groups.google.com/group/redline-smalltalk/topics":https://groups.google.com/group/redline-smalltalk/topics|
