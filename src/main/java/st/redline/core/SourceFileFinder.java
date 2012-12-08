@@ -53,6 +53,7 @@ public class SourceFileFinder {
 
     private SourceFile findSourceFile(String sourceFilePath, String className) {
         String filename = ClassPathUtilities.classNameToFileName(sourceFilePath, className);
+//        System.out.println("findSourceFile: " + className + " in: " + filename);
         File file = new File(filename);
         if (file.exists())
             return new SourceFile(file);
@@ -121,8 +122,6 @@ public class SourceFileFinder {
     }
 
     private static void addDefaultPathsTo(List<String> sourceFilePaths) {
-        sourceFilePaths.add("src" + File.separator + "main" + File.separator + "smalltalk");
-        sourceFilePaths.add("src" + File.separator + "test" + File.separator + "smalltalk");
         sourceFilePaths.add("rt");
     }
 }

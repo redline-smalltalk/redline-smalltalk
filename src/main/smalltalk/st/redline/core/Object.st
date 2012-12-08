@@ -113,28 +113,36 @@ ProtoObject < #Object.
     "Same as size. The method associated with this message, however, cannot be
     modified in any subclass."
     <primitive: 62>
-  
+
+"printing"
+
 - printString
     "Answer a String whose characters are a description of the receiver."
-  
     | stream |
     stream := WriteStream on: String new.
     self printOn: stream.
     ^ stream contents.
 
 - printOn: aStream 
-    "Append to the argument, aStream, a sequence of characters that
-    identifies the receiver."
-
+    "Append to the argument, aStream, a sequence of characters that identifies the receiver."
     | title |
     title := self class name.
     aStream
       nextPutAll: (title first isVowel ifTrue: [ 'an ' ] ifFalse: [ 'a ' ]);
       nextPutAll: title.
 
+"storing"
+
+- storeString
+    "Answer a String representation of the receiver
+    from which the receiver can be reconstructed."
+  ^ String streamContents: [:s | self storeOn: s].
+
 - yourself
     "Answer self."
     ^ self.
+
+"error handling"
 
 - error: aString
     "Report to the user that an error occurred in
