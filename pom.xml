@@ -240,9 +240,9 @@
 	              <mainClass>st.redline.core.Stic</mainClass>
     	          <arguments>
         	        <argument>-r</argument>
-            	    <argument>${project.basedir}/src/main/smalltalk</argument>
+            	    <argument>src/main/smalltalk</argument>
                 	<argument>-s</argument>
-	                <argument>${project.basedir}/src/main/smalltalk${path.separator}${project.basedir}/src/test/smalltalk</argument>
+	                <argument>src/main/smalltalk${path.separator}src/test/smalltalk</argument>
     	            <argument>st.redline.core.TestRunner</argument>
         	      </arguments>
                 </configuration>
