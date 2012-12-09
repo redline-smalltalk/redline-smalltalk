@@ -1,5 +1,5 @@
-import: 'com.friendly.Test' as: 'Test'.
-import: 'java.util.ArrayList' as: 'JList'.
+self import: 'com.friendly.Test' as: 'Test'.
+self import: 'java.util.ArrayList' as: 'JList'.
 
 Transcript  show: '1aa'; cr.
 Test new.
