@@ -35,5 +35,6 @@ Add INSTALL file to root w/ basic build & install instructions.
 need more.
 
 Find out why travis-CI will sometimes fail a build although the build doesnt
-fail elsewhere.
+fail elsewhere. And so we continue to see this problem with travis.
+
 
