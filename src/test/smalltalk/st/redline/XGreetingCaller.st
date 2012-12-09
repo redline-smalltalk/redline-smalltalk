@@ -1,4 +1,4 @@
-import: 'st.redline.XGreeting'.
+self import: 'st.redline.XGreeting'.
 
 Object < #XGreetingCaller.
 

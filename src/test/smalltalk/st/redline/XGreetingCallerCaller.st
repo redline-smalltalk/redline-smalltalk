@@ -1,5 +1,5 @@
-import: 'st.redline.XGreetingCaller'.
-import: 'st.redline.XGreeting'.
+self import: 'st.redline.XGreetingCaller'.
+self import: 'st.redline.XGreeting'.
 
 XGreeting new sayHello.
 XGreetingCaller new works.
