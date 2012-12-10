@@ -87,7 +87,9 @@ public class SourceFileFinder {
                             JarFile jarFile = new JarFile(upath);
                             for (Enumeration em1 = jarFile.entries(); em1.hasMoreElements();) {
                                 String entry = em1.nextElement().toString();
-                                if (entry.startsWith(resourcePath) && entry.endsWith(".st")) {
+                                int lastSlash = entry.lastIndexOf('/');
+                                int pathLength = resourcePath.length();
+                                if (entry.startsWith(resourcePath) && lastSlash == pathLength && entry.endsWith(".st")) {
                                     int index = entry.indexOf(sourceFilePath);
                                     sourceFiles.add(entry.substring(index + sourceFilePath.length() + 1));
                                 }
