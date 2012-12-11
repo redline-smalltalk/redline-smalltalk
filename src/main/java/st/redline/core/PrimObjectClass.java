@@ -56,6 +56,8 @@ public class PrimObjectClass extends PrimObject {
         Integer index = variableIndexes.get(name);
         if (index != null)
             return index;
+        if (superclass() != null)
+            return superclass().indexOfVariable(name);
         return 0;  // indexes can't be zero (0).
     }
 

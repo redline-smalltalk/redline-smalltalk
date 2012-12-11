@@ -138,9 +138,11 @@ public class PrimObjectMetaclass extends PrimObjectClass {
     public void packageAtPut(String name, String packageName) {
         if (imports == null)
             imports = new Hashtable<String, String>();
-        if (imports.containsKey(name))
-            throw new IllegalStateException("'" + name + "' already registered to a package.");
-        imports.put(name, packageName);
+        if (imports.containsKey(name)) {
+            if (!imports.get(name).equals(packageName))
+                throw new IllegalStateException("'" + name + "' already registered to package: '" + imports.get(name) + "'.");
+        } else
+            imports.put(name, packageName);
     }
 
     protected PrimObject _sendMessages_(PrimObject receiver, PrimContext context) {
