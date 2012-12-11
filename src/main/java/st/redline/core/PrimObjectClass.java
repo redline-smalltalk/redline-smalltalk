@@ -16,7 +16,7 @@ public class PrimObjectClass extends PrimObject {
     static final int SUPERCLASS_INDEX = CLASS_INDEX + 1;
 
     HashMap<String, Integer> variableIndexes;
-    int nextVariableIndex = SUPERCLASS_INDEX + 1;
+    int nextVariableIndex;
 
     PrimObjectClass() {
         this(0);
@@ -30,11 +30,10 @@ public class PrimObjectClass extends PrimObject {
     }
 
     public void addVariableNamed(String name) {
-    //		System.out.println("addVariableNamed() " + name + " @ " + nextVariableIndex);
+        nextVariableIndex = getNextVariableIndex();
         if (hasVariableNamed(name))
             throw new IllegalStateException("Variable '" + name + "' already defined.");
         variableIndexes().put(name, nextVariableIndex);
-        nextVariableIndex++;
     }
 
     boolean hasVariableNamed(String name) {
@@ -46,6 +45,13 @@ public class PrimObjectClass extends PrimObject {
         PrimObjectClass aClass = (PrimObjectClass) cls();
         return aClass.variableIndexes().containsKey(name)
                 || (aClass.superclass() != PRIM_NIL && ((PrimObjectClass) aClass.superclass()).hasVariableNamed(name));
+    }
+
+    int getNextVariableIndex() {
+        PrimObject superclass = superclass();
+        if (superclass != PRIM_NIL && superclass != null)
+            return variableIndexes.size() + ((PrimObjectClass) superclass).getNextVariableIndex();
+        return SUPERCLASS_INDEX + 1;
     }
 
     Map<String, Integer> variableIndexes() {
