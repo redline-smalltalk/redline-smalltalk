@@ -15,12 +15,12 @@ ProtoObject < #Object.
 
 "comparing"
 
-- == anObject 
+- == anObject
     "Primitive. Answer whether the receiver and the argument are the same
     object (have the same object pointer). Do not redefine the message == in
     any other class! Essential. No Lookup. Do not override in any subclass.
     See Object documentation whatIsAPrimitive."
-  
+
     "NOTE: The Blue Book says just:
     Answer whether the receiver and the argument are the same object."
     <primitive: 110>
@@ -40,6 +40,11 @@ ProtoObject < #Object.
 - hash
     "Answer an Integer computed with respect to the representation of the receiver."
     <primitive: 75>
+
+"message handling"
+
+- perform: selector
+    <primitive: 83>
 
 "testing"
 
@@ -123,7 +128,7 @@ ProtoObject < #Object.
     self printOn: stream.
     ^ stream contents.
 
-- printOn: aStream 
+- printOn: aStream
     "Append to the argument, aStream, a sequence of characters that identifies the receiver."
     | title |
     title := self class name.
@@ -151,7 +156,7 @@ ProtoObject < #Object.
     aString, as part of the error notification comment."
     <primitive: 216>
 
-- doesNotUnderstand: aMessage 
+- doesNotUnderstand: aMessage
     "Report to the user that the receiver does not understand the argument, aMessage, as a message."
     self error: aMessage
 
