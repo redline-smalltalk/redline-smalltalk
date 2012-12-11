@@ -602,6 +602,7 @@ public class PrimObject {
         // answer a new instance of the receiver with an arraylist in its javaValue .
         PrimObject newInstance = p70(receiver, context);
         ArrayList<PrimObject> list = new ArrayList<PrimObject>();
+        list.add(null);
         newInstance.javaValue(list);
         return newInstance;
     }
