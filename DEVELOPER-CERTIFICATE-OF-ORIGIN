@@ -6,7 +6,7 @@ which certifies that you wrote it or otherwise have the right to pass it on
 as a open-source patch.  The rules are pretty simple: if you can certify the
 below:
 
-         Developer's Certificate of Origin 1.1
+         Developer's Certificate of Origin 1.2
 
          By making a contribution to this project, I certify that:
 
@@ -31,6 +31,9 @@ below:
              personal information I submit with it, including my sign-off) is
              maintained indefinitely and may be redistributed consistent with
              this project or the open source license(s) involved.
+
+	 (e) I understand and agree that further contributions to this project
+             by me will also be covered by this agreement.
 
 then you just add a line saying
 
