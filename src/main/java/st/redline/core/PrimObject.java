@@ -249,7 +249,7 @@ public class PrimObject {
     }
 
     int indexOfVariable(String name) {
-        throw new IllegalStateException("Subclass should override.");
+        return 0;
     }
 
     public static PrimObject putAt(PrimObject receiver, PrimObject object, int index) {
