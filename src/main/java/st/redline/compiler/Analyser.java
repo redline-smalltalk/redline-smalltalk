@@ -8,14 +8,16 @@ public class Analyser implements NodeVisitor {
     private final Stack<AnalyserDelegate> delegates;
     private final String className;
     private final String packageName;
+    private String sourcePath;
     private AnalyserDelegate delegate;
 
-    public Analyser(String className, String packageName, boolean verbose) {
+    public Analyser(String className, String packageName, String sourcePath, boolean verbose) {
         this.className = className;
         this.packageName = packageName;
+        this.sourcePath = sourcePath;
         delegates = new Stack<AnalyserDelegate>();
-        currentDelegate(verbose ? verboseDelegate(className, packageName)
-                                : normalDelegate(className, packageName, verbose));
+        currentDelegate(verbose ? verboseDelegate(className, packageName, sourcePath)
+                                : normalDelegate(className, packageName, sourcePath, verbose));
     }
 
     String className() {
@@ -26,12 +28,16 @@ public class Analyser implements NodeVisitor {
         return packageName;
     }
 
-    AnalyserDelegate normalDelegate(String className, String packageName, boolean verbose) {
-        return new ProgramAnalyser(this, className, packageName, verbose);
+    String sourcePath() {
+        return sourcePath;
     }
 
-    AnalyserDelegate verboseDelegate(String className, String packageName) {
-        return tracingDelegate(normalDelegate(className, packageName, true));
+    AnalyserDelegate normalDelegate(String className, String packageName, String sourcePath, boolean verbose) {
+        return new ProgramAnalyser(this, className, packageName, sourcePath, verbose);
+    }
+
+    AnalyserDelegate verboseDelegate(String className, String packageName, String sourcePath) {
+        return tracingDelegate(normalDelegate(className, packageName, sourcePath, true));
     }
 
     AnalyserDelegate tracingDelegate(AnalyserDelegate analyserDelegate) {
@@ -67,6 +73,14 @@ public class Analyser implements NodeVisitor {
         delegate.visitEnd(program);
     }
 
+    public void visitBegin(ReferencedClasses referencedClasses) {
+        delegate.visitBegin(referencedClasses);
+    }
+
+    public void visitEnd(ReferencedClasses referencedClasses) {
+        delegate.visitEnd(referencedClasses);
+    }
+
     public void visitBegin(Temporaries temporaries) {
         delegate.visitBegin(temporaries);
     }
@@ -89,6 +103,10 @@ public class Analyser implements NodeVisitor {
 
     public void visitEnd(AnswerStatement answerStatement) {
         delegate.visitEnd(answerStatement);
+    }
+
+    public void visit(ReferencedClass referencedClass, String value) {
+        delegate.visit(referencedClass, value);
     }
 
     public void visit(Temporary temporary, String value, int line) {

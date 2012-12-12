@@ -5,10 +5,12 @@ public class Program implements VisitableNode {
 
     private Temporaries temporaries;
     private Statements statements;
+    private ReferencedClasses referencedClasses;
 
-    Program(Temporaries temporaries, Statements statements) {
+    Program(Temporaries temporaries, Statements statements, ReferencedClasses referencedClasses) {
         this.temporaries = temporaries;
         this.statements = statements;
+        this.referencedClasses = referencedClasses;
     }
 
     Statements statements() {
@@ -19,8 +21,14 @@ public class Program implements VisitableNode {
         return temporaries;
     }
 
+    ReferencedClasses referencedClasses() {
+        return referencedClasses;
+    }
+
     public void accept(NodeVisitor nodeVisitor) {
         nodeVisitor.visitBegin(this);
+        if (referencedClasses != null)
+            referencedClasses.accept(nodeVisitor);
         if (temporaries != null)
             temporaries.accept(nodeVisitor);
         if (statements != null)

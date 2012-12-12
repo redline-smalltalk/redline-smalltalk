@@ -1,14 +1,12 @@
-self import: 'st.redline.XGreeting'.
-
 Object < #XGreetingCaller.
 
 + Fail
 	XGreeting new sayHello.
 
--fails
+- fails
 	XGreeting new sayHello.
 
--works
+- works
 	Transcript show: 'Getting Greeting to say Hello from works.'; cr.
 	
 	

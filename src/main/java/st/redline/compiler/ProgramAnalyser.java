@@ -5,6 +5,7 @@ import st.redline.core.ClassPathUtilities;
 import st.redline.core.RedlineException;
 import st.redline.core.SmalltalkEnvironment;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,16 +23,18 @@ public class ProgramAnalyser implements AnalyserDelegate {
     private boolean sendToSuper = false;
     private boolean hasBlockWithAnswerExpression = false;
     private String packageName;
+    private String sourcePath;
 
-    ProgramAnalyser(Analyser analyser, String className, String packageName, boolean verbose) {
-        this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose, packageName);
+    ProgramAnalyser(Analyser analyser, String className, String packageName, String sourcePath, boolean verbose) {
+        this(analyser, new ClassBytecodeWriter(className, packageName, verbose), verbose, packageName, sourcePath);
     }
 
-    ProgramAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose, String packageName) {
+    ProgramAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose, String packageName, String sourcePath) {
         this.analyser = analyser;
         this.writer = classBytecodeWriter;
         this.verbose = verbose;
         this.packageName = packageName;
+        this.sourcePath = sourcePath;
     }
 
     ClassBytecodeWriter classBytecodeWriter() {
@@ -66,6 +69,12 @@ public class ProgramAnalyser implements AnalyserDelegate {
         writer.closeClass();
     }
 
+    public void visitBegin(ReferencedClasses referencedClasses) {
+    }
+
+    public void visitEnd(ReferencedClasses referencedClasses) {
+    }
+
     public void visitBegin(Temporaries temporaries) {
         initializeTemporariesRegistration();
         writer.invokeContextTemporariesInit(temporaries.size());
@@ -89,6 +98,12 @@ public class ProgramAnalyser implements AnalyserDelegate {
     }
 
     public void visitEnd(AnswerStatement answerStatement) {
+    }
+
+    public void visit(ReferencedClass referencedClass, String value) {
+        File file = new File(ClassPathUtilities.classNameToFileName(sourcePath, value));
+        if (file.exists())
+            writer.addClassToImports(value, packageName + '.' + value);
     }
 
     public void visit(Temporary temporary, String value, int line) {
@@ -201,8 +216,8 @@ public class ProgramAnalyser implements AnalyserDelegate {
     }
 
     Analyser createBlockAnalyser(String blockClassName, Block block) {
-        Analyser analyserDelegator = new Analyser(analyser.className(), analyser.packageName(), verbose);
-        BlockAnalyser blockAnalyser = new BlockAnalyser(analyserDelegator, blockClassName, analyser.packageName(), verbose, block);
+        Analyser analyserDelegator = new Analyser(analyser.className(), analyser.packageName(), analyser.sourcePath(), verbose);
+        BlockAnalyser blockAnalyser = new BlockAnalyser(analyserDelegator, blockClassName, analyser.packageName(), analyser.sourcePath(), verbose, block);
         analyserDelegator.currentDelegate(blockAnalyser);
         return analyserDelegator;
     }

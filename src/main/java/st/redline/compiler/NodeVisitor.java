@@ -4,10 +4,12 @@ package st.redline.compiler;
 interface NodeVisitor {
     void visitBegin(Program program);
     void visitEnd(Program program);
-    void visitBegin(Temporaries temporaries);
-    void visitEnd(Temporaries temporaries);
+    void visitBegin(ReferencedClasses referencedClasses);
+    void visitEnd(ReferencedClasses referencedClasses);
     void visitBegin(Statements statements);
     void visitEnd(Statements statements);
+    void visitBegin(Temporaries temporaries);
+    void visitEnd(Temporaries temporaries);
     void visitBegin(AnswerStatement answerStatements);
     void visitEnd(AnswerStatement answerStatements);
     void visitBegin(SimpleExpression simpleExpression);
@@ -34,6 +36,7 @@ interface NodeVisitor {
     void visitEnd(BlockArguments blockArguments, int argumentCount);
     void visit(BinaryObjectDescription binaryObjectDescription);
     void visit(UnaryObjectDescription unaryObjectDescription);
+    void visit(ReferencedClass referencedClass, String value);
     void visit(Temporary temporary, String value, int line);
     void visit(PrimaryExpression primaryExpression, int line);
     void visit(PrimaryStatements primaryStatements, int line);

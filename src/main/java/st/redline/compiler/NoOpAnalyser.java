@@ -12,6 +12,12 @@ class NoOpAnalyser implements AnalyserDelegate {
     public void visitEnd(Program program) {
     }
 
+    public void visitBegin(ReferencedClasses referencedClasses) {
+    }
+
+    public void visitEnd(ReferencedClasses referencedClasses) {
+    }
+
     public void visitBegin(Temporaries temporaries) {
     }
 
@@ -104,6 +110,9 @@ class NoOpAnalyser implements AnalyserDelegate {
     }
 
     public void visit(UnaryObjectDescription unaryObjectDescription) {
+    }
+
+    public void visit(ReferencedClass referencedClass, String value) {
     }
 
     public void visit(Temporary temporary, String value, int line) {

@@ -434,7 +434,8 @@ public class NodeTest {
 	public void programNodeShouldBeVisitable() {
 		Temporaries temporaries = mock(Temporaries.class);
 		Statements statements = mock(Statements.class);
-		Program program = new Program(temporaries, statements);
+		ReferencedClasses referencedClasses = mock(ReferencedClasses.class);
+		Program program = new Program(temporaries, statements, referencedClasses);
 		program.accept(visitor);
 		verify(visitor).visitBegin(program);
 		verify(temporaries).accept(visitor);

@@ -32,6 +32,16 @@ public class TracingAnalyser implements AnalyserDelegate {
         delegate.visitEnd(program);
     }
 
+    public void visitBegin(ReferencedClasses referencedClasses) {
+        trace("visitBegin(ReferencedClasses) " + referencedClasses);
+        delegate.visitBegin(referencedClasses);
+    }
+
+    public void visitEnd(ReferencedClasses referencedClasses) {
+        trace("visitEnd(ReferencedClasses) " + referencedClasses);
+        delegate.visitEnd(referencedClasses);
+    }
+
     public void visitBegin(Temporaries temporaries) {
         trace("visitBegin(Temporaries) " + temporaries);
         delegate.visitBegin(temporaries);
@@ -60,6 +70,11 @@ public class TracingAnalyser implements AnalyserDelegate {
     public void visitEnd(AnswerStatement answerStatement) {
         trace("visitEnd(AnswerStatement) " + answerStatement);
         delegate.visitEnd(answerStatement);
+    }
+
+    public void visit(ReferencedClass referencedClass, String value) {
+        trace("visit(ReferencedClass) " + referencedClass + " " + String.valueOf(value));
+        delegate.visit(referencedClass, value);
     }
 
     public void visit(Temporary temporary, String value, int line) {

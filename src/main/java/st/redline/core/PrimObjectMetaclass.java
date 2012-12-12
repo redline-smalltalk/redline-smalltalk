@@ -128,10 +128,12 @@ public class PrimObjectMetaclass extends PrimObjectClass {
 
     public String packageFor(String name) {
         String packageName;
-        if (imports != null && (packageName = imports.get(name)) != null)
+        if (imports != null && (packageName = imports.get(name)) != null) {
             return packageName;
-        if (superclass() != null && (packageName = superclass().packageFor(name)) != null)
+        }
+        if (superclass() != null && (packageName = superclass().packageFor(name)) != null) {
             return packageName;
+        }
         return IMPORTS.get(name);
     }
 
