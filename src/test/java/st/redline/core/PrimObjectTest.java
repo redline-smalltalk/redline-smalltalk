@@ -50,7 +50,7 @@ public class PrimObjectTest {
 
 	@Test (expected = IllegalStateException.class)
 	public void shouldThrowExceptionWhenBlockToBeCompiledNotFound() {
-		new PrimObject().block("st/redline/core/Thing$M1", null);
+		new PrimObject().block("st/redline/core/Thing$M2", null);
 	}
 
 	@Test
