@@ -1,6 +1,4 @@
 
-self import: 'st.redline.*'.
-
 InstVarParent < #InstVarChild.
 
 - initialize

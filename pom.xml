@@ -10,7 +10,7 @@
 
   <groupId>st.redline</groupId>
   <artifactId>redline</artifactId>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.4-SNAPSHOT</version>
   <packaging>jar</packaging>
   
   <name>Redline Smalltalk</name>
