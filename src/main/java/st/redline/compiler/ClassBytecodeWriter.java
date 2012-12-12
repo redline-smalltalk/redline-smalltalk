@@ -119,6 +119,15 @@ public class ClassBytecodeWriter implements Opcodes {
         mv.visitMethodInsn(INVOKEVIRTUAL, superclass(), "packageAtPut", "(Ljava/lang/String;Ljava/lang/String;)V");
     }
 
+    void addClassToImports(String name, String packageName) {
+        visitVarInsn(ALOAD, 1);
+        visitLdcInsn(packageName);
+        visitMethodInsn(INVOKESTATIC, "st/redline/core/PrimObject", "string", "(Ljava/lang/Object;)Lst/redline/core/PrimObject;");
+        visitLdcInsn("import:");
+        visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "perform", "(Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;");
+        pop();
+    }
+
     void deregisterPackage() {
         if ("".equals(packageName))
             return;

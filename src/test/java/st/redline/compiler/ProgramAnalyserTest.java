@@ -24,7 +24,7 @@ public class ProgramAnalyserTest {
 	public void setup() {
 		writer = mock(ClassBytecodeWriter.class);
 		parent = mock(Analyser.class);
-		analyser = new ProgramAnalyser(parent, writer, false, "");
+		analyser = new ProgramAnalyser(parent, writer, false, "", "");
 	}
 
 	@Test
@@ -270,21 +270,21 @@ public class ProgramAnalyserTest {
 
 	@Test
 	public void shouldHaveNoTemporariesRegistryWhenCreated() {
-		ProgramAnalyser programAnalyser = new ProgramAnalyser(parent, "foo", "com.domain", false);
+		ProgramAnalyser programAnalyser = new ProgramAnalyser(parent, "foo", "com.domain", "", false);
 		assertNull(programAnalyser.temporariesRegistry());
 		assertEquals(0, programAnalyser.temporariesIndex());
 	}
 
 	@Test
 	public void shouldHaveNoArgumentsRegistryWhenCreated() {
-		ProgramAnalyser programAnalyser = new ProgramAnalyser(parent, "foo", "com.domain", false);
+		ProgramAnalyser programAnalyser = new ProgramAnalyser(parent, "foo", "com.domain", "", false);
 		assertNull(programAnalyser.argumentsRegistry());
 		assertEquals(0, programAnalyser.argumentsIndex());
 	}
 
 	@Test
 	public void shouldCreateClassBytecodeWriter() {
-		assertNotNull(new ProgramAnalyser(parent, "foo", "com.domain", false).classBytecodeWriter());
+		assertNotNull(new ProgramAnalyser(parent, "foo", "com.domain", "", false).classBytecodeWriter());
 	}
 
 	@Test

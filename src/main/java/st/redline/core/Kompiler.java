@@ -39,7 +39,7 @@ public class Kompiler {
     }
 
     private Analyser analyser() {
-        return new Analyser(sourceFile.shortName(), sourceFile.packageName(), verbose);
+        return new Analyser(sourceFile.shortName(), sourceFile.packageName(), sourceFile.getParent(), verbose);
     }
 
     private Program parse(String sourceCode) {

@@ -14,13 +14,14 @@ public class AnalyserTest {
 
 	static String CLASS_NAME = "Example";
 	static String PACKAGE_NAME = "com.domain";
+	static String SOURCE_PATH = "";
 
 	Analyser analyser;
 	ProgramAnalyser delegate;
 
 	@Before
 	public void setup() {
-		analyser = new Analyser(CLASS_NAME, PACKAGE_NAME, false);
+		analyser = new Analyser(CLASS_NAME, PACKAGE_NAME, SOURCE_PATH, false);
 		delegate = mock(ProgramAnalyser.class);
 		analyser.currentDelegate(delegate);
 	}
@@ -227,12 +228,12 @@ public class AnalyserTest {
 
 	@Test
 	public void shouldDefaultToProgramAnalyserDelegate() {
-		assertTrue(new Analyser(CLASS_NAME, PACKAGE_NAME, false).currentDelegate() instanceof ProgramAnalyser);
+		assertTrue(new Analyser(CLASS_NAME, PACKAGE_NAME, SOURCE_PATH, false).currentDelegate() instanceof ProgramAnalyser);
 	}
 
 	@Test
 	public void shouldDefaultToTracingAnalyserDelegateWhenVerbose() {
-		assertTrue(new Analyser(CLASS_NAME, PACKAGE_NAME, true).currentDelegate() instanceof TracingAnalyser);
+		assertTrue(new Analyser(CLASS_NAME, PACKAGE_NAME, SOURCE_PATH, true).currentDelegate() instanceof TracingAnalyser);
 	}
 
 	@Test
@@ -316,7 +317,7 @@ public class AnalyserTest {
 
 	@Test
 	public void shouldDelegateVisitOfProgramNode() {
-		Program program = new Program(null, null);
+		Program program = new Program(null, null, null);
 		program.accept(analyser);
 		verify(delegate).visitBegin(program);
 		verify(delegate).visitEnd(program);

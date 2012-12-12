@@ -16,14 +16,19 @@ options {
   public List<RecognitionException> getExceptions() { return exceptions; }
   public void reportError(RecognitionException e) { super.reportError(e); exceptions.add(e); }
 }
+@parser::members {
+  ReferencedClasses referencedClasses = new ReferencedClasses();
+  public ReferencedClasses getReferencedClasses() { return referencedClasses; }
+  public void addReferencedClass(String cls) { referencedClasses.add(new ReferencedClass(cls)); }
+}
 
 program returns [Program program]
-  : temporaries? statements WHITESPACE?  EOF {program = new Program(new Temporaries($temporaries.temporaries), $statements.statements);}
+  : temporaries? statements WHITESPACE?  EOF {program = new Program(new Temporaries($temporaries.temporaries), $statements.statements, getReferencedClasses());}
   ;	
 
 primary returns [Primary primary]
   : WHITESPACE? 
-    ( IDENTIFIER {primary = new Identifier($IDENTIFIER.text, $IDENTIFIER.line);}
+    ( IDENTIFIER {primary = new Identifier($IDENTIFIER.text, $IDENTIFIER.line); addReferencedClass($IDENTIFIER.text); }
     | number {primary = $number.number;}
     | symbol_constant {primary = $symbol_constant.symbolConstant;}
     | CHARACTER_CONSTANT {primary = new CharacterConstant($CHARACTER_CONSTANT.text.substring(1), $CHARACTER_CONSTANT.line);}

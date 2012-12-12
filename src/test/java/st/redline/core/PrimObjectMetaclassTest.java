@@ -48,14 +48,14 @@ public class PrimObjectMetaclassTest {
         assertEquals(newvar, metaclass.variableAt(name));
     }
 
-	@Test
-	public void shouldLookInGlobalImportsMapWhenFindingPackageForClassName() {
-		Map<String, String> imports = mock(Map.class);
-		PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
-		PrimObjectMetaclass.IMPORTS = imports;
-		metaclass.packageFor("ClassName");
-		verify(imports).get("ClassName");
-	}
+//	@Test
+//	public void shouldLookInGlobalImportsMapWhenFindingPackageForClassName() {
+//		Map<String, String> imports = mock(Map.class);
+//		PrimObjectMetaclass metaclass = new PrimObjectMetaclass();
+//		PrimObjectMetaclass.IMPORTS = imports;
+//		metaclass.packageFor("ClassName");
+//		verify(imports).get("ClassName");
+//	}
 
 	@Test
 	public void shouldLookInImportsMapInSuperclassChainWhenFindingPackageForClassName() {
