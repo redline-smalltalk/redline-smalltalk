@@ -355,6 +355,11 @@ public class PrimObject {
         return receiver.invoke(receiver, context);
     }
 
+    public PrimObject p83(PrimObject receiver, PrimContext context) {
+        // perform: selector
+        return receiver.perform((String) context.argumentAt(0).javaValue());
+    }
+
     public PrimObject p110(PrimObject receiver, PrimContext context) {
         // ==
         return receiver.equals(context.argumentAt(0)) ? PrimObject.TRUE : PrimObject.FALSE;

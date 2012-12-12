@@ -26,6 +26,7 @@ TestCase < #ObjectTest
     self testAtPut.
     self testSize.
     self testYourself.
+    self testPerform.
   " self testDoesNotUnderstand. Cannot really be tested yet -- need something like aBlock ifError:... "
 
 - testIsKindOfObject
@@ -60,7 +61,7 @@ TestCase < #ObjectTest
     self assertTrue: (#(this is an array) class == Array) withMessage: 'class of array literal should be Array'.
     self assertTrue: (3 class == Integer) withMessage: 'class of integer literal should be Integer'.
     self assertTrue: (#test class == Symbol) withMessage: 'class of symbol literal should be Symbol'.
-  
+
 - testEquivalence
     | object3 |
     self assertTrue: Object class == Object class withMessage: 'equivalence of class objects'.
@@ -87,7 +88,7 @@ TestCase < #ObjectTest
 - testNotEquals
     self assertTrue: object1 ~= object2 withMessage: 'different objects should be not equal'.
     self assertFalse: object1 ~= object1 withMessage: 'same object should be not not equal'.
-  
+
 - testNotEquivalent
     self assertTrue: object1 ~~ object2 withMessage: 'different objects should be not equivalent'.
     self assertFalse: object1 ~~ object1 withMessage: 'same object should be not not equivalent'.
@@ -141,6 +142,11 @@ TestCase < #ObjectTest
 
 - testYourself
     self assertTrue: object1 yourself == object1 withMessage: 'yourself should answer self'.
+
+- testPerform
+    | anArray |
+    anArray := #(1 2 3).
+    self assert: (anArray perform: #size) equals: 3 withMessage: 'size should be 3'.
 
 - testDoesNotUnderstand
     self shouldFail.
