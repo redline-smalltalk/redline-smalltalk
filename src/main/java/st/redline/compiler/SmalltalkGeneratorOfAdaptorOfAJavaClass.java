@@ -257,10 +257,10 @@ public class SmalltalkGeneratorOfAdaptorOfAJavaClass
 	public static Object javaObjectForSmalltalkObject(PrimObject smalltalkObject)
     {
 		
-    	//System.out.println("in javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
+//    	System.out.println("in javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
 		if (smalltalkObjectIsAnInstanceOfAJavaAdaptorClass(smalltalkObject))
 		{
-			//System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
+//			System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
     		return smalltalkObject.javaValue();
 		}
 		else if (smalltalkObject.javaValue().getClass().isArray())
@@ -273,7 +273,7 @@ public class SmalltalkGeneratorOfAdaptorOfAJavaClass
 	        		newArr[i]=javaObjectForSmalltalkObject(p);
 	        	}
 	
-	    		//System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
+//	    		System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
 	        	return newArr;
     		
     	}
@@ -283,9 +283,9 @@ public class SmalltalkGeneratorOfAdaptorOfAJavaClass
     		ArrayList l = (ArrayList) smalltalkObject.javaValue();
     		ArrayList newList = new ArrayList(); 
     		
-    		for(Object e : l)
+            for (int i = 1; i < l.size(); i++)
         	{
-        		PrimObject p = (PrimObject) e;
+        		PrimObject p = (PrimObject) l.get(i);
         		newList.add(javaObjectForSmalltalkObject(p));
         	}
 	    	if(((PrimObjectMetaclass)smalltalkObject.cls()).name().javaValue().equals("String") )
@@ -296,18 +296,18 @@ public class SmalltalkGeneratorOfAdaptorOfAJavaClass
 	        		char c = (Character) e;
 	        		b.append(c);
 	        	}
-	    		//System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
+//	    		System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
 	    		return b.toString();
 	    	}
 			else
 			{
-				//System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
+//				System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
 	    		return newList;
 			}
     	}
     	else
     	{ 
-    		//System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
+//    		System.out.println("end javaObjectForSmalltalkObject smalltalkObject=" + smalltalkObject);
     		return smalltalkObject.javaValue();
     	}
     	
@@ -776,14 +776,13 @@ public class SmalltalkGeneratorOfAdaptorOfAJavaClass
 		{
 			for(int i=0 ; i<parameterTypes.length;i++)
 			{
-				sourceBuf.append("  JVM arg:0 at:"+i+ ".\n");
+				sourceBuf.append("  JVM arg:0 at:" + ( i + 1 ) + ".\n");
 				sourceBuf.append( smalltalkSourceToConvertASmalltalkVariableOnStackToTypeAndLeaveThatOnStack(parameterTypes[i]));
 			};
 		}
 		else
 		{
-			for(int i=0 ; i<parameterTypes.length;i++)
-			{
+			for(int i=0 ; i<parameterTypes.length;i++)			{
 				sourceBuf.append("  " + smalltalkCodeToPutArgumentsOnStack[i]+ "\n");
 				sourceBuf.append( smalltalkSourceToConvertASmalltalkVariableOnStackToTypeAndLeaveThatOnStack(parameterTypes[i]));
 			};
@@ -1225,6 +1224,6 @@ public class SmalltalkGeneratorOfAdaptorOfAJavaClass
 			}
 			return converted;
 		}
-        throw new RedlineException("should not happen");
+        throw new RedlineException("should not happen: " + toConvert + " " + toConvert.getClass().getName());
 	}
 }
