@@ -8,22 +8,22 @@ Transcript  show: '2bb'; cr.
 Transcript show: (Test new) toString; cr.
 Transcript  show: '3cc'; cr.
 
-[
+"[
     | a |
     a := OrderedCollection new.
     a add: Test new.
     Test new equals: a.
-] value.
+] value."
 
 Transcript  show: '4dd'; cr.
 
-Transcript show: [
+"Transcript show: [
   | a |
   a := OrderedCollection new.
   a add: Test new.
   Test new equals: a.
 ] value.
-Transcript cr.
+Transcript cr."
 
 Transcript  show: '5ee'; cr.
 
