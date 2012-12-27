@@ -11,6 +11,7 @@
       <option name="HAS_BRACES" value="true" />
       <option name="HAS_PARENS" value="true" />
       <option name="HAS_STRING_ESCAPES" value="true" />
+      <option name="LINE_COMMENT_AT_START" value="false" />
     </options>
     <keywords ignore_case="false">
       <keyword name="category" />
@@ -28,8 +29,6 @@
     <keywords3 />
     <keywords4 />
   </highlighting>
-  <extensionMap>
-    <mapping ext="st" />
-  </extensionMap>
+  <extensionMap />
 </filetype>
 
