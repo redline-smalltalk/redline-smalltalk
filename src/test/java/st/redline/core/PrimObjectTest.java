@@ -110,6 +110,7 @@ public class PrimObjectTest {
 		when(primObjectClass.indexOfVariable("Thing")).thenReturn(0);
 		primObject.cls(primObjectClass);
 		PrimObject spy = spy(primObject);
+		doReturn(spy.cls()).when(spy).resolveObject("Thing");
 		spy.variableAt("Thing");
 		verify(spy).resolveObject("Thing");
 	}
