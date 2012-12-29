@@ -5,6 +5,12 @@ ClassDescription < #Class.
 - < name
     ^ self subclass: name instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''.
 
+- subclass: name
+    "Create a new subclass of the receiver.  This is a convenience binary message that can be used when only the
+     subclass name needs to specified.  It delegates to the default
+     subclass:instanceVariableNames:classVariableNames:poolDictionaries: message"
+    ^ self subclass: name instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''.
+
 - subclass: name instanceVariableNames: instVarNames classVariableNames: classVarNames poolDictionaries: poolDicts classInstanceVariableNames: classInstVarNames
     "create a new subclass of the receiver. Nb: Primitive 128 is added by Redline (not in Blue Book)."
     <primitive: 128>
