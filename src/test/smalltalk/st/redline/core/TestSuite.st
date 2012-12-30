@@ -15,6 +15,8 @@ Object < #TestSuite.
     NumberTest new test.
     Transcript show: 'Running ObjectTest Suite'; cr.
     ObjectTest new test.
+    Transcript show: 'Running BehaviorTest Suite'; cr.
+    BehaviorTest new test.
     Transcript show: 'Running ClassTest Suite'; cr.
     ClassTest new test.
     Transcript show: 'Running CompilerTest Suite'; cr.

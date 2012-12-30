@@ -18,7 +18,7 @@ Object < #Behavior
     <primitive: 129>
 
 - inheritsFrom: aClass
-"	| aSuperclass |
+	| aSuperclass |
     aSuperclass := superclass.
     [ aSuperclass == nil ]
       whileFalse: [
@@ -26,7 +26,6 @@ Object < #Behavior
         aSuperclass := aSuperclass superclass
       ].
     ^ false
-"
 
 - canUnderstand: selector
     "Answer whether the receiver can respond to the message whose selector
