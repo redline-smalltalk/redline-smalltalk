@@ -35,7 +35,7 @@ ProtoObject < #Object.
 
 - ~~ anObject
     "Answer whether the receiver and the argument are not the same object."
-    ^ self ~= anObject.
+    ^ (self == anObject) not.
 
 - hash
     "Answer an Integer computed with respect to the representation of the receiver."
