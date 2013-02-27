@@ -8,8 +8,16 @@ import org.objectweb.asm.Opcodes;
 import st.redline.core.ClassPathUtilities;
 
 import java.io.PrintWriter;
+import java.lang.invoke.CallSite;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+import java.lang.invoke.MutableCallSite;
 import java.util.HashMap;
 import java.util.Map;
+import org.objectweb.asm.Handle;
+import st.redline.core.PrimContext;
+import st.redline.core.PrimObject;
 
 public class ClassBytecodeWriter implements Opcodes {
 
@@ -87,7 +95,7 @@ public class ClassBytecodeWriter implements Opcodes {
     }
 
     void openClass() {
-        cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, superclass(), null);
+        cw.visit(V1_7, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, superclass(), null);
         cw.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
         writeInitializeMethod();
         openMessageSendsMethod();
@@ -197,7 +205,15 @@ public class ClassBytecodeWriter implements Opcodes {
         if (sendToSuper)
             mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "superPerform", "(Lst/redline/core/PrimContext;" + SIGNATURES[argumentCount].substring(1));
         else
-            mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "perform", SIGNATURES[argumentCount]);
+            mv.visitInvokeDynamicInsn(
+                    "perform",
+                    "(Lst/redline/core/PrimObject;" + SIGNATURES[argumentCount].substring(1),
+                    new Handle(
+                            H_INVOKESTATIC,
+                            "st/redline/core/IndyBootstrap",
+                            "performBootstrap",
+                            "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;"));
+//            mv.visitMethodInsn(INVOKEVIRTUAL, OBJECT, "perform", SIGNATURES[argumentCount]);
     }
 
     void invokeObjectCreate(String type, String value, int line) {
