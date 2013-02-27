@@ -39,7 +39,7 @@ public class IndyBootstrap {
         MethodHandle[] performs = new MethodHandle[6];
         try {
             apply = MethodHandles.lookup().findVirtual(PrimObject.class, "apply", MethodType.methodType(PrimObject.class, PrimObject.class, PrimObject.class, String.class, PrimObject[].class));
-            test = MethodHandles.lookup().findStatic(IndyBootstrap.class, "test", MethodType.methodType(boolean.class, PrimObject.class, PrimObject.class));
+            test = MethodHandles.lookup().findStatic(IndyBootstrap.class, "test", MethodType.methodType(boolean.class, PrimObject.class, Object.class, PrimObject.class));
             performs[0] = MethodHandles.lookup().findStatic(IndyBootstrap.class, "perform", MethodType.methodType(PrimObject.class, SmalltalkCallSite.class, PrimObject.class, String.class));
             performs[1] = MethodHandles.lookup().findStatic(IndyBootstrap.class, "perform", MethodType.methodType(PrimObject.class, SmalltalkCallSite.class, PrimObject.class, PrimObject.class, String.class));
             performs[2] = MethodHandles.lookup().findStatic(IndyBootstrap.class, "perform", MethodType.methodType(PrimObject.class, SmalltalkCallSite.class, PrimObject.class, PrimObject.class, PrimObject.class, String.class));
@@ -62,11 +62,11 @@ public class IndyBootstrap {
         return method;
     }
     
-    private static boolean test(PrimObject self, PrimObject expectedCls) {
-        return self.attributes[CLASS_INDEX] == expectedCls;
+    private static boolean test(PrimObject self, Object classModifications, PrimObject expectedCls) {
+        return PrimObjectClass.CLASS_MODIFICATIONS == classModifications && self.attributes[CLASS_INDEX] == expectedCls;
     }
     
-    private static void bind(SmalltalkCallSite site, PrimObject method, PrimObject cls, int args) {
+    private static void bind(SmalltalkCallSite site, PrimObject method, Object classModifications, PrimObject cls, int args) {
         // bind method and class
         MethodHandle target = MethodHandles.insertArguments(APPLY, 1, method, cls);
         
@@ -91,8 +91,8 @@ public class IndyBootstrap {
                 break;
         }
         
-        // add type guard
-        MethodHandle test = MethodHandles.insertArguments(TEST, 1, cls);
+        // add class modification and type guard
+        MethodHandle test = MethodHandles.insertArguments(TEST, 1, classModifications, cls);
         test = MethodHandles.permuteArguments(test, site.type().changeReturnType(boolean.class), new int[]{0});
         MethodHandle fail = PERFORMS[args].bindTo(site);
         target = MethodHandles.guardWithTest(test, target, fail);
@@ -102,43 +102,49 @@ public class IndyBootstrap {
     
     public static PrimObject perform(SmalltalkCallSite site, PrimObject self, String selector) throws Throwable {
         PrimObject cls = self.attributes[CLASS_INDEX];
+        Object classModifications = PrimObjectClass.CLASS_MODIFICATIONS;
         PrimObject method = findMethod(cls, selector);
-        bind(site, method, cls, 0);
+        bind(site, method, classModifications, cls, 0);
         return self.apply(method, cls, selector);
     }
     
     public static PrimObject perform(SmalltalkCallSite site, PrimObject self, PrimObject arg1, String selector) {
         PrimObject cls = self.attributes[CLASS_INDEX];
+        Object classModifications = PrimObjectClass.CLASS_MODIFICATIONS;
         PrimObject method = findMethod(cls, selector);
-        bind(site, method, cls, 1);
+        bind(site, method, classModifications, cls, 1);
         return self.apply(method, cls, selector, arg1);
     }
     
     public static PrimObject perform(SmalltalkCallSite site, PrimObject self, PrimObject arg1, PrimObject arg2, String selector) {
         PrimObject cls = self.attributes[CLASS_INDEX];
+        Object classModifications = PrimObjectClass.CLASS_MODIFICATIONS;
         PrimObject method = findMethod(cls, selector);
-        bind(site, method, cls, 2);
+        bind(site, method, classModifications, cls, 2);
         return self.apply(method, cls, selector, arg1, arg2);
     }
     
     public static PrimObject perform(SmalltalkCallSite site, PrimObject self, PrimObject arg1, PrimObject arg2, PrimObject arg3, String selector) {
         PrimObject cls = self.attributes[CLASS_INDEX];
+        Object classModifications = PrimObjectClass.CLASS_MODIFICATIONS;
         PrimObject method = findMethod(cls, selector);
-        bind(site, method, cls, 3);
+        bind(site, method, classModifications, cls, 3);
         return self.apply(method, cls, selector, arg1, arg2, arg3);
     }
     
     public static PrimObject perform(SmalltalkCallSite site, PrimObject self, PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, String selector) {
         PrimObject cls = self.attributes[CLASS_INDEX];
+        Object classModifications = PrimObjectClass.CLASS_MODIFICATIONS;
         PrimObject method = findMethod(cls, selector);
-        bind(site, method, cls, 4);
+        bind(site, method, classModifications, cls, 4);
         return self.apply(method, cls, selector, arg1, arg2, arg3, arg4);
     }
     
     public static PrimObject perform(SmalltalkCallSite site, PrimObject self, PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, PrimObject arg5, String selector) {
         PrimObject cls = self.attributes[CLASS_INDEX];
+        Object classModifications = PrimObjectClass.CLASS_MODIFICATIONS;
         PrimObject method = findMethod(cls, selector);
-        bind(site, method, cls, 5);
+        bind(site, method, classModifications, cls, 5);
         return self.apply(method, cls, selector, arg1, arg2, arg3, arg4, arg5);
     }
 }
