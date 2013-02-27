@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Handle;
 
 public class ClassBytecodeWriter implements Opcodes {
@@ -50,12 +51,14 @@ public class ClassBytecodeWriter implements Opcodes {
     private final boolean verbose;
 
     protected ClassWriter cw;
+    protected ClassVisitor cv;
     protected MethodVisitor mv;
     private String fullyQualifiedClassName;
 
     ClassBytecodeWriter(String className, String packageName, boolean verbose) {
         this(className, packageName, verbose, null);
-        this.cw = createClassWriter();
+        this.cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        this.cv = createClassVisitor(verbose, cw);
     }
 
     ClassBytecodeWriter(String className, String packageName, boolean verbose, ClassWriter classWriter) {
@@ -63,21 +66,21 @@ public class ClassBytecodeWriter implements Opcodes {
         this.packageName = packageName;
         this.verbose = verbose;
         this.cw = classWriter;
+        this.cv = createClassVisitor(verbose, classWriter);
         fullyQualifiedClassName = ClassPathUtilities.classNameToFullyQualifiedClassName(packageName, className);
     }
 
-    ClassWriter createClassWriter() {
-//        return verbose ? tracingClassWriter() : nonTracingClassWriter();
-        return nonTracingClassWriter();
+    static ClassVisitor createClassVisitor(boolean verbose, ClassWriter writer) {
+        return verbose ? tracingClassVisitor(writer) : nonTracingClassVisitor(writer);
     }
 
-    static ClassWriter nonTracingClassWriter() {
-        return new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+    static ClassVisitor nonTracingClassVisitor(ClassWriter writer) {
+        return writer;
     }
 
-//    static ClassWriter tracingClassWriter() {
-//        return new TracingClassWriter(ClassWriter.COMPUTE_FRAMES, new PrintWriter(System.out));
-//    }
+    static ClassVisitor tracingClassVisitor(ClassWriter writer) {
+        return new TracingClassVisitor(writer, new PrintWriter(System.out));
+    }
 
     ClassWriter classWriter() {
         return cw;
@@ -99,14 +102,14 @@ public class ClassBytecodeWriter implements Opcodes {
     }
 
     void openClass() {
-        cw.visit(BYTECODE_VERSION, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, superclass(), null);
-        cw.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
+        cv.visit(BYTECODE_VERSION, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, superclass(), null);
+        cv.visitSource(homogenize(fullyQualifiedClassName) + ".st", null);
         writeInitializeMethod();
         openMessageSendsMethod();
     }
 
     void openMessageSendsMethod() {
-        mv = cw.visitMethod(ACC_PROTECTED, SEND_MESSAGES, SEND_MESSAGES_SIG, null, null);
+        mv = cv.visitMethod(ACC_PROTECTED, SEND_MESSAGES, SEND_MESSAGES_SIG, null, null);
         mv.visitCode();
         pushThis();
         pushReceiver();
@@ -172,7 +175,7 @@ public class ClassBytecodeWriter implements Opcodes {
 
     void closeClass() {
         closeMessageSendsMethod();
-        cw.visitEnd();
+        cv.visitEnd();
     }
 
     void closeMessageSendsMethod() {
@@ -191,7 +194,7 @@ public class ClassBytecodeWriter implements Opcodes {
     }
 
     void openInitializeMethod() {
-        mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+        mv = cv.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
         mv.visitCode();
         visitLine(0);
         pushThis();

@@ -10,58 +10,60 @@ import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class TracingClassWriter extends ClassVisitor {
+public class TracingClassVisitor extends ClassVisitor {
 
     private final PrintWriter out;
+    private final ClassVisitor delegate;
 
-    public TracingClassWriter(int computeMaxs, PrintWriter printWriter) {
+    public TracingClassVisitor(ClassVisitor delegate, PrintWriter printWriter) {
         super(Opcodes.ASM4);
+        this.delegate = delegate;
         this.out = printWriter;
     }
 
     public void visit(int i, int i1, String s, String s1, String s2, String[] strings) {
         out.println("");
         out.println("  visit(" + i + ", " + i1 + ", '" + s + "', '" + s1 + "', '" + s2 + "', " + strings + ")");
-        super.visit(i, i1, s, s1, s2, strings);
+        delegate.visit(i, i1, s, s1, s2, strings);
     }
 
     public void visitSource(String s, String s1) {
         out.println("  visitSource('" + s + "', '" + s1 + "')");
-        super.visitSource(s, s1);
+        delegate.visitSource(s, s1);
     }
 
     public void visitOuterClass(String s, String s1, String s2) {
         out.println("  visitOuterClass('" + s + "', '" + s1 + "', '" + s2 + "')");
-        super.visitOuterClass(s, s1, s2);
+        delegate.visitOuterClass(s, s1, s2);
     }
 
     public AnnotationVisitor visitAnnotation(String s, boolean b) {
         out.println("  visitAnnotation('" + s + "', " + b + ")");
-        return super.visitAnnotation(s, b);
+        return delegate.visitAnnotation(s, b);
     }
 
     public void visitAttribute(Attribute attribute) {
         out.println("  visitAttribute(" + attribute + ")");
-        super.visitAttribute(attribute);
+        delegate.visitAttribute(attribute);
     }
 
     public void visitInnerClass(String s, String s1, String s2, int i) {
         out.println("  visitInnerClass('" + s + "', '" + s1 + "', '" + s2 + "', " + i + ")");
-        super.visitInnerClass(s, s1, s2, i);
+        delegate.visitInnerClass(s, s1, s2, i);
     }
 
     public FieldVisitor visitField(int i, String s, String s1, String s2, Object o) {
         out.println("  visitField(" + i + ", '" + s + "', '" + s1 + "', '" + s2 + "', " + o + ")");
-        return super.visitField(i, s, s1, s2, o);
+        return delegate.visitField(i, s, s1, s2, o);
     }
 
     public MethodVisitor visitMethod(int i, String s, String s1, String s2, String[] strings) {
         out.println("\n  visitMethod(" + i + ", '" + s + "', '" + s1 + "', '" + s2 + "', " + strings + ")");
-        return new TracingMethodVisitor(super.visitMethod(i, s, s1, s2, strings));
+        return new TracingMethodVisitor(delegate.visitMethod(i, s, s1, s2, strings));
     }
 
     public void visitEnd() {
         out.println("  visitEnd()\n");
-        super.visitEnd();
+        delegate.visitEnd();
     }
 }
