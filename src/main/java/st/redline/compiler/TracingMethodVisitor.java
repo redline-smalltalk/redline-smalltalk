@@ -7,11 +7,12 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class TracingMethodVisitor implements MethodVisitor, Opcodes {
+public class TracingMethodVisitor extends MethodVisitor implements Opcodes {
 
     private final MethodVisitor methodVisitor;
 
     public TracingMethodVisitor(MethodVisitor methodVisitor) {
+        super(ASM4);
         this.methodVisitor = methodVisitor;
     }
 

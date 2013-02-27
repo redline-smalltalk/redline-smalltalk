@@ -55,16 +55,17 @@ public class ClassBytecodeWriter implements Opcodes {
     }
 
     ClassWriter createClassWriter() {
-        return verbose ? tracingClassWriter() : nonTracingClassWriter();
+//        return verbose ? tracingClassWriter() : nonTracingClassWriter();
+        return nonTracingClassWriter();
     }
 
     static ClassWriter nonTracingClassWriter() {
         return new ClassWriter(ClassWriter.COMPUTE_FRAMES);
     }
 
-    static ClassWriter tracingClassWriter() {
-        return new TracingClassWriter(ClassWriter.COMPUTE_FRAMES, new PrintWriter(System.out));
-    }
+//    static ClassWriter tracingClassWriter() {
+//        return new TracingClassWriter(ClassWriter.COMPUTE_FRAMES, new PrintWriter(System.out));
+//    }
 
     ClassWriter classWriter() {
         return cw;
