@@ -3,6 +3,7 @@ package st.redline.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 
 // Adds a method dictionary and class hierarchy (superclass) to a Primitive Object.
 // To create an instance of the Class this object represents send it a 'new' message.
@@ -14,6 +15,7 @@ public class PrimObjectClass extends PrimObject {
 
     static final int DEFAULT_ATTRIBUTE_COUNT = 1;  // for superclass
     static final int SUPERCLASS_INDEX = CLASS_INDEX + 1;
+    static volatile Object CLASS_MODIFICATIONS = new Object();  // for guarding caches against class mutation
 
     HashMap<String, Integer> variableIndexes;
     int nextVariableIndex;
@@ -34,6 +36,7 @@ public class PrimObjectClass extends PrimObject {
         if (hasVariableNamed(name))
             throw new IllegalStateException("Variable '" + name + "' already defined.");
         variableIndexes().put(name, nextVariableIndex);
+        CLASS_MODIFICATIONS = new Object();
     }
 
     boolean hasVariableNamed(String name) {
