@@ -26,7 +26,7 @@ public class BlockBytecodeWriter extends ClassBytecodeWriter implements Opcodes 
     }
 
     private void createInitializeMethodWithContext() {
-        mv = cw.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/core/PrimContext;)V", null, null);
+        mv = cv.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/core/PrimContext;)V", null, null);
         mv.visitCode();
         visitLine(0);
         mv.visitVarInsn(ALOAD, 0);
@@ -54,7 +54,7 @@ public class BlockBytecodeWriter extends ClassBytecodeWriter implements Opcodes 
     }
 
     void openInvokeMethod() {
-        mv = cw.visitMethod(ACC_PROTECTED, "invoke", INVOKE_SIG, null, null);
+        mv = cv.visitMethod(ACC_PROTECTED, "invoke", INVOKE_SIG, null, null);
         mv.visitCode();
         pushReceiver();
     }
