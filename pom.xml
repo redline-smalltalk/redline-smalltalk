@@ -83,38 +83,31 @@
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/jsr292-mock.jar</systemPath>
     </dependency>
+    <dependency>
+      <groupId>dummy</groupId>
+      <artifactId>SourceFinderTest</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/SourceFinderTest.jar</systemPath>
+    </dependency>
   </dependencies>
   
   <build>
     <defaultGoal>install</defaultGoal>
-      <resources>
-          <resource>
-              <directory>${basedir}/target/smalltalk</directory>
-          </resource>
-      </resources>
+      <!--<resources>-->
+          <!--<resource>-->
+              <!--<directory>${project.basedir}/src/smalltalk</directory>-->
+          <!--</resource>-->
+      <!--</resources>-->
+      <testResources>
+          <testResource>
+              <directory>${project.basedir}/src/test/java</directory>
+              <includes>
+                  <include>**/*.st</include>
+              </includes>
+          </testResource>
+      </testResources>
     <plugins>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${basedir}/target/smalltalk/rt</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/main/smalltalk</directory>
-                  <filtering>false</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
