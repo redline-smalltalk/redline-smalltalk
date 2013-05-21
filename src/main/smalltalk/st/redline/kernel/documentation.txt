@@ -1,0 +1,50 @@
+"Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution."
+
+Boostrapping:
+=============
+
+The following classes make up the minimum set of classes required to bootstrap Redline Smalltalk to a point where
+development is possible:
+
+  ArrayedCollection, Behavior, BlockClosure, Boolean, Class, ClassDescription, Collection, False, Object,
+  SequenceableCollection, String, Symbol, True, UndefinedObject.
+
+
+Source Code Formatting Guidelines:
+==================================
+
+0. The default indent size is two spaces. We are using spaces not tabs.
+
+1. Start the source file with the Copyright comment and a blank line.
+   "Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution."
+   <blankline>
+
+2. Define the method categories with a comment and a blank line.
+   <blankline>
+   "accessing"
+   <blankline>
+
+3. Leave a space between the short-hand instance/class method definition character '-/+' and the method selector.
+   The method definition character should be in column 0 (left most place).
+   - at: key put: value
+
+4. Put any method documentation comment next, indented two spaces (from column 0).
+   - at: key put: value
+     "method documentation comment here"
+
+5. Always leave a space before and after a binary selector.
+   ^ self.
+   this + that.
+
+6. Blocks should look close to this, although it is also fine for simple blocks to be on one line.
+
+   (condition) ifTrue: [ :arg |
+     "complex block"
+   ].
+
+   (condition) ifFalse: [ "simple block ].
+
+7. While a period to end a statement is not always required, always add one to assist those new to Smalltalk.
+   ^ self.
+
+*end*

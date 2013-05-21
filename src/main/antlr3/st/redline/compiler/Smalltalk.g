@@ -7,6 +7,9 @@ options {
 }
 @header {
   package st.redline.compiler;
+  import org.antlr.runtime.Parser;
+  import st.redline.compiler.ast.*;
+  import st.redline.compiler.ast.Number;
 }
 @lexer::header {
   package st.redline.compiler;
