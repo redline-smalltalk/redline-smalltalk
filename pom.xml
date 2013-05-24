@@ -94,11 +94,14 @@
   
   <build>
     <defaultGoal>install</defaultGoal>
-      <!--<resources>-->
-          <!--<resource>-->
-              <!--<directory>${project.basedir}/src/smalltalk</directory>-->
-          <!--</resource>-->
-      <!--</resources>-->
+      <resources>
+          <resource>
+              <directory>${project.basedir}/src/main/smalltalk</directory>
+              <includes>
+                  <include>**/*.st</include>
+              </includes>
+          </resource>
+      </resources>
       <testResources>
           <testResource>
               <directory>${project.basedir}/src/test/java</directory>
