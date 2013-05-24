@@ -207,13 +207,10 @@
                 </goals>
                 <configuration>
                   <includeProjectDependencies>true</includeProjectDependencies>
-	              <mainClass>st.redline.core.Stic</mainClass>
+	              <mainClass>st.redline.Stic</mainClass>
+                  <commandlineArgs>-cp ${project.build.directory}/${project.artifactId}-${project.version}.jar</commandlineArgs>
     	          <arguments>
-        	        <argument>-r</argument>
-            	    <argument>src/main/smalltalk</argument>
-                	<argument>-s</argument>
-	                <argument>src/main/smalltalk${path.separator}src/test/smalltalk</argument>
-    	            <argument>st.redline.core.TestRunner</argument>
+      	              <argument>st.redline.kernel.TestRunner</argument>
         	      </arguments>
                 </configuration>
               </execution>
