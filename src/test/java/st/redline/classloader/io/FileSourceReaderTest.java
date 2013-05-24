@@ -26,7 +26,6 @@ public class FileSourceReaderTest {
     private String absolutePathToThisTestClass() {
         URL thisTest = FileSourceReader.class.getResource("FileSourceReaderTest.class");
         File path = new File(thisTest.getPath());
-        System.out.println("absolutePathToThisTestClass: " + path.getAbsolutePath());
         return path.getAbsolutePath();
     }
 
