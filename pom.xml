@@ -42,6 +42,11 @@
       <name>Sean T Allen</name>
       <email>sean@monkeysnatchbanana.com</email>
     </developer>
+      <developer>
+          <id>robdaemon</id>
+          <name>Robert Roland</name>
+          <email>robert@robertroland.org</email>
+      </developer>
   </developers>
   
   <properties>
@@ -104,6 +109,12 @@
                   <include>**/*.st</include>
               </includes>
           </testResource>
+          <testResource>
+              <directory>${project.basedir}/src/test/smalltalk</directory>
+              <includes>
+                  <include>**/*.st</include>
+              </includes>
+          </testResource>
       </testResources>
     <plugins>
       <plugin>
@@ -145,38 +156,44 @@
   </build>
   
   <profiles>
-    <!--<profile>-->
-      <!--<id>dev</id>-->
-      <!--<activation>-->
-        <!--<activeByDefault>true</activeByDefault>-->
-      <!--</activation>-->
-      <!--<build>-->
-        <!--<plugins>-->
-          <!--<plugin>-->
-            <!--<groupId>org.codehaus.mojo</groupId>-->
-            <!--<artifactId>exec-maven-plugin</artifactId>-->
-            <!--<version>1.2.1</version>-->
-            <!--<executions>-->
-              <!--<execution>-->
-                <!--<phase>integration-test</phase>-->
-                <!--<goals>-->
-                  <!--<goal>java</goal>-->
-                <!--</goals>-->
-                <!--<configuration>-->
-                  <!--<includeProjectDependencies>true</includeProjectDependencies>-->
-	              <!--<mainClass>st.redline.Stic</mainClass>-->
-                  <!--<commandlineArgs>-cp ${project.build.directory}/${project.artifactId}-${project.version}.jar</commandlineArgs>-->
-    	          <!--<arguments>-->
-      	              <!--<argument>st.redline.kernel.TestRunner</argument>-->
-        	      <!--</arguments>-->
-                <!--</configuration>-->
-              <!--</execution>-->
-            <!--</executions>-->
-          <!--</plugin>-->
-        <!--</plugins>-->
-      <!--</build>-->
-    <!--</profile>-->
-  
+
+      <profile>
+          <id>dev</id>
+          <activation>
+              <activeByDefault>true</activeByDefault>
+          </activation>
+          <build>
+              <plugins>
+                  <plugin>
+                      <groupId>org.codehaus.mojo</groupId>
+                      <artifactId>exec-maven-plugin</artifactId>
+                      <version>1.2.1</version>
+                      <executions>
+                          <execution>
+                              <phase>integration-test</phase>
+                              <goals>
+                                  <goal>exec</goal>
+                              </goals>
+                              <configuration>
+                                  <executable>java</executable>
+                                  <workingDirectory>${project.build.directory}</workingDirectory>
+                                  <arguments>
+                                      <argument>-cp</argument>
+                                      <argument>classes:test-classes:lib/antlr-runtime-3.4.jar:lib/asm-4.1.jar</argument>
+                                      <argument>st.redline.Stic</argument>
+                                      <argument>st.redline.kernel.TestRunner</argument>
+                                  </arguments>
+                              </configuration>
+                          </execution>
+                      </executions>
+                      <configuration>
+                          <workingDirectory>${project.build.directory}</workingDirectory>
+                      </configuration>
+                  </plugin>
+              </plugins>
+          </build>
+      </profile>
+
     <profile>
       <id>no-tests</id>
       <activation>
