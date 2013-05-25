@@ -142,7 +142,7 @@ fi
 # request optional jars and their dependencies via the OPT_JAR_LIST
 # variable
 if $rpm_mode && [ -x /usr/bin/build-classpath ] ; then
-  LOCALCLASSPATH="$(/usr/bin/build-classpath redline-0.0.1-SNAPSHOT antlr-3.4.jar antlr-runtime-3.4.jar asm-3.2.jar commons-cli-1.2.jar ST4-4.0.4.jar stringtemplate-3.2.1.jar)"
+  LOCALCLASSPATH="$(/usr/bin/build-classpath redline-0.5-SNAPSHOT antlr-runtime-3.4.jar asm-4.1.jar)"
 
   # If no optional jars have been specified then build the default list
   if [ -z "$OPT_JAR_LIST" ] ; then
@@ -311,7 +311,7 @@ else
     redline_sys_opts="-Djikes.class.path=\"$JIKESPATH\""
   fi
 fi
-redline_exec_command="exec \"$JAVACMD\" $REDLINE_OPTS -classpath \"$LOCALCLASSPATH\" -Dredline.home=\"$REDLINE_HOME\" -Dredline.library.dir=\"$REDLINE_LIB\" $redline_sys_opts st.redline.core.Stic $REDLINE_ARGS $redline_exec_args"
+redline_exec_command="exec \"$JAVACMD\" $REDLINE_OPTS -classpath \"$LOCALCLASSPATH\" -Dredline.home=\"$REDLINE_HOME\" -Dredline.library.dir=\"$REDLINE_LIB\" $redline_sys_opts st.redline.Stic $REDLINE_ARGS $redline_exec_args"
 if $redline_exec_debug ; then
     echo $redline_exec_command
 fi
