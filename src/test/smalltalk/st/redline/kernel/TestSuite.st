@@ -3,6 +3,9 @@
 Object subclass: #TestSuite.
 
 - run
+    self show: '-------------------------------------------------------'.
+    self show: '--- S m a l l t a l k  T e s t s'.
+    self show: '-------------------------------------------------------'.
     self show: 'Running UndefinedObjectTests'.
     UndefinedObjectTest new test.
     self show: 'Running TrueTests'.
