@@ -1,5 +1,8 @@
-/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
+/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.compiler;
+
+import st.redline.compiler.ast.*;
+import st.redline.compiler.ast.Number;
 
 public class TracingAnalyser implements AnalyserDelegate {
 

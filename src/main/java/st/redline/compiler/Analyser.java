@@ -1,59 +1,65 @@
-/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
+/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.compiler;
+
+import st.redline.classloader.SmalltalkClassLoader;
+import st.redline.classloader.Source;
+import st.redline.compiler.ast.*;
+import st.redline.compiler.ast.Number;
 
 import java.util.Stack;
 
 public class Analyser implements NodeVisitor {
 
+    private final VisitableNode rootAstNode;
     private final Stack<AnalyserDelegate> delegates;
-    private final String className;
-    private final String packageName;
-    private String sourcePath;
     private AnalyserDelegate delegate;
 
-    public Analyser(String className, String packageName, String sourcePath, boolean verbose) {
-        this.className = className;
-        this.packageName = packageName;
-        this.sourcePath = sourcePath;
+    public Analyser(AnalyserFactory analyserFactory, BytecodeWriterFactory bytecodeWriterFactory, boolean verbose,
+                    VisitableNode rootAstNode, Source source) {
+        this.rootAstNode = rootAstNode;
         delegates = new Stack<AnalyserDelegate>();
-        currentDelegate(verbose ? verboseDelegate(className, packageName, sourcePath)
-                                : normalDelegate(className, packageName, sourcePath, verbose));
+        currentDelegate(verbose ? verboseDelegate(analyserFactory, bytecodeWriterFactory, source)
+                                : normalDelegate(analyserFactory, bytecodeWriterFactory, source));
     }
 
-    String className() {
-        return className;
+    public byte[] analyse() {
+        rootAstNode.accept(this);
+        return classBytes();
     }
 
-    String packageName() {
-        return packageName;
+    private AnalyserDelegate normalDelegate(AnalyserFactory analyserFactory, BytecodeWriterFactory bytecodeWriterFactory,
+                                            Source source) {
+        SmalltalkClassLoader smalltalkClassLoader = classLoader();
+        return new ProgramAnalyser(this, smalltalkClassLoader, analyserFactory, bytecodeWriterFactory, source);
     }
 
-    String sourcePath() {
-        return sourcePath;
+    private SmalltalkClassLoader classLoader() {
+        return (SmalltalkClassLoader) currentThread().getContextClassLoader();
     }
 
-    AnalyserDelegate normalDelegate(String className, String packageName, String sourcePath, boolean verbose) {
-        return new ProgramAnalyser(this, className, packageName, sourcePath, verbose);
+    private Thread currentThread() {
+        return Thread.currentThread();
     }
 
-    AnalyserDelegate verboseDelegate(String className, String packageName, String sourcePath) {
-        return tracingDelegate(normalDelegate(className, packageName, sourcePath, true));
+    private AnalyserDelegate verboseDelegate(AnalyserFactory analyserFactory, BytecodeWriterFactory bytecodeWriterFactory,
+                                             Source source) {
+        return tracingDelegate(normalDelegate(analyserFactory, bytecodeWriterFactory, source));
     }
 
-    AnalyserDelegate tracingDelegate(AnalyserDelegate analyserDelegate) {
+    protected AnalyserDelegate tracingDelegate(AnalyserDelegate analyserDelegate) {
         return new TracingAnalyser(analyserDelegate);
     }
 
-    void currentDelegate(AnalyserDelegate analyserDelegate) {
+    protected void currentDelegate(AnalyserDelegate analyserDelegate) {
         delegate = analyserDelegate;
         delegates.push(delegate);
     }
 
-    AnalyserDelegate currentDelegate() {
+    private AnalyserDelegate currentDelegate() {
         return delegates.peek();
     }
 
-    void previousDelegate() {
+    protected void previousDelegate() {
         delegate = null;
         if (!delegates.isEmpty())
             delegates.pop();

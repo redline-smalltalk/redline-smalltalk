@@ -1,21 +1,28 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
 package st.redline.compiler;
 
-import st.redline.core.RedlineException;
+import st.redline.classloader.SmalltalkClassLoader;
+import st.redline.classloader.Source;
+import st.redline.compiler.ast.*;
+import st.redline.compiler.ast.Number;
 
 public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 
-    private boolean verbose;
-    private Block thisBlock;
+    private final boolean verbose;
+    private final Block thisBlock;
+    private final String blockClassName;
 
-    BlockAnalyser(Analyser analyser, String className, String packageName, String sourcePath, boolean verbose, Block block) {
-        this(analyser, new BlockBytecodeWriter(className, packageName, verbose), verbose, packageName, sourcePath, block);
-    }
-
-    BlockAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose, String packageName, String sourcePath, Block block) {
-        super(analyser, classBytecodeWriter, verbose, packageName, sourcePath);
+    public BlockAnalyser(Analyser analyser, SmalltalkClassLoader smalltalkClassLoader, AnalyserFactory analyserFactory,
+                         BytecodeWriterFactory bytecodeWriterFactory, boolean verbose, Block block, String blockClassName, Source source) {
+        super(analyser, smalltalkClassLoader, analyserFactory, bytecodeWriterFactory, source, blockClassName);
         this.verbose = verbose;
         this.thisBlock = block;
+        this.blockClassName = blockClassName;
+    }
+
+    protected ClassBytecodeWriter createClassBytecodeWriter(String className) {
+        String packageName =  source.packageName();
+        return bytecodeWriterFactory.createBlockBytecodeWriter(className, packageName);
     }
 
     public boolean skipBlockVisit(Block block) {
@@ -45,7 +52,7 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
                 super.visit(identifier, value, line);
         } else {
             if (isOuterArgument(value))
-                throw new RedlineException("Can't store into an argument, only temporaries and variables.");
+                throw new RuntimeException("Can't store into an argument, only temporaries and variables.");
             else if (isOuterTemporary(value))
                 writer.storeOuterTemporary(thisBlock.outerTemporary(value));
             else
@@ -63,8 +70,8 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
 
     public void visit(JVM jvm, int line) {
         writer.visitLine(line);
-        JVMAnalyser jvmAnalyser = new JVMAnalyser(analyser, writer, verbose);
-        analyser.currentDelegate(verbose ? analyser.tracingDelegate(jvmAnalyser) : jvmAnalyser);
+        AnalyserDelegate jvmAnalyser = analyserFactory.createJVMAnalyser(analyser, writer);
+        analyser.currentDelegate(jvmAnalyser);
     }
 
     public void visitEnd(AnswerStatement answerStatement) {
@@ -74,10 +81,5 @@ public class BlockAnalyser extends ProgramAnalyser implements AnalyserDelegate {
     public void visit(Self self, int line) {
         writer.visitLine(line);
         writer.pushOuterReceiver();
-    }
-
-    String createBlockName() {
-        BLOCK_NUMBER++;
-        return analyser.className() + "$B" + BLOCK_NUMBER;
     }
 }

@@ -42,16 +42,15 @@
       <name>Sean T Allen</name>
       <email>sean@monkeysnatchbanana.com</email>
     </developer>
-    <developer>
-      <id>robdaemon</id>
-      <name>Robert Roland</name>
-      <email>robert@robertroland.org</email>
-    </developer>
+      <developer>
+          <id>robdaemon</id>
+          <name>Robert Roland</name>
+          <email>robert@robertroland.org</email>
+      </developer>
   </developers>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <powermock.version>1.4.10</powermock.version>
   </properties>
   
   <dependencies>
@@ -78,38 +77,18 @@
       <version>4.1</version>
     </dependency>
     <dependency>
-      <groupId>commons-cli</groupId>
-      <artifactId>commons-cli</artifactId>
-      <version>1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty</artifactId>
-      <version>6.1.25</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>servlet-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty-util</artifactId>
-      <version>6.1.25</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>dummy</groupId>
       <artifactId>jsr292-mock</artifactId>
       <version>1.0</version>
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/jsr292-mock.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>dummy</groupId>
+      <artifactId>SourceFinderTest</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/SourceFinderTest.jar</systemPath>
     </dependency>
   </dependencies>
   
@@ -117,39 +96,34 @@
     <defaultGoal>install</defaultGoal>
       <resources>
           <resource>
-              <directory>${basedir}/target/smalltalk</directory>
+              <directory>${project.basedir}/src/main/smalltalk</directory>
+              <includes>
+                  <include>**/*.st</include>
+              </includes>
           </resource>
       </resources>
+      <testResources>
+          <testResource>
+              <directory>${project.basedir}/src/test/java</directory>
+              <includes>
+                  <include>**/*.st</include>
+              </includes>
+          </testResource>
+          <testResource>
+              <directory>${project.basedir}/src/test/smalltalk</directory>
+              <includes>
+                  <include>**/*.st</include>
+              </includes>
+          </testResource>
+      </testResources>
     <plugins>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${basedir}/target/smalltalk/rt</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/main/smalltalk</directory>
-                  <filtering>false</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.7</source>
+          <target>1.7</target>
         </configuration>
       </plugin>
       <plugin>
@@ -164,102 +138,62 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.3</version>
-        <executions>
-          <execution>
-            <id>copy-dependencies</id>
-            <phase>install</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/${project.artifactId}-deploy/lib</outputDirectory>
-              <excludeScope>test</excludeScope>
-              <includeScope>compile</includeScope>
-            </configuration>
-          </execution>
+    <plugin>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <executions>
+        <execution>
+          <phase>process-sources</phase>
+               <goals>
+                    <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                </configuration>
+            </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.7</version>
-        <executions>
-          <execution>
-            <phase>install</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <target>
-                <copy overwrite="true" verbose="true" file="${project.build.directory}/${project.artifactId}-${project.version}.jar" tofile="${project.build.directory}/${project.artifactId}-deploy/lib/${project.artifactId}-${project.version}.jar"/>
-                <copy todir="${project.build.directory}/${project.artifactId}-deploy">
-                  <fileset dir="${basedir}/src/main/scripts"/>
-                </copy>
-                <copy todir="${project.build.directory}/${project.artifactId}-deploy/extras">
-                  <fileset dir="${basedir}/extras"/>
-                </copy>
-                <copy todir="${project.build.directory}/${project.artifactId}-deploy/examples">
-                  <fileset dir="${basedir}/src/test/smalltalk"/>
-                </copy>
-                <chmod perm="u+x" type="file">
-                  <fileset dir="${project.build.directory}/${project.artifactId}-deploy">
-                    <include name="stic"/>
-                    <include name="stout"/>
-                  </fileset>
-                </chmod>
-              </target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.5.1</version>
-      </plugin>
+    </plugin>
     </plugins>
   </build>
   
   <profiles>
-    <profile>
-      <id>dev</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.2.1</version>
-            <executions>
-              <execution>
-                <phase>integration-test</phase>
-                <goals>
-                  <goal>java</goal>
-                </goals>
-                <configuration>
-                  <includeProjectDependencies>true</includeProjectDependencies>
-	              <mainClass>st.redline.core.Stic</mainClass>
-    	          <arguments>
-        	        <argument>-r</argument>
-            	    <argument>src/main/smalltalk</argument>
-                	<argument>-s</argument>
-	                <argument>src/main/smalltalk${path.separator}src/test/smalltalk</argument>
-    	            <argument>st.redline.core.TestRunner</argument>
-        	      </arguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  
+
+      <profile>
+          <id>dev</id>
+          <activation>
+              <activeByDefault>true</activeByDefault>
+          </activation>
+          <build>
+              <plugins>
+                  <plugin>
+                      <groupId>org.codehaus.mojo</groupId>
+                      <artifactId>exec-maven-plugin</artifactId>
+                      <version>1.2.1</version>
+                      <executions>
+                          <execution>
+                              <phase>integration-test</phase>
+                              <goals>
+                                  <goal>exec</goal>
+                              </goals>
+                              <configuration>
+                                  <executable>java</executable>
+                                  <workingDirectory>${project.build.directory}</workingDirectory>
+                                  <arguments>
+                                      <argument>-cp</argument>
+                                      <argument>classes:test-classes:lib/antlr-runtime-3.4.jar:lib/asm-4.1.jar</argument>
+                                      <argument>st.redline.Stic</argument>
+                                      <argument>st.redline.kernel.TestRunner</argument>
+                                  </arguments>
+                              </configuration>
+                          </execution>
+                      </executions>
+                      <configuration>
+                          <workingDirectory>${project.build.directory}</workingDirectory>
+                      </configuration>
+                  </plugin>
+              </plugins>
+          </build>
+      </profile>
+
     <profile>
       <id>no-tests</id>
       <activation>

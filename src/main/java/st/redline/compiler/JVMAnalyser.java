@@ -1,14 +1,16 @@
-/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution */
+/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.compiler;
 
 import org.objectweb.asm.Opcodes;
+import st.redline.compiler.ast.*;
+import st.redline.compiler.ast.Number;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 
-    final static Map<String, Builder> builders = new HashMap<String, Builder>();
+    private final static Map<String, Builder> builders = new HashMap<String, Builder>();
     static {
         builders.put("getStatic:named:as:", new VisitFieldInsnBuilder(GETSTATIC));
         builders.put("ldc:", new VisitLdcInsnBuilder());
@@ -28,15 +30,13 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 
     protected final Analyser analyser;
     protected final ClassBytecodeWriter writer;
-    private final boolean verbose;
 
     private int nesting;
-    Builder builder;
+    private Builder builder;
 
-    JVMAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter, boolean verbose) {
+    protected JVMAnalyser(Analyser analyser, ClassBytecodeWriter classBytecodeWriter) {
         this.analyser = analyser;
         this.writer = classBytecodeWriter;
-        this.verbose = verbose;
         this.nesting = 1;
     }
 
@@ -242,10 +242,10 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 
     static abstract class Builder {
 
-        int opcode;
-        int argumentCount;
-        Object[] arguments;
-        int offset = 0;
+        protected int opcode;
+        protected int argumentCount;
+        protected Object[] arguments;
+        protected int offset = 0;
 
         abstract Builder create();
         abstract void writeUsing(ClassBytecodeWriter writer);
@@ -256,45 +256,45 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
             this.arguments = new Object[argumentCount];
         }
 
-        void addArgument(String argument) {
+        public void addArgument(String argument) {
             arguments[offset] = argument;
             offset++;
         }
 
-        void addArgument(Integer argument) {
+        public void addArgument(Integer argument) {
             arguments[offset] = argument;
             offset++;
         }
 
-        String string(int index) {
+        public String string(int index) {
             return String.valueOf(arguments[index]);
         }
 
-        Integer number(int index) {
+        public Integer number(int index) {
             return Integer.valueOf(string(index));
         }
     }
 
     static class VisitFieldInsnBuilder extends Builder {
-        VisitFieldInsnBuilder(int opcode) { super(opcode, 3); }
-        Builder create() { return new VisitFieldInsnBuilder(opcode); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitFieldInsnBuilder(int opcode) { super(opcode, 3); }
+        public Builder create() { return new VisitFieldInsnBuilder(opcode); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             writer.visitFieldInsn(opcode, string(0), string(1), string(2));
         }
     }
 
     static class VisitMethodInsnBuilder extends Builder {
-        VisitMethodInsnBuilder(int opcode) { super(opcode, 3); }
-        Builder create() { return new VisitMethodInsnBuilder(opcode); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitMethodInsnBuilder(int opcode) { super(opcode, 3); }
+        public Builder create() { return new VisitMethodInsnBuilder(opcode); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             writer.visitMethodInsn(opcode, string(0), string(1), string(2));
         }
     }
 
     static class VisitLdcInsnBuilder extends Builder {
-        VisitLdcInsnBuilder() { super(0, 1); }
-        Builder create() { return new VisitLdcInsnBuilder(); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitLdcInsnBuilder() { super(0, 1); }
+        public Builder create() { return new VisitLdcInsnBuilder(); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             if (arguments[0] instanceof java.lang.String)
                 writer.visitLdcInsn(string(0));
             else if (arguments[0] instanceof Integer)
@@ -305,9 +305,9 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
     }
 
     static class VisitVarInsnBuilder extends Builder {
-        VisitVarInsnBuilder() { super(0, 1); }
-        Builder create() { return new VisitVarInsnBuilder(); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitVarInsnBuilder() { super(0, 1); }
+        public Builder create() { return new VisitVarInsnBuilder(); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             if (arguments[0] instanceof Integer)
                 writer.visitVarInsn(ALOAD, number(0));
             else
@@ -316,18 +316,18 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
     }
 
     static class VisitTypeInsnBuilder extends Builder {
-        VisitTypeInsnBuilder(int opcode) { super(opcode, 1); }
-        Builder create() { return new VisitTypeInsnBuilder(opcode); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitTypeInsnBuilder(int opcode) { super(opcode, 1); }
+        public Builder create() { return new VisitTypeInsnBuilder(opcode); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             writer.visitTypeInsn(opcode, string(0));
         }
     }
 
     // this builder provides access to method arguments
     static class VisitArgumentFetchBuilder extends Builder {
-        VisitArgumentFetchBuilder() { super(0, 1); }
-        Builder create() { return new VisitArgumentFetchBuilder(); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitArgumentFetchBuilder() { super(0, 1); }
+        public Builder create() { return new VisitArgumentFetchBuilder(); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             if (arguments[0] instanceof Integer)
                 writer.pushArgument(number(0));
             else
@@ -337,9 +337,9 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 
     // this builder provides access to elements of method arguments
     static class VisitArgumentAtFetchBuilder extends Builder {
-        VisitArgumentAtFetchBuilder() { super(0, 2); }
-        Builder create() { return new VisitArgumentAtFetchBuilder(); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitArgumentAtFetchBuilder() { super(0, 2); }
+        public Builder create() { return new VisitArgumentAtFetchBuilder(); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             if (arguments[0] instanceof Integer && arguments[1] instanceof Integer)
                 writer.pushArgumentElement(number(0), number(1));
             else
@@ -349,9 +349,9 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
 
     // this builder provides access to temporaries
     static class VisitTemporaryFetchBuilder extends Builder {
-        VisitTemporaryFetchBuilder() { super(0, 1); }
-        Builder create() { return new VisitTemporaryFetchBuilder(); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitTemporaryFetchBuilder() { super(0, 1); }
+        public Builder create() { return new VisitTemporaryFetchBuilder(); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             if (arguments[0] instanceof Integer)
                 writer.pushTemporary(number(0));
             else
@@ -360,9 +360,9 @@ public class JVMAnalyser implements AnalyserDelegate, Opcodes {
     }
 
     static class VisitTemporaryStoreBuilder extends Builder {
-        VisitTemporaryStoreBuilder() { super(0, 1); }
-        Builder create() { return new VisitTemporaryStoreBuilder(); }
-        void writeUsing(ClassBytecodeWriter writer) {
+        public VisitTemporaryStoreBuilder() { super(0, 1); }
+        public Builder create() { return new VisitTemporaryStoreBuilder(); }
+        public void writeUsing(ClassBytecodeWriter writer) {
             if (arguments[0] instanceof Integer)
                 writer.storeTemporary(number(0));
             else
