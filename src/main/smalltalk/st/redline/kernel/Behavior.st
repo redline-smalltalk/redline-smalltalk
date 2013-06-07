@@ -291,14 +291,16 @@ Object subclass: #Behavior.
      for which aBlock evaluates to true. Answer the resulting Set."
     self notImplementedYet.
 
+"category: printing"
+
 - classVariableString
-    "Answer a collection of the receiver's class variable names."
+    "Answer a String that contains the names of each class variable in the receiver's variable declaration."
     self notImplementedYet.
 
 - instanceVariableString
-    ""
+    "Answer a String that contains the names of each instance variable in the receiver's variable declaration."
     self notImplementedYet.
 
 - sharedVariableString
-    ""
+    "Answer a String that contains the names of each pool dictionary in the receiver's variable declaration."
     self notImplementedYet.
