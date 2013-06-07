@@ -27,6 +27,8 @@ TestCase subclass: #FalseTest.
     self assertTrue: (false not) withMessage: 'should answer true.'.
     self assertFalse: (false & nil) withMessage: 'should answer false.'.
     self assert: (false | nil) equals: nil withMessage: 'should answer nil.'.
+    self assertTrue: (false eqv: false) withMessage: 'should answer true.'.
+    self assertTrue: (false xor: true) withMessage: 'should answer true.'.
 
 - testControllingMethods
     "Assert False supports each of the controlling methods."

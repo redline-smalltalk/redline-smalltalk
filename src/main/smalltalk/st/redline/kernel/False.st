@@ -49,6 +49,14 @@ Boolean subclass: #False.
     "Evaluating disjunction (OR) -- answer with the argument, aBoolean."
     ^ aBoolean.
 
+- eqv: aBoolean
+    "Answer true if the receiver is equivalent to the argument, aBoolean."
+    ^ self == aBoolean.
+
+- xor: aBoolean
+    "Exclusive OR. Answer true if the receiver is not equivalent to aBoolean."
+    ^ self ~= aBoolean.
+
 "category: printing"
 
 - printOn: aStream
