@@ -124,38 +124,38 @@ ProtoObject subclass: #Object.
     "Answer a copy of the receiver which shares the receiver's instance variables. It should never be overridden. I'm
      invoked from the copy template method. Subclasses that need to specialize the copy should specialize the postCopy
      hook method."
-    self error: 'implement me'.
+    self notImplementedYet.
 
 - deepCopy
     "Answer a copy of the receiver with its own copy of each instance variable. deepCopy does a deep copy.
      It should never be overridden and only be used if you want to get these very specific semantics."
-    self error: 'implement me'.
+    self notImplementedYet.
 
 "category: dependents access"
 
 - addDependent: anObject
     "Make the given object one of the receiver's dependents."
-    self error: 'implement me'.
+    self notImplementedYet.
 
 - removeDependent: anObject
     "Remove the given object as one of the receiver's dependents."
-    self error: 'implement me'.
+    self notImplementedYet.
 
 - dependents
     "Answer a collection of objects that are 'dependent' on the receiver; that is, all objects that should be notified
      if the receiver changes."
-    self error: 'implement me'.
+    self notImplementedYet.
 
 - release
     "Remove references to objects that may refer to the receiver. This message should be overridden by subclasses with
      any cycles, in which case the subclass should also include the expression super release."
-    self error: 'implement me'.
+    self notImplementedYet.
 
 - broadcast: aSymbol
-    self error: 'implement me'.
+    self notImplementedYet.
 
 - broadcast: aSymbol with: anObject
-    self error: 'implement me'.
+    self notImplementedYet.
 
 "category: updating"
 
@@ -166,7 +166,7 @@ ProtoObject subclass: #Object.
 - changed: aParameter
     "Receiver changed. The change is denoted by the argument aParameter. Usually the argument is a Symbol that is part
      of the dependent's change protocol. Inform all of the dependents."
-    self error: 'implement me'.
+    self notImplementedYet.
 
 - update: aParameter
     "Receive a change notice from an object of whom the receiver is a dependent. The default behavior is to do nothing;
@@ -196,6 +196,10 @@ ProtoObject subclass: #Object.
     "This message sets up a framework for the behavior of the class' subclasses. Announce that the subclass should have
      implemented this message."
     self error: 'My subclass should have overridden one of my messages.'.
+
+- notImplementedYet
+    "Announce that, although the receiver inherits this message, it is not implemented YET."
+    self error: 'This message is not implemented yet. Please implement is via a Test.'.
 
 "category: testing"
 
