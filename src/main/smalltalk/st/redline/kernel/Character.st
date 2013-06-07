@@ -2,6 +2,8 @@
 
 Magnitude subclass: #Character.
 
+"category: instance creation"
+
 + value: anInteger
     "Answer an instance of Character whose value is the argument, anInteger. The value is associated with an element of
      the ASCII character set. For example, Character value: 65 is a capital 'A'."
