@@ -8,7 +8,7 @@ ProtoObject subclass: #Object.
     "Subclasses should redefine this method to perform initializations on Class creation"
 
 - initialize
-    "Subclasses should redefine this method to perform initializations on Class creation"
+    "Subclasses should redefine this method to perform initializations on instance creation"
 
 "category: class membership"
 
