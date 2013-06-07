@@ -77,6 +77,9 @@ public class Bootstrapper {
     private void addKernelImports(ProtoClass protoObject) {
         for (Source source : sourceFinder.findIn("st.redline.kernel"))
             addKernelImport(protoObject, source);
+        // TODO.JCL - Do we really have to add all roots?
+        for (Source source : sourceFinder.findIn("st.redline.test"))
+            addKernelImport(protoObject, source);
     }
 
     private void addKernelImport(ProtoClass protoObject, Source source) {

@@ -318,7 +318,7 @@ asSortedCol lection
 asSortedCollection: aBIock
 
 -- Bag Protocol --
-add: newObject withOccurrences: anlnteger
+add: newObject withOccurrences: anInteger
 
 -- Set Protocol --
 

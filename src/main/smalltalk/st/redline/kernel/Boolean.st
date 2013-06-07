@@ -36,6 +36,28 @@ Object subclass: #Boolean.
      answer true without evaluating the argument."
     self subclassResponsibility.
 
+"category: logical operations"
+
+- & alternativeObject
+    "Evaluating conjunction -- answer alternativeObject since receiver is true."
+    self subclassResponsibility.
+
+- not
+    "Negation -- answer false since the receiver is true."
+    self subclassResponsibility.
+
+- | aBoolean
+    "Evaluating disjunction (OR) -- answer with the argument, aBoolean."
+    self subclassResponsibility.
+
+- eqv: aBoolean
+    "Answer true if the receiver is equivalent to the argument, aBoolean."
+    self subclassResponsibility.
+
+- xor: aBoolean
+    "Exclusive OR. Answer true if the receiver is not equivalent to aBoolean."
+    self subclassResponsibility.
+
 "category: copying"
 
 - deepCopy
