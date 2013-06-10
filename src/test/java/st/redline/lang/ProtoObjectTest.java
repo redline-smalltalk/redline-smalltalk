@@ -11,6 +11,7 @@ import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProtoObjectTest {
@@ -33,7 +34,7 @@ public class ProtoObjectTest {
         ProtoObject object =  new ProtoObject();
         ProtoObject spy = spy(object);
         SmalltalkClassLoader mock = mock(SmalltalkClassLoader.class);
-        when(spy.classLoader()).thenReturn(mock);
+        doReturn(mock).when(spy).classLoader();
         assertEquals(mock, spy.classLoader());
     }
 }
