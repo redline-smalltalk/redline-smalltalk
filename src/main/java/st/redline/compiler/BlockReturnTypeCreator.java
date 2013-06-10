@@ -5,6 +5,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import st.redline.classloader.SmalltalkClassLoader;
+import st.redline.compiler.ClassBytecodeWriter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class BlockReturnTypeCreator implements Opcodes {
 
     private byte[] createClass() {
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-        writer.visit(V1_7, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, "st/redline/lang/BlockReturn", null);
+        writer.visit(ClassBytecodeWriter.BYTECODE_VERSION, ACC_PUBLIC + ACC_SUPER, fullyQualifiedClassName, null, "st/redline/lang/BlockReturn", null);
         createAnswerArgumentConstructor(writer);
         writer.visitEnd();
         return writer.toByteArray();
