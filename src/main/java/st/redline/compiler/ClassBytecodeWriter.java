@@ -33,7 +33,7 @@ public class ClassBytecodeWriter implements Opcodes {
             "(Lst/redline/lang/ProtoObject;Lst/redline/lang/ProtoObject;Lst/redline/lang/ProtoObject;Lst/redline/lang/ProtoObject;Lst/redline/lang/ProtoObject;Lst/redline/lang/ProtoObject;Lst/redline/lang/ProtoObject;Ljava/lang/String;)Lst/redline/lang/ProtoObject;"
     };
     private static final Map<String, Integer> OPCODES = new HashMap<String, Integer>();
-    private final static int BYTECODE_VERSION;
+    public final static int BYTECODE_VERSION;
     static {
         int compareTo17 = new BigDecimal(System.getProperty("java.specification.version")).compareTo(new BigDecimal("1.7"));
         if (compareTo17 >= 0) {
