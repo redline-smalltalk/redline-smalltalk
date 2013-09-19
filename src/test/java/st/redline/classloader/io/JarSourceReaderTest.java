@@ -7,9 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
-import java.net.URL;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JarSourceReaderTest {
@@ -19,7 +18,7 @@ public class JarSourceReaderTest {
     @Before
     public void setup() {
         String jarPath = absolutePathToTestJar();
-        String entryName = "st.redline.classloader.SourceFinderJarTest".replace(".", File.separator);
+        String entryName = "st.redline.classloader.SourceFinderJarTest".replace(".", "/");
         entryName = entryName + ".st";
         jarSourceReader = new JarSourceReader(entryName, jarPath);
     }
@@ -33,6 +32,6 @@ public class JarSourceReaderTest {
 
     @Test
     public void shouldReadContents() {
-        assertEquals("\"I exist for the SourceFileFinderTest.java class to find.\"\n\n", jarSourceReader.contents());
+        assertEquals("\"I exist for the SourceFileFinderTest.java class to find.\"", jarSourceReader.contents().trim());
     }
 }
