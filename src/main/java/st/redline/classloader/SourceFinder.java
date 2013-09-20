@@ -12,6 +12,9 @@ import java.util.zip.ZipEntry;
 
 public class SourceFinder {
 
+    public static final String WINDOWS_PATH_SEPARATOR = "\\";
+    public static final String JAR_PATH_SEPARATOR = "/";
+
     private static final String SOURCE_EXTENSION = ".st";
     private SourceFactory sourceFactory;
     private final String[] classPaths;
@@ -82,9 +85,10 @@ public class SourceFinder {
 
     private Source findSourceInJar(String sourceName, String classPath) {
         JarFile jarFile = tryCreateJarFile(classPath);
-        ZipEntry entry = jarFile.getEntry(sourceName);
+        String sourceNameForJar = sourceName.replace(WINDOWS_PATH_SEPARATOR, JAR_PATH_SEPARATOR);
+        ZipEntry entry = jarFile.getEntry(sourceNameForJar);
         if (entry != null)
-            return sourceFactory.createFromJar(sourceName, classPath);
+            return sourceFactory.createFromJar(sourceNameForJar, classPath);
         return null;
     }
 

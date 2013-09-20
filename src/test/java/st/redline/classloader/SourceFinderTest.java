@@ -6,23 +6,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import st.redline.classloader.Source;
-import st.redline.classloader.SourceFactory;
-import st.redline.classloader.SourceFinder;
 
 import java.io.File;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.notNull;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SourceFinderTest {
 
+    public static final String OS_SPECIFIC_NAME_AND_PATH_OF_TEST_SOURCE = "st/redline/classloader/SourceFinderFileTest.st".replace("/", File.separator);
+    public static final String JAR_SPECIFIC_NAME_AND_PATH_OF_TEST_SOURCE = "st/redline/classloader/SourceFinderJarTest.st";
+
     @Mock
     private Source source;
+
     @Mock
     private SourceFactory sourceFactory;
     private String[] classPaths = System.getProperty("java.class.path").split(File.pathSeparator);
@@ -31,8 +31,8 @@ public class SourceFinderTest {
     @Before
     public void setup() {
         sourceFinder = new SourceFinder(sourceFactory, classPaths);
-        when(sourceFactory.createFromFile(eq("st/redline/classloader/SourceFinderFileTest.st"), notNull(String.class))).thenReturn(source);
-        when(sourceFactory.createFromJar(eq("st/redline/classloader/SourceFinderJarTest.st"), notNull(String.class))).thenReturn(source);
+        when(sourceFactory.createFromFile(eq(OS_SPECIFIC_NAME_AND_PATH_OF_TEST_SOURCE), notNull(String.class))).thenReturn(source);
+        when(sourceFactory.createFromJar(eq(JAR_SPECIFIC_NAME_AND_PATH_OF_TEST_SOURCE), notNull(String.class))).thenReturn(source);
     }
 
     @Test
