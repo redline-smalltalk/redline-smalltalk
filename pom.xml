@@ -179,7 +179,7 @@
                                   <workingDirectory>${project.build.directory}</workingDirectory>
                                   <arguments>
                                       <argument>-cp</argument>
-                                      <argument>classes:test-classes:lib/antlr-runtime-3.4.jar:lib/asm-4.1.jar</argument>
+                                      <argument>classes${path.separator}test-classes${path.separator}lib/antlr-runtime-3.4.jar${path.separator}lib/asm-4.1.jar</argument>
                                       <argument>st.redline.Stic</argument>
                                       <argument>st.redline.kernel.TestRunner</argument>
                                   </arguments>
