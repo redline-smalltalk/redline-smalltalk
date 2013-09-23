@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.classloader;
 
+import st.redline.RedlineFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class SourceFinder {
     }
 
     public List<Source> findIn(String path) {
-        String packagePath = path.replace(".", File.separator);
+        String packagePath = path.replace(".", RedlineFile.separator);
         List<Source> sources = new ArrayList<Source>();
         for (String classPath : classPaths)
             sources.addAll(findIn(packagePath, classPath));
@@ -53,13 +55,13 @@ public class SourceFinder {
     }
 
     private List<Source> findSourceInFile(String packagePath, String classPath) {
-        File folder = new File(classPath + File.separator + packagePath);
+        File folder = new File(classPath + RedlineFile.separator + packagePath);
         if (!folder.isDirectory())
             return Collections.EMPTY_LIST;
         List<Source> sources = new ArrayList<Source>();
         for (File file : folder.listFiles())
             if (file.isFile() && file.getName().endsWith(".st"))
-                sources.add(sourceFactory.createFromFile(packagePath + File.separator + file.getName(), file.getAbsolutePath()));
+                sources.add(sourceFactory.createFromFile(packagePath + RedlineFile.separator + file.getName(), file.getAbsolutePath()));
         return sources;
     }
 
@@ -112,7 +114,7 @@ public class SourceFinder {
     }
 
     public File createFile(String sourceName, String classPath) {
-        return new File(classPath + File.separator + sourceName);
+        return new File(classPath + RedlineFile.separator + sourceName);
     }
 
     public JarFile createJarFile(String classPath) throws IOException {
@@ -120,7 +122,7 @@ public class SourceFinder {
     }
 
     private String makeFilename(String name) {
-        String filename = name.replace(".", File.separator);
+        String filename = name.replace(".", RedlineFile.separator);
         return filename + SOURCE_EXTENSION;
     }
 }

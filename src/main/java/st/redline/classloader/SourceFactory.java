@@ -1,11 +1,10 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.classloader;
 
+import st.redline.RedlineFile;
 import st.redline.classloader.io.FileSourceReader;
 import st.redline.classloader.io.JarSourceReader;
 import st.redline.classloader.io.SourceReader;
-
-import java.io.File;
 
 public class SourceFactory {
 
@@ -24,7 +23,7 @@ public class SourceFactory {
     }
 
     private SourceReader fileSourceReader(String sourceName, String filePath) {
-        String filename = filePath + File.separator + sourceName;
+        String filename = filePath + RedlineFile.separator + sourceName;
         return new FileSourceReader(filename);
     }
 

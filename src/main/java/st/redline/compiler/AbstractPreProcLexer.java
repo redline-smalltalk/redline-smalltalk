@@ -99,7 +99,7 @@ public abstract class AbstractPreProcLexer
 //
 //            // Massage the name
 //            //
-//            methodName = methodName.substring(methodName.lastIndexOf(File.separatorChar)+1); // Remove paths
+//            methodName = methodName.substring(methodName.lastIndexOf(RedlineFile.separatorChar)+1); // Remove paths
 //
 //            if (methodName.lastIndexOf('.') != -1) {
 //

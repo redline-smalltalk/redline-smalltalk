@@ -1,7 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.lang;
 
-import java.io.File;
+import st.redline.RedlineFile;
 
 public class EigenClass extends ProtoClass {
 
@@ -10,7 +10,7 @@ public class EigenClass extends ProtoClass {
 
     public void initialize(String className, String packagePath) {
         this.className = className;
-        this.packageName = packagePath.replace(File.separator, ".");
+        this.packageName = packagePath.replace(RedlineFile.separator, ".");
         initializeHierarchy();
         register();
     }

@@ -1,7 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.lang;
 
-import java.io.File;
+import st.redline.RedlineFile;
 
 public class PrimImport extends ProtoObject {
 
@@ -26,6 +26,6 @@ public class PrimImport extends ProtoObject {
 
     private String fullyQualifiedName(PrimContext context) {
         String fullyQualifiedName = (String) context.argumentAt(0).javaValue();
-        return fullyQualifiedName.replace(File.separator, ".");
+        return fullyQualifiedName.replace(RedlineFile.separator, ".");
     }
 }

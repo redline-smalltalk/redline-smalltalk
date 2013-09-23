@@ -1,12 +1,50 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.compiler;
 
+import st.redline.RedlineFile;
 import st.redline.classloader.SmalltalkClassLoader;
 import st.redline.classloader.Source;
-import st.redline.compiler.ast.*;
+import st.redline.compiler.ast.AnswerStatement;
+import st.redline.compiler.ast.Array;
+import st.redline.compiler.ast.ArrayConstant;
+import st.redline.compiler.ast.AssignmentExpression;
+import st.redline.compiler.ast.BinaryExpression;
+import st.redline.compiler.ast.BinaryObjectDescription;
+import st.redline.compiler.ast.BinarySelector;
+import st.redline.compiler.ast.BinarySelectorMessageElement;
+import st.redline.compiler.ast.Block;
+import st.redline.compiler.ast.BlockArgument;
+import st.redline.compiler.ast.BlockArguments;
+import st.redline.compiler.ast.Cascade;
+import st.redline.compiler.ast.CharacterConstant;
+import st.redline.compiler.ast.False;
+import st.redline.compiler.ast.Identifier;
+import st.redline.compiler.ast.JVM;
+import st.redline.compiler.ast.KeywordExpression;
+import st.redline.compiler.ast.KeywordMessageElement;
+import st.redline.compiler.ast.Nil;
 import st.redline.compiler.ast.Number;
+import st.redline.compiler.ast.PrimaryExpression;
+import st.redline.compiler.ast.PrimaryStatements;
+import st.redline.compiler.ast.Primitive;
+import st.redline.compiler.ast.Program;
+import st.redline.compiler.ast.ReferencedClass;
+import st.redline.compiler.ast.ReferencedClasses;
+import st.redline.compiler.ast.Self;
+import st.redline.compiler.ast.SimpleExpression;
+import st.redline.compiler.ast.Statements;
+import st.redline.compiler.ast.StringConstant;
+import st.redline.compiler.ast.Super;
+import st.redline.compiler.ast.Symbol;
+import st.redline.compiler.ast.SymbolConstant;
+import st.redline.compiler.ast.Temporaries;
+import st.redline.compiler.ast.Temporary;
+import st.redline.compiler.ast.True;
+import st.redline.compiler.ast.UnaryExpression;
+import st.redline.compiler.ast.UnaryObjectDescription;
+import st.redline.compiler.ast.UnarySelector;
+import st.redline.compiler.ast.UnarySelectorMessageElement;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,7 +142,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
     }
 
     private String blockReturnType() {
-        return source.packageName() + File.separator + source.className() + "$MAnswer";
+        return source.packageName() + RedlineFile.separator + source.className() + "$MAnswer";
     }
 
     public void visitEnd(SimpleExpression simpleExpression) {
@@ -199,7 +237,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
 
     protected String createFullBlockName(String blockClassName) {
         String packageName = source.packageName();
-        return packageName + (packageName.equals("") ? "" : File.separator) + blockClassName;
+        return packageName + (packageName.equals("") ? "" : RedlineFile.separator) + blockClassName;
     }
 
     public void visitEnd(Block block, int line) {
@@ -222,7 +260,7 @@ public class ProgramAnalyser implements AnalyserDelegate {
         // Check is referenced class is in same package and import if it is to save Developer importing classes in
         // same package. If not in same package we ignore as class will be resolved later.
         if (source.isNextTo(value))
-            writer.addClassToImports(source.packageName() + File.separator + value);
+            writer.addClassToImports(source.packageName() + RedlineFile.separator + value);
     }
 
     public void visit(Temporary temporary, String value, int line) {
