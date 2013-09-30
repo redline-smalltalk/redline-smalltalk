@@ -9,7 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.File;
 import java.net.URL;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FileSourceReaderTest {
@@ -31,6 +31,6 @@ public class FileSourceReaderTest {
 
     @Test
     public void shouldReadContents() {
-        assertEquals("\"I exist for the test FileSourceReaderTest.java\"\n", fileSourceReader.contents());
+        assertEquals("\"I exist for the test FileSourceReaderTest.java\"", fileSourceReader.contents().trim());
     }
 }

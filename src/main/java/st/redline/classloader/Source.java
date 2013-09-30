@@ -1,6 +1,7 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.classloader;
 
+import st.redline.RedlineFile;
 import st.redline.classloader.io.SourceReader;
 
 import java.io.File;
@@ -22,14 +23,14 @@ public class Source {
     }
 
     private String makePackageName() {
-        int index = name.lastIndexOf(File.separator);
+        int index = name.lastIndexOf(RedlineFile.separator);
         if (index == -1)
             return "";
         return name.substring(0, index);
     }
 
     private String makeClassName() {
-        int index = name.lastIndexOf(File.separator);
+        int index = name.lastIndexOf(RedlineFile.separator);
         if (index == -1)
             index = 0;
         return name.substring(index + 1, name.lastIndexOf(".st"));
@@ -52,7 +53,7 @@ public class Source {
     }
 
     public String fullyQualifiedName() {
-        return packageName.replace(File.separator, ".") + "." + className;
+        return packageName.replace(RedlineFile.separator, ".") + "." + className;
     }
 
     public SourceReader reader() {
@@ -64,7 +65,7 @@ public class Source {
     }
 
     public boolean isNextTo(String otherFile) {
-        String filename = path + File.separator + name.replace(className + ".st", otherFile + ".st");
+        String filename = path + RedlineFile.separator + name.replace(className + ".st", otherFile + ".st");
         File file = new File(filename);
         return file.exists();
     }
