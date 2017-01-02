@@ -2,6 +2,8 @@ package st.redline;
 
 import st.redline.classloader.*;
 
+import java.io.*;
+
 public class Stic {
 
     private final String[] args;
@@ -35,7 +37,19 @@ public class Stic {
     }
 
     private SourceFinder sourceFinder() {
-        return new SmalltalkSourceFinder();
+        return new SmalltalkSourceFinder(sourceFactory(), classPaths());
+    }
+
+    private SourceFactory sourceFactory() {
+        return new SourceFactory();
+    }
+
+    public String[] classPaths() {
+        return classPath().split(File.pathSeparator);
+    }
+
+    private String classPath() {
+        return System.getProperty("java.class.path");
     }
 
     private ClassLoader currentClassLoader() {

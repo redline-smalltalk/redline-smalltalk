@@ -2,12 +2,11 @@ package st.redline.core;
 
 import st.redline.classloader.SmalltalkClassLoader;
 
+import static st.redline.compiler.SmalltalkGeneratingVisitor.DEFAULT_IMPORTED_PACKAGE;
 import static st.redline.core.PrimDoesNotUnderstand.PRIM_DOES_NOT_UNDERSTAND;
 import static st.redline.core.PrimSubclass.PRIM_SUBCLASS;
 
 public class PrimObject {
-
-    protected static final String DEFAULT_IMPORTED_PACKAGE = "st.redline.core";
 
     private PrimObject selfClass;
     private Object javaValue;
@@ -106,11 +105,12 @@ public class PrimObject {
     }
 
     protected String importFor(String name) {
-        System.out.println("** importFor: " + name + " from: " + this);
-        String imports = classLoader().findPackage(this, name);
-        if (imports != null)
-            return imports;
-        return DEFAULT_IMPORTED_PACKAGE + '.' + name;
+        // Subclass should override.
+        return packageName() + "." + name;
+    }
+
+    protected void importAll(String packageName) {
+        classLoader().importAll(packageName);
     }
 
     protected SmalltalkClassLoader classLoader() {
@@ -118,8 +118,13 @@ public class PrimObject {
     }
 
     protected PrimObject sendMessages(PrimObject receiver, PrimContext context) {
-        System.out.println("** sendMessages(" + receiver + "," + context + ")");
+        // Subclass should override.
         return receiver;
+    }
+
+    protected String packageName() {
+        // Subclass should override.
+        return DEFAULT_IMPORTED_PACKAGE;
     }
 
     public PrimObject perform(String selector) {

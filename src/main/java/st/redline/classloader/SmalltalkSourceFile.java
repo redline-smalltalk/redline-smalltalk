@@ -8,6 +8,9 @@ import java.util.regex.Pattern;
 
 public class SmalltalkSourceFile implements Source, LineTransformer {
 
+    public static final String SEPARATOR = "/";
+    public static final String SOURCE_EXTENSION = ".st";
+
     private static final Pattern METHOD_START_PATTERN = Pattern.compile("^[-+] .*\\s");
     private static final Pattern METHOD_UNARY_PATTERN = Pattern.compile("^\\w+[^:|\\s]");
     private static final Pattern METHOD_BINARY_PATTERN = Pattern.compile("^[-\\\\+*/=><,@%~|&?]+ \\w+");
@@ -30,6 +33,7 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
     private String selector;
     private String arguments;
     private String fullClassName;
+    private String packageName;
 
     public SmalltalkSourceFile(String name, String filename, File file, SourceReader reader) {
         this.name = name;
@@ -139,6 +143,17 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
         if (fullClassName == null)
             fullClassName = withoutExtension(fullFilename());
         return fullClassName;
+    }
+
+    public String packageName() {
+        if (packageName == null) {
+            packageName = fullClassName();
+            int index = packageName.lastIndexOf(File.separatorChar);
+            if (index != -1)
+                packageName = packageName.substring(0, index);
+            packageName = packageName.replaceAll(String.valueOf(File.separatorChar), ".");
+        }
+        return packageName;
     }
 
     private String withoutExtension(String filename) {

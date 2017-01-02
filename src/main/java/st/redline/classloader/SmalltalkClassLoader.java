@@ -3,8 +3,9 @@ package st.redline.classloader;
 import st.redline.compiler.Compiler;
 import st.redline.core.PrimObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static st.redline.compiler.SmalltalkGeneratingVisitor.DEFAULT_IMPORTED_PACKAGE;
 
 public class SmalltalkClassLoader extends ClassLoader {
 
@@ -16,35 +17,18 @@ public class SmalltalkClassLoader extends ClassLoader {
     private final SourceFinder sourceFinder;
     private final Map<String, Class> classCache;
     private final Map<String, PrimObject> objectCache;
-    private final Map<Object, Map<String, String>> packageCache;
+    private final Map<String, Map<String, String>> packageCache;
     private boolean bootstrapping;
 
     public SmalltalkClassLoader(ClassLoader classLoader, SourceFinder sourceFinder, Bootstrapper bootstrapper) {
         super(classLoader);
         this.sourceFinder = sourceFinder;
-        this.classCache = new HashMap<String, Class>();
-        this.objectCache = new HashMap<String, PrimObject>();
-        this.packageCache = new HashMap<Object, Map<String, String>>();
+        this.classCache = new HashMap<>();
+        this.objectCache = new HashMap<>();
+        this.packageCache = new HashMap<>();
 
         // initialize Object cache with bootstrapped objects.
         bootstrapper.bootstrap(this);
-    }
-
-    public void registerPackage(String name, PrimObject group) {
-        System.out.println("** registerPackage: " +  name + " " + group);
-        // NOTE: For some reason getClass().getPackage() returns NULL.
-        String className = group.getClass().getName();
-        String groupName = className.substring(0, className.lastIndexOf('.'));
-        Map<String, String> imports = packageCache.getOrDefault(groupName, new HashMap<>());
-        imports.put(name, groupName + '.' + name);
-        packageCache.put(groupName, imports);
-    }
-
-    public String findPackage(PrimObject group, String name) {
-        System.out.println("** findPackage: " + group + " " + name);
-        String className = group.getClass().getName();
-        String groupName = className.substring(0, className.lastIndexOf('.'));
-        return packageCache.get(groupName).get(name);
     }
 
     public PrimObject findObject(String name) {
@@ -147,5 +131,31 @@ public class SmalltalkClassLoader extends ClassLoader {
 
     public PrimObject trueInstance() {
         return TRUE;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String importForBy(String name, String packageName) {
+        System.out.println("** importFor: " + name + " in " + packageName);
+        Map<String, String> imports = packageCache.getOrDefault(packageName, Collections.EMPTY_MAP);
+        String fqn = imports.get(name);
+        if (fqn != null)
+            return fqn;
+        if (!DEFAULT_IMPORTED_PACKAGE.equals(packageName))
+            return importForBy(name, DEFAULT_IMPORTED_PACKAGE);
+        return name;
+    }
+
+    public void importAll(String packageName) {
+        System.out.println("** importAll: " + packageName);
+        if (!packageCache.containsKey(packageName))
+            for (Source source : sourceFinder.findIn(packageName))
+                addImport(packageName, source);
+    }
+
+    private void addImport(String packageName, Source source) {
+        System.out.println("addImport: " + packageName + " " + source.className());
+        Map<String, String> objects = packageCache.getOrDefault(packageName, new HashMap<>());
+        objects.put(source.className(), packageName + "." + source.className());
+        packageCache.put(packageName, objects);
     }
 }

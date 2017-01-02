@@ -10,6 +10,8 @@ import java.util.*;
 
 public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> implements SmalltalkVisitor<Void>, Opcodes {
 
+    public static final String DEFAULT_IMPORTED_PACKAGE = "st.redline.core";
+
     private static final String[] SIGNATURES = {
             "(Ljava/lang/String;)Lst/redline/core/PrimObject;",
             "(Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
@@ -74,6 +76,10 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
     private String fullClassName() {
         return source.fullClassName();
+    }
+
+    private String packageName() {
+        return source.packageName();
     }
 
     private String superclassName() {
@@ -235,6 +241,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitScript(SmalltalkParser.ScriptContext ctx) {
             openJavaClass();
+            createPackageNameMethod();
+            createImportForMethod();
             openSendMessagesMethod();
             ctx.sequence().accept(currentVisitor());
             closeSendMessagesMethod();
@@ -245,6 +253,31 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private void closeSendMessagesMethod() {
             mv.visitInsn(ARETURN);
             mv.visitMaxs(0, 0);
+            mv.visitEnd();
+        }
+
+        private void createPackageNameMethod() {
+            mv = cw.visitMethod(ACC_PROTECTED, "packageName", "()Ljava/lang/String;", null, null);
+            mv.visitCode();
+            mv.visitLdcInsn(packageName());
+            mv.visitInsn(ARETURN);
+            mv.visitMaxs(1, 1);
+            mv.visitEnd();
+        }
+
+        private void createImportForMethod() {
+            if (DEFAULT_IMPORTED_PACKAGE.equals(packageName()))
+                return;
+            mv = cw.visitMethod(ACC_PROTECTED, "importFor", "(Ljava/lang/String;)Ljava/lang/String;", null, null);
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "classLoader", "()Lst/redline/classloader/SmalltalkClassLoader;", false);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "packageName", "()Ljava/lang/String;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/classloader/SmalltalkClassLoader", "importForBy", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", false);
+            mv.visitInsn(ARETURN);
+            mv.visitMaxs(3, 2);
             mv.visitEnd();
         }
 
@@ -277,12 +310,11 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             mv.visitVarInsn(ALOAD, 0);
             mv.visitMethodInsn(INVOKESPECIAL, superclassName(), "<init>", "()V", false);
 
-            // Register this class name and it's package.
+            // import current package
             mv.visitVarInsn(ALOAD, 0);
-            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "classLoader", "()Lst/redline/classloader/SmalltalkClassLoader;", false);
-            mv.visitLdcInsn(className());
             mv.visitVarInsn(ALOAD, 0);
-            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/classloader/SmalltalkClassLoader", "registerPackage", "(Ljava/lang/String;Lst/redline/core/PrimObject;)V", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "packageName", "()Ljava/lang/String;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "importAll", "(Ljava/lang/String;)V", false);
 
             // create a Context
             mv.visitTypeInsn(NEW, contextName());

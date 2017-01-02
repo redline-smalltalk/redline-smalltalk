@@ -18,7 +18,7 @@ public class Bootstrapper {
 
         // Create Kernel Objects and Classes we need to start Runtime.
         PrimObject primObject = classLoader.cachedObject("st.redline.core.PrimObject");
-        classLoader.registerPackage("PrimObject", primObject);
+//        classLoader.registerPackage("PrimObject", primObject);
 
         PrimClass object = createKernelObject("Object", primObject);
         PrimClass behavior = createKernelObject("Behavior", object);
