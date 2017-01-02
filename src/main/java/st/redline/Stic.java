@@ -1,55 +1,60 @@
-/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline;
+
+import st.redline.classloader.*;
 
 public class Stic {
 
-    private SticConfiguration configuration;
+    private final String[] args;
 
-    public static void main(String[] args) {
-        SticConfiguration configuration = configuration(args);
-        try {
-            new Stic(configuration).run();
-        } catch (Exception e) {
-            print(e.getCause() != null ? e.getCause() : e);
-        }
+    public static void main(String[] args) throws Exception {
+        new Stic(args).run();
     }
 
-    private static void print(Throwable throwable) {
-        throwable.printStackTrace();
+    public Stic(String[] args) {
+        this.args = args;
     }
 
-    private static SticConfiguration configuration(String[] args) {
-        return new SticConfiguration(args);
+    private void run() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        run(loadScript(scriptName()));
     }
 
-    public Stic(SticConfiguration configuration) {
-        this.configuration = configuration;
+    private void run(Class cls) throws IllegalAccessException, InstantiationException {
+        cls.newInstance();
     }
 
-    public void run() throws Exception {
-        runProgram(scriptName());
+    private Class loadScript(String name) throws ClassNotFoundException {
+        return classLoader().loadClass(name);
     }
 
-    private void runProgram(String program) throws Exception {
-        run(loadProgram(program));
+    private ClassLoader classLoader() {
+        return new SmalltalkClassLoader(currentClassLoader(), sourceFinder(), bootstrapper());
     }
 
-    private void run(Class aClass) throws Exception {
-        if (aClass != null)
-            aClass.newInstance();
+    private Bootstrapper bootstrapper() {
+        return new Bootstrapper();
     }
 
-    public Class loadProgram(String program) throws Exception {
-        ClassLoader classLoader = classLoader();
-        return Class.forName(program, true, classLoader);
+    private SourceFinder sourceFinder() {
+        return new SmalltalkSourceFinder();
+    }
+
+    private ClassLoader currentClassLoader() {
+        return Thread.currentThread().getContextClassLoader();
     }
 
     private String scriptName() {
-        String scriptName = configuration.scriptName();
-        return "".equals(scriptName) ? "st.redline.NoScript" : scriptName;
+        return hasArguments() ? firstArgument() : defaultScriptName();
     }
 
-    private ClassLoader classLoader() throws Exception {
-        return configuration.classLoader();
+    private String defaultScriptName() {
+        return "st.redline.NoArguments";
+    }
+
+    private String firstArgument() {
+        return args[0];
+    }
+
+    private boolean hasArguments() {
+        return args.length > 0;
     }
 }

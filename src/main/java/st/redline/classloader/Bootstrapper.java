@@ -1,104 +1,125 @@
-/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.classloader;
 
-import st.redline.lang.*;
-
-import java.io.File;
+import st.redline.core.*;
 
 public class Bootstrapper {
 
-    private final SourceFinder sourceFinder;
+    public void bootstrap(SmalltalkClassLoader classLoader) {
+        setContextClassLoader(classLoader);
 
-    public Bootstrapper(SourceFinder sourceFinder) {
-        this.sourceFinder = sourceFinder;
+        classLoader.beginBootstrapping();
+        createPrimObject(classLoader);
+        createKernelObjectsHierarchy(classLoader);
+        loadKernelObjects(classLoader);
+        classLoader.endBootstrapping();
     }
 
-    public void bootstrap(SmalltalkClassLoader smalltalkClassLoader) throws Exception {
-        bootstrapNil(smalltalkClassLoader);
-        bootstrapMetaclass(smalltalkClassLoader);
-        bootstrapProtoObject(smalltalkClassLoader);
-        bootstrapSymbol(smalltalkClassLoader);
-        bootstrapObject(smalltalkClassLoader);
-        bootstrapMetaclassHierarchy(smalltalkClassLoader);
-        smalltalkClassLoader.stoppedBootstrapping();
-        bootstrapNilHierarchy(smalltalkClassLoader);
-        bootstrapBooleans(smalltalkClassLoader);
+    private void createKernelObjectsHierarchy(SmalltalkClassLoader classLoader) {
+
+        // Create Kernel Objects and Classes we need to start Runtime.
+        PrimObject primObject = classLoader.cachedObject("st.redline.core.PrimObject");
+        classLoader.registerPackage("PrimObject", primObject);
+
+        PrimClass object = createKernelObject("Object", primObject);
+        PrimClass behavior = createKernelObject("Behavior", object);
+        PrimClass classDescription = createKernelObject("ClassDescription", behavior);
+        PrimClass klass = createKernelObject("Class", classDescription);
+        PrimClass metaclass = createKernelObject("Metaclass", classDescription);
+        PrimClass undefinedObject = createKernelObject("UndefinedObject", object);
+        PrimClass blockClosure = createKernelObject("BlockClosure", object);
+        PrimClass compiledMethod = createKernelObject("CompiledMethod", object);
+        PrimClass booleanObject = createKernelObject("Boolean", object);
+        PrimClass trueObject = createKernelObject("True", booleanObject);
+        PrimClass falseObject = createKernelObject("False", booleanObject);
+        PrimClass collection = createKernelObject("Collection", object);
+        PrimClass sequenceableCollection = createKernelObject("SequenceableCollection", collection);
+        PrimClass arrayedCollection = createKernelObject("ArrayedCollection", sequenceableCollection);
+        PrimClass string = createKernelObject("String", arrayedCollection);
+        PrimClass symbol = createKernelObject("Symbol", string);
+
+        // Initialise special Smalltalk circular hierarchy.
+        ((PrimClass) object.selfClass()).superclass(klass);
+
+        // Add basicAddSelector:withMethod: to Behaviour
+        ((PrimClass) behavior).addMethod("basicAddSelector:withMethod:", new PrimAddMethod());
+
+        // Create special instances, referred to with pseudo variables.
+        PrimObject nil = new PrimObject();
+        nil.selfClass(undefinedObject);
+        classLoader.nilInstance(nil);
+
+        PrimObject trueInstance = new PrimObject();
+        trueInstance.selfClass(trueObject);
+        classLoader.trueInstance(trueInstance);
+
+        PrimObject falseInstance = new PrimObject();
+        falseInstance.selfClass(falseObject);
+        classLoader.falseInstance(falseInstance);
+
+        // Load the hierarchy which will attached their methods.
+        classLoader.cacheObject("st.redline.core.Object", object);
+        classLoader.cacheObject("st.redline.core.Behavior", behavior);
+        classLoader.cacheObject("st.redline.core.ClassDescription", classDescription);
+        classLoader.cacheObject("st.redline.core.Class", klass);
+        classLoader.cacheObject("st.redline.core.Metaclass", metaclass);
+        classLoader.cacheObject("st.redline.core.UndefinedObject", undefinedObject);
+        classLoader.cacheObject("st.redline.core.BlockClosure", blockClosure);
+        classLoader.cacheObject("st.redline.core.CompiledMethod", compiledMethod);
+        classLoader.cacheObject("st.redline.core.Boolean", booleanObject);
+        classLoader.cacheObject("st.redline.core.True", trueObject);
+        classLoader.cacheObject("st.redline.core.False", falseObject);
+        classLoader.cacheObject("st.redline.core.Collection", collection);
+        classLoader.cacheObject("st.redline.core.SequenceableCollection", sequenceableCollection);
+        classLoader.cacheObject("st.redline.core.ArrayedCollection", arrayedCollection);
+        classLoader.cacheObject("st.redline.core.String", string);
+        classLoader.cacheObject("st.redline.core.Symbol", symbol);
     }
 
-    private void bootstrapBooleans(SmalltalkClassLoader smalltalkClassLoader) throws Exception {
-        ProtoObject Metaclass = smalltalkClassLoader.METACLASS;
-        ProtoObject TrueClass = Metaclass.resolveObject("st.redline.kernel.True");
-        smalltalkClassLoader.TRUE = TrueClass.perform("new");
-        ProtoObject FalseClass = Metaclass.resolveObject("st.redline.kernel.False");
-        smalltalkClassLoader.FALSE = FalseClass.perform("new");
+    private PrimClass createKernelObject(String name, PrimObject superclass) {
+        PrimClass primMeta = new PrimClass(name,true);
+        primMeta.superclass(superclass.selfClass());
+        PrimClass primClass = new PrimClass(name);
+        primClass.superclass(superclass);
+        primClass.selfClass(primMeta);
+        return primClass;
     }
 
-    private void bootstrapNilHierarchy(SmalltalkClassLoader smalltalkClassLoader) throws Exception {
-        ProtoObject Metaclass = smalltalkClassLoader.METACLASS;
-        smalltalkClassLoader.NIL.selfclass = Metaclass.resolveObject("st.redline.kernel.UndefinedObject");
+    private void setContextClassLoader(SmalltalkClassLoader classLoader) {
+        Thread.currentThread().setContextClassLoader(classLoader);
     }
 
-    private void bootstrapNil(SmalltalkClassLoader smalltalkClassLoader) {
-        smalltalkClassLoader.NIL = new ProtoObject();
+    private void loadKernelObjects(SmalltalkClassLoader classLoader) {
+        loadObject(classLoader, "st.redline.core.Object");
+        loadObject(classLoader, "st.redline.core.Behavior");
+        loadObject(classLoader, "st.redline.core.ClassDescription");
+        loadObject(classLoader, "st.redline.core.Class");
+        loadObject(classLoader, "st.redline.core.Metaclass");
+        loadObject(classLoader, "st.redline.core.UndefinedObject");
+        loadObject(classLoader, "st.redline.core.BlockClosure");
+        loadObject(classLoader, "st.redline.core.CompiledMethod");
+        loadObject(classLoader, "st.redline.core.Boolean");
+        loadObject(classLoader, "st.redline.core.True");
+        loadObject(classLoader, "st.redline.core.False");
+        loadObject(classLoader, "st.redline.core.Collection");
+        loadObject(classLoader, "st.redline.core.SequenceableCollection");
+        loadObject(classLoader, "st.redline.core.ArrayedCollection");
+        loadObject(classLoader, "st.redline.core.String");
+        loadObject(classLoader, "st.redline.core.Symbol");
     }
 
-    private void bootstrapMetaclassHierarchy(SmalltalkClassLoader smalltalkClassLoader) throws Exception {
-        ProtoObject Metaclass = smalltalkClassLoader.METACLASS;
-        ProtoObject classDescription = Metaclass.resolveObject("st.redline.kernel.ClassDescription");
-        ((ProtoClass) Metaclass).superclass(classDescription);
+    private void createPrimObject(SmalltalkClassLoader classLoader) {
+        PrimObject primObject = new PrimObject();
+        primObject.selfClass(primObject);
+        classLoader.cacheObject("st.redline.core.PrimObject", primObject);
     }
 
-    private void bootstrapObject(SmalltalkClassLoader smalltalkClassLoader) throws Exception {
-        ProtoObject Metaclass = smalltalkClassLoader.METACLASS;
-        ProtoObject Object = Metaclass.resolveObject("st.redline.kernel.Object");
-        ProtoObject Class = Metaclass.resolveObject("st.redline.kernel.Class");
-        ((ProtoClass) Object.selfclass).superclass(Class);
-    }
-
-    private void bootstrapSymbol(SmalltalkClassLoader smalltalkClassLoader) throws ClassNotFoundException {
-        smalltalkClassLoader.METACLASS.resolveObject("st.redline.kernel.Symbol");
-    }
-
-    private void bootstrapMetaclass(SmalltalkClassLoader smalltalkClassLoader) {
-        ProtoClass Metaclass = new ProtoClass();
-        ProtoClass metaclass = Metaclass.create("Metaclass");
-        Metaclass.selfclass = metaclass;
-        smalltalkClassLoader.METACLASS = metaclass;
-        metaclass.addMethod("atSelector:put:", new PrimAtSelectorPutMethod());
-    }
-
-    private ProtoObject bootstrapProtoObject(SmalltalkClassLoader smalltalkClassLoader) {
-        ProtoClass ProtoObject = makeProtoObject((ProtoClass) smalltalkClassLoader.METACLASS);
-        smalltalkClassLoader.registerProtoObject(ProtoObject);
-        addKernelImports(ProtoObject);
-        return ProtoObject;
-    }
-
-    private void addKernelImports(ProtoClass protoObject) {
-        for (Source source : sourceFinder.findIn("st.redline.kernel"))
-            addKernelImport(protoObject, source);
-        // TODO.JCL - Do we really have to add all roots?
-        for (Source source : sourceFinder.findIn("st.redline.test"))
-            addKernelImport(protoObject, source);
-    }
-
-    private void addKernelImport(ProtoClass protoObject, Source source) {
-        protoObject.importAtPut(source.className(), source.fullyQualifiedName());
-    }
-
-    private ProtoClass makeProtoObject(ProtoClass metaclass) {
-        // Create ProtoObject class (metaclass)
-        ProtoClass protoObjectClass = new ProtoClass();
-        protoObjectClass.selfclass = metaclass;
-
-        // Add methods needed during bootstrap.
-        protoObjectClass.addMethod("subclass:", new PrimSubclass());
-        protoObjectClass.addMethod("import:", new PrimImport());
-        protoObjectClass.addMethod("class", new PrimClass());
-        protoObjectClass.addMethod("atSelector:put:", new PrimAtSelectorPutMethod());
-
-        // Create ProtoObject sole instance. ProtoObject is a class.
-        ProtoClass protoObject = protoObjectClass.create("ProtoObject");
-        return protoObject;
+    private void loadObject(ClassLoader classLoader, String name) {
+        try {
+            // Loading and instantiating the class causes the 'sendMessages' java method
+            // to be called which executes all the message sends of the Smalltalk source.
+            classLoader.loadClass(name).newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

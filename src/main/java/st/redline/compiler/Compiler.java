@@ -1,43 +1,63 @@
-/* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.compiler;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 import st.redline.classloader.Source;
-import st.redline.compiler.ast.Program;
 
 public class Compiler {
 
-    private final Preprocessor preprocessor;
-    private final Parser parser;
-    private final AnalyserFactory analyserFactory;
+    private final Source source;
 
-    public Compiler(Preprocessor preprocessor, Parser parser, AnalyserFactory analyserFactory) {
-        this.preprocessor = preprocessor;
-        this.parser = parser;
-        this.analyserFactory = analyserFactory;
+    public Compiler(Source source) {
+        this.source = source;
     }
 
-    public byte[] compile(Source source) {
-        String preprocessedSource = preprocess(source);
-        Program rootAstNode = parse(preprocessedSource, source.name());
-        Analyser analyser = createAnalyser(rootAstNode, source);
-        return analyser.analyse();
+    public byte[] compile() {
+        if (!haveSource())
+            return null;
+        return compileSource();
     }
 
-    private Analyser createAnalyser(Program rootAstNode, Source source) {
-        return analyserFactory.createAnalyser(analyserFactory, rootAstNode, source);
+    private byte[] compileSource() {
+        return generateClass(parsedSourceContents());
     }
 
-    private Program parse(String preprocessedSource, String name) {
-        return parser.parse(preprocessedSource, name);
+    private ParseTree parsedSourceContents() {
+        return parse(sourceContents());
     }
 
-    private String preprocess(Source source) {
-        String className = source.className();
-        String rawSource = source.contents();
-        return preprocess(rawSource, className);
+    private byte[] generateClass(ParseTree tree) {
+        return createGenerator(tree).generate();
     }
 
-    private String preprocess(String rawSource, String name) {
-        return preprocessor.preprocess(rawSource, name);
+    private Generator createGenerator(ParseTree tree) {
+        return new Generator(tree, createVisitor());
+    }
+
+    private SmalltalkGeneratingVisitor createVisitor() {
+        return new SmalltalkGeneratingVisitor(source);
+    }
+
+    private ParseTree parse(String input) {
+        SmalltalkLexer lexer = new SmalltalkLexer(new ANTLRInputStream(input));
+        SmalltalkParser parser = new SmalltalkParser(new CommonTokenStream(lexer));
+
+        // dump tree
+        // System.out.println(parser.script().toStringTree(parser));
+        // System.out.flush();
+
+        return parser.script();
+    }
+
+    private String sourceContents() {
+        String src = source.contents();
+        // dump pre-processed source
+        System.out.print(src);
+        return src;
+    }
+
+    private boolean haveSource() {
+        return source != null && source.hasContent();
     }
 }
