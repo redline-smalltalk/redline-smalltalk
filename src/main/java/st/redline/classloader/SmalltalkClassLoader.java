@@ -44,13 +44,7 @@ public class SmalltalkClassLoader extends ClassLoader {
             cls = cachedObject(name);
             if (cls != null)
                 return cls;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (ObjectNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         throw new ObjectNotFoundException("Object '" + name + "' was not found.");
