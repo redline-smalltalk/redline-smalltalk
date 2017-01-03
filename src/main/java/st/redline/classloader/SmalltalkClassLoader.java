@@ -53,6 +53,9 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     private void instantiateMessageSendingClass(Class messageSendingClass, String name) throws IllegalAccessException, InstantiationException {
+        // We have to instantiate the class to cause all the message sends contained within it to be sent.
+        // Should these message sends involve a subclass then we need to ensure that subclass knows the package it is in.
+        // hence this code (which makes me uncomfortable).
         pushInstantiatingName(name);
         try {
             messageSendingClass.newInstance();
