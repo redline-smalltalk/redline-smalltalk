@@ -25,7 +25,7 @@ public class SmalltalkSourceFinder implements SourceFinder {
     }
 
     public List<Source> findIn(String packageName) {
-        System.out.println("findIn: " + packageName);
+        System.out.println("** findIn: " + packageName);
         return findInPath(packageName);
     }
 

@@ -153,7 +153,7 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     private void addImport(String packageName, Source source) {
-        System.out.println("addImport: " + packageName + " " + source.className());
+        System.out.println("** addImport: " + packageName + " " + source.className());
         Map<String, String> objects = packageCache.getOrDefault(packageName, new HashMap<>());
         objects.put(source.className(), packageName + "." + source.className());
         packageCache.put(packageName, objects);
