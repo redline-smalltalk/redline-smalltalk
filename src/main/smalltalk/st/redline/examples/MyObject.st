@@ -1,3 +1,4 @@
+
 Object subclass: #MyObject.
 
 - yourself
