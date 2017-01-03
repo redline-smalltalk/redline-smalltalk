@@ -3,6 +3,8 @@ package st.redline.classloader;
 
 import st.redline.core.*;
 
+import static st.redline.core.PrimSubclass.PRIM_SUBCLASS;
+
 public class Bootstrapper {
 
     public void bootstrap(SmalltalkClassLoader classLoader) {
@@ -19,27 +21,35 @@ public class Bootstrapper {
 
         // Create Kernel Objects and Classes we need to start Runtime.
         PrimObject primObject = classLoader.cachedObject("st.redline.core.PrimObject");
-//        classLoader.registerPackage("PrimObject", primObject);
 
         PrimClass object = createKernelObject("Object", primObject);
         PrimClass behavior = createKernelObject("Behavior", object);
         PrimClass classDescription = createKernelObject("ClassDescription", behavior);
         PrimClass klass = createKernelObject("Class", classDescription);
         PrimClass metaclass = createKernelObject("Metaclass", classDescription);
-        PrimClass undefinedObject = createKernelObject("UndefinedObject", object);
-        PrimClass blockClosure = createKernelObject("BlockClosure", object);
-        PrimClass compiledMethod = createKernelObject("CompiledMethod", object);
-        PrimClass booleanObject = createKernelObject("Boolean", object);
-        PrimClass trueObject = createKernelObject("True", booleanObject);
-        PrimClass falseObject = createKernelObject("False", booleanObject);
-        PrimClass collection = createKernelObject("Collection", object);
-        PrimClass sequenceableCollection = createKernelObject("SequenceableCollection", collection);
-        PrimClass arrayedCollection = createKernelObject("ArrayedCollection", sequenceableCollection);
-        PrimClass string = createKernelObject("String", arrayedCollection);
-        PrimClass symbol = createKernelObject("Symbol", string);
+        PrimClass undefinedObject = createKernelObject("UndefinedObject", object, metaclass);
+        PrimClass blockClosure = createKernelObject("BlockClosure", object, metaclass);
+        PrimClass compiledMethod = createKernelObject("CompiledMethod", object, metaclass);
+        PrimClass booleanObject = createKernelObject("Boolean", object, metaclass);
+        PrimClass trueObject = createKernelObject("True", booleanObject, metaclass);
+        PrimClass falseObject = createKernelObject("False", booleanObject, metaclass);
+        PrimClass collection = createKernelObject("Collection", object, metaclass);
+        PrimClass sequenceableCollection = createKernelObject("SequenceableCollection", collection, metaclass);
+        PrimClass arrayedCollection = createKernelObject("ArrayedCollection", sequenceableCollection, metaclass);
+        PrimClass string = createKernelObject("String", arrayedCollection, metaclass);
+        PrimClass symbol = createKernelObject("Symbol", string, metaclass);
+
+        // Fix up bootstrapped Kernel Objects Metaclass instance.
+        klass.selfClass().selfClass(metaclass);
+        classDescription.selfClass().selfClass(metaclass);
+        behavior.selfClass().selfClass(metaclass);
+        object.selfClass().selfClass(metaclass);
 
         // Initialise special Smalltalk circular hierarchy.
         ((PrimClass) object.selfClass()).superclass(klass);
+
+        // Let subclass primitive know the Metaclass instance - used when subclassing.
+        ((PrimSubclass) PRIM_SUBCLASS).metaclass(metaclass);
 
         // Add basicAddSelector:withMethod: to Behaviour
         ((PrimClass) behavior).addMethod("basicAddSelector:withMethod:", new PrimAddMethod());
@@ -82,6 +92,12 @@ public class Bootstrapper {
         PrimClass primClass = new PrimClass(name);
         primClass.superclass(superclass);
         primClass.selfClass(primMeta);
+        return primClass;
+    }
+
+    private PrimClass createKernelObject(String name, PrimObject superclass, PrimObject metaclass) {
+        PrimClass primClass = createKernelObject(name, superclass);
+        primClass.selfClass().selfClass(metaclass);
         return primClass;
     }
 

@@ -7,6 +7,8 @@ public class PrimSubclass extends PrimObject {
 
     public static final PrimObject PRIM_SUBCLASS = new PrimSubclass();
 
+    private PrimObject theMetaclass;
+
     protected PrimObject invoke(PrimObject receiver, PrimContext primContext) {
 //        System.out.println("PrimSubclass invoke: " + String.valueOf(primContext.argumentJavaValueAt(0)));
         assert receiver.equals(primContext.receiver());
@@ -27,6 +29,7 @@ public class PrimSubclass extends PrimObject {
             newClass.selfClass(newMeta);
             newClass.superclass(superclass);
             newMeta.superclass(superclass.selfClass());
+            newMeta.selfClass(theMetaclass);
         }
 
         // TODO - Add other definitions to appropriate objects.
@@ -46,5 +49,9 @@ public class PrimSubclass extends PrimObject {
         if (instantiationName != null && instantiationName.endsWith(name))
             return instantiationName;
         throw new RuntimeException("Current instantiating class name not found.");
+    }
+
+    public void metaclass(PrimClass metaclass) {
+        theMetaclass = metaclass;
     }
 }
