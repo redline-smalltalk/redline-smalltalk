@@ -18,6 +18,7 @@ public class SmalltalkClassLoader extends ClassLoader {
     private final Map<String, Class> classCache;
     private final Map<String, PrimObject> objectCache;
     private final Map<String, Map<String, String>> packageCache;
+    private final Stack<String> instantiatingName;
     private boolean bootstrapping;
 
     public SmalltalkClassLoader(ClassLoader classLoader, SourceFinder sourceFinder, Bootstrapper bootstrapper) {
@@ -26,6 +27,7 @@ public class SmalltalkClassLoader extends ClassLoader {
         this.classCache = new HashMap<>();
         this.objectCache = new HashMap<>();
         this.packageCache = new HashMap<>();
+        this.instantiatingName = new Stack<String>();
 
         // initialize Object cache with bootstrapped objects.
         bootstrapper.bootstrap(this);
@@ -40,7 +42,7 @@ public class SmalltalkClassLoader extends ClassLoader {
             boolean requiresInstantiation = !isCachedClass(name);
             Class messageSendingClass = findClass(name);
             if (requiresInstantiation)
-                messageSendingClass.newInstance();
+                instantiateMessageSendingClass(messageSendingClass, name);
             cls = cachedObject(name);
             if (cls != null)
                 return cls;
@@ -48,6 +50,27 @@ public class SmalltalkClassLoader extends ClassLoader {
             e.printStackTrace();
         }
         throw new ObjectNotFoundException("Object '" + name + "' was not found.");
+    }
+
+    private void instantiateMessageSendingClass(Class messageSendingClass, String name) throws IllegalAccessException, InstantiationException {
+        pushInstantiatingName(name);
+        try {
+            messageSendingClass.newInstance();
+        } finally {
+            popInstantiatingName();
+        }
+    }
+
+    public String peekInstantiationName() {
+        return instantiatingName.peek();
+    }
+
+    private void popInstantiatingName() {
+        instantiatingName.pop();
+    }
+
+    private void pushInstantiatingName(String name) {
+        instantiatingName.push(name);
     }
 
     protected PrimObject cachedObject(String name) {

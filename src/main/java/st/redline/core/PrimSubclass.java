@@ -33,11 +33,18 @@ public class PrimSubclass extends PrimObject {
 
         if (!bootstrapping) {
             SmalltalkClassLoader classLoader = classLoader();
-//            String fullName = classLoader.findPackage(subclassName);
-            classLoader.cacheObject("st.redline.examples." + subclassName, newClass);
+            String fullQualifiedName = makeFullyQualifiedName(classLoader, subclassName);
+            classLoader.cacheObject(fullQualifiedName, newClass);
         }
 
         return newClass;
+    }
+
+    private String makeFullyQualifiedName(SmalltalkClassLoader classLoader, String name) {
+        String instantiationName = classLoader.peekInstantiationName();
+        if (instantiationName != null && instantiationName.endsWith(name))
+            return instantiationName;
+        throw new RuntimeException("Current instantiating class name not found.");
     }
 
     private String subclassName(PrimContext context) {
