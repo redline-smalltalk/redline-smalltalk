@@ -139,7 +139,7 @@ public class PrimObject {
     }
 
     public PrimObject perform(PrimObject arg1, PrimObject arg2, String selector) {
-//        System.out.println("** perform(" + arg1 + "," + arg2 + "," + selector + ") " + this);
+        System.out.println("** perform(" + arg1 + "," + arg2 + "," + selector + ") " + this);
         return perform0(selector, arg1, arg2);
     }
 
@@ -171,9 +171,9 @@ public class PrimObject {
 
     protected PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
         System.out.println("** apply: #" + selector + " found in " + foundInClass + " to " + this);
-//        PrimObject result = method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
-//        System.out.println("** result: " + String.valueOf(result));
-        return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
+        PrimObject result = method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
+        System.out.println("** result: " + String.valueOf(result));
+        return result; // method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
     }
 
     protected PrimObject invoke(PrimObject receiver, PrimContext context) {

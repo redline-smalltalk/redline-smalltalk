@@ -13,3 +13,10 @@ PrimObject subclass: #Object.
 - yourself
     "Answer the receiver."
     ^ self.
+
+"category: class membership"
+
+- class
+    "Primitive. Answer the object which is the receiver's class."
+    JVM aload: 1;
+        invokeVirtual: 'st/redline/core/PrimObject' method: 'selfClass' matching: '()Lst/redline/core/PrimObject;'.

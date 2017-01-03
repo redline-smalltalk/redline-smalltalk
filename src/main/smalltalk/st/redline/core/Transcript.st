@@ -2,16 +2,18 @@
 
 Object subclass: #Transcript.
 
-"categtory: streaming"
+"category: streaming"
 
 + show: anObject
     self stdout: anObject.
 
++ stdout: aString
+    JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
+        argLoad: 0;
+        invokeVirtual: 'java/io/PrintStream' method: 'print' matching: '(Ljava/lang/Object;)V';
+        aload: 1.
+
 + cr
     JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
-        invokeVirtual: 'java/io/PrintStream' method: 'println' matching: '()V'.
-
-+ stdout: string
-    JVM getStatic: 'java/lang/System' named: 'out' as: 'Ljava/io/PrintStream;';
-        arg: 0;
-        invokeVirtual: 'java/io/PrintStream' method: 'print' matching: '(Ljava/lang/Object;)V'.
+        invokeVirtual: 'java/io/PrintStream' method: 'println' matching: '()V';
+        aload: 1.

@@ -173,7 +173,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         mv.visitLineNumber(line, l0);
     }
 
-    public void pushNumber(MethodVisitor mv, int value) {
+    public static void pushNumber(MethodVisitor mv, int value) {
         switch (value) {
             case 0: mv.visitInsn(ICONST_0); break;
             case 1: mv.visitInsn(ICONST_1); break;
@@ -769,6 +769,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             String name = makeBlockMethodName(keywordRecord);
             pushCurrentVisitor(new BlockGeneratorVisitor(cw, name));
             ctx.accept(currentVisitor());
+            removeJVMGeneratorVisitor();
             popCurrentVisitor();
             if (keywordRecord.keyword.toString().endsWith("withMethod:"))
                 pushNewMethod(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, ctx.BLOCK_START().getSymbol().getLine());
@@ -936,6 +937,14 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
                             if (number != null) {
                                 return number.getText();
                             }
+                            SmalltalkParser.SymbolContext symbol = parsetimeLiteral.symbol();
+//                            if (symbol != null) {
+//                                SmalltalkParser.BareSymbolContext bareSymbol = symbol.bareSymbol();
+//                                List<TerminalNode> keyword = bareSymbol.KEYWORD();
+//                                if (keyword != null) {
+//                                    System.out.println("here");
+//                                }
+//                            }
                             throw new RuntimeException("Unhandled JVM keyword argument.");
                         }
                     }
@@ -1010,6 +1019,19 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         JVM_WRITERS.put("invokeStatic:method:matching:", new JVMWriter() {
             public void write(MethodVisitor mv, List<Object> arguments) {
                 mv.visitMethodInsn(INVOKESTATIC, String.valueOf(arguments.get(0)), String.valueOf(arguments.get(1)), String.valueOf(arguments.get(2)), false);
+            }
+        });
+        JVM_WRITERS.put("getStatic:named:as:", new JVMWriter() {
+            public void write(MethodVisitor mv, List<Object> arguments) {
+                mv.visitFieldInsn(GETSTATIC, String.valueOf(arguments.get(0)), String.valueOf(arguments.get(1)), String.valueOf(arguments.get(2)));
+            }
+        });
+        // ## Redline Additions - these are not true JVM instructions but helpers.
+        JVM_WRITERS.put("argLoad:", new JVMWriter() {
+            public void write(MethodVisitor mv, List<Object> arguments) {
+                mv.visitVarInsn(ALOAD, 2);  // Load Context
+                pushNumber(mv, Integer.valueOf(String.valueOf(arguments.get(0))));  // Load index of argument we want to get.
+                mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimContext", "argumentAt", "(I)Lst/redline/core/PrimObject;", false);
             }
         });
     }
