@@ -1,0 +1,2 @@
+
+MyObject new.

@@ -37,13 +37,20 @@ public class SmalltalkClassLoader extends ClassLoader {
         if (cls != null)
             return cls;
         try {
-            findClass(name);
+            boolean requiresInstantiation = !isCachedClass(name);
+            Class messageSendingClass = findClass(name);
+            if (requiresInstantiation)
+                messageSendingClass.newInstance();
             cls = cachedObject(name);
             if (cls != null)
                 return cls;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
             e.printStackTrace();
         }
         throw new ObjectNotFoundException("Object '" + name + "' was not found.");
@@ -75,6 +82,10 @@ public class SmalltalkClassLoader extends ClassLoader {
     private void cacheClass(Class cls, String name) {
         System.out.println("** cacheClass " + cls + " as " + name);
         classCache.put(name, cls);
+    }
+
+    private boolean isCachedClass(String name) {
+        return classCache.containsKey(name);
     }
 
     private Class cachedClass(String name) {

@@ -56,7 +56,7 @@ public class PrimObject {
     }
 
     public PrimObject resolveObject(String name) {
-        System.out.println("** resolveObject " + name);
+        System.out.println("** resolveObject " + name + " " + importFor(name));
         return findObject(importFor(name));
     }
 
