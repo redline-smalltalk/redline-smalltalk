@@ -7,7 +7,7 @@ public class PrimSubclass extends PrimObject {
     public static final PrimObject PRIM_SUBCLASS = new PrimSubclass();
 
     protected PrimObject invoke(PrimObject receiver, PrimContext primContext) {
-        System.out.println("PrimSubclass invoke: " + String.valueOf(primContext.argumentJavaValueAt(0)));
+//        System.out.println("PrimSubclass invoke: " + String.valueOf(primContext.argumentJavaValueAt(0)));
         assert receiver.equals(primContext.receiver());
 
         String subclassName = String.valueOf(primContext.argumentJavaValueAt(0));
@@ -45,9 +45,5 @@ public class PrimSubclass extends PrimObject {
         if (instantiationName != null && instantiationName.endsWith(name))
             return instantiationName;
         throw new RuntimeException("Current instantiating class name not found.");
-    }
-
-    private String subclassName(PrimContext context) {
-        return String.valueOf(context.argumentJavaValueAt(0));
     }
 }

@@ -128,32 +128,32 @@ public class PrimObject {
     }
 
     public PrimObject perform(String selector) {
-        System.out.println("** perform(" + selector + ") " + this);
+//        System.out.println("** perform(" + selector + ") " + this);
         return perform0(selector);
     }
 
     public PrimObject perform(PrimObject arg1, String selector) {
-        System.out.println("** perform(" + arg1 + "," + selector + ") " + this);
+//        System.out.println("** perform(" + arg1 + "," + selector + ") " + this);
         return perform0(selector, arg1);
     }
 
     public PrimObject perform(PrimObject arg1, PrimObject arg2, String selector) {
-        System.out.println("** perform(" + arg1 + "," + arg2 + "," + selector + ") " + this);
+//        System.out.println("** perform(" + arg1 + "," + arg2 + "," + selector + ") " + this);
         return perform0(selector, arg1, arg2);
     }
 
     public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, String selector) {
-        System.out.println("** perform(" + arg1 + "," + arg2 + "," + arg3 + "," + selector + ") " + this);
+//        System.out.println("** perform(" + arg1 + "," + arg2 + "," + arg3 + "," + selector + ") " + this);
         return perform0(selector, arg1, arg2);
     }
 
     public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, String selector) {
-        System.out.println("** perform(" + arg1 + "," + arg2 + "," + arg3 + "," + arg4 + "," + selector + ") " + this);
+//        System.out.println("** perform(" + arg1 + "," + arg2 + "," + arg3 + "," + arg4 + "," + selector + ") " + this);
         return perform0(selector, arg1, arg2);
     }
 
     public PrimObject perform(PrimObject arg1, PrimObject arg2, PrimObject arg3, PrimObject arg4, PrimObject arg5, String selector) {
-        System.out.println("** perform(" + arg1 + "," + arg2 + "," + arg3 + "," + arg4 + "," + arg5 + "," + selector + ") " + this);
+//        System.out.println("** perform(" + arg1 + "," + arg2 + "," + arg3 + "," + arg4 + "," + arg5 + "," + selector + ") " + this);
         return perform0(selector, arg1, arg2);
     }
 
@@ -170,9 +170,9 @@ public class PrimObject {
 
     protected PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
         System.out.println("** apply: #" + selector + " found in " + foundInClass + " to " + this);
-        PrimObject result = method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
-        System.out.println("** result: " + String.valueOf(result));
-        return result; //method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
+//        PrimObject result = method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
+//        System.out.println("** result: " + String.valueOf(result));
+        return method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
     }
 
     protected PrimObject invoke(PrimObject receiver, PrimContext context) {
@@ -198,7 +198,7 @@ public class PrimObject {
     }
 
     public PrimObject primitiveSubclass(PrimContext primContext) {
-        System.out.println("primitiveSubclass: " + primContext.argumentJavaValueAt(0));
+//        System.out.println("primitiveSubclass: " + primContext.argumentJavaValueAt(0));
         return PRIM_SUBCLASS.invoke(this, primContext);
     }
 
