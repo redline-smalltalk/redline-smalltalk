@@ -9,16 +9,12 @@ public class SourceFactory {
 
     public Source createFromFile(String sourceName, File file, String classpath) {
         SourceReader sourceReader = fileSourceReader(file);
-        return createSource(sourceName, file, classpath, sourceReader);
+        return new SmalltalkSourceFile(nameWithoutExtension(file), sourceName, file, classpath, sourceReader);
     }
 
     public Source createFromJar(String sourceName, String jarPath) {
         SourceReader sourceReader = jarSourceReader(sourceName, jarPath);
-        return createSource(sourceName, new File(jarPath), jarPath, sourceReader);
-    }
-
-    private Source createSource(String name, File file, String classpath, SourceReader reader) {
-        return new SmalltalkSourceFile(nameWithoutExtension(file), name, file, classpath, reader);
+        return new SmalltalkJarSourceFile(sourceName, jarPath, new File(jarPath), jarPath, sourceReader);
     }
 
     private String nameWithoutExtension(File file) {

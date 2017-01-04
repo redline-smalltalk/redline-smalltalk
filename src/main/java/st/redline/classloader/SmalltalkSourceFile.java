@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/* Note: Move the preprocessing resposibility into an inner class. */
+/* Note: Move the preprocessing responsibility into an inner class. */
 
 public class SmalltalkSourceFile implements Source, LineTransformer {
 
@@ -23,7 +23,6 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
     private static final String METHOD_PUT_SELECTOR = "withMethod:";
     private static final String CLASS_METHOD_INDICATOR = "+ ";
     private static final String NEWLINE = System.getProperty("line.separator");
-    private static final String SOURCE_FILE_EXTENSION = ".st";
 
     private final String name;
     private final String filename;
@@ -31,11 +30,11 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
     private final String classpath;
     private final SourceReader reader;
     private boolean methods;
-    private String className;
-    private String selector;
-    private String arguments;
-    private String fullClassName;
-    private String packageName;
+    protected String className;
+    protected String selector;
+    protected String arguments;
+    protected String fullClassName;
+    protected String packageName;
 
     public SmalltalkSourceFile(String name, String filename, File file, String classpath, SourceReader reader) {
         this.name = name;
@@ -61,7 +60,7 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
     }
 
     public String fileExtension() {
-        return SOURCE_FILE_EXTENSION;
+        return SOURCE_EXTENSION;
     }
 
     private String methodDefinitionTransformation(String line) {
@@ -140,6 +139,10 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
         return classpath;
     }
 
+    public String name() {
+        return name;
+    }
+
     public String className() {
         if (className == null)
             className = withoutExtension(filename());
@@ -169,7 +172,7 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
         return filename;
     }
 
-    private String withoutExtension(String filename) {
+    protected String withoutExtension(String filename) {
         return filename.substring(0, filename.lastIndexOf("."));
     }
 
