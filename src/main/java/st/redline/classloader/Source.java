@@ -9,4 +9,5 @@ public interface Source {
     String fullClassName();
     String fileExtension();
     String packageName();
+    String classpath();
 }

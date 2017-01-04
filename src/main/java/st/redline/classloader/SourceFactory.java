@@ -7,18 +7,18 @@ import static st.redline.classloader.SmalltalkSourceFile.SOURCE_EXTENSION;
 
 public class SourceFactory {
 
-    public Source createFromFile(String sourceName, File file) {
+    public Source createFromFile(String sourceName, File file, String classpath) {
         SourceReader sourceReader = fileSourceReader(file);
-        return createSource(sourceName, file, sourceReader);
+        return createSource(sourceName, file, classpath, sourceReader);
     }
 
     public Source createFromJar(String sourceName, String jarPath) {
         SourceReader sourceReader = jarSourceReader(sourceName, jarPath);
-        return createSource(sourceName, new File(jarPath), sourceReader);
+        return createSource(sourceName, new File(jarPath), jarPath, sourceReader);
     }
 
-    private Source createSource(String name, File file, SourceReader reader) {
-        return new SmalltalkSourceFile(nameWithoutExtension(file), name, file, reader);
+    private Source createSource(String name, File file, String classpath, SourceReader reader) {
+        return new SmalltalkSourceFile(nameWithoutExtension(file), name, file, classpath, reader);
     }
 
     private String nameWithoutExtension(File file) {

@@ -22,7 +22,7 @@ public class SmalltalkSourceFinder implements SourceFinder {
         File file = new File(filename);
         if (!file.exists())
             return new SourceNotFound();
-        return sourceFile(filename, file);
+        return sourceFile(filename, file, "");
     }
 
     public List<Source> findIn(String packageName) {
@@ -55,7 +55,7 @@ public class SmalltalkSourceFinder implements SourceFinder {
         if (files != null)
             for (File file : files)
                 if (file.isFile() && file.getName().endsWith(SOURCE_EXTENSION))
-                    sources.add(sourceFactory.createFromFile(packagePath + SEPARATOR + file.getName(), file));
+                    sources.add(sourceFile(packagePath + SEPARATOR + file.getName(), file, classPath));
         return sources;
     }
 
@@ -88,8 +88,8 @@ public class SmalltalkSourceFinder implements SourceFinder {
         return classPath.endsWith(".jar") || classPath.endsWith(".JAR");
     }
 
-    private Source sourceFile(String filename, File file) {
-        return sourceFactory.createFromFile(filename, file);
+    private Source sourceFile(String filename, File file, String classpath) {
+        return sourceFactory.createFromFile(filename, file, classpath);
     }
 
     private String toFilename(String name) {
@@ -119,6 +119,10 @@ public class SmalltalkSourceFinder implements SourceFinder {
         }
 
         public String packageName() {
+            return "";
+        }
+
+        public String classpath() {
             return "";
         }
     }

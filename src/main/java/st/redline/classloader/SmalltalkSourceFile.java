@@ -28,6 +28,7 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
     private final String name;
     private final String filename;
     private final File file;
+    private final String classpath;
     private final SourceReader reader;
     private boolean methods;
     private String className;
@@ -36,10 +37,11 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
     private String fullClassName;
     private String packageName;
 
-    public SmalltalkSourceFile(String name, String filename, File file, SourceReader reader) {
+    public SmalltalkSourceFile(String name, String filename, File file, String classpath, SourceReader reader) {
         this.name = name;
         this.filename = filename;
         this.file = file;
+        this.classpath = classpath;
         this.reader = reader;
         this.methods = false;
     }
@@ -134,6 +136,10 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
         return line.startsWith(CLASS_METHOD_INDICATOR);
     }
 
+    public String classpath() {
+        return classpath;
+    }
+
     public String className() {
         if (className == null)
             className = withoutExtension(filename());
@@ -142,7 +148,7 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
 
     public String fullClassName() {
         if (fullClassName == null)
-            fullClassName = withoutExtension(fullFilename());
+            fullClassName = withoutClassPath(withoutExtension(fullFilename()));
         return fullClassName;
     }
 
@@ -155,6 +161,12 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
             packageName = packageName.replaceAll(String.valueOf(File.separatorChar), ".");
         }
         return packageName;
+    }
+
+    private String withoutClassPath(String filename) {
+        if (classpath.length() > 0 && filename.startsWith(classpath))
+            return filename.substring(classpath.length() + 1);
+        return filename;
     }
 
     private String withoutExtension(String filename) {
