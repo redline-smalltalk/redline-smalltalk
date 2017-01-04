@@ -60,7 +60,7 @@ public class SmalltalkSourceFinder implements SourceFinder {
     }
 
     private List<Source> findSourceInInJar(String packagePath, String classPath) {
-        List<Source> sources = new ArrayList<Source>();
+        List<Source> sources = new ArrayList<>();
         JarFile jarFile = tryCreateJarFile(classPath);
         for (Enumeration em1 = jarFile.entries(); em1.hasMoreElements();) {
             String entry = em1.nextElement().toString();

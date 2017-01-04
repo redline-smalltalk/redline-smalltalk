@@ -22,6 +22,9 @@ public class SourceFactory {
     }
 
     private String nameWithoutExtension(File file) {
+        int index = file.getName().lastIndexOf(SOURCE_EXTENSION);
+        if (index == -1)
+            return file.getName();
         return file.getName().substring(0, file.getName().lastIndexOf(SOURCE_EXTENSION));
     }
 
