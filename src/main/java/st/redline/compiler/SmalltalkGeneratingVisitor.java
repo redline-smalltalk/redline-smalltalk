@@ -714,7 +714,9 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         public Void visitString(@NotNull SmalltalkParser.StringContext ctx) {
             log("visitString " + ctx.STRING().getSymbol().getText());
             TerminalNode node = ctx.STRING();
-            pushNewObject(mv, "smalltalkString", node.getSymbol().getText(), node.getSymbol().getLine());
+            String value = node.getSymbol().getText();
+            value = value.substring(1, value.length() - 1);
+            pushNewObject(mv, "smalltalkString", value, node.getSymbol().getLine());
             return null;
         }
 
