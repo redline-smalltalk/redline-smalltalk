@@ -18,6 +18,7 @@ public class SmalltalkSourceFinder implements SourceFinder {
     }
 
     public Source find(String name) {
+        System.out.println(">>> find: " + name);
         String filename = toFilename(name);
         File file = new File(filename);
         if (!file.exists())
