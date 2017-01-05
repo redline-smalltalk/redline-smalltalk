@@ -13,6 +13,7 @@ public class Bootstrapper {
         classLoader.beginBootstrapping();
         createPrimObject(classLoader);
         createKernelObjectsHierarchy(classLoader);
+        classLoader.importAll("st.redline.core");
         loadKernelObjects(classLoader);
         classLoader.endBootstrapping();
     }

@@ -15,7 +15,7 @@ public class JarSourceReader implements SourceReader {
         this.path = path;
     }
 
-    public String contents() {
+    public String contents(LineTransformer lineTransformer) {
         // TODO.JCL - There is a lot of commonality between this 'contents()' method
         // and the one in FileSourceReader - DRY up into SourceReader at some point.
         String newLine = System.getProperty("line.separator");
@@ -30,10 +30,15 @@ public class JarSourceReader implements SourceReader {
             InputStreamReader isr = new InputStreamReader(input);
             reader = new BufferedReader(isr);
             String line;
-            while ((line = reader.readLine()) != null) {
+            line = lineTransformer.begin();
+            if (line != null)
                 contents.append(line);
-                contents.append(newLine);
+            while ((line = reader.readLine()) != null) {
+                contents.append(lineTransformer.transform(line + newLine));
             }
+            line = lineTransformer.end();
+            if (line != null)
+                contents.append(line);
             return contents.toString();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -57,10 +62,5 @@ public class JarSourceReader implements SourceReader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public String contents(LineTransformer lineTransformer) {
-        throw new RuntimeException("TODO: implement this contents method with lineTransformer.");
     }
 }

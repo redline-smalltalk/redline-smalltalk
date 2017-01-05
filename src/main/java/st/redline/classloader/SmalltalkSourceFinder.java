@@ -21,9 +21,9 @@ public class SmalltalkSourceFinder implements SourceFinder {
         System.out.println(">>> find: " + name);
         String filename = toFilename(name);
         File file = new File(filename);
-        if (!file.exists())
-            return new SourceNotFound();
-        return sourceFile(filename, file, "");
+        if (file.exists())
+            return sourceFile(filename, file, "");
+        return new SourceNotFound(name);
     }
 
     public List<Source> findIn(String packageName) {
@@ -99,6 +99,16 @@ public class SmalltalkSourceFinder implements SourceFinder {
 
     public class SourceNotFound implements Source {
 
+        private final String name;
+
+        public SourceNotFound(String name) {
+            this.name = name;
+        }
+
+        public boolean exists() {
+            return false;
+        }
+
         public boolean hasContent() {
             return false;
         }
@@ -108,11 +118,14 @@ public class SmalltalkSourceFinder implements SourceFinder {
         }
 
         public String className() {
-            return "";
+            int index = name.lastIndexOf(".");
+            if (index == -1)
+                return name;
+            return name.substring(index + 1);
         }
 
         public String fullClassName() {
-            return "";
+            return name;
         }
 
         public String fileExtension() {
@@ -120,7 +133,10 @@ public class SmalltalkSourceFinder implements SourceFinder {
         }
 
         public String packageName() {
-            return "";
+            int index = name.lastIndexOf(".");
+            if (index == -1)
+                return "";
+            return name.substring(0, index);
         }
 
         public String classpath() {

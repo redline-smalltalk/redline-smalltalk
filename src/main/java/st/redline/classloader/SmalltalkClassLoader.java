@@ -4,6 +4,7 @@ package st.redline.classloader;
 import st.redline.compiler.Compiler;
 import st.redline.core.PrimObject;
 
+import java.io.*;
 import java.util.*;
 
 import static st.redline.compiler.SmalltalkGeneratingVisitor.DEFAULT_IMPORTED_PACKAGE;
@@ -18,7 +19,7 @@ public class SmalltalkClassLoader extends ClassLoader {
     private final SourceFinder sourceFinder;
     private final Map<String, Class> classCache;
     private final Map<String, PrimObject> objectCache;
-    private final Map<String, Map<String, String>> packageCache;
+    private final Map<String, Map<String, Source>> packageCache;
     private final Stack<String> instantiatingName;
     private boolean bootstrapping;
 
@@ -28,7 +29,7 @@ public class SmalltalkClassLoader extends ClassLoader {
         this.classCache = new HashMap<>();
         this.objectCache = new HashMap<>();
         this.packageCache = new HashMap<>();
-        this.instantiatingName = new Stack<String>();
+        this.instantiatingName = new Stack<>();
 
         // initialize Object cache with bootstrapped objects.
         bootstrapper.bootstrap(this);
@@ -117,8 +118,13 @@ public class SmalltalkClassLoader extends ClassLoader {
         return compile(findSource(name));
     }
 
+    @SuppressWarnings("unchecked")
     private Source findSource(String name) {
-        return sourceFinder.find(name);
+        Source source = sourceFinder.find(name);
+        if (source.exists())
+            return source;
+        Map<String, Source> imports = packageCache.getOrDefault(source.packageName(), Collections.EMPTY_MAP);
+        return imports.getOrDefault(source.className(), source);
     }
 
     private byte[] compile(Source source) {
@@ -168,13 +174,17 @@ public class SmalltalkClassLoader extends ClassLoader {
     @SuppressWarnings("unchecked")
     public String importForBy(String name, String packageName) {
         System.out.println("** importFor: " + name + " in " + packageName);
-        Map<String, String> imports = packageCache.getOrDefault(packageName, Collections.EMPTY_MAP);
-        String fqn = imports.get(name);
-        if (fqn != null)
-            return fqn;
+        Map<String, Source> imports = packageCache.getOrDefault(packageName, Collections.EMPTY_MAP);
+        Source source = imports.get(name);
+        if (source != null)
+            return dotted(source.fullClassName());
         if (!DEFAULT_IMPORTED_PACKAGE.equals(packageName))
             return importForBy(name, DEFAULT_IMPORTED_PACKAGE);
         return name;
+    }
+
+    private String dotted(String name) {
+        return name.replaceAll(String.valueOf(File.separator), ".");
     }
 
     public void importAll(String packageName) {
@@ -186,8 +196,8 @@ public class SmalltalkClassLoader extends ClassLoader {
 
     private void addImport(String packageName, Source source) {
         System.out.println("** addImport: " + packageName + " " + source.className() + " : " + source.fullClassName());
-        Map<String, String> objects = packageCache.getOrDefault(packageName, new HashMap<>());
-        objects.put(source.className(), packageName + "." + source.className());
+        Map<String, Source> objects = packageCache.getOrDefault(packageName, new HashMap<>());
+        objects.put(source.className(), source);
         packageCache.put(packageName, objects);
     }
 }

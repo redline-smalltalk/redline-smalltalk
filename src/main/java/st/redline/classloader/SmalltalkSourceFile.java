@@ -45,6 +45,10 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
         this.methods = false;
     }
 
+    public boolean exists() {
+        return true;
+    }
+
     public boolean hasContent() {
         return file.length() > 0;
     }
@@ -144,14 +148,12 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
     }
 
     public String className() {
-        if (className == null)
-            className = withoutExtension(filename());
-        return className;
+        return name();
     }
 
     public String fullClassName() {
         if (fullClassName == null)
-            fullClassName = withoutClassPath(withoutExtension(fullFilename()));
+            fullClassName = withoutClassPath(withoutExtension(filename()));
         return fullClassName;
     }
 
@@ -181,7 +183,7 @@ public class SmalltalkSourceFile implements Source, LineTransformer {
     }
 
     public String filename() {
-        return file.getName();
+        return filename;
     }
 
     public String fullFilename() {

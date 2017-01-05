@@ -4,6 +4,7 @@ package st.redline.classloader;
 public interface Source {
 
     boolean hasContent();
+    boolean exists();
     String contents();
     String className();
     String fullClassName();

@@ -9,19 +9,27 @@ public class SourceFactory {
 
     public Source createFromFile(String sourceName, File file, String classpath) {
         SourceReader sourceReader = fileSourceReader(file);
-        return new SmalltalkSourceFile(nameWithoutExtension(file), sourceName, file, classpath, sourceReader);
+        return new SmalltalkSourceFile(nameWithoutExtension(file.getName()), sourceName, file, classpath, sourceReader);
     }
 
     public Source createFromJar(String sourceName, String jarPath) {
         SourceReader sourceReader = jarSourceReader(sourceName, jarPath);
-        return new SmalltalkJarSourceFile(sourceName, jarPath, new File(jarPath), jarPath, sourceReader);
+        return new SmalltalkSourceFile(nameWithoutExtensionAndPackage(sourceName), sourceName, new File(jarPath), jarPath, sourceReader);
     }
 
-    private String nameWithoutExtension(File file) {
-        int index = file.getName().lastIndexOf(SOURCE_EXTENSION);
+    private String nameWithoutExtensionAndPackage(String sourceName) {
+        String name = nameWithoutExtension(sourceName);
+        int index = name.lastIndexOf(File.separator);
         if (index == -1)
-            return file.getName();
-        return file.getName().substring(0, file.getName().lastIndexOf(SOURCE_EXTENSION));
+            return name;
+        return name.substring(index + 1);
+    }
+
+    private String nameWithoutExtension(String name) {
+        int index = name.lastIndexOf(SOURCE_EXTENSION);
+        if (index == -1)
+            return name;
+        return name.substring(0, index);
     }
 
     private SourceReader fileSourceReader(File file) {
