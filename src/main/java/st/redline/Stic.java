@@ -26,10 +26,10 @@ public class Stic {
     }
 
     private Class loadScript(String name) throws ClassNotFoundException {
-        return classLoader().loadClass(name);
+        return classLoader().loadScript(name);
     }
 
-    private ClassLoader classLoader() {
+    private SmalltalkClassLoader classLoader() {
         return new SmalltalkClassLoader(currentClassLoader(), sourceFinder(), bootstrapper());
     }
 

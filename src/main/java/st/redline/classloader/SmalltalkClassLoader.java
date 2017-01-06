@@ -171,6 +171,18 @@ public class SmalltalkClassLoader extends ClassLoader {
         return TRUE;
     }
 
+    public Class loadScript(String name) throws ClassNotFoundException {
+        importAll(packageName(name));
+        return loadClass(name);
+    }
+
+    private String packageName(String name) {
+        int index = name.lastIndexOf(".");
+        if (index == -1)
+            return name;
+        return name.substring(0, index);
+    }
+
     @SuppressWarnings("unchecked")
     public String importForBy(String name, String packageName) {
         System.out.println("** importFor: " + name + " in " + packageName);
@@ -188,7 +200,7 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     public void importAll(String packageName) {
-        System.out.println("** importAll: " + packageName);
+        System.out.println("** importAll: " + packageName + " " + packageCache.containsKey(packageName));
         if (!packageCache.containsKey(packageName))
             for (Source source : sourceFinder.findIn(packageName))
                 addImport(packageName, source);
