@@ -54,7 +54,7 @@ public class Compiler {
     private String sourceContents() {
         String src = source.contents();
         // dump pre-processed source
-        System.out.print(src);
+        //System.out.print(src);
         return src;
     }
 

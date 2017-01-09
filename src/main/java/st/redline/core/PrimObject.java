@@ -37,37 +37,37 @@ public class PrimObject {
     }
 
     public PrimObject referenceNil() {
-        System.out.println("** referenceNil");
+        //System.out.println("** referenceNil");
         return classLoader().nilInstance();
     }
 
     public PrimObject referenceTrue() {
-        System.out.println("** referenceTrue");
+        //System.out.println("** referenceTrue");
         return classLoader().trueInstance();
     }
 
     public PrimObject referenceFalse() {
-        System.out.println("** referenceFalse");
+        //System.out.println("** referenceFalse");
         return classLoader().falseInstance();
     }
 
     public PrimObject reference(String name) {
-        System.out.println("** reference " + name);
+        //System.out.println("** reference " + name);
         return resolveObject(name);
     }
 
     public PrimObject resolveObject(String name) {
-        System.out.println("** resolveObject " + name + " " + importFor(name));
+        //System.out.println("** resolveObject " + name + " " + importFor(name));
         return findObject(importFor(name));
     }
 
     public PrimObject smalltalkBlock(Object value) {
-        System.out.println("** smalltalkBlock " + value);
+        //System.out.println("** smalltalkBlock " + value);
         return instanceOfWith("BlockClosure", value);
     }
 
     public PrimObject smalltalkMethod(Object value) {
-        System.out.println("** smalltalkMethod " + value);
+        //System.out.println("** smalltalkMethod " + value);
         return instanceOfWith("CompiledMethod", value);
     }
 
@@ -139,7 +139,7 @@ public class PrimObject {
     }
 
     public PrimObject perform(PrimObject arg1, PrimObject arg2, String selector) {
-        System.out.println("** perform(" + arg1 + "," + arg2 + "," + selector + ") " + this);
+        //System.out.println("** perform(" + arg1 + "," + arg2 + "," + selector + ") " + this);
         return perform0(selector, arg1, arg2);
     }
 
@@ -170,9 +170,9 @@ public class PrimObject {
     }
 
     protected PrimObject apply(PrimObject method, PrimObject foundInClass, String selector, PrimObject ... arguments) {
-        System.out.println("** apply: #" + selector + " found in " + foundInClass + " to " + this);
+        //System.out.println("** apply: #" + selector + " found in " + foundInClass + " to " + this);
         PrimObject result = method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
-        System.out.println("** result: " + String.valueOf(result));
+        //System.out.println("** result: " + String.valueOf(result));
         return result; // method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
     }
 

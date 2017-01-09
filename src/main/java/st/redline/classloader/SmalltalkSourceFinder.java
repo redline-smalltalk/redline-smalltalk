@@ -18,7 +18,7 @@ public class SmalltalkSourceFinder implements SourceFinder {
     }
 
     public Source find(String name) {
-        System.out.println(">>> find: " + name);
+        //System.out.println(">>> find: " + name);
         String filename = toFilename(name);
         File file = new File(filename);
         if (file.exists())
@@ -27,7 +27,7 @@ public class SmalltalkSourceFinder implements SourceFinder {
     }
 
     public List<Source> findIn(String packageName) {
-        System.out.println("** findIn: " + packageName);
+        //System.out.println("** findIn: " + packageName);
         return findInPath(packageName);
     }
 

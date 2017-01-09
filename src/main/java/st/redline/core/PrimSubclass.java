@@ -33,7 +33,7 @@ public class PrimSubclass extends PrimObject {
         }
 
         // TODO - Add other definitions to appropriate objects.
-        System.out.println("TODO - Add other definitions to appropriate objects.");
+        //System.out.println("TODO - Add other definitions to appropriate objects.");
 
         if (!bootstrapping) {
             SmalltalkClassLoader classLoader = classLoader();

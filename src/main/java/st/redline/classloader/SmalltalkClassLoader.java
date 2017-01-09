@@ -36,7 +36,7 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     public PrimObject findObject(String name) {
-        System.out.println("** findObject " + name);
+        //System.out.println("** findObject " + name);
         PrimObject cls = cachedObject(name);
         if (cls != null)
             return cls;
@@ -79,17 +79,17 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     protected PrimObject cachedObject(String name) {
-        System.out.println("** cachedObject " + name);
+        //System.out.println("** cachedObject " + name);
         return objectCache.get(name);
     }
 
     public void cacheObject(String name, PrimObject object) {
-        System.out.println("** cacheObject " + object + " as " + name);
+        //System.out.println("** cacheObject " + object + " as " + name);
         objectCache.put(name, object);
     }
 
     public Class findClass(String name) throws ClassNotFoundException {
-        System.out.println("** findClass " + name);
+        //System.out.println("** findClass " + name);
         Class cls = cachedClass(name);
         if (cls != null)
             return cls;
@@ -102,7 +102,7 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     private void cacheClass(Class cls, String name) {
-        System.out.println("** cacheClass " + cls + " as " + name);
+        //System.out.println("** cacheClass " + cls + " as " + name);
         classCache.put(name, cls);
     }
 
@@ -185,7 +185,7 @@ public class SmalltalkClassLoader extends ClassLoader {
 
     @SuppressWarnings("unchecked")
     public String importForBy(String name, String packageName) {
-        System.out.println("** importFor: " + name + " in " + packageName);
+        //System.out.println("** importFor: " + name + " in " + packageName);
         Map<String, Source> imports = packageCache.getOrDefault(packageName, Collections.EMPTY_MAP);
         Source source = imports.get(name);
         if (source != null)
@@ -200,14 +200,14 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     public void importAll(String packageName) {
-        System.out.println("** importAll: " + packageName + " " + packageCache.containsKey(packageName));
+        //System.out.println("** importAll: " + packageName + " " + packageCache.containsKey(packageName));
         if (!packageCache.containsKey(packageName))
             for (Source source : sourceFinder.findIn(packageName))
                 addImport(packageName, source);
     }
 
     private void addImport(String packageName, Source source) {
-        System.out.println("** addImport: " + packageName + " " + source.className() + " : " + source.fullClassName());
+        //System.out.println("** addImport: " + packageName + " " + source.className() + " : " + source.fullClassName());
         Map<String, Source> objects = packageCache.getOrDefault(packageName, new HashMap<>());
         objects.put(source.className(), source);
         packageCache.put(packageName, objects);

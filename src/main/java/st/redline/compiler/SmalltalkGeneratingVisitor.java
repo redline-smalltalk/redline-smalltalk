@@ -63,7 +63,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
     }
 
     private void log(String output) {
-        System.out.println(output);
+        //System.out.println(output);
         System.out.flush();
     }
 
@@ -289,7 +289,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         private void openJavaClass() {
-            System.out.println("openJavaClass: " + fullClassName());
+            //System.out.println("openJavaClass: " + fullClassName());
             cw.visit(BYTECODE_VERSION, ACC_PUBLIC + ACC_SUPER, fullClassName(), null, superclassName(), null);
             cw.visitSource(className() + sourceFileExtension(), null);
             cw.visitInnerClass("java/lang/invoke/MethodHandles$Lookup", "java/lang/invoke/MethodHandles", "Lookup", ACC_PUBLIC + ACC_FINAL + ACC_STATIC);
@@ -297,7 +297,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         private void closeJavaClass() {
-            System.out.println("closeJavaClass: " + fullClassName());
+            //System.out.println("closeJavaClass: " + fullClassName());
             cw.visitEnd();
             classBytes = cw.toByteArray();
         }
@@ -838,8 +838,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             for (ParseTree parseTree : list) {
                 if (parseTree instanceof SmalltalkParser.AnswerContext)
                     return false;
-                System.out.println("******");
-                System.out.println(parseTree);
+                //System.out.println("******");
+                //System.out.println(parseTree);
             }
             return true;
         }
