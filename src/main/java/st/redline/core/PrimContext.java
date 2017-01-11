@@ -1,6 +1,8 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.core;
 
+import st.redline.classloader.*;
+
 public class PrimContext {
 
     private final PrimObject receiver;
@@ -34,6 +36,17 @@ public class PrimContext {
 
     public void initTemporaries(int count) {
         temporaries = new PrimObject[count];
+        PrimObject nil = nil();
+        for (int i = 0; i < count; i++)
+            temporaries[i] = nil;
+    }
+
+    private PrimObject nil() {
+        return classLoader().nilInstance();
+    }
+
+    private SmalltalkClassLoader classLoader() {
+        return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
     }
 
     public PrimObject[] selectorAndArguments() {
