@@ -63,7 +63,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
     }
 
     private void log(String output) {
-        //System.out.println(output);
+        System.out.println(output);
         System.out.flush();
     }
 
@@ -133,6 +133,12 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         pushContext(mv);
         pushNumber(mv, index);
         mv.visitMethodInsn(INVOKEVIRTUAL, contextName(), "temporaryAt", "(I)Lst/redline/core/PrimObject;", false);
+    }
+
+    public void storeTemporary(MethodVisitor mv, int index) {
+        pushNumber(mv, index);
+        pushContext(mv);
+        mv.visitMethodInsn(INVOKESTATIC, contextName(), "temporaryPutAt", "(Lst/redline/core/PrimObject;IL" + contextName() + ";)V", false);
     }
 
     public void pushArgument(MethodVisitor mv, int index) {
@@ -289,7 +295,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         private void openJavaClass() {
-            //System.out.println("openJavaClass: " + fullClassName());
+            System.out.println("\nopenJavaClass: " + fullClassName());
             cw.visit(BYTECODE_VERSION, ACC_PUBLIC + ACC_SUPER, fullClassName(), null, superclassName(), null);
             cw.visitSource(className() + sourceFileExtension(), null);
             cw.visitInnerClass("java/lang/invoke/MethodHandles$Lookup", "java/lang/invoke/MethodHandles", "Lookup", ACC_PUBLIC + ACC_FINAL + ACC_STATIC);
@@ -297,7 +303,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         private void closeJavaClass() {
-            //System.out.println("closeJavaClass: " + fullClassName());
+            System.out.println("closeJavaClass: " + fullClassName());
             cw.visitEnd();
             classBytes = cw.toByteArray();
         }
@@ -568,6 +574,19 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitAssignment(@NotNull SmalltalkParser.AssignmentContext ctx) {
             log("visitAssignment");
+            SmalltalkParser.ExpressionContext expression = ctx.expression();
+            if (expression == null)
+                throw new RuntimeException("visitAssignment expression expected.");
+            expression.accept(currentVisitor());
+            SmalltalkParser.VariableContext variable = ctx.variable();
+            if (variable == null)
+                throw new RuntimeException("visitAssignment variable expected.");
+            TerminalNode identifierNode = variable.IDENTIFIER();
+            String identifier = identifierNode.getSymbol().getText();
+            visitLine(mv, identifierNode.getSymbol().getLine());
+            if (!isTemporary(identifier))
+                throw new RuntimeException("visitAssignment temporary expected.");
+            storeTemporary(mv, indexOfTemporary(identifier));
             return null;
         }
 

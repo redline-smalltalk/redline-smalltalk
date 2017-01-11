@@ -52,4 +52,16 @@ public class PrimContext {
     public Object argumentJavaValueAt(int index) {
         return argumentAt(index).javaValue();
     }
+
+    public PrimObject temporaryAt(int index) {
+        return temporaries[index];
+    }
+
+    public void temporaryAtPut(int index, PrimObject object) {
+        temporaries[index] = object;
+    }
+
+    public static void temporaryPutAt(PrimObject object, int index, PrimContext context) {
+        context.temporaryAtPut(index, object);
+    }
 }
