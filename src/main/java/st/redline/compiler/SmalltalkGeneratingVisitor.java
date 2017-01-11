@@ -503,7 +503,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitPrimitive(@NotNull SmalltalkParser.PrimitiveContext ctx) {
             log("visitPrimitive");
-            return null;
+            throw new RuntimeException("visitPrimitive Smalltalk <primitive> should be replaced with JVM messages.");
         }
 
         public Void visitUnarySend(@NotNull SmalltalkParser.UnarySendContext ctx) {
@@ -801,6 +801,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitSubexpression(@NotNull SmalltalkParser.SubexpressionContext ctx) {
             log("visitSubexpression");
+            // 2 + (  (3 * 4) - 1  )
+            // evaluated last (   (evaluated first)  evaluated second  )
             return null;
         }
 
