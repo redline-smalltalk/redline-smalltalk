@@ -4,7 +4,6 @@ package st.redline.core;
 public class PrimAddMethod extends PrimObject {
 
     protected PrimObject invoke(PrimObject receiver, PrimContext context) {
-//        System.out.println("PrimAddMethod invoke");
         String selector = selector(context);
         PrimObject method = method(context);
         if (!(method instanceof PrimMethod)) {

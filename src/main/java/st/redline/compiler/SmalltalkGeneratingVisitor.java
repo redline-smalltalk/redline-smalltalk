@@ -121,6 +121,11 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         mv.visitVarInsn(ALOAD, 1);
     }
 
+    public void pushSuper(MethodVisitor mv, int line) {
+        visitLine(mv, line);
+        pushReceiver(mv);
+    }
+
     public void pushContext(MethodVisitor mv) {
         mv.visitVarInsn(ALOAD, 2);
     }
@@ -168,9 +173,10 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         mv.visitMethodInsn(INVOKEVIRTUAL, superclassName(), "referenceFalse", "()Lst/redline/core/PrimObject;", false);
     }
 
-    public void invokePerform(MethodVisitor mv, String selector, int argumentCount) {
+    public void invokePerform(MethodVisitor mv, String selector, int argumentCount, boolean sendToSuper) {
         pushLiteral(mv, selector);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "perform", SIGNATURES[argumentCount], false);
+        String methodName = (sendToSuper) ? "superPerform" : "perform";
+        mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", methodName, SIGNATURES[argumentCount], false);
     }
 
     public void visitLine(MethodVisitor mv, int line) {
@@ -232,6 +238,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private Stack<KeywordRecord> keywords = new Stack<KeywordRecord>();
         private int blockNumber = 0;
         private boolean referencedJVM = false;
+        private boolean sendToSuper = false;
 
         public ClassGeneratorVisitor() {
             this(new ClassWriter(ClassWriter.COMPUTE_MAXS));
@@ -503,7 +510,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitPrimitive(@NotNull SmalltalkParser.PrimitiveContext ctx) {
             log("visitPrimitive");
-            throw new RuntimeException("visitPrimitive Smalltalk <primitive> should be replaced with JVM messages.");
+            throw new RuntimeException("Smalltalk <primitive> should be replaced with JVM messages.");
         }
 
         public Void visitUnarySend(@NotNull SmalltalkParser.UnarySendContext ctx) {
@@ -528,7 +535,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             log("visitUnarySelector " + ctx.IDENTIFIER().getSymbol().getText());
             TerminalNode selectorNode = ctx.IDENTIFIER();
             visitLine(mv, selectorNode.getSymbol().getLine());
-            invokePerform(mv, selectorNode.getSymbol().getText(), 0);
+            invokePerform(mv, selectorNode.getSymbol().getText(), 0, sendToSuper);
+            sendToSuper = false;
             return null;
         }
 
@@ -622,7 +630,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             if (operand != null)
                 operand.accept(currentVisitor());
             visitLine(mv, binarySelector.getSymbol().getLine());
-            invokePerform(mv, binarySelector.getSymbol().getText(), 1);
+            invokePerform(mv, binarySelector.getSymbol().getText(), 1, sendToSuper);
+            sendToSuper = false;
             return null;
         }
 
@@ -633,7 +642,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
                 keywordPair.accept(currentVisitor());
             visitLine(mv, ctx.keywordPair().get(0).KEYWORD().getSymbol().getLine());
             String keyword = removeKeyword();
-            invokePerform(mv, keyword, countOf(keyword, ':'));
+            invokePerform(mv, keyword, countOf(keyword, ':'), sendToSuper);
+            sendToSuper = false;
             return null;
         }
 
@@ -724,7 +734,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             else if ("false".equals(name))
                 pushFalse(mv);
             else if ("super".equals(name))
-                throw new RuntimeException("visitPseudoVariable TODO - handle 'super'.");
+                pushSuper(mv, pseudoVariable.getSymbol().getLine());
             else
                 throw new RuntimeException("visitPseudoVariable unknown variable.");
             return null;
