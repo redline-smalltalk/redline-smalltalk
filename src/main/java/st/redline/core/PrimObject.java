@@ -62,7 +62,7 @@ public class PrimObject {
     }
 
     public PrimObject smalltalkBlock(Object value) {
-        //System.out.println("** smalltalkBlock " + value);
+//        System.out.println("** smalltalkBlock " + value);
         return instanceOfWith("BlockClosure", value);
     }
 

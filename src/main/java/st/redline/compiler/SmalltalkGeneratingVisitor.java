@@ -736,7 +736,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             else if ("super".equals(name))
                 pushSuper(mv, pseudoVariable.getSymbol().getLine());
             else
-                throw new RuntimeException("visitPseudoVariable unknown variable.");
+                throw new RuntimeException("visitPseudoVariable unknown variable: " + name);
             return null;
         }
 
@@ -855,22 +855,23 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             SmalltalkParser.SequenceContext blockSequence = ctx.sequence();
             if (blockSequence != null)
                 blockSequence.accept(currentVisitor());
-            closeBlockLambdaMethod(noAnswer(blockSequence));
+            closeBlockLambdaMethod(returnRequired(blockSequence));
             return null;
         }
 
-        private boolean noAnswer(SmalltalkParser.SequenceContext blockSequence) {
+        private boolean returnRequired(SmalltalkParser.SequenceContext blockSequence) {
             if (blockSequence == null)
                 return true;
             SmalltalkParser.StatementsContext statements = blockSequence.statements();
-            if (statements == null)
+            if (statements == null) {
+                // We have no statements in block, so answer nil.
+                pushNil(mv);
                 return true;
+            }
             List<ParseTree> list = statements.children;
             for (ParseTree parseTree : list) {
                 if (parseTree instanceof SmalltalkParser.AnswerContext)
                     return false;
-                //System.out.println("******");
-                //System.out.println(parseTree);
             }
             return true;
         }
@@ -888,9 +889,9 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             return null;
         }
 
-        private void closeBlockLambdaMethod(boolean answerRequired) {
-            log("closeBlockLambdaMethod: " + blockName);
-            if (answerRequired)
+        private void closeBlockLambdaMethod(boolean returnRequired) {
+            log("closeBlockLambdaMethod: " + blockName + " " + returnRequired);
+            if (returnRequired)
                 mv.visitInsn(ARETURN);
             mv.visitMaxs(0, 0);
             mv.visitEnd();
