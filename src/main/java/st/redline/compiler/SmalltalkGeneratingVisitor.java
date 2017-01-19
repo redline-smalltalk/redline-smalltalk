@@ -832,19 +832,16 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         private String makeBlockAnswerClassName(String blockName) {
-            return packageName() + '.' + className() + "$Answer" + blockName;
+            return packageName() + '.' + className() + "$A" + blockName;
         }
 
         private String makeBlockMethodName(KeywordRecord keywordRecord) {
             StringBuilder name = new StringBuilder();
-            name.append("block$")
-                    .append(className())
-                    .append('$');
             if (keywordRecord.firstArgument.length() == 0) {
                 blockNumber++;
                 name.append(blockNumber);
             } else
-                name.append(keywordRecord.firstArgument.toString().replaceAll(":", "_"));
+                name.append(keywordRecord.firstArgument.toString());
             return name.toString();
         }
     }
