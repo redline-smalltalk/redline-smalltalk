@@ -1,11 +1,11 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.core;
 
-import st.redline.classloader.SmalltalkClassLoader;
+import st.redline.classloader.*;
 
-import static st.redline.compiler.SmalltalkGeneratingVisitor.DEFAULT_IMPORTED_PACKAGE;
-import static st.redline.core.PrimDoesNotUnderstand.PRIM_DOES_NOT_UNDERSTAND;
-import static st.redline.core.PrimSubclass.PRIM_SUBCLASS;
+import static st.redline.compiler.SmalltalkGeneratingVisitor.*;
+import static st.redline.core.PrimDoesNotUnderstand.*;
+import static st.redline.core.PrimSubclass.*;
 
 public class PrimObject {
 
@@ -63,6 +63,11 @@ public class PrimObject {
 
     public PrimObject smalltalkBlock(Object value) {
 //        System.out.println("** smalltalkBlock " + value);
+        return instanceOfWith("BlockClosure", value);
+    }
+
+    public PrimObject smalltalkBlockAnswer(Object value, String answerClassName) {
+//        System.out.println("** smalltalkBlockAnswer " + value + " from " + answerClassName);
         return instanceOfWith("BlockClosure", value);
     }
 

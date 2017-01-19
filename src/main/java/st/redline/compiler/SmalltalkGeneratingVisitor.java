@@ -105,6 +105,10 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         mv.visitInsn(POP);
     }
 
+    public void pushBoolean(MethodVisitor mv, boolean value) {
+        mv.visitInsn(value ? ICONST_1 : ICONST_0);
+    }
+
     public void pushLiteral(MethodVisitor mv, String literal) {
         mv.visitLdcInsn(literal);
     }
@@ -208,9 +212,14 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", type, "(Ljava/lang/Object;)Lst/redline/core/PrimObject;", false);
     }
 
-    private void pushNewBlock(MethodVisitor mv, String className, String name, String sig, int line) {
-        pushNewLambda(mv, className,name, sig, line);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "smalltalkBlock", "(Ljava/lang/Object;)Lst/redline/core/PrimObject;", false);
+    private void pushNewBlock(MethodVisitor mv, String className, String name, String sig, int line, boolean answerBlock, String answerBlockClassName) {
+        pushNewLambda(mv, className, name, sig, line);
+        if (!answerBlock) {
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "smalltalkBlock", "(Ljava/lang/Object;)Lst/redline/core/PrimObject;", false);
+        } else {
+            pushLiteral(mv, answerBlockClassName);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "smalltalkBlockAnswer", "(Ljava/lang/Object;Ljava/lang/String;)Lst/redline/core/PrimObject;", false);
+        }
     }
 
     private void pushNewMethod(MethodVisitor mv, String className, String name, String sig, int line) {
@@ -798,14 +807,16 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             log("visitBlock " + peekKeyword());
             KeywordRecord keywordRecord = peekKeyword();
             String name = makeBlockMethodName(keywordRecord);
-            pushCurrentVisitor(new BlockGeneratorVisitor(cw, name));
+            BlockGeneratorVisitor blockGeneratorVisitor = new BlockGeneratorVisitor(cw, name);
+            pushCurrentVisitor(blockGeneratorVisitor);
             ctx.accept(currentVisitor());
             removeJVMGeneratorVisitor();
             popCurrentVisitor();
+            int line = ctx.BLOCK_START().getSymbol().getLine();
             if (keywordRecord.keyword.toString().endsWith("withMethod:"))
-                pushNewMethod(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, ctx.BLOCK_START().getSymbol().getLine());
+                pushNewMethod(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, line);
             else
-                pushNewBlock(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, ctx.BLOCK_START().getSymbol().getLine());
+                pushNewBlock(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, line, blockGeneratorVisitor.isAnswerBlock(), makeBlockAnswerClassName(name));
             return null;
         }
 
@@ -818,6 +829,10 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitVariable(@NotNull SmalltalkParser.VariableContext ctx) {
             throw new RuntimeException("visitVariable should have been handed before now.");
+        }
+
+        private String makeBlockAnswerClassName(String blockName) {
+            return packageName() + '.' + className() + "$Answer" + blockName;
         }
 
         private String makeBlockMethodName(KeywordRecord keywordRecord) {
@@ -839,11 +854,13 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         private final ClassWriter cw;
         private String blockName;
+        private boolean returnRequired;
 
         public BlockGeneratorVisitor(ClassWriter cw, String name) {
             super(cw);
             this.cw = cw;
             this.blockName = name;
+            this.returnRequired = false;
         }
 
         public Void visitBlock(@NotNull SmalltalkParser.BlockContext ctx) {
@@ -855,8 +872,13 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             SmalltalkParser.SequenceContext blockSequence = ctx.sequence();
             if (blockSequence != null)
                 blockSequence.accept(currentVisitor());
-            closeBlockLambdaMethod(returnRequired(blockSequence));
+            returnRequired = returnRequired(blockSequence);
+            closeBlockLambdaMethod(returnRequired);
             return null;
+        }
+
+        public boolean isAnswerBlock() {
+            return !returnRequired;
         }
 
         private boolean returnRequired(SmalltalkParser.SequenceContext blockSequence) {
