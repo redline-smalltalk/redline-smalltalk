@@ -68,7 +68,20 @@ public class PrimObject {
 
     public PrimObject smalltalkBlockAnswer(Object value, String answerClassName) {
 //        System.out.println("** smalltalkBlockAnswer " + value + " from " + answerClassName);
-        return instanceOfWith("BlockClosure", value);
+        return instanceOfWith("BlockClosure", throwingLambdaWrapper(value, answerClassName));
+    }
+
+    private LambdaBlock throwingLambdaWrapper(Object value, String answerClassName) {
+        return (self, receiver, context) -> {
+            PrimObject answer = ((LambdaBlock) value).apply(self, receiver, context);
+            PrimBlockAnswer blockAnswer;
+            try {
+                blockAnswer = (PrimBlockAnswer) Class.forName(answerClassName).getConstructor().newInstance(answer);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            throw blockAnswer;
+        };
     }
 
     public PrimObject smalltalkMethod(Object value) {
@@ -246,5 +259,10 @@ public class PrimObject {
         PrimObject object = new PrimObject();
         object.selfClass(this);
         return object;
+    }
+
+    public PrimObject primitiveEval(PrimContext context) {
+//        System.out.println("primitiveEval: " + context);
+        return ((LambdaBlock) javaValue()).apply(this, this, context);
     }
 }
