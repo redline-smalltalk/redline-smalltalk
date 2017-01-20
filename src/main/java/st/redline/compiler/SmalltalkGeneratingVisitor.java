@@ -815,9 +815,41 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             int line = ctx.BLOCK_START().getSymbol().getLine();
             if (keywordRecord.keyword.toString().endsWith("withMethod:"))
                 pushNewMethod(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, line);
-            else
-                pushNewBlock(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, line, blockGeneratorVisitor.isAnswerBlock(), makeBlockAnswerClassName(name));
+            else {
+                String blockAnswerClassName = makeBlockAnswerClassName(name);
+                pushNewBlock(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, line, blockGeneratorVisitor.isAnswerBlock(), blockAnswerClassName);
+                loadBlockAnswerClass(blockAnswerClassName);
+            }
             return null;
+        }
+
+        private void loadBlockAnswerClass(String blockAnswerClassName) {
+            log("loadBlockAnswerClass: " + blockAnswerClassName);
+            byte[] classBytes = createBlockAnswerClass(blockAnswerClassName);
+            SmalltalkClassLoader classLoader = classLoader();
+            classLoader.defineClass(classBytes);
+        }
+
+        private SmalltalkClassLoader classLoader() {
+            return (SmalltalkClassLoader) Thread.currentThread().getContextClassLoader();
+        }
+
+        private byte[] createBlockAnswerClass(String blockAnswerClassName) {
+            String className = blockAnswerClassName.replaceAll("\\.", "/");
+            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            MethodVisitor mv;
+            cw.visit(BYTECODE_VERSION, ACC_PUBLIC + ACC_SUPER, className, null, "st/redline/core/PrimBlockAnswer", null);
+            cw.visitSource(className() + sourceFileExtension(), null);
+            mv = cw.visitMethod(ACC_PUBLIC, "<init>", "(Lst/redline/core/PrimObject;)V", null, null);
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitMethodInsn(INVOKESPECIAL, "st/redline/core/PrimBlockAnswer", "<init>", "(Lst/redline/core/PrimObject;)V", false);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(2, 2);
+            mv.visitEnd();
+            cw.visitEnd();
+            return cw.toByteArray();
         }
 
         public Void visitSubexpression(@NotNull SmalltalkParser.SubexpressionContext ctx) {

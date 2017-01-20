@@ -118,6 +118,10 @@ public class SmalltalkClassLoader extends ClassLoader {
         return compile(findSource(name));
     }
 
+    public Class defineClass(byte[] bytes) {
+        return defineClass(null, bytes, 0, bytes.length);
+    }
+
     @SuppressWarnings("unchecked")
     private Source findSource(String name) {
         Source source = sourceFinder.find(name);

@@ -76,7 +76,11 @@ public class PrimObject {
             PrimObject answer = ((LambdaBlock) value).apply(self, receiver, context);
             PrimBlockAnswer blockAnswer;
             try {
-                blockAnswer = (PrimBlockAnswer) Class.forName(answerClassName).getConstructor().newInstance(answer);
+                blockAnswer = (PrimBlockAnswer)
+                        classLoader()
+                                .loadClass(answerClassName)
+                                .getConstructor(PrimObject.class)
+                                .newInstance(answer);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
