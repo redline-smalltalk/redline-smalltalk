@@ -248,6 +248,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private int blockNumber = 0;
         private boolean referencedJVM = false;
         private boolean sendToSuper = false;
+        private boolean needToWatchForBlockAnswer;
+        private Stack<String> blockAnswerCatchNames;
 
         public ClassGeneratorVisitor() {
             this(new ClassWriter(ClassWriter.COMPUTE_MAXS));
@@ -359,12 +361,17 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         public Void visitSequence(SmalltalkParser.SequenceContext ctx) {
+            log("visitSequence");
+            needToWatchForBlockAnswer = true;
+            blockAnswerCatchNames = new Stack<>();
             SmalltalkParser.TempsContext temps = ctx.temps();
             if (temps != null)
                 temps.accept(currentVisitor());
             SmalltalkParser.StatementsContext statements = ctx.statements();
             if (statements != null)
                 statements.accept(currentVisitor());
+            System.out.println("**********");
+            System.out.println(blockAnswerCatchNames);
             return null;
         }
 
@@ -469,12 +476,14 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitStatementExpressions(@NotNull SmalltalkParser.StatementExpressionsContext ctx) {
             log("visitStatementExpressions");
+            setupTryCatchForBlockAnswer(ctx.expressions());
             ctx.expressions().accept(currentVisitor());
             return null;
         }
 
         public Void visitStatementExpressionsAnswer(@NotNull SmalltalkParser.StatementExpressionsAnswerContext ctx) {
             log("visitStatementExpressionsAnswer");
+            setupTryCatchForBlockAnswer(ctx.expressions());
             ctx.expressions().accept(currentVisitor());
             ctx.answer().accept(currentVisitor());
             return null;
@@ -482,12 +491,46 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitStatementAnswer(@NotNull SmalltalkParser.StatementAnswerContext ctx) {
             log("visitStatementAnswer");
+            setupTryCatchForBlockAnswer(ctx.answer().expression());
             SmalltalkParser.AnswerContext answer = ctx.answer();
             visitLine(mv, answer.CARROT().getSymbol().getLine());
             SmalltalkParser.ExpressionContext expression = answer.expression();
             expression.accept(currentVisitor());
             mv.visitInsn(ARETURN);
             return null;
+        }
+
+        private void setupTryCatchForBlockAnswer(SmalltalkParser.ExpressionsContext exps) {
+            if (exps.expression() != null)
+                setupTryCatchForBlockAnswer(exps.expression());
+            if (needToWatchForBlockAnswer && exps.expressionList() != null) {
+                ListIterator<SmalltalkParser.ExpressionListContext> iterator = exps.expressionList().listIterator();
+                while (iterator.hasNext() && needToWatchForBlockAnswer)
+                    setupTryCatchForBlockAnswer(iterator.next().expression());
+            }
+        }
+
+        private void setupTryCatchForBlockAnswer(SmalltalkParser.ExpressionContext exp) {
+            if (!needToWatchForBlockAnswer)
+                return;
+            if (exp.keywordSend() != null
+                    && exp.keywordSend().keywordMessage() != null
+                    && exp.keywordSend().keywordMessage().keywordPair() != null) {
+                Iterator<SmalltalkParser.KeywordPairContext> iterator = exp.keywordSend().keywordMessage().keywordPair().iterator();
+                while (iterator.hasNext() && needToWatchForBlockAnswer)
+                    setupTryCatchForBlockAnswer(iterator.next());
+            }
+        }
+
+        private void setupTryCatchForBlockAnswer(SmalltalkParser.KeywordPairContext keywordPair) {
+            log(">>>> setupTryCatchForBlockAnswer " + needToWatchForBlockAnswer);
+            if (!needToWatchForBlockAnswer)
+                return;
+            String keyword = keywordPair.KEYWORD().getSymbol().getText();
+            // Don't look into Method blocks. handled in Block Analyser.
+            if (keyword.endsWith("basicAddSelector:") || keyword.endsWith("withMethod:"))
+                return;
+            System.out.println(keyword);
         }
 
         public Void visitExpression(@NotNull SmalltalkParser.ExpressionContext ctx) {
