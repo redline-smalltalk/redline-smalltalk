@@ -240,7 +240,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         protected final String LAMBDA_BLOCK_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
         protected MethodVisitor mv;
-        private final String SEND_MESSAGES_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
+        private final String SEND_MESSAGES_SIG = LAMBDA_BLOCK_SIG;
         private final ClassWriter cw;
         private HashMap<String, ExtendedTerminalNode> temporaries;
         private HashMap<String, ExtendedTerminalNode> arguments;
@@ -349,11 +349,11 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             mv.visitVarInsn(ASTORE, 1);
 
             // call sendMessages with parameters: this & context
-            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ALOAD, 0); // this
+            mv.visitVarInsn(ALOAD, 0); // receiver
             mv.visitVarInsn(ALOAD, 0); // receiver
             mv.visitVarInsn(ALOAD, 1); // context
             mv.visitMethodInsn(INVOKEVIRTUAL, fullClassName(), "sendMessages", SEND_MESSAGES_SIG, false);
-            mv.visitInsn(POP);
 
             mv.visitInsn(RETURN);
             mv.visitMaxs(0, 0);
@@ -1052,7 +1052,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         protected void initializeKeyword() {
             super.initializeKeyword();
-            arguments = new ArrayList<Object>();
+            arguments = new ArrayList<>();
         }
 
         public Void visitKeywordPair(@NotNull SmalltalkParser.KeywordPairContext ctx) {

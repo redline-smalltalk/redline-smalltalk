@@ -68,10 +68,10 @@ public class PrimObject {
 
     public PrimObject smalltalkBlockAnswer(Object value, String answerClassName) {
 //        System.out.println("** smalltalkBlockAnswer " + value + " from " + answerClassName);
-        return instanceOfWith("BlockClosure", throwingLambdaWrapper(value, answerClassName));
+        return instanceOfWith("BlockClosure", throwingAnswer(value, answerClassName));
     }
 
-    private LambdaBlock throwingLambdaWrapper(Object value, String answerClassName) {
+    private LambdaBlock throwingAnswer(Object value, String answerClassName) {
         return (self, receiver, context) -> {
             PrimObject answer = ((LambdaBlock) value).apply(self, receiver, context);
             PrimBlockAnswer blockAnswer;
