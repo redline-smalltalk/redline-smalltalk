@@ -249,10 +249,11 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private boolean referencedJVM = false;
         private boolean sendToSuper = false;
         private List<BlockAnswerRecord> tryCatchRecords;
-        private Label tryBeforeCallLabel;
+        private Label tryStartLabel;
+        private Label tryEndLabel;
 
         public ClassGeneratorVisitor() {
-            this(new ClassWriter(ClassWriter.COMPUTE_MAXS));
+            this(new ClassWriter(ClassWriter.COMPUTE_FRAMES));
         }
 
         public ClassGeneratorVisitor(ClassWriter classWriter) {
@@ -664,18 +665,28 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         private void initializeTryCatch() {
             tryCatchRecords = new ArrayList<>();
-            tryBeforeCallLabel = new Label();
+            tryStartLabel = new Label();
+            tryEndLabel = new Label();
         }
 
         private void setupTryBlock() {
             if (tryCatchRecords.isEmpty())
                 return;
-            mv.visitLabel(tryBeforeCallLabel);
+            for (BlockAnswerRecord record : tryCatchRecords)
+                mv.visitTryCatchBlock(tryStartLabel, tryEndLabel, record.handlerLabel, record.exceptionName);
+            mv.visitLabel(tryStartLabel);
         }
 
         private void setupCatchBlock() {
             if (tryCatchRecords.isEmpty())
                 return;
+            for (BlockAnswerRecord record : tryCatchRecords) {
+                mv.visitJumpInsn(GOTO, tryEndLabel);
+                mv.visitLabel(record.handlerLabel);
+                mv.visitMethodInsn(INVOKEVIRTUAL, record.exceptionName, "answer", "()Lst/redline/core/PrimObject;", false);
+                mv.visitInsn(ARETURN);
+            }
+            mv.visitLabel(tryEndLabel);
         }
 
         public Void visitKeywordPair(@NotNull SmalltalkParser.KeywordPairContext ctx) {
@@ -860,7 +871,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         private byte[] createBlockAnswerClass(String blockAnswerClassName) {
             String className = blockAnswerClassName.replaceAll("\\.", "/");
-            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
             MethodVisitor mv;
             cw.visit(BYTECODE_VERSION, ACC_PUBLIC + ACC_SUPER, className, null, "st/redline/core/PrimBlockAnswer", null);
             cw.visitSource(className() + sourceFileExtension(), null);
@@ -1100,13 +1111,11 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
     private class BlockAnswerRecord {
 
         public final String exceptionName;
-        public Label afterCallLabel;
-        public Label catchLabel;
+        public Label handlerLabel;
 
         public BlockAnswerRecord(String name) {
             this.exceptionName = name.replaceAll("\\.", "/");
-            this.afterCallLabel = new Label();
-            this.catchLabel = new Label();
+            this.handlerLabel = new Label();
         }
     }
 
