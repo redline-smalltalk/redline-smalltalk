@@ -10,6 +10,9 @@ public class PrimBlockAnswer extends RuntimeException {
     }
 
     public PrimObject answer() {
+        System.out.println("************************");
+        System.out.println("************************");
+        System.out.println("ANSWER REQUESTED");
         return answer;
     }
 }
