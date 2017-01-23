@@ -523,14 +523,32 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         private void setupTryCatchForBlockAnswer(SmalltalkParser.KeywordPairContext keywordPair) {
-            log(">>>> setupTryCatchForBlockAnswer " + needToWatchForBlockAnswer);
             if (!needToWatchForBlockAnswer)
                 return;
             String keyword = keywordPair.KEYWORD().getSymbol().getText();
             // Don't look into Method blocks. handled in Block Analyser.
             if (keyword.endsWith("basicAddSelector:") || keyword.endsWith("withMethod:"))
                 return;
-            System.out.println(keyword);
+            if (keywordPair.binarySend() != null
+                    && keywordPair.binarySend().unarySend() != null
+                    && keywordPair.binarySend().unarySend().operand() != null
+                    && keywordPair.binarySend().unarySend().operand().literal() != null
+                    && keywordPair.binarySend().unarySend().operand().literal().runtimeLiteral() != null
+                    && keywordPair.binarySend().unarySend().operand().literal().runtimeLiteral().block() != null)
+                setupTryCatchForBlockAnswer(keywordPair.binarySend().unarySend().operand().literal().runtimeLiteral().block());
+        }
+
+        private void setupTryCatchForBlockAnswer(SmalltalkParser.BlockContext block) {
+            log("setupTryCatchForBlockAnswer " + needToWatchForBlockAnswer);
+            if (!needToWatchForBlockAnswer)
+                return;
+            boolean foundAnswerContext = false;
+            ListIterator<ParseTree> iterator = block.children.listIterator();
+            while (iterator.hasNext() && !foundAnswerContext)
+                foundAnswerContext = iterator.next() instanceof SmalltalkParser.AnswerContext;
+            if (!foundAnswerContext)
+                return;
+            needToWatchForBlockAnswer = false;
         }
 
         public Void visitExpression(@NotNull SmalltalkParser.ExpressionContext ctx) {
@@ -850,13 +868,14 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             log("visitBlock " + peekKeyword());
             KeywordRecord keywordRecord = peekKeyword();
             String name = makeBlockMethodName(keywordRecord);
+            boolean methodBlock = keywordRecord.keyword.toString().endsWith("withMethod:");
             BlockGeneratorVisitor blockGeneratorVisitor = new BlockGeneratorVisitor(cw, name);
             pushCurrentVisitor(blockGeneratorVisitor);
             ctx.accept(currentVisitor());
             removeJVMGeneratorVisitor();
             popCurrentVisitor();
             int line = ctx.BLOCK_START().getSymbol().getLine();
-            if (keywordRecord.keyword.toString().endsWith("withMethod:"))
+            if (methodBlock)
                 pushNewMethod(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, line);
             else {
                 String blockAnswerClassName = makeBlockAnswerClassName(name);
