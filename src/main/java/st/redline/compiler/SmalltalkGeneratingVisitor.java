@@ -1165,6 +1165,14 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
                 mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimContext", "argumentAt", "(I)Lst/redline/core/PrimObject;", false);
             }
         });
+        JVM_WRITERS.put("primitive:", new JVMWriter() {
+            public void write(MethodVisitor mv, List<Object> arguments) {
+                mv.visitVarInsn(ALOAD, 1);  // Load Receiver
+                mv.visitVarInsn(ALOAD, 2);  // Load Context
+                String methodName = "primitive" + String.valueOf(arguments.get(0));
+                mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", methodName, "(Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;", false);
+            }
+        });
     }
 
     static {
