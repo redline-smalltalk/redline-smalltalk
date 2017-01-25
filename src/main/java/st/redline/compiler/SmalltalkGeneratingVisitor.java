@@ -896,6 +896,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             log("visitSubexpression");
             // 2 + (  (3 * 4) - 1  )
             // evaluated last (   (evaluated first)  evaluated second  )
+            SmalltalkParser.ExpressionContext expression = ctx.expression();
+            expression.accept(currentVisitor());
             return null;
         }
 

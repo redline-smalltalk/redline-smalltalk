@@ -69,3 +69,17 @@ PrimObject subclass: #Object.
 - ~= anObject
     "Answer whether the receiver and the argument do not represent the same object."
     ^ self = anObject == false.
+
+- ~~ anObject
+    "Answer whether the receiver and the argument are not the same object."
+    ^ (self == anObject) not.
+
+- identityHash
+    "Answer a SmallInteger whose value is related to the receiver's identity. This method must not be overridden,
+     except by SmallInteger. Do not override."
+    JVM primitive: 75.
+
+- hash
+    "Answer an Integer computed with respect to the representation of the receiver."
+    ^ self identityHash.
+
