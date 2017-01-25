@@ -41,3 +41,31 @@ PrimObject subclass: #Object.
 - basicSize
     "Same as size. The method associated with this message, however, cannot be modified in any subclass."
     JVM primitive: 62.
+
+- basicAt: index
+    "Answer the value of the indexed instance variable of the receiver whose index is the argument, index. If the
+     receiver does not have indexed variables, or if the argument is greater than the number of indexed variables, then
+     report an error."
+    JVM primitive: 144.
+
+- basicAt: index put: anObject
+    "Store the argument, anObject, as the value of the indexed instance variable of the receiver whose index is the
+     argument, index. If the receiver does not have indexed variables, or if the argument is greater than the number of
+     indexed variables, then report an error. Answer anObject."
+    JVM primitive: 143.
+
+"category: comparing"
+
+- = anObject
+    "Answer whether the receiver and the argument represent the same object."
+    ^ self == anObject.
+
+- == anObject
+    "Primitive. Answer whether the receiver and the argument are the same object (have the same object pointer).
+     Do not redefine the message == in any other class! Essential. No Lookup. Do not override in any subclass.
+     NOTE: The Blue Book says just: Answer whether the receiver and the argument are the same object."
+    JVM primitive: 110.
+
+- ~= anObject
+    "Answer whether the receiver and the argument do not represent the same object."
+    ^ self = anObject == false.
