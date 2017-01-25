@@ -269,4 +269,9 @@ public class PrimObject {
 //        System.out.println("primitiveEval: " + context);
         return ((LambdaBlock) javaValue()).apply(this, this, context);
     }
+
+    public PrimObject primitive111(PrimContext context) {
+//        System.out.println("primitive111: " + context);
+        return this.selfClass();
+    }
 }
