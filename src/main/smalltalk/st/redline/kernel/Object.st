@@ -83,3 +83,6 @@ PrimObject subclass: #Object.
     "Answer an Integer computed with respect to the representation of the receiver."
     ^ self identityHash.
 
+"category: class membership"
+
+
