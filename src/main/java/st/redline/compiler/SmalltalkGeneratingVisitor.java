@@ -11,7 +11,7 @@ import java.util.*;
 
 public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> implements SmalltalkVisitor<Void>, Opcodes {
 
-    public static final String DEFAULT_IMPORTED_PACKAGE = "st.redline.core";
+    public static final String DEFAULT_IMPORTED_PACKAGE = "st.redline.kernel";
 
     private static final String[] SIGNATURES = {
             "(Ljava/lang/String;)Lst/redline/core/PrimObject;",
@@ -348,6 +348,11 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             mv.visitVarInsn(ALOAD, 0);
             mv.visitMethodInsn(INVOKESPECIAL, contextName(), "<init>", "(Lst/redline/core/PrimObject;)V", false);
             mv.visitVarInsn(ASTORE, 1);
+
+            // set the class of this as self.
+            mv.visitVarInsn(ALOAD, 0); // this
+            mv.visitVarInsn(ALOAD, 0); // receiver
+            mv.visitMethodInsn(INVOKEVIRTUAL, fullClassName(), "selfClass", "(Lst/redline/core/PrimObject;)V", false);
 
             // call sendMessages with parameters: this & context
             mv.visitVarInsn(ALOAD, 0); // this

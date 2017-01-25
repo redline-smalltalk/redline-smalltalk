@@ -13,7 +13,7 @@ public class Bootstrapper {
         classLoader.beginBootstrapping();
         createPrimObject(classLoader);
         createKernelObjectsHierarchy(classLoader);
-        classLoader.importAll("st.redline.core");
+        classLoader.importAll("st.redline.kernel");
         loadKernelObjects(classLoader);
         classLoader.endBootstrapping();
     }
@@ -21,7 +21,7 @@ public class Bootstrapper {
     private void createKernelObjectsHierarchy(SmalltalkClassLoader classLoader) {
 
         // Create Kernel Objects and Classes we need to start Runtime.
-        PrimObject primObject = classLoader.cachedObject("st.redline.core.PrimObject");
+        PrimObject primObject = classLoader.cachedObject("st.redline.kernel.PrimObject");
 
         PrimClass object = createKernelObject("Object", primObject);
         PrimClass behavior = createKernelObject("Behavior", object);
@@ -69,22 +69,22 @@ public class Bootstrapper {
         classLoader.falseInstance(falseInstance);
 
         // Load the hierarchy which will attached their methods.
-        classLoader.cacheObject("st.redline.core.Object", object);
-        classLoader.cacheObject("st.redline.core.Behavior", behavior);
-        classLoader.cacheObject("st.redline.core.ClassDescription", classDescription);
-        classLoader.cacheObject("st.redline.core.Class", klass);
-        classLoader.cacheObject("st.redline.core.Metaclass", metaclass);
-        classLoader.cacheObject("st.redline.core.UndefinedObject", undefinedObject);
-        classLoader.cacheObject("st.redline.core.BlockClosure", blockClosure);
-        classLoader.cacheObject("st.redline.core.CompiledMethod", compiledMethod);
-        classLoader.cacheObject("st.redline.core.Boolean", booleanObject);
-        classLoader.cacheObject("st.redline.core.True", trueObject);
-        classLoader.cacheObject("st.redline.core.False", falseObject);
-        classLoader.cacheObject("st.redline.core.Collection", collection);
-        classLoader.cacheObject("st.redline.core.SequenceableCollection", sequenceableCollection);
-        classLoader.cacheObject("st.redline.core.ArrayedCollection", arrayedCollection);
-        classLoader.cacheObject("st.redline.core.String", string);
-        classLoader.cacheObject("st.redline.core.Symbol", symbol);
+        classLoader.cacheObject("st.redline.kernel.Object", object);
+        classLoader.cacheObject("st.redline.kernel.Behavior", behavior);
+        classLoader.cacheObject("st.redline.kernel.ClassDescription", classDescription);
+        classLoader.cacheObject("st.redline.kernel.Class", klass);
+        classLoader.cacheObject("st.redline.kernel.Metaclass", metaclass);
+        classLoader.cacheObject("st.redline.kernel.UndefinedObject", undefinedObject);
+        classLoader.cacheObject("st.redline.kernel.BlockClosure", blockClosure);
+        classLoader.cacheObject("st.redline.kernel.CompiledMethod", compiledMethod);
+        classLoader.cacheObject("st.redline.kernel.Boolean", booleanObject);
+        classLoader.cacheObject("st.redline.kernel.True", trueObject);
+        classLoader.cacheObject("st.redline.kernel.False", falseObject);
+        classLoader.cacheObject("st.redline.kernel.Collection", collection);
+        classLoader.cacheObject("st.redline.kernel.SequenceableCollection", sequenceableCollection);
+        classLoader.cacheObject("st.redline.kernel.ArrayedCollection", arrayedCollection);
+        classLoader.cacheObject("st.redline.kernel.String", string);
+        classLoader.cacheObject("st.redline.kernel.Symbol", symbol);
     }
 
     private PrimClass createKernelObject(String name, PrimObject superclass) {
@@ -107,28 +107,28 @@ public class Bootstrapper {
     }
 
     private void loadKernelObjects(SmalltalkClassLoader classLoader) {
-        loadObject(classLoader, "st.redline.core.Object");
-        loadObject(classLoader, "st.redline.core.Behavior");
-        loadObject(classLoader, "st.redline.core.ClassDescription");
-        loadObject(classLoader, "st.redline.core.Class");
-        loadObject(classLoader, "st.redline.core.Metaclass");
-        loadObject(classLoader, "st.redline.core.UndefinedObject");
-        loadObject(classLoader, "st.redline.core.BlockClosure");
-        loadObject(classLoader, "st.redline.core.CompiledMethod");
-        loadObject(classLoader, "st.redline.core.Boolean");
-        loadObject(classLoader, "st.redline.core.True");
-        loadObject(classLoader, "st.redline.core.False");
-        loadObject(classLoader, "st.redline.core.Collection");
-        loadObject(classLoader, "st.redline.core.SequenceableCollection");
-        loadObject(classLoader, "st.redline.core.ArrayedCollection");
-        loadObject(classLoader, "st.redline.core.String");
-        loadObject(classLoader, "st.redline.core.Symbol");
+        loadObject(classLoader, "st.redline.kernel.Object");
+        loadObject(classLoader, "st.redline.kernel.Behavior");
+        loadObject(classLoader, "st.redline.kernel.ClassDescription");
+        loadObject(classLoader, "st.redline.kernel.Class");
+        loadObject(classLoader, "st.redline.kernel.Metaclass");
+        loadObject(classLoader, "st.redline.kernel.UndefinedObject");
+        loadObject(classLoader, "st.redline.kernel.BlockClosure");
+        loadObject(classLoader, "st.redline.kernel.CompiledMethod");
+        loadObject(classLoader, "st.redline.kernel.Boolean");
+        loadObject(classLoader, "st.redline.kernel.True");
+        loadObject(classLoader, "st.redline.kernel.False");
+        loadObject(classLoader, "st.redline.kernel.Collection");
+        loadObject(classLoader, "st.redline.kernel.SequenceableCollection");
+        loadObject(classLoader, "st.redline.kernel.ArrayedCollection");
+        loadObject(classLoader, "st.redline.kernel.String");
+        loadObject(classLoader, "st.redline.kernel.Symbol");
     }
 
     private void createPrimObject(SmalltalkClassLoader classLoader) {
         PrimObject primObject = new PrimObject();
         primObject.selfClass(primObject);
-        classLoader.cacheObject("st.redline.core.PrimObject", primObject);
+        classLoader.cacheObject("st.redline.kernel.PrimObject", primObject);
     }
 
     private void loadObject(ClassLoader classLoader, String name) {
