@@ -1,3 +1,5 @@
 java -jar ../../../lib/antlr-4.1-complete.jar -o ../java/st/redline/compiler -no-listener -visitor -package st.redline.compiler Smalltalk.g4
 
+# byte[] generatedClassBytes(); SmalltalkVisitor
+# public byte[] generatedClassBytes() { return null; } SmalltalkBaseVisitor
 

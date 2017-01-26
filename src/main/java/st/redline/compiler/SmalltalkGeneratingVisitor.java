@@ -240,7 +240,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         protected final String LAMBDA_BLOCK_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
         protected MethodVisitor mv;
-        private final String SEND_MESSAGES_SIG = LAMBDA_BLOCK_SIG;
+        private final String SEND_MESSAGES_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
         private final ClassWriter cw;
         private HashMap<String, ExtendedTerminalNode> temporaries;
         private HashMap<String, ExtendedTerminalNode> arguments;
@@ -357,9 +357,9 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             // call sendMessages with parameters: this & context
             mv.visitVarInsn(ALOAD, 0); // this
             mv.visitVarInsn(ALOAD, 0); // receiver
-            mv.visitVarInsn(ALOAD, 0); // receiver
             mv.visitVarInsn(ALOAD, 1); // context
             mv.visitMethodInsn(INVOKEVIRTUAL, fullClassName(), "sendMessages", SEND_MESSAGES_SIG, false);
+            mv.visitInsn(POP);
 
             mv.visitInsn(RETURN);
             mv.visitMaxs(0, 0);
@@ -528,7 +528,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitPrimitive(@NotNull SmalltalkParser.PrimitiveContext ctx) {
             log("visitPrimitive");
-            throw new RuntimeException("Smalltalk <primitive> should be replaced with JVM messages.");
+            throw new RuntimeException("Smalltalk <primitive> should be replaced with JVM primitive: id.");
         }
 
         public Void visitUnarySend(@NotNull SmalltalkParser.UnarySendContext ctx) {
@@ -612,6 +612,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             visitLine(mv, identifierNode.getSymbol().getLine());
             if (!isTemporary(identifier))
                 throw new RuntimeException("visitAssignment temporary expected.");
+            pushDuplicate(mv);
             storeTemporary(mv, indexOfTemporary(identifier));
             return null;
         }

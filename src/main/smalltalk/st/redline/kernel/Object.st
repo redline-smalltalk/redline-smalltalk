@@ -85,4 +85,3 @@ PrimObject subclass: #Object.
 
 "category: class membership"
 
-

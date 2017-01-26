@@ -5,10 +5,10 @@
  */
 grammar Smalltalk;
 
-script : sequence EOF;
+script : sequence ws EOF;
 sequence : temps? ws statements?;
 ws : (SEPARATOR | COMMENT)*;
-temps : PIPE (ws IDENTIFIER)+ ws PIPE;
+temps : ws PIPE (ws IDENTIFIER)+ ws PIPE;
 statements : answer ws # StatementAnswer
            | expressions ws PERIOD ws answer # StatementExpressionsAnswer
            | expressions PERIOD? ws # StatementExpressions

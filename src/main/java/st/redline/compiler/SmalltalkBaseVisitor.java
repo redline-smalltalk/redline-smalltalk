@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
  * operations with no return type.
  */
 public class SmalltalkBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SmalltalkVisitor<T> {
-    public byte[] generatedClassBytes() { return null; }
+	public byte[] generatedClassBytes() { return null; }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
