@@ -678,6 +678,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private void setupTryBlock() {
             if (tryCatchRecords.isEmpty())
                 return;
+            log("setupTryBlock");
             for (BlockAnswerRecord record : tryCatchRecords)
                 mv.visitTryCatchBlock(tryStartLabel, tryEndLabel, record.handlerLabel, record.exceptionName);
             mv.visitLabel(tryStartLabel);
@@ -686,6 +687,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private void setupCatchBlock() {
             if (tryCatchRecords.isEmpty())
                 return;
+            log("setupCatchBlock");
             for (BlockAnswerRecord record : tryCatchRecords) {
                 mv.visitJumpInsn(GOTO, tryEndLabel);
                 mv.visitLabel(record.handlerLabel);
@@ -815,15 +817,21 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             node = bareSymbolContext.BINARY_SELECTOR();
             if (node != null)
                 return new ExtendedTerminalNode(node, 0);
-            List<TerminalNode> k = bareSymbolContext.KEYWORD();
-            if (k != null && !k.isEmpty()) {
-                int line = k.get(0).getSymbol().getLine();
-                StringBuilder text = new StringBuilder();
-                for (TerminalNode n : k)
-                    text.append(n.getSymbol().getText());
-                return new BasicNode(line, text.toString(), 0);
-            }
+            List<TerminalNode> keywords = bareSymbolContext.KEYWORD();
+            if (keywords != null && !keywords.isEmpty())
+                return nodeFor(keywords);
+            List<TerminalNode> pipe = bareSymbolContext.PIPE();
+            if (pipe != null && !pipe.isEmpty())
+                return nodeFor(pipe);
             throw new RuntimeException("Node cannot be determined from context.");
+        }
+
+        private BasicNode nodeFor(List<TerminalNode> nodes) {
+            int line = nodes.get(0).getSymbol().getLine();
+            StringBuilder text = new StringBuilder();
+            for (TerminalNode n : nodes)
+                text.append(n.getSymbol().getText());
+            return new BasicNode(line, text.toString(), 0);
         }
 
         public Void visitReference(@NotNull SmalltalkParser.ReferenceContext ctx) {

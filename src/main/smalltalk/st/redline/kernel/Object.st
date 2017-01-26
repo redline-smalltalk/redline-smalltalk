@@ -84,4 +84,3 @@ PrimObject subclass: #Object.
     ^ self identityHash.
 
 "category: class membership"
-

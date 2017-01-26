@@ -270,6 +270,14 @@ public class PrimObject {
         return ((LambdaBlock) javaValue()).apply(this, this, context);
     }
 
+    public PrimObject primitive110(PrimContext context) {
+//        System.out.println("primitive110: " + context);
+        if (this.equals(context.argumentAt(0)))
+            return classLoader().trueInstance();
+        else
+            return classLoader().falseInstance();
+    }
+
     public PrimObject primitive111(PrimContext context) {
 //        System.out.println("primitive111: " + context);
         return this.selfClass();
