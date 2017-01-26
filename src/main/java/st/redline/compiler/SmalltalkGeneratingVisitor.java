@@ -866,8 +866,10 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             else {
                 String blockAnswerClassName = makeBlockAnswerClassName(name);
                 pushNewBlock(mv, fullClassName(), name, LAMBDA_BLOCK_SIG, line, blockGeneratorVisitor.isAnswerBlock(), blockAnswerClassName);
-                loadBlockAnswerClass(blockAnswerClassName);
-                tryCatchRecords.add(new BlockAnswerRecord(blockAnswerClassName));
+                if (blockGeneratorVisitor.isAnswerBlock()) {
+                    loadBlockAnswerClass(blockAnswerClassName);
+                    tryCatchRecords.add(new BlockAnswerRecord(blockAnswerClassName));
+                }
             }
             return null;
         }
