@@ -244,7 +244,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private final ClassWriter cw;
         private HashMap<String, ExtendedTerminalNode> temporaries;
         private HashMap<String, ExtendedTerminalNode> arguments;
-        private Stack<KeywordRecord> keywords = new Stack<KeywordRecord>();
+        private Stack<KeywordRecord> keywords = new Stack<>();
         private int blockNumber = 0;
         private boolean referencedJVM = false;
         private boolean sendToSuper = false;
@@ -857,7 +857,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             boolean methodBlock = keywordRecord.keyword.toString().endsWith("withMethod:");
             BlockGeneratorVisitor blockGeneratorVisitor = new BlockGeneratorVisitor(cw, name);
             pushCurrentVisitor(blockGeneratorVisitor);
-            ctx.accept(currentVisitor());
+            blockGeneratorVisitor.handleBlock(ctx);
             removeJVMGeneratorVisitor();
             popCurrentVisitor();
             int line = ctx.BLOCK_START().getSymbol().getLine();
@@ -924,7 +924,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             StringBuilder name = new StringBuilder();
             if (keywordRecord.firstArgument.length() == 0) {
                 blockNumber++;
-                name.append(blockNumber);
+                name.append("B").append(blockNumber);
             } else
                 name.append(keywordRecord.firstArgument.toString());
             return name.toString();
@@ -945,8 +945,8 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             this.returnRequired = false;
         }
 
-        public Void visitBlock(@NotNull SmalltalkParser.BlockContext ctx) {
-            log("visitBlock " + blockName);
+        public void handleBlock(@NotNull SmalltalkParser.BlockContext ctx) {
+            log("handleBlock " + blockName);
             openBlockLambdaMethod();
             SmalltalkParser.BlockParamListContext blockParamList = ctx.blockParamList();
             if (blockParamList != null)
@@ -956,7 +956,6 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
                 blockSequence.accept(currentVisitor());
             returnRequired = returnRequired(blockSequence);
             closeBlockLambdaMethod(returnRequired);
-            return null;
         }
 
         public boolean isAnswerBlock() {
