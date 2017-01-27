@@ -97,21 +97,20 @@ public class SmalltalkClassLoader extends ClassLoader {
         if (classData == null)
             return super.findClass(name);
         cls = defineClass(null, classData, 0, classData.length);
-//        saveClass(classData, name);
         cacheClass(cls, name);
         return cls;
     }
 
-    private void saveClass(byte[] classData, String name) {
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream("/home/jamesl/dev/redline-smalltalk/target/classes/" + name + ".class");
-            fos.write(classData);
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void saveClass(byte[] classData, String name) {
+//        FileOutputStream fos = null;
+//        try {
+//            fos = new FileOutputStream("/home/jamesl/dev/redline-smalltalk/target/classes/" + name + ".class");
+//            fos.write(classData);
+//            fos.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void cacheClass(Class cls, String name) {
         //System.out.println("** cacheClass " + cls + " as " + name);
