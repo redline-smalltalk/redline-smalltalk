@@ -1,2 +1,2 @@
 
-MyObject new test: [ ^ true ].
+MyObject new.

@@ -245,7 +245,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private HashMap<String, ExtendedTerminalNode> temporaries;
         private HashMap<String, ExtendedTerminalNode> arguments;
         private Stack<KeywordRecord> keywords = new Stack<>();
-        private int blockNumber = 0;
+        protected int blockNumber = 0;
         private boolean referencedJVM = false;
         private boolean sendToSuper = false;
         private List<BlockAnswerRecord> tryCatchRecords;
@@ -257,7 +257,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         public ClassGeneratorVisitor(ClassWriter classWriter) {
-            cw = classWriter;
+            this.cw = classWriter;
         }
 
         public ClassGeneratorVisitor(ClassWriter classWriter, MethodVisitor methodVisitor) {
@@ -851,7 +851,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         public Void visitBlock(@NotNull SmalltalkParser.BlockContext ctx) {
-            log("visitBlock " + peekKeyword());
+            log(">>>>> visitBlock " + peekKeyword() + " " + blockNumber);
             KeywordRecord keywordRecord = peekKeyword();
             String name = makeBlockMethodName(keywordRecord);
             boolean methodBlock = keywordRecord.keyword.toString().endsWith("withMethod:");
@@ -946,7 +946,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         public void handleBlock(@NotNull SmalltalkParser.BlockContext ctx) {
-            log("handleBlock " + blockName);
+            log("handleBlock " + blockName + " " + blockNumber);
             openBlockLambdaMethod();
             SmalltalkParser.BlockParamListContext blockParamList = ctx.blockParamList();
             if (blockParamList != null)

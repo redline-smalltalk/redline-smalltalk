@@ -84,3 +84,157 @@ PrimObject subclass: #Object.
     ^ self identityHash.
 
 "category: class membership"
+
+- isKindOf: aClass
+    "Answer whether the argument, aClass, is a superclass or class of the receiver."
+    ^ self class == aClass
+        ifTrue: [ true ]
+        ifFalse: [ self class inheritsFrom: aClass ].
+
+- isMemberOf: aClass
+    "Answer whether the receiver is an instance of the class, aClass."
+    ^ self class == aClass.
+
+- respondsTo: aSymbol
+    "Answer whether the method dictionary of the receiver's class contains aSymbol as a message selector."
+    ^ self class canUnderstand: aSymbol.
+
+"category: copying"
+
+- copy
+    "Answer another instance just like the receiver. Subclasses typically override postCopy; they typically do not
+     override shallowCopy. Copy is a template method in the sense of Design Patterns. So do not override it.
+     Override postCopy instead. Pay attention that normally you should call postCopy of your superclass too."
+    ^ self shallowCopy postCopy.
+
+- postCopy
+	"I'm a hook method in the sense of Design Patterns TemplateHook/Methods. I'm called by copy. self is a shallow copy,
+	 subclasses should copy fields as necessary to complete the full copy"
+	^ self.
+
+- shallowCopy
+    "Answer a copy of the receiver which shares the receiver's instance variables. It should never be overridden. I'm
+     invoked from the copy template method. Subclasses that need to specialize the copy should specialize the postCopy
+     hook method."
+    self notImplementedYet.
+
+- deepCopy
+    "Answer a copy of the receiver with its own copy of each instance variable. deepCopy does a deep copy.
+     It should never be overridden and only be used if you want to get these very specific semantics."
+    self notImplementedYet.
+
+"category: dependents access"
+
+- addDependent: anObject
+    "Make the given object one of the receiver's dependents."
+    self notImplementedYet.
+
+- removeDependent: anObject
+    "Remove the given object as one of the receiver's dependents."
+    self notImplementedYet.
+
+- dependents
+    "Answer a collection of objects that are 'dependent' on the receiver; that is, all objects that should be notified
+     if the receiver changes."
+    self notImplementedYet.
+
+- release
+    "Remove references to objects that may refer to the receiver. This message should be overridden by subclasses with
+     any cycles, in which case the subclass should also include the expression super release."
+    self notImplementedYet.
+
+- broadcast: aSymbol
+    self notImplementedYet.
+
+- broadcast: aSymbol with: anObject
+    self notImplementedYet.
+
+"category: updating"
+
+- changed
+    "Receiver changed in a general way; inform all the dependents by sending each dependent an update: message."
+    self changed: self.
+
+- changed: aParameter
+    "Receiver changed. The change is denoted by the argument aParameter. Usually the argument is a Symbol that is part
+     of the dependent's change protocol. Inform all of the dependents."
+    self notImplementedYet.
+
+- update: aParameter
+    "Receive a change notice from an object of whom the receiver is a dependent. The default behavior is to do nothing;
+     a subclass might want to change itself in some way."
+    ^ self.
+
+"category: error handling"
+
+- error: aString
+    "Report to the user that an error occurred in the context of responding to a message to the receiver. The report
+     uses the argument, aString, as part of the error notification comment."
+    JVM primitive: 131.
+
+- doesNotUnderstand: aMessage
+    "Report to the user that the receiver does not understand the argument, aMessage, as a message."
+    self error: aMessage.
+
+- primitiveFailed
+    "Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
+    self error: 'a primitive has failed'.
+
+- shouldNotImplement
+    "Announce that, although the receiver inherits this message, it should not implement it."
+    self error: 'This message is not appropriate for this object'.
+
+- subclassResponsibility
+    "This message sets up a framework for the behavior of the class' subclasses. Announce that the subclass should have
+     implemented this message."
+    self error: 'My subclass should have overridden one of my messages.'.
+
+- notImplementedYet
+    "Announce that, although the receiver inherits this message, it is not implemented YET."
+    self error: 'This message is not implemented yet. Please implement is via a Test.'.
+
+"category: testing"
+
+- isNil
+    "Coerces nil to true and everything else to false."
+    ^ false.
+
+- notNil
+    "Coerces nil to false and everything else to true."
+    ^ true.
+
+- ifNil: aBlock
+    "Return self, or evaluate the block if I'm == nil - NOTE: This is not actually in the Blue Book."
+    ^ self.
+
+"category: message handling"
+
+- perform: aSymbol
+    "Send the unary selector, aSymbol, to the receiver."
+    JVM primitive: 83.
+
+- perform: aSymbol with: anObject
+    "Send the selector, aSymbol, to the receiver with anObject as its argument."
+    JVM primitive: 84.
+
+- perform: aSymbol with: firstObject with: secondObject
+    "Send the selector, aSymbol, to the receiver with the given arguments."
+    JVM primitive: 140.
+
+- perform: aSymbol with: firstObject with: secondObject with: thirdObject
+    "Send the selector, aSymbol, to the receiver with the given arguments."
+    JVM primitive: 141.
+
+- perform: aSymbol withArguments: arguments
+    "Send the selector, aSymbol, to the receiver with the given arguments."
+    JVM primitive: 142.
+
+"category: printing"
+
+- printOn: aStream
+    "Append to the argument, aStream, a sequence of characters that identifies the receiver."
+    | title |
+    title := self class name.
+    aStream
+      nextPutAll: (title first isVowel ifTrue: [ 'an ' ] ifFalse: [ 'a ' ]);
+      nextPutAll: title.
