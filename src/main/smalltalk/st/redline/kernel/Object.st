@@ -231,6 +231,13 @@ PrimObject subclass: #Object.
 
 "category: printing"
 
+"- printString
+    Answer a String whose characters are a description of the receiver.
+    | stream |
+    stream := WriteStream on: String new.
+    self printOn: stream.
+    ^ stream contents."
+
 - printOn: aStream
     "Append to the argument, aStream, a sequence of characters that identifies the receiver."
     | title |
@@ -238,3 +245,33 @@ PrimObject subclass: #Object.
     aStream
       nextPutAll: (title first isVowel ifTrue: [ 'an ' ] ifFalse: [ 'a ' ]);
       nextPutAll: title.
+
+"category: storing"
+
+- storeString
+    "Answer a String representation of the receiver from which the receiver can be reconstructed."
+    ^ String streamContents: [ :s | self storeOn: s ].
+
+"category: system primitives"
+
+- instVarAt: index
+    "Primitive. Answer a fixed variable in an object. The numbering of the variables corresponds to the named instance
+     variables. Fail if the index is not an Integer or is not the index of a fixed variable."
+    JVM primitive: 73.
+
+- instVarAt: anInteger put: anObject
+    "Primitive. Store a value into a fixed variable in the receiver. The numbering of the variables corresponds to the
+     named instance variables. Fail if the index is not an Integer or is not the index of a fixed variable. Answer the
+     value stored as the result. Using this message violates the principle that each object has sovereign control over
+     the storing of values into its instance variables."
+    JVM primitive: 74.
+
+- become: otherObject
+    self error: 'implement me'.
+
+- printString
+    "Answer a String whose characters are a description of the receiver."
+    | stream |
+    stream := WriteStream on: String new.
+    self printOn: stream.
+    ^ self.

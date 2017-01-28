@@ -851,13 +851,14 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         public Void visitBlock(@NotNull SmalltalkParser.BlockContext ctx) {
-            log(">>>>> visitBlock " + peekKeyword() + " " + blockNumber);
+            log("visitBlock " + peekKeyword() + " " + blockNumber);
             KeywordRecord keywordRecord = peekKeyword();
             String name = makeBlockMethodName(keywordRecord);
             boolean methodBlock = keywordRecord.keyword.toString().endsWith("withMethod:");
-            BlockGeneratorVisitor blockGeneratorVisitor = new BlockGeneratorVisitor(cw, name);
+            BlockGeneratorVisitor blockGeneratorVisitor = new BlockGeneratorVisitor(cw, name, blockNumber);
             pushCurrentVisitor(blockGeneratorVisitor);
             blockGeneratorVisitor.handleBlock(ctx);
+            blockNumber = blockGeneratorVisitor.blockNumber;
             removeJVMGeneratorVisitor();
             popCurrentVisitor();
             int line = ctx.BLOCK_START().getSymbol().getLine();
@@ -938,11 +939,12 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private String blockName;
         private boolean returnRequired;
 
-        public BlockGeneratorVisitor(ClassWriter cw, String name) {
+        public BlockGeneratorVisitor(ClassWriter cw, String name, int blockNumber) {
             super(cw);
             this.cw = cw;
             this.blockName = name;
             this.returnRequired = false;
+            this.blockNumber = blockNumber;
         }
 
         public void handleBlock(@NotNull SmalltalkParser.BlockContext ctx) {
