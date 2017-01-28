@@ -231,12 +231,12 @@ PrimObject subclass: #Object.
 
 "category: printing"
 
-"- printString
-    Answer a String whose characters are a description of the receiver.
+- printString
+    "Answer a String whose characters are a description of the receiver."
     | stream |
-    stream := WriteStream on: String new.
-    self printOn: stream.
-    ^ stream contents."
+    "stream := WriteStream on: String new."
+    "self printOn: stream."
+    ^ stream contents.
 
 - printOn: aStream
     "Append to the argument, aStream, a sequence of characters that identifies the receiver."
@@ -269,9 +269,3 @@ PrimObject subclass: #Object.
 - become: otherObject
     self error: 'implement me'.
 
-- printString
-    "Answer a String whose characters are a description of the receiver."
-    | stream |
-    stream := WriteStream on: String new.
-    self printOn: stream.
-    ^ self.
