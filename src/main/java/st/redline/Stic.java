@@ -62,7 +62,7 @@ public class Stic {
     }
 
     private String defaultScriptName() {
-        return "st.redline.NoArguments";
+        return "st.redline.script.NoArguments";
     }
 
     private String firstArgument() {
