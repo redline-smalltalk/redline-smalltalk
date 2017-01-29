@@ -499,6 +499,16 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             return null;
         }
 
+        public Void visitAnswer(@NotNull SmalltalkParser.AnswerContext ctx) {
+            log("visitAnswer");
+            TerminalNode carrot = ctx.CARROT();
+            visitLine(mv, carrot.getSymbol().getLine());
+            SmalltalkParser.ExpressionContext expression = ctx.expression();
+            expression.accept(currentVisitor());
+            mv.visitInsn(ARETURN);
+            return null;
+        }
+
         public Void visitExpression(@NotNull SmalltalkParser.ExpressionContext ctx) {
             log("visitExpression");
             referencedJVM = false;

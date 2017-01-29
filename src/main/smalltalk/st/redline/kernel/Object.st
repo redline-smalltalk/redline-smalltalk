@@ -234,8 +234,8 @@ PrimObject subclass: #Object.
 - printString
     "Answer a String whose characters are a description of the receiver."
     | stream |
-    "stream := WriteStream on: String new."
-    "self printOn: stream."
+    stream := WriteStream on: String new.
+    self printOn: stream.
     ^ stream contents.
 
 - printOn: aStream
