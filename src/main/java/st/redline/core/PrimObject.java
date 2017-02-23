@@ -229,7 +229,7 @@ public class PrimObject {
 //        System.out.println("** apply: #" + selector + " found in " + foundInClass + " to " + this);
         PrimObject result = method.invoke(this, new PrimContext(this, foundInClass, outerContext, selector, arguments));
         //System.out.println("** result: " + String.valueOf(result));
-        return result; // method.invoke(this, new PrimContext(this, foundInClass, selector, arguments));
+        return result; // method.invoke(this, new PrimContext(this, foundInClass, outerContext, selector, arguments));
     }
 
     protected PrimObject invoke(PrimObject receiver, PrimContext context) {
