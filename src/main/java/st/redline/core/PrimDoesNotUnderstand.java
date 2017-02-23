@@ -9,7 +9,7 @@ public class PrimDoesNotUnderstand extends PrimObject {
 
     protected PrimObject invoke(PrimObject receiver, PrimContext context) {
         if (!"primDoesNotUnderstand:".equals(context.selector()))
-            return receiver.perform0("primDoesNotUnderstand:", context.selectorAndArguments());
+            return receiver.perform0(context, "primDoesNotUnderstand:", context.selectorAndArguments());
         outputDoesNotUnderstandError(receiver, context);
         return PRIM_NIL;
     }

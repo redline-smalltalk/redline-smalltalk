@@ -7,17 +7,19 @@ public class PrimContext {
 
     private final PrimObject receiver;
     private final PrimObject lookupClass;
+    private final PrimContext outerContext;
     private final String selector;
     private final PrimObject[] arguments;
     private PrimObject[] temporaries;
 
     public PrimContext(PrimObject receiver) {
-        this(receiver, null, null, null);
+        this(receiver, null, null, null, null);
     }
 
-    public PrimContext(PrimObject receiver, PrimObject lookupClass, String selector, PrimObject[] arguments) {
+    public PrimContext(PrimObject receiver, PrimObject lookupClass, PrimContext outerContext, String selector, PrimObject[] arguments) {
         this.receiver = receiver;
         this.lookupClass = lookupClass;
+        this.outerContext = outerContext;
         this.selector = selector;
         this.arguments = arguments;
     }

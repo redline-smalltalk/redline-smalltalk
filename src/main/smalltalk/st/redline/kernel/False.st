@@ -2,55 +2,32 @@
 
 Boolean subclass: #False.
 
-"category: controlling"
+- & alternativeObject
+	^ self.
 
 - and: alternativeBlock
-    "Nonevaluating conjunction -- answer with false since the receiver is false."
-    ^ self.
-
-- ifTrue: alternativeBlock
-    "Since the condition is false, the value is the false alternative, which is nil."
-    ^ nil.
+	^ self.
 
 - ifFalse: alternativeBlock
-    "Answer the value of alternativeBlock."
-    ^ alternativeBlock value.
-
-- ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock
-    "Answer the value of falseAlternativeBlock."
-    ^ falseAlternativeBlock value.
+	^ alternativeBlock value.
 
 - ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock
-    "Answer the value of falseAlternativeBlock."
-    ^ falseAlternativeBlock value.
+	^ falseAlternativeBlock value.
 
-- or: alternativeBlock
-    "Nonevaluating disjunction -- answer value of alternativeBlock."
-    ^ alternativeBlock value.
+- ifTrue: alternativeBlock
+	^ nil.
 
-"category: logical operations"
-
-- & alternativeObject
-    "Evaluating conjunction -- answer false since receiver is false."
-    ^ self.
+- ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock
+	^ falseAlternativeBlock value.
 
 - not
-    "Negation -- answer true since the receiver is false."
-    ^ true.
+	^ true.
 
-- | aBoolean
-    "Evaluating disjunction (OR) -- answer with the argument, aBoolean."
-    ^ aBoolean.
-
-- eqv: aBoolean
-    "Answer true if the receiver is equivalent to the argument, aBoolean."
-    ^ self == aBoolean.
-
-- xor: aBoolean
-    "Exclusive OR. Answer true if the receiver is not equivalent to aBoolean."
-    ^ self ~= aBoolean.
-
-"category: printing"
+- or: alternativeBlock
+	^ alternativeBlock value.
 
 - printOn: aStream
-    aStream nextPutAll: 'false'.
+	aStream nextPutAll: 'false'.
+
+- | aBoolean
+	^ aBoolean.
