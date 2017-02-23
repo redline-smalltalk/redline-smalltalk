@@ -622,7 +622,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             String identifier = identifierNode.getSymbol().getText();
             visitLine(mv, identifierNode.getSymbol().getLine());
             if (!isTemporary(identifier))
-                throw new RuntimeException("visitAssignment temporary expected.");
+                throw new RuntimeException("visitAssignment temporary expected: " + identifier);
             pushDuplicate(mv);
             storeTemporary(mv, indexOfTemporary(identifier));
             return null;
