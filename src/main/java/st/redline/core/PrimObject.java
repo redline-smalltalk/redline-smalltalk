@@ -63,12 +63,12 @@ public class PrimObject {
 
     public PrimObject smalltalkBlock(Object value, PrimContext homeContext) {
 //        System.out.println("** smalltalkBlock " + value);
-        return instanceOfWith("BlockClosure", new Object[] {value, homeContext});
+        return instanceOfWith("BlockClosure", new Object[] {value, homeContext.homeContext()});
     }
 
     public PrimObject smalltalkBlockAnswer(Object value, PrimContext homeContext, String answerClassName) {
 //        System.out.println("** smalltalkBlockAnswer " + value + " from " + answerClassName);
-        return instanceOfWith("BlockClosure", throwingAnswer(value, homeContext, answerClassName));
+        return instanceOfWith("BlockClosure", throwingAnswer(value, homeContext.homeContext(), answerClassName));
     }
 
     private LambdaBlock throwingAnswer(Object value, PrimContext homeContext, String answerClassName) {

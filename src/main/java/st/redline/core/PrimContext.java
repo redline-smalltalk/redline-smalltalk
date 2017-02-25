@@ -82,4 +82,8 @@ public class PrimContext {
     public void homeContext(PrimContext homeContext) {
         this.homeContext = homeContext;
     }
+
+    public PrimContext homeContext() {
+        return (homeContext != null) ? homeContext : this;
+    }
 }
