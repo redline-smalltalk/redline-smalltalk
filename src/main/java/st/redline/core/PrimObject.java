@@ -61,18 +61,19 @@ public class PrimObject {
         return findObject(importFor(name));
     }
 
-    public PrimObject smalltalkBlock(Object value) {
+    public PrimObject smalltalkBlock(Object value, PrimContext homeContext) {
 //        System.out.println("** smalltalkBlock " + value);
-        return instanceOfWith("BlockClosure", value);
+        return instanceOfWith("BlockClosure", new Object[] {value, homeContext});
     }
 
-    public PrimObject smalltalkBlockAnswer(Object value, String answerClassName) {
+    public PrimObject smalltalkBlockAnswer(Object value, PrimContext homeContext, String answerClassName) {
 //        System.out.println("** smalltalkBlockAnswer " + value + " from " + answerClassName);
-        return instanceOfWith("BlockClosure", throwingAnswer(value, answerClassName));
+        return instanceOfWith("BlockClosure", throwingAnswer(value, homeContext, answerClassName));
     }
 
-    private LambdaBlock throwingAnswer(Object value, String answerClassName) {
+    private LambdaBlock throwingAnswer(Object value, PrimContext homeContext, String answerClassName) {
         return (self, receiver, context) -> {
+            context.homeContext(homeContext);
             PrimObject answer = ((LambdaBlock) value).apply(self, receiver, context);
             PrimBlockAnswer blockAnswer;
             try {
@@ -267,7 +268,9 @@ public class PrimObject {
 
     public PrimObject primitiveEval(PrimContext context) {
 //        System.out.println("primitiveEval: " + context);
-        return ((LambdaBlock) javaValue()).apply(this, this, context);
+        Object[] value = (Object[]) javaValue();
+        context.homeContext((PrimContext) value[1]);
+        return ((LambdaBlock) value[0]).apply(this, this, context);
     }
 
     public PrimObject primitive110(PrimContext context) {
