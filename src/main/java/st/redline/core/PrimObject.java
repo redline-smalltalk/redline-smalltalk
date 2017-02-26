@@ -63,17 +63,16 @@ public class PrimObject {
 
     public PrimObject smalltalkBlock(Object value, PrimContext homeContext) {
 //        System.out.println("** smalltalkBlock " + value);
-        return instanceOfWith("BlockClosure", new Object[] {value, homeContext.homeContext()});
+        return instanceOfWith("BlockClosure", value);
     }
 
     public PrimObject smalltalkBlockAnswer(Object value, PrimContext homeContext, String answerClassName) {
 //        System.out.println("** smalltalkBlockAnswer " + value + " from " + answerClassName);
-        return instanceOfWith("BlockClosure", throwingAnswer(value, homeContext.homeContext(), answerClassName));
+        return instanceOfWith("BlockClosure", throwingAnswer(value, answerClassName));
     }
 
-    private LambdaBlock throwingAnswer(Object value, PrimContext homeContext, String answerClassName) {
+    private LambdaBlock throwingAnswer(Object value, String answerClassName) {
         return (self, receiver, context) -> {
-            context.homeContext(homeContext);
             PrimObject answer = ((LambdaBlock) value).apply(self, receiver, context);
             PrimBlockAnswer blockAnswer;
             try {
@@ -89,7 +88,7 @@ public class PrimObject {
         };
     }
 
-    public PrimObject smalltalkMethod(Object value) {
+    public PrimObject smalltalkMethod(Object value, PrimContext homeContext) {
         //System.out.println("** smalltalkMethod " + value);
         return instanceOfWith("CompiledMethod", value);
     }
@@ -268,9 +267,7 @@ public class PrimObject {
 
     public PrimObject primitiveEval(PrimContext context) {
 //        System.out.println("primitiveEval: " + context);
-        Object[] value = (Object[]) javaValue();
-        context.homeContext((PrimContext) value[1]);
-        return ((LambdaBlock) value[0]).apply(this, this, context);
+        return ((LambdaBlock) javaValue()).apply(this, this, context);
     }
 
     public PrimObject primitive110(PrimContext context) {
