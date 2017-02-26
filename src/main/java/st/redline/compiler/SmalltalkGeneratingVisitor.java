@@ -214,11 +214,12 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
     private void pushNewBlock(MethodVisitor mv, String className, String name, String sig, int line, boolean answerBlock, String answerBlockClassName) {
         pushNewLambda(mv, className, name, sig, line);
+        pushContext(mv);
         if (!answerBlock) {
-            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "smalltalkBlock", "(Ljava/lang/Object;)Lst/redline/core/PrimObject;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "smalltalkBlock", "(Ljava/lang/Object;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;", false);
         } else {
             pushLiteral(mv, answerBlockClassName);
-            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "smalltalkBlockAnswer", "(Ljava/lang/Object;Ljava/lang/String;)Lst/redline/core/PrimObject;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", "smalltalkBlockAnswer", "(Ljava/lang/Object;Lst/redline/core/PrimContext;Ljava/lang/String;)Lst/redline/core/PrimObject;", false);
         }
     }
 

@@ -10,6 +10,7 @@ public class PrimContext {
     private final String selector;
     private final PrimObject[] arguments;
     private PrimObject[] temporaries;
+    private PrimContext homeContext;
 
     public PrimContext(PrimObject receiver) {
         this(receiver, null, null, null);
@@ -76,5 +77,9 @@ public class PrimContext {
 
     public static void temporaryPutAt(PrimObject object, int index, PrimContext context) {
         context.temporaryAtPut(index, object);
+    }
+
+    public void homeContext(PrimContext homeContext) {
+        this.homeContext = homeContext;
     }
 }
