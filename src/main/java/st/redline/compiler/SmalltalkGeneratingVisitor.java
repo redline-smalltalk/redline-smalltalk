@@ -14,12 +14,12 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
     public static final String DEFAULT_IMPORTED_PACKAGE = "st.redline.kernel";
 
     private static final String[] SIGNATURES = {
-            "(Ljava/lang/String;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;",
-            "(Lst/redline/core/PrimObject;Ljava/lang/String;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;",
-            "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;",
-            "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;",
-            "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;",
-            "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;"
+            "(Ljava/lang/String;)Lst/redline/core/PrimObject;",
+            "(Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+            "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+            "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+            "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;",
+            "(Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Lst/redline/core/PrimObject;Ljava/lang/String;)Lst/redline/core/PrimObject;"
     };
     private static final Map<String, Integer> OPCODES = new HashMap<String, Integer>();
     private static final int BYTECODE_VERSION;
@@ -179,7 +179,6 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
     public void invokePerform(MethodVisitor mv, String selector, int argumentCount, boolean sendToSuper) {
         pushLiteral(mv, selector);
-        pushContext(mv);
         String methodName = (sendToSuper) ? "superPerform" : "perform";
         mv.visitMethodInsn(INVOKEVIRTUAL, "st/redline/core/PrimObject", methodName, SIGNATURES[argumentCount], false);
     }

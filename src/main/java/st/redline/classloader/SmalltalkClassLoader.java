@@ -36,7 +36,7 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     public PrimObject findObject(String name) {
-        //System.out.println("** findObject " + name);
+//        System.out.println("** findObject " + name);
         PrimObject cls = cachedObject(name);
         if (cls != null)
             return cls;
@@ -89,7 +89,7 @@ public class SmalltalkClassLoader extends ClassLoader {
     }
 
     public Class findClass(String name) throws ClassNotFoundException {
-        //System.out.println("** findClass " + name);
+//        System.out.println("** findClass " + name);
         Class cls = cachedClass(name);
         if (cls != null)
             return cls;
