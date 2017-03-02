@@ -10,7 +10,7 @@ public class PrimSubclass extends PrimObject {
     private PrimObject theMetaclass;
 
     protected PrimObject invoke(PrimObject receiver, PrimContext primContext) {
-//        System.out.println("PrimSubclass invoke: " + String.valueOf(primContext.argumentJavaValueAt(0)));
+        System.out.println("PrimSubclass invoke: " + String.valueOf(primContext.argumentJavaValueAt(0)));
         assert receiver.equals(primContext.receiver());
 
         String subclassName = String.valueOf(primContext.argumentJavaValueAt(0));
