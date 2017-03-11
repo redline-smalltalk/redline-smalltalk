@@ -268,7 +268,7 @@ public class PrimObject {
     public PrimObject primitiveEval(PrimContext context) {
 //        System.out.println("primitiveEval: " + context + " " + ((Object[]) javaValue())[1]);
         Object[] values = (Object[]) javaValue();
-        context.homeContext((PrimContext) values[1]);
+        context.homeContext(((PrimContext) values[1]).homeContext());
         return ((LambdaBlock) values[0]).apply(this, this, context);
     }
 
