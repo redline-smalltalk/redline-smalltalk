@@ -268,6 +268,7 @@ public class PrimObject {
     public PrimObject primitiveEval(PrimContext context) {
 //        System.out.println("primitiveEval: " + context + " " + ((Object[]) javaValue())[1]);
         Object[] values = (Object[]) javaValue();
+        // Context is invocation context while home context is the context where block was created.
         context.homeContext(((PrimContext) values[1]).homeContext());
         return ((LambdaBlock) values[0]).apply(this, this, context);
     }
