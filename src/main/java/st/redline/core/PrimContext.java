@@ -11,6 +11,7 @@ public class PrimContext {
     private final PrimObject[] arguments;
     private PrimObject[] temporaries;
     private PrimContext homeContext;
+    private PrimContext outerContext;
 
     public PrimContext(PrimObject receiver) {
         this(receiver, null, null, null);
@@ -79,8 +80,13 @@ public class PrimContext {
         context.temporaryAtPut(index, object);
     }
 
-    public void homeContext(PrimContext homeContext) {
-        this.homeContext = homeContext;
+    public void setupCallContext(PrimContext context) {
+        homeContext = context.homeContext();
+        outerContext = context;
+    }
+
+    public PrimContext outerContext() {
+        return outerContext;
     }
 
     public PrimContext homeContext() {
