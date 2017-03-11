@@ -144,16 +144,40 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         mv.visitMethodInsn(INVOKEVIRTUAL, contextName(), "temporaryAt", "(I)Lst/redline/core/PrimObject;", false);
     }
 
+    public void pushHomeTemporary(MethodVisitor mv, int index) {
+        pushContext(mv);
+        pushNumber(mv, index);
+        mv.visitMethodInsn(INVOKEVIRTUAL, contextName(), "homeTemporaryAt", "(I)Lst/redline/core/PrimObject;", false);
+    }
+
     public void storeTemporary(MethodVisitor mv, int index) {
         pushNumber(mv, index);
         pushContext(mv);
         mv.visitMethodInsn(INVOKESTATIC, contextName(), "temporaryPutAt", "(Lst/redline/core/PrimObject;IL" + contextName() + ";)V", false);
     }
 
+    public void storeHomeTemporary(MethodVisitor mv, int index) {
+        pushNumber(mv, index);
+        pushContext(mv);
+        mv.visitMethodInsn(INVOKESTATIC, contextName(), "homeTemporaryPutAt", "(Lst/redline/core/PrimObject;IL" + contextName() + ";)V", false);
+    }
+
     public void pushArgument(MethodVisitor mv, int index) {
         pushContext(mv);
         pushNumber(mv, index);
         mv.visitMethodInsn(INVOKEVIRTUAL, contextName(), "argumentAt", "(I)Lst/redline/core/PrimObject;", false);
+    }
+
+    public void pushOuterArgument(MethodVisitor mv, int index) {
+        pushContext(mv);
+        pushNumber(mv, index);
+        mv.visitMethodInsn(INVOKEVIRTUAL, contextName(), "outerArgumentAt", "(I)Lst/redline/core/PrimObject;", false);
+    }
+
+    public void pushHomeArgument(MethodVisitor mv, int index) {
+        pushContext(mv);
+        pushNumber(mv, index);
+        mv.visitMethodInsn(INVOKEVIRTUAL, contextName(), "homeArgumentAt", "(I)Lst/redline/core/PrimObject;", false);
     }
 
     public void pushReference(MethodVisitor mv, String name) {
@@ -243,8 +267,11 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         protected MethodVisitor mv;
         private final String SEND_MESSAGES_SIG = "(Lst/redline/core/PrimObject;Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;";
         private final ClassWriter cw;
-        private HashMap<String, ExtendedTerminalNode> temporaries;
-        private HashMap<String, ExtendedTerminalNode> arguments;
+        private HashMap<String, ExtendedTerminalNode> temporaries = new HashMap<>();
+        protected HashMap<String, ExtendedTerminalNode> homeTemporaries;
+        private HashMap<String, ExtendedTerminalNode> arguments = new HashMap<>();
+        protected HashMap<String, ExtendedTerminalNode> outerArguments;
+        protected HashMap<String, ExtendedTerminalNode> homeArguments;
         private Stack<KeywordRecord> keywords = new Stack<>();
         protected int blockNumber = 0;
         private boolean referencedJVM = false;
@@ -379,7 +406,6 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         public Void visitTemps(@NotNull SmalltalkParser.TempsContext ctx) {
-            initializeTemporaryVariableMap();
             addToTemporaryVariableMap(ctx.IDENTIFIER());
             addTemporariesToContext();
             return null;
@@ -400,8 +426,16 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             return temporaries != null && temporaries.containsKey(key);
         }
 
+        private boolean isHomeTemporary(String key) {
+            return homeTemporaries != null && homeTemporaries.containsKey(key);
+        }
+
         private int indexOfTemporary(String key) {
             return temporaries.get(key).getIndex();
+        }
+
+        private int indexOfHomeTemporary(String key) {
+            return homeTemporaries.get(key).getIndex();
         }
 
         private void addToTemporaryVariableMap(List<TerminalNode> nodes) {
@@ -452,20 +486,28 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             return keywords.peek();
         }
 
-        private void initializeTemporaryVariableMap() {
-            temporaries = new HashMap<String, ExtendedTerminalNode>();
-        }
-
         private boolean isArgument(String key) {
             return arguments != null && arguments.containsKey(key);
+        }
+
+        private boolean isOuterArgument(String key) {
+            return outerArguments != null && outerArguments.containsKey(key);
+        }
+
+        private boolean isHomeArgument(String key) {
+            return homeArguments != null && homeArguments.containsKey(key);
         }
 
         private int indexOfArgument(String key) {
             return arguments.get(key).getIndex();
         }
 
-        protected void initializeArgumentsMap() {
-            arguments = new HashMap<>();
+        private int indexOfOuterArgument(String key) {
+            return outerArguments.get(key).getIndex();
+        }
+
+        private int indexOfHomeArgument(String key) {
+            return homeArguments.get(key).getIndex();
         }
 
         protected void addArgumentToMap(ExtendedTerminalNode node) {
@@ -621,10 +663,15 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             TerminalNode identifierNode = variable.IDENTIFIER();
             String identifier = identifierNode.getSymbol().getText();
             visitLine(mv, identifierNode.getSymbol().getLine());
-            if (!isTemporary(identifier))
+            if (isTemporary(identifier)) {
+                pushDuplicate(mv);
+                storeTemporary(mv, indexOfTemporary(identifier));
+            } else if (isHomeTemporary(identifier)) {
+                pushDuplicate(mv);
+                storeHomeTemporary(mv, indexOfHomeTemporary(identifier));
+            } else {
                 throw new RuntimeException("visitAssignment temporary expected: " + identifier);
-            pushDuplicate(mv);
-            storeTemporary(mv, indexOfTemporary(identifier));
+            }
             return null;
         }
 
@@ -856,6 +903,12 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
                 pushArgument(mv, indexOfArgument(name));
             else if ("JVM".equals(name))
                 referencedJVM = true;
+            else if (isHomeTemporary(name))
+                pushHomeTemporary(mv, indexOfHomeTemporary(name));
+            else if (isHomeArgument(name))
+                pushHomeArgument(mv, indexOfHomeArgument(name));
+            else if (isOuterArgument(name))
+                pushOuterArgument(mv, indexOfOuterArgument(name));
             else
                 pushReference(mv, name);
             return null;
@@ -866,7 +919,13 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             KeywordRecord keywordRecord = peekKeyword();
             String name = makeBlockMethodName(keywordRecord);
             boolean methodBlock = keywordRecord.keyword.toString().endsWith("withMethod:");
-            BlockGeneratorVisitor blockGeneratorVisitor = new BlockGeneratorVisitor(cw, name, blockNumber);
+            HashMap<String, ExtendedTerminalNode> homeTemps = homeTemporaries;
+            if (homeTemps == null && !methodBlock)
+                homeTemps = temporaries;
+            HashMap<String, ExtendedTerminalNode> homeArgs = homeArguments;
+            if (homeArgs == null && !methodBlock)
+                homeArgs = arguments;
+            BlockGeneratorVisitor blockGeneratorVisitor = new BlockGeneratorVisitor(cw, name, blockNumber, homeTemps, homeArgs, arguments);
             pushCurrentVisitor(blockGeneratorVisitor);
             blockGeneratorVisitor.handleBlock(ctx);
             blockNumber = blockGeneratorVisitor.blockNumber;
@@ -950,12 +1009,18 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         private String blockName;
         private boolean returnRequired;
 
-        public BlockGeneratorVisitor(ClassWriter cw, String name, int blockNumber) {
+        public BlockGeneratorVisitor(ClassWriter cw, String name, int blockNumber,
+                                     HashMap<String, ExtendedTerminalNode> homeTemporaries,
+                                     HashMap<String, ExtendedTerminalNode> homeArguments,
+                                     HashMap<String, ExtendedTerminalNode> outerArguments) {
             super(cw);
             this.cw = cw;
             this.blockName = name;
             this.returnRequired = false;
             this.blockNumber = blockNumber;
+            this.homeTemporaries = homeTemporaries;
+            this.homeArguments = homeArguments;
+            this.outerArguments = outerArguments;
         }
 
         public void handleBlock(@NotNull SmalltalkParser.BlockContext ctx) {
@@ -994,7 +1059,6 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitBlockParamList(@NotNull SmalltalkParser.BlockParamListContext ctx) {
             log("visitBlockParamList");
-            initializeArgumentsMap();
             int index = 0;
             int n = ctx.getChildCount();
             for(int i = 0; i < n; ++i) {

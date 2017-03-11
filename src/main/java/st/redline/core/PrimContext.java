@@ -64,6 +64,14 @@ public class PrimContext {
         return arguments[index];
     }
 
+    public PrimObject outerArgumentAt(int index) {
+        return outerContext.argumentAt(index);
+    }
+
+    public PrimObject homeArgumentAt(int index) {
+        return homeContext.argumentAt(index);
+    }
+
     public Object argumentJavaValueAt(int index) {
         return argumentAt(index).javaValue();
     }
@@ -72,12 +80,20 @@ public class PrimContext {
         return temporaries[index];
     }
 
+    public PrimObject homeTemporaryAt(int index) {
+        return homeContext.temporaryAt(index);
+    }
+
     public void temporaryAtPut(int index, PrimObject object) {
         temporaries[index] = object;
     }
 
     public static void temporaryPutAt(PrimObject object, int index, PrimContext context) {
         context.temporaryAtPut(index, object);
+    }
+
+    public static void homeTemporaryPutAt(PrimObject object, int index, PrimContext context) {
+        context.homeContext().temporaryAtPut(index, object);
     }
 
     public void setupCallContext(PrimContext context) {
