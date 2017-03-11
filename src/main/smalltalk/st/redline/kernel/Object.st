@@ -17,3 +17,28 @@ PrimObject subclass: #Object.
 					any := true]].
 	any == nil ifTrue: [self subclassResponsibility].
 	^ inst.
+
++ readFrom: aStream
+	| object |
+	object := Compiler evaluate: aStream.
+	(object isKindOf: self)
+		ifFalse: [self error: self name + ' expected'].
+	^ object.
+
+- = anObject
+	^ self == anObject.
+
+- == anObject
+	JVM primitive: 110.
+
+- addDependent: anObject
+	| dependents |
+	dependents := self dependents.
+	dependents do:
+		[ :o |
+		o == anObject ifTrue: [^ self].
+		nil].
+	DependentsFields at: self put: (dependents copyWith: anObject).
+
+- as: aSimilarClass
+	^ aSimilarClass newFrom: self.

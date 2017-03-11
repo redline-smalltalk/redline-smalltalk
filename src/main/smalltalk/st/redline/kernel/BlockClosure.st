@@ -5,7 +5,7 @@ Object subclass: #BlockClosure.
 "category: evaluating"
 
 - value
-    "Activate the receiver and evaluate the block."
-    JVM aload: 1;
-        aload: 2;
-        invokeVirtual: 'st/redline/core/PrimObject' method: 'primitiveEval' matching: '(Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;'.
+  "Activate the receiver and evaluate the block."
+  JVM aload: 1;
+      aload: 2;
+      invokeVirtual: 'st/redline/core/PrimObject' method: 'primitiveEval' matching: '(Lst/redline/core/PrimContext;)Lst/redline/core/PrimObject;'.
