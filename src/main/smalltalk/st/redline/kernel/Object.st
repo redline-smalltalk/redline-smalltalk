@@ -74,3 +74,6 @@ PrimObject subclass: #Object.
 	(Array with: self)
 		elementsExchangeIdentityWith: (Array with: otherObject).
 
+- bindingOf: aString
+  ^ nil.
+
