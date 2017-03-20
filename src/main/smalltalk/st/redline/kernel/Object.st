@@ -77,3 +77,7 @@ PrimObject subclass: #Object.
 - bindingOf: aString
   ^ nil.
 
+- breakDependents
+  DependentsFields removeKey: self.
+  " TODO-JCL: was DependentsFields removeKey: self ifAbsent: []."
+
