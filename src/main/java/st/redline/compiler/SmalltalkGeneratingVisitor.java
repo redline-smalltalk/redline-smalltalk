@@ -848,6 +848,16 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             return null;
         }
 
+        public Void visitLiteralArray(@NotNull SmalltalkParser.LiteralArrayContext ctx) {
+            log("visitLiteralArray ");
+            return visitChildren(ctx);
+        }
+
+        public Void visitLiteralArrayRest(@NotNull SmalltalkParser.LiteralArrayRestContext ctx) {
+            log("visitLiteralArrayRest ");
+            return null;
+        }
+
         public Void visitStInteger(@NotNull SmalltalkParser.StIntegerContext ctx) {
             log("visitInteger " + (ctx.MINUS() != null  ? "-" + nodeFor(ctx.DIGIT()).getText() : nodeFor(ctx.DIGIT()).getText()));
             boolean minus = ctx.MINUS() != null;

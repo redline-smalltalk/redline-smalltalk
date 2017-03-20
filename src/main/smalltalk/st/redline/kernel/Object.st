@@ -81,3 +81,33 @@ PrimObject subclass: #Object.
   DependentsFields removeKey: self.
   " TODO-JCL: was DependentsFields removeKey: self ifAbsent: []."
 
+- caseError
+	self error: 'Case not found, and no otherwise clause'.
+
+- caseOf: aBlockAssociationCollection
+	^ self caseOf: aBlockAssociationCollection.
+
+- caseOf: aBlockAssociationCollection otherwise: aBlock
+	aBlockAssociationCollection
+		associationsDo: [ :assoc |
+			assoc key value = self ifTrue: [^ assoc value value].
+			nil ].
+	^ aBlock value.
+
+- changed
+	self changed: self.
+
+- class
+	JVM primitive: 111.
+
+- copy
+	^ self shallowCopy.
+
+- deepCopy
+	JVM primitive: 301.
+
+- dependents
+	(DependentsFields includesKey: self)
+		ifTrue: [^ DependentsFields at: self].
+	^ #().
+
