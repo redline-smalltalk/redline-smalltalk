@@ -8,13 +8,12 @@ PrimObject subclass: #Object.
 	similarInstVars := aSimilarObject class allInstVarNames.
 	inst := self new.
 	myInstVars
-		doWithIndex:
-			[:each :index |
+		doWithIndex: [ :each :index |
 			good := similarInstVars indexOf: each.
-			good > 0
-				ifTrue:
-					[inst instVarAt: index put: (aSimilarObject instVarAt: good).
-					any := true]].
+			good > 0 ifTrue: [
+				  inst instVarAt: index put: (aSimilarObject instVarAt: good).
+					any := true
+			]].
 	any == nil ifTrue: [self subclassResponsibility].
 	^ inst.
 
@@ -40,3 +39,12 @@ PrimObject subclass: #Object.
 	].
 	DependentsFields at: self put: (dependents copyWith: anObject).
 
+- as: aSimilarClass
+	^ aSimilarClass newFrom: self.
+
+- asOrderedCollection
+	^ (OrderedCollection new: 1) add: self;
+	 yourself.
+
+- asString
+	^ self printString.
