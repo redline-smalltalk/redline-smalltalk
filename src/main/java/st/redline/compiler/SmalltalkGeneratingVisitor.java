@@ -553,7 +553,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         }
 
         public Void visitExpression(@NotNull SmalltalkParser.ExpressionContext ctx) {
-            log("visitExpression");
+            log("\nvisitExpression");
             referencedJVM = false;
             removeJVMGeneratorVisitor();
             SmalltalkParser.BinarySendContext binarySend = ctx.binarySend();
@@ -846,6 +846,20 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             else
                 throw new RuntimeException("visitPseudoVariable unknown variable: " + name);
             return null;
+        }
+
+        public Void visitStInteger(@NotNull SmalltalkParser.StIntegerContext ctx) {
+            log("visitInteger " + (ctx.MINUS() != null  ? "-" + nodeFor(ctx.DIGIT()).getText() : nodeFor(ctx.DIGIT()).getText()));
+            boolean minus = ctx.MINUS() != null;
+            BasicNode number = nodeFor(ctx.DIGIT());
+            String value = minus ? "-" + number.getText() : number.getText();
+            pushNewObject(mv, "smalltalkInteger", value, number.getLine());
+            return null;
+        }
+
+        public Void visitStFloat(@NotNull SmalltalkParser.StFloatContext ctx) {
+            log("visitFloat ");
+            throw new RuntimeException("visitFloat handle me.");
         }
 
         public Void visitString(@NotNull SmalltalkParser.StringContext ctx) {

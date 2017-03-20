@@ -34,11 +34,9 @@ PrimObject subclass: #Object.
 - addDependent: anObject
 	| dependents |
 	dependents := self dependents.
-	dependents do:
-		[ :o |
+	dependents do: [ :o |
 		o == anObject ifTrue: [^ self].
-		nil].
+		nil
+	].
 	DependentsFields at: self put: (dependents copyWith: anObject).
 
-- as: aSimilarClass
-	^ aSimilarClass newFrom: self.

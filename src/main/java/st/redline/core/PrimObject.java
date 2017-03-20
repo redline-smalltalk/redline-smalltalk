@@ -88,6 +88,10 @@ public class PrimObject {
         };
     }
 
+    public PrimObject smalltalkInteger(Object value) {
+        return instanceOfWith("Integer", Integer.valueOf(String.valueOf(value)));
+    }
+
     public PrimObject smalltalkMethod(Object value) {
         //System.out.println("** smalltalkMethod " + value);
         return instanceOfWith("CompiledMethod", value);
