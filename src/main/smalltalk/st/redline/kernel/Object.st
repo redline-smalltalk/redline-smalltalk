@@ -48,3 +48,6 @@ PrimObject subclass: #Object.
 
 - asString
 	^ self printString.
+
+- at: index
+	JVM primitive: 60.
