@@ -51,3 +51,6 @@ PrimObject subclass: #Object.
 
 - at: index
 	JVM primitive: 60.
+
+- at: index put: value
+	JVM primitive: 61.
