@@ -67,3 +67,10 @@ PrimObject subclass: #Object.
 - basicAt: index put: value
 	JVM primitive: 61.
 
+- basicSize
+	JVM primitive: 62.
+
+- become: otherObject
+	(Array with: self)
+		elementsExchangeIdentityWith: (Array with: otherObject).
+
