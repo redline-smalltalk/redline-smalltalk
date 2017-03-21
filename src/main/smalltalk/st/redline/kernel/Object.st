@@ -205,3 +205,9 @@ PrimObject subclass: #Object.
 			(self instVarAt: index)
 				printOn: aStream.
 			aStream cr].
+
+- longPrintString
+	| aStream |
+	aStream := WriteStream on: (String new: 100).
+	self longPrintOn: aStream.
+	^ aStream contents.
