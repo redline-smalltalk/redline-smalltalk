@@ -309,3 +309,25 @@ PrimObject subclass: #Object.
 
 - species
 	^ self class.
+
+- storeAt: offset inTempFrame: aContext
+	^ aContext tempAt: offset put: self.
+
+- storeOn: aStream
+	aStream nextPut: $(.
+	self class isVariable
+		ifTrue: [aStream nextPutAll: '(' , self class name , ' basicNew: ';
+			 store: self basicSize;
+			 nextPutAll: ') ']
+		ifFalse: [aStream nextPutAll: self class name , ' basicNew'].
+	1 to: self class instSize do: [:i | aStream nextPutAll: ' instVarAt: ';
+		 store: i;
+		 nextPutAll: ' put: ';
+		 store: (self instVarAt: i);
+		 nextPut: $;].
+	1 to: self basicSize do: [:i | aStream nextPutAll: ' basicAt: ';
+		 store: i;
+		 nextPutAll: ' put: ';
+		 store: (self basicAt: i);
+		 nextPut: $;].
+	aStream nextPutAll: ' yourself)'.
