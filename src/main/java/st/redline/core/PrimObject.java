@@ -251,7 +251,8 @@ public class PrimObject {
     }
 
     protected PrimObject methodFor(String selector) {
-        if ("subclass:".equals(selector))
+        // This only happens for Bootstrapped instance after that PrimClass takes over.
+        if (selector.startsWith("subclass:"))
             return PRIM_SUBCLASS;
         return PRIM_DOES_NOT_UNDERSTAND;
     }

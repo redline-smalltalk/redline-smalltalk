@@ -1,6 +1,10 @@
 "Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution."
 
-PrimObject subclass: #Object.
+PrimObject subclass: #Object
+           instanceVariableNames: ''
+           classVariableNames: 'DependentsFields '
+           poolDictionaries: ''
+           category: 'Kernel-Objects'.
 
 + newFrom: aSimilarObject
 	| myInstVars similarInstVars any inst good |
