@@ -271,3 +271,11 @@ PrimObject subclass: #Object.
 			ifFalse: ['a '])
 			+ title.
 
+- printString
+	| limit limitedString |
+	limit := 50000.
+	limitedString := String streamContents: [:s | self printOn: s]
+				limitedTo: limit.
+	limitedString size < limit ifTrue: [^ limitedString].
+	^ limitedString + '...etc...'.
+
