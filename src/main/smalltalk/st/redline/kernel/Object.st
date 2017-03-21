@@ -136,3 +136,23 @@ PrimObject subclass: #Object.
 - halt
 	JVM primitive: 303.
 
+- halt: aString
+	JVM primitive: 303.
+
+- hash
+	^ self identityHash.
+
+- identityHash
+	JVM primitive: 75.
+
+- ifNil: nilBlock
+	^ self.
+
+- ifNil: nilBlock ifNotNil: ifNotNilBlock
+	^ ifNotNilBlock value.
+
+- ifNotNil: ifNotNilBlock
+	^ ifNotNilBlock value.
+
+- ifNotNil: ifNotNilBlock ifNil: nilBlock
+	^ ifNotNilBlock value.
