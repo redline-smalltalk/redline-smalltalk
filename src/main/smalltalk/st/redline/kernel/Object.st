@@ -175,3 +175,15 @@ PrimObject subclass: #Object.
 - isKindOf: aClass
 	self class == aClass ifTrue: [^ true].
 	^ self class inheritsFrom: aClass.
+
+- isLiteral
+	^ false.
+
+- isMemberOf: aClass
+	^ self class == aClass.
+
+- isNil
+	^ false.
+
+- isNumber
+	^ false.
