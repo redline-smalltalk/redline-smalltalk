@@ -211,3 +211,18 @@ PrimObject subclass: #Object.
 	aStream := WriteStream on: (String new: 100).
 	self longPrintOn: aStream.
 	^ aStream contents.
+
+- modelWakeUp
+	^ self.
+
+- name
+	^ self printString.
+
+- nextInstance
+	JVM primitive: 78.
+
+- nextObject
+	JVM primitive: 139.
+
+- notNil
+	^ true.
