@@ -133,3 +133,6 @@ PrimObject subclass: #Object.
 - flag: aSymbol
 	^ self.
 
+- halt
+	JVM primitive: 303.
+
