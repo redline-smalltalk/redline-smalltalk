@@ -187,3 +187,21 @@ PrimObject subclass: #Object.
 
 - isNumber
 	^ false.
+
+- isPseudoContext
+	^ false.
+
+- isText
+	^ false.
+
+- longPrintOn: aStream
+	self class allInstVarNames
+		doWithIndex:
+			[ :title :index |
+			aStream nextPutAll: title;
+			 nextPut: $:;
+			 space;
+			 tab.
+			(self instVarAt: index)
+				printOn: aStream.
+			aStream cr].

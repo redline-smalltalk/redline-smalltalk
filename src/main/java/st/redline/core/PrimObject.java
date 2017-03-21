@@ -90,6 +90,10 @@ public class PrimObject {
         };
     }
 
+    public PrimObject smalltalkCharacter(Object value) {
+        return instanceOfWith("Character", value);
+    }
+
     public PrimObject smalltalkArray(Object ignored) {
         return instanceOfWith("Array", new ArrayList<PrimObject>());
     }

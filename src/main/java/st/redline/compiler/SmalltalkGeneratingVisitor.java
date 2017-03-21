@@ -865,6 +865,14 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             return null;
         }
 
+        public Void visitCharConstant(@NotNull SmalltalkParser.CharConstantContext ctx) {
+            log("visitCharConstant " + ctx.CHARACTER_CONSTANT().getSymbol().getText());
+            TerminalNode constant = ctx.CHARACTER_CONSTANT();
+            String value = constant.getSymbol().getText().substring(1);
+            pushNewObject(mv, "smalltalkCharacter", value, constant.getSymbol().getLine());
+            return null;
+        }
+
         public Void visitStInteger(@NotNull SmalltalkParser.StIntegerContext ctx) {
             log("visitInteger " + (ctx.MINUS() != null  ? "-" + nodeFor(ctx.DIGIT()).getText() : nodeFor(ctx.DIGIT()).getText()));
             boolean minus = ctx.MINUS() != null;
