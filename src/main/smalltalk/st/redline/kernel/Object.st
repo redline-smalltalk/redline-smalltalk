@@ -279,3 +279,33 @@ PrimObject subclass: #Object.
 	limitedString size < limit ifTrue: [^ limitedString].
 	^ limitedString + '...etc...'.
 
+- readFromString: aString
+	^ self readFrom: (ReadStream on: aString).
+
+- rehash
+	^ self.
+
+- release
+	self breakDependents.
+
+- removeDependent: anObject
+  self error: 'implement me'.
+  " TODO-JCL: Implement."
+
+- respondsTo: aSymbol
+  ^ self class canUnderstand: aSymbol.
+
+- shallowCopy
+	JVM primitive: 148.
+
+- shouldNotImplement
+	self error: 'This message is not appropriate for this object'.
+
+- size
+	JVM primitive: 62.
+
+- someObject
+	JVM primitive: 138.
+
+- species
+	^ self class.
