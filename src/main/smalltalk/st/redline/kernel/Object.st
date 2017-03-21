@@ -123,3 +123,13 @@ PrimObject subclass: #Object.
 
 - errorImproperStore
 	self error: 'Improper store into indexable object'.
+
+- errorNonIntegerIndex
+	self error: 'only integers should be used as indices'.
+
+- errorSubscriptBounds: index
+	self error: 'subscript is out of bounds: ' + index printString.
+
+- flag: aSymbol
+	^ self.
+
