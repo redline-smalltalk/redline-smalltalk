@@ -114,3 +114,12 @@ PrimObject subclass: #Object.
 		ifTrue: [^ DependentsFields at: self].
 	^ #().
 
+- do: aBlock
+	self notify: 'Only collections should respond to "do:". The "do:" method in Object will soon be removed; clients depending on it should use "in:" instead. If you get this message in system code, please report it to johnm@wdi.disney.com. Proceed from this notifier to get the old behavior.'.
+	^ self in: aBlock.
+
+- error: aString
+  JVM primitive: 302.
+
+- errorImproperStore
+	self error: 'Improper store into indexable object'.
