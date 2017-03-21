@@ -1,11 +1,13 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.core;
 
-import st.redline.classloader.*;
+import st.redline.classloader.SmalltalkClassLoader;
 
-import static st.redline.compiler.SmalltalkGeneratingVisitor.*;
-import static st.redline.core.PrimDoesNotUnderstand.*;
-import static st.redline.core.PrimSubclass.*;
+import java.util.ArrayList;
+
+import static st.redline.compiler.SmalltalkGeneratingVisitor.DEFAULT_IMPORTED_PACKAGE;
+import static st.redline.core.PrimDoesNotUnderstand.PRIM_DOES_NOT_UNDERSTAND;
+import static st.redline.core.PrimSubclass.PRIM_SUBCLASS;
 
 public class PrimObject {
 
@@ -86,6 +88,10 @@ public class PrimObject {
             }
             throw blockAnswer;
         };
+    }
+
+    public PrimObject smalltalkArray(Object ignored) {
+        return instanceOfWith("Array", new ArrayList<PrimObject>());
     }
 
     public PrimObject smalltalkInteger(Object value) {

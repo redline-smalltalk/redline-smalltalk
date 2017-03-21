@@ -1,12 +1,14 @@
 /* Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution. */
 package st.redline.compiler;
 
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.objectweb.asm.*;
-import st.redline.classloader.*;
+import st.redline.classloader.SmalltalkClassLoader;
+import st.redline.classloader.Source;
 
-import java.math.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> implements SmalltalkVisitor<Void>, Opcodes {
@@ -850,7 +852,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitLiteralArray(@NotNull SmalltalkParser.LiteralArrayContext ctx) {
             log("visitLiteralArray ");
-            visitLine(mv, ctx.LITARR_START().getSymbol().getLine());
+            pushNewObject(mv, "smalltalkArray", "", ctx.LITARR_START().getSymbol().getLine());
             return visitChildren(ctx);
         }
 
@@ -858,7 +860,7 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
             log("visitLiteralArrayRest ");
             if (ctx.parsetimeLiteral() != null)
                 for (SmalltalkParser.ParsetimeLiteralContext literal : ctx.parsetimeLiteral()) {
-                    log(literal.toString());
+                    throw new RuntimeException("Handle LiteralArray element");
                 }
             return null;
         }
