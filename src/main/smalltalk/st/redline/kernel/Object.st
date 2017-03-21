@@ -97,6 +97,9 @@ PrimObject subclass: #Object.
 - changed
 	self changed: self.
 
+- changed: aParameter
+	self dependents do: [:aDependent | aDependent update: aParameter].
+
 - class
 	JVM primitive: 111.
 
