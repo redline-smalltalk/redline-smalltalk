@@ -226,3 +226,48 @@ PrimObject subclass: #Object.
 
 - notNil
 	^ true.
+
+- notYetImplemented
+	self inform: 'Not yet implemented'.
+
+- notify: aString
+  JVM primitive: 304.
+
+- notify: aString at: location
+	self notify: aString.
+
+- okToChange
+	^ true.
+
+- perform: aSymbol
+	JVM primitive: 83.
+
+- perform: aSymbol with: anObject
+	JVM primitive: 83.
+
+- perform: aSymbol with: firstObject with: secondObject
+	JVM primitive: 83.
+
+- perform: aSymbol with: firstObject with: secondObject with: thirdObject
+	JVM primitive: 83.
+
+- perform: selector withArguments: anArray
+	JVM primitive: 84.
+
+- pointsTo: anObject
+	JVM primitive: 132.
+
+- primitiveError: aString
+  JVM primitive: 305.
+
+- primitiveFailed
+	self error: 'a primitive has failed'.
+
+- printOn: aStream
+	| title |
+	title := self class name.
+	aStream nextPutAll: ((title at: 1) isVowel
+			ifTrue: ['an ']
+			ifFalse: ['a '])
+			+ title.
+
