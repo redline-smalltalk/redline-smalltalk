@@ -156,3 +156,22 @@ PrimObject subclass: #Object.
 
 - ifNotNil: ifNotNilBlock ifNil: nilBlock
 	^ ifNotNilBlock value.
+
+- in: aBlock
+	^ aBlock value: self.
+
+- inline: inlineFlag
+	^ self.
+
+- instVarAt: index
+	JVM primitive: 73.
+
+- instVarAt: anInteger put: anObject
+	JVM primitive: 74.
+
+- isInteger
+	^ false.
+
+- isKindOf: aClass
+	self class == aClass ifTrue: [^ true].
+	^ self class inheritsFrom: aClass.
