@@ -331,3 +331,28 @@ PrimObject subclass: #Object.
 		 store: (self basicAt: i);
 		 nextPut: $;].
 	aStream nextPutAll: ' yourself)'.
+
+- storeString
+	^ String streamContents: [:s | self storeOn: s].
+
+- subclassResponsibility
+	self error: 'My subclass should have overridden one of my messages.'.
+
+- tryPrimitive: primIndex withArgs: argumentArray
+	JVM primitive: 118.
+
+- update: aParameter
+	^ self.
+
+- var: varSymbol declareC: declString
+	^ self.
+
+- yourself
+	^ self.
+
+- ~= anObject
+	^ self = anObject == false.
+
+- ~~ anObject
+	self == anObject ifTrue: [^ false].
+	^ true.
