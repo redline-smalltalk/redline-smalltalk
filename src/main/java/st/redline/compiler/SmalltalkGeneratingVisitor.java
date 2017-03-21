@@ -850,11 +850,16 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
 
         public Void visitLiteralArray(@NotNull SmalltalkParser.LiteralArrayContext ctx) {
             log("visitLiteralArray ");
+            visitLine(mv, ctx.LITARR_START().getSymbol().getLine());
             return visitChildren(ctx);
         }
 
         public Void visitLiteralArrayRest(@NotNull SmalltalkParser.LiteralArrayRestContext ctx) {
             log("visitLiteralArrayRest ");
+            if (ctx.parsetimeLiteral() != null)
+                for (SmalltalkParser.ParsetimeLiteralContext literal : ctx.parsetimeLiteral()) {
+                    log(literal.toString());
+                }
             return null;
         }
 
