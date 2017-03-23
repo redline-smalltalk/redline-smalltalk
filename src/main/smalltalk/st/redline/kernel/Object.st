@@ -6,28 +6,6 @@ PrimObject subclass: #Object
            poolDictionaries: ''
            category: 'Kernel-Objects'.
 
-+ newFrom: aSimilarObject
-	| myInstVars similarInstVars any inst good |
-	myInstVars := self allInstVarNames.
-	similarInstVars := aSimilarObject class allInstVarNames.
-	inst := self new.
-	myInstVars
-		doWithIndex: [ :each :index |
-			good := similarInstVars indexOf: each.
-			good > 0 ifTrue: [
-				  inst instVarAt: index put: (aSimilarObject instVarAt: good).
-					any := true
-			]].
-	any == nil ifTrue: [self subclassResponsibility].
-	^ inst.
-
-+ readFrom: aStream
-	| object |
-	object := Compiler evaluate: aStream.
-	(object isKindOf: self)
-		ifFalse: [self error: self name + ' expected'].
-	^ object.
-
 - = anObject
 	^ self == anObject.
 
@@ -360,3 +338,25 @@ PrimObject subclass: #Object
 - ~~ anObject
 	self == anObject ifTrue: [^ false].
 	^ true.
+
++ newFrom: aSimilarObject
+	| myInstVars similarInstVars any inst good |
+	myInstVars := self allInstVarNames.
+	similarInstVars := aSimilarObject class allInstVarNames.
+	inst := self new.
+	myInstVars
+		doWithIndex: [ :each :index |
+			good := similarInstVars indexOf: each.
+			good > 0 ifTrue: [
+				  inst instVarAt: index put: (aSimilarObject instVarAt: good).
+					any := true
+			]].
+	any == nil ifTrue: [self subclassResponsibility].
+	^ inst.
+
++ readFrom: aStream
+	| object |
+	object := Compiler evaluate: aStream.
+	(object isKindOf: self)
+		ifFalse: [self error: self name + ' expected'].
+	^ object.
