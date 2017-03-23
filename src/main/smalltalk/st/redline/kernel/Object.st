@@ -6,6 +6,9 @@ PrimObject subclass: #Object
            poolDictionaries: ''
            category: 'Kernel-Objects'.
 
+- initialize
+  ^ self.
+
 - = anObject
 	^ self == anObject.
 
