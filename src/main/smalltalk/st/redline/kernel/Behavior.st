@@ -1,6 +1,13 @@
 "Redline Smalltalk, Copyright (c) James C. Ladd. All rights reserved. See LICENSE in the root of this distribution."
 
-Object subclass: #Behavior.
+Object subclass: #Behavior
+	     instanceVariableNames: 'superclass methodDict format subclasses '
+	     classVariableNames: ''
+	     poolDictionaries: ''
+	     category: 'Kernel-Classes'.
+
+- addSelector: selector withMethod: compiledMethod
+	self basicAddSelector: selector withMethod: compiledMethod.
 
 "category: instance creation"
 
