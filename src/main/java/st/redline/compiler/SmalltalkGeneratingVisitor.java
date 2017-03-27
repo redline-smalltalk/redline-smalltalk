@@ -158,6 +158,18 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
         mv.visitMethodInsn(INVOKESTATIC, contextName(), "temporaryPutAt", "(Lst/redline/core/PrimObject;IL" + contextName() + ";)V", false);
     }
 
+    public void pushInstVar(MethodVisitor mv, String var) {
+        pushContext(mv);
+        pushLiteral(mv, var);
+        mv.visitMethodInsn(INVOKEVIRTUAL, contextName(), "instVarAt", "(Ljava/lang/String;)Lst/redline/core/PrimObject;", false);
+    }
+
+    public void storeInstVar(MethodVisitor mv, String identifier) {
+        pushLiteral(mv, identifier);
+        pushContext(mv);
+        mv.visitMethodInsn(INVOKESTATIC, contextName(), "instVarPutAt", "(Lst/redline/core/PrimObject;Ljava/lang/String;L" + contextName() + ";)V", false);
+    }
+
     public void storeHomeTemporary(MethodVisitor mv, int index) {
         pushNumber(mv, index);
         pushContext(mv);
@@ -672,7 +684,9 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
                 pushDuplicate(mv);
                 storeHomeTemporary(mv, indexOfHomeTemporary(identifier));
             } else {
-                throw new RuntimeException("visitAssignment temporary expected: " + identifier);
+                // Assume the variable is an instance var.
+                pushDuplicate(mv);
+                storeInstVar(mv, identifier);
             }
             return null;
         }
@@ -948,8 +962,10 @@ public class SmalltalkGeneratingVisitor extends SmalltalkBaseVisitor<Void> imple
                 pushHomeArgument(mv, indexOfHomeArgument(name));
             else if (isOuterArgument(name))
                 pushOuterArgument(mv, indexOfOuterArgument(name));
+            else if (Character.isUpperCase(name.codePointAt(0)))
+                pushReference(mv, name); // May be Class reference or InstVar.
             else
-                pushReference(mv, name);
+                pushInstVar(mv, name); // Assume instVar.
             return null;
         }
 

@@ -88,12 +88,24 @@ public class PrimContext {
         temporaries[index] = object;
     }
 
+    public PrimObject instVarAt(String var) {
+        throw new RuntimeException("TODO.JCL - get instVar: " + var);
+    }
+
+    public void instVarAtPut(String var, PrimObject object) {
+        throw new RuntimeException("TODO.JCL - set instVar: " + var);
+    }
+
     public static void temporaryPutAt(PrimObject object, int index, PrimContext context) {
         context.temporaryAtPut(index, object);
     }
 
     public static void homeTemporaryPutAt(PrimObject object, int index, PrimContext context) {
         context.homeContext().temporaryAtPut(index, object);
+    }
+
+    public static void instVarPutAt(PrimObject object, String var, PrimContext context) {
+        context.instVarAtPut(var, object);
     }
 
     public void setupCallContext(PrimContext context) {

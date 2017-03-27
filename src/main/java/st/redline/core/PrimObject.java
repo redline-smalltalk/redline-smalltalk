@@ -54,7 +54,7 @@ public class PrimObject {
     }
 
     public PrimObject reference(String name) {
-        //System.out.println("** reference " + name);
+//        System.out.println("***** reference " + name);
         return resolveObject(name);
     }
 
