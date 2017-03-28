@@ -300,4 +300,19 @@ public class PrimObject {
 //        System.out.println("primitive111: " + context);
         return this.selfClass();
     }
+
+    public PrimObject primitive306(PrimContext context) {
+        // ^ superclass
+        return this.superclass();
+    }
+
+    public PrimObject primitive307(PrimContext context) {
+//        (aClass == nil or: [aClass isKindOf: Behavior])
+//        ifTrue: [ superclass := aClass]
+//        ifFalse: [self error: 'superclass must be a class-describing object'].
+        PrimObject aSuperclass = context.argumentAt(0);
+        PrimClass theClass = (PrimClass) context.receiver();
+        theClass.superclass(aSuperclass);
+        return theClass;
+    }
 }

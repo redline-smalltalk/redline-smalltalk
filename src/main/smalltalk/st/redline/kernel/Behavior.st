@@ -38,6 +38,11 @@ Object subclass: #Behavior
   isVariable
   isWords
   literalScannedAs: scannedLiteral notifying: requestor
+  thoroughWhichSelectorsReferTo: literal special: specialFlag byte: specialByte
+  whichSelectorsAccess: instVarName
+  whichSelectorsReferTo: literal
+  whichSelectorsReferTo: literal special: specialFlag byte: specialByte
+  whichSelectorsStoreInto: instVarName
 "
 
 - allInstVarNames
@@ -319,3 +324,31 @@ Object subclass: #Behavior
 - subclassesDo: aBlock
 	subclasses == nil ifFalse: [subclasses do: [:cl | aBlock value: cl]].
 
+- superclass
+  JVM primitive: 306.
+
+- superclass: aClass
+  JVM primitive: 307.
+
+- whichClassIncludesSelector: aSymbol
+	(methodDict includesKey: aSymbol)
+		ifTrue: [^ self].
+	superclass == nil ifTrue: [^ nil].
+	^ superclass whichClassIncludesSelector: aSymbol.
+
+- withAllSubclasses
+	| aSet |
+	aSet := Set with: self.
+	aSet addAll: self subclasses.
+	self subclasses do: [:eachSubclass | aSet addAll: eachSubclass allSubclasses].
+	^ aSet.
+
+- withAllSubclassesDo: aBlock
+	aBlock value: self.
+	self allSubclassesDo: aBlock.
+
+- withAllSuperclasses
+	| temp |
+	temp := self allSuperclasses.
+	temp addFirst: self.
+	^ temp.
