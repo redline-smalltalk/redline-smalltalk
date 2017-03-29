@@ -93,6 +93,14 @@ ClassDescription subclass: #Class
     "Shorthand for subclass creation."
     ^ self subclass: className instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: ''.
 
+- subclass: className category: cat
+    "Shorthand for subclass creation."
+    ^ self subclass: className instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: cat.
+
+- subclass: className instanceVariableNames: ivn category: cat
+    "Shorthand for subclass creation."
+    ^ self subclass: className instanceVariableNames: ivn classVariableNames: '' poolDictionaries: '' category: cat.
+
 - subclass: className instanceVariableNames: ivn classVariableNames: cvn poolDictionaries: pd category: cat
     "Create a new class that is a subclass of the receiver. Each or the arguments provides the information needed to
      initialize the new class and categorize it."
