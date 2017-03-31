@@ -542,365 +542,346 @@ Number variableWordSubclass: #Float
       aStream nextPutAll: (baseExpEstimate - 1) printString].
 
 - absPrintOn: aStream base: base
-	"Print my value on a stream in the given base.  Assumes that my value is strictly
-	positive; negative numbers, zero, and NaNs have already been handled elsewhere.
-	Based upon the algorithm outlined in:
-	Robert G. Burger and R. Kent Dybvig
-	Printing Floating Point Numbers Quickly and Accurately
-	ACM SIGPLAN 1996 Conference on Programming Language Design and Implementation
-	June 1996.
-	This version performs all calculations with Floats instead of LargeIntegers, and loses
-	about 3 lsbs of accuracy compared to an exact conversion."
+    "Print my value on a stream in the given base.  Assumes that my value is strictly
+    positive; negative numbers, zero, and NaNs have already been handled elsewhere.
+    Based upon the algorithm outlined in:
+    Robert G. Burger and R. Kent Dybvig
+    Printing Floating Point Numbers Quickly and Accurately
+    ACM SIGPLAN 1996 Conference on Programming Language Design and Implementation
+    June 1996.
+    This version performs all calculations with Floats instead of LargeIntegers, and loses
+    about 3 lsbs of accuracy compared to an exact conversion."
 
-	| significantBits fBase exp baseExpEstimate r s mPlus mMinus scale d tc1 tc2 fixedFormat decPointCount |
-	self isInfinite ifTrue: [aStream nextPutAll: 'Infinity'. ^ self].
-	significantBits _ 50.  "approximately 3 lsb's of accuracy loss during conversion"
-	fBase _ base asFloat.
-	exp _ self exponent.
-	baseExpEstimate _ (exp * fBase reciprocalLogBase2 - 1.0e-10) ceiling.
-	exp >= 0
-		ifTrue:
-			[r _ self.
-			s _ 1.0.
-			mPlus _ 1.0 timesTwoPower: exp - significantBits.
-			mMinus _ self significand ~= 1.0 ifTrue: [mPlus] ifFalse: [mPlus / 2.0]]
-		ifFalse:
-			[r _ self timesTwoPower: significantBits.
-			s _ 1.0 timesTwoPower:  significantBits.
-			mMinus _ 1.0 timesTwoPower: (exp max: -1024).
-			mPlus _
-				(exp = MinValLogBase2) | (self significand ~= 1.0)
-					ifTrue: [mMinus]
-					ifFalse: [mMinus * 2.0]].
-	baseExpEstimate >= 0
-		ifTrue:
-			[s _ s * (fBase raisedToInteger: baseExpEstimate).
-			exp = 1023
-				ifTrue:   "scale down to prevent overflow to Infinity during conversion"
-					[r _ r / fBase.
-					s _ s / fBase.
-					mPlus _ mPlus / fBase.
-					mMinus _ mMinus / fBase]]
-		ifFalse:
-			[exp < -1023
-				ifTrue:   "scale up to prevent denorm reciprocals overflowing to Infinity"
-					[d _ (53 * fBase reciprocalLogBase2 - 1.0e-10) ceiling.
-					scale _ fBase raisedToInteger: d.
-					r _ r * scale.
-					mPlus _ mPlus * scale.
-					mMinus _ mMinus * scale.
-					scale _ fBase raisedToInteger: (baseExpEstimate + d) negated]
-				ifFalse:
-				[scale _ fBase raisedToInteger: baseExpEstimate negated].
-			s _ s / scale].
-	(r + mPlus >= s)
-		ifTrue: [baseExpEstimate _ baseExpEstimate + 1]
-		ifFalse:
-			[s _ s / fBase].
-	(fixedFormat _ baseExpEstimate between: -3 and: 6)
-		ifTrue:
-			[decPointCount _ baseExpEstimate.
-			baseExpEstimate <= 0
-				ifTrue: [aStream nextPutAll: ('0.000000' truncateTo: 2 - baseExpEstimate)]]
-		ifFalse:
-			[decPointCount _ 1].
-	[d _ (r / s) truncated.
-	r _ r - (d * s).
-	(tc1 _ r <= mMinus) | (tc2 _ r + mPlus >= s)] whileFalse:
-		[aStream nextPut: (Character digitValue: d).
-		r _ r * fBase.
-		mPlus _ mPlus * fBase.
-		mMinus _ mMinus * fBase.
-		decPointCount _ decPointCount - 1.
-		decPointCount = 0 ifTrue: [aStream nextPut: $.]].
-	tc2 ifTrue:
-		[tc1 not | (tc1 & (r*2.0 >= s)) ifTrue: [d _ d + 1]].
-	aStream nextPut: (Character digitValue: d).
-	decPointCount > 0
-		ifTrue:
-		[decPointCount - 1 to: 1 by: -1 do: [:i | aStream nextPut: $0].
-		aStream nextPutAll: '.0'].
-	fixedFormat ifFalse:
-		[aStream nextPut: $e.
-		aStream nextPutAll: (baseExpEstimate - 1) printString]! !
+    | significantBits fBase exp baseExpEstimate r s mPlus mMinus scale d tc1 tc2 fixedFormat decPointCount |
+    self isInfinite ifTrue: [aStream nextPutAll: 'Infinity'. ^ self].
+    significantBits := 50.  "approximately 3 lsb's of accuracy loss during conversion"
+    fBase := base asFloat.
+    exp := self exponent.
+    baseExpEstimate := (exp * fBase reciprocalLogBase2 - 1.0e-10) ceiling.
+    exp >= 0
+      ifTrue:
+        [r := self.
+        s := 1.0.
+        mPlus := 1.0 timesTwoPower: exp - significantBits.
+        mMinus := self significand ~= 1.0 ifTrue: [mPlus] ifFalse: [mPlus / 2.0]]
+      ifFalse:
+        [r := self timesTwoPower: significantBits.
+        s := 1.0 timesTwoPower:  significantBits.
+        mMinus := 1.0 timesTwoPower: (exp max: -1024).
+        mPlus :=
+          (exp = MinValLogBase2) | (self significand ~= 1.0)
+            ifTrue: [mMinus]
+            ifFalse: [mMinus * 2.0]].
+    baseExpEstimate >= 0
+      ifTrue:
+        [s := s * (fBase raisedToInteger: baseExpEstimate).
+        exp = 1023
+          ifTrue:   "scale down to prevent overflow to Infinity during conversion"
+            [r := r / fBase.
+            s := s / fBase.
+            mPlus := mPlus / fBase.
+            mMinus := mMinus / fBase]]
+      ifFalse:
+        [exp < -1023
+          ifTrue:   "scale up to prevent denorm reciprocals overflowing to Infinity"
+            [d := (53 * fBase reciprocalLogBase2 - 1.0e-10) ceiling.
+            scale := fBase raisedToInteger: d.
+            r := r * scale.
+            mPlus := mPlus * scale.
+            mMinus := mMinus * scale.
+            scale := fBase raisedToInteger: (baseExpEstimate + d) negated]
+          ifFalse:
+          [scale := fBase raisedToInteger: baseExpEstimate negated].
+        s := s / scale].
+    (r + mPlus >= s)
+      ifTrue: [baseExpEstimate := baseExpEstimate + 1]
+      ifFalse:
+        [s := s / fBase].
+    (fixedFormat := baseExpEstimate between: -3 and: 6)
+      ifTrue:
+        [decPointCount := baseExpEstimate.
+        baseExpEstimate <= 0
+          ifTrue: [aStream nextPutAll: ('0.000000' truncateTo: 2 - baseExpEstimate)]]
+      ifFalse:
+        [decPointCount := 1].
+    [d := (r / s) truncated.
+    r :=r - (d * s).
+    (tc1 := r <= mMinus) | (tc2 := r + mPlus >= s)] whileFalse:
+      [aStream nextPut: (Character digitValue: d).
+      r := r * fBase.
+      mPlus := mPlus * fBase.
+      mMinus := mMinus * fBase.
+      decPointCount := decPointCount - 1.
+      decPointCount = 0 ifTrue: [aStream nextPut: $.]].
+    tc2 ifTrue:
+      [tc1 not | (tc1 & (r*2.0 >= s)) ifTrue: [d := d + 1]].
+    aStream nextPut: (Character digitValue: d).
+    decPointCount > 0
+      ifTrue:
+      [decPointCount - 1 to: 1 by: -1 do: [:i | aStream nextPut: $0].
+      aStream nextPutAll: '.0'].
+    fixedFormat ifFalse:
+      [aStream nextPut: $e.
+      aStream nextPutAll: (baseExpEstimate - 1) printString].
 
-!Float methodsFor: 'printing'!
-hex  "If ya really want to know..."
-	| word nibble |
-	^ String streamContents:
-		[:strm |
-		1 to: 2 do:
-			[:i | word _ self at: i.
-			1 to: 8 do:
-				[:s | nibble _ (word bitShift: -8+s*4) bitAnd: 16rF.
-				strm nextPut: ('0123456789ABCDEF' at: nibble+1)]]]
-"
-(-2.0 to: 2.0) collect: [:f | f hex]
-"! !
+- hex  "If ya really want to know..."
+    | word nibble |
+    ^ String streamContents:
+      [:strm |
+      1 to: 2 do:
+        [:i | word := self at: i.
+        1 to: 8 do:
+          [:s | nibble := (word bitShift: -8+s*4) bitAnd: 16rF.
+          strm nextPut: ('0123456789ABCDEF' at: nibble+1)]]].
 
-!Float methodsFor: 'printing' stamp: 'tao 4/19/98 23:31'!
-printOn: aStream base: base
-	"Handle sign, zero, and NaNs; all other values passed to absPrintOn:base:"
+- printOn: aStream base: base
+    "Handle sign, zero, and NaNs; all other values passed to absPrintOn:base:"
 
-	self isNaN ifTrue: [aStream nextPutAll: 'NaN'. ^ self]. "check for NaN before sign"
-	self > 0.0
-		ifTrue: [self absPrintOn: aStream base: base]
-		ifFalse:
-			[self sign = -1
-				ifTrue: [aStream nextPutAll: '-'].
-			self = 0.0
-				ifTrue: [aStream nextPutAll: '0.0'. ^ self]
-				ifFalse: [self negated absPrintOn: aStream base: base]]! !
+    self isNaN ifTrue: [aStream nextPutAll: 'NaN'. ^ self]. "check for NaN before sign"
+    self > 0.0
+      ifTrue: [self absPrintOn: aStream base: base]
+      ifFalse:
+        [self sign = -1
+          ifTrue: [aStream nextPutAll: '-'].
+        self = 0.0
+          ifTrue: [aStream nextPutAll: '0.0'. ^ self]
+          ifFalse: [self negated absPrintOn: aStream base: base]].
 
 
-!Float methodsFor: 'private' stamp: 'tao 10/10/97 18:18'!
-absPrintOn: aStream base: base digitCount: digitCount
-	"Print me in the given base, using digitCount significant figures."
+- absPrintOn: aStream base: base digitCount: digitCount
+    "Print me in the given base, using digitCount significant figures."
 
-	| fuzz x exp q fBase scale logScale |
-	self isInf ifTrue: [^ aStream nextPutAll: 'Inf'].
-	fBase _ base asFloat.
-	"x is myself normalized to [1.0, fBase), exp is my exponent"
-	exp _
-		self < 1.0
-			ifTrue: [self reciprocalFloorLog: fBase]
-			ifFalse: [self floorLog: fBase].
-	scale _ 1.0.
-	logScale _ 0.
-	[(x _ fBase raisedTo: (exp + logScale)) = 0]
-		whileTrue:
-			[scale _ scale * fBase.
-			logScale _ logScale + 1].
-	x _ self * scale / x.
-	fuzz _ fBase raisedTo: 1 - digitCount.
-	"round the last digit to be printed"
-	x _ 0.5 * fuzz + x.
-	x >= fBase
-		ifTrue:
-			["check if rounding has unnormalized x"
-			x _ x / fBase.
-			exp _ exp + 1].
-	(exp < 6 and: [exp > -4])
-		ifTrue:
-			["decimal notation"
-			q _ 0.
-			exp < 0 ifTrue: [1 to: 1 - exp do: [:i | aStream nextPut: ('0.0000' at: i)]]]
-		ifFalse:
-			["scientific notation"
-			q _ exp.
-			exp _ 0].
-	[x >= fuzz]
-		whileTrue:
-			["use fuzz to track significance"
-			i _ x asInteger.
-			aStream nextPut: (Character digitValue: i).
-			x _ x - i asFloat * fBase.
-			fuzz _ fuzz * fBase.
-			exp _ exp - 1.
-			exp = -1 ifTrue: [aStream nextPut: $.]].
-	[exp >= -1]
-		whileTrue:
-			[aStream nextPut: $0.
-			exp _ exp - 1.
-			exp = -1 ifTrue: [aStream nextPut: $.]].
-	q ~= 0
-		ifTrue:
-			[aStream nextPut: $e.
-			q printOn: aStream]! !
+    | fuzz x exp q fBase scale logScale |
+    self isInf ifTrue: [^ aStream nextPutAll: 'Inf'].
+    fBase := base asFloat.
+    "x is myself normalized to [1.0, fBase), exp is my exponent"
+    exp :=
+      self < 1.0
+        ifTrue: [self reciprocalFloorLog: fBase]
+        ifFalse: [self floorLog: fBase].
+    scale := 1.0.
+    logScale := 0.
+    [(x := fBase raisedTo: (exp + logScale)) = 0]
+      whileTrue:
+        [scale := scale * fBase.
+        logScale := logScale + 1].
+    x := self * scale / x.
+    fuzz := fBase raisedTo: 1 - digitCount.
+    "round the last digit to be printed"
+    x := 0.5 * fuzz + x.
+    x >= fBase
+      ifTrue:
+        ["check if rounding has unnormalized x"
+        x := x / fBase.
+        exp := exp + 1].
+    (exp < 6 and: [exp > -4])
+      ifTrue:
+        ["decimal notation"
+        q := 0.
+        exp < 0 ifTrue: [1 to: 1 - exp do: [:i | aStream nextPut: ('0.0000' at: i)]]]
+      ifFalse:
+        ["scientific notation"
+        q := exp.
+        exp := 0].
+    [x >= fuzz]
+      whileTrue:
+        ["use fuzz to track significance"
+        i := x asInteger.
+        aStream nextPut: (Character digitValue: i).
+        x := x - i asFloat * fBase.
+        fuzz := fuzz * fBase.
+        exp := exp - 1.
+        exp = -1 ifTrue: [aStream nextPut: $.]].
+    [exp >= -1]
+      whileTrue:
+        [aStream nextPut: $0.
+        exp := exp - 1.
+        exp = -1 ifTrue: [aStream nextPut: $.]].
+    q ~= 0
+      ifTrue:
+        [aStream nextPut: $e.
+        q printOn: aStream].
 
-!Float methodsFor: 'private' stamp: 'tao 4/19/98 23:22'!
-deprecatedAbsPrintOn: aStream base: base digitCount: digitCount
-	"Print me in the given base, using digitCount significant figures.
-	This version has been deprecated by the newer version, but is kept here for comparison"
+- deprecatedAbsPrintOn: aStream base: base digitCount: digitCount
+    "Print me in the given base, using digitCount significant figures.
+    This version has been deprecated by the newer version, but is kept here for comparison"
 
-	| fuzz x exp q fBase scale logScale |
-	self isInfinite ifTrue: [^ aStream nextPutAll: 'Inf'].
-	fBase _ base asFloat.
-	"x is myself normalized to [1.0, fBase), exp is my exponent"
-	exp _
-		self < 1.0
-			ifTrue: [self reciprocalFloorLog: fBase]
-			ifFalse: [self floorLog: fBase].
-	scale _ 1.0.
-	logScale _ 0.
-	[(x _ fBase raisedTo: (exp + logScale)) = 0]
-		whileTrue:
-			[scale _ scale * fBase.
-			logScale _ logScale + 1].
-	x _ self * scale / x.
-	fuzz _ fBase raisedTo: 1 - digitCount.
-	"round the last digit to be printed"
-	x _ 0.5 * fuzz + x.
-	x >= fBase
-		ifTrue:
-			["check if rounding has unnormalized x"
-			x _ x / fBase.
-			exp _ exp + 1].
-	(exp < 6 and: [exp > -4])
-		ifTrue:
-			["decimal notation"
-			q _ 0.
-			exp < 0 ifTrue: [1 to: 1 - exp do: [:i | aStream nextPut: ('0.0000' at: i)]]]
-		ifFalse:
-			["scientific notation"
-			q _ exp.
-			exp _ 0].
-	[x >= fuzz]
-		whileTrue:
-			["use fuzz to track significance"
-			i _ x asInteger.
-			aStream nextPut: (Character digitValue: i).
-			x _ x - i asFloat * fBase.
-			fuzz _ fuzz * fBase.
-			exp _ exp - 1.
-			exp = -1 ifTrue: [aStream nextPut: $.]].
-	[exp >= -1]
-		whileTrue:
-			[aStream nextPut: $0.
-			exp _ exp - 1.
-			exp = -1 ifTrue: [aStream nextPut: $.]].
-	q ~= 0
-		ifTrue:
-			[aStream nextPut: $e.
-			q printOn: aStream]! !
+    | fuzz x exp q fBase scale logScale |
+    self isInfinite ifTrue: [^ aStream nextPutAll: 'Inf'].
+    fBase := base asFloat.
+    "x is myself normalized to [1.0, fBase), exp is my exponent"
+    exp :=
+      self < 1.0
+        ifTrue: [self reciprocalFloorLog: fBase]
+        ifFalse: [self floorLog: fBase].
+    scale := 1.0.
+    logScale := 0.
+    [(x := fBase raisedTo: (exp + logScale)) = 0]
+      whileTrue:
+        [scale := scale * fBase.
+        logScale := logScale + 1].
+    x := self * scale / x.
+    fuzz := fBase raisedTo: 1 - digitCount.
+    "round the last digit to be printed"
+    x := 0.5 * fuzz + x.
+    x >= fBase
+      ifTrue:
+        ["check if rounding has unnormalized x"
+        x := x / fBase.
+        exp := exp + 1].
+    (exp < 6 and: [exp > -4])
+      ifTrue:
+        ["decimal notation"
+        q := 0.
+        exp < 0 ifTrue: [1 to: 1 - exp do: [:i | aStream nextPut: ('0.0000' at: i)]]]
+      ifFalse:
+        ["scientific notation"
+        q := exp.
+        exp := 0].
+    [x >= fuzz]
+      whileTrue:
+        ["use fuzz to track significance"
+        i := x asInteger.
+        aStream nextPut: (Character digitValue: i).
+        x := x - i asFloat * fBase.
+        fuzz := fuzz * fBase.
+        exp := exp - 1.
+        exp = -1 ifTrue: [aStream nextPut: $.]].
+    [exp >= -1]
+      whileTrue:
+        [aStream nextPut: $0.
+        exp := exp - 1.
+        exp = -1 ifTrue: [aStream nextPut: $.]].
+    q ~= 0
+      ifTrue:
+        [aStream nextPut: $e.
+        q printOn: aStream].
 
-!Float methodsFor: 'private' stamp: 'tao 10/15/97 18:16'!
-testPrintOn: aStream base: base
-	"Print me in the given base,"
+"Float methodsFor: 'private'"
 
-	| fBase significand exp baseExpEstimate be be1 r s mPlus mMinus scale roundingIncludesLimits d tc1 tc2 |
-	self isInf ifTrue: [^ aStream nextPutAll: 'Inf'].
-	fBase _ base asFloat.
-	significand _ self significandAsInteger.
-	roundingIncludesLimits _ significand even.
-	exp _ (self exponent - 52) max: MinValLogBase2.
-	baseExpEstimate _ (exp + 52 * fBase reciprocalLogBase2 - 1.0e-10) ceiling.
-	exp >= 0
-		ifTrue:
-			[be _ 1 << exp.
-			significand ~= 16r10000000000000
-				ifTrue:
-					[r _ significand * be * 2.
-					s _ 2.
-					mPlus _ be.
-					mMinus _ be]
-				ifFalse:
-					[be1 _ be * 2.
-					r _ significand * be1 * 2.
-					s _ 4.
-					mPlus _ be1.
-					mMinus _ be]]
-		ifFalse:
-			[(exp = MinValLogBase2) | (significand ~= 16r10000000000000)
-				ifTrue:
-					[r _ significand * 2.
-					s _ (1 << (exp negated)) * 2.
-					mPlus _ 1.
-					mMinus _ 1]
-				ifFalse:
-					[r _ significand * 4.
-					s _ (1 << (exp negated + 1)) * 2.
-					mPlus _ 2.
-					mMinus _ 1]].
-	baseExpEstimate >= 0
-		ifTrue: [s _ s * (base raisedToInteger: baseExpEstimate)]
-		ifFalse:
-			[scale _ base raisedToInteger: baseExpEstimate negated.
-			r _ r * scale.
-			mPlus _ mPlus * scale.
-			mMinus _ mMinus * scale].
-	(r + mPlus > s) | (roundingIncludesLimits & (r + mPlus = s))
-		ifTrue: [baseExpEstimate _ baseExpEstimate + 1]
-		ifFalse:
-			[r _ r * base.
-			mPlus _ mPlus * base.
-			mMinus _ mMinus * base].
+- testPrintOn: aStream base: base
+    "Print me in the given base,"
 
-	[d _ r // s.
-	r _ r \\ s.
-	(tc1 _ (r < mMinus) | (roundingIncludesLimits & (r = mMinus))) |
-	(tc2 _ (r + mPlus > s) | (roundingIncludesLimits & (r + mPlus = s)))] whileFalse:
-		[aStream nextPut: (Character digitValue: d).
-		r _ r * base.
-		mPlus _ mPlus * base.
-		mMinus _ mMinus * base].
-	tc2 ifTrue:
-		[tc1 not | (tc1 & (r*2 >= s)) ifTrue: [d _ d + 1]].
-	aStream nextPut: (Character digitValue: d).
-	aStream nextPut: $e.
-	aStream nextPutAll: baseExpEstimate printString.! !
+    | fBase significand exp baseExpEstimate be be1 r s mPlus mMinus scale roundingIncludesLimits d tc1 tc2 |
+    self isInf ifTrue: [^ aStream nextPutAll: 'Inf'].
+    fBase := base asFloat.
+    significand := self significandAsInteger.
+    roundingIncludesLimits := significand even.
+    exp := (self exponent - 52) max: MinValLogBase2.
+    baseExpEstimate := (exp + 52 * fBase reciprocalLogBase2 - 1.0e-10) ceiling.
+    exp >= 0
+      ifTrue:
+        [be := 1 << exp.
+        significand ~= 16r10000000000000
+          ifTrue:
+            [r := significand * be * 2.
+            s := 2.
+            mPlus := be.
+            mMinus := be]
+          ifFalse:
+            [be1 := be * 2.
+            r := significand * be1 * 2.
+            s := 4.
+            mPlus := be1.
+            mMinus := be]]
+      ifFalse:
+        [(exp = MinValLogBase2) | (significand ~= 16r10000000000000)
+          ifTrue:
+            [r := significand * 2.
+            s := (1 << (exp negated)) * 2.
+            mPlus := 1.
+            mMinus := 1]
+          ifFalse:
+            [r := significand * 4.
+            s := (1 << (exp negated + 1)) * 2.
+            mPlus := 2.
+            mMinus := 1]].
+    baseExpEstimate >= 0
+      ifTrue: [s := s * (base raisedToInteger: baseExpEstimate)]
+      ifFalse:
+        [scale := base raisedToInteger: baseExpEstimate negated.
+        r := r * scale.
+        mPlus := mPlus * scale.
+        mMinus := mMinus * scale].
+    (r + mPlus > s) | (roundingIncludesLimits & (r + mPlus = s))
+      ifTrue: [baseExpEstimate := baseExpEstimate + 1]
+      ifFalse:
+        [r := r * base.
+        mPlus := mPlus * base.
+        mMinus := mMinus * base].
 
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+    [d := r // s.
+    r :=_ r \\ s.
+    (tc1 := (r < mMinus) | (roundingIncludesLimits & (r = mMinus))) |
+    (tc2 := (r + mPlus > s) | (roundingIncludesLimits & (r + mPlus = s)))] whileFalse:
+      [aStream nextPut: (Character digitValue: d).
+      r := r * base.
+      mPlus := mPlus * base.
+      mMinus := mMinus * base].
+    tc2 ifTrue:
+      [tc1 not | (tc1 & (r*2 >= s)) ifTrue: [d := d + 1]].
+    aStream nextPut: (Character digitValue: d).
+    aStream nextPut: $e.
+    aStream nextPutAll: baseExpEstimate printString.
 
-Float class
-	instanceVariableNames: ''!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "
 
-!Float class methodsFor: 'class initialization' stamp: 'jm 4/30/1998 13:48'!
-initialize
-	"Float initialize"
-	"Constants from Computer Approximations, pp. 182-183:
-		Pi = 3.14159265358979323846264338327950288
-		Pi/2 = 1.57079632679489661923132169163975144
-		Pi*2 = 6.28318530717958647692528676655900576
-		Pi/180 = 0.01745329251994329576923690768488612
-		2.0 ln = 0.69314718055994530941723212145817657
-		2.0 sqrt = 1.41421356237309504880168872420969808"
+"Float class methodsFor: 'class initialization'"
 
-	Pi _ 3.14159265358979323846264338327950288.
-	Halfpi _ Pi / 2.0.
-	Twopi _ Pi * 2.0.
-	RadiansPerDegree _ Pi / 180.0.
++ initialize
+    "Float initialize"
+    "Constants from Computer Approximations, pp. 182-183:
+      Pi = 3.14159265358979323846264338327950288
+      Pi/2 = 1.57079632679489661923132169163975144
+      Pi*2 = 6.28318530717958647692528676655900576
+      Pi/180 = 0.01745329251994329576923690768488612
+      2.0 ln = 0.69314718055994530941723212145817657
+      2.0 sqrt = 1.41421356237309504880168872420969808"
 
-	Ln2 _ 0.69314718055994530941723212145817657.
-	Ln10 _ 10.0 ln.
-	Sqrt2 _ 1.41421356237309504880168872420969808.
-	E _ 2.718281828459045235360287471353.
+    Pi := 3.14159265358979323846264338327950288.
+    Halfpi := Pi / 2.0.
+    Twopi := Pi * 2.0.
+    RadiansPerDegree := Pi / 180.0.
 
-	Epsilon _ 0.000000000001.  "Defines precision of mathematical functions"
+    Ln2 := 0.69314718055994530941723212145817657.
+    Ln10 := 10.0 ln.
+    Sqrt2 := 1.41421356237309504880168872420969808.
+    E := 2.718281828459045235360287471353.
 
-	MaxVal _ 1.7976931348623159e308.
-	MaxValLn _ 709.782712893384.
-	MinValLogBase2 _ -1074.
+    Epsilon := 0.000000000001.  "Defines precision of mathematical functions"
 
-	Infinity _ MaxVal * MaxVal.
-	NegativeInfinity _ 0.0 - Infinity.
-	NaN _ Infinity - Infinity.
-	NegativeZero _ 1.0 / Infinity negated.
-! !
+    MaxVal := 1.7976931348623159e308.
+    MaxValLn := 709.782712893384.
+    MinValLogBase2 := -1074.
 
+    Infinity := MaxVal * MaxVal.
+    NegativeInfinity := 0.0 - Infinity.
+    NaN := Infinity - Infinity.
+    NegativeZero := 1.0 / Infinity negated.
 
-!Float class methodsFor: 'instance creation'!
-readFrom: aStream
-	"Answer a new Float as described on the stream, aStream."
++ readFrom: aStream
+    "Answer a new Float as described on the stream, aStream."
 
-	^(super readFrom: aStream) asFloat! !
+    ^ (super readFrom: aStream) asFloat.
 
 
-!Float class methodsFor: 'constants'!
-e
-	"Answer the constant, E."
+"Float class methodsFor: 'constants'"
 
-	^E! !
++ e
+    "Answer the constant, E."
+    ^ E.
 
-!Float class methodsFor: 'constants' stamp: 'tao 4/23/98 11:37'!
-infinity
-	"Answer the value used to represent an infinite magnitude"
++ infinity
+    "Answer the value used to represent an infinite magnitude"
+    ^ Infinity.
 
-	^ Infinity! !
-
-!Float class methodsFor: 'constants' stamp: 'tao 4/23/98 11:38'!
-nan
++ nan
 	"Answer the canonical value used to represent Not-A-Number"
+	^ NaN.
 
-	^ NaN! !
++ negativeZero
+	^ NegativeZero.
 
-!Float class methodsFor: 'constants' stamp: 'tao 4/23/98 12:05'!
-negativeZero
-
-	^ NegativeZero! !
-
-!Float class methodsFor: 'constants'!
-pi
++ pi
 	"Answer the constant, Pi."
-
-	^Pi! !
+	^ Pi.
